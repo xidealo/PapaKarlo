@@ -1,17 +1,19 @@
 package com.example.papakarlo
 
-import android.os.Bundle
-import com.example.papakarlo.view.activity.BaseActivity
+import androidx.activity.viewModels
+import com.example.papakarlo.databinding.ActivityProductBinding
+import com.example.papakarlo.di.components.ViewModelComponent
+import com.example.papakarlo.ui.activity.base.BaseActivity
+import com.example.papakarlo.view_model.ProductViewModel
 
-class ProductActivity : BaseActivity() {
+class ProductActivity : BaseActivity<ActivityProductBinding>() {
 
+    override val dataBindingVariable: Int = BR.viewModel
+    override val layoutId: Int = R.layout.activity_product
+    override val viewModel: ProductViewModel by viewModels { modelFactory }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product)
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
     }
-
-
-
 
 }

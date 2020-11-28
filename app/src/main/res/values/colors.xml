@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#1A66E6</color>
+    <color name="colorPrimaryDark">#1552BC</color>
+    <color name="mainGrey">#03DAC5</color>
+    <color name="red">#B1021D</color>
+    <color name="yellow">#D79100</color>
+    <color name="orange">#E63C22</color>
+    <color name="green">#80B302</color>
+    <color name="black" tools:override="true">#000000</color>
+    <color name="white" tools:override="true">#FFFFFF</color>
+    <color name="white80">#CCFFFFFF</color>
+    <color name="white50">#80FFFFFF</color>
+    <color name="grey">#93969A</color>
+    <color name="darkGrey">#93969a</color>
+
+    <!-- BACKGROUND -->
+    <color name="backgroundPage">#F8F7F8</color>
+    <color name="backgroundComponent">#F3F2F3</color>
+    <color name="cardViewBackground">#FFFFFF</color>
+    <color name="fragmentBackground">#FFFFFF</color>
+    <color name="dialogBackground">#FFFFFF</color>
+    <color name="tabLayoutBackground">#FFFFFF</color>
+    <color name="actionChipBackground">#F3F2F3</color>
+    <color name="backgroundRed">#FF8572</color>
+    <color name="backgroundYellow">#FFD57C</color>
+
+    <!-- TEXT -->
+    <color name="mainTextColor" >#000000</color>
+    <color name="buttonTextColor" >#FFFFFF</color>
+    <color name="hintColor" >#93969A</color>
+    <color name="iconTintColor" >#93969A</color>
 </resources>
