@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.papakarlo">
+    package="com.bun_beauty.papakarlo">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         tools:replace="android:icon"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProductActivity">
+        <activity android:name="com.bun_beauty.papakarlo.ProductActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

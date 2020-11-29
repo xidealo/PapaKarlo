@@ -34,7 +34,6 @@ android {
         dataBinding true
         viewBinding true
     }
-
     flavorDimensions "api"
 
     productFlavors {

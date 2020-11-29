@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">PapaKarlo</string>
+    <!--
+    title — заголовки;
+    hint — подсказки в edittext;
+    msg — сообщения или обычные текста на экранах;
+    error — сообщения об ошибках;
+    action — кнопки или какие-то действия.
+    description — описание для iv
+    title_registration_pass
+    -->
+
+    <!-- PRODUCT -->
+    <string name="action_product_want">Want!</string>
+    <string name="hint_product_title">Title</string>
+    <string name="hint_product_cost">Cost</string>
+    <string name="hint_product_gram">Gram</string>
+    <string name="hint_product_description">Description</string>
+
 </resources>
