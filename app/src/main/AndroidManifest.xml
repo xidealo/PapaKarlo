@@ -9,9 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:icon"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.bun_beauty.papakarlo.ProductActivity">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
+        <activity android:name=".ui.activity.ConsumerCartActivity"/>
+        <activity android:name=".ui.activity.ProductMenuActivity" />
+        <activity android:name=".ui.activity.ProductActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

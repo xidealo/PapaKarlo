@@ -1,6 +1,8 @@
-package com.bun_beauty.papakarlo
+package com.bun_beauty.papakarlo.ui.activity
 
 import androidx.activity.viewModels
+import com.bun_beauty.papakarlo.BR
+import com.bun_beauty.papakarlo.R
 import com.bun_beauty.papakarlo.databinding.ActivityProductBinding
 import com.bun_beauty.papakarlo.di.components.ViewModelComponent
 import com.bun_beauty.papakarlo.ui.activity.base.BaseActivity
@@ -15,5 +17,4 @@ class ProductActivity : BaseActivity<ActivityProductBinding>() {
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
-
 }

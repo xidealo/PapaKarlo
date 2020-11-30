@@ -1,4 +1,4 @@
-package com.bun_beauty.papakarlo.model.entity
+package com.bun_beauty.papakarlo.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,12 +8,13 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity
 data class Product(
-    @PrimaryKey
-    var id: String = "",
+    @PrimaryKey(autoGenerate = true)
+    override var id: Long = 0,
+    override var uuid: String = "",
     var name: String = "",
     var cost: Long = 0,
     var gram: Int = 0,
     var description: String = "",
     var photoLink: String = ""
-):Parcelable {
+) : BaseModel(), Parcelable {
 }
