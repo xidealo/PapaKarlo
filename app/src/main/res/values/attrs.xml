@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressButton">
+        <attr name="android:text" />
+        <attr name="android:enabled" />
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+        <attr name="android:fontFamily" />
+        <attr name="android:textAllCaps" />
+        <attr name="android:layout_marginStart" />
+        <attr name="android:layout_marginEnd" />
+        <attr name="android:layout_marginTop" />
+        <attr name="android:layout_marginBottom" />
+        <attr name="android:backgroundTint" />
+        <attr name="cornerRadius" />
+    </declare-styleable>
+    <declare-styleable name="TimeSeekBar">
+        <attr name="timeText" format="string" />
+        <attr name="labelText" format="string" />
+    </declare-styleable>
+</resources>

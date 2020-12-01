@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="product"
+            type="com.bunbeauty.papakarlo.data.model.Product" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/element_product_iv_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/element_product_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.name}"
+                app:layout_constraintStart_toEndOf="@id/element_product_iv_photo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/element_product_tv_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{product.cost}"
+                app:layout_constraintStart_toEndOf="@id/element_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@+id/element_product_tv_title" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/element_product_btn_want"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Want!"
+                app:layout_constraintStart_toEndOf="@id/element_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@+id/element_product_tv_cost" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

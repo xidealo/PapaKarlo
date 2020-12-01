@@ -16,5 +16,7 @@
     <string name="hint_product_cost">Cost</string>
     <string name="hint_product_gram">Gram</string>
     <string name="hint_product_description">Description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
