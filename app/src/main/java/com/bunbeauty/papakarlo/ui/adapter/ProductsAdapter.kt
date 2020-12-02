@@ -8,10 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.Product
 import com.bunbeauty.papakarlo.databinding.ElementProductBinding
+import com.bunbeauty.papakarlo.ui.ProductFragment
+import com.bunbeauty.papakarlo.ui.ProductMenuActivity
+import com.bunbeauty.papakarlo.ui.ProductsFragment
 import javax.inject.Inject
 
 class ProductsAdapter @Inject constructor(private val context: Context) :
     BaseAdapter<ProductsAdapter.ProductViewHolder, Product>() {
+
+    lateinit var productsFragment: ProductsFragment
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -30,9 +35,14 @@ class ProductsAdapter @Inject constructor(private val context: Context) :
         val binding = DataBindingUtil.bind<ElementProductBinding>(view)
 
         fun setListener(product: Product) {
-            /*binding?.elementDvirBtnDelete?.setOnClickListener {
-                dvirViewModel.deleteDvir(token, dvirWithVehicle)
-            }*/
+            binding?.elementProductMcvMain?.setOnClickListener {
+                productsFragment.parentFragmentManager.beginTransaction()
+                    .replace(
+                        (productsFragment.activity as ProductMenuActivity).viewDataBinding.activityProductMenuClMain.id,
+                        ProductFragment.newInstance(product)
+                    )
+                    .addToBackStack(ProductFragment.TAG).commit()
+            }
         }
     }
 }

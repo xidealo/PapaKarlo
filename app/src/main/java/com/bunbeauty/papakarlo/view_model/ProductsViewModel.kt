@@ -10,20 +10,21 @@ import javax.inject.Inject
 class ProductsViewModel @Inject constructor() : BaseViewModel() {
 
     val productsField = ObservableField<List<Product>?>()
-    val isLoading = ObservableField(true)
 
     val errorMessage: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
-    var productList = mutableListOf<Product>()
-
-    fun getProducts(productCode: ProductCode) {
-        productsField.set(
-            listOf(
-                Product(name = "Pizza", productCode = ProductCode.Pizza),
-                Product(name = "Hamburger", productCode = ProductCode.Hamburger),
+    fun filterProducts(productCode: ProductCode, products: ArrayList<Product>) {
+        if (productCode == ProductCode.All) {
+            productsField.set(
+                products
             )
+            return
+        }
+
+        productsField.set(
+            products.filter { it.productCode == productCode }
         )
     }
 

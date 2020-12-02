@@ -3,7 +3,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ProductActivity">
+    xmlns:bind="http://schemas.android.com/tools"
+    tools:context=".ui.ProductFragment">
 
     <data>
 
@@ -12,16 +13,22 @@
         <variable
             name="viewModel"
             type="com.bunbeauty.papakarlo.view_model.ProductViewModel" />
+
+        <variable
+            name="product"
+            type="com.bunbeauty.papakarlo.data.model.Product" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/activity_product_iv_photo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            bind:image="@{product.photoLink}"
             app:layout_constraintBottom_toTopOf="@id/line_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +44,7 @@
             android:id="@+id/activity_product_btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/action_product_want"
+            android:text="@string/action_product_want"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo" />
 
@@ -46,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_product_title"
+            android:text="@{product.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_btn_add" />
 
@@ -54,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_product_cost"
+            android:text="@{product.cost}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_tv_title" />
 
@@ -62,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_product_gram"
+            android:text="@{product.gram}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_tv_cost" />
 
@@ -70,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_product_description"
+            android:text="@{product.description}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_tv_gram" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,8 @@ data class Product(
     var productCode: ProductCode = ProductCode.All
 ) : BaseModel(), Parcelable {
     companion object {
-        const val PRODUCT_CODE: String = "Product code"
+        const val PRODUCT_CODE: String = "product code"
+        const val PRODUCTS: String = "products"
+        const val PRODUCT: String = "product"
     }
 }

@@ -21,6 +21,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override var viewModelClass = ProductsViewModel::class.java
 
     private lateinit var productCode: ProductCode
+    private lateinit var products: ArrayList<Product>
 
     @Inject
     lateinit var productsAdapter: ProductsAdapter
@@ -36,26 +37,29 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         super.onCreate(savedInstanceState)
         arguments?.let {
             productCode = it.getParcelable(Product.PRODUCT_CODE)!!
+            products = it.getParcelableArrayList(Product.PRODUCTS)!!
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewModel.getProducts(productCode)
+        viewModel.filterProducts(productCode, products)
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setupRecyclerView() {
+        productsAdapter.productsFragment = this
         viewDataBinding.fragmentProductsRvResult.adapter = productsAdapter
         viewDataBinding.fragmentProductsRvResult.layoutManager = linearLayoutManager
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(productCode: ProductCode) =
+        fun newInstance(productCode: ProductCode, products: ArrayList<Product>) =
             ProductsFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(Product.PRODUCT_CODE, productCode)
+                    putParcelableArrayList(Product.PRODUCTS, products)
                 }
             }
     }

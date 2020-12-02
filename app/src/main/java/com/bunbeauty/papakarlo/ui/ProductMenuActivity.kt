@@ -24,31 +24,37 @@ class ProductMenuActivity : BaseActivity<ActivityProductMenuBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLiveDataProducts()
+        viewModel.getProducts()
+    }
 
-        viewDataBinding.activityMainVp.adapter = ProductsPagerAdapter(
-            listOf(
-                ProductsFragment.newInstance(ProductCode.All),
-                ProductsFragment.newInstance(ProductCode.Pizza),
-                ProductsFragment.newInstance(ProductCode.Hamburger),
-                ProductsFragment.newInstance(ProductCode.Potato),
-                ProductsFragment.newInstance(ProductCode.OnCoals),
-            ),
-            this
-        )
+    private fun setLiveDataProducts(){
+        viewModel.productsLiveData.observe(this){
+            viewDataBinding.activityMainVp.adapter = ProductsPagerAdapter(
+                listOf(
+                    ProductsFragment.newInstance(ProductCode.All, it),
+                    ProductsFragment.newInstance(ProductCode.Pizza, it),
+                    ProductsFragment.newInstance(ProductCode.Hamburger, it),
+                    ProductsFragment.newInstance(ProductCode.Potato, it),
+                    ProductsFragment.newInstance(ProductCode.OnCoals, it),
+                ),
+                this
+            )
 
-        val tabNameList = arrayListOf(
-            ProductCode.All.name,
-            ProductCode.Pizza.name,
-            ProductCode.Hamburger.name,
-            ProductCode.Potato.name,
-            ProductCode.OnCoals.name
-        )
+            val tabNameList = arrayListOf(
+                ProductCode.All.name,
+                ProductCode.Pizza.name,
+                ProductCode.Hamburger.name,
+                ProductCode.Potato.name,
+                ProductCode.OnCoals.name
+            )
 
-        TabLayoutMediator(
-            viewDataBinding.activityMainTl,
-            viewDataBinding.activityMainVp
-        ) { tab, i ->
-            tab.text = tabNameList[i]
-        }.attach()
+            TabLayoutMediator(
+                viewDataBinding.activityMainTl,
+                viewDataBinding.activityMainVp
+            ) { tab, i ->
+                tab.text = tabNameList[i]
+            }.attach()
+        }
     }
 }

@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bunbeauty.papakarlo.ui.ProductActivity" />
+        <activity android:name="com.bunbeauty.papakarlo.ui.ProductFragment" />
     </application>
 
 </manifest>
