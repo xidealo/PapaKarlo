@@ -3,10 +3,7 @@ package com.bunbeauty.papakarlo.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
-import com.bunbeauty.papakarlo.view_model.MainViewModel
-import com.bunbeauty.papakarlo.view_model.MenuViewModel
-import com.bunbeauty.papakarlo.view_model.ProductViewModel
-import com.bunbeauty.papakarlo.view_model.ProductsViewModel
+import com.bunbeauty.papakarlo.view_model.*
 import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -37,4 +34,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MenuViewModel::class)
     internal abstract fun provideMenuViewModel(menuViewModel: MenuViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConsumerCartViewModel::class)
+    internal abstract fun provideConsumerCartViewModel(consumerCartViewModel: ConsumerCartViewModel): ViewModel
 }

@@ -9,9 +9,11 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
+import java.lang.ref.WeakReference
 
-class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>() {
+class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_product
@@ -32,7 +34,16 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.product = product
+        viewModel.productNavigator = WeakReference(this)
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun addWishProduct(product: Product) {
+        (activity as MainActivity).viewModel.wishProductList.add(product)
+        (activity as MainActivity).showMessage(
+            "Вы добавили ${product.name} в корзину",
+            viewDataBinding.fragmentProductClMain
+        )
     }
 
     companion object {

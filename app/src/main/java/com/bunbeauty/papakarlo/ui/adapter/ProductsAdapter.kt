@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.Product
 import com.bunbeauty.papakarlo.databinding.ElementProductBinding
 import com.bunbeauty.papakarlo.ui.ProductFragment
-import com.bunbeauty.papakarlo.ui.MainActivity
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.ProductsFragment
 import javax.inject.Inject
 
@@ -41,7 +41,15 @@ class ProductsAdapter @Inject constructor(private val context: Context) :
                         (productsFragment.activity as MainActivity).viewDataBinding.activityProductMenuFlMain.id,
                         ProductFragment.newInstance(product)
                     )
-                    .addToBackStack(ProductFragment.TAG).commit()
+                    .addToBackStack(ProductFragment.TAG)
+                    .commit()
+            }
+            binding?.elementProductBtnWant?.setOnClickListener {
+                (productsFragment.activity as MainActivity).viewModel.wishProductList.add(product)
+                (productsFragment.activity as MainActivity).showMessage(
+                    "Вы добавили ${product.name} в корзину",
+                    productsFragment.viewDataBinding.fragmentProductsClMain
+                )
             }
         }
     }

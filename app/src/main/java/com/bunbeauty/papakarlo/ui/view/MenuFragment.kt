@@ -66,6 +66,8 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
     }
 
     companion object {
+        const val TAG = "MenuFragment"
+
         @JvmStatic
         fun newInstance(products: ArrayList<Product>) =
             MenuFragment().apply {

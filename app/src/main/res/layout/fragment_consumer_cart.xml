@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.ConsumerCartFragment">
 
     <data>
 
@@ -11,30 +11,27 @@
 
         <variable
             name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.MainViewModel" />
+            type="com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_product_menu_fl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/activity_main_pb_loading"
+        <TextView
+            android:id="@+id/fragment_consumer_cart_tv_product_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            bind:isLoading="@{viewModel.isLoading}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <TextView
+            android:id="@+id/fragment_consumer_cart_tv_common_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart"
-            android:onClick="@{()->viewModel.goToConsumerCartClick()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_product_count" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

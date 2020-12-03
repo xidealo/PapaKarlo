@@ -12,8 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name="com.bunbeauty.papakarlo.ui.ConsumerCartActivity" />
-        <activity android:name="com.bunbeauty.papakarlo.ui.MainActivity">
+        <activity android:name="com.bunbeauty.papakarlo.ui.ConsumerCartFragment" />
+        <activity android:name="com.bunbeauty.papakarlo.ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
