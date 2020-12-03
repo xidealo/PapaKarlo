@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.Product
 import com.bunbeauty.papakarlo.databinding.ElementProductBinding
 import com.bunbeauty.papakarlo.ui.ProductFragment
-import com.bunbeauty.papakarlo.ui.ProductMenuActivity
+import com.bunbeauty.papakarlo.ui.MainActivity
 import com.bunbeauty.papakarlo.ui.ProductsFragment
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class ProductsAdapter @Inject constructor(private val context: Context) :
             binding?.elementProductMcvMain?.setOnClickListener {
                 productsFragment.parentFragmentManager.beginTransaction()
                     .replace(
-                        (productsFragment.activity as ProductMenuActivity).viewDataBinding.activityProductMenuClMain.id,
+                        (productsFragment.activity as MainActivity).viewDataBinding.activityProductMenuFlMain.id,
                         ProductFragment.newInstance(product)
                     )
                     .addToBackStack(ProductFragment.TAG).commit()

@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name="com.bunbeauty.papakarlo.ui.ConsumerCartActivity" />
-        <activity android:name="com.bunbeauty.papakarlo.ui.ProductMenuActivity">
+        <activity android:name="com.bunbeauty.papakarlo.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

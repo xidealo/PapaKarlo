@@ -3,7 +3,8 @@ package com.bunbeauty.papakarlo.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
-import com.bunbeauty.papakarlo.view_model.ProductMenuViewModel
+import com.bunbeauty.papakarlo.view_model.MainViewModel
+import com.bunbeauty.papakarlo.view_model.MenuViewModel
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
@@ -29,7 +30,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProductMenuViewModel::class)
-    internal abstract fun provideProductMenuViewModel(productMenuViewModel: ProductMenuViewModel): ViewModel
+    @ViewModelKey(MainViewModel::class)
+    internal abstract fun provideMainViewModel(mainViewModel: MainViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(MenuViewModel::class)
+    internal abstract fun provideMenuViewModel(menuViewModel: MenuViewModel): ViewModel
 }
