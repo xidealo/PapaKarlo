@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragment
@@ -39,11 +39,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator {
         viewModel.getProducts()
     }
 
-    override fun goToConsumerCart(wishProductList: ArrayList<Product>) {
+    override fun goToConsumerCart(wishMenuProductList: ArrayList<MenuProduct>) {
         supportFragmentManager.beginTransaction()
             .replace(
                 viewDataBinding.activityProductMenuFlMain.id,
-                ConsumerCartFragment.newInstance(wishProductList),
+                ConsumerCartFragment.newInstance(wishMenuProductList),
                 ConsumerCartFragment.TAG
             )
             .addToBackStack(ConsumerCartFragment.TAG)

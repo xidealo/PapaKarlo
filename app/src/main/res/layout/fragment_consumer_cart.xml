@@ -2,8 +2,8 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.ConsumerCartFragment">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.ConsumerCartFragment">
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_product_count"
@@ -33,5 +34,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_product_count" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_consumer_cart_rv_result"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_consumer_cart_tv_common_price"
+            bind:items="@{viewModel.cartProductsField}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

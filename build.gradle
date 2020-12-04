@@ -46,7 +46,7 @@ ext {
     convertorScalarsVersion = "2.0.1"
     mPAndroidChartVersion = "v3.1.0"
     roomDatabaseVersion = "2.2.5"
-    datastoreVersion = "1.0.0-alpha04"
+    datastoreVersion = "1.0.0-alpha05"
     lifecycleVersion = "2.2.0"
     activityVersion = "1.1.0"
     fragmentVersion = "1.2.5"

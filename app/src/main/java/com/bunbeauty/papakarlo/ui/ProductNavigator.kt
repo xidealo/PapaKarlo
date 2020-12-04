@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.ui
 
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 
 interface ProductNavigator {
-    fun addWishProduct(product: Product)
+    fun addWishProduct(menuProduct: MenuProduct)
 }

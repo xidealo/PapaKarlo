@@ -5,11 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
-import com.bunbeauty.papakarlo.ui.adapter.ProductsAdapter
+import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import javax.inject.Inject
@@ -21,10 +21,10 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override var viewModelClass = ProductsViewModel::class.java
 
     private lateinit var productCode: ProductCode
-    private lateinit var products: ArrayList<Product>
+    private lateinit var menuProducts: ArrayList<MenuProduct>
 
     @Inject
-    lateinit var productsAdapter: ProductsAdapter
+    lateinit var menuProductsAdapter: MenuProductsAdapter
 
     @Inject
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -36,30 +36,30 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            productCode = it.getParcelable(Product.PRODUCT_CODE)!!
-            products = it.getParcelableArrayList(Product.PRODUCTS)!!
+            productCode = it.getParcelable(MenuProduct.PRODUCT_CODE)!!
+            menuProducts = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewModel.filterProducts(productCode, products)
+        viewModel.filterProducts(productCode, menuProducts)
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setupRecyclerView() {
-        productsAdapter.productsFragment = this
-        viewDataBinding.fragmentProductsRvResult.adapter = productsAdapter
+        menuProductsAdapter.productsFragment = this
+        viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
         viewDataBinding.fragmentProductsRvResult.layoutManager = linearLayoutManager
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(productCode: ProductCode, products: ArrayList<Product>) =
+        fun newInstance(productCode: ProductCode, menuProducts: ArrayList<MenuProduct>) =
             ProductsFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(Product.PRODUCT_CODE, productCode)
-                    putParcelableArrayList(Product.PRODUCTS, products)
+                    putParcelable(MenuProduct.PRODUCT_CODE, productCode)
+                    putParcelableArrayList(MenuProduct.PRODUCTS, menuProducts)
                 }
             }
     }

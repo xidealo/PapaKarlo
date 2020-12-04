@@ -1,12 +1,10 @@
 package com.bunbeauty.papakarlo.ui.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
@@ -26,23 +24,23 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         viewModelComponent.inject(this)
     }
 
-    lateinit var products: ArrayList<Product>
+    lateinit var menuProducts: ArrayList<MenuProduct>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            products = it.getParcelableArrayList(Product.PRODUCTS)!!
+            menuProducts = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             listOf(
-                ProductsFragment.newInstance(ProductCode.All, products),
-                ProductsFragment.newInstance(ProductCode.Pizza, products),
-                ProductsFragment.newInstance(ProductCode.Hamburger, products),
-                ProductsFragment.newInstance(ProductCode.Potato, products),
-                ProductsFragment.newInstance(ProductCode.OnCoals, products),
+                ProductsFragment.newInstance(ProductCode.All, menuProducts),
+                ProductsFragment.newInstance(ProductCode.Pizza, menuProducts),
+                ProductsFragment.newInstance(ProductCode.Hamburger, menuProducts),
+                ProductsFragment.newInstance(ProductCode.Potato, menuProducts),
+                ProductsFragment.newInstance(ProductCode.OnCoals, menuProducts),
             ),
             requireActivity()
         )
@@ -69,10 +67,10 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         const val TAG = "MenuFragment"
 
         @JvmStatic
-        fun newInstance(products: ArrayList<Product>) =
+        fun newInstance(menuProducts: ArrayList<MenuProduct>) =
             MenuFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelableArrayList(Product.PRODUCTS, products)
+                    putParcelableArrayList(MenuProduct.PRODUCTS, menuProducts)
                 }
             }
     }

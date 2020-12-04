@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class Product(
+data class MenuProduct(
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",

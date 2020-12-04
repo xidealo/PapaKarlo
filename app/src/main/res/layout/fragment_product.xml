@@ -15,7 +15,7 @@
 
         <variable
             name="product"
-            type="com.bunbeauty.papakarlo.data.model.Product" />
+            type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,8 +44,8 @@
             android:id="@+id/activity_product_btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_product_want"
             android:onClick="@{()->viewModel.addWishProductClick(product)}"
+            android:text="@string/action_product_want"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo" />
 

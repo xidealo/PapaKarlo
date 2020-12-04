@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -15,19 +15,19 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     lateinit var mainNavigator: WeakReference<MainNavigator>
 
-    val productsLiveData: MutableLiveData<ArrayList<Product>> by lazy {
-        MutableLiveData<ArrayList<Product>>()
+    val productsLiveData: MutableLiveData<ArrayList<MenuProduct>> by lazy {
+        MutableLiveData<ArrayList<MenuProduct>>()
     }
     val isLoading = ObservableField(true)
 
     var productList = arrayListOf(
-        Product(name = "Pizza", productCode = ProductCode.Pizza, cost = 10),
-        Product(name = "Pizza 312", productCode = ProductCode.Pizza, cost = 23),
-        Product(name = "Hamburger", productCode = ProductCode.Hamburger, cost = 11),
-        Product(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
+        MenuProduct(name = "Pizza", productCode = ProductCode.Pizza, cost = 10),
+        MenuProduct(name = "Pizza 312", productCode = ProductCode.Pizza, cost = 23),
+        MenuProduct(name = "Hamburger", productCode = ProductCode.Hamburger, cost = 11),
+        MenuProduct(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
     )
 
-    var wishProductList = arrayListOf<Product>()
+    var wishProductList = arrayListOf<MenuProduct>()
 
     fun getProducts() {
         viewModelScope.launch {

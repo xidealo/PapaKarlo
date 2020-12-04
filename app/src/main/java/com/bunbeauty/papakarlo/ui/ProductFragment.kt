@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Product
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
@@ -19,7 +18,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
     override var layoutId: Int = R.layout.fragment_product
     override var viewModelClass = ProductViewModel::class.java
 
-    lateinit var product: Product
+    lateinit var menuProduct: MenuProduct
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -28,20 +27,20 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            product = it.getParcelable(Product.PRODUCT)!!
+            menuProduct = it.getParcelable(MenuProduct.PRODUCT)!!
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewDataBinding.product = product
+        viewDataBinding.product = menuProduct
         viewModel.productNavigator = WeakReference(this)
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun addWishProduct(product: Product) {
-        (activity as MainActivity).viewModel.wishProductList.add(product)
+    override fun addWishProduct(menuProduct: MenuProduct) {
+        (activity as MainActivity).viewModel.wishProductList.add(menuProduct)
         (activity as MainActivity).showMessage(
-            "Вы добавили ${product.name} в корзину",
+            "Вы добавили ${menuProduct.name} в корзину",
             viewDataBinding.fragmentProductClMain
         )
     }
@@ -50,10 +49,10 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
         const val TAG = "ProductFragment"
 
         @JvmStatic
-        fun newInstance(product: Product) =
+        fun newInstance(menuProduct: MenuProduct) =
             ProductFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(Product.PRODUCT, product)
+                    putParcelable(MenuProduct.PRODUCT, menuProduct)
                 }
             }
     }
