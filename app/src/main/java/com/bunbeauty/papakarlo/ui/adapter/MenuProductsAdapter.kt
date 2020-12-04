@@ -45,9 +45,7 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
                     .commit()
             }
             binding?.elementMenuProductBtnWant?.setOnClickListener {
-                (productsFragment.activity as MainActivity).viewModel.wishProductList.add(
-                    menuProduct
-                )
+                (productsFragment.activity as MainActivity).viewModel.addCartProduct(menuProduct)
                 (productsFragment.activity as MainActivity).showMessage(
                     "Вы добавили ${menuProduct.name} в корзину",
                     productsFragment.viewDataBinding.fragmentProductsClMain

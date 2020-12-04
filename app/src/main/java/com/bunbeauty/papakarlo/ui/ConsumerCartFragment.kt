@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -20,7 +21,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
 
-    lateinit var wishMenuProductList: ArrayList<MenuProduct>
+    lateinit var cartMenuProductList: ArrayList<CartProduct>
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -35,18 +36,18 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            wishMenuProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
+            cartMenuProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-
         viewDataBinding.fragmentConsumerCartTvProductCount.text =
-            wishMenuProductList.size.toString()
+            cartMenuProductList.sumBy { it.count }.toString()
         viewDataBinding.fragmentConsumerCartTvCommonPrice.text =
-            wishMenuProductList.sumBy { it.cost }.toString()
-        viewModel.setCartProducts(wishMenuProductList)
+            cartMenuProductList.sumBy { it.fullPrice }.toString()
+
+        viewModel.setCartProducts(cartMenuProductList)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -59,10 +60,10 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         const val TAG = "ConsumerCartFragment"
 
         @JvmStatic
-        fun newInstance(wishMenuProductList: ArrayList<MenuProduct>) =
+        fun newInstance(wishMenuProductList: Set<CartProduct>) =
             ConsumerCartFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelableArrayList(MenuProduct.PRODUCTS, wishMenuProductList)
+                    putParcelableArrayList(MenuProduct.PRODUCTS, ArrayList(wishMenuProductList))
                 }
             }
     }

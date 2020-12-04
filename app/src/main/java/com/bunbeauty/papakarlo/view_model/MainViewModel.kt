@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
@@ -27,7 +28,23 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         MenuProduct(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
     )
 
-    var wishProductList = arrayListOf<MenuProduct>()
+    var cartProductList = mutableSetOf<CartProduct>()
+
+    fun addCartProduct(menuProduct: MenuProduct) {
+        val foundCartProduct = cartProductList.find { it.menuProduct.name == menuProduct.name }
+        if (foundCartProduct != null) {
+            foundCartProduct.count++
+            foundCartProduct.fullPrice += menuProduct.cost
+        } else {
+            cartProductList.add(
+                CartProduct(
+                    menuProduct = menuProduct,
+                    count = 1,
+                    fullPrice = menuProduct.cost
+                )
+            )
+        }
+    }
 
     fun getProducts() {
         viewModelScope.launch {
@@ -37,6 +54,6 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     }
 
     fun goToConsumerCartClick() {
-        mainNavigator.get()?.goToConsumerCart(wishProductList)
+        mainNavigator.get()?.goToConsumerCart(cartProductList)
     }
 }

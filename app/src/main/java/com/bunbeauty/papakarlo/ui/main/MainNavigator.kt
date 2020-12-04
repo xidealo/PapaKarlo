@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.ui.main
 
-import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.data.model.CartProduct
 
 interface MainNavigator {
-    fun goToConsumerCart(wishMenuProductList: ArrayList<MenuProduct>)
+    fun goToConsumerCart(wishMenuProductList: Set<CartProduct>)
 }

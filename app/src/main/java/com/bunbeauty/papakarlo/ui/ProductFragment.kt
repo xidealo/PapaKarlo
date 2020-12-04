@@ -38,7 +38,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
     }
 
     override fun addWishProduct(menuProduct: MenuProduct) {
-        (activity as MainActivity).viewModel.wishProductList.add(menuProduct)
+        (activity as MainActivity).viewModel.addCartProduct(menuProduct)
         (activity as MainActivity).showMessage(
             "Вы добавили ${menuProduct.name} в корзину",
             viewDataBinding.fragmentProductClMain
