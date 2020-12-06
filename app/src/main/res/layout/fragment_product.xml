@@ -20,8 +20,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        style="@style/DefaultPage"
         tools:context=".ui.ProductFragment">
 
         <ImageView
@@ -29,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/line_1"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:image="@{product.photoLink}" />
@@ -40,49 +40,51 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
 
+        <LinearLayout
+            android:id="@+id/activity_product_ll_description"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="@dimen/default_padding"
+            app:layout_constraintBottom_toTopOf="@id/activity_product_btn_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo">
+
+            <TextView
+                android:id="@+id/activity_product_tv_title"
+                style="@style/TitleFragmentProduct"
+                android:text="@{product.name}" />
+
+            <TextView
+                android:id="@+id/activity_product_tv_cost"
+                style="@style/CostFragmentProduct"
+                android:text="@{product.getStringCost()}" />
+
+            <TextView
+                android:id="@+id/activity_product_tv_gram"
+                style="@style/GramFragmentProduct"
+                android:text="@{product.getStringGram()}" />
+
+            <TextView
+                android:id="@+id/activity_product_tv_description"
+                style="@style/DescriptionFragmentProduct"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@{product.description}" />
+        </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_product_btn_add"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:onClick="@{()->viewModel.addWishProductClick(product)}"
             android:text="@string/action_product_want"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo" />
+            app:cornerRadius="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/activity_product_tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_product_title"
-            android:text="@{product.name}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_btn_add" />
-
-        <TextView
-            android:id="@+id/activity_product_tv_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_product_cost"
-            android:text="@{product.cost}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_tv_title" />
-
-        <TextView
-            android:id="@+id/activity_product_tv_gram"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_product_gram"
-            android:text="@{product.gram}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_tv_cost" />
-
-        <TextView
-            android:id="@+id/activity_product_tv_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_product_description"
-            android:text="@{product.description}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_tv_gram" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,8 +3,55 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/mainGrey</item>
+        <item name="colorAccent">@color/hintColor</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="DefaultPage">
+        <item name="background">@color/backgroundPage</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="DefaultMaterialCard">
+        <item name="background">@color/cardViewBackground</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">1dp</item>
+    </style>
+
+
+    <!-- FRAGMENT_PRODUCT -->
+    <style name="TitleFragmentProduct">
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="CostFragmentProduct">
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="GramFragmentProduct">
+        <item name="android:textSize">@dimen/default_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_light</item>
+    </style>
+
+    <style name="DescriptionFragmentProduct">
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
 </resources>

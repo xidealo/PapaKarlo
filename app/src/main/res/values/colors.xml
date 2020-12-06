@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary">#1A66E6</color>
-    <color name="colorPrimaryDark">#1552BC</color>
-    <color name="mainGrey">#03DAC5</color>
-    <color name="red">#B1021D</color>
-    <color name="yellow">#D79100</color>
-    <color name="orange">#E63C22</color>
-    <color name="green">#80B302</color>
+    <color name="colorPrimary">#ff6900</color>
+    <color name="colorPrimaryDark">#A64500</color>
+    <color name="errorColor">#B1021D</color>
+
     <color name="black" tools:override="true">#000000</color>
     <color name="white" tools:override="true">#FFFFFF</color>
-    <color name="white80">#CCFFFFFF</color>
-    <color name="white50">#80FFFFFF</color>
     <color name="grey">#93969A</color>
-    <color name="darkGrey">#93969a</color>
 
     <!-- BACKGROUND -->
-    <color name="backgroundPage">#F8F7F8</color>
-    <color name="backgroundComponent">#F3F2F3</color>
-    <color name="cardViewBackground">#FFFFFF</color>
-    <color name="fragmentBackground">#FFFFFF</color>
-    <color name="dialogBackground">#FFFFFF</color>
-    <color name="tabLayoutBackground">#FFFFFF</color>
+    <color name="backgroundPage">#242526</color>
+    <color name="backgroundComponent">#3C3D40</color>
+    <color name="cardViewBackground">#2B2C2E</color>
+    <color name="fragmentBackground">#2B2C2E</color>
+    <color name="dialogBackground">#2B2C2E</color>
+    <color name="tabLayoutBackground">#2B2C2E</color>
     <color name="actionChipBackground">#F3F2F3</color>
-    <color name="backgroundRed">#FF8572</color>
-    <color name="backgroundYellow">#FFD57C</color>
+    <color name="backgroundRed">#47140D</color>
+    <color name="backgroundYellow">#614201</color>
 
     <!-- TEXT -->
-    <color name="mainTextColor" >#000000</color>
+    <color name="mainTextColor" tools:override="true">#FFFFFF</color>
     <color name="buttonTextColor" >#FFFFFF</color>
-    <color name="hintColor" >#93969A</color>
-    <color name="iconTintColor" >#93969A</color>
+    <color name="hintColor" tools:override="true">#93969A</color>
+    <color name="iconTintColor" tools:override="true">#93969A</color>
 </resources>

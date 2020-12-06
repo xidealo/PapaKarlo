@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bunbeauty.papakarlo.enums.ProductCode
 import kotlinx.parcelize.Parcelize
+import kotlin.math.cos
 
 @Parcelize
 @Entity
@@ -19,6 +20,10 @@ data class MenuProduct(
     var photoLink: String = "",
     var productCode: ProductCode = ProductCode.All
 ) : BaseModel(), Parcelable {
+
+    fun getStringCost() = "$cost ₽"
+    fun getStringGram() = "$gram г"
+
     companion object {
         const val PRODUCT_CODE: String = "product code"
         const val PRODUCTS: String = "products"

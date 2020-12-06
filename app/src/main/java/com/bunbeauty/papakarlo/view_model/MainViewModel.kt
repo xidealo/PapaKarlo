@@ -22,9 +22,26 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     val isLoading = ObservableField(true)
 
     var productList = arrayListOf(
-        MenuProduct(name = "Pizza", productCode = ProductCode.Pizza, cost = 10),
-        MenuProduct(name = "Pizza 312", productCode = ProductCode.Pizza, cost = 23),
-        MenuProduct(name = "Hamburger", productCode = ProductCode.Hamburger, cost = 11),
+        MenuProduct(
+            name = "Pizza",
+            productCode = ProductCode.Pizza,
+            cost = 10,
+            description = "Super pizza bly budu",
+            gram = 210,
+            photoLink = "https://www.delonghi.com/Global/recipes/multifry/3.jpg"
+        ),
+        MenuProduct(
+            name = "Pizza 312",
+            productCode = ProductCode.Pizza,
+            cost = 23,
+            photoLink = "https://papakarlokimry.ru/images/products/pizza/saliamy.jpg"
+        ),
+        MenuProduct(
+            name = "Hamburger",
+            productCode = ProductCode.Hamburger,
+            cost = 11,
+            photoLink = "https://mcdonalds.ru/resize/-x1020/upload/iblock/f90/0000_BigMac_BB_1500x1500_min.png"
+        ),
         MenuProduct(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
     )
 

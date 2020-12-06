@@ -11,12 +11,17 @@
     -->
 
     <!-- PRODUCT -->
-    <string name="action_product_want">Want!</string>
+    <string name="action_product_want">Хочу!</string>
     <string name="hint_product_title">Title</string>
     <string name="hint_product_cost">Cost</string>
     <string name="hint_product_gram">Gram</string>
     <string name="hint_product_description">Description</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- MENU -->
+    <string name="title_menu_all">Все</string>
+    <string name="title_menu_pizza">Пицца</string>
+    <string name="title_menu_hamburger">Гамбургеры</string>
+    <string name="title_menu_potato">Картошка</string>
+    <string name="title_menu_onCoals">На углях</string>
+    <string name="action_menu_want">Хочу!</string>
 </resources>

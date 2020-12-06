@@ -46,11 +46,11 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         )
 
         val tabNameList = arrayListOf(
-            ProductCode.All.name,
-            ProductCode.Pizza.name,
-            ProductCode.Hamburger.name,
-            ProductCode.Potato.name,
-            ProductCode.OnCoals.name
+            resources.getString(R.string.title_menu_all),
+            resources.getString(R.string.title_menu_pizza),
+            resources.getString(R.string.title_menu_hamburger),
+            resources.getString(R.string.title_menu_potato),
+            resources.getString(R.string.title_menu_onCoals)
         )
 
         TabLayoutMediator(

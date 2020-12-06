@@ -44,7 +44,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     fun showError(messageError: String, layout: View) {
         val snack = Snackbar.make(layout, messageError, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.red))
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.errorColor))
             .setTextColor(ContextCompat.getColor(this, R.color.white))
             .setActionTextColor(ContextCompat.getColor(this, R.color.white))
         snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =

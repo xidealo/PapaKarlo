@@ -37,11 +37,5 @@
             android:onClick="@{()->viewModel.goToConsumerCartClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
-
-        <com.bunbeauty.papakarlo.ui.view.CountPicker
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/activity_main_btn_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

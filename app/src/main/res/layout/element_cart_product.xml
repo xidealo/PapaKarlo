@@ -30,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/element_cart_product_iv_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_element_size"
+                android:layout_height="@dimen/image_element_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 bind:image="@{cartProduct.menuProduct.photoLink}" />
@@ -60,6 +60,12 @@
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@+id/element_cart_product_tv_full_price" />
 
+            <com.bunbeauty.papakarlo.ui.view.CountPicker
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
