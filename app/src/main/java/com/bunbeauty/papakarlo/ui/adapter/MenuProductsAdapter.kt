@@ -38,7 +38,7 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
             binding?.elementMenuProductMcvMain?.setOnClickListener {
                 productsFragment.parentFragmentManager.beginTransaction()
                     .replace(
-                        (productsFragment.activity as MainActivity).viewDataBinding.activityProductMenuFlMain.id,
+                        (productsFragment.activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
                         ProductFragment.newInstance(menuProduct)
                     )
                     .addToBackStack(ProductFragment.TAG)

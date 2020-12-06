@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.bunbeauty.papakarlo.view_model.MainViewModel" />
+    </data>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/part_top_bar_tb"
+        style="@style/TopBar"
+        app:title="@string/title_top_bar_title">
+
+        <TextView
+            android:id="@+id/part_top_bar_tv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:onClick="@{()->viewModel.goToConsumerCartClick()}"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="0"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/ic_shopping_cart" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+</layout>

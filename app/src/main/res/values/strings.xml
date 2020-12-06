@@ -24,4 +24,7 @@
     <string name="title_menu_potato">Картошка</string>
     <string name="title_menu_onCoals">На углях</string>
     <string name="action_menu_want">Хочу!</string>
+
+    <!-- TOP BAR -->
+    <string name="title_top_bar_title">Заголовок</string>
 </resources>
