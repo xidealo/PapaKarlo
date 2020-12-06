@@ -24,7 +24,7 @@ interface ITopBar {
             ContextCompat.getDrawable(context, R.drawable.ic_back)
     }
 
-    fun addToCart(context: Context, cost: Int) {
+/*    fun addToCart(context: Context, cost: Int) {
         topBarBinding.partTopBarTvCart.text =
             (topBarBinding.partTopBarTvCart.text.toString().toInt() + cost).toString()
     }
@@ -32,5 +32,5 @@ interface ITopBar {
     fun removeFromCart(context: Context, cost: Int) {
         topBarBinding.partTopBarTvCart.text =
             (topBarBinding.partTopBarTvCart.text.toString().toInt() - cost).toString()
-    }
+    }*/
 }

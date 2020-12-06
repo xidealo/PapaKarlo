@@ -55,5 +55,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator, ITopBar
             .commit()
     }
 
-
 }

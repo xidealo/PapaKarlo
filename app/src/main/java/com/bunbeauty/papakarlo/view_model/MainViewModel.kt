@@ -20,6 +20,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         MutableLiveData<ArrayList<MenuProduct>>()
     }
     val isLoading = ObservableField(true)
+    val fullPrice = ObservableField("0")
 
     var productList = arrayListOf(
         MenuProduct(
@@ -61,6 +62,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
                 )
             )
         }
+        fullPrice.set("${cartProductList.sumBy { it.fullPrice }} ₽")
     }
 
     fun getProducts() {

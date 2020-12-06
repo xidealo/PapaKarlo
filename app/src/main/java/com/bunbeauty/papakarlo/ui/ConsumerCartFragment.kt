@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import javax.inject.Inject
 
@@ -38,6 +39,11 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         arguments?.let {
             cartMenuProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity).setTitle("Корзина")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

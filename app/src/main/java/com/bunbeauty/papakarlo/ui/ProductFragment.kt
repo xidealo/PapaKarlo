@@ -31,6 +31,11 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity).setTitle("${menuProduct.name}")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.product = menuProduct
         viewModel.productNavigator = WeakReference(this)

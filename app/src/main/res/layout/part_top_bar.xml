@@ -23,8 +23,9 @@
             android:layout_gravity="end"
             android:onClick="@{()->viewModel.goToConsumerCartClick()}"
             android:layout_marginEnd="@dimen/default_margin"
-            android:text="0"
+            android:text="@{viewModel.fullPrice}"
             android:textColor="@color/white"
+            android:drawablePadding="@dimen/default_padding"
             app:drawableStartCompat="@drawable/ic_shopping_cart" />
 
     </com.google.android.material.appbar.MaterialToolbar>
