@@ -24,6 +24,7 @@
         tools:context=".ui.ProductFragment">
 
         <ImageView
+            android:layout_marginTop="@dimen/small_margin"
             android:id="@+id/activity_product_iv_photo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -51,10 +52,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo">
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/activity_product_tv_title"
                 style="@style/TitleFragmentProduct"
-                android:text="@{product.name}" />
+                android:text="@{product.name}" />-->
 
             <TextView
                 android:id="@+id/activity_product_tv_cost"

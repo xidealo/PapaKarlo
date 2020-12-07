@@ -22,7 +22,7 @@ data class MenuProduct(
 ) : BaseModel(), Parcelable {
 
     fun getStringCost() = "$cost ₽"
-    fun getStringGram() = "$gram г"
+    fun getStringGram() = "$gram г."
 
     companion object {
         const val PRODUCT_CODE: String = "product code"

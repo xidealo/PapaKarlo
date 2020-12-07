@@ -73,5 +73,52 @@
         <item name="android:layout_marginEnd">8dp</item>
     </style>
 
+    <!--PRODUCTS-->
+    <style name="TitleElementProduct">
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <style name="CostElementProduct">
+        <item name="android:textSize">@dimen/very_small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
+    <!--CONSUMER CART-->
+
+    <!--CART PRODUCT-->
+    <style name="TitleCartProduct">
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <style name="GramCartProduct">
+        <item name="android:textSize">@dimen/very_small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
+    <style name="FullPriceCartProduct">
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
 
 </resources>

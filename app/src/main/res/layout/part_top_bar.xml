@@ -23,7 +23,7 @@
             android:layout_gravity="end"
             android:onClick="@{()->viewModel.goToConsumerCartClick()}"
             android:layout_marginEnd="@dimen/default_margin"
-            android:text="@{viewModel.fullPrice}"
+            android:text="@{viewModel.cartField}"
             android:textColor="@color/white"
             android:drawablePadding="@dimen/default_padding"
             app:drawableStartCompat="@drawable/ic_shopping_cart" />

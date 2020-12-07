@@ -20,19 +20,19 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         MutableLiveData<ArrayList<MenuProduct>>()
     }
     val isLoading = ObservableField(true)
-    val fullPrice = ObservableField("0")
+    val cartField = ObservableField("0 ₽")
 
     var productList = arrayListOf(
         MenuProduct(
-            name = "Pizza",
+            name = "Пицца маргарита",
             productCode = ProductCode.Pizza,
             cost = 10,
-            description = "Super pizza bly budu",
+            description = "Много сыра не бывает",
             gram = 210,
             photoLink = "https://www.delonghi.com/Global/recipes/multifry/3.jpg"
         ),
         MenuProduct(
-            name = "Pizza 312",
+            name = "Пицца бекон",
             productCode = ProductCode.Pizza,
             cost = 23,
             photoLink = "https://papakarlokimry.ru/images/products/pizza/saliamy.jpg"
@@ -62,7 +62,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
                 )
             )
         }
-        fullPrice.set("${cartProductList.sumBy { it.fullPrice }} ₽")
+        cartField.set("${cartProductList.sumBy { it.fullPrice }} ₽\n${cartProductList.sumBy { it.count }} шт.")
     }
 
     fun getProducts() {

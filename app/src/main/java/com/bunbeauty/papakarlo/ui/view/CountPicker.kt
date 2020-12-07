@@ -61,7 +61,7 @@ class CountPicker @JvmOverloads constructor(
             z = 10f
         }
         button.text = text
-        button.backgroundTintList = ColorStateList.valueOf(buttonColor)
+        //button.backgroundTintList = ColorStateList.valueOf(buttonColor)
         button.setTextColor(buttonTextColor)
 
         button.setOnClickListener(onClickListener)
@@ -138,8 +138,8 @@ class CountPicker @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_BUTTON_SIZE = 48f
-        private const val DEFAULT_BUTTON_COLOR = R.color.colorPrimary
+        private const val DEFAULT_BUTTON_SIZE = 42f
+        private const val DEFAULT_BUTTON_COLOR = R.color.white
         private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.white
     }
 

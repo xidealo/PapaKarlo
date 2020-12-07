@@ -54,11 +54,13 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     fun showMessage(message: String, layout: View) {
         val snack = Snackbar.make(layout, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimary))
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimaryDark))
             .setTextColor(ContextCompat.getColor(this, R.color.white))
             .setActionTextColor(ContextCompat.getColor(this, R.color.white))
+
         snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
             View.TEXT_ALIGNMENT_CENTER
+
         snack.show()
     }
 

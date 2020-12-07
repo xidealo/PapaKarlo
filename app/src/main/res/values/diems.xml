@@ -6,6 +6,7 @@
     <dimen name="large_text">20sp</dimen>
     <dimen name="default_text">18sp</dimen>
     <dimen name="small_text">16sp</dimen>
+    <dimen name="very_small_text">14sp</dimen>
 
     <!-- INPUTS -->
 
@@ -39,6 +40,7 @@
     <dimen name="drawable_padding">4dp</dimen>
 
     <!-- IMAGE -->
-    <dimen name="image_element_size">90dp</dimen>
+    <dimen name="image_element_width">90dp</dimen>
+    <dimen name="image_element_height">80dp</dimen>
 
 </resources>

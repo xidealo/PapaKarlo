@@ -45,14 +45,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator, ITopBar
     }
 
     override fun goToConsumerCart(wishMenuProductList: Set<CartProduct>) {
-        supportFragmentManager.beginTransaction()
-            .replace(
-                viewDataBinding.activityProductMenuClFragment.id,
-                ConsumerCartFragment.newInstance(wishMenuProductList),
-                ConsumerCartFragment.TAG
-            )
-            .addToBackStack(ConsumerCartFragment.TAG)
-            .commit()
+        if (supportFragmentManager.findFragmentByTag(ConsumerCartFragment.TAG) == null)
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    viewDataBinding.activityProductMenuClFragment.id,
+                    ConsumerCartFragment.newInstance(wishMenuProductList),
+                    ConsumerCartFragment.TAG
+                )
+                .addToBackStack(ConsumerCartFragment.TAG)
+                .commit()
     }
 
 }

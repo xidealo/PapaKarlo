@@ -10,7 +10,6 @@ import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
@@ -22,7 +21,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
 
-    lateinit var cartMenuProductList: ArrayList<CartProduct>
+    lateinit var cartProductList: ArrayList<CartProduct>
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -37,7 +36,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            cartMenuProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
+            cartProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
     }
 
@@ -48,12 +47,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        viewDataBinding.fragmentConsumerCartTvProductCount.text =
-            cartMenuProductList.sumBy { it.count }.toString()
-        viewDataBinding.fragmentConsumerCartTvCommonPrice.text =
-            cartMenuProductList.sumBy { it.fullPrice }.toString()
-
-        viewModel.setCartProducts(cartMenuProductList)
+        viewModel.setCartProducts(cartProductList)
         super.onViewCreated(view, savedInstanceState)
     }
 

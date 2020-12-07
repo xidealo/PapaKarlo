@@ -21,51 +21,51 @@
         android:id="@+id/element_cart_product_mcv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true">
+        android:layout_marginBottom="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_padding">
 
             <ImageView
                 android:id="@+id/element_cart_product_iv_photo"
-                android:layout_width="@dimen/image_element_size"
-                android:layout_height="@dimen/image_element_size"
+                android:layout_width="@dimen/image_element_width"
+                android:layout_height="@dimen/image_element_height"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 bind:image="@{cartProduct.menuProduct.photoLink}" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/TitleCartProduct"
+                android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{cartProduct.menuProduct.name}"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_full_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{cartProduct.fullPrice}"
+                android:id="@+id/element_cart_product_tv_gram"
+                style="@style/GramCartProduct"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:text="@{cartProduct.menuProduct.getStringGram()}"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
-                app:layout_constraintTop_toBottomOf="@+id/element_cart_product_tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{cartProduct.count}"
-                app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
-                app:layout_constraintTop_toBottomOf="@+id/element_cart_product_tv_full_price" />
+                android:id="@+id/element_cart_product_tv_full_price"
+                style="@style/FullPriceCartProduct"
+                android:text="@{cartProduct.getStringFullPrice()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
 
             <com.bunbeauty.papakarlo.ui.view.CountPicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

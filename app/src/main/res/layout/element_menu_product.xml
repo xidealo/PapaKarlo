@@ -25,31 +25,30 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_padding">
 
             <ImageView
                 android:id="@+id/element_menu_product_iv_photo"
-                android:layout_width="@dimen/image_element_size"
-                android:layout_height="@dimen/image_element_size"
-                bind:image="@{menuProduct.photoLink}"
+                android:layout_width="@dimen/image_element_width"
+                android:layout_height="@dimen/image_element_height"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                bind:image="@{menuProduct.photoLink}" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/TitleElementProduct"
+                android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{menuProduct.name}"
-                android:layout_marginStart="@dimen/default_margin"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_cost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{menuProduct.cost}"
-                android:layout_marginStart="@dimen/default_margin"
+                style="@style/CostElementProduct"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:text="@{menuProduct.getStringCost()}"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
@@ -57,8 +56,8 @@
                 android:id="@+id/element_menu_product_btn_want"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_product_want"
                 android:layout_marginEnd="@dimen/default_margin"
+                android:text="@string/action_product_want"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

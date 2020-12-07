@@ -27,4 +27,9 @@
 
     <!-- TOP BAR -->
     <string name="title_top_bar_title">Заголовок</string>
+
+    <!-- CONSUMER CART -->
+    <string name="action_consumer_cart_checkout">Оформить заказ</string>
+    <string name="msg_consumer_cart_common_count">Общее количество :</string>
+    <string name="msg_consumer_cart_common_price">Общая стоимость :</string>
 </resources>
