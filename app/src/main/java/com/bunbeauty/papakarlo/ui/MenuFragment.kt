@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.view
+package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
-import com.bunbeauty.papakarlo.ui.ProductsFragment
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity

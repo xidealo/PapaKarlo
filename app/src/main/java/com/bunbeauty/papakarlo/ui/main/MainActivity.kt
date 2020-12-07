@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.ui.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.CartProduct
@@ -12,7 +11,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragment
 import com.bunbeauty.papakarlo.ui.base.BaseActivity
 import com.bunbeauty.papakarlo.ui.base.ITopBar
-import com.bunbeauty.papakarlo.ui.view.MenuFragment
+import com.bunbeauty.papakarlo.ui.MenuFragment
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import java.lang.ref.WeakReference
 

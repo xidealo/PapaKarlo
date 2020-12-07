@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.product
 
 import android.os.Bundle
 import android.view.View

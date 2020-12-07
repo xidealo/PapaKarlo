@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/activity_product_btn_add"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             bind:items="@{viewModel.cartProductsField}" />
 
         <com.google.android.material.button.MaterialButton
@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:onClick="@{()->viewModel.goToOrderClick()}"
             android:text="@string/action_consumer_cart_checkout"
             app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

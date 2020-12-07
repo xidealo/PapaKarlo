@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.ProductFragment
+import com.bunbeauty.papakarlo.ui.product.ProductFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.ProductsFragment
 import javax.inject.Inject

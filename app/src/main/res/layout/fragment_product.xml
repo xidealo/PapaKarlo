@@ -21,7 +21,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
         style="@style/DefaultPage"
-        tools:context=".ui.ProductFragment">
+        tools:context=".ui.product.ProductFragment">
 
         <ImageView
             android:layout_marginTop="@dimen/small_margin"

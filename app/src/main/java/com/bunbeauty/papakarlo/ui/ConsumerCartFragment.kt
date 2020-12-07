@@ -12,10 +12,13 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.ui.product.ProductFragment
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>() {
+class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>(),
+    ConsumerCartNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_consumer_cart
@@ -47,6 +50,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
+        viewModel.consumerCartNavigator = WeakReference(this)
         viewModel.setCartProducts(cartProductList)
         super.onViewCreated(view, savedInstanceState)
     }
@@ -54,6 +58,16 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     private fun setupRecyclerView() {
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
         viewDataBinding.fragmentConsumerCartRvResult.layoutManager = linearLayoutManager
+    }
+
+    override fun goToOrder() {
+        parentFragmentManager.beginTransaction()
+            .replace(
+                (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
+                OrderFragment.newInstance()
+            )
+            .addToBackStack(OrderFragment.TAG)
+            .commit()
     }
 
     companion object {

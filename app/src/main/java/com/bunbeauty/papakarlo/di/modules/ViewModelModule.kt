@@ -39,4 +39,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ConsumerCartViewModel::class)
     internal abstract fun provideConsumerCartViewModel(consumerCartViewModel: ConsumerCartViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OrderViewModel::class)
+    internal abstract fun provideOrderViewModel(orderViewModel: OrderViewModel): ViewModel
 }
