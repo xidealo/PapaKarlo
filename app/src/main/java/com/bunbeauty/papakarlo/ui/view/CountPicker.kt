@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui.view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -17,6 +16,13 @@ class CountPicker @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attributeSet, defStyleAttr) {
+
+    var countChangeCallback: CountChangeCallback? = null
+    var count = 0
+    set(value) {
+        field = value
+        countTextView.text = value.toString()
+    }
 
     private val elementSize = getDimensionPixel(
         context,
@@ -43,8 +49,6 @@ class CountPicker @JvmOverloads constructor(
     private val minusButton = createButton("-", ::onMinus)
     private val countTextView = createTextView()
 
-    var count = 0
-
     init {
         addView(minusButton)
         addView(countTextView)
@@ -70,7 +74,9 @@ class CountPicker @JvmOverloads constructor(
     }
 
     fun onPlus(view: View) {
+        Log.d("test", "c " + count)
         count++
+        countChangeCallback?.onCountIncreased()
         countTextView.text = count.toString()
     }
 
@@ -80,6 +86,7 @@ class CountPicker @JvmOverloads constructor(
         }
 
         count--
+        countChangeCallback?.onCountDecreased()
         countTextView.text = count.toString()
     }
 
@@ -114,6 +121,23 @@ class CountPicker @JvmOverloads constructor(
         }
     }
 
+    fun getInteger(
+        context: Context,
+        attributeSet: AttributeSet?,
+        attributeId: Int,
+        defaultInt: Int
+    ): Int {
+        return if (attributeSet != null) {
+            val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
+            val integerValue = typedArray.getInteger(attributeId, defaultInt)
+            typedArray.recycle()
+
+            integerValue
+        } else {
+            defaultInt
+        }
+    }
+
     fun getPixels(dip: Float): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, resources.displayMetrics)
             .toInt()
@@ -137,7 +161,13 @@ class CountPicker @JvmOverloads constructor(
         }
     }
 
+    interface CountChangeCallback {
+        fun onCountIncreased()
+        fun onCountDecreased()
+    }
+
     companion object {
+        private const val DEFAULT_COUNT = 0
         private const val DEFAULT_BUTTON_SIZE = 42f
         private const val DEFAULT_BUTTON_COLOR = R.color.white
         private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.white

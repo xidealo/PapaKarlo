@@ -1,28 +1,41 @@
 package com.bunbeauty.papakarlo.view_model
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Transformations
+import com.bunbeauty.papakarlo.data.local.db.CartDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class MainViewModel @Inject constructor() : BaseViewModel() {
+class MainViewModel @Inject constructor(private val cartDao: CartDao) : BaseViewModel(),
+    CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = Job()
 
     lateinit var mainNavigator: WeakReference<MainNavigator>
 
-    val productsLiveData: MutableLiveData<ArrayList<MenuProduct>> by lazy {
-        MutableLiveData<ArrayList<MenuProduct>>()
+    val cartProductListLiveData by lazy {
+        cartDao.getCart()
+    }
+    val cartLiveData by lazy {
+        Transformations.map(cartProductListLiveData) { productList ->
+            "${productList.sumBy { it.getFullPrice() }} ₽\n${productList.sumBy { it.count }} шт."
+        }
     }
     val isLoading = ObservableField(true)
-    val cartField = ObservableField("0 ₽")
 
-    var productList = arrayListOf(
+    private val productList = arrayListOf(
         MenuProduct(
             name = "Пицца маргарита",
             productCode = ProductCode.Pizza,
@@ -45,30 +58,25 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
         ),
         MenuProduct(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
     )
+    val productsLiveData: LiveData<ArrayList<MenuProduct>> by lazy {
+        MutableLiveData(productList)
+    }
 
     var cartProductList = mutableSetOf<CartProduct>()
 
     fun addCartProduct(menuProduct: MenuProduct) {
-        val foundCartProduct = cartProductList.find { it.menuProduct.name == menuProduct.name }
-        if (foundCartProduct != null) {
-            foundCartProduct.count++
-            foundCartProduct.fullPrice += menuProduct.cost
-        } else {
-            cartProductList.add(
-                CartProduct(
-                    menuProduct = menuProduct,
-                    count = 1,
-                    fullPrice = menuProduct.cost
-                )
-            )
+        val cartProduct = cartProductListLiveData.value?.find { cartProduct ->
+            cartProduct.menuProduct == menuProduct
         }
-        cartField.set("${cartProductList.sumBy { it.fullPrice }} ₽\n${cartProductList.sumBy { it.count }} шт.")
-    }
-
-    fun getProducts() {
-        viewModelScope.launch {
-            productsLiveData.value = productList
-            isLoading.set(false)
+        if (cartProduct == null) {
+            launch(Dispatchers.IO) {
+                cartDao.insert(CartProduct(menuProduct = menuProduct))
+            }
+        } else {
+            cartProduct.count++
+            launch(Dispatchers.IO) {
+                cartDao.update(cartProduct)
+            }
         }
     }
 

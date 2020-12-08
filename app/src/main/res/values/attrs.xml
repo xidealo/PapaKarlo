@@ -22,5 +22,6 @@
         <attr name="elementSize" format="dimension" />
         <attr name="buttonColor" format="color" />
         <attr name="buttonTextColor" format="color" />
+        <attr name="count" format="integer" />
     </declare-styleable>
 </resources>

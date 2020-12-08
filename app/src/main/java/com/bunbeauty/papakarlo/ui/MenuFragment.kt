@@ -72,11 +72,10 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         const val TAG = "MenuFragment"
 
         @JvmStatic
-        fun newInstance(menuProducts: ArrayList<MenuProduct>) =
-            MenuFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelableArrayList(MenuProduct.PRODUCTS, menuProducts)
-                }
+        fun newInstance(menuProducts: ArrayList<MenuProduct>) = MenuFragment().apply {
+            arguments = Bundle().apply {
+                putParcelableArrayList(MenuProduct.PRODUCTS, menuProducts)
             }
+        }
     }
 }

@@ -23,8 +23,6 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
 
-    lateinit var cartProductList: ArrayList<CartProduct>
-
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -35,28 +33,24 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     @Inject
     lateinit var linearLayoutManager: LinearLayoutManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            cartProductList = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         (activity as MainActivity).setTitle("Корзина")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setupRecyclerView()
         viewModel.consumerCartNavigator = WeakReference(this)
-        viewModel.setCartProducts(cartProductList)
-        super.onViewCreated(view, savedInstanceState)
+        cartProductsAdapter.consumerCartViewModel = viewModel
+        viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
+            cartProductsAdapter.setItemList(cartProductList)
+        }
     }
 
     private fun setupRecyclerView() {
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
-        viewDataBinding.fragmentConsumerCartRvResult.layoutManager = linearLayoutManager
     }
 
     override fun goToOrder() {

@@ -9,9 +9,9 @@ import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.databinding.PartTopBarBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragment
+import com.bunbeauty.papakarlo.ui.MenuFragment
 import com.bunbeauty.papakarlo.ui.base.BaseActivity
 import com.bunbeauty.papakarlo.ui.base.ITopBar
-import com.bunbeauty.papakarlo.ui.MenuFragment
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import java.lang.ref.WeakReference
 
@@ -29,18 +29,25 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator, ITopBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         topBarBinding = viewDataBinding.activityVehiclesTbTopBar
         viewModel.mainNavigator = WeakReference(this)
-        viewModel.productsLiveData.observe(this) {
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    viewDataBinding.activityProductMenuClFragment.id,
-                    MenuFragment.newInstance(it),
-                    MenuFragment.TAG
-                )
-                .commit()
+
+        setCartObserver()
+        viewModel.productsLiveData.observe(this) { menuProductList ->
+            supportFragmentManager.beginTransaction().replace(
+                viewDataBinding.activityProductMenuClFragment.id,
+                MenuFragment.newInstance(menuProductList),
+                MenuFragment.TAG
+            ).commit()
+            viewModel.isLoading.set(false)
         }
-        viewModel.getProducts()
+    }
+
+    private fun setCartObserver() {
+        viewModel.cartLiveData.observe(this) { cartText ->
+            topBarBinding.partTopBarTvCart.text = cartText
+        }
     }
 
     override fun goToConsumerCart(wishMenuProductList: Set<CartProduct>) {
