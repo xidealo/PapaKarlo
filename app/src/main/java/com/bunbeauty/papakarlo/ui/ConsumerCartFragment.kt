@@ -11,6 +11,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import java.lang.ref.WeakReference
@@ -22,6 +23,8 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
+
+    var cartProducts: ArrayList<CartProduct> = arrayListOf()
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -46,6 +49,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         cartProductsAdapter.consumerCartViewModel = viewModel
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList)
+            cartProducts.addAll(cartProductList)
         }
     }
 
@@ -57,7 +61,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         parentFragmentManager.beginTransaction()
             .replace(
                 (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
-                CreationOrderFragment.newInstance()
+                CreationOrderFragment.newInstance(cartProducts)
             )
             .addToBackStack(CreationOrderFragment.TAG)
             .commit()
@@ -67,11 +71,9 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         const val TAG = "ConsumerCartFragment"
 
         @JvmStatic
-        fun newInstance(wishMenuProductList: Set<CartProduct>) =
+        fun newInstance() =
             ConsumerCartFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelableArrayList(MenuProduct.PRODUCTS, ArrayList(wishMenuProductList))
-                }
+                arguments = Bundle().apply {}
             }
     }
 }

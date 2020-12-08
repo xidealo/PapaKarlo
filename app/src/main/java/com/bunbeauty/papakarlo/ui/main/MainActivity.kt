@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator, ITopBar
             supportFragmentManager.beginTransaction()
                 .replace(
                     viewDataBinding.activityProductMenuClFragment.id,
-                    ConsumerCartFragment.newInstance(wishMenuProductList),
+                    ConsumerCartFragment.newInstance(),
                     ConsumerCartFragment.TAG
                 )
                 .addToBackStack(ConsumerCartFragment.TAG)

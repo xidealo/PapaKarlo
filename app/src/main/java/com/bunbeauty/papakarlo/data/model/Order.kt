@@ -6,9 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Order(
-    @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0,
-    override var uuid: String = "",
     var street: String = "",
     var house: String = "",
     var flat: String = "",
@@ -17,4 +14,21 @@ data class Order(
     var floor: String = "",
     var comment: String = "",
     var phone: String = "",
-) : BaseModel(), Parcelable
+    var cartProducts: ArrayList<CartProduct> = arrayListOf(),
+    @PrimaryKey(autoGenerate = true)
+    override var id: Long = 0,
+    override var uuid: String = "",
+) : BaseModel(), Parcelable {
+    companion object {
+        const val ORDERS = "ORDERS"
+
+        const val STREET = "street"
+        const val HOUSE = "house"
+        const val FLAT = "flat"
+        const val ENTRANCE = "entrance"
+        const val INTERCOM = "intercom"
+        const val FLOOR = "floor"
+        const val COMMENT = "comment"
+        const val PHONE = "phone"
+    }
+}

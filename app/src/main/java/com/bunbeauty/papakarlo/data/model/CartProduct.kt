@@ -26,4 +26,12 @@ data class CartProduct(
     fun getFullPrice(): Int {
         return menuProduct.cost * count
     }
+
+    companion object{
+        const val CART_PRODUCT = "cart product"
+        const val CART_PRODUCTS = "cart products"
+
+        const val COUNT = "count"
+        const val DISCOUNT = "discount"
+    }
 }

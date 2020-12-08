@@ -24,8 +24,14 @@ data class MenuProduct(
     fun getStringGram() = "$gram г."
 
     companion object {
-        const val PRODUCT_CODE: String = "product code"
         const val PRODUCTS: String = "products"
         const val PRODUCT: String = "product"
+
+        const val NAME: String = "name"
+        const val COST: String = "cost"
+        const val GRAM: String = "gram"
+        const val DESCRIPTION: String = "description"
+        const val PHOTO_LINK: String = "photo link"
+        const val PRODUCT_CODE: String = "product code"
     }
 }

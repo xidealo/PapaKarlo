@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
         android:padding="@dimen/small_padding"
-        tools:context=".ui.CreationOrderFragment">
+        tools:context=".ui.creation_order.CreationOrderFragment">
 
         <TextView
             android:id="@+id/fragment_creation_order_tv_title"
@@ -167,6 +167,7 @@
             android:id="@+id/fragment_creation_order_et_phone"
             style="@style/MainButton"
             android:text="@string/action_creation_order_order"
+            android:onClick="@{()->viewModel.createOrderClick()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
