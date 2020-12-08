@@ -24,10 +24,10 @@
         tools:context=".ui.product.ProductFragment">
 
         <ImageView
-            android:layout_marginTop="@dimen/small_margin"
             android:id="@+id/activity_product_iv_photo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintBottom_toTopOf="@id/line_1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +52,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo">
 
-           <!-- <TextView
-                android:id="@+id/activity_product_tv_title"
-                style="@style/TitleFragmentProduct"
-                android:text="@{product.name}" />-->
+            <!-- <TextView
+                 android:id="@+id/activity_product_tv_title"
+                 style="@style/TitleFragmentProduct"
+                 android:text="@{product.name}" />-->
 
             <TextView
                 android:id="@+id/activity_product_tv_cost"
@@ -76,13 +76,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_product_btn_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            style="@style/MainButton"
+            android:layout_margin="@dimen/small_margin"
             android:onClick="@{()->viewModel.addWishProductClick(product)}"
             android:text="@string/action_product_want"
-            app:cornerRadius="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

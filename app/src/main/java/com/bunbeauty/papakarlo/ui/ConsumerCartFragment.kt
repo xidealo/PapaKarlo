@@ -12,7 +12,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.ui.product.ProductFragment
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -64,9 +63,9 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         parentFragmentManager.beginTransaction()
             .replace(
                 (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
-                OrderFragment.newInstance()
+                CreationOrderFragment.newInstance()
             )
-            .addToBackStack(OrderFragment.TAG)
+            .addToBackStack(CreationOrderFragment.TAG)
             .commit()
     }
 

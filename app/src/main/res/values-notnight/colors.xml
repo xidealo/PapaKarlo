@@ -2,7 +2,7 @@
 <resources>
     <!-- BACKGROUND -->
     <color name="backgroundPage">#f3f2f7</color>
-    <color name="backgroundComponent">#ffffff</color>
+    <color name="backgroundComponent">#F3F2F3</color>
     <color name="cardViewBackground">#FFFFFF</color>
     <color name="fragmentBackground">#FFFFFF</color>
     <color name="dialogBackground">#FFFFFF</color>
@@ -15,5 +15,5 @@
     <color name="mainTextColor">#000000</color>
     <color name="buttonTextColor">#FFFFFF</color>
     <color name="hintColor">#93969A</color>
-    <color name="iconTintColor">#8f92a5</color>
+    <color name="iconTintColor">#93969A</color>
 </resources>

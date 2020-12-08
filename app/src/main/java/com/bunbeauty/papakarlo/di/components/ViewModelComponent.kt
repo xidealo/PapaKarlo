@@ -24,7 +24,7 @@ interface ViewModelComponent {
     fun inject(productFragment: ProductFragment)
     fun inject(menuFragment: MenuFragment)
     fun inject(consumerCartFragment: ConsumerCartFragment)
-    fun inject(orderFragment: OrderFragment)
+    fun inject(creationOrderFragment: CreationOrderFragment)
 
     // dialogs
 }

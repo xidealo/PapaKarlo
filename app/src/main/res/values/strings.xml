@@ -32,6 +32,21 @@
     <string name="action_consumer_cart_checkout">Оформить заказ</string>
     <string name="msg_consumer_cart_common_count">Общее количество :</string>
     <string name="msg_consumer_cart_common_price">Общая стоимость :</string>
+
+    <!-- CREATION ORDER -->
+    <string name="title_creation_order_address">Адрес</string>
+    <string name="hint_creation_order_street">Улица*</string>
+    <string name="hint_creation_order_house">Дом*</string>
+    <string name="hint_creation_order_flat">Квартира</string>
+    <string name="hint_creation_order_entrance">Подъезд</string>
+    <string name="hint_creation_order_intercom">Домофон</string>
+    <string name="hint_creation_order_floor">Этаж</string>
+    <string name="title_creation_order_extra_extra_comment">Дополнительная информация для курьера</string>
+    <string name="hint_creation_order_extra_comment">Комментарий</string>
+    <string name="title_creation_order_contact">Контактная информация</string>
+    <string name="title_creation_order_phone">Телефон</string>
+    <string name="action_creation_order_order">Оформить заказ</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

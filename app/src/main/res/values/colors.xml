@@ -22,6 +22,6 @@
     <!-- TEXT -->
     <color name="mainTextColor" tools:override="true">#FFFFFF</color>
     <color name="buttonTextColor" >#FFFFFF</color>
-    <color name="hintColor" tools:override="true">#93969A</color>
-    <color name="iconTintColor" tools:override="true">#93969A</color>
+    <color name="hintColor">#93969A</color>
+    <color name="iconTintColor">#93969A</color>
 </resources>
