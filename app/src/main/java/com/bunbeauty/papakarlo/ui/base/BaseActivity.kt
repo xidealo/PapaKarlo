@@ -53,8 +53,8 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     }
 
     fun showMessage(message: String, layout: View) {
-        val snack = Snackbar.make(layout, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+        val snack = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimary))
             .setTextColor(ContextCompat.getColor(this, R.color.white))
             .setActionTextColor(ContextCompat.getColor(this, R.color.white))
 
