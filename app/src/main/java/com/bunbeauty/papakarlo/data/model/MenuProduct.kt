@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bunbeauty.papakarlo.enums.ProductCode
 import kotlinx.parcelize.Parcelize
-import kotlin.math.cos
 
 @Parcelize
 @Entity

@@ -10,8 +10,8 @@ data class CartProduct(
     var menuProduct: MenuProduct,
     var count: Int = 0,
     var fullPrice: Int = 0,
-    var discount: Float = 0f
-) : BaseModel(), Parcelable{
+    var discount: Float = 0f,
+    var orderUuid: String
+) : BaseModel(), Parcelable {
     fun getStringFullPrice() = "$fullPrice ₽"
-
 }
