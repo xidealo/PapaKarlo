@@ -53,15 +53,24 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         val tabNameList = arrayListOf(
             resources.getString(R.string.title_menu_all),
             resources.getString(R.string.title_menu_pizza),
-            resources.getString(R.string.title_menu_hamburger),
+            resources.getString(R.string.title_menu_burger),
             resources.getString(R.string.title_menu_potato),
             resources.getString(R.string.title_menu_onCoals)
+        )
+
+        val tabIconList = arrayListOf(
+            R.drawable.ic_all_products,
+            R.drawable.ic_pizza,
+            R.drawable.ic_burger,
+            R.drawable.ic_french_fries,
+            R.drawable.ic_kebab
         )
 
         TabLayoutMediator(
             viewDataBinding.fragmentMenuTl,
             viewDataBinding.fragmentMenuVp
         ) { tab, i ->
+            tab.setIcon(tabIconList[i])
             tab.text = tabNameList[i]
         }.attach()
 

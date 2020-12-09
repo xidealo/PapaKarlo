@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.bunbeauty.papakarlo.data.model.BaseModel
 

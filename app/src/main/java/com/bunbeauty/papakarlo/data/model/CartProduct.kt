@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.data.model
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey

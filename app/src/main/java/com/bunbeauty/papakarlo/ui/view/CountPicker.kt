@@ -17,7 +17,7 @@ class CountPicker @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attributeSet, defStyleAttr) {
 
-    var countChangeCallback: CountChangeCallback? = null
+    var countChangeListener: CountChangeListener? = null
     var count = 0
     set(value) {
         field = value
@@ -74,9 +74,8 @@ class CountPicker @JvmOverloads constructor(
     }
 
     fun onPlus(view: View) {
-        Log.d("test", "c " + count)
         count++
-        countChangeCallback?.onCountIncreased()
+        countChangeListener?.onCountIncreased()
         countTextView.text = count.toString()
     }
 
@@ -86,7 +85,7 @@ class CountPicker @JvmOverloads constructor(
         }
 
         count--
-        countChangeCallback?.onCountDecreased()
+        countChangeListener?.onCountDecreased()
         countTextView.text = count.toString()
     }
 
@@ -161,7 +160,7 @@ class CountPicker @JvmOverloads constructor(
         }
     }
 
-    interface CountChangeCallback {
+    interface CountChangeListener {
         fun onCountIncreased()
         fun onCountDecreased()
     }

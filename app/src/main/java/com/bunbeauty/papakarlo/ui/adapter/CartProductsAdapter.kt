@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,26 +25,25 @@ class CartProductsAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: CartProductViewHolder, i: Int) {
-        holder.setListener(itemList[i])
         holder.binding?.cartProduct = itemList[i]
-        holder.binding?.elementCartProductCpCount?.countChangeCallback = object : CountPicker.CountChangeCallback {
-            override fun onCountIncreased() {
-                itemList[i].count++
-                consumerCartViewModel.updateCartProduct(itemList[i])
-            }
-
-            override fun onCountDecreased() {
-                itemList[i].count--
-                consumerCartViewModel.updateCartProduct(itemList[i])
-            }
-        }
+        holder.setCountChangeListener(itemList[i])
     }
 
     inner class CartProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementCartProductBinding>(view)
 
-        fun setListener(cartProduct: CartProduct) {
+        fun setCountChangeListener(cartProduct: CartProduct) {
+            binding?.elementCartProductCpCount?.countChangeListener = object : CountPicker.CountChangeListener {
+                override fun onCountIncreased() {
+                    val updatedProduct = cartProduct.copy(count = cartProduct.count + 1)
+                    consumerCartViewModel.updateCartProduct(updatedProduct)
+                }
 
+                override fun onCountDecreased() {
+                    val updatedProduct = cartProduct.copy(count = cartProduct.count - 1)
+                    consumerCartViewModel.updateCartProduct(updatedProduct)
+                }
+            }
         }
     }
 }
