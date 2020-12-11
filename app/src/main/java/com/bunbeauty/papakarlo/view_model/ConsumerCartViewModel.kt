@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.view_model
 
 import com.bunbeauty.papakarlo.data.local.db.CartDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.ui.ConsumerCartNavigator
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

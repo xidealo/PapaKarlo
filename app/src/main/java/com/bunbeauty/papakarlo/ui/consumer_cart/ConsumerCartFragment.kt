@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.consumer_cart
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
@@ -20,26 +19,21 @@ import javax.inject.Inject
 class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>(),
     ConsumerCartNavigator {
 
+    override var title: String = "Корзина"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
 
-    var cartProducts: ArrayList<CartProduct> = arrayListOf()
-
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
+    var cartProducts: ArrayList<CartProduct> = arrayListOf()
 
     @Inject
     lateinit var cartProductsAdapter: CartProductsAdapter
 
     @Inject
     lateinit var linearLayoutManager: LinearLayoutManager
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity).setTitle("Корзина")
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +43,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         cartProductsAdapter.consumerCartViewModel = viewModel
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList)
+            cartProducts.clear()
             cartProducts.addAll(cartProductList)
         }
     }

@@ -15,7 +15,7 @@ import com.bunbeauty.papakarlo.view_model.MenuViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
-
+    override var title: String = "Меню"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_menu
     override var viewModelClass = MenuViewModel::class.java
@@ -31,11 +31,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
         arguments?.let {
             menuProducts = it.getParcelableArrayList(MenuProduct.PRODUCTS)!!
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity).setTitle("Меню")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

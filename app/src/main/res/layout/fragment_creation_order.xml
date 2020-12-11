@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.OrderViewModel" />
+            type="com.bunbeauty.papakarlo.view_model.CreationOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

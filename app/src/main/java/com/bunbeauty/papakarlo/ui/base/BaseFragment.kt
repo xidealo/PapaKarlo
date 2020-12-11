@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
 
+    abstract var title: String
     abstract var layoutId: Int
     abstract var viewModelVariable: Int
     abstract var viewModelClass: Class<V>
@@ -31,9 +33,10 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        val viewModelComponent = (requireActivity().application as PapaKarloApplication).appComponent
-            .getViewModelComponent()
-            .create(this)
+        val viewModelComponent =
+            (requireActivity().application as PapaKarloApplication).appComponent
+                .getViewModelComponent()
+                .create(this)
         inject(viewModelComponent)
 
         viewModel = ViewModelProvider(this, modelFactory).get(viewModelClass)
@@ -57,7 +60,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-
+        (activity as MainActivity).setTitle(title)
         return viewDataBinding.root
     }
 

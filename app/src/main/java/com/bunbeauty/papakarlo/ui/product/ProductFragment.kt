@@ -14,6 +14,7 @@ import java.lang.ref.WeakReference
 
 class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
 
+    override lateinit var title: String
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_product
     override var viewModelClass = ProductViewModel::class.java
@@ -28,12 +29,8 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
         super.onCreate(savedInstanceState)
         arguments?.let {
             menuProduct = it.getParcelable(MenuProduct.PRODUCT)!!
+            title = menuProduct.name
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity).setTitle("${menuProduct.name}")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

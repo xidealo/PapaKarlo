@@ -9,34 +9,27 @@ import com.bunbeauty.papakarlo.data.model.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.view_model.OrderViewModel
-import com.google.firebase.database.FirebaseDatabase
+import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
 
-class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding, OrderViewModel>(),
+class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
-
+    override var title: String = "Оформление заказа"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_creation_order
-    override var viewModelClass = OrderViewModel::class.java
-
-    lateinit var cartProducts: ArrayList<CartProduct>
-
+    override var viewModelClass = CreationOrderViewModel::class.java
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
+
+    lateinit var cartProducts: ArrayList<CartProduct>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             cartProducts = it.getParcelableArrayList(CartProduct.CART_PRODUCT)!!
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity).setTitle("Оформление заказа")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

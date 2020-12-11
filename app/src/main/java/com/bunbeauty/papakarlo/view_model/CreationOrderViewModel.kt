@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class OrderViewModel @Inject constructor(private val orderRepo: OrderRepo) : BaseViewModel() {
+class CreationOrderViewModel @Inject constructor(private val orderRepo: OrderRepo) : BaseViewModel() {
 
     lateinit var creationOrderNavigator: WeakReference<CreationOrderNavigator>
 

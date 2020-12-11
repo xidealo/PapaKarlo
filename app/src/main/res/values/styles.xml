@@ -102,6 +102,17 @@
         <item name="android:layout_marginEnd">8dp</item>
     </style>
 
+    <!-- BOTTOM BAR -->
+
+    <style name="BottomNavigation">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="elevation">10dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemIconTint">@color/selector_navigation</item>
+    </style>
+
     <!--PRODUCTS-->
     <style name="TitleElementProduct">
         <item name="android:textSize">@dimen/small_text</item>

@@ -16,6 +16,7 @@ import javax.inject.Inject
 
 class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>() {
 
+    override var title: String = "Меню"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_products
     override var viewModelClass = ProductsViewModel::class.java

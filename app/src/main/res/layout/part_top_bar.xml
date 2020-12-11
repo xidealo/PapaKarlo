@@ -10,7 +10,7 @@
     </data>
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/part_top_bar_tb"
+        android:id="@+id/part_tb_top_bar"
         style="@style/TopBar"
         app:title="@string/title_top_bar_title">
 

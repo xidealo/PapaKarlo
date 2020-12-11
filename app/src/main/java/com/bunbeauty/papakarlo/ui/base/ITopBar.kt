@@ -10,17 +10,17 @@ interface ITopBar {
      var topBarBinding: PartTopBarBinding
 
     fun setTitle(title: String) {
-        topBarBinding.partTopBarTb.title = title
+        topBarBinding.partTbTopBar.title = title
     }
 
     fun hideTitle() {
-        topBarBinding.partTopBarTb.title = ""
+        topBarBinding.partTbTopBar.title = ""
     }
 
     // 1
 
     fun showBackArrow(context: Context) {
-        topBarBinding.partTopBarTb.navigationIcon =
+        topBarBinding.partTbTopBar.navigationIcon =
             ContextCompat.getDrawable(context, R.drawable.ic_back)
     }
 
