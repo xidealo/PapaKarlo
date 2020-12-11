@@ -61,6 +61,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         (activity as MainActivity).setTitle(title)
+        (activity as MainActivity).showBottomPanel()
         return viewDataBinding.root
     }
 

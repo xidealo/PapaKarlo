@@ -10,6 +10,8 @@ import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.databinding.PartBottomPanelBinding
 import com.bunbeauty.papakarlo.databinding.PartTopBarBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment
 import com.bunbeauty.papakarlo.ui.MenuFragment
 import com.bunbeauty.papakarlo.ui.base.BaseActivity
@@ -95,6 +97,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainNavigator, ITopBar
             OrdersFragment.newInstance(),
             OrdersFragment.TAG
         ).addToBackStack(OrdersFragment.TAG).commit()
+    }
+
+    fun hideBottomPanel() {
+        viewDataBinding.activityMainTbBottomBar.partBottomBarTb.gone()
+    }
+
+    fun showBottomPanel() {
+        viewDataBinding.activityMainTbBottomBar.partBottomBarTb.visible()
     }
 
 }

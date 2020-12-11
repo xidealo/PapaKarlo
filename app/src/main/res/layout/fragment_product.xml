@@ -20,7 +20,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.product.ProductFragment">
 
         <ImageView

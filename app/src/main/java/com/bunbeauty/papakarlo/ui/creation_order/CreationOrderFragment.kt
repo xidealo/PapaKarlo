@@ -9,6 +9,7 @@ import com.bunbeauty.papakarlo.data.model.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
 
@@ -34,6 +35,7 @@ class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding, Creatio
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.creationOrderNavigator = WeakReference(this)
+        (activity as MainActivity).hideBottomPanel()
         super.onViewCreated(view, savedInstanceState)
     }
 

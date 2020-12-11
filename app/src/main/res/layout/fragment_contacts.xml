@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,10 +13,79 @@
             type="com.bunbeauty.papakarlo.view_model.ContactsViewModel" />
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/DefaultPage"
+        android:padding="@dimen/default_padding"
         tools:context=".ui.contacts.ContactsFragment">
 
-    </FrameLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_contacts_mc_address"
+            style="@style/MaterialCardContacts"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.addressClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout style="@style/LinearLayoutContacts">
+
+                <TextView
+                    android:id="@+id/fragment_contacts_tv_address"
+                    style="@style/TextContacts"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:text="@string/msg_contacts_address"
+                    app:drawableLeftCompat="@drawable/ic_contact"
+                    app:drawableTint="@color/black" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_contacts_mc_work_time"
+            style="@style/MaterialCardContacts"
+            android:layout_marginTop="@dimen/default_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.workTimeClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_mc_address">
+
+            <LinearLayout style="@style/LinearLayoutContacts">
+
+                <TextView
+                    android:id="@+id/fragment_contacts_tv_work_time"
+                    style="@style/TextContacts"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:text="@string/msg_contacts_work_time"
+                    app:drawableLeftCompat="@drawable/ic_clock"
+                    app:drawableTint="@color/black" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_contacts_mc_phone"
+            style="@style/MaterialCardContacts"
+            android:layout_marginTop="@dimen/default_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()->viewModel.phoneClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_mc_work_time">
+
+            <LinearLayout style="@style/LinearLayoutContacts">
+
+                <TextView
+                    android:id="@+id/fragment_contacts_tv_work_phone"
+                    style="@style/TextContacts"
+                    android:drawablePadding="@dimen/default_padding"
+                    android:text="@string/msg_contacts_phone"
+                    app:drawableLeftCompat="@drawable/ic_phone"
+                    app:drawableTint="@color/black" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

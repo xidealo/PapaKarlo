@@ -36,6 +36,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).hideBottomPanel()
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()

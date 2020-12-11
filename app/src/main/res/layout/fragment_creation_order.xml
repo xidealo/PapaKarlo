@@ -13,7 +13,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="@dimen/small_padding"
         tools:context=".ui.creation_order.CreationOrderFragment">
 
@@ -166,8 +167,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_creation_order_et_phone"
             style="@style/MainButton"
-            android:text="@string/action_creation_order_order"
             android:onClick="@{()->viewModel.createOrderClick()}"
+            android:text="@string/action_creation_order_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -8,7 +8,7 @@
     </style>
 
     <style name="DefaultPage">
-        <item name="background">@color/backgroundPage</item>
+        <item name="android:background">@color/backgroundPage</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
@@ -168,6 +168,28 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
         <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <!--CONTACTS-->
+    <style name="TextContacts">
+        <item name="android:textSize">@dimen/default_text</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="MaterialCardContacts">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/backgroundComponent</item>
+    </style>
+
+   <style name="LinearLayoutContacts">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/default_padding</item>
     </style>
 
 </resources>

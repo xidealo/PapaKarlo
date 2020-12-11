@@ -34,6 +34,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding, ProductViewModel>()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).hideBottomPanel()
         viewDataBinding.product = menuProduct
         viewModel.productNavigator = WeakReference(this)
         super.onViewCreated(view, savedInstanceState)
