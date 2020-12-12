@@ -1,10 +1,15 @@
-package com.bunbeauty.papakarlo.data.model
+package com.bunbeauty.papakarlo.data.model.order
 
 import android.os.Parcelable
+import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bunbeauty.papakarlo.data.model.BaseModel
+import com.bunbeauty.papakarlo.data.model.Time
 import kotlinx.parcelize.Parcelize
+import org.joda.time.DateTime
 
 @Parcelize
+@Entity
 data class Order(
     var street: String = "",
     var house: String = "",
@@ -14,11 +19,20 @@ data class Order(
     var floor: String = "",
     var comment: String = "",
     var phone: String = "",
-    var cartProducts: ArrayList<CartProduct> = arrayListOf(),
+    var time: Long = Time(DateTime.now().millis, 3).toDateTime().millis,
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",
 ) : BaseModel(), Parcelable {
+
+
+    fun getTimeHHMM(): String {
+        val newTime = Time(time)
+        return newTime.toStringTimeHHMM()
+    }
+
+    fun getAddress() = "Доставка на улицу $street дом $house контактный телефон $phone"
+    fun getUuidCode() = "Код заказа $uuid"
     companion object {
         const val ORDERS = "ORDERS"
 

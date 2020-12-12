@@ -4,17 +4,22 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bunbeauty.papakarlo.data.local.converter.ProductCodeConverter
+import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
+import com.bunbeauty.papakarlo.data.local.db.order.OrderDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.data.model.order.Order
 
 @Database(
     entities = [
         CartProduct::class,
-        MenuProduct::class
-    ], version = 3
+        MenuProduct::class,
+        Order::class
+    ], version = 5
 )
 @TypeConverters(ProductCodeConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
 
-    abstract fun getCartDao(): CartDao
+    abstract fun cartProductDao(): CartProductDao
+    abstract fun orderDao(): OrderDao
 }

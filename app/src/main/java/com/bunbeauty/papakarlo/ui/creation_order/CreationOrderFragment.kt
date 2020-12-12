@@ -5,7 +5,8 @@ import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.Order
+import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -25,7 +26,6 @@ class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding, Creatio
 
     lateinit var cartProducts: ArrayList<CartProduct>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,16 +41,18 @@ class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding, Creatio
 
     override fun createOrder() {
         viewModel.createOrder(
-            Order(
-                street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
-                house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
-                flat = viewDataBinding.fragmentOrderEtFlat.text.toString(),
-                entrance = viewDataBinding.fragmentOrderEtEntrance.text.toString(),
-                intercom = viewDataBinding.fragmentOrderEtIntercom.text.toString(),
-                floor = viewDataBinding.fragmentOrderEtFloor.text.toString(),
-                comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
-                phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
-                cartProducts = cartProducts
+            OrderWithCartProducts(
+                Order(
+                    street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
+                    house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
+                    flat = viewDataBinding.fragmentOrderEtFlat.text.toString(),
+                    entrance = viewDataBinding.fragmentOrderEtEntrance.text.toString(),
+                    intercom = viewDataBinding.fragmentOrderEtIntercom.text.toString(),
+                    floor = viewDataBinding.fragmentOrderEtFloor.text.toString(),
+                    comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
+                    phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
+                ),
+                cartProducts
             )
         )
     }

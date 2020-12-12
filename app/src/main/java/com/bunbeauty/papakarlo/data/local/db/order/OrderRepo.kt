@@ -1,7 +1,11 @@
 package com.bunbeauty.papakarlo.data.local.db.order
 
-import com.bunbeauty.papakarlo.data.model.Order
+import androidx.lifecycle.LiveData
+import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
+import kotlinx.coroutines.Deferred
 
 interface OrderRepo {
-    suspend fun insertOrder(order: Order)
+    suspend fun insertOrderAsync(order: Order): Deferred<Order>
+    fun getOrdersWithCartProducts(): LiveData<List<OrderWithCartProducts>>
 }

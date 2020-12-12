@@ -21,6 +21,9 @@ class DataModule {
     //DAO
 
     @Provides
-    fun provideCartDao(localDatabase: LocalDatabase) = localDatabase.getCartDao()
+    fun provideCartProductDao(localDatabase: LocalDatabase) = localDatabase.cartProductDao()
+
+    @Provides
+    fun provideOrderDao(localDatabase: LocalDatabase) = localDatabase.orderDao()
 
 }

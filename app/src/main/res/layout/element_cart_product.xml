@@ -19,9 +19,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cart_product_mcv_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp">
+        style="@style/DefaultMaterialCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

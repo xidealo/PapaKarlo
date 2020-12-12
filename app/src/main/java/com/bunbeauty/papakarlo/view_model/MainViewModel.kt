@@ -4,7 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.bunbeauty.papakarlo.data.local.db.CartDao
+import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.enums.ProductCode
@@ -18,7 +18,7 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class MainViewModel @Inject constructor(private val cartDao: CartDao) : BaseViewModel(),
+class MainViewModel @Inject constructor(private val cartProductDao: CartProductDao) : BaseViewModel(),
     CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(private val cartDao: CartDao) : BaseView
     lateinit var mainNavigator: WeakReference<MainNavigator>
 
     val cartProductListLiveData by lazy {
-        cartDao.getCart()
+        cartProductDao.getCartProductWithoutOrder()
     }
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->
@@ -70,12 +70,12 @@ class MainViewModel @Inject constructor(private val cartDao: CartDao) : BaseView
         }
         if (cartProduct == null) {
             launch(Dispatchers.IO) {
-                cartDao.insert(CartProduct(menuProduct = menuProduct))
+                cartProductDao.insert(CartProduct(menuProduct = menuProduct))
             }
         } else {
             cartProduct.count++
             launch(Dispatchers.IO) {
-                cartDao.update(cartProduct)
+                cartProductDao.update(cartProduct)
             }
         }
     }

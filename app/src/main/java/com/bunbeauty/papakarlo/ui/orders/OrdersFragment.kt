@@ -9,9 +9,12 @@ import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
+import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.view_model.OrdersViewModel
+import javax.inject.Inject
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>() {
 
@@ -24,10 +27,21 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>() {
         viewModelComponent.inject(this)
     }
 
+    @Inject
+    lateinit var ordersAdapter: OrdersAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
 
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
+        viewModel.orderWithCartProductsLiveData.observe(viewLifecycleOwner) { orderWithCartProducts ->
+            ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.order.time })
         }
     }
 

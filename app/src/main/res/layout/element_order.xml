@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="menuProduct"
+            type="com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView style="@style/DefaultMaterialCard">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/small_padding">
+
+            <TextView
+                android:id="@+id/element_order_tv_uuid"
+                style="@style/TitleOrderElement"
+                android:text="@{menuProduct.order.getUuidCode()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/element_order_tv_time"
+                style="@style/TimeOrderElement"
+                android:text="@{menuProduct.order.getTimeHHMM()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/element_order_tv_address"
+                style="@style/AddressOrderElement"
+                android:text="@{menuProduct.order.getAddress()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_uuid" />
+
+            <TextView
+                android:id="@+id/element_order_tv_full_price"
+                style="@style/CostOrderElement"
+                android:text="@{menuProduct.getFullPrice()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_address" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

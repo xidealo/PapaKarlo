@@ -4,7 +4,9 @@ import android.os.Parcelable
 import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.bunbeauty.papakarlo.data.model.order.Order
 import kotlinx.parcelize.Parcelize
 
 @Entity
@@ -13,7 +15,7 @@ data class CartProduct(
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",
-    @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct,
+    @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct = MenuProduct(),
     var count: Int = 1,
     var discount: Float = 0f,
     var orderUuid: String = ""
@@ -27,7 +29,7 @@ data class CartProduct(
         return menuProduct.cost * count
     }
 
-    companion object{
+    companion object {
         const val CART_PRODUCT = "cart product"
         const val CART_PRODUCTS = "cart products"
 

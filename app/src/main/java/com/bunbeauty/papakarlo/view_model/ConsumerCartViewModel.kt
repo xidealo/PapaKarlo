@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.view_model
 
-import com.bunbeauty.papakarlo.data.local.db.CartDao
+import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ConsumerCartViewModel @Inject constructor(private val cartDao: CartDao) : BaseViewModel(),
+class ConsumerCartViewModel @Inject constructor(private val cartProductDao: CartProductDao) : BaseViewModel(),
     CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
@@ -20,17 +20,17 @@ class ConsumerCartViewModel @Inject constructor(private val cartDao: CartDao) : 
     lateinit var consumerCartNavigator: WeakReference<ConsumerCartNavigator>
 
     val cartProductListLiveData by lazy {
-        cartDao.getCart()
+        cartProductDao.getCartProductWithoutOrder()
     }
 
     fun updateCartProduct(cartProduct: CartProduct) {
         if (cartProduct.count > 0) {
             launch(Dispatchers.IO) {
-                cartDao.update(cartProduct)
+                cartProductDao.update(cartProduct)
             }
         } else {
             launch(Dispatchers.IO) {
-                cartDao.delete(cartProduct)
+                cartProductDao.delete(cartProduct)
             }
         }
     }

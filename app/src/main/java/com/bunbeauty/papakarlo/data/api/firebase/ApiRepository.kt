@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.data.api.firebase
 
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.data.model.Order
+import com.bunbeauty.papakarlo.data.model.order.Order
 import com.google.firebase.database.FirebaseDatabase
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ class ApiRepository @Inject constructor() : IApiRepository {
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
-    override fun insertOrder(order: Order) {
+    override fun insertOrder(order: Order): String {
 
         order.uuid = firebaseInstance.getReference(Order.ORDERS).push().key!!
 
@@ -28,20 +28,15 @@ class ApiRepository @Inject constructor() : IApiRepository {
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
         orderRef.updateChildren(orderItems)
-
-        for (cartProduct in order.cartProducts) {
-            insertCartProduct(cartProduct, order.uuid)
-        }
+        return order.uuid
     }
 
-    override fun insertCartProduct(cartProduct: CartProduct, orderUuid: String) {
-
-
+    override fun insertCartProduct(cartProduct: CartProduct): String {
         cartProduct.uuid = firebaseInstance.getReference(Order.ORDERS).push().key!!
 
         val cartProductRef = firebaseInstance
             .getReference(Order.ORDERS)
-            .child(orderUuid)
+            .child(cartProduct.orderUuid)
             .child(CartProduct.CART_PRODUCTS)
             .child(cartProduct.uuid)
 
@@ -52,9 +47,10 @@ class ApiRepository @Inject constructor() : IApiRepository {
         cartProductItems[MenuProduct.COST] = cartProduct.menuProduct.cost
         cartProductItems[MenuProduct.GRAM] = cartProduct.menuProduct.gram
         cartProductItems[MenuProduct.DESCRIPTION] = cartProduct.menuProduct.description
-        cartProductItems[MenuProduct.PHOTO_LINK] =cartProduct.menuProduct.photoLink
+        cartProductItems[MenuProduct.PHOTO_LINK] = cartProduct.menuProduct.photoLink
         cartProductItems[MenuProduct.PRODUCT_CODE] = cartProduct.menuProduct.productCode
         cartProductRef.updateChildren(cartProductItems)
+        return cartProduct.uuid
     }
 
 

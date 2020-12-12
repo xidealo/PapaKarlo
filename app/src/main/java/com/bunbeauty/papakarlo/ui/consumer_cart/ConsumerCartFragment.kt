@@ -27,13 +27,11 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
+
     var cartProducts: ArrayList<CartProduct> = arrayListOf()
 
     @Inject
     lateinit var cartProductsAdapter: CartProductsAdapter
-
-    @Inject
-    lateinit var linearLayoutManager: LinearLayoutManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as MainActivity).hideBottomPanel()
