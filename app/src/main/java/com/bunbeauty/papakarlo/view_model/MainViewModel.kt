@@ -41,19 +41,4 @@ class MainViewModel @Inject constructor(
             cafeRepo.refreshCafeList()
         }
     }
-
-    /*val streets = context.resources.getStringArray(R.array.right).mapIndexed { i, str ->
-            Street("0cafe-0district-${i}street", str)
-        }
-
-        val ref = FirebaseDatabase.getInstance()
-            .getReference("COMPANY")
-            .child(BuildConfig.APP_ID)
-            .child(Cafe.CAFES)
-            .child("0")
-            .child("districts")
-            .child("0")
-            .child("streets")
-
-        ref.setValue(streets)*/
 }
