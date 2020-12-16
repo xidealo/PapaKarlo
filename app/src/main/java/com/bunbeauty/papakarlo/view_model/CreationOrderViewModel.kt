@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.view_model
 
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import androidx.lifecycle.Transformations.map
@@ -15,7 +14,6 @@ import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
-import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -27,7 +25,6 @@ class CreationOrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val stringHelper: IStringHelper,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
 ) : BaseViewModel() {
@@ -44,7 +41,6 @@ class CreationOrderViewModel @Inject constructor(
                 map(addressRepo.getAddressById(addressId)) { firstAddress ->
                     val deliveryAddress = address ?: firstAddress
                     hasAddressField.set(deliveryAddress != null)
-                    Log.d("test", "deliveryAddress != null " + (deliveryAddress != null))
                     deliveryAddress
                 }
             }
