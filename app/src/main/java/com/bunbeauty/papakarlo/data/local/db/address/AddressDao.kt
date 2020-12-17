@@ -19,5 +19,8 @@ interface AddressDao : BaseDao<Address> {
     fun getCafeAddresses(): LiveData<List<Address>>
 
     @Query("SELECT * FROM Address WHERE Address.id == :id")
-    fun getAddress(id:Long): Flow<Address?>
+    fun getAddressById(id:Long): LiveData<Address?>
+
+    @Query("SELECT * FROM Address LIMIT 1")
+    fun getFirstAddress(): LiveData<Address?>
 }

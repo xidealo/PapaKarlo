@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 interface IStringHelper {
-    fun toString(address: Address): String
+    fun toString(address: Address?): String
     fun toString(orderEntity: OrderEntity): String
     fun toString(cartProducts: List<CartProduct>): String
     fun toStringCost(menuProduct: MenuProduct): String

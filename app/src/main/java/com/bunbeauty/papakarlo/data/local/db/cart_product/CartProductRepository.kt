@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.data.local.db.cart_product
 
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,14 +13,12 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
         return cartProduct
     }
 
-    override fun getCartProductList() =
+    override fun getCartProductListLiveData() =
         cartProductDao.getCartProductListLiveData()
 
-    override suspend fun getCartProductListAsync() =
+    override suspend fun getCartProductList(): List<CartProduct> =
         withContext(Dispatchers.IO) {
-            async {
-                cartProductDao.getCartProductList()
-            }
+            cartProductDao.getCartProductList()
         }
 
     override suspend fun update(cartProduct: CartProduct) {

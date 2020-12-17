@@ -56,14 +56,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/large_margin"
-                                android:checked="@{viewModel.isDeliveryField}"
+                                android:checked="true"
                                 android:text="@string/title_creation_order_delivery" />
 
                             <RadioButton
                                 android:id="@+id/fragment_creation_order_rb_pickup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:checked="@{!viewModel.isDeliveryField}"
                                 android:text="@string/title_creation_order_pickup" />
                         </RadioGroup>
 
@@ -78,7 +77,7 @@
                             android:id="@+id/fragment_creation_order_mcv_address_pick"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="@{!viewModel.showCreateAddressField || !viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
+                            android:visibility="@{viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                             app:cardElevation="0dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +94,6 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_weight="1"
                                     android:paddingVertical="@dimen/small_padding"
-                                    android:text="@{viewModel.lastAddressField}"
                                     app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_iv_address"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -119,7 +117,7 @@
                                 android:layout_width="0dp"
                                 android:onClick="@{()->viewModel.onAddAddressClick()}"
                                 android:text="@string/action_creation_address_address"
-                                android:visibility="@{(viewModel.showCreateAddressField &amp;&amp; viewModel.isDeliveryField) ? View.VISIBLE : View.GONE}"
+                                android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address_pick" />
@@ -131,7 +129,7 @@
                                 android:layout_marginEnd="@dimen/small_margin"
                                 android:contentDescription="Description"
                                 android:src="@drawable/ic_add"
-                                android:visibility="@{(viewModel.showCreateAddressField &amp;&amp; viewModel.isDeliveryField) ? View.VISIBLE : View.GONE}"
+                                android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                                 app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />

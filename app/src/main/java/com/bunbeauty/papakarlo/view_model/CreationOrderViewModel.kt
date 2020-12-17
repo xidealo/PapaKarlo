@@ -1,8 +1,10 @@
 package com.bunbeauty.papakarlo.view_model
 
+import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.Transformations.switchMap
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
@@ -15,7 +17,7 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
@@ -25,85 +27,62 @@ class CreationOrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val iStringHelper: IStringHelper,
+    private val stringHelper: IStringHelper,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
 ) : BaseViewModel() {
+
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
     val errorMessageLiveData = MutableLiveData<String>()
-    val lastAddressField = ObservableField("")
-    val isDeliveryField = ObservableField(true)
-    val showCreateAddressField = ObservableField(false)
-    var currentDeliveryAddress: Address? = null
-    var currentPickUpAddress: Address? = null
+    val hasAddressField = ObservableField(false)
 
-    fun getLastDeliveryAddress() {
-        if (currentDeliveryAddress != null) {
-            lastAddressField.set(iStringHelper.toString(currentDeliveryAddress!!))
-            lastAddressField.notifyChange()
-            return
-        }
-
-        viewModelScope.launch {
-            dataStoreHelper.selectedDeliveryAddress.collect { addressId ->
-
-                addressRepo.getAddress(addressId).collect {
-                    if (it?.street == null) {
-                        lastAddressField.set("")
-                        showCreateAddressField.set(true)
-                    } else {
-                        currentDeliveryAddress = it
-                        lastAddressField.set(
-                            iStringHelper.toString(it)
-                        )
-                    }
+    val isDeliveryLiveData = MutableLiveData(true)
+    private val deliveryAddressLiveData: LiveData<Address?> by lazy {
+        switchMap(dataStoreHelper.selectedDeliveryAddress.asLiveData()) { addressId ->
+            switchMap(addressRepo.getAddressById(addressId)) { address ->
+                map(addressRepo.getAddressById(addressId)) { firstAddress ->
+                    val deliveryAddress = address ?: firstAddress
+                    hasAddressField.set(deliveryAddress != null)
+                    Log.d("test", "deliveryAddress != null " + (deliveryAddress != null))
+                    deliveryAddress
                 }
             }
         }
     }
-
-    fun getLastPickupAddress() {
-        if (currentPickUpAddress != null) {
-            lastAddressField.set(iStringHelper.toString(currentPickUpAddress!!))
-            return
+    private val pickupAddressLiveData: LiveData<Address?> by lazy {
+        switchMap(dataStoreHelper.selectedPickupAddress.asLiveData()) { addressId ->
+            addressRepo.getAddressById(addressId)
         }
-
-        viewModelScope.launch {
-            dataStoreHelper.selectedPickupAddress.collect { addressId ->
-                addressRepo.getAddress(addressId).collect {
-                    if (it?.street == null) {
-                        lastAddressField.set("")
-                    } else {
-                        currentPickUpAddress = it
-                        lastAddressField.set(iStringHelper.toString(it))
-                    }
-                }
+    }
+    val addressLiveData: LiveData<Address?> by lazy {
+        switchMap(isDeliveryLiveData) { isDelivery ->
+            if (isDelivery) {
+                hasAddressField.set(deliveryAddressLiveData.value != null)
+                deliveryAddressLiveData
+            } else {
+                hasAddressField.set(true)
+                pickupAddressLiveData
             }
         }
     }
 
     fun createOrder(orderEntity: OrderEntity) {
-        viewModelScope.launch {
-            val address = if (isDeliveryField.get()!!) {
-                currentDeliveryAddress
-            } else {
-                currentPickUpAddress
-            }
-            if (address == null) {
+        viewModelScope.launch(IO) {
+            if (addressLiveData.value == null) {
                 errorMessageLiveData.value =
                     resourcesProvider.getString(R.string.error_creation_order_address)
                 return@launch
             } else {
-                orderEntity.address = address
+                orderEntity.address = addressLiveData.value!!
             }
 
-            orderEntity.isDelivery = isDeliveryField.get()!!
+            orderEntity.isDelivery = isDeliveryLiveData.value!!
             orderEntity.code = generateCode()
             val order = Order(
                 orderEntity,
-                cartProductRepo.getCartProductListAsync().await(),
-                cafeRepo.getCafeEntityByDistrict(orderEntity.address.street?.districtId ?: "ERROR CAFE").await().id
+                cartProductRepo.getCartProductList(),
+                cafeRepo.getCafeEntityByDistrict(orderEntity.address.street?.districtId ?: "ERROR CAFE").id
             )
 
             orderRepo.saveOrder(order)

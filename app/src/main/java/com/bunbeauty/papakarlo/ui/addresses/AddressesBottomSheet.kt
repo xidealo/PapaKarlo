@@ -7,8 +7,10 @@ import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.setViewVisibility
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
+import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.view_model.AddressesViewModel
 import java.lang.ref.WeakReference
@@ -28,12 +30,19 @@ class AddressesBottomSheet :
     lateinit var addressesAdapter: AddressesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.navigator = WeakReference(this)
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.navigator = WeakReference(this)
+        
+        val isDelivery = fromBundle(requireArguments()).isDelivery
+        viewDataBinding.bottomSheetAddressBtnCreateAddress.setViewVisibility(isDelivery)
+        viewDataBinding.fragmentCreationOrderIvCreateAddress.setViewVisibility(isDelivery)
+        viewModel.isDelivery = isDelivery
+
         addressesAdapter.addressesViewModel = viewModel
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
-        val isDelivery = AddressesBottomSheetArgs.fromBundle(requireArguments()).isDelivery
-        viewModel.getAddressesLiveData(isDelivery).observe(viewLifecycleOwner) {
+
+        viewModel.addressesLiveData.observe(viewLifecycleOwner) {
             addressesAdapter.setItemList(it)
         }
     }

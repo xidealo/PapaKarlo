@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -25,14 +24,14 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     val isCartEmpty = ObservableField(false)
 
     val cartProductListLiveData by lazy {
-        Transformations.map(cartProductRepo.getCartProductList()) { cartProductList ->
+        Transformations.map(cartProductRepo.getCartProductListLiveData()) { cartProductList ->
             isCartEmpty.set(cartProductList.isEmpty())
             cartProductList
         }
     }
 
     fun addProductToCart(menuProduct: MenuProduct) = launch(Dispatchers.IO) {
-        val cartProduct = cartProductRepo.getCartProductListAsync().await().find { cartProduct ->
+        val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
             cartProduct.menuProduct == menuProduct
         }
 

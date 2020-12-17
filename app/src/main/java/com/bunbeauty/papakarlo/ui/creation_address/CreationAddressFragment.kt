@@ -13,9 +13,8 @@ import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.CreationAddressViewModel
 import java.lang.ref.WeakReference
 
-class CreationAddressFragment :
-    CartClickableFragment<FragmentCreationAddressBinding, CreationAddressViewModel>(),
-    CreationAddressNavigator {
+class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBinding,
+        CreationAddressViewModel>(), CreationAddressNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_creation_address
@@ -30,6 +29,7 @@ class CreationAddressFragment :
         title = resources.getString(R.string.title_creation_address)
         viewModel.navigator = WeakReference(this)
         viewModel.getStreets()
+
         super.onViewCreated(view, savedInstanceState)
     }
 

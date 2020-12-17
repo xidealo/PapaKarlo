@@ -28,13 +28,13 @@ class AddressesAdapter @Inject constructor(
     override fun onBindViewHolder(holder: AddressViewHolder, i: Int) {
         holder.binding?.address = itemList[i]
         holder.binding?.iStringHelper = iStringHelper
-        holder.setListener(itemList[i])
+        holder.setOnClickListener(itemList[i])
     }
 
     inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementAddressBinding>(view)
 
-        fun setListener(address: Address) {
+        fun setOnClickListener(address: Address) {
             binding?.elementAddressMcvMain?.setOnClickListener {
                 addressesViewModel.saveSelectedAddress(address)
             }

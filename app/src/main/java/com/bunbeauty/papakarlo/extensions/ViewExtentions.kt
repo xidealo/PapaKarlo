@@ -16,3 +16,12 @@ fun View.gone(): View {
     visibility = View.GONE
     return this
 }
+
+fun View.setViewVisibility(isVisible: Boolean): View {
+    if (isVisible) {
+        this.visible()
+    } else {
+        this.gone()
+    }
+    return this
+}

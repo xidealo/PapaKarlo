@@ -12,7 +12,11 @@ import javax.inject.Inject
 
 class StringHelper @Inject constructor() : IStringHelper {
 
-    override fun toString(address: Address): String {
+    override fun toString(address: Address?): String {
+        if (address == null) {
+            return ""
+        }
+
         return checkLastSymbol(
             "${address.street?.name ?: "НЕТ"}, " +
                     "Дом: ${address.house}, " +

@@ -34,7 +34,6 @@
             android:layout_width="0dp"
             android:onClick="@{()->viewModel.createAddressClick()}"
             android:text="@string/action_creation_address_address"
-            android:visibility="@{viewModel.isDeliveryField() ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_address_rv_result" />
@@ -46,7 +45,6 @@
             android:layout_marginEnd="@dimen/small_margin"
             android:contentDescription="Description"
             android:src="@drawable/ic_add"
-            android:visibility="@{viewModel.isDeliveryField() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_address_btn_create_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/bottom_sheet_address_btn_create_address" />

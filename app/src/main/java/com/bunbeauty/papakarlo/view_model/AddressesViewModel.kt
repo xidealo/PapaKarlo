@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.view_model
 
-import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
@@ -15,32 +13,28 @@ import javax.inject.Inject
 
 class AddressesViewModel @Inject constructor(
     private val addressRepo: AddressRepo,
-    private val iDataStoreHelper: IDataStoreHelper
+    private val dataStoreHelper: IDataStoreHelper
 ) : BaseViewModel() {
 
     var navigator: WeakReference<AddressesNavigator>? = null
-    var isDeliveryField = ObservableField(false)
+    var isDelivery = false
 
-    private val deliveryAddressesLiveData by lazy {
-        Transformations.map(addressRepo.getNotCafeAddresses()) {
-            it.reversed()
-        }
-    }
-
-    fun getAddressesLiveData(isDelivery: Boolean): LiveData<List<Address>> {
-        isDeliveryField.set(isDelivery)
-        return if (isDelivery)
-            deliveryAddressesLiveData
-        else
+    val addressesLiveData by lazy {
+        if (isDelivery) {
+            Transformations.map(addressRepo.getNotCafeAddresses()) {
+                it.reversed()
+            }
+        } else {
             addressRepo.getCafeAddresses()
+        }
     }
 
     fun saveSelectedAddress(address: Address) {
         viewModelScope.launch {
-            if (isDeliveryField.get() == true)
-                iDataStoreHelper.saveSelectedDeliveryAddress(address.id)
+            if (isDelivery)
+                dataStoreHelper.saveSelectedDeliveryAddress(address.id)
             else
-                iDataStoreHelper.saveSelectedPickupAddress(address.id)
+                dataStoreHelper.saveSelectedPickupAddress(address.id)
 
             navigator?.get()?.goToBack()
         }
