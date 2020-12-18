@@ -52,13 +52,20 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     }
 
     override fun goToOrder() {
-        parentFragmentManager.beginTransaction()
-            .replace(
-                (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
-                CreationOrderFragment.newInstance(cartProducts)
+        if (cartProducts.isNotEmpty()) {
+            parentFragmentManager.beginTransaction()
+                .replace(
+                    (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
+                    CreationOrderFragment.newInstance(cartProducts)
+                )
+                .addToBackStack(CreationOrderFragment.TAG)
+                .commit()
+        } else {
+            (activity as MainActivity).showMessage(
+                requireActivity().resources.getString(R.string.msg_consumer_cart_empty),
+                viewDataBinding.fragmentConsumerCartClMain
             )
-            .addToBackStack(CreationOrderFragment.TAG)
-            .commit()
+        }
     }
 
     companion object {

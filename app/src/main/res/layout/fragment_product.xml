@@ -78,7 +78,6 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_product_btn_add"
             style="@style/MainButton"
-            android:layout_margin="@dimen/small_margin"
             android:onClick="@{()->viewModel.addWishProductClick(product)}"
             android:text="@string/action_product_want"
             app:layout_constraintBottom_toBottomOf="parent"

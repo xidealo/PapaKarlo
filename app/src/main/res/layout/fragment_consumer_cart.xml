@@ -14,6 +14,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_consumer_cart_cl_main"
         style="@style/DefaultPage"
         tools:context=".ui.consumer_cart.ConsumerCartFragment">
 
@@ -30,7 +31,6 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/activity_product_btn_add"
             style="@style/MainButton"
-            android:layout_margin="@dimen/small_margin"
             android:onClick="@{()->viewModel.goToOrderClick()}"
             android:text="@string/action_consumer_cart_checkout"
             app:layout_constraintBottom_toBottomOf="parent"

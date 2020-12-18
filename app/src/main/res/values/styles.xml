@@ -48,7 +48,7 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="cornerRadius">0dp</item>
-
+        <item name="android:layout_margin">@dimen/small_margin</item>
     </style>
     <!-- FRAGMENT_PRODUCT -->
     <style name="TitleFragmentProduct">
@@ -170,6 +170,13 @@
         <item name="android:layout_marginTop">@dimen/small_margin</item>
     </style>
 
+    <style name="MaterialCardCreationOrder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/backgroundComponent</item>
+        <item name="cornerRadius">@dimen/default_radius</item>
+    </style>
+
     <!--CONTACTS-->
     <style name="TextContacts">
         <item name="android:textSize">@dimen/default_text</item>
@@ -185,7 +192,7 @@
         <item name="android:background">@color/backgroundComponent</item>
     </style>
 
-   <style name="LinearLayoutContacts">
+    <style name="LinearLayoutContacts">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
@@ -217,7 +224,7 @@
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
-  <style name="CostOrderElement">
+    <style name="CostOrderElement">
         <item name="android:textSize">@dimen/small_text</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>

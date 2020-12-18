@@ -30,8 +30,7 @@
 
     <!-- CONSUMER CART -->
     <string name="action_consumer_cart_checkout">Оформить заказ</string>
-    <string name="msg_consumer_cart_common_count">Общее количество :</string>
-    <string name="msg_consumer_cart_common_price">Общая стоимость :</string>
+    <string name="msg_consumer_cart_empty">Пустая корзина</string>
 
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>
@@ -51,7 +50,6 @@
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>
     <string name="title_bottom_navigation_menu_menu">Меню</string>
     <string name="title_bottom_navigation_menu_orders">Заказы</string>
-
 
     <!-- CONTACTS  -->
     <string name="msg_contacts_address">г.Кимры, улица Чапаева, 22а</string>
