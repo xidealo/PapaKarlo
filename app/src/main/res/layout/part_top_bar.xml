@@ -3,23 +3,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.MainViewModel" />
-    </data>
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/part_tb_top_bar"
-        style="@style/TopBar"
-        app:title="@string/title_top_bar_title">
+        style="@style/TopBar">
 
         <TextView
             android:id="@+id/part_top_bar_tv_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:onClick="@{()->viewModel.goToConsumerCartClick()}"
             android:layout_marginEnd="@dimen/default_margin"
             android:textColor="@color/white"
             android:drawablePadding="@dimen/default_padding"

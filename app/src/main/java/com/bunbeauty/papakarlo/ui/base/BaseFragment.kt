@@ -4,18 +4,23 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
 
     abstract var title: String
     abstract var layoutId: Int
@@ -23,8 +28,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     abstract var viewModelClass: Class<V>
 
     lateinit var viewDataBinding: T
-    var activity: BaseActivity<*>? = null
-
     lateinit var viewModel: V
 
     @Inject
@@ -40,10 +43,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         inject(viewModelComponent)
 
         viewModel = ViewModelProvider(this, modelFactory).get(viewModelClass)
-
-        if (context is BaseActivity<*>) {
-            activity = context
-        }
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
@@ -60,8 +59,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        (activity as MainActivity).setTitle(title)
-        (activity as MainActivity).showBottomPanel()
         return viewDataBinding.root
     }
 
@@ -73,8 +70,21 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         viewDataBinding.executePendingBindings()
     }
 
-    override fun onDetach() {
-        activity = null
-        super.onDetach()
+    fun showMessage(message: String) {
+        val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
+        snack.show()
+    }
+
+    fun showError(messageError: String) {
+        val snack = Snackbar.make(viewDataBinding.root, messageError, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.errorColor))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
+        snack.show()
     }
 }

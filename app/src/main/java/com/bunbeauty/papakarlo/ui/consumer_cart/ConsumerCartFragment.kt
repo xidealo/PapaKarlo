@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui.consumer_cart
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
@@ -10,6 +11,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.actionCartFragmentToCreationOrder
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
@@ -28,53 +30,30 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         viewModelComponent.inject(this)
     }
 
-    var cartProducts: ArrayList<CartProduct> = arrayListOf()
-
     @Inject
     lateinit var cartProductsAdapter: CartProductsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as MainActivity).hideBottomPanel()
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.navigator = WeakReference(this)
         setupRecyclerView()
-        viewModel.consumerCartNavigator = WeakReference(this)
-        cartProductsAdapter.consumerCartViewModel = viewModel
+
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList)
-            cartProducts.clear()
-            cartProducts.addAll(cartProductList)
         }
     }
 
     private fun setupRecyclerView() {
+        cartProductsAdapter.consumerCartViewModel = viewModel
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
     }
 
     override fun goToOrder() {
-        if (cartProducts.isNotEmpty()) {
-            parentFragmentManager.beginTransaction()
-                .replace(
-                    (activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
-                    CreationOrderFragment.newInstance(cartProducts)
-                )
-                .addToBackStack(CreationOrderFragment.TAG)
-                .commit()
-        } else {
-            (activity as MainActivity).showMessage(
-                requireActivity().resources.getString(R.string.msg_consumer_cart_empty),
-                viewDataBinding.fragmentConsumerCartClMain
-            )
-        }
+        findNavController().navigate(actionCartFragmentToCreationOrder())
     }
 
     companion object {
         const val TAG = "ConsumerCartFragment"
-
-        @JvmStatic
-        fun newInstance() =
-            ConsumerCartFragment().apply {
-                arguments = Bundle().apply {}
-            }
     }
 }

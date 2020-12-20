@@ -1,53 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.MainViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_product_menu_cl_main"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include
             android:id="@+id/activity_main_tb_top_bar"
-            layout="@layout/part_top_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:viewModel="@{viewModel}" />
+            layout="@layout/part_top_bar" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_product_menu_cl_fragment"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/activity_main_fcv_container"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/activity_main_tb_bottom_bar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_main_tb_top_bar">
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_main" />
 
-            <ProgressBar
-                android:id="@+id/activity_main_pb_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:isLoading="@{viewModel.isLoading}" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include
-            android:id="@+id/activity_main_tb_bottom_bar"
-            layout="@layout/part_bottom_panel"
-            app:layout_constraintBottom_toBottomOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

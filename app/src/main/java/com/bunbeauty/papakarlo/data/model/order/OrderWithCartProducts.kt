@@ -10,7 +10,7 @@ data class OrderWithCartProducts(
     var order: Order = Order(),
 
     @Relation(parentColumn = "uuid", entityColumn = "orderUuid")
-    var cartProducts: MutableList<CartProduct> = ArrayList()
+    var cartProducts: List<CartProduct> = ArrayList()
 ) : BaseModel() {
     fun getFullPrice(): String {
         var fullPrice = 0

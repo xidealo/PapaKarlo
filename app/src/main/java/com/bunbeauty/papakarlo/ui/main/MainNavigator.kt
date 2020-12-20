@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui.main
 
-import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.papakarlo.ui.base.BaseNavigator
 
-interface MainNavigator {
-    fun goToConsumerCart(wishMenuProductList: Set<CartProduct>)
+interface MainNavigator: BaseNavigator {
 }

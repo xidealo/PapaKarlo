@@ -53,5 +53,4 @@ class ApiRepository @Inject constructor() : IApiRepository {
         return cartProduct.uuid
     }
 
-
 }

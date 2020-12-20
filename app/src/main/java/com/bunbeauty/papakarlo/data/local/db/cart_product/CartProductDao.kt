@@ -5,10 +5,14 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
+import kotlinx.coroutines.Deferred
 
 @Dao
 interface CartProductDao : BaseDao<CartProduct> {
 
     @Query("SELECT * FROM CartProduct WHERE orderUuid = \"\" ")
-    fun getCartProductWithoutOrder(): LiveData<List<CartProduct>>
+    fun getCartProductListLiveData(): LiveData<List<CartProduct>>
+
+    @Query("SELECT * FROM CartProduct WHERE orderUuid = \"\" ")
+    fun getCartProductList(): List<CartProduct>
 }

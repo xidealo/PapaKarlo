@@ -10,6 +10,12 @@
     title_registration_pass
     -->
 
+    <!-- TITLES -->
+    <string name="title_main">Главная</string>
+    <string name="title_cart">Карзина</string>
+    <string name="title_order">Оформление заказа</string>
+    <string name="title_product">Продукт</string>
+
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
     <string name="hint_product_title">Title</string>

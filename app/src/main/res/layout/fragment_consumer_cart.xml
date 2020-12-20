@@ -23,13 +23,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/activity_product_btn_add"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_product_btn_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/activity_product_btn_add"
+            android:id="@+id/fragment_product_btn_add"
             style="@style/MainButton"
             android:onClick="@{()->viewModel.goToOrderClick()}"
             android:text="@string/action_consumer_cart_checkout"

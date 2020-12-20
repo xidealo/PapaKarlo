@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.ui.creation_order
 
-interface CreationOrderNavigator {
-    fun createOrder()
+import com.bunbeauty.papakarlo.ui.base.BaseNavigator
+
+interface CreationOrderNavigator: BaseNavigator {
 }

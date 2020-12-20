@@ -19,7 +19,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     abstract val layoutId: Int
     abstract val dataBindingVariable: Int
-    abstract val viewModel: BaseViewModel
+    abstract val viewModel: BaseViewModel<*>
 
     lateinit var viewDataBinding: T
 
@@ -41,34 +41,4 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
-
-    fun showError(messageError: String, layout: View) {
-        val snack = Snackbar.make(layout, messageError, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.errorColor))
-            .setTextColor(ContextCompat.getColor(this, R.color.white))
-            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
-            View.TEXT_ALIGNMENT_CENTER
-        snack.show()
-    }
-
-    fun showMessage(message: String, layout: View) {
-        val snack = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimary))
-            .setTextColor(ContextCompat.getColor(this, R.color.white))
-            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
-
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
-            View.TEXT_ALIGNMENT_CENTER
-
-        snack.show()
-    }
-
-    fun onFragmentAttached() {
-
-    }
-
-    fun onFragmentDetached(tag: String?) {
-
-    }
 }

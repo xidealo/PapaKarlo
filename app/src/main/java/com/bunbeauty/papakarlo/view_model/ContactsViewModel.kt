@@ -7,19 +7,19 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ContactsViewModel @Inject constructor(private val context: Context) : BaseViewModel() {
+class ContactsViewModel @Inject constructor(private val context: Context) : BaseViewModel<ContactsNavigator>() {
 
-    lateinit var contactsNavigator: WeakReference<ContactsNavigator>
+    override var navigator: WeakReference<ContactsNavigator>? = null
 
     fun addressClick() {
-        contactsNavigator.get()?.goToAddress(56.847314, 37.369407)
+        navigator?.get()?.goToAddress(56.847314, 37.369407)
     }
 
     fun workTimeClick() {
-        contactsNavigator.get()?.goToTime()
+        navigator?.get()?.goToTime()
     }
 
     fun phoneClick() {
-        contactsNavigator.get()?.goToPhone(context.getString(R.string.msg_contacts_phone))
+        navigator?.get()?.goToPhone(context.getString(R.string.msg_contacts_phone))
     }
 }

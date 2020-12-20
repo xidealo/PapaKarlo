@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu"
+    app:startDestination="@id/menu_fragment">
+
+    <fragment
+        android:id="@+id/contacts_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.contacts.ContactsFragment"
+        android:label="contacts_fragment"
+        tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/menu_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.menu.MenuFragment"
+        android:label="menu_fragment"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/orders_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.orders.OrdersFragment"
+        android:label="orders_fragment"
+        tools:layout="@layout/fragment_orders" />
+
+</navigation>

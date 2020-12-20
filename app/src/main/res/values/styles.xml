@@ -90,6 +90,7 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="titleTextColor">@color/white</item>
+        <item name="navigationIconTint">@color/white</item>
     </style>
 
     <style name="TopBarText">
@@ -230,6 +231,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
+    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">24dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="labelVisibilityMode">unlabeled</item>
+        <item name="menu">@menu/bottom_navigation_menu</item>
     </style>
 
 </resources>

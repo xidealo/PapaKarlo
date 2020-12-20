@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.main.MainFragment"
+        android:label="@string/title_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_main_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_product_fragment"
+            app:destination="@id/product_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cart_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_consumer_cart">
+        <action
+            android:id="@+id/action_cart_fragment_to_creation_order"
+            app:destination="@id/creation_order" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/creation_order"
+        android:name="com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment"
+        android:label="@string/title_order"
+        tools:layout="@layout/fragment_creation_order" >
+        <action
+            android:id="@+id/action_creation_order_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/product_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.product.ProductFragment"
+        android:label="@string/title_product"
+        tools:layout="@layout/fragment_product">
+        <argument
+            android:name="menuProduct"
+            app:argType="com.bunbeauty.papakarlo.data.model.MenuProduct" />
+        <action
+            android:id="@+id/action_product_fragment_to_cart_fragment"
+            app:destination="@id/cart_fragment" />
+    </fragment>
+
+</navigation>

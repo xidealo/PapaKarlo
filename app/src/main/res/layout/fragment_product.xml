@@ -10,10 +10,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.ProductViewModel" />
-
-        <variable
             name="product"
             type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
     </data>
@@ -25,7 +21,7 @@
         tools:context=".ui.product.ProductFragment">
 
         <ImageView
-            android:id="@+id/activity_product_iv_photo"
+            android:id="@+id/fragment_product_iv_photo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/small_margin"
@@ -43,15 +39,15 @@
             app:layout_constraintGuide_percent="0.35" />
 
         <LinearLayout
-            android:id="@+id/activity_product_ll_description"
+            android:id="@+id/fragment_product_ll_description"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="@dimen/default_padding"
-            app:layout_constraintBottom_toTopOf="@id/activity_product_btn_add"
+            app:layout_constraintBottom_toTopOf="@id/fragment_product_btn_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_product_iv_photo">
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo">
 
             <!-- <TextView
                  android:id="@+id/activity_product_tv_title"
@@ -59,26 +55,25 @@
                  android:text="@{product.name}" />-->
 
             <TextView
-                android:id="@+id/activity_product_tv_cost"
+                android:id="@+id/fragment_product_tv_cost"
                 style="@style/CostFragmentProduct"
                 android:text="@{product.getStringCost()}" />
 
             <TextView
-                android:id="@+id/activity_product_tv_gram"
+                android:id="@+id/fragment_product_tv_gram"
                 style="@style/GramFragmentProduct"
                 android:text="@{product.getStringGram()}" />
 
             <TextView
-                android:id="@+id/activity_product_tv_description"
+                android:id="@+id/fragment_product_tv_description"
                 style="@style/DescriptionFragmentProduct"
                 android:layout_marginTop="@dimen/default_margin"
                 android:text="@{product.description}" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/activity_product_btn_add"
+            android:id="@+id/fragment_product_btn_add"
             style="@style/MainButton"
-            android:onClick="@{()->viewModel.addWishProductClick(product)}"
             android:text="@string/action_product_want"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

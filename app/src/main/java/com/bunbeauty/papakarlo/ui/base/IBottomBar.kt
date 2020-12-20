@@ -24,7 +24,7 @@ interface IBottomBar : BottomNavigationView.OnNavigationItemSelectedListener {
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+        /*when (item.itemId) {
             R.id.navigation_contacts -> {
                 goToContacts()
             }
@@ -34,7 +34,7 @@ interface IBottomBar : BottomNavigationView.OnNavigationItemSelectedListener {
             R.id.navigation_orders -> {
                 goToOrders()
             }
-        }
+        }*/
 
         return true
     }

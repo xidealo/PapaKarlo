@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.gms.google-services'
 
 android {
@@ -56,11 +57,12 @@ android {
 
 repositories {
     maven { url 'https://jitpack.io' }
+    google()
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar", "*.arr"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.21"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
@@ -69,6 +71,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatV7Version"
     implementation "com.android.support:design:$rootProject.designVersion"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
 
     testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"
@@ -131,9 +136,10 @@ dependencies {
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database'
-
 }
+

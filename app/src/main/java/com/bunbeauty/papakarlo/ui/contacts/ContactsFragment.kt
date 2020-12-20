@@ -20,6 +20,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_contacts
     override var viewModelClass = ContactsViewModel::class.java
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -32,7 +33,7 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.contactsNavigator = WeakReference(this)
+        viewModel.navigator = WeakReference(this)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -59,13 +60,5 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel
 
     companion object {
         const val TAG = "ContactsFragment"
-
-        @JvmStatic
-        fun newInstance() =
-            ContactsFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

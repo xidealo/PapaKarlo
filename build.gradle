@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.20"
+    ext.kotlin_version = "1.4.21"
     repositories {
         google()
         jcenter()
@@ -9,6 +9,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.4'
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -36,10 +37,10 @@ ext {
 
     // App dependencies
     viewModelVersion = "2.3.0-beta01"
-    dagger2Version = "2.29"
+    dagger2Version = "2.30.1"
     corountinesVersion = "1.3.9"
 
-    retrofitVersion = "2.8.1"
+    retrofitVersion = "2.9.0"
     moshiVersion = "2.4.0"
 
     convertorGsonVersion = "2.8.1"

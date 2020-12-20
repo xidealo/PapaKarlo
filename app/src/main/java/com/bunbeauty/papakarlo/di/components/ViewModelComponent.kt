@@ -2,13 +2,15 @@ package com.bunbeauty.papakarlo.di.components
 
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
-import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment
 import com.bunbeauty.papakarlo.ui.contacts.ContactsFragment
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.ui.main.MainFragment
+import com.bunbeauty.papakarlo.ui.menu.MenuFragment
 import com.bunbeauty.papakarlo.ui.orders.OrdersFragment
 import com.bunbeauty.papakarlo.ui.product.ProductFragment
+import com.bunbeauty.papakarlo.ui.products.ProductsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -31,6 +33,7 @@ interface ViewModelComponent {
     fun inject(creationOrderFragment: CreationOrderFragment)
     fun inject(contactsFragment: ContactsFragment)
     fun inject(ordersFragment: OrdersFragment)
+    fun inject(mainFragment: MainFragment)
 
     // dialogs
 }

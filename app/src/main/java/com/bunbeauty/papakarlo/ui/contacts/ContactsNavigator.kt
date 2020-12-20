@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.ui.contacts
 
-interface ContactsNavigator {
+import com.bunbeauty.papakarlo.ui.base.BaseNavigator
+
+interface ContactsNavigator: BaseNavigator {
     fun goToAddress(longitude: Double, latitude: Double)
     fun goToTime()
     fun goToPhone(phone: String)

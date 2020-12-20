@@ -8,15 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.product.ProductFragment
-import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.ui.ProductsFragment
+import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor(private val context: Context) :
     BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
-    lateinit var productsFragment: ProductsFragment
+    lateinit var productsViewModel: ProductsViewModel
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -36,20 +34,11 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
 
         fun setListener(menuProduct: MenuProduct) {
             binding?.elementMenuProductMcvMain?.setOnClickListener {
-                productsFragment.parentFragmentManager.beginTransaction()
-                    .replace(
-                        (productsFragment.activity as MainActivity).viewDataBinding.activityProductMenuClFragment.id,
-                        ProductFragment.newInstance(menuProduct)
-                    )
-                    .addToBackStack(ProductFragment.TAG)
-                    .commit()
+                productsViewModel.goToProduct(menuProduct)
             }
             binding?.elementMenuProductBtnWant?.setOnClickListener {
-                (productsFragment.activity as MainActivity).viewModel.addCartProduct(menuProduct)
-                (productsFragment.activity as MainActivity).showMessage(
-                    "Вы добавили ${menuProduct.name} в корзину",
-                    productsFragment.viewDataBinding.fragmentProductsClMain
-                )
+                productsViewModel.addProductToCart(menuProduct)
+                productsViewModel.showMessage("Вы добавили ${menuProduct.name} в корзину")
             }
         }
     }

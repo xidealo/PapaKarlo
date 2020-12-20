@@ -19,7 +19,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import javax.inject.Inject
 
-abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragment() {
+abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel<*>> : DialogFragment() {
 
     abstract var layoutId: Int
     abstract var dataBindingVariable: Int
@@ -52,7 +52,6 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
         if (context is BaseActivity<*>) {
             val mActivity: BaseActivity<*> = context
             this.mActivity = mActivity
-            mActivity.onFragmentAttached()
         }
     }
 
@@ -102,11 +101,9 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
 
     open fun dismissDialog(tag: String?) {
         dismiss()
-        getBaseActivity()?.onFragmentDetached(tag)
     }
 
     open fun getBaseActivity(): BaseActivity<*>? {
         return mActivity
     }
-
 }
