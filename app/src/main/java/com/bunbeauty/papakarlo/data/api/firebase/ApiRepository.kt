@@ -27,7 +27,10 @@ class ApiRepository @Inject constructor() : IApiRepository {
         orderItems[Order.FLOOR] = order.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
-        orderRef.updateChildren(orderItems)
+        orderRef.updateChildren(orderItems).addOnCompleteListener {
+            val k = it
+            val t = 0
+        }
         return order.uuid
     }
 
@@ -52,5 +55,4 @@ class ApiRepository @Inject constructor() : IApiRepository {
         cartProductRef.updateChildren(cartProductItems)
         return cartProduct.uuid
     }
-
 }

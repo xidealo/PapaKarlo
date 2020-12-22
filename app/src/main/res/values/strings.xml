@@ -12,7 +12,7 @@
 
     <!-- TITLES -->
     <string name="title_main">Главная</string>
-    <string name="title_cart">Карзина</string>
+    <string name="title_cart">Корзина</string>
     <string name="title_order">Оформление заказа</string>
     <string name="title_product">Продукт</string>
 

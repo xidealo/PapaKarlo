@@ -36,7 +36,7 @@
                     android:drawablePadding="@dimen/default_padding"
                     android:text="@string/msg_contacts_address"
                     app:drawableLeftCompat="@drawable/ic_contact"
-                    app:drawableTint="@color/black" />
+                    app:drawableTint="@color/mainTextColor" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -60,7 +60,7 @@
                     android:drawablePadding="@dimen/default_padding"
                     android:text="@string/msg_contacts_work_time"
                     app:drawableLeftCompat="@drawable/ic_clock"
-                    app:drawableTint="@color/black" />
+                    app:drawableTint="@color/mainTextColor" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -83,7 +83,7 @@
                     android:drawablePadding="@dimen/default_padding"
                     android:text="@string/msg_contacts_phone"
                     app:drawableLeftCompat="@drawable/ic_phone"
-                    app:drawableTint="@color/black" />
+                    app:drawableTint="@color/mainTextColor" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

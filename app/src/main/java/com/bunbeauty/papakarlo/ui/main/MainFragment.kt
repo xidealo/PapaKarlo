@@ -19,7 +19,6 @@ import kotlin.reflect.KFunction1
 class MainFragment: TopBarFragment<FragmentMainBinding, MainViewModel>(), MainNavigator {
 
     override var layoutId = R.layout.fragment_main
-    override var title: String = ""
     override var viewModelClass: Class<MainViewModel> = MainViewModel::class.java
     override var viewModelVariable: Int = BR.viewModel
 

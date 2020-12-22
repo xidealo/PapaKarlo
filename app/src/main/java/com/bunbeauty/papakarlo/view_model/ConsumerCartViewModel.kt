@@ -11,11 +11,12 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ConsumerCartViewModel @Inject constructor() : BaseViewModel<ConsumerCartNavigator>(), CoroutineScope {
+class ConsumerCartViewModel @Inject constructor() : BaseViewModel<ConsumerCartNavigator>(),
+    CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
 
-     override var navigator: WeakReference<ConsumerCartNavigator>? = null
+    override var navigator: WeakReference<ConsumerCartNavigator>? = null
 
     fun updateCartProduct(cartProduct: CartProduct) {
         if (cartProduct.count > 0) {
@@ -30,7 +31,11 @@ class ConsumerCartViewModel @Inject constructor() : BaseViewModel<ConsumerCartNa
     }
 
     fun goToOrderClick() {
-        navigator?.get()?.goToOrder()
+        if (!cartProductListLiveData.value.isNullOrEmpty()){
+            navigator?.get()?.goToOrder()
+        }else {
+            navigator?.get()?.showMessage("Корзина пуста")
+        }
     }
 
 }

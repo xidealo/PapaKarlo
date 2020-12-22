@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>() {
 
-    override var title: String = "Заказы"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_orders
     override var viewModelClass = OrdersViewModel::class.java

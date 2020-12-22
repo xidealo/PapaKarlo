@@ -16,7 +16,6 @@ import java.lang.ref.WeakReference
 class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel>(),
     ContactsNavigator {
 
-    override var title: String = "Контакты"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_contacts
     override var viewModelClass = ContactsViewModel::class.java

@@ -13,9 +13,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/default_margin"
-            android:textColor="@color/white"
+            android:textColor="@color/mainTextColor"
             android:drawablePadding="@dimen/default_padding"
-            app:drawableStartCompat="@drawable/ic_shopping_cart" />
+            app:drawableStartCompat="@drawable/ic_shopping_cart"
+            app:drawableTint="@color/mainTextColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 </layout>

@@ -18,7 +18,6 @@ import java.lang.ref.WeakReference
 class CreationOrderFragment : TopBarFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
 
-    override var title: String = "Оформление заказа"
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_creation_order
     override var viewModelClass = CreationOrderViewModel::class.java

@@ -15,14 +15,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
 
-    abstract var title: String
     abstract var layoutId: Int
     abstract var viewModelVariable: Int
     abstract var viewModelClass: Class<V>

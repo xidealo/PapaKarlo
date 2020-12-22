@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryDark">#ff6900</color>
+
     <!-- BACKGROUND -->
     <color name="backgroundPage">#f3f2f7</color>
     <color name="backgroundComponent">#F3F2F3</color>

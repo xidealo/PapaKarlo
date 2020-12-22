@@ -16,7 +16,6 @@ import java.lang.ref.WeakReference
 
 class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
 
-    override lateinit var title: String
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_product
     override var viewModelClass = ProductViewModel::class.java
@@ -36,14 +35,11 @@ class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>
 
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(product)
+            viewModel.showMessage("${product.name} был добавлен в корзину")
         }
     }
 
     override fun goToCart(view: View) {
         findNavController().navigate(actionProductFragmentToCartFragment())
-    }
-
-    companion object {
-        const val TAG = "ProductFragment"
     }
 }
