@@ -1,9 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
+}
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -36,13 +38,7 @@ android {
         dataBinding true
         viewBinding true
     }
-    flavorDimensions "api"
 
-    productFlavors {
-        prod {
-            buildConfigField 'String', 'API_URL', '"https://apoirus.com/v1/"'
-        }
-    }
     testOptions {
         unitTests.includeAndroidResources = true
     }

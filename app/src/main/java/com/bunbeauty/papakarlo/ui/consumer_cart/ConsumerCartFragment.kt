@@ -49,8 +49,8 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         findNavController().navigate(actionCartFragmentToCreationOrder())
     }
 
-    override fun showMessage(message: String) {
-        (activity as MainActivity).showMessage(message)
+    override fun showError(message: String) {
+        (activity as MainActivity).showError(message)
     }
 
 }

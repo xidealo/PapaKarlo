@@ -34,7 +34,7 @@ class ConsumerCartViewModel @Inject constructor() : BaseViewModel<ConsumerCartNa
         if (!cartProductListLiveData.value.isNullOrEmpty()){
             navigator?.get()?.goToOrder()
         }else {
-            navigator?.get()?.showMessage("Корзина пуста")
+            navigator?.get()?.showError("Корзина пуста")
         }
     }
 
