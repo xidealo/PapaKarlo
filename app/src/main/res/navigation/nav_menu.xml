@@ -8,17 +8,17 @@
     <fragment
         android:id="@+id/contacts_fragment"
         android:name="com.bunbeauty.papakarlo.ui.contacts.ContactsFragment"
-        android:label="contacts_fragment"
+        android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contacts" />
     <fragment
         android:id="@+id/menu_fragment"
         android:name="com.bunbeauty.papakarlo.ui.menu.MenuFragment"
-        android:label="menu_fragment"
+        android:label="@string/title_main"
         tools:layout="@layout/fragment_menu" />
     <fragment
         android:id="@+id/orders_fragment"
         android:name="com.bunbeauty.papakarlo.ui.orders.OrdersFragment"
-        android:label="orders_fragment"
+        android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders" />
 
 </navigation>

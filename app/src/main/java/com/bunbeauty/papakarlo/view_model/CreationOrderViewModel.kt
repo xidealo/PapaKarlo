@@ -26,8 +26,10 @@ class CreationOrderViewModel @Inject constructor(private val orderRepo: OrderRep
 
             for (cartProduct in orderWithCartProducts.cartProducts) {
                 cartProduct.orderUuid = insertedOrder.uuid
-                cartProductRepo.insert(cartProduct)
+                cartProductRepo.insertAsync(cartProduct)
             }
+
+            navigator?.get()?.goToMain(order)
         }
     }
 }

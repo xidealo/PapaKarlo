@@ -19,7 +19,7 @@ data class Order(
     var floor: String = "",
     var comment: String = "",
     var phone: String = "",
-    var time: Long = Time(DateTime.now().millis, 3).toDateTime().millis,
+    var time: Long = DateTime.now().millis,
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",
@@ -27,12 +27,13 @@ data class Order(
 
 
     fun getTimeHHMM(): String {
-        val newTime = Time(time)
+        val newTime = Time(time, 3)
         return newTime.toStringTimeHHMM()
     }
 
     fun getAddress() = "Доставка на улицу $street дом $house контактный телефон $phone"
     fun getUuidCode() = "Код заказа $uuid"
+
     companion object {
         const val ORDERS = "ORDERS"
 

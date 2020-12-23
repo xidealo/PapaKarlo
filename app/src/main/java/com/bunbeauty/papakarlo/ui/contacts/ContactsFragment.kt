@@ -56,8 +56,4 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel
         intent.data = Uri.parse("tel:$phone")
         startActivity(intent)
     }
-
-    companion object {
-        const val TAG = "ContactsFragment"
-    }
 }

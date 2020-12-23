@@ -66,7 +66,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_house"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +82,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_flat"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -98,7 +98,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_entrance"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +115,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_intercom"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -131,7 +131,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_floor"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -175,7 +175,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_order_et_phone"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

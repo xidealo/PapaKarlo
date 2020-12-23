@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.ui.base.BaseNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,7 +12,7 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel<N : BaseNavigator> : ViewModel(), CoroutineScope {
+abstract class BaseViewModel<N> : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
 
@@ -38,9 +37,5 @@ abstract class BaseViewModel<N : BaseNavigator> : ViewModel(), CoroutineScope {
             cartProduct.count++
             cartProductRepo.update(cartProduct)
         }
-    }
-
-    fun showMessage(message: String) {
-        navigator?.get()?.showMessage(message)
     }
 }

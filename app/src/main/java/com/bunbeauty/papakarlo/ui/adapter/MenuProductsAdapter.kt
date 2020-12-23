@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
+import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.ui.products.ProductsFragment
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import javax.inject.Inject
 
@@ -15,6 +17,7 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
     BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
     lateinit var productsViewModel: ProductsViewModel
+    lateinit var productsFragment: ProductsFragment
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -38,7 +41,7 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
             }
             binding?.elementMenuProductBtnWant?.setOnClickListener {
                 productsViewModel.addProductToCart(menuProduct)
-                productsViewModel.showMessage("Вы добавили ${menuProduct.name} в корзину")
+                (productsFragment.activity as MainActivity).showMessage("Вы добавили ${menuProduct.name} в корзину")
             }
         }
     }

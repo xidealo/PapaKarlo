@@ -5,17 +5,19 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.actionCreationOrderToCartFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.actionCreationOrderToMainFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
 
-class CreationOrderFragment : TopBarFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
+class CreationOrderFragment :
+    TopBarFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
@@ -34,13 +36,33 @@ class CreationOrderFragment : TopBarFragment<FragmentCreationOrderBinding, Creat
         viewDataBinding.fragmentCreationOrderBtnOrder.setOnClickListener {
             createOrder()
         }
-    }
 
-    override fun goToCart(view: View) {
-        findNavController().navigate(actionCreationOrderToCartFragment())
+        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
+        viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
     }
 
     private fun createOrder() {
+        if (!(activity as MainActivity).viewModel.isNetworkConnected) {
+            (activity as MainActivity).showError("Нет подключения к интернету")
+            return
+        }
+
+        if (viewDataBinding.fragmentOrderEtStreet.text.isNullOrEmpty()) {
+            viewDataBinding.fragmentOrderEtStreet.error =
+                resources.getString(R.string.error_creation_order_street)
+            return
+        }
+        if (viewDataBinding.fragmentOrderEtHouse.text.isNullOrEmpty()) {
+            viewDataBinding.fragmentOrderEtHouse.error =
+                resources.getString(R.string.error_creation_order_house)
+            return
+        }
+        if (viewDataBinding.fragmentOrderEtPhone.text.isNullOrEmpty()) {
+            viewDataBinding.fragmentOrderEtPhone.error =
+                resources.getString(R.string.error_creation_order_phone)
+            return
+        }
+
         viewModel.createOrder(
             Order(
                 street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
@@ -55,7 +77,12 @@ class CreationOrderFragment : TopBarFragment<FragmentCreationOrderBinding, Creat
         )
     }
 
-    companion object {
-        const val TAG = "CreationOrderFragment"
+    override fun goToMain(order: Order) {
+        (activity as MainActivity).showMessage("Код заказа ${order.uuid}")
+        findNavController().navigate(actionCreationOrderToMainFragment())
+    }
+
+    override fun goToCart(view: View) {
+        findNavController().navigate(actionCreationOrderToCartFragment())
     }
 }

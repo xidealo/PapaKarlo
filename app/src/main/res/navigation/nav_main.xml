@@ -36,6 +36,11 @@
         <action
             android:id="@+id/action_creation_order_to_cart_fragment"
             app:destination="@id/cart_fragment" />
+        <action
+            android:id="@+id/action_creation_order_to_main_fragment"
+            app:destination="@id/main_fragment"
+            app:popUpTo="@id/main_fragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

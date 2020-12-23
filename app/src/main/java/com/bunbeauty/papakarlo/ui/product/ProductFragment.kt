@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.product.ProductFragmentDirections.actionProductFragmentToCartFragment
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
 import java.lang.ref.WeakReference
@@ -35,7 +36,7 @@ class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>
 
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(product)
-            viewModel.showMessage("${product.name} был добавлен в корзину")
+            (activity as MainActivity).showMessage("${product.name} был добавлен в корзину")
         }
     }
 

@@ -11,7 +11,6 @@ class ApiRepository @Inject constructor() : IApiRepository {
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
     override fun insertOrder(order: Order): String {
-
         order.uuid = firebaseInstance.getReference(Order.ORDERS).push().key!!
 
         val orderRef = firebaseInstance
@@ -27,10 +26,8 @@ class ApiRepository @Inject constructor() : IApiRepository {
         orderItems[Order.FLOOR] = order.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
-        orderRef.updateChildren(orderItems).addOnCompleteListener {
-            val k = it
-            val t = 0
-        }
+        orderRef.updateChildren(orderItems)
+
         return order.uuid
     }
 

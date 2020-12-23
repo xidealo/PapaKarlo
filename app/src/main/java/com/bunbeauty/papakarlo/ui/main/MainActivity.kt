@@ -2,7 +2,9 @@ package com.bunbeauty.papakarlo.ui.main
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -14,6 +16,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import kotlin.reflect.KFunction1
 
@@ -49,10 +52,34 @@ class MainActivity : AppCompatActivity() {
             navController,
             appBarConfiguration
         )
+
+        viewModel.connectionLiveData.observe(this) { isNetworkConnected ->
+            viewModel.isNetworkConnected = isNetworkConnected
+        }
     }
 
     fun setCartClickListener(clickListener: KFunction1<View, Unit>) {
         viewDataBinding.activityMainTbTopBar.partTopBarTvCart.setOnClickListener(clickListener)
+    }
+
+    fun showMessage(message: String) {
+        val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimary))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
+        snack.show()
+    }
+
+    fun showError(messageError: String) {
+        val snack = Snackbar.make(viewDataBinding.root, messageError, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(this, R.color.errorColor))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setActionTextColor(ContextCompat.getColor(this, R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
+        snack.show()
     }
 
 }

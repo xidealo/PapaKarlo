@@ -50,6 +50,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
 
     private fun setupRecyclerView() {
         menuProductsAdapter.productsViewModel = viewModel
+        menuProductsAdapter.productsFragment = this
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
     }
 

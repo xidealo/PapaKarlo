@@ -38,7 +38,12 @@ class ProductsViewModel @Inject constructor() : BaseViewModel<ProductsNavigator>
             cost = 11,
             photoLink = "https://mcdonalds.ru/resize/-x1020/upload/iblock/f90/0000_BigMac_BB_1500x1500_min.png"
         ),
-        MenuProduct(name = "Hamburger 2", productCode = ProductCode.Hamburger, cost = 65),
+        MenuProduct(
+            name = "Hamburger 2",
+            productCode = ProductCode.Hamburger,
+            cost = 65,
+            photoLink = "https://mcdonalds.ru/resize/-x1020/upload/iblock/b0b/CHizburger-_1_.png"
+        ),
     )
 
     lateinit var productCode: ProductCode

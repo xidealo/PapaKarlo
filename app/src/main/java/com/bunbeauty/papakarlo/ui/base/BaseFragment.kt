@@ -19,7 +19,7 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment(){
 
     abstract var layoutId: Int
     abstract var viewModelVariable: Int
@@ -66,23 +66,5 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragmen
         viewDataBinding.setVariable(viewModelVariable, viewModel)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
-    }
-
-    fun showMessage(message: String) {
-        val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
-        snack.show()
-    }
-
-    fun showError(messageError: String) {
-        val snack = Snackbar.make(viewDataBinding.root, messageError, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.errorColor))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
-        snack.show()
     }
 }

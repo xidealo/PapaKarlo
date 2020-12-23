@@ -12,6 +12,8 @@
 
     <!-- TITLES -->
     <string name="title_main">Главная</string>
+    <string name="title_contacts">Контакты</string>
+    <string name="title_orders">Ваши заказы</string>
     <string name="title_cart">Корзина</string>
     <string name="title_order">Оформление заказа</string>
     <string name="title_product">Продукт</string>
@@ -49,8 +51,11 @@
     <string name="title_creation_order_extra_extra_comment">Дополнительная информация для курьера</string>
     <string name="hint_creation_order_extra_comment">Комментарий</string>
     <string name="title_creation_order_contact">Контактная информация</string>
-    <string name="title_creation_order_phone">Телефон</string>
+    <string name="title_creation_order_phone">Телефон*</string>
     <string name="action_creation_order_order">Оформить заказ</string>
+    <string name="error_creation_order_street">Введите название улицы</string>
+    <string name="error_creation_order_house">Введите номер дома</string>
+    <string name="error_creation_order_phone">Введите номер телефона</string>
 
     <!-- CREATION ORDER -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>
@@ -61,6 +66,7 @@
     <string name="msg_contacts_address">г.Кимры, улица Чапаева, 22а</string>
     <string name="msg_contacts_work_time">Время работы: 9.00–22.00</string>
     <string name="msg_contacts_phone">+7(900)111–14–21</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

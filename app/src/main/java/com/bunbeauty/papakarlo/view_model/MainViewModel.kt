@@ -4,6 +4,7 @@ import androidx.lifecycle.Transformations
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.live_data.ConnectionLiveData
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +18,11 @@ import kotlin.coroutines.CoroutineContext
 class MainViewModel @Inject constructor() : BaseViewModel<MainNavigator>() {
 
     override var navigator: WeakReference<MainNavigator>? = null
+
+    var isNetworkConnected = false
+
+    @Inject
+    lateinit var connectionLiveData: ConnectionLiveData
 
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->
