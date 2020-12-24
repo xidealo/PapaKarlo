@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.main.MainActivity">
 
-    <data>
-    </data>
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

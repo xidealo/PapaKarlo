@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         viewDataBinding.executePendingBindings()
 
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
+
         viewModel.cartLiveData.observe(this) { cartText ->
             viewDataBinding.activityMainTbTopBar.partTopBarTvCart.text = cartText
         }
