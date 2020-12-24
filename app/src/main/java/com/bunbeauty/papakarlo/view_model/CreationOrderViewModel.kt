@@ -11,9 +11,9 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class CreationOrderViewModel @Inject constructor(private val orderRepo: OrderRepo) :
-    BaseViewModel<CreationOrderNavigator>() {
+    BaseViewModel() {
 
-    override var navigator: WeakReference<CreationOrderNavigator>? = null
+    var navigator: WeakReference<CreationOrderNavigator>? = null
 
     fun createOrder(order: Order) {
         viewModelScope.launch {

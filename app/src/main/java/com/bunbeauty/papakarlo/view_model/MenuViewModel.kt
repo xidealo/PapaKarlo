@@ -5,7 +5,7 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class MenuViewModel @Inject constructor() : BaseViewModel<MenuNavigator>() {
+class MenuViewModel @Inject constructor() : BaseViewModel() {
 
-    override var navigator: WeakReference<MenuNavigator>? = null
+    var navigator: WeakReference<MenuNavigator>? = null
 }

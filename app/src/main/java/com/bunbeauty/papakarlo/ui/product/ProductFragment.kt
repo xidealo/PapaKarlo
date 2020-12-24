@@ -8,14 +8,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.base.TopBarFragment
+import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.ui.product.ProductFragmentDirections.actionProductFragmentToCartFragment
+import com.bunbeauty.papakarlo.ui.product.ProductFragmentDirections.toCartFragment
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
 import java.lang.ref.WeakReference
 
-class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
+class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_product
@@ -28,12 +27,13 @@ class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val product = ProductFragmentArgs.fromBundle(requireArguments()).menuProduct
+        title = product.name
+
         super.onViewCreated(view, savedInstanceState)
 
-        val product = ProductFragmentArgs.fromBundle(requireArguments()).menuProduct
         viewDataBinding.product = product
         viewModel.navigator = WeakReference(this)
-
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(product)
             (activity as MainActivity).showMessage("${product.name} был добавлен в корзину")
@@ -41,6 +41,6 @@ class ProductFragment : TopBarFragment<FragmentProductBinding, ProductViewModel>
     }
 
     override fun goToCart(view: View) {
-        findNavController().navigate(actionProductFragmentToCartFragment())
+        findNavController().navigate(toCartFragment())
     }
 }

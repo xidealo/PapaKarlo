@@ -34,7 +34,6 @@
                 <TextView
                     android:id="@+id/fragment_creation_order_tv_title"
                     style="@style/TitleCreationOrder"
-                    android:layout_marginTop="0dp"
                     android:text="@string/title_creation_order_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +136,6 @@
                 <TextView
                     android:id="@+id/fragment_creation_order_tv_comment"
                     style="@style/TitleCreationOrder"
-                    android:layout_marginTop="@dimen/small_margin"
                     android:text="@string/title_creation_order_extra_extra_comment"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_entrance" />
@@ -159,7 +157,6 @@
                 <TextView
                     android:id="@+id/fragment_creation_order_tv_contact"
                     style="@style/TitleCreationOrder"
-                    android:layout_marginTop="@dimen/small_margin"
                     android:text="@string/title_creation_order_contact"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />

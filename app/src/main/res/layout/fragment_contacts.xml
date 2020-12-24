@@ -44,7 +44,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_contacts_mc_work_time"
             style="@style/MaterialCardContacts"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()->viewModel.workTimeClick()}"
@@ -67,7 +67,7 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_contacts_mc_phone"
             style="@style/MaterialCardContacts"
-            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()->viewModel.phoneClick()}"

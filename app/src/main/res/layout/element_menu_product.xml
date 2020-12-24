@@ -56,7 +56,7 @@
                 android:id="@+id/element_menu_product_btn_want"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:text="@string/action_product_want"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

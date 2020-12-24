@@ -10,13 +10,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMainBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.generated.callback.OnClickListener
+import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections.actionMainFragmentToCartFragment
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import kotlin.reflect.KFunction
 import kotlin.reflect.KFunction1
 
-class MainFragment: TopBarFragment<FragmentMainBinding, MainViewModel>(), MainNavigator {
+class MainFragment: CartClickableFragment<FragmentMainBinding, MainViewModel>(), MainNavigator {
 
     override var layoutId = R.layout.fragment_main
     override var viewModelClass: Class<MainViewModel> = MainViewModel::class.java

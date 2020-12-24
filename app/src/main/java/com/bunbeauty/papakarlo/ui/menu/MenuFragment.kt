@@ -10,11 +10,12 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
 import com.bunbeauty.papakarlo.view_model.MenuViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
+class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_menu
     override var viewModelClass = MenuViewModel::class.java
@@ -24,6 +25,9 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = resources.getString(R.string.title_menu)
+
+        super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             listOf(
@@ -35,7 +39,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
             ),
             requireActivity()
         )
-
         val tabNameList = arrayListOf(
             resources.getString(R.string.title_menu_all),
             resources.getString(R.string.title_menu_pizza),
@@ -43,7 +46,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
             resources.getString(R.string.title_menu_potato),
             resources.getString(R.string.title_menu_onCoals)
         )
-
         val tabIconList = arrayListOf(
             R.drawable.ic_all_products,
             R.drawable.ic_pizza,
@@ -51,7 +53,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
             R.drawable.ic_french_fries,
             R.drawable.ic_kebab
         )
-
         TabLayoutMediator(
             viewDataBinding.fragmentMenuTl,
             viewDataBinding.fragmentMenuVp
@@ -59,8 +60,6 @@ class MenuFragment : BaseFragment<FragmentMenuBinding, MenuViewModel>() {
             tab.setIcon(tabIconList[i])
             tab.text = tabNameList[i]
         }.attach()
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {

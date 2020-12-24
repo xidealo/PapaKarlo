@@ -62,6 +62,10 @@ class MainActivity : AppCompatActivity() {
         viewDataBinding.activityMainTbTopBar.partTopBarTvCart.setOnClickListener(clickListener)
     }
 
+    fun setTopBarTitle(title: String) {
+        viewDataBinding.activityMainTbTopBar.partTbTopBar.title = title
+    }
+
     fun showMessage(message: String) {
         val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(this, R.color.colorPrimary))

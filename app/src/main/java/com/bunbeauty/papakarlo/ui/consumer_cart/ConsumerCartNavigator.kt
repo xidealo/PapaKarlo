@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui.consumer_cart
 
-import com.bunbeauty.papakarlo.ui.base.BaseNavigator
-
-interface ConsumerCartNavigator:BaseNavigator {
+interface ConsumerCartNavigator {
     fun goToOrder()
+    fun showError(message: String)
 }

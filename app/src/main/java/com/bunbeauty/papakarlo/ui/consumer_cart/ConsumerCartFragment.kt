@@ -8,14 +8,15 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.actionCartFragmentToCreationOrder
+import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.toCreationOrder
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>(),
+class ConsumerCartFragment :
+    CartClickableFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>(),
     ConsumerCartNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
@@ -30,6 +31,8 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
     lateinit var cartProductsAdapter: CartProductsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = resources.getString(R.string.title_cart)
+
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
@@ -45,8 +48,11 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding, ConsumerC
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
     }
 
+    override fun goToCart(view: View) {
+    }
+
     override fun goToOrder() {
-        findNavController().navigate(actionCartFragmentToCreationOrder())
+        findNavController().navigate(toCreationOrder())
     }
 
     override fun showError(message: String) {

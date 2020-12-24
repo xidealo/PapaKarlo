@@ -8,16 +8,18 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.TopBarFragment
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.actionCreationOrderToCartFragment
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.actionCreationOrderToMainFragment
+import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToCartFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToMainFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
+import com.bunbeauty.papakarlo.utils.ResourcesProvider
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
 class CreationOrderFragment :
-    TopBarFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
+    CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
@@ -29,14 +31,14 @@ class CreationOrderFragment :
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = resources.getString(R.string.title_order)
+
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-
         viewDataBinding.fragmentCreationOrderBtnOrder.setOnClickListener {
             createOrder()
         }
-
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
     }
@@ -79,10 +81,10 @@ class CreationOrderFragment :
 
     override fun goToMain(order: Order) {
         (activity as MainActivity).showMessage("Код заказа ${order.uuid}")
-        findNavController().navigate(actionCreationOrderToMainFragment())
+        findNavController().navigate(backToMainFragment())
     }
 
     override fun goToCart(view: View) {
-        findNavController().navigate(actionCreationOrderToCartFragment())
+        findNavController().navigate(backToCartFragment())
     }
 }

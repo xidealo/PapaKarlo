@@ -19,7 +19,7 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel<*>> : Fragment(){
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment(){
 
     abstract var layoutId: Int
     abstract var viewModelVariable: Int

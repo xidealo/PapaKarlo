@@ -8,10 +8,11 @@ import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.view_model.OrdersViewModel
 import javax.inject.Inject
 
-class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>() {
+class OrdersFragment : TopBarFragment<FragmentOrdersBinding, OrdersViewModel>() {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_orders
@@ -24,15 +25,11 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding, OrdersViewModel>() {
     @Inject
     lateinit var ordersAdapter: OrdersAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = resources.getString(R.string.title_orders)
+
         super.onViewCreated(view, savedInstanceState)
+
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
         viewModel.orderWithCartProductsLiveData.observe(viewLifecycleOwner) { orderWithCartProducts ->
             ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.order.time })

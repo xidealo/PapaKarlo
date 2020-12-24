@@ -67,7 +67,7 @@
             <TextView
                 android:id="@+id/fragment_product_tv_description"
                 style="@style/DescriptionFragmentProduct"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/medium_margin"
                 android:text="@{product.description}" />
         </LinearLayout>
 

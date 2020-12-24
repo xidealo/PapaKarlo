@@ -9,11 +9,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentContactsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
+import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.view_model.ContactsViewModel
 import java.lang.ref.WeakReference
 
 
-class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel>(),
+class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewModel>(),
     ContactsNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
@@ -24,15 +26,10 @@ class ContactsFragment : BaseFragment<FragmentContactsBinding, ContactsViewModel
         viewModelComponent.inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.navigator = WeakReference(this)
+        title = resources.getString(R.string.title_contacts)
+
         super.onViewCreated(view, savedInstanceState)
     }
 

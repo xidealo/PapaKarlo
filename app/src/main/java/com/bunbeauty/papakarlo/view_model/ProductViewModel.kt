@@ -5,8 +5,8 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ProductViewModel @Inject constructor() : BaseViewModel<ProductNavigator>() {
+class ProductViewModel @Inject constructor() : BaseViewModel() {
 
-    override var navigator: WeakReference<ProductNavigator>? = null
+    var navigator: WeakReference<ProductNavigator>? = null
 
 }

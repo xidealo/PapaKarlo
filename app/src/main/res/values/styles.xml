@@ -23,7 +23,7 @@
     <style name="MaterialInputLayout">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/large_margin</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
         <item name="android:fontFamily">@font/font_roboto_medium</item>
         <item name="boxStrokeColor">@color/hintColor</item>
         <item name="boxBackgroundColor">@color/backgroundComponent</item>
@@ -166,7 +166,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/small_margin</item>
+        <item name="android:layout_marginTop">@dimen/medium_margin</item>
     </style>
 
     <style name="MaterialCardCreationOrder">
@@ -200,7 +200,7 @@
 
     <!--ORDER ELEMENT-->
     <style name="TitleOrderElement">
-        <item name="android:textSize">@dimen/default_margin</item>
+        <item name="android:textSize">@dimen/medium_margin</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

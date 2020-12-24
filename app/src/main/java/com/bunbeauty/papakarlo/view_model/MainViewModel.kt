@@ -15,9 +15,9 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class MainViewModel @Inject constructor() : BaseViewModel<MainNavigator>() {
+class MainViewModel @Inject constructor() : BaseViewModel() {
 
-    override var navigator: WeakReference<MainNavigator>? = null
+    var navigator: WeakReference<MainNavigator>? = null
 
     var isNetworkConnected = false
 

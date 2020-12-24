@@ -24,7 +24,7 @@
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_consumer_cart">
         <action
-            android:id="@+id/action_cart_fragment_to_creation_order"
+            android:id="@+id/to_creation_order"
             app:destination="@id/creation_order" />
     </fragment>
 
@@ -34,10 +34,12 @@
         android:label="@string/title_order"
         tools:layout="@layout/fragment_creation_order" >
         <action
-            android:id="@+id/action_creation_order_to_cart_fragment"
-            app:destination="@id/cart_fragment" />
+            android:id="@+id/back_to_cart_fragment"
+            app:destination="@id/cart_fragment"
+            app:popUpTo="@id/cart_fragment"
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_creation_order_to_main_fragment"
+            android:id="@+id/back_to_main_fragment"
             app:destination="@id/main_fragment"
             app:popUpTo="@id/main_fragment"
             app:popUpToInclusive="true" />
@@ -52,7 +54,7 @@
             android:name="menuProduct"
             app:argType="com.bunbeauty.papakarlo.data.model.MenuProduct" />
         <action
-            android:id="@+id/action_product_fragment_to_cart_fragment"
+            android:id="@+id/to_cart_fragment"
             app:destination="@id/cart_fragment" />
     </fragment>
 

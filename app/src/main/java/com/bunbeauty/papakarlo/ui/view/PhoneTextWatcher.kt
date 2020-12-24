@@ -11,15 +11,18 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
     override fun afterTextChanged(text: Editable?) {
         var cursorPosition = phoneEditText.selectionEnd
 
-        val numbers = text.toString().replace(Regex("\\D"), "")
+        val numbers = text.toString()
+            .replace("+7", "")
+            .replace("7 (", "")
+            .replace(Regex("\\D"), "")
         val firstGroup = numbers.take(3)
         val secondGroup = numbers.drop(3).take(3)
         val thirdGroup = numbers.drop(6).take(2)
         val fourthGroup = numbers.drop(8).take(2)
 
         var result = ""
-        if (numbers.isNotEmpty()) {
-            result += "($firstGroup"
+        if (firstGroup.isNotEmpty()) {
+            result += "+7 ($firstGroup"
         }
 
         if (secondGroup.isNotEmpty()) {
@@ -36,50 +39,41 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
 
         when (cursorPosition) {
             1 -> {
-                // "(" -> ""
-                if (text.toString() == "(") {
-                    cursorPosition--
-                }
-
-                // "0" -> "(0"
-                else {
-                    if (text?.first() != '(') {
-                        cursorPosition++
-                    }
+                // "0" -> "+7 (0"
+                if (text?.first() != '+') {
+                    cursorPosition += 4
                 }
             }
-            5 -> {
-                if (text!![4] != ')') {
+            4 -> {
+                // "+7 (" -> ""
+                if (text.toString() == "+7 (") {
+                    cursorPosition -= 4
+                }
+            }
+            8 -> {
+                // "+7 (0000" -> "+7 (000) 0"
+                if (text!![7] != ')') {
                     cursorPosition += 2
                 }
             }
-            6 -> {
-                if (text!![5] == ' ') {
+            9 -> {
+                // "+7 (000) " -> "+7 (000"
+                if (text!![8] == ' ') {
                     cursorPosition -= 2
-                } else {
+                }
+
+                // "+7 (000)0" -> "+7 (000) 0"
+                else {
                     cursorPosition++
                 }
             }
-            10 -> {
-                // "(000) 000-" -> "(000) 000"
-                if (text?.last() == '-') {
-                    cursorPosition--
-                }
-
-                // "(000) 0000" -> "(000) 000-0"
-                else {
-                    if (text!![9] != '-') {
-                        cursorPosition++
-                    }
-                }
-            }
             13 -> {
-                // "(000) 000-00-" -> "(000) 000-00"
+                // "+7 (000) 000-" -> "+7 (000) 000"
                 if (text?.last() == '-') {
                     cursorPosition--
                 }
 
-                // "(000) 000-000" -> "(000) 000-00-0"
+                // "+7 (000) 0000" -> "+7 (000) 000-0"
                 else {
                     if (text!![12] != '-') {
                         cursorPosition++
@@ -87,7 +81,20 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
                 }
             }
             16 -> {
-                // "(000) 000-00-000" -> "(000) 000-00-00"
+                // "+7 (000) 000-00-" -> "+7 (000) 000-00"
+                if (text?.last() == '-') {
+                    cursorPosition--
+                }
+
+                // "+7 (000) 000-000" -> "+7 (000) 000-00-0"
+                else {
+                    if (text!![15] != '-') {
+                        cursorPosition++
+                    }
+                }
+            }
+            19 -> {
+                // "+7 (000) 000-00-000" -> "+7 (000) 000-00-00"
                 cursorPosition--
             }
         }

@@ -14,7 +14,7 @@ abstract class BaseActivity<T : ViewDataBinding> : AppCompatActivity() {
 
     abstract val layoutId: Int
     abstract val dataBindingVariable: Int
-    abstract val viewModel: BaseViewModel<*>
+    abstract val viewModel: BaseViewModel
 
     lateinit var viewDataBinding: T
 

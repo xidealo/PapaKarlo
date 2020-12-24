@@ -12,9 +12,9 @@ import kotlinx.coroutines.delay
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ProductsViewModel @Inject constructor() : BaseViewModel<ProductsNavigator>() {
+class ProductsViewModel @Inject constructor() : BaseViewModel() {
 
-    override var navigator: WeakReference<ProductsNavigator>? = null
+    var navigator: WeakReference<ProductsNavigator>? = null
 
     val isLoading = ObservableField(true)
     private val productList = arrayListOf(
