@@ -73,13 +73,13 @@ class CountPicker @JvmOverloads constructor(
         return button
     }
 
-    fun onPlus(view: View) {
+    private fun onPlus(view: View) {
         count++
         countChangeListener?.onCountIncreased()
         countTextView.text = count.toString()
     }
 
-    fun onMinus(view: View) {
+    private fun onMinus(view: View) {
         if (count == 0) {
             return
         }

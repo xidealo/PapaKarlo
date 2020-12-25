@@ -7,9 +7,12 @@ import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.toCreationOrder
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToMainFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import java.lang.ref.WeakReference
@@ -36,10 +39,16 @@ class ConsumerCartFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-        setupRecyclerView()
-
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList)
+        }
+
+        setupRecyclerView()
+        viewDataBinding.fragmentConsumerCartBtnMenu.setOnClickListener {
+            goToMenu()
+        }
+        viewDataBinding.fragmentConsumerCartBtnCrateOrder.setOnClickListener {
+            goToOrder()
         }
     }
 
@@ -49,6 +58,10 @@ class ConsumerCartFragment :
     }
 
     override fun goToCart(view: View) {
+    }
+
+    private fun goToMenu() {
+        findNavController().navigate(backToMainFragment())
     }
 
     override fun goToOrder() {

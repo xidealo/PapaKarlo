@@ -15,7 +15,7 @@
             android:layout_marginEnd="@dimen/medium_margin"
             android:textColor="@color/mainTextColor"
             android:drawablePadding="@dimen/default_padding"
-            app:drawableStartCompat="@drawable/ic_shopping_cart"
+            app:drawableStartCompat="@drawable/ic_cart"
             app:drawableTint="@color/mainTextColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>

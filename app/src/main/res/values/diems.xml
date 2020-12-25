@@ -22,8 +22,8 @@
 
     <dimen name="timeline_height">296dp</dimen>
 
-    <dimen name="seek_bar_size">176dp</dimen>
-    <dimen name="seek_bar_arc_width">16dp</dimen>
+    <!-- IMAGES -->
+    <dimen name="empty_cart_img_size">176dp</dimen>
 
     <!-- MARGIN -->
     <dimen name="very_large_margin">96dp</dimen>

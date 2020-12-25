@@ -39,7 +39,8 @@
 
     <!-- CONSUMER CART -->
     <string name="action_consumer_cart_checkout">Оформить заказ</string>
-    <string name="msg_consumer_cart_empty">Пустая корзина</string>
+    <string name="action_consumer_cart_menu">Меню</string>
+    <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавте понравившийся товар из \"Меню\"</string>
 
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>

@@ -30,12 +30,4 @@ class ConsumerCartViewModel @Inject constructor() : BaseViewModel(),
         }
     }
 
-    fun goToOrderClick() {
-        if (!cartProductListLiveData.value.isNullOrEmpty()){
-            navigator?.get()?.goToOrder()
-        }else {
-            navigator?.get()?.showError("Корзина пуста")
-        }
-    }
-
 }

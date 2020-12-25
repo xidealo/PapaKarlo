@@ -18,20 +18,51 @@
         style="@style/DefaultPage"
         tools:context=".ui.consumer_cart.ConsumerCartFragment">
 
+        <ImageView
+            android:id="@+id/fragment_consumer_cart_iv_empty_cart"
+            android:layout_width="@dimen/empty_cart_img_size"
+            android:layout_height="@dimen/empty_cart_img_size"
+            android:src="@drawable/ic_cart_empty"
+            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_consumer_cart_tv_empty_cart"
+            style="@style/DefaultText"
+            android:text="@string/msg_consumer_cart_empty"
+            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_iv_empty_cart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_consumer_cart_btn_menu"
+            style="@style/SmallButton"
+            android:text="@string/action_consumer_cart_menu"
+            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_empty_cart" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_consumer_cart_rv_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_product_btn_add"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_crate_order"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:itemCount="2"
+            tools:listitem="@layout/element_cart_product" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_product_btn_add"
+            android:id="@+id/fragment_consumer_cart_btn_crate_order"
             style="@style/MainButton"
-            android:onClick="@{()->viewModel.goToOrderClick()}"
+            android:visibility="@{viewModel.isCartEmpty ? View.GONE : View.VISIBLE}"
             android:text="@string/action_consumer_cart_checkout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
