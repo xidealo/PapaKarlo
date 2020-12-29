@@ -8,12 +8,9 @@ import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentContactsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.view_model.ContactsViewModel
 import java.lang.ref.WeakReference
-
 
 class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewModel>(),
     ContactsNavigator {

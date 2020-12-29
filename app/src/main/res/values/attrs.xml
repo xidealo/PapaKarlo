@@ -14,14 +14,4 @@
         <attr name="android:backgroundTint" />
         <attr name="cornerRadius" />
     </declare-styleable>
-    <declare-styleable name="TimeSeekBar">
-        <attr name="timeText" format="string" />
-        <attr name="labelText" format="string" />
-    </declare-styleable>
-    <declare-styleable name="CountPicker">
-        <attr name="elementSize" format="dimension" />
-        <attr name="buttonColor" format="color" />
-        <attr name="buttonTextColor" format="color" />
-        <attr name="count" format="integer" />
-    </declare-styleable>
 </resources>

@@ -22,13 +22,12 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_products
     override var viewModelClass = ProductsViewModel::class.java
-
-    @Inject
-    lateinit var menuProductsAdapter: MenuProductsAdapter
-
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
+
+    @Inject
+    lateinit var menuProductsAdapter: MenuProductsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
