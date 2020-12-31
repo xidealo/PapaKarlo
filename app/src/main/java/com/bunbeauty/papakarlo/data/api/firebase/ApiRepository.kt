@@ -1,13 +1,25 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
 import com.bunbeauty.papakarlo.BuildConfig
+import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ApiRepository @Inject constructor() : IApiRepository {
+class ApiRepository @Inject constructor(
+    private val dataStoreHelper: IDataStoreHelper,
+    private val contactInfoHelper: IContactInfoHelper
+) : IApiRepository {
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
@@ -54,5 +66,28 @@ class ApiRepository @Inject constructor() : IApiRepository {
         cartProductItems[MenuProduct.PRODUCT_CODE] = cartProduct.menuProduct.productCode
         cartProductRef.updateChildren(cartProductItems)
         return cartProduct.uuid
+    }
+
+    override fun getContactInfo() {
+        val contactInfoRef = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(ContactInfo.CONTACT_INFO)
+
+        contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val contactInfo = contactInfoHelper.getContactInfoFromSnapshot(snapshot)
+                CoroutineScope(Dispatchers.IO).launch {
+                    dataStoreHelper.saveContactInfo(contactInfo)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
+    companion object {
+        private val COMPANY = "COMPANY"
     }
 }

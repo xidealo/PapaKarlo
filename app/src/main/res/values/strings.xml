@@ -66,7 +66,8 @@
 
     <!-- CONTACTS  -->
     <string name="msg_contacts_address">г.Кимры, улица Чапаева, 22а</string>
-    <string name="msg_contacts_work_time">Время работы: 9.00–22.00</string>
+    <string name="msg_contacts_work_time">Время работы: </string>
+    <string name="msg_contacts_work_time_divider"> - </string>
     <string name="msg_contacts_phone">+7(900)111–14–21</string>
 
 

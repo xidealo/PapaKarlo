@@ -37,6 +37,7 @@ class OrdersFragment : TopBarFragment<FragmentOrdersBinding, OrdersViewModel>() 
     }
 
     companion object {
+        const val TAG = "OrdersFragment"
 
         @JvmStatic
         fun newInstance() =

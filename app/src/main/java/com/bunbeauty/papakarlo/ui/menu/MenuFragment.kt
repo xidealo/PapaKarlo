@@ -4,21 +4,30 @@ import android.os.Bundle
 import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.data.local.datastore.DataStoreHelper
+import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
 import com.bunbeauty.papakarlo.view_model.MenuViewModel
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
+
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_menu
     override var viewModelClass = MenuViewModel::class.java
+
+    @Inject
+    lateinit var dataStoreHelper: DataStoreHelper
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -28,6 +37,10 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         title = resources.getString(R.string.title_menu)
 
         super.onViewCreated(view, savedInstanceState)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            dataStoreHelper.saveContactInfo(ContactInfo("", "", "", ""))
+        }
 
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             listOf(

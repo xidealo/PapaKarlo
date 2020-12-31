@@ -13,10 +13,8 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToMainFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
-import com.bunbeauty.papakarlo.utils.ResourcesProvider
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
-import javax.inject.Inject
 
 class CreationOrderFragment :
     CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),

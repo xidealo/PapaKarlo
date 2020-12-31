@@ -34,7 +34,7 @@
                     android:id="@+id/fragment_contacts_tv_address"
                     style="@style/TextContacts"
                     android:drawablePadding="@dimen/default_padding"
-                    android:text="@string/msg_contacts_address"
+                    android:text=""
                     app:drawableLeftCompat="@drawable/ic_contact"
                     app:drawableTint="@color/mainTextColor" />
 
@@ -58,7 +58,7 @@
                     android:id="@+id/fragment_contacts_tv_work_time"
                     style="@style/TextContacts"
                     android:drawablePadding="@dimen/default_padding"
-                    android:text="@string/msg_contacts_work_time"
+                    android:text=""
                     app:drawableLeftCompat="@drawable/ic_clock"
                     app:drawableTint="@color/mainTextColor" />
             </LinearLayout>
@@ -81,7 +81,7 @@
                     android:id="@+id/fragment_contacts_tv_work_phone"
                     style="@style/TextContacts"
                     android:drawablePadding="@dimen/default_padding"
-                    android:text="@string/msg_contacts_phone"
+                    android:text=""
                     app:drawableLeftCompat="@drawable/ic_phone"
                     app:drawableTint="@color/mainTextColor" />
             </LinearLayout>
