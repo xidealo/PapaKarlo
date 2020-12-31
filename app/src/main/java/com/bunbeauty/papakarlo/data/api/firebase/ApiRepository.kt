@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
+import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
@@ -15,6 +16,7 @@ class ApiRepository @Inject constructor() : IApiRepository {
 
         val orderRef = firebaseInstance
             .getReference(Order.ORDERS)
+            .child(BuildConfig.APP_ID)
             .child(order.uuid)
 
         val orderItems = HashMap<String, Any>()
@@ -36,6 +38,7 @@ class ApiRepository @Inject constructor() : IApiRepository {
 
         val cartProductRef = firebaseInstance
             .getReference(Order.ORDERS)
+            .child(BuildConfig.APP_ID)
             .child(cartProduct.orderUuid)
             .child(CartProduct.CART_PRODUCTS)
             .child(cartProduct.uuid)

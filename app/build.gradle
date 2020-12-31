@@ -49,6 +49,14 @@ android {
             }
         }
     }
+
+    flavorDimensions "api"
+
+    productFlavors {
+        prod {
+            buildConfigField 'String', 'APP_ID', '"papakarlo"'
+        }
+    }
 }
 
 repositories {
