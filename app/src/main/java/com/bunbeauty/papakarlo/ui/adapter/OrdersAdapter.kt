@@ -20,7 +20,7 @@ class OrdersAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
-        holder.binding?.menuProduct = itemList[i]
+        holder.binding?.orderWithCartProducts = itemList[i]
     }
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

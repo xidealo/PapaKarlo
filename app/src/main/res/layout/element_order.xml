@@ -12,7 +12,7 @@
             type="android.content.Context" />
 
         <variable
-            name="menuProduct"
+            name="orderWithCartProducts"
             type="com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts" />
     </data>
 
@@ -26,35 +26,35 @@
             <TextView
                 android:id="@+id/element_order_tv_uuid"
                 style="@style/TitleOrderElement"
-                android:text="@{menuProduct.order.getUuidCode()}"
+                android:text="@{orderWithCartProducts.order.getUuidCode()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_order_tv_time"
                 style="@style/TimeOrderElement"
-                android:text="@{menuProduct.order.getTimeHHMM()}"
+                android:text="@{orderWithCartProducts.order.getTimeHHMM()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_order_tv_address"
                 style="@style/AddressOrderElement"
-                android:text="@{menuProduct.order.getAddress()}"
+                android:text="@{orderWithCartProducts.order.getAddress()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_uuid" />
 
             <TextView
                 android:id="@+id/element_order_tv_full_price"
                 style="@style/CostOrderElement"
-                android:text="@{menuProduct.getFullPrice()}"
+                android:text="@{orderWithCartProducts.getFullPrice()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_address" />
 
             <TextView
                 android:id="@+id/element_order_tv_structure"
                 style="@style/CostOrderElement"
-                android:text="@{menuProduct.getCartProductsStructure()}"
+                android:text="@{orderWithCartProducts.getCartProductsStructure()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_full_price" />
 
