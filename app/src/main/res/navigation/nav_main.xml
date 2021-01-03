@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.bunbeauty.papakarlo.ui.main.MainFragment"
-        android:label="@string/title_main"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_main_fragment_to_cart_fragment"
