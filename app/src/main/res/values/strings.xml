@@ -11,6 +11,7 @@
     -->
 
     <!-- TITLES -->
+    <string name="title_main">Главная</string>
     <string name="title_menu">Меню</string>
     <string name="title_contacts">Контакты</string>
     <string name="title_orders">Ваши заказы</string>
