@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.size
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -30,6 +31,8 @@ class MainFragment: CartClickableFragment<FragmentMainBinding, MainViewModel>(),
             viewDataBinding.fragmentMainBnvNavigationBar,
             (childFragmentManager.findFragmentById(R.id.fragment_main_fcv_container) as NavHostFragment).findNavController()
         )
+        viewDataBinding.fragmentMainBnvNavigationBar.setOnNavigationItemReselectedListener {
+        }
     }
 
     override fun goToCart(view: View) {

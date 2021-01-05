@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue.TIMESTAMP
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -45,6 +46,7 @@ class ApiRepository @Inject constructor(
         orderItems[Order.FLOOR] = order.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
+        orderItems[Order.TIMESTAMP] = TIMESTAMP
         orderItems[Order.ORDER_STATUS] = order.orderStatus
         orderRef.updateChildren(orderItems)
 

@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui.menu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R

@@ -55,6 +55,7 @@ data class Order(
         const val FLOOR = "floor"
         const val COMMENT = "comment"
         const val PHONE = "phone"
+        const val TIMESTAMP = "timestamp"
         const val ORDER_STATUS = "order status"
     }
 }

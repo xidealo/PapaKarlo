@@ -8,4 +8,5 @@ import javax.inject.Inject
 class MenuViewModel @Inject constructor() : BaseViewModel() {
 
     var navigator: WeakReference<MenuNavigator>? = null
+    var selectedTabIndex = 0
 }

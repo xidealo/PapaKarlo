@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.databinding.FragmentContactsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
 import com.bunbeauty.papakarlo.utils.uri.IUriHelper
 import com.bunbeauty.papakarlo.view_model.ContactsViewModel
@@ -58,6 +59,9 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
         }
         viewDataBinding.fragmentContactsMcAddress.setOnClickListener {
             goToAddress(viewModel.contactInfoLiveData.value!!)
+        }
+        viewDataBinding.fragmentContactsMcWorkTime.setOnClickListener {
+            (activity as MainActivity).showMessage(viewModel.getIsClosedMessage())
         }
     }
 
