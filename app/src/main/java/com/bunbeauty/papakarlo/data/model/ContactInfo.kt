@@ -4,7 +4,10 @@ data class ContactInfo(
     val address: String,
     val startTime: String,
     val endTime: String,
-    val phone: String
+    val phone: String,
+    val label: String,
+    val latitude: Double,
+    val longitude: Double
 ) {
 
     companion object {
@@ -13,5 +16,8 @@ data class ContactInfo(
         const val START_TIME = "start_time"
         const val END_TIME = "end_time"
         const val PHONE = "phone"
+        const val NAME = "name"
+        const val LATITUDE = "latitude"
+        const val LONGITUDE = "longitude"
     }
 }

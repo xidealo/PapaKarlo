@@ -65,10 +65,8 @@
     <string name="title_bottom_navigation_menu_orders">Заказы</string>
 
     <!-- CONTACTS  -->
-    <string name="msg_contacts_address">г.Кимры, улица Чапаева, 22а</string>
-    <string name="msg_contacts_work_time">Время работы: </string>
-    <string name="msg_contacts_work_time_divider"> - </string>
-    <string name="msg_contacts_phone">+7(900)111–14–21</string>
+    <string name="msg_contacts_work_time">Время работы:\u0020</string>
+    <string name="msg_contacts_work_time_divider">\u0020-\u0020</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -12,14 +12,16 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class ApiRepository @Inject constructor(
-    private val dataStoreHelper: IDataStoreHelper,
-    private val contactInfoHelper: IContactInfoHelper
-) : IApiRepository {
+class ApiRepository @Inject constructor(private val contactInfoHelper: IContactInfoHelper, private val dataStoreHelper: IDataStoreHelper) :
+    IApiRepository, CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = Job() + IO
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
@@ -77,7 +79,7 @@ class ApiRepository @Inject constructor(
         contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val contactInfo = contactInfoHelper.getContactInfoFromSnapshot(snapshot)
-                CoroutineScope(Dispatchers.IO).launch {
+                launch {
                     dataStoreHelper.saveContactInfo(contactInfo)
                 }
             }
@@ -88,6 +90,6 @@ class ApiRepository @Inject constructor(
     }
 
     companion object {
-        private val COMPANY = "COMPANY"
+        private const val COMPANY = "COMPANY"
     }
 }

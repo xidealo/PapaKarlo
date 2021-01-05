@@ -26,9 +26,6 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
     override var layoutId: Int = R.layout.fragment_menu
     override var viewModelClass = MenuViewModel::class.java
 
-    @Inject
-    lateinit var dataStoreHelper: DataStoreHelper
-
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -37,10 +34,6 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         title = resources.getString(R.string.title_menu)
 
         super.onViewCreated(view, savedInstanceState)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            dataStoreHelper.saveContactInfo(ContactInfo("", "", "", ""))
-        }
 
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             listOf(

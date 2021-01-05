@@ -8,8 +8,11 @@ import com.bunbeauty.papakarlo.utils.contact_info.ContactInfoHelper
 import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
+import com.bunbeauty.papakarlo.utils.uri.IUriHelper
+import com.bunbeauty.papakarlo.utils.uri.UriHelper
 import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module
 abstract class ApiModule {
@@ -21,6 +24,7 @@ abstract class ApiModule {
 
     // DATA_STORE
 
+    @Singleton
     @Binds
     abstract fun bindDataStoreHelper(dataStoreHelper: DataStoreHelper): IDataStoreHelper
 
@@ -31,6 +35,9 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindContactInfoHelper(contactInfoHelper: ContactInfoHelper): IContactInfoHelper
+
+    @Binds
+    abstract fun bindUriHelper(uriHelper: UriHelper): IUriHelper
 
 
 }

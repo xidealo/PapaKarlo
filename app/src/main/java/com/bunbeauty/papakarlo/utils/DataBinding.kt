@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
+import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
 object DataBinding {
@@ -76,5 +77,11 @@ object DataBinding {
         if (!link.isNullOrEmpty()) {
             Picasso.get().load(link).into(imageView)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:enabled")
+    fun setEnabled(materialCardView: MaterialCardView, isEnabled: Boolean) {
+        materialCardView.isEnabled = isEnabled
     }
 }

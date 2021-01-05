@@ -1,9 +1,13 @@
 package com.bunbeauty.papakarlo.utils.contact_info
 
+import android.util.Log
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.ADDRESS
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.END_TIME
+import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LATITUDE
+import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LONGITUDE
+import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.NAME
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.PHONE
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.START_TIME
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
@@ -28,7 +32,10 @@ class ContactInfoHelper @Inject constructor(private val resourcesProvider: Resou
             dataSnapshot.child(ADDRESS).value.toString(),
             dataSnapshot.child(START_TIME).value.toString(),
             dataSnapshot.child(END_TIME).value.toString(),
-            dataSnapshot.child(PHONE).value.toString()
+            dataSnapshot.child(PHONE).value.toString(),
+            dataSnapshot.child(NAME).value.toString(),
+            dataSnapshot.child(LATITUDE).value.toString().toDouble(),
+            dataSnapshot.child(LONGITUDE).value.toString().toDouble()
         )
     }
 }

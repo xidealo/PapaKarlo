@@ -21,9 +21,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_contacts_mc_address"
             style="@style/MaterialCardContacts"
-            android:clickable="true"
+            bind:enabled="@{viewModel.isClickable}"
             android:focusable="true"
-            android:onClick="@{()->viewModel.addressClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -45,9 +44,7 @@
             android:id="@+id/fragment_contacts_mc_work_time"
             style="@style/MaterialCardContacts"
             android:layout_marginTop="@dimen/medium_margin"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{()->viewModel.workTimeClick()}"
+            bind:enabled="@{viewModel.isClickable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_mc_address">
@@ -67,10 +64,8 @@
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_contacts_mc_phone"
             style="@style/MaterialCardContacts"
+            bind:enabled="@{viewModel.isClickable}"
             android:layout_marginTop="@dimen/medium_margin"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{()->viewModel.phoneClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_mc_work_time">
