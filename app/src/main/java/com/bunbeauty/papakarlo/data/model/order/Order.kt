@@ -35,10 +35,10 @@ data class Order(
 
     fun getAddress() =
         "Доставка на улицу:$street\n" +
-                "Дом:$house\n" +
-                "Квартира:$flat\n" +
-                "Подъезд:$entrance\n" +
-                "Домофон:$intercom\n" +
+                "Дом:$house " +
+                "Квартира:$flat " +
+                "Подъезд:$entrance " +
+                "Домофон:$intercom " +
                 "Этаж:$floor\n" +
                 "Комментарий:$comment\n" +
                 "Контактный телефон:$phone"
