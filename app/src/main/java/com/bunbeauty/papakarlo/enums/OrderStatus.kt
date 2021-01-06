@@ -4,10 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class ProductCode : Parcelable {
-    All,
-    Pizza,
-    Hamburger,
-    Potato,
-    OnCoals
+enum class OrderStatus : Parcelable {
+    NotAccepted,
+    Preparing,
+    SentOut,
+    Delivered
 }

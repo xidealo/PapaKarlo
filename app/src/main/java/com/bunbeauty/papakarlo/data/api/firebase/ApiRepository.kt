@@ -18,7 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ApiRepository @Inject constructor(private val contactInfoHelper: IContactInfoHelper, private val dataStoreHelper: IDataStoreHelper) :
+class ApiRepository @Inject constructor(
+    private val contactInfoHelper: IContactInfoHelper,
+    private val dataStoreHelper: IDataStoreHelper
+) :
     IApiRepository, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job() + IO
@@ -42,6 +45,7 @@ class ApiRepository @Inject constructor(private val contactInfoHelper: IContactI
         orderItems[Order.FLOOR] = order.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
+        orderItems[Order.ORDER_STATUS] = order.orderStatus
         orderRef.updateChildren(orderItems)
 
         return order.uuid

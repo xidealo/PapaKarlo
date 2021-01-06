@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.data.local.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.bunbeauty.papakarlo.data.local.converter.OrderStatusConverter
 import com.bunbeauty.papakarlo.data.local.converter.ProductCodeConverter
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
 import com.bunbeauty.papakarlo.data.local.db.order.OrderDao
@@ -15,9 +16,9 @@ import com.bunbeauty.papakarlo.data.model.order.Order
         CartProduct::class,
         MenuProduct::class,
         Order::class
-    ], version = 5
+    ], version = 6
 )
-@TypeConverters(ProductCodeConverter::class)
+@TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
 
     abstract fun cartProductDao(): CartProductDao
