@@ -1,12 +1,9 @@
 package com.bunbeauty.papakarlo.ui.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.local.datastore.DataStoreHelper
-import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,10 +13,6 @@ import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
 import com.bunbeauty.papakarlo.view_model.MenuViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
 
@@ -36,13 +29,14 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getMenuProductList()
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             listOf(
-                ProductsFragment.newInstance(ProductCode.All),
-                ProductsFragment.newInstance(ProductCode.Pizza),
-                ProductsFragment.newInstance(ProductCode.Hamburger),
-                ProductsFragment.newInstance(ProductCode.Potato),
-                ProductsFragment.newInstance(ProductCode.OnCoals),
+                ProductsFragment.newInstance(ProductCode.ALL),
+                ProductsFragment.newInstance(ProductCode.PIZZA),
+                ProductsFragment.newInstance(ProductCode.BURGER),
+                ProductsFragment.newInstance(ProductCode.POTATO),
+                ProductsFragment.newInstance(ProductCode.BARBECUE),
             ),
             requireActivity()
         )
@@ -51,14 +45,14 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
             resources.getString(R.string.title_menu_pizza),
             resources.getString(R.string.title_menu_burger),
             resources.getString(R.string.title_menu_potato),
-            resources.getString(R.string.title_menu_onCoals)
+            resources.getString(R.string.title_menu_barbecue)
         )
         val tabIconList = arrayListOf(
             R.drawable.ic_all_products,
             R.drawable.ic_pizza,
             R.drawable.ic_burger,
-            R.drawable.ic_french_fries,
-            R.drawable.ic_kebab
+            R.drawable.ic_potato,
+            R.drawable.ic_barbecue
         )
         TabLayoutMediator(
             viewDataBinding.fragmentMenuTl,

@@ -57,7 +57,7 @@ class CreationOrderFragment :
                 resources.getString(R.string.error_creation_order_house)
             return
         }
-        if (viewDataBinding.fragmentOrderEtPhone.text.isNullOrEmpty()) {
+        if (viewDataBinding.fragmentOrderEtPhone.text?.length != 18) {
             viewDataBinding.fragmentOrderEtPhone.error =
                 resources.getString(R.string.error_creation_order_phone)
             return

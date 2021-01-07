@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections
+import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections.actionMainFragmentToProductFragment
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -22,12 +23,13 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_products
     override var viewModelClass = ProductsViewModel::class.java
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter
+
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +42,8 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView()
         viewModel.navigator = WeakReference(this)
+        setupRecyclerView()
         viewModel.productListLiveData.observe(viewLifecycleOwner) { productList ->
             menuProductsAdapter.setItemList(productList)
         }
@@ -54,9 +56,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     }
 
     override fun goToProduct(menuProduct: MenuProduct) {
-        findNavController().navigate(
-            MainFragmentDirections.actionMainFragmentToProductFragment(menuProduct)
-        )
+        findNavController().navigate(actionMainFragmentToProductFragment(menuProduct))
     }
 
     companion object {

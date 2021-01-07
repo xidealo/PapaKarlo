@@ -7,4 +7,5 @@ interface IApiRepository {
     fun insertOrder(order: Order): String
     fun insertCartProduct(cartProduct: CartProduct): String
     fun getContactInfo()
+    fun getMenuProductList()
 }
