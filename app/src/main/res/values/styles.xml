@@ -47,9 +47,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
+        <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">0dp</item>
         <item name="android:layout_margin">@dimen/medium_margin</item>
     </style>
+
     <style name="SmallButton" parent="MainButton">
         <item name="android:layout_width">@dimen/small_button_width</item>
     </style>
