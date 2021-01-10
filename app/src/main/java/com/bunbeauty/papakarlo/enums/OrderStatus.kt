@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 enum class OrderStatus : Parcelable {
-    NotAccepted,
-    Preparing,
-    SentOut,
-    Delivered
+    NOT_ACCEPTED,
+    PREPARING,
+    SENT_OUT,
+    DONE
 }

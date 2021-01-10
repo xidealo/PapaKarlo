@@ -21,7 +21,7 @@ data class Order(
     var comment: String = "",
     var phone: String = "",
     var time: Long = DateTime.now().millis,
-    var orderStatus: OrderStatus = OrderStatus.NotAccepted,
+    var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED,
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",

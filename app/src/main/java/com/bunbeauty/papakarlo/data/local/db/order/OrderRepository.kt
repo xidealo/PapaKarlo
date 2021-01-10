@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -26,4 +25,11 @@ class OrderRepository @Inject constructor(
     override fun getOrdersWithCartProducts(): LiveData<List<OrderWithCartProducts>> {
         return orderDao.getOrders()
     }
+
+    /*override suspend fun deleteAll(orderList: List<OrderWithCartProducts>) =
+        withContext(Dispatchers.IO) {
+            for (order in orderList) {
+                orderDao.delete(order.order)
+            }
+        }*/
 }
