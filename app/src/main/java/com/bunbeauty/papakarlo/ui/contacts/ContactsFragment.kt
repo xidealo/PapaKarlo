@@ -3,9 +3,7 @@ package com.bunbeauty.papakarlo.ui.contacts
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.asLiveData
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.ContactInfo
@@ -16,10 +14,6 @@ import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
 import com.bunbeauty.papakarlo.utils.uri.IUriHelper
 import com.bunbeauty.papakarlo.view_model.ContactsViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -66,7 +60,7 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
     }
 
     private fun goToAddress(contactInfo: ContactInfo) {
-        val uri = uriHelper.createUri(contactInfo.label, contactInfo.latitude, contactInfo.longitude)
+        val uri = Uri.parse("http://maps.google.com/maps?daddr=" + contactInfo.latitude + "," + contactInfo.longitude)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
