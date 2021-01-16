@@ -178,7 +178,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/medium_margin</item>
+        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
     </style>
 
     <style name="MaterialCardCreationOrder">

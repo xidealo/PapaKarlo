@@ -58,6 +58,7 @@
     <string name="error_creation_order_street">Введите название улицы</string>
     <string name="error_creation_order_house">Введите номер дома</string>
     <string name="error_creation_order_phone">Введите номер телефона</string>
+    <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
 
     <!-- CREATION ORDER -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>
