@@ -1,7 +1,9 @@
 package com.bunbeauty.papakarlo.ui.creation_order
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
@@ -16,6 +18,7 @@ import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
 import java.lang.ref.WeakReference
 
+
 class CreationOrderFragment :
     CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
@@ -23,6 +26,7 @@ class CreationOrderFragment :
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_creation_order
     override var viewModelClass = CreationOrderViewModel::class.java
+    override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -47,19 +51,85 @@ class CreationOrderFragment :
             return
         }
 
-        if (viewDataBinding.fragmentOrderEtStreet.text.isNullOrEmpty()) {
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtStreet.text.toString(),
+                true,
+                50
+            )) {
             viewDataBinding.fragmentOrderEtStreet.error =
                 resources.getString(R.string.error_creation_order_street)
+            viewDataBinding.fragmentOrderEtStreet.requestFocus()
             return
         }
-        if (viewDataBinding.fragmentOrderEtHouse.text.isNullOrEmpty()) {
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtHouse.text.toString(),
+                true,
+                5
+            )) {
             viewDataBinding.fragmentOrderEtHouse.error =
                 resources.getString(R.string.error_creation_order_house)
+            viewDataBinding.fragmentOrderEtHouse.requestFocus()
             return
         }
-        if (viewDataBinding.fragmentOrderEtPhone.text?.length != 18) {
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtFlat.text.toString(),
+                false,
+                5
+            )) {
+            viewDataBinding.fragmentOrderEtFlat.error =
+                resources.getString(R.string.error_creation_order_flat)
+            viewDataBinding.fragmentOrderEtFlat.requestFocus()
+            return
+        }
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtEntrance.text.toString(),
+                false,
+                5
+            )) {
+            viewDataBinding.fragmentOrderEtEntrance.error =
+                resources.getString(R.string.error_creation_order_entrance)
+            viewDataBinding.fragmentOrderEtEntrance.requestFocus()
+            return
+        }
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtIntercom.text.toString(),
+                false,
+                5
+            )) {
+            viewDataBinding.fragmentOrderEtIntercom.error =
+                resources.getString(R.string.error_creation_order_intercom)
+            viewDataBinding.fragmentOrderEtIntercom.requestFocus()
+            return
+        }
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtFloor.text.toString(),
+                false,
+                5
+            )) {
+            viewDataBinding.fragmentOrderEtFloor.error =
+                resources.getString(R.string.error_creation_order_floor)
+            viewDataBinding.fragmentOrderEtFloor.requestFocus()
+            return
+        }
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtComment.text.toString(),
+                false,
+                100
+            )) {
+            viewDataBinding.fragmentOrderEtComment.error =
+                resources.getString(R.string.error_creation_order_comment)
+            viewDataBinding.fragmentOrderEtComment.requestFocus()
+            return
+        }
+        if (!viewModel.isCorrectFieldContent(
+                viewDataBinding.fragmentOrderEtPhone.text.toString(),
+                true,
+                18,
+                18
+            )) {
             viewDataBinding.fragmentOrderEtPhone.error =
                 resources.getString(R.string.error_creation_order_phone)
+            viewDataBinding.fragmentOrderEtPhone.requestFocus()
             return
         }
 
@@ -75,6 +145,9 @@ class CreationOrderFragment :
                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
             )
         )
+
+        val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
     }
 
     override fun goToMain(order: Order) {

@@ -19,6 +19,7 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_menu
     override var viewModelClass = MenuViewModel::class.java
+    override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

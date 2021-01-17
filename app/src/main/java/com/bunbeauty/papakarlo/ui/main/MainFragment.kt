@@ -19,12 +19,15 @@ class MainFragment: CartClickableFragment<FragmentMainBinding, MainViewModel>(),
     override var layoutId = R.layout.fragment_main
     override var viewModelClass: Class<MainViewModel> = MainViewModel::class.java
     override var viewModelVariable: Int = BR.viewModel
+    override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = ""
+
         super.onViewCreated(view, savedInstanceState)
 
         NavigationUI.setupWithNavController(

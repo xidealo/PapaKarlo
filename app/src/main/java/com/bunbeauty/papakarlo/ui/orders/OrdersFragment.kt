@@ -17,6 +17,7 @@ class OrdersFragment : TopBarFragment<FragmentOrdersBinding, OrdersViewModel>() 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_orders
     override var viewModelClass = OrdersViewModel::class.java
+    override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

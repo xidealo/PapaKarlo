@@ -55,9 +55,15 @@
     <string name="title_creation_order_contact">Контактная информация</string>
     <string name="title_creation_order_phone">Телефон*</string>
     <string name="action_creation_order_order">Оформить заказ</string>
-    <string name="error_creation_order_street">Введите название улицы</string>
-    <string name="error_creation_order_house">Введите номер дома</string>
-    <string name="error_creation_order_phone">Введите номер телефона</string>
+
+    <string name="error_creation_order_street">Введите коррекное название улицы</string>
+    <string name="error_creation_order_house">Введите корректный номер дома</string>
+    <string name="error_creation_order_flat">Введите корректный номер квартиры</string>
+    <string name="error_creation_order_entrance">Введите корректный номер подъезда</string>
+    <string name="error_creation_order_intercom">Введите корректный код домофона</string>
+    <string name="error_creation_order_floor">Введите корректный номер этажа</string>
+    <string name="error_creation_order_comment">Введите корректный комментарий</string>
+    <string name="error_creation_order_phone">Введите корректный номер телефона</string>
 
     <!-- CREATION ORDER -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>

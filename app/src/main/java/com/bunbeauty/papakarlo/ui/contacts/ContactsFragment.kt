@@ -23,6 +23,7 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_contacts
     override var viewModelClass = ContactsViewModel::class.java
+    override lateinit var title: String
 
     @Inject
     lateinit var contactInfoHelper: IContactInfoHelper
@@ -35,10 +36,11 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        title = resources.getString(R.string.title_contacts)
+
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-        title = resources.getString(R.string.title_contacts)
 
         viewModel.contactInfoLiveData.observe(viewLifecycleOwner) { contactInfo ->
             viewDataBinding.fragmentContactsTvAddress.text = contactInfo.address

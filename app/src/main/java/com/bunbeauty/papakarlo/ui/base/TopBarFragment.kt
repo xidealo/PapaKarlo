@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 
 abstract class TopBarFragment<T : ViewDataBinding, V : BaseViewModel> : BaseFragment<T, V>() {
 
-    protected var title = ""
+    abstract var title: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

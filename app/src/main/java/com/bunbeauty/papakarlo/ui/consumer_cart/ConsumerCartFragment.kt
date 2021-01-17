@@ -25,6 +25,7 @@ class ConsumerCartFragment :
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_consumer_cart
     override var viewModelClass = ConsumerCartViewModel::class.java
+    override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

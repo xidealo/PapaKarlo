@@ -17,169 +17,191 @@
         tools:context=".ui.creation_order.CreationOrderFragment">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_creation_order_cv_order"
             style="@style/MaterialCardContacts"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/small_margin"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_creation_order_btn_order"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/cardViewBackground"
-                android:padding="@dimen/small_padding">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/fragment_creation_order_tv_title"
-                    style="@style/TitleCreationOrder"
-                    android:text="@string/title_creation_order_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cardViewBackground"
+                    android:padding="@dimen/small_padding">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_street"
-                    style="@style/MaterialInputLayout"
-                    android:hint="@string/hint_creation_order_street"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_title">
+                    <TextView
+                        android:id="@+id/fragment_creation_order_tv_title"
+                        style="@style/TitleCreationOrder"
+                        android:text="@string/title_creation_order_address"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_street"
-                        style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_street"
+                        style="@style/MaterialInputLayout"
+                        android:hint="@string/hint_creation_order_street"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="50"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_title">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_house"
-                    style="@style/MaterialInputLayout"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:hint="@string/hint_creation_order_house"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_flat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_street">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_street"
+                            style="@style/MaterialInput"
+                            android:inputType="textCapSentences" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_house"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_house"
+                        style="@style/MaterialInputLayout"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:hint="@string/hint_creation_order_house"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_flat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_street">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_flat"
-                    style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:hint="@string/hint_creation_order_flat"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_house"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_street">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_house"
+                            style="@style/MaterialInput"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_flat"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_flat"
+                        style="@style/MaterialInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:hint="@string/hint_creation_order_flat"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_house"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_street">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_entrance"
-                    style="@style/MaterialInputLayout"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:hint="@string/hint_creation_order_entrance"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_intercom"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_house">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_flat"
+                            style="@style/MaterialInput"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_entrance"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_entrance"
+                        style="@style/MaterialInputLayout"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:hint="@string/hint_creation_order_entrance"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_intercom"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_house">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_intercom"
-                    style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:layout_marginEnd="@dimen/small_margin"
-                    android:hint="@string/hint_creation_order_intercom"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_floor"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_entrance"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_flat">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_entrance"
+                            style="@style/MaterialInput"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_intercom"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_intercom"
+                        style="@style/MaterialInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/small_margin"
+                        android:hint="@string/hint_creation_order_intercom"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_til_floor"
+                        app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_entrance"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_flat">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_floor"
-                    style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:hint="@string/hint_creation_order_floor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_intercom"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_flat">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_intercom"
+                            style="@style/MaterialInput"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_floor"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_floor"
+                        style="@style/MaterialInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:hint="@string/hint_creation_order_floor"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/fragment_creation_order_til_intercom"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_flat">
 
-                <TextView
-                    android:id="@+id/fragment_creation_order_tv_comment"
-                    style="@style/TitleCreationOrder"
-                    android:text="@string/title_creation_order_extra_extra_comment"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_entrance" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_floor"
+                            style="@style/MaterialInput"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_comment"
-                    style="@style/MaterialInputLayout"
-                    android:hint="@string/hint_creation_order_extra_comment"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
+                    <TextView
+                        android:id="@+id/fragment_creation_order_tv_comment"
+                        style="@style/TitleCreationOrder"
+                        android:text="@string/title_creation_order_extra_extra_comment"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_entrance" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_comment"
-                        style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_comment"
+                        style="@style/MaterialInputLayout"
+                        android:hint="@string/hint_creation_order_extra_comment"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="100"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
 
-                <TextView
-                    android:id="@+id/fragment_creation_order_tv_contact"
-                    style="@style/TitleCreationOrder"
-                    android:text="@string/title_creation_order_contact"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_comment"
+                            style="@style/MaterialInput"
+                            android:inputType="textCapSentences" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_phone"
-                    style="@style/MaterialInputLayout"
-                    android:hint="@string/title_creation_order_phone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
+                    <TextView
+                        android:id="@+id/fragment_creation_order_tv_contact"
+                        style="@style/TitleCreationOrder"
+                        android:text="@string/title_creation_order_contact"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_phone"
-                        style="@style/MaterialInput"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fragment_creation_order_til_phone"
+                        style="@style/MaterialInputLayout"
+                        android:hint="@string/title_creation_order_phone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/fragment_order_et_phone"
+                            style="@style/MaterialInput"
+                            android:inputType="phone" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_creation_order_btn_order"
             style="@style/MainButton"
+            android:layout_marginTop="133dp"
             android:text="@string/action_creation_order_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
