@@ -55,6 +55,7 @@
     <string name="title_creation_order_contact">Контактная информация</string>
     <string name="title_creation_order_phone">Телефон*</string>
     <string name="action_creation_order_order">Оформить заказ</string>
+    <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
 
     <string name="error_creation_order_street">Введите коррекное название улицы</string>
     <string name="error_creation_order_house">Введите корректный номер дома</string>
@@ -64,7 +65,6 @@
     <string name="error_creation_order_floor">Введите корректный номер этажа</string>
     <string name="error_creation_order_comment">Введите корректный комментарий</string>
     <string name="error_creation_order_phone">Введите корректный номер телефона</string>
-    <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
 
     <!-- CREATION ORDER -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>
