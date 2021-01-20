@@ -9,5 +9,6 @@ enum class ProductCode : Parcelable {
     PIZZA,
     BURGER,
     POTATO,
-    BARBECUE
+    BARBECUE,
+    OVEN
 }

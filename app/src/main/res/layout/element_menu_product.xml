@@ -52,6 +52,24 @@
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
+            <ImageView
+                android:id="@+id/element_menu_product_iv_on_fire"
+                style="@style/Icon"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:src="@drawable/ic_on_fire"
+                android:visibility="@{menuProduct.onFire ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_cost" />
+
+            <ImageView
+                android:id="@+id/element_menu_product_iv_in_oven"
+                style="@style/Icon"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:src="@drawable/ic_in_oven"
+                android:visibility="@{menuProduct.inOven ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_on_fire"
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_cost" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/element_menu_product_btn_want"
                 android:layout_width="wrap_content"

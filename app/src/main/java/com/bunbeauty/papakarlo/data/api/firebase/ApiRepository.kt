@@ -113,6 +113,8 @@ class ApiRepository @Inject constructor(
                         weight = snapshot.child(MenuProduct.WEIGHT).value.toString().toInt(),
                         description = snapshot.child(MenuProduct.DESCRIPTION).value.toString(),
                         photoLink = snapshot.child(MenuProduct.PHOTO_LINK).value.toString(),
+                        onFire = snapshot.child(MenuProduct.ON_FIRE).value.toString().toBoolean(),
+                        inOven = snapshot.child(MenuProduct.IN_OVEN).value.toString().toBoolean(),
                         productCode = ProductCode.valueOf(
                             snapshot.child(MenuProduct.PRODUCT_CODE).value.toString()
                         )

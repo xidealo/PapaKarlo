@@ -16,6 +16,8 @@ data class MenuProduct(
     var weight: Int = 0,
     var description: String = "",
     var photoLink: String = "",
+    var onFire: Boolean = false,
+    var inOven: Boolean = false,
     var productCode: ProductCode = ProductCode.ALL
 ) : BaseModel(), Parcelable {
 
@@ -32,6 +34,8 @@ data class MenuProduct(
         const val WEIGHT: String = "weight"
         const val DESCRIPTION: String = "description"
         const val PHOTO_LINK: String = "photo link"
+        const val ON_FIRE: String = "on fire"
+        const val IN_OVEN: String = "in oven"
         const val PRODUCT_CODE: String = "product code"
     }
 }

@@ -17,7 +17,7 @@ import com.bunbeauty.papakarlo.data.model.order.Order
         CartProduct::class,
         MenuProduct::class,
         Order::class
-    ], version = 7
+    ], version = 8
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {

@@ -38,38 +38,58 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
 
-        <LinearLayout
-            android:id="@+id/fragment_product_ll_description"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:padding="@dimen/default_padding"
-            app:layout_constraintBottom_toTopOf="@id/fragment_product_btn_add"
-            app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+            android:id="@+id/fragment_product_tv_title"
+            style="@style/TitleFragmentProduct"
+            android:layout_margin="@dimen/medium_margin"
+            android:text="@{product.name}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo">
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
 
-             <TextView
-                 android:id="@+id/fragment_product_tv_title"
-                 style="@style/TitleFragmentProduct"
-                 android:text="@{product.name}" />
+        <TextView
+            android:id="@+id/fragment_product_tv_cost"
+            style="@style/CostFragmentProduct"
+            android:text="@{product.getStringCost()}"
+            android:layout_marginStart="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
-            <TextView
-                android:id="@+id/fragment_product_tv_cost"
-                style="@style/CostFragmentProduct"
-                android:text="@{product.getStringCost()}" />
+        <TextView
+            android:id="@+id/fragment_product_tv_gram"
+            style="@style/GramFragmentProduct"
+            android:text="@{product.getStringGram()}"
+            android:layout_marginStart="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost"/>
 
-            <TextView
-                android:id="@+id/fragment_product_tv_gram"
-                style="@style/GramFragmentProduct"
-                android:text="@{product.getStringGram()}" />
+        <ImageView
+            android:id="@+id/element_menu_product_iv_on_fire"
+            style="@style/Icon"
+            android:src="@drawable/ic_on_fire"
+            android:visibility="@{product.onFire ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
 
-            <TextView
-                android:id="@+id/fragment_product_tv_description"
-                style="@style/DescriptionFragmentProduct"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:text="@{product.description}" />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/element_menu_product_iv_in_oven"
+            style="@style/Icon"
+            android:src="@drawable/ic_in_oven"
+            android:visibility="@{product.inOven ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram"/>
+
+        <TextView
+            android:id="@+id/fragment_product_tv_description"
+            style="@style/DescriptionFragmentProduct"
+            android:text="@{product.description}"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_product_btn_add"

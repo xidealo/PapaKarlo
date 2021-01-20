@@ -38,6 +38,7 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
                 ProductsFragment.newInstance(ProductCode.BURGER),
                 ProductsFragment.newInstance(ProductCode.POTATO),
                 ProductsFragment.newInstance(ProductCode.BARBECUE),
+                ProductsFragment.newInstance(ProductCode.OVEN),
             ),
             requireActivity()
         )
@@ -46,14 +47,16 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
             resources.getString(R.string.title_menu_pizza),
             resources.getString(R.string.title_menu_burger),
             resources.getString(R.string.title_menu_potato),
-            resources.getString(R.string.title_menu_barbecue)
+            resources.getString(R.string.title_menu_barbecue),
+            resources.getString(R.string.title_menu_oven),
         )
         val tabIconList = arrayListOf(
             R.drawable.ic_all_products,
             R.drawable.ic_pizza,
             R.drawable.ic_burger,
             R.drawable.ic_potato,
-            R.drawable.ic_barbecue
+            R.drawable.ic_barbecue,
+            R.drawable.ic_oven,
         )
         TabLayoutMediator(
             viewDataBinding.fragmentMenuTl,
