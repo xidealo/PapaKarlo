@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/element_order_tv_address"
                 style="@style/AddressOrderElement"
-                android:text="@{menuProduct.order.getAddress()}"
+                android:text="@{menuProduct.order.getOrderData()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_uuid" />
 

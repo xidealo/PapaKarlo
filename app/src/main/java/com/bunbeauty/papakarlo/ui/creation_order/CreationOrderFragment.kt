@@ -4,6 +4,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.CompoundButton
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
@@ -11,11 +12,11 @@ import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToCartFragment
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToMainFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.*
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
+import com.google.android.material.internal.NavigationMenu
 import java.lang.ref.WeakReference
 
 
@@ -38,84 +39,31 @@ class CreationOrderFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-        viewDataBinding.fragmentCreationOrderBtnOrder.setOnClickListener {
-            createOrder()
+        viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+            if (isChecked)
+                viewModel
+        }
+        viewDataBinding.fragmentCreationOrderRbPickup.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+            if (isChecked)
+                viewModel
         }
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
     }
 
-    private fun createOrder() {
+    override fun createDeliveryOrder() {
         if (!(activity as MainActivity).viewModel.isNetworkConnected) {
-            (activity as MainActivity).showError("Нет подключения к интернету")
+            (activity as MainActivity).showError(requireContext().getString(R.string.error_creation_order_connect))
             return
         }
 
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtStreet.text.toString(),
-                true,
-                50
-            )) {
-            viewDataBinding.fragmentOrderEtStreet.error =
-                resources.getString(R.string.error_creation_order_street)
-            viewDataBinding.fragmentOrderEtStreet.requestFocus()
-            return
-        }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtHouse.text.toString(),
-                true,
-                5
-            )) {
-            viewDataBinding.fragmentOrderEtHouse.error =
-                resources.getString(R.string.error_creation_order_house)
-            viewDataBinding.fragmentOrderEtHouse.requestFocus()
-            return
-        }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtFlat.text.toString(),
-                false,
-                5
-            )) {
-            viewDataBinding.fragmentOrderEtFlat.error =
-                resources.getString(R.string.error_creation_order_flat)
-            viewDataBinding.fragmentOrderEtFlat.requestFocus()
-            return
-        }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtEntrance.text.toString(),
-                false,
-                5
-            )) {
-            viewDataBinding.fragmentOrderEtEntrance.error =
-                resources.getString(R.string.error_creation_order_entrance)
-            viewDataBinding.fragmentOrderEtEntrance.requestFocus()
-            return
-        }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtIntercom.text.toString(),
-                false,
-                5
-            )) {
-            viewDataBinding.fragmentOrderEtIntercom.error =
-                resources.getString(R.string.error_creation_order_intercom)
-            viewDataBinding.fragmentOrderEtIntercom.requestFocus()
-            return
-        }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtFloor.text.toString(),
-                false,
-                5
-            )) {
-            viewDataBinding.fragmentOrderEtFloor.error =
-                resources.getString(R.string.error_creation_order_floor)
-            viewDataBinding.fragmentOrderEtFloor.requestFocus()
-            return
-        }
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentOrderEtComment.text.toString(),
                 false,
                 100
-            )) {
+            )
+        ) {
             viewDataBinding.fragmentOrderEtComment.error =
                 resources.getString(R.string.error_creation_order_comment)
             viewDataBinding.fragmentOrderEtComment.requestFocus()
@@ -126,14 +74,15 @@ class CreationOrderFragment :
                 true,
                 18,
                 18
-            )) {
+            )
+        ) {
             viewDataBinding.fragmentOrderEtPhone.error =
                 resources.getString(R.string.error_creation_order_phone)
             viewDataBinding.fragmentOrderEtPhone.requestFocus()
             return
         }
 
-        viewModel.createOrder(
+       /* viewModel.createOrder(
             Order(
                 street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
                 house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
@@ -144,9 +93,10 @@ class CreationOrderFragment :
                 comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
             )
-        )
+        )*/
 
-        val inputMethodManager = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
     }
 
@@ -157,5 +107,9 @@ class CreationOrderFragment :
 
     override fun goToCart(view: View) {
         findNavController().navigate(backToCartFragment())
+    }
+
+    override fun goToCreationAddress() {
+        findNavController().navigate(toCreationAddressFragment())
     }
 }

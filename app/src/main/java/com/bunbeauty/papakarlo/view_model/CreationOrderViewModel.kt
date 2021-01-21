@@ -45,7 +45,12 @@ class CreationOrderViewModel @Inject constructor(private val orderRepo: OrderRep
         return true
     }
 
-    fun isCorrectFieldContent(text: String, isRequired: Boolean, minLength: Int, maxLength: Int): Boolean {
+    fun isCorrectFieldContent(
+        text: String,
+        isRequired: Boolean,
+        minLength: Int,
+        maxLength: Int
+    ): Boolean {
         if (!isCorrectFieldContent(text, isRequired, maxLength)) {
             return false
         }
@@ -55,5 +60,13 @@ class CreationOrderViewModel @Inject constructor(private val orderRepo: OrderRep
         }
 
         return true
+    }
+
+    fun createOrderClick() {
+        navigator?.get()?.createDeliveryOrder()
+    }
+
+    fun createAddressClick(){
+        navigator?.get()?.goToCreationAddress()
     }
 }

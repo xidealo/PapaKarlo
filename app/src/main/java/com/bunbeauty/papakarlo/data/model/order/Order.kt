@@ -1,8 +1,10 @@
 package com.bunbeauty.papakarlo.data.model.order
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.BaseModel
 import com.bunbeauty.papakarlo.data.model.Time
 import com.bunbeauty.papakarlo.enums.OrderStatus
@@ -12,12 +14,8 @@ import org.joda.time.DateTime
 @Parcelize
 @Entity
 data class Order(
-    var street: String = "",
-    var house: String = "",
-    var flat: String = "",
-    var entrance: String = "",
-    var intercom: String = "",
-    var floor: String = "",
+    @Embedded(prefix = "address_")
+    var address: Address = Address(),
     var comment: String = "",
     var phone: String = "",
     var time: Long = DateTime.now().millis,
@@ -27,21 +25,21 @@ data class Order(
     override var uuid: String = "",
 ) : BaseModel(), Parcelable {
 
-
     fun getTimeHHMM(): String {
         val newTime = Time(time, 3)
         return newTime.toStringTimeHHMM()
     }
 
-    fun getAddress() =
-        "Доставка на улицу:$street\n" +
-                "Дом:$house " +
-                "Квартира:$flat " +
-                "Подъезд:$entrance " +
-                "Домофон:$intercom " +
-                "Этаж:$floor\n" +
+    fun getOrderData() =
+        "Доставка на улицу:${address.street}\n" +
+                "Дом:${address.house} " +
+                "Квартира:${address.flat} " +
+                "Подъезд:${address.entrance} " +
+                "Домофон:${address.intercom} " +
+                "Этаж:${address.floor}\n" +
                 "Комментарий:$comment\n" +
                 "Контактный телефон:$phone"
+
     fun getUuidCode() = "Код заказа $uuid"
 
     companion object {

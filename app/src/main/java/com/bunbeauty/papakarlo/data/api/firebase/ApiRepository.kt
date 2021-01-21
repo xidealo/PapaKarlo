@@ -39,12 +39,12 @@ class ApiRepository @Inject constructor(
             .child(order.uuid)
 
         val orderItems = HashMap<String, Any>()
-        orderItems[Order.STREET] = order.street
-        orderItems[Order.HOUSE] = order.house
-        orderItems[Order.FLAT] = order.flat
-        orderItems[Order.ENTRANCE] = order.entrance
-        orderItems[Order.INTERCOM] = order.intercom
-        orderItems[Order.FLOOR] = order.floor
+        orderItems[Order.STREET] = order.address.street
+        orderItems[Order.HOUSE] = order.address.house
+        orderItems[Order.FLAT] = order.address.flat
+        orderItems[Order.ENTRANCE] = order.address.entrance
+        orderItems[Order.INTERCOM] = order.address.intercom
+        orderItems[Order.FLOOR] = order.address.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
         orderItems[Order.TIMESTAMP] = TIMESTAMP

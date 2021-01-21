@@ -37,7 +37,7 @@
         android:id="@+id/creation_order"
         android:name="com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment"
         android:label="@string/title_order"
-        tools:layout="@layout/fragment_creation_order" >
+        tools:layout="@layout/fragment_creation_order">
         <action
             android:id="@+id/back_to_cart_fragment"
             app:destination="@id/cart_fragment"
@@ -48,6 +48,9 @@
             app:destination="@id/main_fragment"
             app:popUpTo="@id/main_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_creationAddressFragment"
+            app:destination="@id/creationAddressFragment" />
     </fragment>
 
     <fragment
@@ -61,6 +64,23 @@
         <action
             android:id="@+id/to_cart_fragment"
             app:destination="@id/cart_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/creationAddressFragment"
+        android:name="com.bunbeauty.papakarlo.ui.creation_address.CreationAddressFragment"
+        android:label="Создание адреса"
+        tools:layout="@layout/fragment_creation_address">
+        <action
+            android:id="@+id/back_to_creation_order"
+            app:destination="@id/creation_order"
+            app:popUpTo="@id/creation_order"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/creationAddress_back_to_cart_fragment"
+            app:destination="@id/cart_fragment"
+            app:popUpTo="@id/cart_fragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>

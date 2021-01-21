@@ -8,6 +8,7 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.main.MainFragment
 import com.bunbeauty.papakarlo.ui.menu.MenuFragment
+import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressFragment
 import com.bunbeauty.papakarlo.ui.orders.OrdersFragment
 import com.bunbeauty.papakarlo.ui.product.ProductFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
@@ -34,6 +35,7 @@ interface ViewModelComponent {
     fun inject(contactsFragment: ContactsFragment)
     fun inject(ordersFragment: OrdersFragment)
     fun inject(mainFragment: MainFragment)
+    fun inject(creationAddressFragment: CreationAddressFragment)
 
     // dialogs
 }

@@ -1,8 +1,9 @@
 package com.bunbeauty.papakarlo.data.local.datastore
 
 import android.content.Context
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.preferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
 import com.bunbeauty.papakarlo.data.model.ContactInfo
 import kotlinx.coroutines.flow.Flow
@@ -47,15 +48,14 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
         private const val CONTACT_INFO_LATITUDE = "contact info latitude"
         private const val CONTACT_INFO_LONGITUDE = "contact info longitude"
 
-        private val CONTACT_INFO_ADDRESS_KEY = preferencesKey<String>(CONTACT_INFO_ADDRESS)
-        private val CONTACT_INFO_ADDRESS_START_KEY = preferencesKey<String>(CONTACT_INFO_START)
-        private val CONTACT_INFO_ADDRESS_END_KEY = preferencesKey<String>(CONTACT_INFO_END)
-        private val CONTACT_INFO_ADDRESS_PHONE_KEY = preferencesKey<String>(CONTACT_INFO_PHONE)
-        private val CONTACT_INFO_ADDRESS_LABEL_KEY = preferencesKey<String>(CONTACT_INFO_LABEL)
-        private val CONTACT_INFO_ADDRESS_LATITUDE_KEY =
-            preferencesKey<Double>(CONTACT_INFO_LATITUDE)
+        private val CONTACT_INFO_ADDRESS_KEY = stringPreferencesKey(CONTACT_INFO_ADDRESS)
+        private val CONTACT_INFO_ADDRESS_START_KEY = stringPreferencesKey(CONTACT_INFO_START)
+        private val CONTACT_INFO_ADDRESS_END_KEY = stringPreferencesKey(CONTACT_INFO_END)
+        private val CONTACT_INFO_ADDRESS_PHONE_KEY = stringPreferencesKey(CONTACT_INFO_PHONE)
+        private val CONTACT_INFO_ADDRESS_LABEL_KEY = stringPreferencesKey(CONTACT_INFO_LABEL)
+        private val CONTACT_INFO_ADDRESS_LATITUDE_KEY = doublePreferencesKey(CONTACT_INFO_LATITUDE)
         private val CONTACT_INFO_ADDRESS_LONGITUDE_KEY =
-            preferencesKey<Double>(CONTACT_INFO_LONGITUDE)
+            doublePreferencesKey(CONTACT_INFO_LONGITUDE)
 
         private const val DEFAULT_STRING = ""
         private const val DEFAULT_DOUBLE = 0.0

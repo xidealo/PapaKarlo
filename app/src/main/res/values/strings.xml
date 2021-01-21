@@ -17,6 +17,7 @@
     <string name="title_orders">Ваши заказы</string>
     <string name="title_cart">Корзина</string>
     <string name="title_order">Оформление заказа</string>
+    <string name="title_creation_address">Добавление адреса</string>
     <string name="title_product">Продукт</string>
 
     <!-- PRODUCT -->
@@ -45,19 +46,15 @@
 
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>
-    <string name="hint_creation_order_street">Улица*</string>
-    <string name="hint_creation_order_house">Дом*</string>
-    <string name="hint_creation_order_flat">Квартира</string>
-    <string name="hint_creation_order_entrance">Подъезд</string>
-    <string name="hint_creation_order_intercom">Домофон</string>
-    <string name="hint_creation_order_floor">Этаж</string>
-    <string name="title_creation_order_extra_extra_comment">Дополнительная информация для курьера</string>
+    <string name="title_creation_order_extra_extra_comment">Дополнительная информация</string>
     <string name="hint_creation_order_extra_comment">Комментарий</string>
     <string name="title_creation_order_contact">Контактная информация</string>
     <string name="title_creation_order_phone">Телефон*</string>
+    <string name="title_creation_order_email">Email</string>
+    <string name="title_creation_order_delivery">Доставка</string>
+    <string name="title_creation_order_pickup">Самовывоз</string>
     <string name="action_creation_order_order">Оформить заказ</string>
     <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
-
     <string name="error_creation_order_street">Введите коррекное название улицы</string>
     <string name="error_creation_order_house">Введите корректный номер дома</string>
     <string name="error_creation_order_flat">Введите корректный номер квартиры</string>
@@ -66,8 +63,19 @@
     <string name="error_creation_order_floor">Введите корректный номер этажа</string>
     <string name="error_creation_order_comment">Введите корректный комментарий</string>
     <string name="error_creation_order_phone">Введите корректный номер телефона</string>
+    <string name="error_creation_order_connect">Нет подключения к интернету</string>
 
-    <!-- CREATION ORDER -->
+    <!-- CREATION ADDRESS -->
+    <string name="title_creation_address_address">Адрес</string>
+    <string name="hint_creation_address_street">Улица*</string>
+    <string name="hint_creation_address_house">Дом*</string>
+    <string name="hint_creation_address_flat">Квартира</string>
+    <string name="hint_creation_address_entrance">Подъезд</string>
+    <string name="hint_creation_address_intercom">Домофон</string>
+    <string name="hint_creation_address_floor">Этаж</string>
+    <string name="action_creation_address_address">Добавить адрес</string>
+
+    <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>
     <string name="title_bottom_navigation_menu_menu">Меню</string>
     <string name="title_bottom_navigation_menu_orders">Заказы</string>
