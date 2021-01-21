@@ -14,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
+import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -65,6 +66,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setTopBarTitle(title: String) {
         viewDataBinding.activityMainTbTopBar.partTbTopBar.title = title
+    }
+
+    fun setTopBarImage(drawableId: Int) {
+        viewDataBinding.activityMainTbTopBar.partTopBarIvImage.setImageResource(drawableId)
     }
 
     fun showMessage(message: String) {

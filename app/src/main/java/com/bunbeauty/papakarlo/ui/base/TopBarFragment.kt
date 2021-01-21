@@ -13,6 +13,11 @@ abstract class TopBarFragment<T : ViewDataBinding, V : BaseViewModel> : BaseFrag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTopBarImage(0)
         (activity as? MainActivity)?.setTopBarTitle(title)
+    }
+
+    fun setTopBarImage(drawableId: Int) {
+        (activity as? MainActivity)?.setTopBarImage(drawableId)
     }
 }
