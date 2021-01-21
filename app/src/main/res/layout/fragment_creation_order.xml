@@ -19,7 +19,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/very_small_margin"
             android:scrollbars="none"
             app:layout_constraintBottom_toTopOf="@+id/fragment_creation_order_btn_order"
             app:layout_constraintEnd_toEndOf="parent"

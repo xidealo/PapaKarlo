@@ -7,32 +7,24 @@
         android:id="@+id/part_tb_top_bar"
         style="@style/TopBar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/part_top_bar_tv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:drawablePadding="@dimen/default_padding"
+            android:textColor="@color/mainTextColor"
+            app:drawableStartCompat="@drawable/ic_cart"
+            app:drawableTint="@color/mainTextColor" />
 
-            <TextView
-                android:id="@+id/part_top_bar_tv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:textColor="@color/mainTextColor"
-                android:drawablePadding="@dimen/default_padding"
-                app:drawableStartCompat="@drawable/ic_cart"
-                app:drawableTint="@color/mainTextColor"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <ImageView
-                android:id="@+id/part_top_bar_iv_image"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/logo_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/part_top_bar_iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_top"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 </layout>
