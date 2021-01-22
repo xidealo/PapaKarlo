@@ -55,6 +55,10 @@ class CreationOrderFragment :
                 viewModel.lastAddressField.set("Нажмите, чтобы выбрать адрес")
             }
         }
+        viewDataBinding.fragmentCreationOrderMcvAddress.setOnClickListener {
+            goToAddresses()
+        }
+
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
     }
@@ -119,5 +123,9 @@ class CreationOrderFragment :
 
     override fun goToCreationAddress() {
         findNavController().navigate(toCreationAddressFragment())
+    }
+
+    fun goToAddresses(){
+        findNavController().navigate(toAddressesBottomSheet())
     }
 }
