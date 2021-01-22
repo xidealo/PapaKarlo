@@ -33,30 +33,31 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         setTopBarImage(R.drawable.logo_top)
         viewModel.getMenuProductList()
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
-            listOf(
-                ProductsFragment.newInstance(ProductCode.ALL),
-                ProductsFragment.newInstance(ProductCode.PIZZA),
-                ProductsFragment.newInstance(ProductCode.BURGER),
-                ProductsFragment.newInstance(ProductCode.POTATO),
-                ProductsFragment.newInstance(ProductCode.BARBECUE),
-                ProductsFragment.newInstance(ProductCode.OVEN),
-            ),
+            ProductCode.values().asList().map {
+                ProductsFragment.newInstance(it)
+            },
             requireActivity()
         )
         val tabNameList = arrayListOf(
             resources.getString(R.string.title_menu_all),
             resources.getString(R.string.title_menu_pizza),
-            resources.getString(R.string.title_menu_burger),
-            resources.getString(R.string.title_menu_potato),
             resources.getString(R.string.title_menu_barbecue),
-            resources.getString(R.string.title_menu_oven),
+            resources.getString(R.string.title_menu_burger),
+            resources.getString(R.string.title_menu_drink),
+            resources.getString(R.string.title_menu_potato),
+            resources.getString(R.string.title_menu_spice),
+            resources.getString(R.string.title_menu_bakery),
+            resources.getString(R.string.title_menu_oven)
         )
         val tabIconList = arrayListOf(
             R.drawable.ic_all_products,
             R.drawable.ic_pizza,
-            R.drawable.ic_burger,
-            R.drawable.ic_potato,
             R.drawable.ic_barbecue,
+            R.drawable.ic_burger,
+            R.drawable.ic_drink,
+            R.drawable.ic_potato,
+            R.drawable.ic_spice,
+            R.drawable.ic_bakery,
             R.drawable.ic_oven,
         )
         TabLayoutMediator(
