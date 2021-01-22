@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.view_model
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressNavigator
@@ -8,18 +9,24 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    private val addressRepo: AddressRepo
+    private val addressRepo: AddressRepo,
+    private val iDataStoreHelper: IDataStoreHelper
 ) : BaseViewModel() {
 
     var navigator: WeakReference<CreationAddressNavigator>? = null
 
     fun creationAddress(address: Address) {
         viewModelScope.launch(Dispatchers.IO) {
+            iDataStoreHelper.saveSelectedAddress(address)
             addressRepo.insert(address)
+            withContext(Dispatchers.Main) {
+                navigator?.get()?.goToCreationOrder()
+            }
         }
     }
 

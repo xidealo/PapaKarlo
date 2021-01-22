@@ -1,9 +1,14 @@
 package com.bunbeauty.papakarlo.utils.contact_info
 
-import android.util.Log
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.Address.Companion.ENTRANCE
+import com.bunbeauty.papakarlo.data.model.Address.Companion.FLAT
+import com.bunbeauty.papakarlo.data.model.Address.Companion.FLOOR
+import com.bunbeauty.papakarlo.data.model.Address.Companion.HOUSE
+import com.bunbeauty.papakarlo.data.model.Address.Companion.INTERCOM
+import com.bunbeauty.papakarlo.data.model.Address.Companion.STREET
 import com.bunbeauty.papakarlo.data.model.ContactInfo
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.ADDRESS
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.END_TIME
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LATITUDE
 import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LONGITUDE
@@ -29,7 +34,15 @@ class ContactInfoHelper @Inject constructor(private val resourcesProvider: Resou
 
     override fun getContactInfoFromSnapshot(dataSnapshot: DataSnapshot): ContactInfo {
         return ContactInfo(
-            dataSnapshot.child(ADDRESS).value.toString(),
+            Address(
+                0,
+                dataSnapshot.child(STREET).value.toString(),
+                dataSnapshot.child(HOUSE).value.toString(),
+                dataSnapshot.child(FLAT).value.toString(),
+                dataSnapshot.child(ENTRANCE).value.toString(),
+                dataSnapshot.child(INTERCOM).value.toString(),
+                dataSnapshot.child(FLOOR).value.toString(),
+            ),
             dataSnapshot.child(START_TIME).value.toString(),
             dataSnapshot.child(END_TIME).value.toString(),
             dataSnapshot.child(PHONE).value.toString(),
@@ -38,4 +51,6 @@ class ContactInfoHelper @Inject constructor(private val resourcesProvider: Resou
             dataSnapshot.child(LONGITUDE).value.toString().toDouble()
         )
     }
+
+
 }

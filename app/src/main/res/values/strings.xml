@@ -47,20 +47,17 @@
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>
     <string name="title_creation_order_extra_extra_comment">Дополнительная информация</string>
-    <string name="hint_creation_order_extra_comment">Комментарий</string>
     <string name="title_creation_order_contact">Контактная информация</string>
     <string name="title_creation_order_phone">Телефон*</string>
     <string name="title_creation_order_email">Email</string>
     <string name="title_creation_order_delivery">Доставка</string>
     <string name="title_creation_order_pickup">Самовывоз</string>
     <string name="action_creation_order_order">Оформить заказ</string>
+    <string name="action_creation_order_address">Добавить адрес</string>
+    <string name="msg_creation_order_add_address">Добавьте адрес</string>
+    <string name="msg_creation_order_selected_address">Выбранный адрес:</string>
+    <string name="hint_creation_order_extra_comment">Комментарий</string>
     <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
-    <string name="error_creation_order_street">Введите коррекное название улицы</string>
-    <string name="error_creation_order_house">Введите корректный номер дома</string>
-    <string name="error_creation_order_flat">Введите корректный номер квартиры</string>
-    <string name="error_creation_order_entrance">Введите корректный номер подъезда</string>
-    <string name="error_creation_order_intercom">Введите корректный код домофона</string>
-    <string name="error_creation_order_floor">Введите корректный номер этажа</string>
     <string name="error_creation_order_comment">Введите корректный комментарий</string>
     <string name="error_creation_order_phone">Введите корректный номер телефона</string>
     <string name="error_creation_order_connect">Нет подключения к интернету</string>
@@ -73,7 +70,14 @@
     <string name="hint_creation_address_entrance">Подъезд</string>
     <string name="hint_creation_address_intercom">Домофон</string>
     <string name="hint_creation_address_floor">Этаж</string>
+    <string name="msg_creation_address_created_address">Адрес добавлен</string>
     <string name="action_creation_address_address">Добавить адрес</string>
+    <string name="error_creation_address_street">Введите коррекное название улицы</string>
+    <string name="error_creation_address_house">Введите корректный номер дома</string>
+    <string name="error_creation_address_flat">Введите корректный номер квартиры</string>
+    <string name="error_creation_address_entrance">Введите корректный номер подъезда</string>
+    <string name="error_creation_address_intercom">Введите корректный код домофона</string>
+    <string name="error_creation_address_floor">Введите корректный номер этажа</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_contacts">Контакты</string>

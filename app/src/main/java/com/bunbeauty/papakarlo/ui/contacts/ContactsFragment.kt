@@ -42,19 +42,19 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
 
         viewModel.navigator = WeakReference(this)
 
-        viewModel.contactInfoLiveData.observe(viewLifecycleOwner) { contactInfo ->
+       /* viewModel.contactInfoLiveData.observe(viewLifecycleOwner) { contactInfo ->
             viewDataBinding.fragmentContactsTvAddress.text = contactInfo.address
             viewDataBinding.fragmentContactsTvWorkTime.text =
                 contactInfoHelper.getWorkTimeString(contactInfo)
             viewDataBinding.fragmentContactsTvWorkPhone.text = contactInfo.phone
-        }
+        }*/
         viewModel.getContactsInfo()
 
         viewDataBinding.fragmentContactsMcPhone.setOnClickListener {
             goToPhone()
         }
         viewDataBinding.fragmentContactsMcAddress.setOnClickListener {
-            goToAddress(viewModel.contactInfoLiveData.value!!)
+            //goToAddress(viewModel.contactInfoLiveData.value!!)
         }
         viewDataBinding.fragmentContactsMcWorkTime.setOnClickListener {
             (activity as MainActivity).showMessage(viewModel.getIsClosedMessage())
@@ -69,7 +69,7 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
 
     private fun goToPhone() {
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:${viewModel.contactInfoLiveData.value!!.phone}")
+        //intent.data = Uri.parse("tel:${viewModel.contactInfoLiveData.value!!.phone}")
         startActivity(intent)
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
+import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
@@ -39,12 +40,12 @@ class ApiRepository @Inject constructor(
             .child(order.uuid)
 
         val orderItems = HashMap<String, Any>()
-        orderItems[Order.STREET] = order.address.street
-        orderItems[Order.HOUSE] = order.address.house
-        orderItems[Order.FLAT] = order.address.flat
-        orderItems[Order.ENTRANCE] = order.address.entrance
-        orderItems[Order.INTERCOM] = order.address.intercom
-        orderItems[Order.FLOOR] = order.address.floor
+        orderItems[Address.STREET] = order.address.street
+        orderItems[Address.HOUSE] = order.address.house
+        orderItems[Address.FLAT] = order.address.flat
+        orderItems[Address.ENTRANCE] = order.address.entrance
+        orderItems[Address.INTERCOM] = order.address.intercom
+        orderItems[Address.FLOOR] = order.address.floor
         orderItems[Order.COMMENT] = order.comment
         orderItems[Order.PHONE] = order.phone
         orderItems[Order.TIMESTAMP] = TIMESTAMP
@@ -87,7 +88,7 @@ class ApiRepository @Inject constructor(
             override fun onDataChange(snapshot: DataSnapshot) {
                 val contactInfo = contactInfoHelper.getContactInfoFromSnapshot(snapshot)
                 launch {
-                    dataStoreHelper.saveContactInfo(contactInfo)
+                    //dataStoreHelper.saveContactInfo(contactInfo)
                 }
             }
 

@@ -15,5 +15,52 @@ data class Address(
     var flat: String = "",
     var entrance: String = "",
     var intercom: String = "",
-    var floor: String = ""
-) : BaseModel(), Parcelable
+    var floor: String = "",
+    var city: String = ""
+) : BaseModel(), Parcelable {
+
+    fun getAddressString() = "Улица:${street} " +
+            "Дом:${house} " +
+            getFlatString() +
+            getEntranceString() +
+            getIntercomString() +
+            getFloorString()
+
+
+    fun getFlatString(): String {
+        return if (flat.isNotEmpty())
+            "Квартира:${flat} "
+        else
+            ""
+    }
+
+    fun getEntranceString(): String {
+        return if (entrance.isNotEmpty())
+            "Подъезд:${entrance} "
+        else
+            ""
+    }
+
+    fun getIntercomString(): String {
+        return if (intercom.isNotEmpty())
+            "Домофон:${intercom} "
+        else
+            ""
+    }
+
+    fun getFloorString(): String {
+        return if (floor.isNotEmpty())
+            "Этаж:${floor} "
+        else
+            ""
+    }
+
+    companion object{
+        const val STREET = "street"
+        const val HOUSE = "house"
+        const val FLAT = "flat"
+        const val ENTRANCE = "entrance"
+        const val INTERCOM = "intercom"
+        const val FLOOR = "floor"
+    }
+}

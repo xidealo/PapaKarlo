@@ -9,6 +9,7 @@ import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
+import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.view_model.CreationAddressViewModel
 import java.lang.ref.WeakReference
 
@@ -39,7 +40,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtStreet.error =
-                resources.getString(R.string.error_creation_order_street)
+                resources.getString(R.string.error_creation_address_street)
             viewDataBinding.fragmentCreationAddressEtStreet.requestFocus()
             return
         }
@@ -50,7 +51,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtHouse.error =
-                resources.getString(R.string.error_creation_order_house)
+                resources.getString(R.string.error_creation_address_house)
             viewDataBinding.fragmentCreationAddressEtHouse.requestFocus()
             return
         }
@@ -61,7 +62,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtFlat.error =
-                resources.getString(R.string.error_creation_order_flat)
+                resources.getString(R.string.error_creation_address_flat)
             viewDataBinding.fragmentCreationAddressEtFlat.requestFocus()
             return
         }
@@ -72,7 +73,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtEntrance.error =
-                resources.getString(R.string.error_creation_order_entrance)
+                resources.getString(R.string.error_creation_address_entrance)
             viewDataBinding.fragmentCreationAddressEtEntrance.requestFocus()
             return
         }
@@ -83,7 +84,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtIntercom.error =
-                resources.getString(R.string.error_creation_order_intercom)
+                resources.getString(R.string.error_creation_address_intercom)
             viewDataBinding.fragmentCreationAddressEtIntercom.requestFocus()
             return
         }
@@ -94,7 +95,7 @@ class CreationAddressFragment :
             )
         ) {
             viewDataBinding.fragmentCreationAddressEtFloor.error =
-                resources.getString(R.string.error_creation_order_floor)
+                resources.getString(R.string.error_creation_address_floor)
             viewDataBinding.fragmentCreationAddressEtFloor.requestFocus()
             return
         }
@@ -113,5 +114,10 @@ class CreationAddressFragment :
 
     override fun goToCart(view: View) {
         findNavController().navigate(CreationAddressFragmentDirections.creationAddressBackToCartFragment())
+    }
+
+    override fun goToCreationOrder() {
+        (activity as MainActivity).showMessage(requireContext().getString(R.string.msg_creation_address_created_address))
+        findNavController().navigate(CreationAddressFragmentDirections.backToCreationOrder())
     }
 }

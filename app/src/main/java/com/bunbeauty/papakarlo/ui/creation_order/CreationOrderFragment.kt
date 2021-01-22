@@ -33,19 +33,27 @@ class CreationOrderFragment :
         viewModelComponent.inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getLastAddress()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_order)
-
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
         viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-            if (isChecked)
-                viewModel
+            if (isChecked) {
+                viewModel.isDeliveryField.set(true)
+                viewModel.getLastAddress()
+            }
         }
         viewDataBinding.fragmentCreationOrderRbPickup.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-            if (isChecked)
-                viewModel
+            if (isChecked) {
+                viewModel.isDeliveryField.set(false)
+                viewModel.lastAddressField.set("Нажмите, чтобы выбрать адрес")
+            }
         }
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
@@ -82,18 +90,18 @@ class CreationOrderFragment :
             return
         }
 
-       /* viewModel.createOrder(
-            Order(
-                street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
-                house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
-                flat = viewDataBinding.fragmentOrderEtFlat.text.toString(),
-                entrance = viewDataBinding.fragmentOrderEtEntrance.text.toString(),
-                intercom = viewDataBinding.fragmentOrderEtIntercom.text.toString(),
-                floor = viewDataBinding.fragmentOrderEtFloor.text.toString(),
-                comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
-                phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
-            )
-        )*/
+        /* viewModel.createOrder(
+             Order(
+                 street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
+                 house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
+                 flat = viewDataBinding.fragmentOrderEtFlat.text.toString(),
+                 entrance = viewDataBinding.fragmentOrderEtEntrance.text.toString(),
+                 intercom = viewDataBinding.fragmentOrderEtIntercom.text.toString(),
+                 floor = viewDataBinding.fragmentOrderEtFloor.text.toString(),
+                 comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
+                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
+             )
+         )*/
 
         val inputMethodManager =
             requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

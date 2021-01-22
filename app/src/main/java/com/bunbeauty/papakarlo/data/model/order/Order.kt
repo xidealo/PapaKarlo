@@ -45,12 +45,6 @@ data class Order(
     companion object {
         const val ORDERS = "ORDERS"
 
-        const val STREET = "street"
-        const val HOUSE = "house"
-        const val FLAT = "flat"
-        const val ENTRANCE = "entrance"
-        const val INTERCOM = "intercom"
-        const val FLOOR = "floor"
         const val COMMENT = "comment"
         const val PHONE = "phone"
         const val TIMESTAMP = "timestamp"

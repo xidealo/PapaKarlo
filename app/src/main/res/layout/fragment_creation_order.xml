@@ -33,6 +33,8 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_address"
                     style="@style/MaterialCardCreationOrder"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -79,56 +81,29 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
+                            <TextView
+                                android:id="@+id/fragment_creation_order_tv_last_address"
+                                style="@style/TextCreationOrder"
+                                android:text="@{viewModel.lastAddressField}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address" />
+
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/fragment_creation_order_btn_create_address"
-                                style="?android:attr/borderlessButtonStyle"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/white"
                                 android:onClick="@{()->viewModel.createAddressClick()}"
-                                android:text="+ Добавить адрес"
+                                android:text="@string/action_creation_address_address"
                                 android:textColor="@color/colorPrimary"
+                                android:visibility="@{viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
+                                app:icon="@drawable/ic_add"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_address" />
+                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_last_address" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_extra_info"
-                    style="@style/MaterialCardCreationOrder"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_contacts">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/small_padding">
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_comment"
-                            style="@style/TitleCreationOrder"
-                            android:text="@string/title_creation_order_extra_extra_comment"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/fragment_creation_order_til_comment"
-                            style="@style/MaterialInputLayout"
-                            android:hint="@string/hint_creation_order_extra_comment"
-                            app:counterEnabled="true"
-                            app:counterMaxLength="100"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_comment"
-                                style="@style/MaterialInput"
-                                android:inputType="textCapSentences" />
-                        </com.google.android.material.textfield.TextInputLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -176,6 +151,42 @@
                                 android:id="@+id/fragment_order_et_email"
                                 style="@style/MaterialInput"
                                 android:inputType="textEmailAddress" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_creation_order_mcv_extra_info"
+                    style="@style/MaterialCardCreationOrder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_contacts">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/small_padding">
+
+                        <TextView
+                            android:id="@+id/fragment_creation_order_tv_comment"
+                            style="@style/TitleCreationOrder"
+                            android:text="@string/title_creation_order_extra_extra_comment"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/fragment_creation_order_til_comment"
+                            style="@style/MaterialInputLayout"
+                            android:hint="@string/hint_creation_order_extra_comment"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="100"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fragment_order_et_comment"
+                                style="@style/MaterialInput"
+                                android:inputType="textCapSentences" />
                         </com.google.android.material.textfield.TextInputLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
