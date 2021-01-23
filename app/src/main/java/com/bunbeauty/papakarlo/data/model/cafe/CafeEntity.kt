@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
  */
 @Entity
 data class CafeEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey
+    var id: String = "",
     var addressId: Long? = null,
     val fromTime: String = "",
     val toTime: String = "",
@@ -18,6 +18,11 @@ data class CafeEntity(
     @Embedded
     val coordinate: Coordinate = Coordinate()
 ) {
+
+    fun getWorkingHoursString(): String {
+        return "$fromTime - $toTime"
+    }
+
     companion object {
 
         const val START_TIME = "start_time"

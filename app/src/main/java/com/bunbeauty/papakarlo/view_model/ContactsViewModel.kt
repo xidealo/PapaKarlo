@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
-import com.bunbeauty.papakarlo.ui.contacts.ContactsNavigator
+import com.bunbeauty.papakarlo.ui.cafe_list.CafeListNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
@@ -13,7 +13,7 @@ class ContactsViewModel @Inject constructor(
     private val cafeRepo: CafeRepo
 ) : BaseViewModel() {
 
-    var navigator: WeakReference<ContactsNavigator>? = null
+    var navigator: WeakReference<CafeListNavigator>? = null
     val isClickable = ObservableField(false)
 
     val cafeListLiveData by lazy {

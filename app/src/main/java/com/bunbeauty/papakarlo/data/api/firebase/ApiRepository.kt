@@ -18,10 +18,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.sendBlocking
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -81,7 +80,8 @@ class ApiRepository @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    override fun getCafeList(): Flow<List<Cafe>> = flow {
+    override fun getCafeList(): SharedFlow<List<Cafe>> {
+        val cafeListSharedFlow = MutableSharedFlow<List<Cafe>>()
         val contactInfoRef = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
@@ -90,16 +90,21 @@ class ApiRepository @Inject constructor(
         contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val cafeList = snapshot.children.map { cafeSnapshot ->
-                    cafeSnapshot.getValue(Cafe::class.java)
+                    cafeSnapshot.getValue(Cafe::class.java)!!.apply {
+                        cafeEntity.id = cafeSnapshot.key!!
+                    }
                 }
-                //Log.d("test", "onDataChange cafeList " + cafeList)
-                //emit(cafeList)
+                launch(IO) {
+                    cafeListSharedFlow.emit(cafeList)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
 
             }
         })
+
+        return cafeListSharedFlow
     }
 
     override fun getMenuProductList() {

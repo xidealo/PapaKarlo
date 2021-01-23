@@ -10,4 +10,8 @@ class AddressRepository @Inject constructor(
     override suspend fun insert(address: Address): Long {
         return addressDao.insert(address)
     }
+
+    override suspend fun update(address: Address) {
+        addressDao.update(address)
+    }
 }

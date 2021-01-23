@@ -7,9 +7,10 @@
 
     <fragment
         android:id="@+id/contacts_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.contacts.ContactsFragment"
-        android:label="@string/title_contacts"
-        tools:layout="@layout/fragment_contacts" />
+        android:name="com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment"
+        android:label="@string/title_cafe_list"
+        tools:layout="@layout/fragment_cafe_list" >
+    </fragment>
     <fragment
         android:id="@+id/menu_fragment"
         android:name="com.bunbeauty.papakarlo.ui.menu.MenuFragment"

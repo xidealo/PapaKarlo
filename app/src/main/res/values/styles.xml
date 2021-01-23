@@ -64,7 +64,7 @@
     </style>
     <!-- FRAGMENT_PRODUCT -->
     <style name="TitleFragmentProduct">
-        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -72,7 +72,7 @@
     </style>
 
     <style name="CostFragmentProduct">
-        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -80,7 +80,7 @@
     </style>
 
     <style name="GramFragmentProduct">
-        <item name="android:textSize">@dimen/default_text</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -88,7 +88,7 @@
     </style>
 
     <style name="DescriptionFragmentProduct">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -126,7 +126,7 @@
 
     <!--PRODUCTS-->
     <style name="TitleElementProduct">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -135,7 +135,7 @@
     </style>
 
     <style name="CostElementProduct">
-        <item name="android:textSize">@dimen/very_small_text</item>
+        <item name="android:textSize">@dimen/very_small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -154,7 +154,7 @@
 
     <!--CART PRODUCT-->
     <style name="TitleCartProduct">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -163,7 +163,7 @@
     </style>
 
     <style name="GramCartProduct">
-        <item name="android:textSize">@dimen/very_small_text</item>
+        <item name="android:textSize">@dimen/very_small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -171,7 +171,7 @@
     </style>
 
     <style name="FullPriceCartProduct">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -181,7 +181,7 @@
 
     <!--CREATION ADDRESS-->
     <style name="TitleCreationAddress">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -191,7 +191,7 @@
 
     <!--CREATION ORDER-->
     <style name="TitleCreationOrder">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -200,7 +200,7 @@
     </style>
 
     <style name="TextCreationOrder">
-        <item name="android:textSize">@dimen/very_small_text</item>
+        <item name="android:textSize">@dimen/very_small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -216,9 +216,27 @@
         <item name="cornerRadius">@dimen/default_radius</item>
     </style>
 
-    <!--CONTACTS-->
-    <style name="TextContacts">
-        <item name="android:textSize">@dimen/default_text</item>
+    <!--Text-->
+    <style name="BaseText">
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MainTitle" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="MainText" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:layout_marginTop">@dimen/medium_margin</item>
+    </style>
+
+    <!--CAFE-->
+    <style name="TextTitle">
+        <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -235,7 +253,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:padding">@dimen/medium_padding</item>
     </style>
 
     <!--ORDER ELEMENT-->
@@ -248,7 +266,7 @@
     </style>
 
     <style name="TimeOrderElement">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -256,7 +274,7 @@
     </style>
 
     <style name="AddressOrderElement">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -264,7 +282,7 @@
     </style>
 
     <style name="CostOrderElement">
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

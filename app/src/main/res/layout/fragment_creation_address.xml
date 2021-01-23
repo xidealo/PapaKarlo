@@ -30,7 +30,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/default_padding">
+                android:padding="@dimen/medium_padding">
 
                 <TextView
                     android:id="@+id/fragment_creation_address_tv_title"

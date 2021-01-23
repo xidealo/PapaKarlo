@@ -13,5 +13,8 @@ import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 interface CafeDao : BaseDao<CafeEntity> {
 
     @Query("SELECT * FROM CafeEntity")
-    fun getCafeList(): LiveData<List<CafeEntity>>
+    fun getCafeList(): LiveData<List<Cafe>>
+
+    @Query("SELECT * FROM CafeEntity WHERE id = :id")
+    fun getCafeById(id: String): CafeEntity?
 }

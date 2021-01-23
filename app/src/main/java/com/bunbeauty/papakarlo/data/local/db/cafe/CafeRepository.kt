@@ -20,13 +20,20 @@ class CafeRepository @Inject constructor(
     override suspend fun refreshCafeList() {
         withContext(IO) {
             apiRepository.getCafeList().collect { cafeList ->
-                val cafeEntityList = cafeList.map { cafe ->
-                    Log.d("test", "cafe " + cafe)
-                    val addressId = addressRepo.insert(cafe.address)
-                    cafe.cafeEntity.addressId = addressId
-                    cafe.cafeEntity
+                for (cafe in cafeList) {
+                    val cafeEntity = cafeDao.getCafeById(cafe.cafeEntity.id)
+                    if (cafeEntity == null) {
+                        val addressId = addressRepo.insert(cafe.address)
+                        cafe.cafeEntity.addressId = addressId
+                        cafeDao.insert(cafe.cafeEntity)
+                    } else {
+                        cafe.address.id = cafeEntity.addressId!!
+                        addressRepo.update(cafe.address)
+                        cafe.cafeEntity.id = cafeEntity.id
+                        cafe.cafeEntity.addressId = cafeEntity.addressId!!
+                        cafeDao.update(cafe.cafeEntity)
+                    }
                 }
-                cafeDao.insertAll(cafeEntityList)
             }
         }
     }

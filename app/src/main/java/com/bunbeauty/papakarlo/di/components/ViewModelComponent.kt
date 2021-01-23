@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment
-import com.bunbeauty.papakarlo.ui.contacts.ContactsFragment
+import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.main.MainFragment
@@ -33,7 +33,7 @@ interface ViewModelComponent {
     fun inject(menuFragment: MenuFragment)
     fun inject(consumerCartFragment: ConsumerCartFragment)
     fun inject(creationOrderFragment: CreationOrderFragment)
-    fun inject(contactsFragment: ContactsFragment)
+    fun inject(cafeListFragment: CafeListFragment)
     fun inject(ordersFragment: OrdersFragment)
     fun inject(mainFragment: MainFragment)
     fun inject(creationAddressFragment: CreationAddressFragment)
