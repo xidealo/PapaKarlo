@@ -6,11 +6,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
+import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.view_model.AddressesViewModel
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor() :
     BaseAdapter<AddressesAdapter.AddressViewHolder, Address>() {
+
+    lateinit var addressesViewModel: AddressesViewModel
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AddressViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -21,9 +26,16 @@ class AddressesAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: AddressViewHolder, i: Int) {
         holder.binding?.address = itemList[i]
+        holder.setListener(itemList[i])
     }
 
     inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementAddressBinding>(view)
+
+        fun setListener(address: Address) {
+            binding?.elementAddressMcvMain?.setOnClickListener {
+                addressesViewModel.saveSelectedAddress(address)
+            }
+        }
     }
 }

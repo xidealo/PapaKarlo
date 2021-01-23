@@ -7,15 +7,19 @@ import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.ui.addresses.AddressesNavigator
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class AddressesViewModel @Inject constructor(
     private val addressRepo: AddressRepo,
-    private val cafeRepo: CafeRepo,
     private val iDataStoreHelper: IDataStoreHelper
 ) : BaseViewModel() {
+
+    var navigator: WeakReference<AddressesNavigator>? = null
 
     private val addressesLiveData by lazy {
         Transformations.map(addressRepo.getNotCafeAddresses()) {
@@ -33,6 +37,7 @@ class AddressesViewModel @Inject constructor(
     fun saveSelectedAddress(address: Address) {
         viewModelScope.launch {
             iDataStoreHelper.saveSelectedAddress(address)
+            navigator?.get()?.goToBack()
         }
     }
 }

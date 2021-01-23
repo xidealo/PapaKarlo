@@ -55,6 +55,9 @@ class CreationOrderFragment :
         viewDataBinding.fragmentCreationOrderMcvAddress.setOnClickListener {
             goToAddresses()
         }
+        viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
+            (activity as MainActivity).showError(it)
+        }
 
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
