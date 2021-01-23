@@ -1,29 +1,28 @@
 package com.bunbeauty.papakarlo.ui.addresses
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
+import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
+import com.bunbeauty.papakarlo.view_model.AddressesViewModel
 
 
-class AddressesBottomSheet : BottomSheetDialogFragment() {
+class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding, AddressesViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
+    override var layoutId = R.layout.bottom_sheet_addresses
+    override var viewModelVariable = BR.viewModel
 
-        }
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.bottom_sheet_addresses, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewDataBinding.root
     }
 
 }

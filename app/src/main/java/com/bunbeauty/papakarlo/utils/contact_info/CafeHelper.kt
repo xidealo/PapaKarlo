@@ -8,32 +8,32 @@ import com.bunbeauty.papakarlo.data.model.Address.Companion.FLOOR
 import com.bunbeauty.papakarlo.data.model.Address.Companion.HOUSE
 import com.bunbeauty.papakarlo.data.model.Address.Companion.INTERCOM
 import com.bunbeauty.papakarlo.data.model.Address.Companion.STREET
-import com.bunbeauty.papakarlo.data.model.ContactInfo
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.END_TIME
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LATITUDE
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.LONGITUDE
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.NAME
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.PHONE
-import com.bunbeauty.papakarlo.data.model.ContactInfo.Companion.START_TIME
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.END_TIME
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.LATITUDE
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.LONGITUDE
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.NAME
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.PHONE
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.START_TIME
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
 import com.google.firebase.database.DataSnapshot
 import javax.inject.Inject
 
-class ContactInfoHelper @Inject constructor(private val resourcesProvider: ResourcesProvider) :
-    IContactInfoHelper {
+class CafeHelper @Inject constructor(private val resourcesProvider: ResourcesProvider) :
+    ICafeHelper {
 
-    override fun getWorkTimeString(contactInfo: ContactInfo): String {
-        if (contactInfo.startTime.isEmpty() || contactInfo.startTime.isEmpty()) {
+    /*override fun getWorkTimeString(cafeEntity: CafeEntity): String {
+        if (cafeEntity.startTime.isEmpty() || cafeEntity.startTime.isEmpty()) {
             return ""
         }
 
         val workTime = resourcesProvider.getString(R.string.msg_contacts_work_time)
         val workTimeDivider = resourcesProvider.getString(R.string.msg_contacts_work_time_divider)
-        return workTime + contactInfo.startTime + workTimeDivider + contactInfo.endTime
+        return workTime + cafeEntity.startTime + workTimeDivider + cafeEntity.endTime
     }
 
-    override fun getContactInfoFromSnapshot(dataSnapshot: DataSnapshot): ContactInfo {
-        return ContactInfo(
+    override fun getCafeFromSnapshot(dataSnapshot: DataSnapshot): CafeEntity {
+        return CafeEntity(
             Address(
                 0,
                 dataSnapshot.child(STREET).value.toString(),
@@ -50,7 +50,7 @@ class ContactInfoHelper @Inject constructor(private val resourcesProvider: Resou
             dataSnapshot.child(LATITUDE).value.toString().toDouble(),
             dataSnapshot.child(LONGITUDE).value.toString().toDouble()
         )
-    }
+    }*/
 
 
 }

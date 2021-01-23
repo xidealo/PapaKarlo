@@ -59,4 +59,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CreationAddressViewModel::class)
     internal abstract fun provideCreationAddressViewModel(creationAddressViewModel: CreationAddressViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AddressesViewModel::class)
+    internal abstract fun provideAddressesViewModel(addressesViewModel: AddressesViewModel): ViewModel
 }

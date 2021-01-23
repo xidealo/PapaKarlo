@@ -32,4 +32,7 @@ class DataModule {
     @Provides
     fun provideAddressDao(localDatabase: LocalDatabase) = localDatabase.getAddressDao()
 
+    @Provides
+    fun provideCafeDao(localDatabase: LocalDatabase) = localDatabase.getCafeDao()
+
 }

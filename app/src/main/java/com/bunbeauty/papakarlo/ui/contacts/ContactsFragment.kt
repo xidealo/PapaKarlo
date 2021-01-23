@@ -3,15 +3,16 @@ package com.bunbeauty.papakarlo.ui.contacts
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.ContactInfo
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.databinding.FragmentContactsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
+import com.bunbeauty.papakarlo.utils.contact_info.ICafeHelper
 import com.bunbeauty.papakarlo.utils.uri.IUriHelper
 import com.bunbeauty.papakarlo.view_model.ContactsViewModel
 import java.lang.ref.WeakReference
@@ -26,7 +27,7 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
     override lateinit var title: String
 
     @Inject
-    lateinit var contactInfoHelper: IContactInfoHelper
+    lateinit var cafeHelper: ICafeHelper
 
     @Inject
     lateinit var uriHelper: IUriHelper
@@ -41,14 +42,10 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-
-       /* viewModel.contactInfoLiveData.observe(viewLifecycleOwner) { contactInfo ->
-            viewDataBinding.fragmentContactsTvAddress.text = contactInfo.address
-            viewDataBinding.fragmentContactsTvWorkTime.text =
-                contactInfoHelper.getWorkTimeString(contactInfo)
-            viewDataBinding.fragmentContactsTvWorkPhone.text = contactInfo.phone
-        }*/
-        viewModel.getContactsInfo()
+        viewModel.refreshCafeList()
+        viewModel.cafeListLiveData.observe(viewLifecycleOwner) { cafeList ->
+            Log.d("test", "cafeList " + cafeList)
+        }
 
         viewDataBinding.fragmentContactsMcPhone.setOnClickListener {
             goToPhone()
@@ -61,8 +58,8 @@ class ContactsFragment : TopBarFragment<FragmentContactsBinding, ContactsViewMod
         }
     }
 
-    private fun goToAddress(contactInfo: ContactInfo) {
-        val uri = Uri.parse("http://maps.google.com/maps?daddr=" + contactInfo.latitude + "," + contactInfo.longitude)
+    private fun goToAddress(cafeEntity: CafeEntity) {
+        val uri = Uri.parse("http://maps.google.com/maps?daddr=" + cafeEntity.coordinate.latitude + "," + cafeEntity.coordinate.longitude)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }

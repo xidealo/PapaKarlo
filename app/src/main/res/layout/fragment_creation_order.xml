@@ -33,8 +33,6 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_address"
                     style="@style/MaterialCardCreationOrder"
-                    android:clickable="true"
-                    android:focusable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">

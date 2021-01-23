@@ -2,28 +2,30 @@ package com.bunbeauty.papakarlo.data.api.firebase
 
 import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.ContactInfo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.enums.ProductCode
-import com.bunbeauty.papakarlo.utils.contact_info.IContactInfoHelper
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue.TIMESTAMP
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import org.joda.time.DateTime
+import kotlinx.coroutines.channels.sendBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class ApiRepository @Inject constructor(
-    private val contactInfoHelper: IContactInfoHelper,
-    private val dataStoreHelper: IDataStoreHelper,
     private val menuProductRepo: MenuProductRepo
 ) : IApiRepository, CoroutineScope {
 
@@ -78,21 +80,24 @@ class ApiRepository @Inject constructor(
         return cartProduct.uuid
     }
 
-    override fun getContactInfo() {
+    @ExperimentalCoroutinesApi
+    override fun getCafeList(): Flow<List<Cafe>> = flow {
         val contactInfoRef = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(ContactInfo.CONTACT_INFO)
+            .child(Cafe.CAFES)
 
         contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val contactInfo = contactInfoHelper.getContactInfoFromSnapshot(snapshot)
-                launch {
-                    //dataStoreHelper.saveContactInfo(contactInfo)
+                val cafeList = snapshot.children.map { cafeSnapshot ->
+                    cafeSnapshot.getValue(Cafe::class.java)
                 }
+                //Log.d("test", "onDataChange cafeList " + cafeList)
+                //emit(cafeList)
             }
 
             override fun onCancelled(error: DatabaseError) {
+
             }
         })
     }

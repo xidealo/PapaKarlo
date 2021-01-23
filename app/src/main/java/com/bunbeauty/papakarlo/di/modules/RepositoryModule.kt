@@ -2,6 +2,8 @@ package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepository
+import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
+import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepository
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepository
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
@@ -24,4 +26,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindAddressRepo(addressRepository: AddressRepository): AddressRepo
+
+    @Binds
+    abstract fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
 }

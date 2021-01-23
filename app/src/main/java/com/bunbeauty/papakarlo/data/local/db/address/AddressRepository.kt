@@ -6,7 +6,8 @@ import javax.inject.Inject
 class AddressRepository @Inject constructor(
     private val addressDao: AddressDao
 ) : AddressRepo {
-    override suspend fun insert(address: Address) {
-        addressDao.insert(address)
+
+    override suspend fun insert(address: Address): Long {
+        return addressDao.insert(address)
     }
 }

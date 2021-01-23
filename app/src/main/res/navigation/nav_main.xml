@@ -85,7 +85,8 @@
             app:popUpTo="@id/cart_fragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
+
+    <dialog
         android:id="@+id/addressesBottomSheet"
         android:name="com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet"
         android:label="bottom_sheet_addresses"

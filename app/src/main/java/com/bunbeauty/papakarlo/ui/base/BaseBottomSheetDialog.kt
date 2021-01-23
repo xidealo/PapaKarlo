@@ -4,28 +4,25 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(){
+abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
+    BottomSheetDialogFragment() {
 
     abstract var layoutId: Int
     abstract var viewModelVariable: Int
-    abstract var viewModelClass: Class<VM>
 
-    lateinit var viewDataBinding: B
+    private var _viewDataBinding: B? = null
+    protected val viewDataBinding get() = _viewDataBinding!!
     lateinit var viewModel: VM
 
     @Inject
@@ -39,24 +36,17 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
                 .getViewModelComponent()
                 .create(this)
         inject(viewModelComponent)
-
-        viewModel = ViewModelProvider(this, modelFactory).get(viewModelClass)
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(false)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
+        _viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         return viewDataBinding.root
     }
 
@@ -66,5 +56,19 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
         viewDataBinding.setVariable(viewModelVariable, viewModel)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewModelClass() =
+        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
+
+
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewBindingClass() =
+        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _viewDataBinding = null
     }
 }
