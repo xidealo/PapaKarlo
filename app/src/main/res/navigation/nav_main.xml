@@ -53,7 +53,8 @@
             app:destination="@id/creationAddressFragment" />
         <action
             android:id="@+id/to_addressesBottomSheet"
-            app:destination="@id/addressesBottomSheet" />
+            app:destination="@id/addressesBottomSheet">
+        </action>
     </fragment>
 
     <fragment
@@ -90,6 +91,10 @@
         android:id="@+id/addressesBottomSheet"
         android:name="com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet"
         android:label="bottom_sheet_addresses"
-        tools:layout="@layout/bottom_sheet_addresses" />
+        tools:layout="@layout/bottom_sheet_addresses">
+        <argument
+            android:name="isDelivery"
+            app:argType="boolean" />
+    </dialog>
 
 </navigation>

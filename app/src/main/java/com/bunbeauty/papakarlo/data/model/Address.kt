@@ -19,43 +19,51 @@ data class Address(
     var city: String = ""
 ) : BaseModel(), Parcelable {
 
-    fun getAddressString() = "Улица:${street} " +
-            "Дом:${house} " +
-            getFlatString() +
-            getEntranceString() +
-            getIntercomString() +
-            getFloorString()
+    fun getAddressString() = checkLastSymbol(
+        "Улица:${street}, " +
+                "Дом:${house}, " +
+                getFlatString() +
+                getEntranceString() +
+                getIntercomString() +
+                getFloorString()
+    )
 
+    fun checkLastSymbol(data: String): String {
+        if (data.trim().last() == ',')
+            return data.substringBeforeLast(",")
+
+        return data
+    }
 
     fun getFlatString(): String {
         return if (flat.isNotEmpty())
-            "Квартира:${flat} "
+            "Квартира:${flat}, "
         else
             ""
     }
 
     fun getEntranceString(): String {
         return if (entrance.isNotEmpty())
-            "Подъезд:${entrance} "
+            "Подъезд:${entrance}, "
         else
             ""
     }
 
     fun getIntercomString(): String {
         return if (intercom.isNotEmpty())
-            "Домофон:${intercom} "
+            "Домофон:${intercom}, "
         else
             ""
     }
 
     fun getFloorString(): String {
         return if (floor.isNotEmpty())
-            "Этаж:${floor} "
+            "Этаж:${floor}"
         else
             ""
     }
 
-    companion object{
+    companion object {
         const val STREET = "street"
         const val HOUSE = "house"
         const val FLAT = "flat"

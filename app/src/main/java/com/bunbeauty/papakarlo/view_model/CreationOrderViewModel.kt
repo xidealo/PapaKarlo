@@ -2,10 +2,12 @@ package com.bunbeauty.papakarlo.view_model
 
 import android.content.Context
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
+import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
@@ -22,24 +24,19 @@ class CreationOrderViewModel @Inject constructor(
 ) : BaseViewModel() {
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
+    val errorMessageLiveData = MutableLiveData<String>()
     val lastAddressField = ObservableField<String>()
     val isDeliveryField = ObservableField(true)
-    var currentDeliveryAddress = ""
+    var currentAddress: Address? = null
 
-    fun getLastAddress() {
-        if (currentDeliveryAddress.isNotEmpty()) {
-            lastAddressField.set(currentDeliveryAddress)
-            return
-        }
-
+    fun getLastDeliveryAddress() {
         viewModelScope.launch {
             iDataStoreHelper.selectedAddress.collect {
                 if (it.street.isEmpty()) {
                     lastAddressField.set(context.getString(R.string.msg_creation_order_add_address))
                 } else {
-                    currentDeliveryAddress =
-                        "${context.getString(R.string.msg_creation_order_selected_address)}\n${it.getAddressString()}"
-                    lastAddressField.set(currentDeliveryAddress)
+                    currentAddress = it
+                    lastAddressField.set("${context.getString(R.string.msg_creation_order_selected_address)}\n${it.getAddressString()}")
                 }
             }
         }
@@ -47,6 +44,14 @@ class CreationOrderViewModel @Inject constructor(
 
     fun createOrder(order: Order) {
         viewModelScope.launch {
+            if (currentAddress != null) {
+                order.address = currentAddress ?: Address(street = "ERROR ADDRESS")
+            } else {
+                errorMessageLiveData.value =
+                    context.getString(R.string.error_creation_order_address)
+                return@launch
+            }
+
             val orderWithCartProducts = OrderWithCartProducts(
                 order,
                 cartProductRepo.getCartProductListAsync().await()
@@ -61,6 +66,12 @@ class CreationOrderViewModel @Inject constructor(
 
             navigator?.get()?.goToMain(order)
         }
+    }
+
+    fun changeIsDeliveryStatus(status: Boolean){
+        isDeliveryField.set(status)
+        currentAddress = null
+        lastAddressField.set("Нажмите, чтобы выбрать адрес")
     }
 
     fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {

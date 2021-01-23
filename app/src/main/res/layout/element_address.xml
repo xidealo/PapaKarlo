@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="context"
+            type="android.content.Context" />
+
+        <variable
+            name="address"
+            type="com.bunbeauty.papakarlo.data.model.Address" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/element_address_mcv_main"
+        style="@style/DefaultMaterialCard"
+        android:clickable="true"
+        android:focusable="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_padding">
+
+            <TextView
+                style="@style/AddressElement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{address.addressString}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

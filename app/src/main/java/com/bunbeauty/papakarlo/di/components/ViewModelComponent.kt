@@ -38,6 +38,7 @@ interface ViewModelComponent {
     fun inject(mainFragment: MainFragment)
     fun inject(creationAddressFragment: CreationAddressFragment)
 
+    //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)
 
     // dialogs

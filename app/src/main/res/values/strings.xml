@@ -64,6 +64,7 @@
     <string name="error_creation_order_comment">Введите корректный комментарий</string>
     <string name="error_creation_order_phone">Введите корректный номер телефона</string>
     <string name="error_creation_order_connect">Нет подключения к интернету</string>
+    <string name="error_creation_order_address">Выберите адрес</string>
 
     <!-- CREATION ADDRESS -->
     <string name="title_creation_address_address">Адрес</string>

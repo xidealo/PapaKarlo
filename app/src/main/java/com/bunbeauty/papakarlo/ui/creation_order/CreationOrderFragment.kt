@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,9 +17,7 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
-import com.google.android.material.internal.NavigationMenu
 import java.lang.ref.WeakReference
-
 
 class CreationOrderFragment :
     CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
@@ -35,7 +34,7 @@ class CreationOrderFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getLastAddress()
+        viewModel.getLastDeliveryAddress()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,14 +44,12 @@ class CreationOrderFragment :
         viewModel.navigator = WeakReference(this)
         viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             if (isChecked) {
-                viewModel.isDeliveryField.set(true)
-                viewModel.getLastAddress()
+                viewModel.changeIsDeliveryStatus(true)
             }
         }
         viewDataBinding.fragmentCreationOrderRbPickup.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             if (isChecked) {
-                viewModel.isDeliveryField.set(false)
-                viewModel.lastAddressField.set("Нажмите, чтобы выбрать адрес")
+                viewModel.changeIsDeliveryStatus(false)
             }
         }
         viewDataBinding.fragmentCreationOrderMcvAddress.setOnClickListener {
@@ -68,7 +65,6 @@ class CreationOrderFragment :
             (activity as MainActivity).showError(requireContext().getString(R.string.error_creation_order_connect))
             return
         }
-
 
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentOrderEtComment.text.toString(),
@@ -94,18 +90,14 @@ class CreationOrderFragment :
             return
         }
 
-        /* viewModel.createOrder(
-             Order(
-                 street = viewDataBinding.fragmentOrderEtStreet.text.toString(),
-                 house = viewDataBinding.fragmentOrderEtHouse.text.toString(),
-                 flat = viewDataBinding.fragmentOrderEtFlat.text.toString(),
-                 entrance = viewDataBinding.fragmentOrderEtEntrance.text.toString(),
-                 intercom = viewDataBinding.fragmentOrderEtIntercom.text.toString(),
-                 floor = viewDataBinding.fragmentOrderEtFloor.text.toString(),
-                 comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
-                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
-             )
-         )*/
+        viewModel.createOrder(
+            Order(
+                Address(),
+                comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
+                phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
+                isDelivery = viewModel.isDeliveryField.get() ?: true
+            )
+        )
 
         val inputMethodManager =
             requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
@@ -125,7 +117,11 @@ class CreationOrderFragment :
         findNavController().navigate(toCreationAddressFragment())
     }
 
-    fun goToAddresses(){
-        findNavController().navigate(toAddressesBottomSheet())
+    fun goToAddresses() {
+        findNavController().navigate(
+            toAddressesBottomSheet(
+                viewModel.isDeliveryField.get() ?: true
+            )
+        )
     }
 }

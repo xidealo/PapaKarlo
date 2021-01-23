@@ -34,6 +34,7 @@
             style="@style/DefaultText"
             android:text="@string/msg_consumer_cart_empty"
             android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_iv_empty_cart" />
 
         <com.google.android.material.button.MaterialButton
@@ -52,18 +53,16 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_crate_order"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
             tools:itemCount="2"
             tools:listitem="@layout/element_cart_product" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_crate_order"
             style="@style/MainButton"
-            android:visibility="@{viewModel.isCartEmpty ? View.GONE : View.VISIBLE}"
             android:text="@string/action_consumer_cart_checkout"
+            android:visibility="@{viewModel.isCartEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

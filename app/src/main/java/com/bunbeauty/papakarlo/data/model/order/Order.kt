@@ -20,6 +20,7 @@ data class Order(
     var phone: String = "",
     var time: Long = DateTime.now().millis,
     var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED,
+    var isDelivery: Boolean = true,
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
     override var uuid: String = "",
