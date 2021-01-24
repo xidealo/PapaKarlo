@@ -42,4 +42,8 @@ class AddressesBottomSheet :
         dismiss()
     }
 
+    override fun goToCreationAddress() {
+        findNavController().navigate(AddressesBottomSheetDirections.actionAddressesBottomSheetToCreationAddressFragment())
+    }
+
 }

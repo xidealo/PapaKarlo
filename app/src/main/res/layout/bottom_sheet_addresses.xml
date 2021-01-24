@@ -4,6 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.bunbeauty.papakarlo.view_model.AddressesViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,13 +21,25 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_address_rv_result"
             android:layout_width="match_parent"
-            android:minHeight="250dp"
             android:layout_height="wrap_content"
+            android:minHeight="250dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="2"
             tools:listitem="@layout/element_address" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_address_btn_create_address"
+            style="@style/OutLineButton"
+            android:onClick="@{()->viewModel.createAddressClick()}"
+            android:text="@string/action_creation_address_address"
+            android:visibility="@{viewModel.hasAddresses ? View.GONE : View.VISIBLE}"
+            app:icon="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

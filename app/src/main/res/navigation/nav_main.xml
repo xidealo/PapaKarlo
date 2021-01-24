@@ -95,6 +95,9 @@
         <argument
             android:name="isDelivery"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_addressesBottomSheet_to_creationAddressFragment"
+            app:destination="@id/creationAddressFragment" />
     </dialog>
 
 </navigation>

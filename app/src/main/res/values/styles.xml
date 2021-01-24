@@ -55,6 +55,15 @@
     <style name="SmallButton" parent="MainButton">
         <item name="android:layout_width">@dimen/small_button_width</item>
     </style>
+
+    <style name="OutLineButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">@color/cardViewBackground</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
     <!-- TEXT -->
     <style name="DefaultText">
         <item name="android:layout_width">match_parent</item>
@@ -143,14 +152,11 @@
     </style>
 
     <!--IMAGE VIEW-->
-
     <style name="Icon">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
-
-    <!--CONSUMER CART-->
 
     <!--CART PRODUCT-->
     <style name="TitleCartProduct">
@@ -190,15 +196,6 @@
     </style>
 
     <!--CREATION ORDER-->
-    <style name="TitleCreationOrder">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
-    </style>
-
     <style name="TextCreationOrder">
         <item name="android:textSize">@dimen/very_small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>

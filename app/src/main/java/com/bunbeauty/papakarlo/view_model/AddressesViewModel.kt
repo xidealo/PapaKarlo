@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.view_model
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
@@ -19,9 +20,15 @@ class AddressesViewModel @Inject constructor(
 
     var navigator: WeakReference<AddressesNavigator>? = null
     var isDelivery: Boolean = true
+    var hasAddresses = ObservableField(true)
 
-    private val addressesLiveData by lazy {
+    private val deliveryAddressesLiveData by lazy {
         Transformations.map(addressRepo.getNotCafeAddresses()) {
+            if (it.isEmpty())
+                hasAddresses.set(false)
+            else
+                hasAddresses.set(true)
+
             it.reversed()
         }
     }
@@ -29,7 +36,7 @@ class AddressesViewModel @Inject constructor(
     fun getAddressesLiveData(isDelivery: Boolean): LiveData<List<Address>> {
         this.isDelivery = isDelivery
         return if (isDelivery)
-            addressesLiveData
+            deliveryAddressesLiveData
         else
             addressRepo.getCafeAddresses()
     }
@@ -43,5 +50,9 @@ class AddressesViewModel @Inject constructor(
 
             navigator?.get()?.goToBack()
         }
+    }
+
+    fun createAddressClick() {
+        navigator?.get()?.goToCreationAddress()
     }
 }

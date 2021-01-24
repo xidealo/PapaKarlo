@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         tools:context=".ui.cafe_options.CafeOptionsBottomSheet">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/bottom_sheet_cafe_options_cv_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:text="@string/action_call"
                 app:drawableLeftCompat="@drawable/ic_phone"
                 app:drawableTint="@color/mainTextColor" />
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <View
             android:id="@+id/bottom_sheet_cafe_options_dv"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_options_cv_call" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/bottom_sheet_cafe_options_cv_show_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                 android:text="@string/action_show_map"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor" />
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
