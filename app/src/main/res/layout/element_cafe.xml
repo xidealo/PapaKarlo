@@ -31,7 +31,7 @@
                 android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
                 android:drawablePadding="@dimen/medium_padding"
-                android:text="@{cafe.address.getAddressString()}"
+                android:text="@{cafe.address.addressString()}"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"

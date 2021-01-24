@@ -19,13 +19,13 @@ data class Address(
     var city: String = ""
 ) : BaseModel(), Parcelable {
 
-    fun getAddressString() = checkLastSymbol(
+    fun addressString() = checkLastSymbol(
         "Улица:${street}, " +
                 "Дом:${house}, " +
-                getFlatString() +
-                getEntranceString() +
-                getIntercomString() +
-                getFloorString()
+                flatString() +
+                entranceString() +
+                intercomString() +
+                floorString()
     )
 
     fun checkLastSymbol(data: String): String {
@@ -35,28 +35,28 @@ data class Address(
         return data
     }
 
-    fun getFlatString(): String {
+    fun flatString(): String {
         return if (flat.isNotEmpty())
             "Квартира:${flat}, "
         else
             ""
     }
 
-    fun getEntranceString(): String {
+    fun entranceString(): String {
         return if (entrance.isNotEmpty())
             "Подъезд:${entrance}, "
         else
             ""
     }
 
-    fun getIntercomString(): String {
+    fun intercomString(): String {
         return if (intercom.isNotEmpty())
             "Домофон:${intercom}, "
         else
             ""
     }
 
-    fun getFloorString(): String {
+    fun floorString(): String {
         return if (floor.isNotEmpty())
             "Этаж:${floor}"
         else

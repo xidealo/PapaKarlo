@@ -33,9 +33,7 @@ class CreationOrderViewModel @Inject constructor(
 
     fun getLastDeliveryAddress() {
         if (currentDeliveryAddress != null) {
-            val selectedAddress =
-                resourcesProvider.getString(R.string.msg_creation_order_selected_address)
-            lastAddressField.set("$selectedAddress\n${currentDeliveryAddress!!.getAddressString()}")
+            lastAddressField.set(currentDeliveryAddress!!.addressString())
             lastAddressField.notifyChange()
             return
         }
@@ -43,14 +41,10 @@ class CreationOrderViewModel @Inject constructor(
         viewModelScope.launch {
             dataStoreHelper.selectedDeliveryAddress.collect { address ->
                 if (address.street.isEmpty()) {
-                    val addAddress =
-                        resourcesProvider.getString(R.string.msg_creation_order_add_address)
-                    lastAddressField.set(addAddress)
+                    lastAddressField.set("")
                 } else {
                     currentDeliveryAddress = address
-                    val selectedAddress =
-                        resourcesProvider.getString(R.string.msg_creation_order_selected_address)
-                    lastAddressField.set("$selectedAddress\n${address.getAddressString()}")
+                    lastAddressField.set(address.addressString())
                 }
             }
         }
@@ -58,23 +52,17 @@ class CreationOrderViewModel @Inject constructor(
 
     fun getLastPickupAddress() {
         if (currentPickUpAddress != null) {
-            val selectedAddress =
-                resourcesProvider.getString(R.string.msg_creation_order_selected_address)
-            lastAddressField.set("$selectedAddress\n${currentPickUpAddress!!.getAddressString()}")
+            lastAddressField.set(currentPickUpAddress!!.addressString())
             return
         }
 
         viewModelScope.launch {
             dataStoreHelper.selectedPickupAddress.collect { address ->
                 if (address.street.isEmpty()) {
-                    val addAddress =
-                        resourcesProvider.getString(R.string.msg_creation_order_add_address)
-                    lastAddressField.set(addAddress)
+                    lastAddressField.set("")
                 } else {
                     currentPickUpAddress = address
-                    val selectedAddress =
-                        resourcesProvider.getString(R.string.msg_creation_order_selected_address)
-                    lastAddressField.set("$selectedAddress\n${address.getAddressString()}")
+                    lastAddressField.set(address.addressString())
                 }
             }
         }
@@ -104,13 +92,6 @@ class CreationOrderViewModel @Inject constructor(
 
             orderRepo.saveOrder(order)
             navigator?.get()?.goToMain(orderEntity)
-
-            /*for (cartProduct in orderWithCartProducts.cartProducts) {
-                cartProduct.orderUuid = insertedOrder.uuid
-                cartProductRepo.insertAsync(cartProduct)
-            }
-
-            navigator?.get()?.goToMain(order)*/
         }
     }
 
