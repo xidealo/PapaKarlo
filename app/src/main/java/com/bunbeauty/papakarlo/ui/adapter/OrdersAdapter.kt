@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
+import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor() :
-    BaseAdapter<OrdersAdapter.OrderViewHolder, OrderWithCartProducts>() {
+    BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

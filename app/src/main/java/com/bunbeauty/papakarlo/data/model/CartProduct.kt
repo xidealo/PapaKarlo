@@ -1,12 +1,9 @@
 package com.bunbeauty.papakarlo.data.model
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.bunbeauty.papakarlo.data.model.order.Order
 import kotlinx.parcelize.Parcelize
 
 @Entity
@@ -14,23 +11,21 @@ import kotlinx.parcelize.Parcelize
 data class CartProduct(
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
-    override var uuid: String = "",
     @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct = MenuProduct(),
     var count: Int = 1,
     var discount: Float = 0f,
-    var orderUuid: String = ""
+    var orderId: Long? = null
 ) : BaseModel(), Parcelable {
 
-    fun getStringFullPrice(): String {
-        return getFullPrice().toString() + " ₽"
+    fun stringFullPrice(): String {
+        return fullPrice().toString() + " ₽"
     }
 
-    fun getFullPrice(): Int {
+    fun fullPrice(): Int {
         return menuProduct.cost * count
     }
 
     companion object {
-        const val CART_PRODUCT = "cart product"
         const val CART_PRODUCTS = "cart products"
 
         const val COUNT = "count"

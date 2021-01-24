@@ -10,9 +10,9 @@ import kotlinx.coroutines.Deferred
 @Dao
 interface CartProductDao : BaseDao<CartProduct> {
 
-    @Query("SELECT * FROM CartProduct WHERE orderUuid = \"\" ")
+    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL")
     fun getCartProductListLiveData(): LiveData<List<CartProduct>>
 
-    @Query("SELECT * FROM CartProduct WHERE orderUuid = \"\" ")
+    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL")
     fun getCartProductList(): List<CartProduct>
 }

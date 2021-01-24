@@ -2,34 +2,31 @@ package com.bunbeauty.papakarlo.data.local.db.order
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
+import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
+import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.order.Order
-import com.bunbeauty.papakarlo.data.model.order.OrderWithCartProducts
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
-    private val iApiRepository: IApiRepository,
-    private val orderDao: OrderDao
+    private val apiRepository: IApiRepository,
+    private val orderDao: OrderDao,
+    private val cartProductRepo: CartProductRepo,
 ) : OrderRepo {
 
-    override suspend fun insertOrderAsync(order: Order) = withContext(Dispatchers.IO) {
-        async {
-            order.uuid = iApiRepository.insertOrder(order)
-            order.id = orderDao.insert(order)
-            order
+    override suspend fun saveOrder(order: Order) {
+        withContext(Dispatchers.IO) {
+            apiRepository.insertOrder(order)
+            val orderEntityId = orderDao.insert(order.orderEntity)
+            for (cardProduct in order.cartProducts) {
+                cardProduct.orderId = orderEntityId
+                cartProductRepo.update(cardProduct)
+            }
         }
     }
 
-    override fun getOrdersWithCartProducts(): LiveData<List<OrderWithCartProducts>> {
+    override fun getOrdersWithCartProducts(): LiveData<List<Order>> {
         return orderDao.getOrders()
     }
-
-    /*override suspend fun deleteAll(orderList: List<OrderWithCartProducts>) =
-        withContext(Dispatchers.IO) {
-            for (order in orderList) {
-                orderDao.delete(order.order)
-            }
-        }*/
 }

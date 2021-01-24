@@ -96,6 +96,8 @@
     <string name="action_call">Позвонить</string>
     <string name="action_show_map">Показать на карте</string>
 
+    <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

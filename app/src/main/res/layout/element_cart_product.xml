@@ -46,14 +46,14 @@
                 android:id="@+id/element_cart_product_tv_gram"
                 style="@style/GramCartProduct"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{cartProduct.menuProduct.getStringGram()}"
+                android:text="@{cartProduct.menuProduct.weightString()}"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_full_price"
                 style="@style/FullPriceCartProduct"
-                android:text="@{cartProduct.getStringFullPrice()}"
+                android:text="@{cartProduct.stringFullPrice()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />

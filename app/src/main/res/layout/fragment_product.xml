@@ -49,7 +49,7 @@
         <TextView
             android:id="@+id/fragment_product_tv_cost"
             style="@style/CostFragmentProduct"
-            android:text="@{product.getStringCost()}"
+            android:text="@{product.costString()}"
             android:layout_marginStart="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
@@ -57,7 +57,7 @@
         <TextView
             android:id="@+id/fragment_product_tv_gram"
             style="@style/GramFragmentProduct"
-            android:text="@{product.getStringGram()}"
+            android:text="@{product.weightString()}"
             android:layout_marginStart="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost"/>

@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
@@ -94,11 +94,10 @@ class CreationOrderFragment :
         }
 
         viewModel.createOrder(
-            Order(
-                Address(),
+            OrderEntity(
                 comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
-                isDelivery = viewModel.isDeliveryField.get() ?: true
+                isDelivery = viewModel.isDeliveryField.get()!!
             )
         )
 
@@ -107,8 +106,8 @@ class CreationOrderFragment :
         inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
     }
 
-    override fun goToMain(order: Order) {
-        (activity as MainActivity).showMessage("Код заказа ${order.uuid}")
+    override fun goToMain(orderEntity: OrderEntity) {
+        (activity as MainActivity).showMessage("Код заказа ${orderEntity.uuid}")
         findNavController().navigate(backToMainFragment())
     }
 

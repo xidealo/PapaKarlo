@@ -7,7 +7,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
-import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.view_model.OrdersViewModel
 import javax.inject.Inject
@@ -33,7 +32,7 @@ class OrdersFragment : TopBarFragment<FragmentOrdersBinding, OrdersViewModel>() 
 
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
         viewModel.orderWithCartProductsLiveData.observe(viewLifecycleOwner) { orderWithCartProducts ->
-            ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.order.time })
+            ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.orderEntity.time })
         }
     }
 

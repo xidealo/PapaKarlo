@@ -101,6 +101,9 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
 
         if (text.toString() != result) {
             phoneEditText.setText(result)
+            if (cursorPosition > result.length) {
+                cursorPosition = result.length
+            }
             phoneEditText.setSelection(cursorPosition)
         }
     }

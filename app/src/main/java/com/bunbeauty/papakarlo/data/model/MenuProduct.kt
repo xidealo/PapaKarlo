@@ -23,8 +23,8 @@ data class MenuProduct(
     var barcode: Int = 0
 ) : BaseModel(), Parcelable {
 
-    fun getStringCost() = "$cost ₽"
-    fun getStringGram() = "$weight г."
+    fun costString() = "$cost ₽"
+    fun weightString() = "$weight г."
 
     companion object {
         const val MENU_PRODUCTS: String = "menu_products"

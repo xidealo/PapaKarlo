@@ -1,12 +1,10 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
-import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
+import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.enums.ProductCode
 import com.google.firebase.database.DataSnapshot
@@ -32,51 +30,18 @@ class ApiRepository @Inject constructor(
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
-    override fun insertOrder(order: Order): String {
-        order.uuid = firebaseInstance.getReference(Order.ORDERS).push().key!!
-
-        val orderRef = firebaseInstance
-            .getReference(Order.ORDERS)
+    override fun insertOrder(order: Order) {
+        val orderUuid = firebaseInstance.getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
-            .child(order.uuid)
+            .push()
+            .key!!
+        order.orderEntity.timestamp = TIMESTAMP
 
-        val orderItems = HashMap<String, Any>()
-        orderItems[Address.STREET] = order.address.street
-        orderItems[Address.HOUSE] = order.address.house
-        orderItems[Address.FLAT] = order.address.flat
-        orderItems[Address.ENTRANCE] = order.address.entrance
-        orderItems[Address.INTERCOM] = order.address.intercom
-        orderItems[Address.FLOOR] = order.address.floor
-        orderItems[Order.COMMENT] = order.comment
-        orderItems[Order.PHONE] = order.phone
-        orderItems[Order.TIMESTAMP] = TIMESTAMP
-        orderItems[Order.ORDER_STATUS] = order.orderStatus
-        orderRef.updateChildren(orderItems)
-
-        return order.uuid
-    }
-
-    override fun insertCartProduct(cartProduct: CartProduct): String {
-        cartProduct.uuid = firebaseInstance.getReference(Order.ORDERS).push().key!!
-
-        val cartProductRef = firebaseInstance
-            .getReference(Order.ORDERS)
+        val orderReference = firebaseInstance
+            .getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
-            .child(cartProduct.orderUuid)
-            .child(CartProduct.CART_PRODUCTS)
-            .child(cartProduct.uuid)
-
-        val cartProductItems = HashMap<String, Any>()
-        cartProductItems[CartProduct.COUNT] = cartProduct.count
-        cartProductItems[CartProduct.DISCOUNT] = cartProduct.discount
-        cartProductItems[MenuProduct.NAME] = cartProduct.menuProduct.name
-        cartProductItems[MenuProduct.COST] = cartProduct.menuProduct.cost
-        cartProductItems[MenuProduct.WEIGHT] = cartProduct.menuProduct.weight
-        cartProductItems[MenuProduct.DESCRIPTION] = cartProduct.menuProduct.description
-        cartProductItems[MenuProduct.PHOTO_LINK] = cartProduct.menuProduct.photoLink
-        cartProductItems[MenuProduct.PRODUCT_CODE] = cartProduct.menuProduct.productCode
-        cartProductRef.updateChildren(cartProductItems)
-        return cartProduct.uuid
+            .child(orderUuid)
+        orderReference.setValue(order)
     }
 
     @ExperimentalCoroutinesApi

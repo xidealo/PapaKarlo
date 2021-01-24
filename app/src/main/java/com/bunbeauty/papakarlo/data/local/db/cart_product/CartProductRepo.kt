@@ -6,7 +6,6 @@ import kotlinx.coroutines.Deferred
 
 interface CartProductRepo {
     suspend fun insert(cartProduct: CartProduct): CartProduct
-    suspend fun insertAsync(cartProduct: CartProduct): Deferred<CartProduct>
 
     fun getCartProductList(): LiveData<List<CartProduct>>
     suspend fun getCartProductListAsync(): Deferred<List<CartProduct>>

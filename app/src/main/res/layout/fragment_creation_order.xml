@@ -91,7 +91,7 @@
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/fragment_creation_order_btn_create_address"
                                 style="@style/OutLineButton"
-                                android:onClick="@{()->viewModel.createAddressClick()}"
+                                android:onClick="@{()->viewModel.onAddAddressClick()}"
                                 android:text="@string/action_creation_address_address"
                                 android:visibility="@{viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
                                 app:icon="@drawable/ic_add"
@@ -193,7 +193,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_creation_order_btn_order"
             style="@style/MainButton"
-            android:onClick="@{()->viewModel.createOrderClick()}"
+            android:onClick="@{()->viewModel.onOrderClick()}"
             android:text="@string/action_creation_order_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

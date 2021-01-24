@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->
-            "${productList.sumBy { it.getFullPrice() }} ₽\n${productList.sumBy { it.count }} шт."
+            "${productList.sumBy { it.fullPrice() }} ₽\n${productList.sumBy { it.count }} шт."
         }
     }
 }

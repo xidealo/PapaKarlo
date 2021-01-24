@@ -14,16 +14,16 @@ import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 @Database(
     entities = [
         CartProduct::class,
         MenuProduct::class,
-        Order::class,
+        OrderEntity::class,
         Address::class,
         CafeEntity::class
-    ], version = 14
+    ], version = 17
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
