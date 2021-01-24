@@ -12,9 +12,10 @@ import javax.inject.Inject
 
 class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
 
-    private val selectedAddressDataStore = context.createDataStore(SELECTED_ADDRESS_DATA_STORE)
+    private val selectedDeliveryAddressDataStore = context.createDataStore(SELECTED_DELIVERY_ADDRESS_DATA_STORE)
+    private val selectedPickupAddressDataStore = context.createDataStore(SELECTED_PICKUP_ADDRESS_DATA_STORE)
 
-    override val selectedAddress: Flow<Address> = selectedAddressDataStore.data.map {
+    override val selectedDeliveryAddress: Flow<Address> = selectedDeliveryAddressDataStore.data.map {
         Address(
             it[ID_KEY] ?: DEFAULT_LONG,
             it[STREET_KEY] ?: DEFAULT_STRING,
@@ -26,8 +27,32 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
         )
     }
 
-    override suspend fun saveSelectedAddress(address: Address) {
-        selectedAddressDataStore.edit {
+    override suspend fun saveSelectedDeliveryAddress(address: Address) {
+        selectedDeliveryAddressDataStore.edit {
+            it[ID_KEY] = address.id
+            it[STREET_KEY] = address.street
+            it[HOUSE_KEY] = address.house
+            it[FLAT_KEY] = address.flat
+            it[ENTRANCE_KEY] = address.entrance
+            it[INTERCOM_KEY] = address.intercom
+            it[FLOOR_KEY] = address.floor
+        }
+    }
+
+    override val selectedPickupAddress: Flow<Address> = selectedPickupAddressDataStore.data.map {
+        Address(
+            it[ID_KEY] ?: DEFAULT_LONG,
+            it[STREET_KEY] ?: DEFAULT_STRING,
+            it[HOUSE_KEY] ?: DEFAULT_STRING,
+            it[FLAT_KEY] ?: DEFAULT_STRING,
+            it[ENTRANCE_KEY] ?: DEFAULT_STRING,
+            it[INTERCOM_KEY] ?: DEFAULT_STRING,
+            it[FLOOR_KEY] ?: DEFAULT_STRING
+        )
+    }
+
+    override suspend fun saveSelectedPickupAddress(address: Address) {
+        selectedPickupAddressDataStore.edit {
             it[ID_KEY] = address.id
             it[STREET_KEY] = address.street
             it[HOUSE_KEY] = address.house
@@ -40,7 +65,8 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
 
     companion object {
         //ADDRESS
-        private const val SELECTED_ADDRESS_DATA_STORE = "selected address data store"
+        private const val SELECTED_DELIVERY_ADDRESS_DATA_STORE = "selected delivery address data store"
+        private const val SELECTED_PICKUP_ADDRESS_DATA_STORE = "selected pickup address data store"
         private const val ID_ADDRESS = "id"
         private const val STREET = "street"
         private const val HOUSE = "house"

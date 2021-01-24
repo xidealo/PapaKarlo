@@ -26,16 +26,42 @@ class CreationOrderViewModel @Inject constructor(
 
     val errorMessageLiveData = MutableLiveData<String>()
     val lastAddressField = ObservableField<String>()
-    val isDeliveryField = ObservableField(true)
-    var currentAddress: Address? = null
+    val isDeliveryField = ObservableField<Boolean>()
+    var currentDeliveryAddress: Address? = null
+    var currentPickUpAddress: Address? = null
 
     fun getLastDeliveryAddress() {
+        if (currentDeliveryAddress != null) {
+            lastAddressField.set("${context.getString(R.string.msg_creation_order_selected_address)}\n${currentDeliveryAddress!!.getAddressString()}")
+            lastAddressField.notifyChange()
+            return
+        }
+
         viewModelScope.launch {
-            iDataStoreHelper.selectedAddress.collect {
+            iDataStoreHelper.selectedDeliveryAddress.collect {
                 if (it.street.isEmpty()) {
                     lastAddressField.set(context.getString(R.string.msg_creation_order_add_address))
                 } else {
-                    currentAddress = it
+                    currentDeliveryAddress = it
+                    lastAddressField.set("${context.getString(R.string.msg_creation_order_selected_address)}\n${it.getAddressString()}")
+                }
+            }
+        }
+    }
+
+    fun getLastPickupAddress() {
+        if (currentPickUpAddress != null) {
+            lastAddressField.set("${context.getString(R.string.msg_creation_order_selected_address)}\n${currentPickUpAddress!!.getAddressString()}")
+            lastAddressField.notifyChange()
+            return
+        }
+
+        viewModelScope.launch {
+            iDataStoreHelper.selectedPickupAddress.collect {
+                if (it.street.isEmpty()) {
+                    lastAddressField.set(context.getString(R.string.msg_creation_order_add_address))
+                } else {
+                    currentPickUpAddress = it
                     lastAddressField.set("${context.getString(R.string.msg_creation_order_selected_address)}\n${it.getAddressString()}")
                 }
             }
@@ -44,13 +70,23 @@ class CreationOrderViewModel @Inject constructor(
 
     fun createOrder(order: Order) {
         viewModelScope.launch {
-            if (currentAddress != null) {
-                order.address = currentAddress ?: Address(street = "ERROR ADDRESS")
-            } else {
-                errorMessageLiveData.value =
-                    context.getString(R.string.error_creation_order_address)
-                return@launch
-            }
+
+            if (isDeliveryField.get() == true)
+                if (currentDeliveryAddress != null) {
+                    order.address = currentDeliveryAddress ?: Address(street = "ERROR ADDRESS")
+                } else {
+                    errorMessageLiveData.value =
+                        context.getString(R.string.error_creation_order_address)
+                    return@launch
+                }
+            else
+                if (currentPickUpAddress != null) {
+                    order.address = currentPickUpAddress ?: Address(street = "ERROR ADDRESS")
+                } else {
+                    errorMessageLiveData.value =
+                        context.getString(R.string.error_creation_order_address)
+                    return@launch
+                }
 
             val orderWithCartProducts = OrderWithCartProducts(
                 order,
@@ -68,12 +104,6 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
 
-    fun changeIsDeliveryStatus(status: Boolean){
-        isDeliveryField.set(status)
-        currentAddress = null
-        lastAddressField.set("Нажмите, чтобы выбрать адрес")
-    }
-
     fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {
         if (text.isEmpty() && isRequired) {
             return false
@@ -82,7 +112,6 @@ class CreationOrderViewModel @Inject constructor(
         if (text.length > maxLength) {
             return false
         }
-
         return true
     }
 

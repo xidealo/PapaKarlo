@@ -32,14 +32,14 @@ class AddressesBottomSheet :
         addressesAdapter.addressesViewModel = viewModel
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
         val isDelivery = AddressesBottomSheetArgs.fromBundle(requireArguments()).isDelivery
-
+        viewModel.isDelivery = isDelivery
         viewModel.getAddressesLiveData(isDelivery).observe(viewLifecycleOwner) {
             addressesAdapter.setItemList(it)
         }
     }
 
     override fun goToBack() {
-        findNavController().navigate(AddressesBottomSheetDirections.backAddressesBottomSheetToCreationOrder())
+        dismiss()
     }
 
 }

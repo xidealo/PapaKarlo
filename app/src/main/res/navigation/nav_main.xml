@@ -95,11 +95,6 @@
         <argument
             android:name="isDelivery"
             app:argType="boolean" />
-        <action
-            android:id="@+id/back_addressesBottomSheet_to_creation_order"
-            app:destination="@id/creation_order"
-            app:popUpTo="@id/creation_order"
-            app:popUpToInclusive="true" />
     </dialog>
 
 </navigation>

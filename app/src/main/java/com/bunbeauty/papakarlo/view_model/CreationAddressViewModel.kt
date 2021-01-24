@@ -5,7 +5,6 @@ import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressNavigator
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +21,7 @@ class CreationAddressViewModel @Inject constructor(
 
     fun creationAddress(address: Address) {
         viewModelScope.launch(Dispatchers.IO) {
-            iDataStoreHelper.saveSelectedAddress(address)
+            iDataStoreHelper.saveSelectedDeliveryAddress(address)
             addressRepo.insert(address)
             withContext(Dispatchers.Main) {
                 navigator?.get()?.goToCreationOrder()

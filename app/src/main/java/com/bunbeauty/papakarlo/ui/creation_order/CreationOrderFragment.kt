@@ -42,14 +42,14 @@ class CreationOrderFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
+        viewModel.isDeliveryField.set(true)
         viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             if (isChecked) {
-                viewModel.changeIsDeliveryStatus(true)
-            }
-        }
-        viewDataBinding.fragmentCreationOrderRbPickup.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-            if (isChecked) {
-                viewModel.changeIsDeliveryStatus(false)
+                viewModel.isDeliveryField.set(true)
+                viewModel.getLastDeliveryAddress()
+            } else {
+                viewModel.isDeliveryField.set(false)
+                viewModel.getLastPickupAddress()
             }
         }
         viewDataBinding.fragmentCreationOrderMcvAddress.setOnClickListener {

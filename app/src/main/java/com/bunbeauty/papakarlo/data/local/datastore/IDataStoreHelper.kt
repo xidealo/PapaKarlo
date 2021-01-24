@@ -4,6 +4,9 @@ import com.bunbeauty.papakarlo.data.model.Address
 import kotlinx.coroutines.flow.Flow
 
 interface IDataStoreHelper {
-    val selectedAddress:Flow<Address>
-    suspend fun saveSelectedAddress(address: Address)
+    val selectedDeliveryAddress:Flow<Address>
+    suspend fun saveSelectedDeliveryAddress(address: Address)
+
+    val selectedPickupAddress:Flow<Address>
+    suspend fun saveSelectedPickupAddress(address: Address)
 }

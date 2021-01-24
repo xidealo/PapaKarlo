@@ -56,13 +56,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/large_margin"
-                                android:checked="true"
+                                android:checked="@{viewModel.isDeliveryField}"
                                 android:text="@string/title_creation_order_delivery" />
 
                             <RadioButton
                                 android:id="@+id/fragment_creation_order_rb_pickup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:checked="@{!viewModel.isDeliveryField}"
                                 android:text="@string/title_creation_order_pickup" />
                         </RadioGroup>
 
