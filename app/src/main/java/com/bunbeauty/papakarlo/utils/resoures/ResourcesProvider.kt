@@ -14,4 +14,8 @@ class ResourcesProvider @Inject constructor(private val context: Context): IReso
     override fun getDrawable(drawableId: Int): Drawable? {
         return ContextCompat.getDrawable(context, drawableId)
     }
+
+    override fun getColor(colorId: Int): Int {
+        return ContextCompat.getColor(context, colorId)
+    }
 }

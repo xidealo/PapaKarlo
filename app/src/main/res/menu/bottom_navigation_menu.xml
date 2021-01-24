@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/contacts_fragment"
-        android:icon="@drawable/ic_contact"
+        android:id="@+id/cafe_list_fragment"
+        android:icon="@drawable/ic_address"
         android:title="@string/title_bottom_navigation_menu_contacts" />
     <item
         android:id="@+id/menu_fragment"

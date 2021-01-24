@@ -26,7 +26,7 @@
     <dimen name="empty_cart_img_size">176dp</dimen>
 
     <!-- MARGIN -->
-    <dimen name="very_large_margin">96dp</dimen>
+    <dimen name="very_large_margin">40dp</dimen>
     <dimen name="large_margin">24dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>

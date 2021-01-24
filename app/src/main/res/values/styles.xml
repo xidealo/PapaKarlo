@@ -234,6 +234,19 @@
         <item name="android:layout_marginTop">@dimen/medium_margin</item>
     </style>
 
+    <style name="HelpText" parent="BaseText">
+        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <style name="CenterText" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
+    </style>
+
     <!--CAFE-->
     <style name="TextTitle">
         <item name="android:textSize">@dimen/medium_text_size</item>
@@ -313,6 +326,16 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
+    <!--DIVIDER-->
+    <style name="Divider">
+        <item name="android:background">@color/grey</item>
+    </style>
+
+    <style name="Divider.Horizontal" parent="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
     </style>
 
 </resources>

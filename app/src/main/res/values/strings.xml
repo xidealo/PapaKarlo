@@ -92,6 +92,10 @@
     <string name="msg_contacts_work_time">Время работы:\u0020</string>
     <string name="msg_contacts_work_time_divider">\u0020-\u0020</string>
 
+    <!-- CAFE OPTIONS -->
+    <string name="action_call">Позвонить</string>
+    <string name="action_show_map">Показать на карте</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

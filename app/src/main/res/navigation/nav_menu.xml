@@ -6,10 +6,13 @@
     app:startDestination="@id/menu_fragment">
 
     <fragment
-        android:id="@+id/contacts_fragment"
+        android:id="@+id/cafe_list_fragment"
         android:name="com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment"
         android:label="@string/title_cafe_list"
         tools:layout="@layout/fragment_cafe_list" >
+        <action
+            android:id="@+id/to_cafeOptionsBottomSheet"
+            app:destination="@id/cafeOptionsBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/menu_fragment"
@@ -21,5 +24,15 @@
         android:name="com.bunbeauty.papakarlo.ui.orders.OrdersFragment"
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders" />
+    <dialog
+        android:id="@+id/cafeOptionsBottomSheet"
+        tools:layout="@layout/bottom_sheet_cafe_options"
+        android:name="com.bunbeauty.papakarlo.ui.cafe_options.CafeOptionsBottomSheet"
+        android:label="CafeOptionsBottomSheet" >
+        <argument
+            android:name="cafeId"
+            app:argType="string" />
+    </dialog>
+
 
 </navigation>

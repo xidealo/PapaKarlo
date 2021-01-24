@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cafe"
+            type="com.bunbeauty.papakarlo.data.model.cafe.Cafe" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.cafe_options.CafeOptionsBottomSheet">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottom_sheet_cafe_options_cv_call"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/CenterText"
+                android:drawablePadding="@dimen/medium_padding"
+                android:text="@string/action_call"
+                app:drawableLeftCompat="@drawable/ic_phone"
+                app:drawableTint="@color/mainTextColor" />
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:id="@+id/bottom_sheet_cafe_options_dv"
+            style="@style/Divider.Horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_options_cv_call" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/bottom_sheet_cafe_options_cv_show_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_options_dv">
+
+            <TextView
+                style="@style/CenterText"
+                android:drawablePadding="@dimen/medium_padding"
+                android:text="@string/action_show_map"
+                app:drawableLeftCompat="@drawable/ic_address"
+                app:drawableTint="@color/mainTextColor" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

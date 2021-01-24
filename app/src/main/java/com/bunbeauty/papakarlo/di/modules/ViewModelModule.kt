@@ -47,8 +47,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ContactsViewModel::class)
-    internal abstract fun provideContactsViewModel(contactsViewModel: ContactsViewModel): ViewModel
+    @ViewModelKey(CafeListViewModel::class)
+    internal abstract fun provideContactsViewModel(cafeListViewModel: CafeListViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -64,4 +64,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddressesViewModel::class)
     internal abstract fun provideAddressesViewModel(addressesViewModel: AddressesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CafeOptionsViewModel::class)
+    internal abstract fun provideCafeOptionsViewModel(cafeOptionsViewModel: CafeOptionsViewModel): ViewModel
 }

@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="cafe"
             type="com.bunbeauty.papakarlo.data.model.cafe.Cafe" />
+
+        <variable
+            name="cafeListViewModel"
+            type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/element_cafe_cv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_margin"
@@ -23,37 +28,49 @@
             android:padding="@dimen/medium_padding">
 
             <TextView
-                android:id="@+id/fragment_contacts_tv_address"
+                android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
                 android:drawablePadding="@dimen/medium_padding"
                 android:text="@{cafe.address.getAddressString()}"
-                app:drawableLeftCompat="@drawable/ic_contact"
+                app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Address" />
 
             <TextView
-                android:id="@+id/fragment_contacts_tv_work_time"
-                style="@style/MainText"
-                android:drawablePadding="@dimen/medium_padding"
-                android:text="@{cafe.cafeEntity.getWorkingHoursString()}"
-                app:drawableLeftCompat="@drawable/ic_clock"
-                app:drawableTint="@color/mainTextColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_tv_address"
-                tools:text="10:00 - 20:00" />
-
-            <TextView
-                android:id="@+id/fragment_contacts_tv_phone"
+                android:id="@+id/element_cafe_tv_phone"
                 style="@style/MainText"
                 android:drawablePadding="@dimen/medium_padding"
                 android:text="@{cafe.cafeEntity.phone}"
                 app:drawableLeftCompat="@drawable/ic_phone"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_contacts_tv_work_time"
+                app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_address"
                 tools:text="8 (910) 000-00-00" />
+
+            <TextView
+                android:id="@+id/element_cafe_tv_work_time"
+                style="@style/MainText"
+                android:drawablePadding="@dimen/medium_padding"
+                android:text="@{cafe.cafeEntity.getWorkingHoursString()}"
+                app:drawableLeftCompat="@drawable/ic_clock"
+                app:drawableTint="@color/mainTextColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_phone"
+                tools:text="10:00 - 20:00" />
+
+            <TextView
+                android:id="@+id/element_cafe_tv_time_status"
+                style="@style/HelpText"
+                android:layout_width="0dp"
+                android:text="@{cafeListViewModel.getIsClosedMessage(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
+                android:textColor="@{cafeListViewModel.getIsClosedColor(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
+                android:layout_marginStart="@dimen/very_large_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_work_time"
+                tools:text="Закрыто" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

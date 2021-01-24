@@ -1,10 +1,10 @@
 package com.bunbeauty.papakarlo.data.local.db.cafe
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
+import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class CafeRepository @Inject constructor(
         withContext(IO) {
             apiRepository.getCafeList().collect { cafeList ->
                 for (cafe in cafeList) {
-                    val cafeEntity = cafeDao.getCafeById(cafe.cafeEntity.id)
+                    val cafeEntity = cafeDao.getCafeEntityById(cafe.cafeEntity.id)
                     if (cafeEntity == null) {
                         val addressId = addressRepo.insert(cafe.address)
                         cafe.cafeEntity.addressId = addressId
@@ -36,5 +36,9 @@ class CafeRepository @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun getCafeById(cafeId: String): LiveData<Cafe> {
+        return cafeDao.getCafeById(cafeId)
     }
 }

@@ -5,6 +5,7 @@ import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
+import com.bunbeauty.papakarlo.ui.cafe_options.CafeOptionsBottomSheet
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.main.MainFragment
@@ -40,6 +41,7 @@ interface ViewModelComponent {
 
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)
+    fun inject(cafeOptionsBottomSheet: CafeOptionsBottomSheet)
 
     // dialogs
 }

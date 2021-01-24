@@ -16,5 +16,8 @@ interface CafeDao : BaseDao<CafeEntity> {
     fun getCafeList(): LiveData<List<Cafe>>
 
     @Query("SELECT * FROM CafeEntity WHERE id = :id")
-    fun getCafeById(id: String): CafeEntity?
+    fun getCafeEntityById(id: String): CafeEntity?
+
+    @Query("SELECT * FROM CafeEntity WHERE id = :id")
+    fun getCafeById(id: String): LiveData<Cafe>
 }
