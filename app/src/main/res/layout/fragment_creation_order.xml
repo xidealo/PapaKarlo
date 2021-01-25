@@ -81,23 +81,41 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/fragment_creation_order_tv_last_address"
-                                style="@style/MainText"
-                                android:text="@{viewModel.lastAddressField}"
+                            <LinearLayout
+                                android:id="@+id/fragment_creation_order_ll_address"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address" />
+                                app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address">
+
+                                <TextView
+                                    android:id="@+id/fragment_creation_order_tv_last_address"
+                                    style="@style/SmallText"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:text="@{viewModel.lastAddressField}"
+                                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_iv_address" />
+
+                                <ImageView
+                                    android:id="@+id/fragment_creation_order_iv_address"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:contentDescription="Description"
+                                    android:src="@drawable/ic_chevron_right_solid" />
+                            </LinearLayout>
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/fragment_creation_order_btn_create_address"
                                 style="@style/OutLineButton"
                                 android:onClick="@{()->viewModel.onAddAddressClick()}"
                                 android:text="@string/action_creation_address_address"
-                                android:visibility="@{viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
+                                android:visibility="@{viewModel.hasAddressesField ? View.VISIBLE : View.GONE}"
                                 app:icon="@drawable/ic_add"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_last_address" />
+                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_ll_address" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>

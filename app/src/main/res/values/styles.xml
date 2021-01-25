@@ -231,6 +231,12 @@
         <item name="android:layout_marginTop">@dimen/medium_margin</item>
     </style>
 
+    <style name="SmallText" parent="BaseText">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
     <style name="HelpText" parent="BaseText">
         <item name="android:textSize">@dimen/very_small_text_size</item>
         <item name="fontFamily">@font/font_roboto_regular</item>

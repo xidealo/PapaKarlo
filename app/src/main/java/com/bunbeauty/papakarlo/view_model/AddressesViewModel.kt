@@ -19,22 +19,16 @@ class AddressesViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var navigator: WeakReference<AddressesNavigator>? = null
-    var isDelivery: Boolean = true
-    var hasAddresses = ObservableField(true)
+    var isDeliveryField = ObservableField(false)
 
     private val deliveryAddressesLiveData by lazy {
         Transformations.map(addressRepo.getNotCafeAddresses()) {
-            if (it.isEmpty())
-                hasAddresses.set(false)
-            else
-                hasAddresses.set(true)
-
             it.reversed()
         }
     }
 
     fun getAddressesLiveData(isDelivery: Boolean): LiveData<List<Address>> {
-        this.isDelivery = isDelivery
+        isDeliveryField.set(isDelivery)
         return if (isDelivery)
             deliveryAddressesLiveData
         else
@@ -43,7 +37,7 @@ class AddressesViewModel @Inject constructor(
 
     fun saveSelectedAddress(address: Address) {
         viewModelScope.launch {
-            if (isDelivery)
+            if (isDeliveryField.get() == true)
                 iDataStoreHelper.saveSelectedDeliveryAddress(address)
             else
                 iDataStoreHelper.saveSelectedPickupAddress(address)
