@@ -14,7 +14,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
-import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.MainViewModel
 import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         viewDataBinding.executePendingBindings()
 
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
-
+        viewModel.refreshCafeList()
         viewModel.cartLiveData.observe(this) { cartText ->
             viewDataBinding.activityMainTbTopBar.partTopBarTvCart.text = cartText
         }

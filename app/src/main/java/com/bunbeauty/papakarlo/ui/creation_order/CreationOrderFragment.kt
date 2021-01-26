@@ -107,7 +107,7 @@ class CreationOrderFragment :
     }
 
     override fun goToMain(orderEntity: OrderEntity) {
-        (activity as MainActivity).showMessage("Код заказа ${orderEntity.uuid}")
+        (activity as MainActivity).showMessage("Код заказа ${orderEntity.code}")
         findNavController().navigate(backToMainFragment())
     }
 

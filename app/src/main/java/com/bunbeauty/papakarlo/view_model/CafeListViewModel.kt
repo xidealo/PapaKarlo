@@ -29,12 +29,6 @@ class CafeListViewModel @Inject constructor(
         cafeRepo.cafeEntityListLiveData
     }
 
-    fun refreshCafeList() {
-        viewModelScope.launch {
-            cafeRepo.refreshCafeList()
-        }
-    }
-
     private fun startTimer() {
         val toNewMinute = (SECONDS_IN_MINUTE - DateTime.now().secondOfMinute) * MILLIS_IN_SECOND
         object : CountDownTimer(toNewMinute, MILLIS_INTERVAL) {

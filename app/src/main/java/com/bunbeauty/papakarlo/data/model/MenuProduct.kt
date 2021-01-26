@@ -19,7 +19,6 @@ data class MenuProduct(
     var onFire: Boolean = false,
     var inOven: Boolean = false,
     var productCode: ProductCode = ProductCode.ALL,
-    var extraIconLink: String = "",
     var barcode: Int = 0
 ) : BaseModel(), Parcelable {
 

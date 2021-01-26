@@ -48,7 +48,6 @@ class CafeListFragment : TopBarFragment<FragmentCafeListBinding, CafeListViewMod
         viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
 
         viewModel.navigator = WeakReference(this)
-        viewModel.refreshCafeList()
         viewModel.cafeListLiveData.observe(viewLifecycleOwner) { cafeList ->
             cafeAdapter.submitList(cafeList)
         }
