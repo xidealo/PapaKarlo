@@ -1,22 +1,6 @@
 package com.bunbeauty.papakarlo.utils.contact_info
 
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.Address.Companion.ENTRANCE
-import com.bunbeauty.papakarlo.data.model.Address.Companion.FLAT
-import com.bunbeauty.papakarlo.data.model.Address.Companion.FLOOR
-import com.bunbeauty.papakarlo.data.model.Address.Companion.HOUSE
-import com.bunbeauty.papakarlo.data.model.Address.Companion.INTERCOM
-import com.bunbeauty.papakarlo.data.model.Address.Companion.STREET
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.END_TIME
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.LATITUDE
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.LONGITUDE
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.NAME
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.PHONE
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity.Companion.START_TIME
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
-import com.google.firebase.database.DataSnapshot
 import javax.inject.Inject
 
 class CafeHelper @Inject constructor(private val resourcesProvider: ResourcesProvider) :

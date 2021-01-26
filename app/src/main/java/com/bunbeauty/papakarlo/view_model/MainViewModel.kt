@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
-import com.bunbeauty.papakarlo.live_data.ConnectionLiveData
+import com.bunbeauty.papakarlo.utils.live_data.ConnectionLiveData
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch

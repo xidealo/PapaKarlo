@@ -11,6 +11,7 @@ import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class CreationOrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper,
-    private val resourcesProvider: IResourcesProvider
+    private val resourcesProvider: IResourcesProvider,
+    private val iStringHelper: IStringHelper
 ) : BaseViewModel() {
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
@@ -34,7 +36,7 @@ class CreationOrderViewModel @Inject constructor(
 
     fun getLastDeliveryAddress() {
         if (currentDeliveryAddress != null) {
-            lastAddressField.set(currentDeliveryAddress!!.addressString())
+            lastAddressField.set(iStringHelper.toString(currentDeliveryAddress!!))
             lastAddressField.notifyChange()
             return
         }
@@ -46,7 +48,9 @@ class CreationOrderViewModel @Inject constructor(
                     hasAddressesField.set(true)
                 } else {
                     currentDeliveryAddress = address
-                    lastAddressField.set(address.addressString())
+                    lastAddressField.set(
+                        iStringHelper.toString(address)
+                    )
                 }
             }
         }
@@ -54,7 +58,7 @@ class CreationOrderViewModel @Inject constructor(
 
     fun getLastPickupAddress() {
         if (currentPickUpAddress != null) {
-            lastAddressField.set(currentPickUpAddress!!.addressString())
+            lastAddressField.set(iStringHelper.toString(currentPickUpAddress!!))
             return
         }
 
@@ -64,7 +68,7 @@ class CreationOrderViewModel @Inject constructor(
                     lastAddressField.set("")
                 } else {
                     currentPickUpAddress = address
-                    lastAddressField.set(address.addressString())
+                    lastAddressField.set(iStringHelper.toString(address))
                 }
             }
         }

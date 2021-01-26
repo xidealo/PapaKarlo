@@ -9,10 +9,13 @@ import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.AddressesViewModel
 import javax.inject.Inject
 
-class AddressesAdapter @Inject constructor() :
+class AddressesAdapter @Inject constructor(
+    private val iStringHelper: IStringHelper
+) :
     BaseAdapter<AddressesAdapter.AddressViewHolder, Address>() {
 
     lateinit var addressesViewModel: AddressesViewModel
@@ -26,6 +29,7 @@ class AddressesAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: AddressViewHolder, i: Int) {
         holder.binding?.address = itemList[i]
+        holder.binding?.iStringHelper = iStringHelper
         holder.setListener(itemList[i])
     }
 

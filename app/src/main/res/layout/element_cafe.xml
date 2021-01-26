@@ -13,6 +13,8 @@
         <variable
             name="cafeListViewModel"
             type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
+
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -31,7 +33,7 @@
                 android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
                 android:drawablePadding="@dimen/medium_padding"
-                android:text="@{cafe.address.addressString()}"
+                android:text="@{cafeListViewModel.iStringHelper.toString(cafe.address)}"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +66,9 @@
                 android:id="@+id/element_cafe_tv_time_status"
                 style="@style/HelpText"
                 android:layout_width="0dp"
+                android:layout_marginStart="@dimen/very_large_margin"
                 android:text="@{cafeListViewModel.getIsClosedMessage(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
                 android:textColor="@{cafeListViewModel.getIsClosedColor(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
-                android:layout_marginStart="@dimen/very_large_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_work_time"

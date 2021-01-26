@@ -8,6 +8,8 @@ import com.bunbeauty.papakarlo.utils.contact_info.CafeHelper
 import com.bunbeauty.papakarlo.utils.contact_info.ICafeHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
+import com.bunbeauty.papakarlo.utils.string.StringHelper
 import com.bunbeauty.papakarlo.utils.uri.IUriHelper
 import com.bunbeauty.papakarlo.utils.uri.UriHelper
 import dagger.Binds
@@ -38,6 +40,9 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindUriHelper(uriHelper: UriHelper): IUriHelper
+
+    @Binds
+    abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
 
 
 }

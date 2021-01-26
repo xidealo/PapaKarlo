@@ -7,6 +7,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch
 import org.joda.time.DateTime
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class CafeListViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
     private val resourcesProvider: IResourcesProvider,
+    val iStringHelper: IStringHelper
 ) : BaseViewModel() {
 
     init {

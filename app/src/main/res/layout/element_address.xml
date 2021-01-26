@@ -14,6 +14,10 @@
         <variable
             name="address"
             type="com.bunbeauty.papakarlo.data.model.Address" />
+
+        <variable
+            name="iStringHelper"
+            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -26,7 +30,7 @@
             style="@style/MainText"
             android:layout_margin="@dimen/medium_margin"
             android:drawablePadding="@dimen/medium_padding"
-            android:text="@{address.addressString}"
+            android:text="@{iStringHelper.toString(address)}"
             app:drawableLeftCompat="@drawable/ic_address"
             app:drawableTint="@color/mainTextColor" />
     </com.google.android.material.card.MaterialCardView>

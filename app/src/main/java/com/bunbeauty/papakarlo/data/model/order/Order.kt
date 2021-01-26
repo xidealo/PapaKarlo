@@ -20,14 +20,4 @@ data class Order(
 
         return "Стоимость заказа: $fullPrice ₽"
     }
-
-
-    fun cartProductsStructure(): String {
-        var structure = ""
-
-        for (cartProduct in cartProducts)
-            structure += "${cartProduct.menuProduct.name} ${cartProduct.count}шт.; "
-
-        return "В заказе: \n$structure"
-    }
 }

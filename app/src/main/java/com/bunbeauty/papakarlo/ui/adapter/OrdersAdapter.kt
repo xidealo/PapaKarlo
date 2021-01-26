@@ -7,9 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import javax.inject.Inject
 
-class OrdersAdapter @Inject constructor() :
+class OrdersAdapter @Inject constructor(
+    private val iStringHelper: IStringHelper
+) :
     BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
@@ -20,7 +23,8 @@ class OrdersAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
-        holder.binding?.menuProduct = itemList[i]
+        holder.binding?.order = itemList[i]
+        holder.binding?.iStringHelper = iStringHelper
     }
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

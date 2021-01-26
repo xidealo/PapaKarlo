@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.live_data
+package com.bunbeauty.papakarlo.utils.live_data
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,7 +6,6 @@ import android.net.Network
 import android.net.NetworkCapabilities.*
 import android.net.NetworkRequest
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.LiveData
 import javax.inject.Inject
 
