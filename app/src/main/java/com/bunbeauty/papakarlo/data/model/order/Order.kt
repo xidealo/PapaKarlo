@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.data.model.order
 
 import androidx.room.Embedded
+import androidx.room.Ignore
 import androidx.room.Relation
 import com.bunbeauty.papakarlo.data.model.BaseModel
 import com.bunbeauty.papakarlo.data.model.CartProduct
@@ -10,7 +11,10 @@ data class Order(
     var orderEntity: OrderEntity = OrderEntity(),
 
     @Relation(parentColumn = "id", entityColumn = "orderId")
-    var cartProducts: List<CartProduct> = ArrayList()
+    var cartProducts: List<CartProduct> = ArrayList(),
+
+    @Ignore
+    var timestamp: Map<String, String>? = null,
 ) : BaseModel() {
 
     fun fullPrice(): String {

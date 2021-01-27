@@ -22,8 +22,6 @@ data class OrderEntity(
     var comment: String = "",
     var phone: String = "",
     var time: Long = DateTime.now().millis,
-    @Ignore
-    var timestamp: Map<String, String>? = null,
     var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED,
     var isDelivery: Boolean = true,
     var code: String = ""

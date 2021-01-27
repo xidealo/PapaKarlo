@@ -35,7 +35,7 @@ class ApiRepository @Inject constructor(
             .child(BuildConfig.APP_ID)
             .push()
             .key!!
-        order.orderEntity.timestamp = TIMESTAMP
+        order.timestamp = TIMESTAMP
 
         val orderReference = firebaseInstance
             .getReference(OrderEntity.ORDERS)
