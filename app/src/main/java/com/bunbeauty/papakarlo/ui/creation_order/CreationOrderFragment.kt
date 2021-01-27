@@ -95,7 +95,7 @@ class CreationOrderFragment :
 
         viewModel.createOrder(
             OrderEntity(
-                comment = viewDataBinding.fragmentOrderEtComment.text.toString(),
+                comment = viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
                 phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
                 isDelivery = viewModel.isDeliveryField.get()!!
             )

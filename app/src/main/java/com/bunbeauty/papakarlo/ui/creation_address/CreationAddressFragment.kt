@@ -102,12 +102,12 @@ class CreationAddressFragment :
 
         viewModel.creationAddress(
             Address(
-                street = viewDataBinding.fragmentCreationAddressEtStreet.text.toString(),
-                house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString(),
-                flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString(),
-                entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString(),
-                intercom = viewDataBinding.fragmentCreationAddressEtIntercom.text.toString(),
-                floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString(),
+                street = viewDataBinding.fragmentCreationAddressEtStreet.text.toString().trim(),
+                house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
+                flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
+                entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),
+                intercom = viewDataBinding.fragmentCreationAddressEtIntercom.text.toString().trim(),
+                floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim(),
             )
         )
     }

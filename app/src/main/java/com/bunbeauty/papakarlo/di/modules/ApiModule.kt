@@ -43,6 +43,4 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
-
-
 }
