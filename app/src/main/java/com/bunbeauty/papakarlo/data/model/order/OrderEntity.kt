@@ -24,7 +24,8 @@ data class OrderEntity(
     var time: Long = DateTime.now().millis,
     var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED,
     var isDelivery: Boolean = true,
-    var code: String = ""
+    var code: String = "",
+    var email: String = ""
 ) : BaseModel(), Parcelable {
 
     fun timeHHMM(): String {

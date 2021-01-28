@@ -99,7 +99,8 @@ class CreationOrderFragment :
         viewModel.createOrder(
             OrderEntity(
                 comment = viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
-                phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
+                phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
+                email = viewDataBinding.fragmentOrderEtEmail.text.toString().trim()
             )
         )
 
