@@ -42,10 +42,10 @@ class StringHelper @Inject constructor() : IStringHelper {
             orderString.append("Самовывоз\n")
 
         orderString.append("Телефон: ${orderEntity.phone}\n")
-        orderString.append("Комментарий:${orderEntity.comment}")
+        orderString.append("Комментарий:${orderEntity.comment}\n")
+        orderString.append("Email:${orderEntity.email}")
         return orderString.toString()
     }
-
 
     fun checkLastSymbol(data: String, symbol: Char): String {
         if (data.trim().last() == symbol)
