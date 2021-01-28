@@ -81,41 +81,54 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <LinearLayout
-                                android:id="@+id/fragment_creation_order_ll_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
+                            <TextView
+                                android:id="@+id/fragment_creation_order_tv_last_address"
+                                style="@style/SmallText"
+                                android:layout_width="0dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:paddingVertical="@dimen/small_padding"
+                                android:text="@{viewModel.lastAddressField}"
+                                android:visibility="@{!viewModel.showCreateAddressField || !viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_iv_address"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address">
+                                app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address"
+                                tools:text="rggrgrgregrekgnegrnjregjrengjrengjregjregn  " />
 
-                                <TextView
-                                    android:id="@+id/fragment_creation_order_tv_last_address"
-                                    style="@style/SmallText"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:text="@{viewModel.lastAddressField}"
-                                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_iv_address" />
-
-                                <ImageView
-                                    android:id="@+id/fragment_creation_order_iv_address"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:contentDescription="Description"
-                                    android:src="@drawable/ic_chevron_right_solid" />
-                            </LinearLayout>
+                            <ImageView
+                                android:id="@+id/fragment_creation_order_iv_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/small_margin"
+                                android:contentDescription="Description"
+                                android:src="@drawable/ic_chevron_right_solid"
+                                android:visibility="@{!viewModel.showCreateAddressField || !viewModel.isDeliveryField ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_tv_last_address"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_tv_last_address" />
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/fragment_creation_order_btn_create_address"
                                 style="@style/OutLineButton"
+                                android:layout_width="0dp"
                                 android:onClick="@{()->viewModel.onAddAddressClick()}"
                                 android:text="@string/action_creation_address_address"
-                                android:visibility="@{viewModel.hasAddressesField ? View.VISIBLE : View.GONE}"
-                                app:icon="@drawable/ic_add"
+                                android:visibility="@{(viewModel.showCreateAddressField &amp;&amp; viewModel.isDeliveryField) ? View.VISIBLE : View.GONE}"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_ll_address" />
+                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_last_address" />
+
+                            <ImageView
+                                android:id="@+id/fragment_creation_order_iv_create_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/small_margin"
+                                android:contentDescription="Description"
+                                android:src="@drawable/ic_add"
+                                android:visibility="@{(viewModel.showCreateAddressField &amp;&amp; viewModel.isDeliveryField) ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>

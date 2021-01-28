@@ -31,13 +31,24 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom_sheet_address_btn_create_address"
             style="@style/OutLineButton"
+            android:layout_width="0dp"
             android:onClick="@{()->viewModel.createAddressClick()}"
             android:text="@string/action_creation_address_address"
             android:visibility="@{viewModel.isDeliveryField() ? View.VISIBLE : View.GONE}"
-            app:icon="@drawable/ic_add"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_address_rv_result" />
+
+        <ImageView
+            android:id="@+id/fragment_creation_order_iv_create_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_margin"
+            android:contentDescription="Description"
+            android:src="@drawable/ic_add"
+            android:visibility="@{viewModel.isDeliveryField() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_address_btn_create_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_address_btn_create_address" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,9 +28,9 @@ class CreationOrderViewModel @Inject constructor(
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
     val errorMessageLiveData = MutableLiveData<String>()
-    val lastAddressField = ObservableField<String>()
-    val isDeliveryField = ObservableField<Boolean>()
-    val hasAddressesField = ObservableField<Boolean>(false)
+    val lastAddressField = ObservableField("")
+    val isDeliveryField = ObservableField(true)
+    val showCreateAddressField = ObservableField(false)
     var currentDeliveryAddress: Address? = null
     var currentPickUpAddress: Address? = null
 
@@ -45,7 +45,7 @@ class CreationOrderViewModel @Inject constructor(
             dataStoreHelper.selectedDeliveryAddress.collect { address ->
                 if (address.street.isEmpty()) {
                     lastAddressField.set("")
-                    hasAddressesField.set(true)
+                    showCreateAddressField.set(true)
                 } else {
                     currentDeliveryAddress = address
                     lastAddressField.set(
@@ -76,23 +76,20 @@ class CreationOrderViewModel @Inject constructor(
 
     fun createOrder(orderEntity: OrderEntity) {
         viewModelScope.launch {
-            if (isDeliveryField.get() == true) {
-                if (currentDeliveryAddress != null) {
-                    orderEntity.address = currentDeliveryAddress!!
-                } else {
-                    errorMessageLiveData.value =
-                        resourcesProvider.getString(R.string.error_creation_order_address)
-                    return@launch
-                }
+            val address = if (isDeliveryField.get()!!) {
+                currentDeliveryAddress
             } else {
-                if (currentPickUpAddress != null) {
-                    orderEntity.address = currentPickUpAddress!!
-                } else {
-                    errorMessageLiveData.value =
-                        resourcesProvider.getString(R.string.error_creation_order_address)
-                    return@launch
-                }
+                currentPickUpAddress
             }
+            if (address == null) {
+                errorMessageLiveData.value =
+                    resourcesProvider.getString(R.string.error_creation_order_address)
+                return@launch
+            } else {
+                orderEntity.address = address
+            }
+
+            orderEntity.isDelivery = isDeliveryField.get()!!
             orderEntity.code = generateCode()
             val order = Order(orderEntity, cartProductRepo.getCartProductListAsync().await())
 

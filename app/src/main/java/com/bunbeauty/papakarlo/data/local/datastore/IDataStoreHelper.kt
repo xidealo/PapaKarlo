@@ -9,4 +9,6 @@ interface IDataStoreHelper {
 
     val selectedPickupAddress:Flow<Address>
     suspend fun saveSelectedPickupAddress(address: Address)
+
+    suspend fun clearData()
 }

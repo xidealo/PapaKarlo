@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui.creation_order
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
@@ -42,7 +43,6 @@ class CreationOrderFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-        viewModel.isDeliveryField.set(true)
         viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             if (isChecked) {
                 viewModel.isDeliveryField.set(true)
@@ -52,7 +52,10 @@ class CreationOrderFragment :
                 viewModel.getLastPickupAddress()
             }
         }
-        viewDataBinding.fragmentCreationOrderMcvAddress.setOnClickListener {
+        viewDataBinding.fragmentCreationOrderTvLastAddress.setOnClickListener {
+            goToAddresses()
+        }
+        viewDataBinding.fragmentCreationOrderIvAddress.setOnClickListener {
             goToAddresses()
         }
         viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
@@ -96,8 +99,7 @@ class CreationOrderFragment :
         viewModel.createOrder(
             OrderEntity(
                 comment = viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
-                phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
-                isDelivery = viewModel.isDeliveryField.get()!!
+                phone = viewDataBinding.fragmentOrderEtPhone.text.toString()
             )
         )
 
@@ -121,9 +123,7 @@ class CreationOrderFragment :
 
     fun goToAddresses() {
         findNavController().navigate(
-            toAddressesBottomSheet(
-                viewModel.isDeliveryField.get() ?: true
-            )
+            toAddressesBottomSheet(viewModel.isDeliveryField.get()!!)
         )
     }
 }

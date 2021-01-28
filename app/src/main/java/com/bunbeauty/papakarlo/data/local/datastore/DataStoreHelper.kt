@@ -63,6 +63,15 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
         }
     }
 
+    override suspend fun clearData() {
+        selectedDeliveryAddressDataStore.edit {
+            it.clear()
+        }
+        selectedPickupAddressDataStore.edit {
+            it.clear()
+        }
+    }
+
     companion object {
         //ADDRESS
         private const val SELECTED_DELIVERY_ADDRESS_DATA_STORE = "selected delivery address data store"
