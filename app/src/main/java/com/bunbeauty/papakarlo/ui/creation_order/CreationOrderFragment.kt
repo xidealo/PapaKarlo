@@ -52,10 +52,7 @@ class CreationOrderFragment :
                 viewModel.getLastPickupAddress()
             }
         }
-        viewDataBinding.fragmentCreationOrderTvLastAddress.setOnClickListener {
-            goToAddresses()
-        }
-        viewDataBinding.fragmentCreationOrderIvAddress.setOnClickListener {
+        viewDataBinding.fragmentCreationOrderMcvAddressPick.setOnClickListener {
             goToAddresses()
         }
         viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {

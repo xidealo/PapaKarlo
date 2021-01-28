@@ -31,9 +31,10 @@
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_empty_cart"
-            style="@style/MainText"
+            style="@style/CenterText"
             android:text="@string/msg_consumer_cart_empty"
             android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_iv_empty_cart" />
 
