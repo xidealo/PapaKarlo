@@ -30,8 +30,6 @@
             style="@style/MainText"
             android:layout_margin="@dimen/medium_margin"
             android:drawablePadding="@dimen/medium_padding"
-            android:text="@{iStringHelper.toString(address)}"
-            app:drawableLeftCompat="@drawable/ic_address"
-            app:drawableTint="@color/mainTextColor" />
+            android:text="@{iStringHelper.toString(address)}"/>
     </com.google.android.material.card.MaterialCardView>
 </layout>

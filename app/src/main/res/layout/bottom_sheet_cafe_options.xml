@@ -24,6 +24,7 @@
 
             <TextView
                 style="@style/CenterText"
+                android:layout_margin="@dimen/medium_margin"
                 android:drawablePadding="@dimen/medium_padding"
                 android:text="@string/action_call"
                 app:drawableLeftCompat="@drawable/ic_phone"
@@ -44,6 +45,7 @@
 
             <TextView
                 style="@style/CenterText"
+                android:layout_margin="@dimen/medium_margin"
                 android:drawablePadding="@dimen/medium_padding"
                 android:text="@string/action_show_map"
                 app:drawableLeftCompat="@drawable/ic_address"
