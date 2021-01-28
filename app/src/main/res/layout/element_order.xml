@@ -28,39 +28,46 @@
             android:padding="@dimen/small_padding">
 
             <TextView
-                android:id="@+id/element_order_tv_uuid"
-                style="@style/TitleOrderElement"
-                android:text="@{order.orderEntity.codeString()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/element_order_tv_time"
-                style="@style/TimeOrderElement"
+                style="@style/MainText"
                 android:text="@{order.orderEntity.timeHHMM()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/element_order_tv_address"
-                style="@style/AddressOrderElement"
-                android:text="@{order.orderEntity.orderString()}"
+                android:id="@+id/element_order_tv_code"
+                style="@style/MainTitle"
+                android:text="@{order.orderEntity.codeString()}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_uuid" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/element_order_tv_full_price"
-                style="@style/CostOrderElement"
-                android:text="@{order.fullPrice()}"
+                android:id="@+id/element_order_tv_order"
+                style="@style/MainText"
+                android:text="@{iStringHelper.toString(order.orderEntity)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_code" />
+
+            <TextView
+                android:id="@+id/element_order_tv_address"
+                style="@style/MainText"
+                android:text="@{iStringHelper.toString(order.orderEntity.address)}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_order" />
+
+            <TextView
+                android:id="@+id/element_order_tv_structure"
+                style="@style/MainText"
+                android:text="@{iStringHelper.toString(order.cartProducts)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_address" />
 
             <TextView
-                android:id="@+id/element_order_tv_structure"
-                style="@style/CostOrderElement"
-                android:text="@{iStringHelper.toString(order)}"
+                android:id="@+id/element_order_tv_full_price"
+                style="@style/MainText"
+                android:text="@{order.fullPrice()}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_full_price" />
+                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_structure" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

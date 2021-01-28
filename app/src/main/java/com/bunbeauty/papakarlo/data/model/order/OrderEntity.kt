@@ -28,19 +28,8 @@ data class OrderEntity(
 ) : BaseModel(), Parcelable {
 
     fun timeHHMM(): String {
-        val newTime = Time(time, 3)
-        return newTime.toStringTimeHHMM()
+        return Time(time, 3).toStringTimeHHMM()
     }
-
-    fun orderString() =
-        "Доставка на улицу:${address.street}\n" +
-                "Дом:${address.house} " +
-                "Квартира:${address.flat} " +
-                "Подъезд:${address.entrance} " +
-                "Домофон:${address.intercom} " +
-                "Этаж:${address.floor}\n" +
-                "Комментарий:$comment\n" +
-                "Контактный телефон:$phone"
 
     fun codeString() = "Код заказа $code"
 

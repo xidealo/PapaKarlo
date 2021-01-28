@@ -1,10 +1,13 @@
 package com.bunbeauty.papakarlo.utils.string
 
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.papakarlo.data.model.order.OrderEntity
+import java.lang.StringBuilder
 import javax.inject.Inject
 
-class StringHelper @Inject constructor(): IStringHelper {
+class StringHelper @Inject constructor() : IStringHelper {
 
     override fun toString(address: Address): String {
         return checkLastSymbol(
@@ -18,10 +21,10 @@ class StringHelper @Inject constructor(): IStringHelper {
         )
     }
 
-    override fun toString(order: Order): String {
+    override fun toString(cartProducts: List<CartProduct>): String {
         var structure = ""
 
-        for (cartProduct in order.cartProducts)
+        for (cartProduct in cartProducts)
             structure += "${cartProduct.menuProduct.name} ${cartProduct.count}шт.; "
 
         return checkLastSymbol(
@@ -29,6 +32,20 @@ class StringHelper @Inject constructor(): IStringHelper {
             ';'
         )
     }
+
+    override fun toString(orderEntity: OrderEntity): String {
+        val orderString = StringBuilder()
+
+        if (orderEntity.isDelivery)
+            orderString.append("Доставка\n")
+        else
+            orderString.append("Самовывоз\n")
+
+        orderString.append("Телефон: ${orderEntity.phone}\n")
+        orderString.append("Комментарий:${orderEntity.comment}")
+        return orderString.toString()
+    }
+
 
     fun checkLastSymbol(data: String, symbol: Char): String {
         if (data.trim().last() == symbol)

@@ -14,7 +14,6 @@
             name="cafeListViewModel"
             type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
 
-
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -43,6 +42,7 @@
             <TextView
                 android:id="@+id/element_cafe_tv_phone"
                 style="@style/MainText"
+                android:layout_marginTop="@dimen/medium_margin"
                 android:drawablePadding="@dimen/medium_padding"
                 android:text="@{cafe.cafeEntity.phone}"
                 app:drawableLeftCompat="@drawable/ic_phone"
@@ -55,6 +55,7 @@
                 android:id="@+id/element_cafe_tv_work_time"
                 style="@style/MainText"
                 android:drawablePadding="@dimen/medium_padding"
+                android:layout_marginTop="@dimen/medium_margin"
                 android:text="@{cafe.cafeEntity.getWorkingHoursString()}"
                 app:drawableLeftCompat="@drawable/ic_clock"
                 app:drawableTint="@color/mainTextColor"
@@ -67,6 +68,7 @@
                 style="@style/HelpText"
                 android:layout_width="0dp"
                 android:layout_marginStart="@dimen/very_large_margin"
+                android:layout_marginTop="@dimen/small_margin"
                 android:text="@{cafeListViewModel.getIsClosedMessage(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
                 android:textColor="@{cafeListViewModel.getIsClosedColor(cafe.cafeEntity.fromTime, cafe.cafeEntity.toTime, cafeListViewModel.currentTime)}"
                 app:layout_constraintEnd_toEndOf="parent"
