@@ -37,8 +37,9 @@ class CreationAddressViewModel @Inject constructor(
 
     fun creationAddress(address: Address) {
         viewModelScope.launch(Dispatchers.IO) {
-            iDataStoreHelper.saveSelectedDeliveryAddress(address.id)
-            addressRepo.insert(address)
+
+            val addressId = addressRepo.insert(address)
+            iDataStoreHelper.saveSelectedDeliveryAddress(addressId)
             withContext(Dispatchers.Main) {
                 navigator?.get()?.goToCreationOrder()
             }

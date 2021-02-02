@@ -47,6 +47,7 @@ class CreationOrderViewModel @Inject constructor(
 
         viewModelScope.launch {
             dataStoreHelper.selectedDeliveryAddress.collect { addressId ->
+
                 addressRepo.getAddress(addressId).collect {
                     if (it?.street == null) {
                         lastAddressField.set("")

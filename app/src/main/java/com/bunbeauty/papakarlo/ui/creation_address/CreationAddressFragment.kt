@@ -104,9 +104,7 @@ class CreationAddressFragment :
 
         viewModel.creationAddress(
             Address(
-                street = Street(
-                    name = viewDataBinding.fragmentCreationAddressEtStreet.text.toString().trim()
-                ),
+                street  = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString()},
                 house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
                 flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
                 entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),

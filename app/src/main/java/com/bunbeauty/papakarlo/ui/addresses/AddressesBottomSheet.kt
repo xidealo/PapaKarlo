@@ -39,7 +39,7 @@ class AddressesBottomSheet :
     }
 
     override fun goToBack() {
-        dismiss()
+        findNavController().navigateUp()
     }
 
     override fun goToCreationAddress() {
