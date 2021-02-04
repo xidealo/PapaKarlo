@@ -52,11 +52,11 @@
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/fragment_creation_address_et_street"
-                        style="@style/Widget.AppCompat.AutoCompleteTextView"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textCapSentences"
-                        android:padding="@dimen/small_margin"
+                        android:padding="@dimen/medium_padding"
                         bind:setAdapter="@{viewModel.streetNamesFiled}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,7 +81,6 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_creation_address_til_flat"
                     style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
                     android:layout_marginTop="@dimen/small_margin"
                     android:hint="@string/hint_creation_address_flat"
                     app:counterEnabled="true"

@@ -20,25 +20,17 @@
         <item name="android:layout_marginBottom">1dp</item>
     </style>
 
-    <style name="MaterialInputLayout">
+    <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/font_roboto_medium</item>
-        <item name="boxStrokeColor">@color/hintColor</item>
-        <item name="boxBackgroundColor">@color/backgroundComponent</item>
-        <item name="android:textColorHint">@color/hintColor</item>
-        <item name="startIconTint">@color/hintColor</item>
-        <item name="hintTextColor">@color/iconTintColor</item>
-        <item name="counterTextColor">@color/iconTintColor</item>
-        <item name="helperTextTextColor">@color/iconTintColor</item>
     </style>
 
-    <style name="MaterialInput">
+    <style name="MaterialInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:background">@color/backgroundComponent</item>
     </style>
 
     <style name="MaterialAutoCompleteText">

@@ -76,10 +76,9 @@
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/fragment_creation_order_mcv_address_pick"
-                                android:layout_width="match_parent"
+                                app:cardElevation="0dp"                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:clickable="true"
-                                app:cardCornerRadius="0dp"
                                 android:focusable="true"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
