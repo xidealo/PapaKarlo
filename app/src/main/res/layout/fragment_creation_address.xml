@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -42,17 +43,21 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_creation_address_til_street"
                     style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
                     android:hint="@string/hint_creation_address_street"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="50"
+                    app:endIconMode="dropdown_menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_tv_title">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/fragment_creation_address_et_street"
-                        style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        style="@style/Widget.AppCompat.AutoCompleteTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:padding="@dimen/small_margin"
+                        bind:setAdapter="@{viewModel.streetNamesFiled}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

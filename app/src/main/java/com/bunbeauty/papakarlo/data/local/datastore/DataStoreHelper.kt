@@ -15,51 +15,23 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
     private val selectedDeliveryAddressDataStore = context.createDataStore(SELECTED_DELIVERY_ADDRESS_DATA_STORE)
     private val selectedPickupAddressDataStore = context.createDataStore(SELECTED_PICKUP_ADDRESS_DATA_STORE)
 
-    override val selectedDeliveryAddress: Flow<Address> = selectedDeliveryAddressDataStore.data.map {
-        Address(
-            it[ID_KEY] ?: DEFAULT_LONG,
-            it[STREET_KEY] ?: DEFAULT_STRING,
-            it[HOUSE_KEY] ?: DEFAULT_STRING,
-            it[FLAT_KEY] ?: DEFAULT_STRING,
-            it[ENTRANCE_KEY] ?: DEFAULT_STRING,
-            it[INTERCOM_KEY] ?: DEFAULT_STRING,
-            it[FLOOR_KEY] ?: DEFAULT_STRING
-        )
+    override val selectedDeliveryAddress: Flow<Long> = selectedDeliveryAddressDataStore.data.map {
+        it[ID_KEY] ?: DEFAULT_LONG
     }
 
-    override suspend fun saveSelectedDeliveryAddress(address: Address) {
+    override suspend fun saveSelectedDeliveryAddress(addressId: Long) {
         selectedDeliveryAddressDataStore.edit {
-            it[ID_KEY] = address.id
-            it[STREET_KEY] = address.street
-            it[HOUSE_KEY] = address.house
-            it[FLAT_KEY] = address.flat
-            it[ENTRANCE_KEY] = address.entrance
-            it[INTERCOM_KEY] = address.intercom
-            it[FLOOR_KEY] = address.floor
+            it[ID_KEY] = addressId
         }
     }
 
-    override val selectedPickupAddress: Flow<Address> = selectedPickupAddressDataStore.data.map {
-        Address(
-            it[ID_KEY] ?: DEFAULT_LONG,
-            it[STREET_KEY] ?: DEFAULT_STRING,
-            it[HOUSE_KEY] ?: DEFAULT_STRING,
-            it[FLAT_KEY] ?: DEFAULT_STRING,
-            it[ENTRANCE_KEY] ?: DEFAULT_STRING,
-            it[INTERCOM_KEY] ?: DEFAULT_STRING,
-            it[FLOOR_KEY] ?: DEFAULT_STRING
-        )
+    override val selectedPickupAddress: Flow<Long> = selectedPickupAddressDataStore.data.map {
+        it[ID_KEY] ?: DEFAULT_LONG
     }
 
-    override suspend fun saveSelectedPickupAddress(address: Address) {
+    override suspend fun saveSelectedPickupAddress(addressId: Long) {
         selectedPickupAddressDataStore.edit {
-            it[ID_KEY] = address.id
-            it[STREET_KEY] = address.street
-            it[HOUSE_KEY] = address.house
-            it[FLAT_KEY] = address.flat
-            it[ENTRANCE_KEY] = address.entrance
-            it[INTERCOM_KEY] = address.intercom
-            it[FLOOR_KEY] = address.floor
+            it[ID_KEY] = addressId
         }
     }
 
@@ -77,22 +49,7 @@ class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
         private const val SELECTED_DELIVERY_ADDRESS_DATA_STORE = "selected delivery address data store"
         private const val SELECTED_PICKUP_ADDRESS_DATA_STORE = "selected pickup address data store"
         private const val ID_ADDRESS = "id"
-        private const val STREET = "street"
-        private const val HOUSE = "house"
-        private const val FLAT = "flat"
-        private const val ENTRANCE = "entrance"
-        private const val INTERCOM = "intercom"
-        private const val FLOOR = "floor"
         private val ID_KEY = longPreferencesKey(ID_ADDRESS)
-        private val STREET_KEY = stringPreferencesKey(STREET)
-        private val HOUSE_KEY = stringPreferencesKey(HOUSE)
-        private val FLAT_KEY = stringPreferencesKey(FLAT)
-        private val ENTRANCE_KEY = stringPreferencesKey(ENTRANCE)
-        private val INTERCOM_KEY = stringPreferencesKey(INTERCOM)
-        private val FLOOR_KEY = stringPreferencesKey(FLOOR)
-
-        private const val DEFAULT_STRING = ""
-        private const val DEFAULT_DOUBLE = 0.0
         private const val DEFAULT_LONG = 0L
     }
 }

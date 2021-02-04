@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
+import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.order.Order
@@ -14,7 +15,9 @@ import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -23,7 +26,8 @@ class CreationOrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val iStringHelper: IStringHelper
+    private val iStringHelper: IStringHelper,
+    private val addressRepo: AddressRepo
 ) : BaseViewModel() {
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
@@ -42,15 +46,17 @@ class CreationOrderViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            dataStoreHelper.selectedDeliveryAddress.collect { address ->
-                if (address.street.isEmpty()) {
-                    lastAddressField.set("")
-                    showCreateAddressField.set(true)
-                } else {
-                    currentDeliveryAddress = address
-                    lastAddressField.set(
-                        iStringHelper.toString(address)
-                    )
+            dataStoreHelper.selectedDeliveryAddress.collect { addressId ->
+                addressRepo.getAddress(addressId).collect {
+                    if (it?.street == null) {
+                        lastAddressField.set("")
+                        showCreateAddressField.set(true)
+                    } else {
+                        currentDeliveryAddress = it
+                        lastAddressField.set(
+                            iStringHelper.toString(it)
+                        )
+                    }
                 }
             }
         }
@@ -63,12 +69,14 @@ class CreationOrderViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            dataStoreHelper.selectedPickupAddress.collect { address ->
-                if (address.street.isEmpty()) {
-                    lastAddressField.set("")
-                } else {
-                    currentPickUpAddress = address
-                    lastAddressField.set(iStringHelper.toString(address))
+            dataStoreHelper.selectedPickupAddress.collect { addressId ->
+                addressRepo.getAddress(addressId).collect {
+                    if (it?.street == null) {
+                        lastAddressField.set("")
+                    } else {
+                        currentPickUpAddress = it
+                        lastAddressField.set(iStringHelper.toString(it))
+                    }
                 }
             }
         }

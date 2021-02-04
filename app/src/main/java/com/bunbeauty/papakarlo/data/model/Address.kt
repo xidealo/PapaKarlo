@@ -1,8 +1,11 @@
 package com.bunbeauty.papakarlo.data.model
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bunbeauty.papakarlo.data.model.BaseModel
+import com.bunbeauty.papakarlo.data.model.Street
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -10,7 +13,8 @@ import kotlinx.parcelize.Parcelize
 data class Address(
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0,
-    var street: String = "",
+    @Embedded(prefix = "street_")
+    var street: Street? = Street(),
     var house: String = "",
     var flat: String = "",
     var entrance: String = "",

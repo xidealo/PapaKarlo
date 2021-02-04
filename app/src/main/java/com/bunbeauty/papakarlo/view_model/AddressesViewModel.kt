@@ -38,9 +38,9 @@ class AddressesViewModel @Inject constructor(
     fun saveSelectedAddress(address: Address) {
         viewModelScope.launch {
             if (isDeliveryField.get() == true)
-                iDataStoreHelper.saveSelectedDeliveryAddress(address)
+                iDataStoreHelper.saveSelectedDeliveryAddress(address.id)
             else
-                iDataStoreHelper.saveSelectedPickupAddress(address)
+                iDataStoreHelper.saveSelectedPickupAddress(address.id)
 
             navigator?.get()?.goToBack()
         }

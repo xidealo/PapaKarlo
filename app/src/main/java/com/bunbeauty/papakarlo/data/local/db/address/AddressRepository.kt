@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.data.local.db.address
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.model.Address
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AddressRepository @Inject constructor(
@@ -26,5 +27,9 @@ class AddressRepository @Inject constructor(
 
     override fun getNotCafeAddresses(): LiveData<List<Address>> {
         return addressDao.getNotCafeAddresses()
+    }
+
+    override fun getAddress(id: Long): Flow<Address?> {
+        return addressDao.getAddress(id)
     }
 }

@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.utils.string
 
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 interface IStringHelper {

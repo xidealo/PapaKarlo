@@ -1,14 +1,13 @@
 package com.bunbeauty.papakarlo.data.local.datastore
 
-import com.bunbeauty.papakarlo.data.model.Address
 import kotlinx.coroutines.flow.Flow
 
 interface IDataStoreHelper {
-    val selectedDeliveryAddress:Flow<Address>
-    suspend fun saveSelectedDeliveryAddress(address: Address)
+    val selectedDeliveryAddress:Flow<Long>
+    suspend fun saveSelectedDeliveryAddress(addressId: Long)
 
-    val selectedPickupAddress:Flow<Address>
-    suspend fun saveSelectedPickupAddress(address: Address)
+    val selectedPickupAddress:Flow<Long>
+    suspend fun saveSelectedPickupAddress(addressId: Long)
 
     suspend fun clearData()
 }

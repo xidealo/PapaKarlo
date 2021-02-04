@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.Street
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
@@ -29,6 +30,7 @@ class CreationAddressFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_creation_address)
         viewModel.navigator = WeakReference(this)
+        viewModel.getStreets()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -102,7 +104,9 @@ class CreationAddressFragment :
 
         viewModel.creationAddress(
             Address(
-                street = viewDataBinding.fragmentCreationAddressEtStreet.text.toString().trim(),
+                street = Street(
+                    name = viewDataBinding.fragmentCreationAddressEtStreet.text.toString().trim()
+                ),
                 house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
                 flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
                 entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),

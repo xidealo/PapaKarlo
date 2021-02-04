@@ -1,16 +1,19 @@
 package com.bunbeauty.papakarlo.utils
 
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.BaseModel
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.squareup.picasso.Picasso
 
 object DataBinding {
@@ -83,5 +86,18 @@ object DataBinding {
     @BindingAdapter("bind:enabled")
     fun setEnabled(materialCardView: MaterialCardView, isEnabled: Boolean) {
         materialCardView.isEnabled = isEnabled
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:setAdapter")
+    fun setAdapter(autoCompleteTextView: MaterialAutoCompleteTextView, data: List<String>?) {
+        if(data != null){
+            val adapter = ArrayAdapter(
+                autoCompleteTextView.context,
+                R.layout.support_simple_spinner_dropdown_item,
+                data
+            )
+            autoCompleteTextView.setAdapter(adapter)
+        }
     }
 }

@@ -23,7 +23,6 @@
     <style name="MaterialInputLayout">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/small_margin</item>
         <item name="android:fontFamily">@font/font_roboto_medium</item>
         <item name="boxStrokeColor">@color/hintColor</item>
         <item name="boxBackgroundColor">@color/backgroundComponent</item>
@@ -35,6 +34,14 @@
     </style>
 
     <style name="MaterialInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:background">@color/backgroundComponent</item>
+    </style>
+
+    <style name="MaterialAutoCompleteText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:maxLines">1</item>

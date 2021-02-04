@@ -8,12 +8,14 @@ import com.bunbeauty.papakarlo.data.local.converter.ProductCodeConverter
 import com.bunbeauty.papakarlo.data.local.db.address.AddressDao
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeDao
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
+import com.bunbeauty.papakarlo.data.local.db.district.DistrictDao
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductDao
 import com.bunbeauty.papakarlo.data.local.db.order.OrderDao
+import com.bunbeauty.papakarlo.data.local.db.street.StreetDao
+import com.bunbeauty.papakarlo.data.model.*
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.data.model.District
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 @Database(
@@ -22,15 +24,18 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
         MenuProduct::class,
         OrderEntity::class,
         Address::class,
-        CafeEntity::class
-    ], version = 19
+        CafeEntity::class,
+        District::class,
+        Street::class
+    ], version = 28
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
-
     abstract fun getCartProductDao(): CartProductDao
     abstract fun getOrderDao(): OrderDao
     abstract fun getMenuProductDao(): MenuProductDao
     abstract fun getAddressDao(): AddressDao
     abstract fun getCafeDao(): CafeDao
+    abstract fun getDistrictDao(): DistrictDao
+    abstract fun getStreetDao(): StreetDao
 }

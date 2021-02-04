@@ -36,5 +36,4 @@ class MainViewModel @Inject constructor(
             cafeRepo.refreshCafeList()
         }
     }
-
 }

@@ -15,7 +15,7 @@ class DataModule {
     fun provideDatabase(context: Context) = Room.databaseBuilder(
         context,
         LocalDatabase::class.java,
-        "EldDatabase"
+        "PapaKarloDatabase"
     ).fallbackToDestructiveMigration().build()
 
     //DAO
@@ -34,5 +34,11 @@ class DataModule {
 
     @Provides
     fun provideCafeDao(localDatabase: LocalDatabase) = localDatabase.getCafeDao()
+
+    @Provides
+    fun provideDistrictDao(localDatabase: LocalDatabase) = localDatabase.getDistrictDao()
+
+    @Provides
+    fun provideStreetDao(localDatabase: LocalDatabase) = localDatabase.getStreetDao()
 
 }
