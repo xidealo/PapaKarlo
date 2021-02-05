@@ -14,7 +14,11 @@ data class Order(
     var cartProducts: List<CartProduct> = ArrayList(),
 
     @Ignore
-    var timestamp: Map<String, String>? = null,
+    var cafeId: String = "",
+
+    @Ignore
+    var timestamp: Map<String, String>? = null
+
 ) : BaseModel() {
 
     fun fullPrice(): String {

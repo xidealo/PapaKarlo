@@ -19,6 +19,5 @@ data class Address(
     var flat: String = "",
     var entrance: String = "",
     var intercom: String = "",
-    var floor: String = "",
-    var city: String = ""
+    var floor: String = ""
 ) : BaseModel(), Parcelable

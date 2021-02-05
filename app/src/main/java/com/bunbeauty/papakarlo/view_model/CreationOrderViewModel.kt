@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
+import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.order.Order
@@ -15,9 +16,7 @@ import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -27,7 +26,8 @@ class CreationOrderViewModel @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val resourcesProvider: IResourcesProvider,
     private val iStringHelper: IStringHelper,
-    private val addressRepo: AddressRepo
+    private val addressRepo: AddressRepo,
+    private val cafeRepo: CafeRepo
 ) : BaseViewModel() {
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
@@ -100,7 +100,11 @@ class CreationOrderViewModel @Inject constructor(
 
             orderEntity.isDelivery = isDeliveryField.get()!!
             orderEntity.code = generateCode()
-            val order = Order(orderEntity, cartProductRepo.getCartProductListAsync().await())
+            val order = Order(
+                orderEntity,
+                cartProductRepo.getCartProductListAsync().await(),
+                cafeRepo.getCafeEntityByDistrict(orderEntity.address.street?.districtId ?: "ERROR CAFE").await().id
+            )
 
             orderRepo.saveOrder(order)
             navigator?.get()?.goToMain(orderEntity)

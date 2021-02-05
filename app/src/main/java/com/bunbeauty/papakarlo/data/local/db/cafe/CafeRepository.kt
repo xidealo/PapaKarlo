@@ -7,6 +7,7 @@ import com.bunbeauty.papakarlo.data.local.db.district.DistrictRepo
 import com.bunbeauty.papakarlo.data.local.db.street.StreetRepo
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -57,5 +58,11 @@ class CafeRepository @Inject constructor(
 
     override fun getCafeById(cafeId: String): LiveData<Cafe> {
         return cafeDao.getCafeById(cafeId)
+    }
+
+    override suspend fun getCafeEntityByDistrict(districtId: String) = withContext(IO) {
+        async {
+            cafeDao.getCafeEntityByDistrict(districtId)
+        }
     }
 }
