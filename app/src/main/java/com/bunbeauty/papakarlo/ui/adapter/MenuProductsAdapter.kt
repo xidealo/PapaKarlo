@@ -10,10 +10,14 @@ import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import javax.inject.Inject
 
-class MenuProductsAdapter @Inject constructor(private val context: Context) :
+class MenuProductsAdapter @Inject constructor(
+    private val context: Context,
+    private val iStringHelper: IStringHelper
+) :
     BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
     lateinit var productsViewModel: ProductsViewModel
@@ -29,6 +33,7 @@ class MenuProductsAdapter @Inject constructor(private val context: Context) :
     override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
         holder.setListener(itemList[i])
         holder.binding?.context = context
+        holder.binding?.iStringHelper = iStringHelper
         holder.binding?.menuProduct = itemList[i]
     }
 

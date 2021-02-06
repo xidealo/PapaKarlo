@@ -2,6 +2,10 @@ package com.bunbeauty.papakarlo.utils.string
 
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.papakarlo.data.model.Time
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
+import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import java.lang.StringBuilder
 import javax.inject.Inject
@@ -44,6 +48,34 @@ class StringHelper @Inject constructor() : IStringHelper {
         orderString.append("Комментарий:${orderEntity.comment}\n")
         orderString.append("Email:${orderEntity.email}")
         return orderString.toString()
+    }
+
+    override fun toStringCost(menuProduct: MenuProduct): String {
+        return "${menuProduct.cost} ₽"
+    }
+
+    override fun toStringWeight(menuProduct: MenuProduct): String {
+        return "${menuProduct.weight} г."
+    }
+
+    override fun toStringFullPrice(cartProduct: CartProduct): String {
+        return (cartProduct.menuProduct.cost * cartProduct.count).toString() + " ₽"
+    }
+
+    override fun toStringFullPrice(order: Order): String {
+        var fullPrice = 0
+        for (cartProduct in order.cartProducts)
+            fullPrice += cartProduct.count * cartProduct.menuProduct.cost
+
+        return "Стоимость заказа: $fullPrice ₽"
+    }
+
+    override fun toStringTime(orderEntity: OrderEntity): String {
+        return Time(orderEntity.time, 3).toStringTimeHHMM()
+    }
+
+    override fun toStringWorkingHours(cafeEntity: CafeEntity): String {
+        return "${cafeEntity.fromTime} - ${cafeEntity.toTime}"
     }
 
     fun checkLastSymbol(data: String, symbol: Char): String {

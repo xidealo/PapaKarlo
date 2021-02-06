@@ -4,6 +4,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
+import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.utils.live_data.ConnectionLiveData
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val cafeRepo: CafeRepo
-    ) : BaseViewModel() {
+) : BaseViewModel() {
 
     var navigator: WeakReference<MainNavigator>? = null
 
@@ -27,8 +28,12 @@ class MainViewModel @Inject constructor(
 
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->
-            "${productList.sumBy { it.fullPrice() }} ₽\n${productList.sumBy { it.count }} шт."
+            "${productList.sumBy { getFullPrice(it) }} ₽\n${productList.sumBy { it.count }} шт."
         }
+    }
+
+    private fun getFullPrice(cartProduct: CartProduct): Int {
+        return cartProduct.menuProduct.cost * cartProduct.count
     }
 
     fun refreshCafeList() {

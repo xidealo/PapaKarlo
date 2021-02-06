@@ -1,11 +1,9 @@
 package com.bunbeauty.papakarlo.data.model.cafe
 
 import androidx.room.Embedded
-import androidx.room.Ignore
 import androidx.room.Relation
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.District
-import com.bunbeauty.papakarlo.data.model.Street
 
 data class Cafe(
     @Embedded

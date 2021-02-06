@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.CafeListViewModel
 import javax.inject.Inject
 
-class CafeAdapter @Inject constructor() :
+class CafeAdapter @Inject constructor(private val iStringHelper: IStringHelper) :
     ListAdapter<Cafe, CafeAdapter.CafeViewHolder>(CafeDiffUtilCallback()) {
 
     lateinit var cafeListViewModel: CafeListViewModel
@@ -20,6 +21,7 @@ class CafeAdapter @Inject constructor() :
     override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
         holder.binding?.cafe = getItem(position)
         holder.binding?.cafeListViewModel = cafeListViewModel
+        holder.binding?.iStringHelper = iStringHelper
         holder.setCafeClickListener(getItem(position))
         Log.d("test", "onBindViewHolder")
     }

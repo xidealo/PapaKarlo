@@ -21,10 +21,6 @@ data class MenuProduct(
     var productCode: ProductCode = ProductCode.ALL,
     var barcode: Int = 0
 ) : BaseModel(), Parcelable {
-
-    fun costString() = "$cost ₽"
-    fun weightString() = "$weight г."
-
     companion object {
         const val MENU_PRODUCTS: String = "menu_products"
         const val PRODUCTS: String = "products"

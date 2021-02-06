@@ -75,9 +75,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatV7Version"
     implementation "com.android.support:design:$rootProject.designVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
-    androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.3"
 
     testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"

@@ -18,14 +18,4 @@ data class Order(
 
     @Ignore
     var timestamp: Map<String, String>? = null
-
-) : BaseModel() {
-
-    fun fullPrice(): String {
-        var fullPrice = 0
-        for (cartProduct in cartProducts)
-            fullPrice += cartProduct.count * cartProduct.menuProduct.cost
-
-        return "Стоимость заказа: $fullPrice ₽"
-    }
-}
+) : BaseModel()

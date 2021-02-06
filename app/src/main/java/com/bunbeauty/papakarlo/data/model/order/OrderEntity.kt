@@ -27,12 +27,6 @@ data class OrderEntity(
     var email: String = ""
 ) : BaseModel(), Parcelable {
 
-    fun timeHHMM(): String {
-        return Time(time, 3).toStringTimeHHMM()
-    }
-
-    fun codeString() = "Код заказа $code"
-
     companion object {
         const val ORDERS = "ORDERS"
 

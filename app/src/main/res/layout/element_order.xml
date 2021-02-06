@@ -30,14 +30,14 @@
             <TextView
                 android:id="@+id/element_order_tv_time"
                 style="@style/MainText"
-                android:text="@{order.orderEntity.timeHHMM()}"
+                android:text="@{iStringHelper.toStringTime(order.orderEntity)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_order_tv_code"
                 style="@style/MainTitle"
-                android:text="@{order.orderEntity.codeString()}"
+                android:text="@{order.orderEntity.code}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
             <TextView
                 android:id="@+id/element_order_tv_full_price"
                 style="@style/MainText"
-                android:text="@{order.fullPrice()}"
+                android:text="@{iStringHelper.toStringFullPrice(order)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_order_tv_structure" />
 

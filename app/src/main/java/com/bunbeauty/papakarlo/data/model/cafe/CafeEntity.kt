@@ -19,10 +19,6 @@ data class CafeEntity(
     val coordinate: Coordinate = Coordinate()
 ) {
 
-    fun getWorkingHoursString(): String {
-        return "$fromTime - $toTime"
-    }
-
     companion object {
 
         const val START_TIME = "start_time"

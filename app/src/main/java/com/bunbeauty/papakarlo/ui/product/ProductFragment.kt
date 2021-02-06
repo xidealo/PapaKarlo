@@ -11,10 +11,13 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.product.ProductFragmentDirections.toCartFragment
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.ProductViewModel
 import java.lang.ref.WeakReference
+import javax.inject.Inject
 
-class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductViewModel>(), ProductNavigator {
+class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductViewModel>(),
+    ProductNavigator {
 
     override var viewModelVariable: Int = BR.viewModel
     override var layoutId: Int = R.layout.fragment_product
@@ -25,6 +28,9 @@ class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductVie
         viewModelComponent.inject(this)
     }
 
+    @Inject
+    lateinit var iStringHelper: IStringHelper
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val product = ProductFragmentArgs.fromBundle(requireArguments()).menuProduct
         title = product.name
@@ -32,6 +38,7 @@ class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductVie
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.product = product
+        viewDataBinding.iStringHelper = iStringHelper
         viewModel.navigator = WeakReference(this)
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(product)

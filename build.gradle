@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.gms:google-services:4.3.5'
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -37,8 +37,8 @@ ext {
 
     // App dependencies
     viewModelVersion = "2.3.0-beta01"
-    dagger2Version = "2.30.1"
-    corountinesVersion = "1.3.9"
+    dagger2Version = "2.31.1"
+    corountinesVersion = "1.4.1"
 
     retrofitVersion = "2.9.0"
     moshiVersion = "2.4.0"
@@ -51,7 +51,7 @@ ext {
     lifecycleVersion = "2.2.0"
     activityVersion = "1.1.0"
     fragmentVersion = "1.2.5"
-    workManagerVersion = "2.4.0"
+    workManagerVersion = "2.5.0"
     bluetoothManagerVersion = "1.3.9"
     bluetoothVersion = "1.3.9"
     jodaVersion = "2.10.6"
@@ -62,7 +62,7 @@ ext {
     firebaseVersion = "26.1.1"
 
     //design
-    materialDesignVersion = "1.3.0-rc01"
+    materialDesignVersion = "1.3.0"
     recyclerViewVersion = "1.1.0"
     materialSerachVersion = "1.4.0"
     drawVersion = "v0.1"

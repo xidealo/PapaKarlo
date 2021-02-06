@@ -14,6 +14,9 @@
             name="cafeListViewModel"
             type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
 
+        <variable
+            name="iStringHelper"
+            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -54,9 +57,9 @@
             <TextView
                 android:id="@+id/element_cafe_tv_work_time"
                 style="@style/MainText"
-                android:drawablePadding="@dimen/medium_padding"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:text="@{cafe.cafeEntity.getWorkingHoursString()}"
+                android:drawablePadding="@dimen/medium_padding"
+                android:text="@{iStringHelper.toStringWorkingHours(cafe.cafeEntity)}"
                 app:drawableLeftCompat="@drawable/ic_clock"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"

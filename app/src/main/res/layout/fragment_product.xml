@@ -12,6 +12,10 @@
         <variable
             name="product"
             type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
+
+        <variable
+            name="iStringHelper"
+            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,45 +52,45 @@
         <TextView
             android:id="@+id/fragment_product_tv_cost"
             style="@style/CostFragmentProduct"
-            android:text="@{product.costString()}"
             android:layout_marginStart="@dimen/medium_margin"
+            android:text="@{iStringHelper.toStringCost(product)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
         <TextView
             android:id="@+id/fragment_product_tv_gram"
             style="@style/GramFragmentProduct"
-            android:text="@{product.weightString()}"
             android:layout_marginStart="@dimen/medium_margin"
+            android:text="@{iStringHelper.toStringWeight(product)}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost"/>
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />
 
         <ImageView
             android:id="@+id/element_menu_product_iv_on_fire"
             style="@style/Icon"
-            android:src="@drawable/ic_on_fire"
-            android:visibility="@{product.onFire ? View.VISIBLE : View.INVISIBLE}"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
+            android:src="@drawable/ic_on_fire"
+            android:visibility="@{product.onFire ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
 
         <ImageView
             android:id="@+id/element_menu_product_iv_in_oven"
             style="@style/Icon"
-            android:src="@drawable/ic_in_oven"
-            android:visibility="@{product.inOven ? View.VISIBLE : View.INVISIBLE}"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
+            android:src="@drawable/ic_in_oven"
+            android:visibility="@{product.inOven ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram"/>
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
 
         <TextView
             android:id="@+id/fragment_product_tv_description"
             style="@style/DescriptionFragmentProduct"
-            android:text="@{product.description}"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/medium_margin"
+            android:text="@{product.description}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
 

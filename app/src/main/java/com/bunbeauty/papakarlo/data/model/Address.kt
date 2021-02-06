@@ -4,8 +4,6 @@ import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bunbeauty.papakarlo.data.model.BaseModel
-import com.bunbeauty.papakarlo.data.model.Street
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
