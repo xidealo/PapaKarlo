@@ -20,38 +20,31 @@ class CafeRepository @Inject constructor(
     private val streetRepo: StreetRepo
 ) : CafeRepo {
 
-    override val cafeEntityListLiveData = cafeDao.getCafeList()
+    override val cafeEntityListLiveData = cafeDao.getCafeListLiveData()
 
-    override suspend fun refreshCafeList() {
-        withContext(IO) {
-            apiRepository.getCafeList().collect { cafeList ->
-                for (cafe in cafeList) {
-                    val cafeEntity = cafeDao.getCafeEntityById(cafe.cafeEntity.id)
-                    if (cafeEntity == null) {
-                        cafe.districts.map {
-                            it.cafeId = cafe.cafeEntity.id
-                            districtRepo.insert(it)
-                            it.streets.map { street ->
-                                street.districtId = it.id
-                                streetRepo.insert(street)
-                            }
-                        }
-                        cafe.address.street?.districtId = cafe.districts.first().id
-                        val addressId = addressRepo.insert(cafe.address)
-                        cafe.cafeEntity.addressId = addressId
-                        cafeDao.insert(cafe.cafeEntity)
-                    } else {
-                        cafe.districts.map {
-                            it.cafeId = cafeEntity.id
-                            districtRepo.update(it)
-                        }
-                        cafe.address.id = cafeEntity.addressId!!
-                        addressRepo.update(cafe.address)
-                        cafe.cafeEntity.id = cafeEntity.id
-                        cafe.cafeEntity.addressId = cafeEntity.addressId!!
-                        cafeDao.update(cafe.cafeEntity)
-                    }
-                }
+    override suspend fun refreshCafeList() = withContext(IO) {
+        cafeDao.deleteAll()
+
+        apiRepository.getCafeList().collect { cafeList ->
+            for (cafe in cafeList) {
+                saveCafe(cafe)
+            }
+        }
+    }
+
+    suspend fun saveCafe(cafe: Cafe) {
+        cafeDao.insert(cafe.cafeEntity)
+
+        cafe.address.cafeId = cafe.cafeEntity.id
+        addressRepo.insert(cafe.address)
+
+        for (district in cafe.districts) {
+            district.districtEntity.cafeId = cafe.cafeEntity.id
+            districtRepo.insert(district.districtEntity)
+
+            for (street in district.streets) {
+                street.districtId = district.districtEntity.id
+                streetRepo.insert(street)
             }
         }
     }

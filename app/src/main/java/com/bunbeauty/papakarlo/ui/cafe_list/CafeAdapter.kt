@@ -23,13 +23,11 @@ class CafeAdapter @Inject constructor(private val iStringHelper: IStringHelper) 
         holder.binding?.cafeListViewModel = cafeListViewModel
         holder.binding?.iStringHelper = iStringHelper
         holder.setCafeClickListener(getItem(position))
-        Log.d("test", "onBindViewHolder")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ElementCafeBinding.inflate(inflater, parent, false)
-        Log.d("test", "onCreateViewHolder")
 
         return CafeViewHolder(binding.root)
     }

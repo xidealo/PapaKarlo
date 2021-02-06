@@ -11,7 +11,6 @@ import androidx.room.PrimaryKey
 data class CafeEntity(
     @PrimaryKey
     var id: String = "",
-    var addressId: Long? = null,
     val fromTime: String = "",
     val toTime: String = "",
     val phone: String = "",

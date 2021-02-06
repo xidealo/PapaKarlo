@@ -24,9 +24,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_menu_product_mcv_main"
-        style="@style/DefaultMaterialCard"
-        android:clickable="true"
-        android:focusable="true">
+        style="@style/DefaultMaterialCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

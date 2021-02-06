@@ -15,7 +15,7 @@ import com.bunbeauty.papakarlo.data.local.db.street.StreetDao
 import com.bunbeauty.papakarlo.data.model.*
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import com.bunbeauty.papakarlo.data.model.District
+import com.bunbeauty.papakarlo.data.model.DistrictEntity
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 @Database(
@@ -25,9 +25,9 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
         OrderEntity::class,
         Address::class,
         CafeEntity::class,
-        District::class,
+        DistrictEntity::class,
         Street::class
-    ], version = 29
+    ], version = 39
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {

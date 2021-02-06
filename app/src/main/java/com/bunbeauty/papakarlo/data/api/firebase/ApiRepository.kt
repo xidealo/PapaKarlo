@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
+import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
@@ -55,9 +56,7 @@ class ApiRepository @Inject constructor(
         contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val cafeList = snapshot.children.map { cafeSnapshot ->
-                    cafeSnapshot.getValue(Cafe::class.java)!!.apply {
-                        cafeEntity.id = cafeSnapshot.key!!
-                    }
+                    cafeSnapshot.getValue(Cafe::class.java)!!
                 }
                 launch(IO) {
                     cafeListSharedFlow.emit(cafeList)

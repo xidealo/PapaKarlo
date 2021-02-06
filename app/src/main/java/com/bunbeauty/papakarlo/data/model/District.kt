@@ -1,18 +1,13 @@
 package com.bunbeauty.papakarlo.data.model
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
+import androidx.room.Embedded
+import androidx.room.Relation
 
-@Parcelize
-@Entity
 data class District(
-    @PrimaryKey
-    var id: String = "",
-    var name: String = "",
-    var cafeId: String? = null,
-    @Ignore
+    @Embedded
+    val districtEntity: DistrictEntity = DistrictEntity(),
+
+    @Relation(parentColumn = "id", entityColumn = "districtId")
     val streets: List<Street> = arrayListOf()
-): Parcelable
+) {
+}

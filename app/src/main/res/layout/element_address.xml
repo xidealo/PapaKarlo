@@ -22,9 +22,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
-        style="@style/DefaultMaterialCard"
-        android:clickable="true"
-        android:focusable="true">
+        style="@style/DefaultMaterialCard">
 
         <TextView
             style="@style/MainText"

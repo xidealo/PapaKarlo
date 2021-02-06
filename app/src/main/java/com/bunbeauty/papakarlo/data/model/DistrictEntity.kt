@@ -5,21 +5,22 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(
+    indices = [Index("cafeId")],
     foreignKeys = [ForeignKey(
-        entity = DistrictEntity::class,
+        entity = CafeEntity::class,
         parentColumns = ["id"],
-        childColumns = ["districtId"],
+        childColumns = ["cafeId"],
         onDelete = ForeignKey.CASCADE
-    )],
-    indices = [Index("districtId")]
+    )]
 )
-data class Street(
+data class DistrictEntity(
     @PrimaryKey
     var id: String = "",
     var name: String = "",
-    var districtId: String? = null
+    var cafeId: String? = null,
 ) : Parcelable

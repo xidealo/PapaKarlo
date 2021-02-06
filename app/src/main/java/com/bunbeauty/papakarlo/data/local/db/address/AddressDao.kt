@@ -12,10 +12,10 @@ interface AddressDao : BaseDao<Address> {
     @Query("SELECT * FROM Address")
     fun getAddresses(): LiveData<List<Address>>
 
-    @Query("SELECT * FROM Address WHERE NOT EXISTS (SELECT * FROM CafeEntity WHERE Address.id = CafeEntity.addressId)")
+    @Query("SELECT * FROM Address WHERE cafeId IS NULL")
     fun getNotCafeAddresses(): LiveData<List<Address>>
 
-    @Query("SELECT Address.* FROM Address, CafeEntity WHERE Address.id == CafeEntity.addressId")
+    @Query("SELECT * FROM Address WHERE cafeId IS NOT NULL")
     fun getCafeAddresses(): LiveData<List<Address>>
 
     @Query("SELECT * FROM Address WHERE Address.id == :id")

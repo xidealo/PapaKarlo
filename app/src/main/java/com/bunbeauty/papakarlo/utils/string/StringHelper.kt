@@ -14,8 +14,8 @@ class StringHelper @Inject constructor() : IStringHelper {
 
     override fun toString(address: Address): String {
         return checkLastSymbol(
-            "Улица:${address.street?.name ?: "НЕТ"}, " +
-                    "Дом:${address.house}, " +
+            "${address.street?.name ?: "НЕТ"}, " +
+                    "Дом: ${address.house}, " +
                     flatString(address) +
                     entranceString(address) +
                     intercomString(address) +
@@ -45,8 +45,8 @@ class StringHelper @Inject constructor() : IStringHelper {
             orderString.append("Самовывоз\n")
 
         orderString.append("Телефон: ${orderEntity.phone}\n")
-        orderString.append("Комментарий:${orderEntity.comment}\n")
-        orderString.append("Email:${orderEntity.email}")
+        orderString.append("Комментарий: ${orderEntity.comment}\n")
+        orderString.append("Email: ${orderEntity.email}")
         return orderString.toString()
     }
 
@@ -87,28 +87,28 @@ class StringHelper @Inject constructor() : IStringHelper {
 
     fun flatString(address: Address): String {
         return if (address.flat.isNotEmpty())
-            "Квартира:${address.flat}, "
+            "Квартира: ${address.flat}, "
         else
             ""
     }
 
     fun entranceString(address: Address): String {
         return if (address.entrance.isNotEmpty())
-            "Подъезд:${address.entrance}, "
+            "Подъезд: ${address.entrance}, "
         else
             ""
     }
 
     fun intercomString(address: Address): String {
         return if (address.intercom.isNotEmpty())
-            "Домофон:${address.intercom}, "
+            "Домофон: ${address.intercom}, "
         else
             ""
     }
 
     fun floorString(address: Address): String {
         return if (address.floor.isNotEmpty())
-            "Этаж:${address.floor}"
+            "Этаж: ${address.floor}"
         else
             ""
     }

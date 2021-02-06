@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.data.local.db.street
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
 import com.bunbeauty.papakarlo.data.model.Street
 import kotlinx.coroutines.flow.Flow
@@ -10,4 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface StreetDao : BaseDao<Street> {
     @Query("SELECT * FROM Street")
     fun getStreets(): Flow<List<Street>>
+
+    @Transaction
+    @Query("DELETE FROM Street")
+    fun deleteAll()
 }
