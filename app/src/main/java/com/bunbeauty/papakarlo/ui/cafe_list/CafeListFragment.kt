@@ -1,18 +1,14 @@
 package com.bunbeauty.papakarlo.ui.cafe_list
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import com.bunbeauty.papakarlo.utils.contact_info.ICafeHelper
 import com.bunbeauty.papakarlo.utils.uri.IUriHelper
 import com.bunbeauty.papakarlo.view_model.CafeListViewModel
 import java.lang.ref.WeakReference
@@ -25,9 +21,6 @@ class CafeListFragment : TopBarFragment<FragmentCafeListBinding, CafeListViewMod
     override var layoutId: Int = R.layout.fragment_cafe_list
     override var viewModelClass = CafeListViewModel::class.java
     override lateinit var title: String
-
-    @Inject
-    lateinit var cafeHelper: ICafeHelper
 
     @Inject
     lateinit var uriHelper: IUriHelper

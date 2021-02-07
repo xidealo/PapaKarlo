@@ -32,6 +32,10 @@ class AddressRepository @Inject constructor(
         return addressDao.getAddressById(id)
     }
 
+    override fun getAddressByCafeId(cafeId: String): LiveData<Address?> {
+        return addressDao.getAddressByCafeId(cafeId)
+    }
+
     override fun getFirstAddress(): LiveData<Address?> {
         return addressDao.getFirstAddress()
     }

@@ -6,7 +6,7 @@
 
     <color name="black" tools:override="true">#000000</color>
     <color name="white" tools:override="true">#FFFFFF</color>
-    <color name="grey">#93969A</color>
+    <color name="grey">#A6A8AC</color>
 
     <color name="light_green">#44AF49</color>
     <color name="light_red">#FF6B60</color>

@@ -5,51 +5,83 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.createDataStore
-import com.bunbeauty.papakarlo.data.model.Address
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DataStoreHelper @Inject constructor(context: Context) : IDataStoreHelper {
 
-    private val selectedDeliveryAddressDataStore = context.createDataStore(SELECTED_DELIVERY_ADDRESS_DATA_STORE)
-    private val selectedPickupAddressDataStore = context.createDataStore(SELECTED_PICKUP_ADDRESS_DATA_STORE)
+    private val deliveryAddressDataStore = context.createDataStore(DELIVERY_ADDRESS_DATA_STORE)
+    private val cafeDataStore = context.createDataStore(CAFE_DATA_STORE)
+    private val phoneNumberDataStore = context.createDataStore(PHONE_NUMBER_DATA_STORE)
+    private val emailDataStore = context.createDataStore(EMAIL_DATA_STORE)
 
-    override val selectedDeliveryAddress: Flow<Long> = selectedDeliveryAddressDataStore.data.map {
-        it[ID_KEY] ?: DEFAULT_LONG
+    override val deliveryAddressId: Flow<Long> = deliveryAddressDataStore.data.map {
+        it[DELIVERY_ADDRESS_ID_KEY] ?: DEFAULT_LONG
     }
 
-    override suspend fun saveSelectedDeliveryAddress(addressId: Long) {
-        selectedDeliveryAddressDataStore.edit {
-            it[ID_KEY] = addressId
+    override suspend fun saveDeliveryAddressId(addressId: Long) {
+        deliveryAddressDataStore.edit {
+            it[DELIVERY_ADDRESS_ID_KEY] = addressId
         }
     }
 
-    override val selectedPickupAddress: Flow<Long> = selectedPickupAddressDataStore.data.map {
-        it[ID_KEY] ?: DEFAULT_LONG
+    override val cafeId: Flow<String> = cafeDataStore.data.map {
+        it[CAFE_ID_KEY] ?: DEFAULT_STRING
     }
 
-    override suspend fun saveSelectedPickupAddress(addressId: Long) {
-        selectedPickupAddressDataStore.edit {
-            it[ID_KEY] = addressId
+    override suspend fun saveCafeId(cafeId: String) {
+        cafeDataStore.edit {
+            it[CAFE_ID_KEY] = cafeId
+        }
+    }
+
+    override val phoneNumber: Flow<String> = phoneNumberDataStore.data.map {
+        it[PHONE_NUMBER_KEY] ?: DEFAULT_STRING
+    }
+
+    override suspend fun savePhoneNumber(phoneNumber: String) {
+        phoneNumberDataStore.edit {
+            it[PHONE_NUMBER_KEY] = phoneNumber
+        }
+    }
+
+    override val email: Flow<String> = emailDataStore.data.map {
+        it[EMAIL_KEY] ?: DEFAULT_STRING
+    }
+
+    override suspend fun saveEmail(email: String) {
+        emailDataStore.edit {
+            it[EMAIL_KEY] = email
         }
     }
 
     override suspend fun clearData() {
-        selectedDeliveryAddressDataStore.edit {
+        deliveryAddressDataStore.edit {
             it.clear()
         }
-        selectedPickupAddressDataStore.edit {
+        cafeDataStore.edit {
             it.clear()
         }
     }
 
     companion object {
-        //ADDRESS
-        private const val SELECTED_DELIVERY_ADDRESS_DATA_STORE = "selected delivery address data store"
-        private const val SELECTED_PICKUP_ADDRESS_DATA_STORE = "selected pickup address data store"
-        private const val ID_ADDRESS = "id"
-        private val ID_KEY = longPreferencesKey(ID_ADDRESS)
+        private const val DELIVERY_ADDRESS_DATA_STORE = "delivery address data store"
+        private const val CAFE_DATA_STORE = "cafe id data store"
+        private const val PHONE_NUMBER_DATA_STORE = "phone number data store"
+        private const val EMAIL_DATA_STORE = "email data store"
+
+        private const val DELIVERY_ADDRESS_ID = "delivery address id"
+        private const val CAFE_ID = "cafe id"
+        private const val PHONE_NUMBER = "phone number"
+        private const val EMAIL = "email"
+
+        private val DELIVERY_ADDRESS_ID_KEY = longPreferencesKey(DELIVERY_ADDRESS_ID)
+        private val CAFE_ID_KEY = stringPreferencesKey(CAFE_ID)
+        private val PHONE_NUMBER_KEY = stringPreferencesKey(PHONE_NUMBER)
+        private val EMAIL_KEY = stringPreferencesKey(EMAIL)
+
         private const val DEFAULT_LONG = 0L
+        private const val DEFAULT_STRING = ""
     }
 }

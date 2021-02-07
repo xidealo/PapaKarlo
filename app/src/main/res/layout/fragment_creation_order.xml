@@ -157,6 +157,7 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_phone"
+                            android:layout_marginTop="@dimen/small_margin"
                             style="@style/MaterialInputLayout"
                             android:hint="@string/title_creation_order_phone"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -173,6 +174,7 @@
                             android:id="@+id/fragment_creation_order_til_email"
                             style="@style/MaterialInputLayout"
                             android:hint="@string/title_creation_order_email"
+                            android:layout_marginTop="@dimen/small_margin"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
@@ -207,6 +209,7 @@
                             android:id="@+id/fragment_creation_order_til_comment"
                             style="@style/MaterialInputLayout"
                             android:hint="@string/hint_creation_order_extra_comment"
+                            android:layout_marginTop="@dimen/small_margin"
                             app:counterEnabled="true"
                             app:counterMaxLength="100"
                             app:layout_constraintEnd_toEndOf="parent"

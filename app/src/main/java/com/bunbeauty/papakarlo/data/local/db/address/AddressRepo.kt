@@ -10,5 +10,6 @@ interface AddressRepo {
     fun getCafeAddresses(): LiveData<List<Address>>
     fun getNotCafeAddresses(): LiveData<List<Address>>
     fun getAddressById(id: Long): LiveData<Address?>
+    fun getAddressByCafeId(cafeId: String): LiveData<Address?>
     fun getFirstAddress(): LiveData<Address?>
 }

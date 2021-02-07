@@ -23,6 +23,7 @@
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColorHint">@color/grey</item>
         <item name="android:fontFamily">@font/font_roboto_medium</item>
     </style>
 
@@ -127,7 +128,6 @@
         <item name="itemIconSize">24dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="labelVisibilityMode">unlabeled</item>
         <item name="menu">@menu/bottom_navigation_menu</item>
     </style>
 

@@ -3,7 +3,7 @@
     <item
         android:id="@+id/cafe_list_fragment"
         android:icon="@drawable/ic_address"
-        android:title="@string/title_bottom_navigation_menu_contacts" />
+        android:title="@string/title_bottom_navigation_menu_cafe_list" />
     <item
         android:id="@+id/menu_fragment"
         android:icon="@drawable/ic_menu"

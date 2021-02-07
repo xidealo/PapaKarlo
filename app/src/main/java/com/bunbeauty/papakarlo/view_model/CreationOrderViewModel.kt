@@ -16,15 +16,17 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class CreationOrderViewModel @Inject constructor(
-    private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper,
     private val resourcesProvider: IResourcesProvider,
+    private val orderRepo: OrderRepo,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
 ) : BaseViewModel() {
@@ -36,7 +38,7 @@ class CreationOrderViewModel @Inject constructor(
 
     val isDeliveryLiveData = MutableLiveData(true)
     private val deliveryAddressLiveData: LiveData<Address?> by lazy {
-        switchMap(dataStoreHelper.selectedDeliveryAddress.asLiveData()) { addressId ->
+        switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
             switchMap(addressRepo.getAddressById(addressId)) { address ->
                 map(addressRepo.getAddressById(addressId)) { firstAddress ->
                     val deliveryAddress = address ?: firstAddress
@@ -47,8 +49,8 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
     private val pickupAddressLiveData: LiveData<Address?> by lazy {
-        switchMap(dataStoreHelper.selectedPickupAddress.asLiveData()) { addressId ->
-            addressRepo.getAddressById(addressId)
+        switchMap(dataStoreHelper.cafeId.asLiveData()) { addressId ->
+            addressRepo.getAddressByCafeId(addressId)
         }
     }
     val addressLiveData: LiveData<Address?> by lazy {
@@ -60,6 +62,16 @@ class CreationOrderViewModel @Inject constructor(
                 hasAddressField.set(true)
                 pickupAddressLiveData
             }
+        }
+    }
+    val phoneNumber by lazy {
+        runBlocking {
+            dataStoreHelper.phoneNumber.first()
+        }
+    }
+    val email by lazy {
+        runBlocking {
+            dataStoreHelper.email.first()
         }
     }
 
@@ -78,10 +90,17 @@ class CreationOrderViewModel @Inject constructor(
             val order = Order(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
-                cafeRepo.getCafeEntityByDistrict(orderEntity.address.street?.districtId ?: "ERROR CAFE").id
+                cafeRepo.getCafeEntityByDistrict(
+                    orderEntity.address.street?.districtId ?: "ERROR CAFE"
+                ).id
             )
 
+            dataStoreHelper.savePhoneNumber(orderEntity.phone)
+            if (orderEntity.email.isNotEmpty()) {
+                dataStoreHelper.saveEmail(orderEntity.email)
+            }
             orderRepo.saveOrder(order)
+
             navigator?.get()?.goToMain(orderEntity)
         }
     }
