@@ -18,4 +18,5 @@ data class Order(
 
     @Ignore
     var timestamp: Map<String, String>? = null
+
 ) : BaseModel()

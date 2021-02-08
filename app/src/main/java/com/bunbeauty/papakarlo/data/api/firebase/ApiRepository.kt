@@ -41,6 +41,7 @@ class ApiRepository @Inject constructor(
         val orderReference = firebaseInstance
             .getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
+            .child(order.cafeId)
             .child(orderUuid)
         orderReference.setValue(order)
     }

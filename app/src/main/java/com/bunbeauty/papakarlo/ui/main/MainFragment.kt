@@ -27,15 +27,13 @@ class MainFragment: CartClickableFragment<FragmentMainBinding, MainViewModel>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = ""
-
         super.onViewCreated(view, savedInstanceState)
 
         NavigationUI.setupWithNavController(
             viewDataBinding.fragmentMainBnvNavigationBar,
             (childFragmentManager.findFragmentById(R.id.fragment_main_fcv_container) as NavHostFragment).findNavController()
         )
-        viewDataBinding.fragmentMainBnvNavigationBar.setOnNavigationItemReselectedListener {
-        }
+        viewDataBinding.fragmentMainBnvNavigationBar.setOnNavigationItemReselectedListener {}
     }
 
     override fun goToCart(view: View) {

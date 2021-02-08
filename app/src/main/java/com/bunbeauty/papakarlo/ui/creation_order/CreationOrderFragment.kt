@@ -104,7 +104,7 @@ class CreationOrderFragment :
 
         val inputMethodManager =
             requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus!!.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
 
     override fun goToMain(orderEntity: OrderEntity) {
