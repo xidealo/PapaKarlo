@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.Street
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
@@ -38,7 +39,7 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
                 viewDataBinding.fragmentCreationAddressEtStreet.text.toString(),
                 true,
                 50
-            )
+            ) || viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() } == null
         ) {
             viewDataBinding.fragmentCreationAddressEtStreet.error =
                 resources.getString(R.string.error_creation_address_street)
@@ -103,7 +104,7 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
 
         viewModel.creationAddress(
             Address(
-                street  = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString()},
+                street = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() },
                 house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
                 flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
                 entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),
