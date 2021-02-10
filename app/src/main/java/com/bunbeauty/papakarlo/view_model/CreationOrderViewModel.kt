@@ -16,9 +16,11 @@ import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -101,7 +103,9 @@ class CreationOrderViewModel @Inject constructor(
             }
             orderRepo.saveOrder(order)
 
-            navigator?.get()?.goToMain(orderEntity)
+            withContext(Main) {
+                navigator?.get()?.goToMain(orderEntity)
+            }
         }
     }
 
