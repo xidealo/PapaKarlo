@@ -56,6 +56,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/large_margin"
+                                android:buttonTint="@color/colorPrimary"
                                 android:checked="true"
                                 android:text="@string/title_creation_order_delivery" />
 
@@ -63,6 +64,7 @@
                                 android:id="@+id/fragment_creation_order_rb_pickup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorPrimary"
                                 android:text="@string/title_creation_order_pickup" />
                         </RadioGroup>
 
@@ -109,32 +111,32 @@
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_tv_last_address" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
-                            </com.google.android.material.card.MaterialCardView>
+                        </com.google.android.material.card.MaterialCardView>
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/fragment_creation_order_btn_create_address"
-                                style="@style/OutLineButton"
-                                android:layout_width="0dp"
-                                android:onClick="@{()->viewModel.onAddAddressClick()}"
-                                android:text="@string/action_creation_address_address"
-                                android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address_pick" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/fragment_creation_order_btn_create_address"
+                            style="@style/OutLineButton"
+                            android:layout_width="0dp"
+                            android:onClick="@{()->viewModel.onAddAddressClick()}"
+                            android:text="@string/action_creation_address_address"
+                            android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address_pick" />
 
-                            <ImageView
-                                android:id="@+id/fragment_creation_order_iv_create_address"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="@dimen/small_margin"
-                                android:contentDescription="Description"
-                                android:src="@drawable/ic_add"
-                                android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
-                                app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />
+                        <ImageView
+                            android:id="@+id/fragment_creation_order_iv_create_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/small_margin"
+                            android:contentDescription="Description"
+                            android:src="@drawable/ic_add"
+                            android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
+                            app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />
 
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -157,8 +159,8 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_phone"
-                            android:layout_marginTop="@dimen/small_margin"
                             style="@style/MaterialInputLayout"
+                            android:layout_marginTop="@dimen/small_margin"
                             android:hint="@string/title_creation_order_phone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -173,8 +175,8 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_email"
                             style="@style/MaterialInputLayout"
-                            android:hint="@string/title_creation_order_email"
                             android:layout_marginTop="@dimen/small_margin"
+                            android:hint="@string/title_creation_order_email"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
@@ -208,8 +210,8 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_comment"
                             style="@style/MaterialInputLayout"
-                            android:hint="@string/hint_creation_order_extra_comment"
                             android:layout_marginTop="@dimen/small_margin"
+                            android:hint="@string/hint_creation_order_extra_comment"
                             app:counterEnabled="true"
                             app:counterMaxLength="100"
                             app:layout_constraintEnd_toEndOf="parent"

@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.setViewVisibility
-import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
