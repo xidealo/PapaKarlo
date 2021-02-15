@@ -89,11 +89,12 @@ class UserAddressRepository @Inject constructor(
             .mapFlow(userAddressMapper::toModel)
     }
 
-    override fun observeUserAddressList(): Flow<List<UserAddress>> {
-        val userUuid = authRepo.firebaseUserUuid ?: ""
-        return dataStoreRepo.selectedCityUuid.flatMapLatest { cityUuid ->
-            userAddressDao.observeUserAddressListByUserAndCityUuid(userUuid, cityUuid ?: "")
-        }.mapListFlow(userAddressMapper::toModel)
+    override fun observeUserAddressListByUserUuidAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<List<UserAddress>> {
+        return userAddressDao.observeUserAddressListByUserAndCityUuid(userUuid, cityUuid)
+            .mapListFlow(userAddressMapper::toModel)
     }
 
     override fun observeUnassignedUserAddressList(): Flow<List<UserAddress>> {

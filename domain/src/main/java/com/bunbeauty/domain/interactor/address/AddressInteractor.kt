@@ -7,6 +7,8 @@ import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 class AddressInteractor @Inject constructor(
@@ -44,5 +46,16 @@ class AddressInteractor @Inject constructor(
         userAddressRepo.saveSelectedUserAddress(userAddress.userUuid)
 
         return userAddress
+    }
+
+    override fun observeAddressList(): Flow<List<UserAddress>> {
+        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            dataStoreRepo.selectedCityUuid.flatMapLatest { cityUuid ->
+                userAddressRepo.observeUserAddressListByUserUuidAndCityUuid(
+                    userUuid ?: "",
+                    cityUuid ?: ""
+                )
+            }
+        }
     }
 }

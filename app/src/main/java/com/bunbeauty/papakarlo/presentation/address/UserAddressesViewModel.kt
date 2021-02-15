@@ -1,18 +1,18 @@
 package com.bunbeauty.papakarlo.presentation.address
 
-import androidx.lifecycle.viewModelScope
+import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.presentation.item.AddressItem
 import com.bunbeauty.presentation.util.string.IStringUtil
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class UserAddressesViewModel @Inject constructor(
-    @Api private val userAddressRepo: UserAddressRepo,
+    private val addressInteractor: IAddressInteractor,
     private val stringUtil: IStringUtil,
 ) : BaseViewModel() {
 
@@ -21,19 +21,19 @@ class UserAddressesViewModel @Inject constructor(
     val userAddressList: StateFlow<List<AddressItem>> = mutableUserAddressList.asStateFlow()
 
     init {
-        subscribeOnUserAddressList()
+        observeUserAddressList()
     }
 
     fun onCreateAddressClicked() {
         router.navigate(toCreationAddressFragment())
     }
 
-    private fun subscribeOnUserAddressList() {
-        userAddressRepo.observeUserAddressList().onEach { userAddressList ->
+    private fun observeUserAddressList() {
+        addressInteractor.observeAddressList().launchOnEach { userAddressList ->
             mutableUserAddressList.value = userAddressList.map { userAddress ->
                 userAddress.toItem()
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
     private fun UserAddress.toItem(): AddressItem {

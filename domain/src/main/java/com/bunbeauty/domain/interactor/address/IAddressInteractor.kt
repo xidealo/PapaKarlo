@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.interactor.address
 
 import com.bunbeauty.domain.model.address.UserAddress
+import kotlinx.coroutines.flow.Flow
 
 interface IAddressInteractor {
 
@@ -12,4 +13,6 @@ interface IAddressInteractor {
         comment: String,
         floor: String
     ): UserAddress?
+
+    fun observeAddressList(): Flow<List<UserAddress>>
 }

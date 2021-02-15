@@ -231,7 +231,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         UserAddressesViewModel(
-            userAddressRepo = get(),
+            addressInteractor = get(),
             stringUtil = get()
         )
     }

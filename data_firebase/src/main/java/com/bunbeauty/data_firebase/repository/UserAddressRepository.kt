@@ -67,12 +67,11 @@ class UserAddressRepository @Inject constructor(
             }.flowOn(Default)
     }
 
-    override fun observeUserAddressList(): Flow<List<UserAddress>> {
-        return userAddressDao.observeListByUserUuid("")
-            .flowOn(IO)
-            .map { userAddressList ->
-                userAddressList.map(userAddressMapper::toUIModel)
-            }.flowOn(Default)
+    override fun observeUserAddressListByUserUuidAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<List<UserAddress>> {
+        return flow { }
     }
 
     override fun observeUnassignedUserAddressList(): Flow<List<UserAddress>> {

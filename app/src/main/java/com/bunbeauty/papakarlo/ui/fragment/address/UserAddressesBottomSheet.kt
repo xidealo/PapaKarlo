@@ -37,7 +37,7 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
-            bottomSheetUserAddressesIvCreateAddress.setOnClickListener {
+            bottomSheetUserAddressesBtnCreateAddress.setOnClickListener {
                 viewModel.onCreateAddressClicked()
             }
             viewModel.userAddressList.onEach { userAddressList ->

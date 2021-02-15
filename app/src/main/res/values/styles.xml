@@ -104,9 +104,18 @@
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="MyShapeAppearance">
+    <style name="FAButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+        <item name="shapeAppearanceOverlay">@style/SquareShape</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+        <item name="fabSize">mini</item>
+    </style>
+
+    <style name="SquareShape">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">32dp</item>
+        <item name="cornerSize">@dimen/medium_radius</item>
     </style>
 
     <!-- BOTTOM BAR -->
