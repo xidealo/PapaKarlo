@@ -1,5 +1,6 @@
 package com.example.data_api.mapper
 
+import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_api.mapper.IStreetMapper
 import com.example.domain_api.mapper.IUserAddressMapper
@@ -73,7 +74,7 @@ class UserAddressMapper @Inject constructor(
             entrance = userAddress.entrance,
             floor = userAddress.floor,
             comment = userAddress.comment,
-            userUuid = userAddress.userUuid ?: "-"
+            userUuid = userAddress.userUuid
         )
     }
 
@@ -86,33 +87,43 @@ class UserAddressMapper @Inject constructor(
             entrance = userAddress.entrance,
             floor = userAddress.floor,
             comment = userAddress.comment,
-            userUuid = userAddress.userUuid ?: "-"
+            userUuid = userAddress.userUuid
         )
     }
 
     override fun toPostServerModel(userAddress: UserAddressEntity): UserAddressPostServer {
         return UserAddressPostServer(
-            uuid = userAddress.uuid,
             streetUuid = userAddress.street.uuid,
             house = userAddress.house,
             flat = userAddress.flat,
             entrance = userAddress.entrance,
             floor = userAddress.floor,
             comment = userAddress.comment,
-            userUuid = userAddress.userUuid ?: "-"
+            isVisible = true
         )
     }
 
     override fun toPostServerModel(userAddress: UserAddress): UserAddressPostServer {
         return UserAddressPostServer(
-            uuid = userAddress.uuid,
             streetUuid = userAddress.street.uuid,
             house = userAddress.house,
             flat = userAddress.flat,
             entrance = userAddress.entrance,
             floor = userAddress.floor,
             comment = userAddress.comment,
-            userUuid = userAddress.userUuid ?: "-"
+            isVisible = true
+        )
+    }
+
+    override fun toPostServerModel(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
+        return UserAddressPostServer(
+            house = createdUserAddress.house,
+            flat = createdUserAddress.flat,
+            entrance = createdUserAddress.entrance,
+            floor = createdUserAddress.floor,
+            comment = createdUserAddress.comment,
+            streetUuid = createdUserAddress.streetUuid,
+            isVisible = createdUserAddress.isVisible,
         )
     }
 }

@@ -16,5 +16,5 @@ data class UserAddressEntity(
     val entrance: String?,
     val floor: String?,
     val comment: String?,
-    val userUuid: String?,
+    val userUuid: String,
 )

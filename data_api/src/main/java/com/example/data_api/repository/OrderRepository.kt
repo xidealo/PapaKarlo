@@ -1,5 +1,7 @@
 package com.example.data_api.repository
 
+import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.repo.Api
@@ -7,8 +9,6 @@ import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.data_api.dao.OrderDao
-import com.example.data_api.mapFlow
-import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow

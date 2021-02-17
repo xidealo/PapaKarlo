@@ -1,6 +1,8 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.CAFE_TAG
+import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.repo.AuthRepo
@@ -8,8 +10,6 @@ import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.example.data_api.dao.CafeDao
 import com.example.data_api.handleListResult
-import com.example.data_api.mapFlow
-import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.ICafeMapper
 import com.example.domain_api.model.entity.cafe.SelectedCafeUuidEntity
 import com.example.domain_api.repo.ApiRepo

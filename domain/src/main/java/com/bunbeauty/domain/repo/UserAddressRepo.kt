@@ -1,13 +1,13 @@
 package com.bunbeauty.domain.repo
 
+import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import kotlinx.coroutines.flow.Flow
 
 interface UserAddressRepo {
 
-    suspend fun saveUserAddress(userAddress: UserAddress): UserAddress
+    suspend fun saveUserAddress(token: String, createdUserAddress: CreatedUserAddress): UserAddress?
     suspend fun saveSelectedUserAddress(userAddressUuid: String)
-    suspend fun assignToUser(userUuid: String)
 
     suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress?
     suspend fun getUserAddressList(): List<UserAddress>

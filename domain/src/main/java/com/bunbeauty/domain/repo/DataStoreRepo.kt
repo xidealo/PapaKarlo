@@ -9,21 +9,14 @@ interface DataStoreRepo {
     suspend fun saveToken(token: String)
     suspend fun clearToken()
 
-    val userAddressUuid: Flow<String?>
-    suspend fun saveUserAddressUuid(addressId: String)
-    suspend fun clearUserAddressUuid()
-
-    val cafeAddressUuid: Flow<String?>
-    suspend fun saveCafeAddressUuid(addressId: String)
-
-    val delivery: Flow<Delivery>
-    suspend fun getDelivery(): Delivery
-    suspend fun saveDelivery(delivery: Delivery)
-
     val userUuid: Flow<String?>
     suspend fun getUserUuid(): String?
     suspend fun saveUserUuid(userId: String)
     suspend fun clearUserUuid()
+
+    val delivery: Flow<Delivery>
+    suspend fun getDelivery(): Delivery
+    suspend fun saveDelivery(delivery: Delivery)
 
     val deferredTime: Flow<String?>
     suspend fun saveDeferredTime(deferredTime: String)
@@ -31,6 +24,4 @@ interface DataStoreRepo {
     val selectedCityUuid: Flow<String?>
     suspend fun saveSelectedCityUuid(cityUuid: String)
     suspend fun getSelectedCityUuid(): String?
-
-    suspend fun clearData()
 }

@@ -2,6 +2,7 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Logger.USER_TAG
+import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
@@ -9,7 +10,6 @@ import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserDao
 import com.example.data_api.handleResult
 import com.example.data_api.handleResultAndReturn
-import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IProfileMapper
 import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.server.login.LoginPostServer

@@ -97,11 +97,15 @@ class ApiRepository @Inject constructor(
         )
     }
 
-    override suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<AddressServer> {
-        return postData(
+    override suspend fun postUserAddress(
+        token: String,
+        userAddress: UserAddressPostServer
+    ): ApiResult<AddressServer> {
+        return postDataWithAuth(
             path = "address",
             postBody = userAddress,
-            serializer = AddressServer.serializer()
+            serializer = AddressServer.serializer(),
+            token = token
         )
     }
 
@@ -141,7 +145,6 @@ class ApiRepository @Inject constructor(
             parameters = parameters,
             headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
         )
-
     }
 
     suspend fun <T : Any> getData(
@@ -174,11 +177,28 @@ class ApiRepository @Inject constructor(
         }
     }
 
+    suspend fun <T : Any, R> postDataWithAuth(
+        path: String,
+        postBody: T,
+        serializer: KSerializer<R>,
+        parameters: Map<String, String> = mapOf(),
+        token: String
+    ): ApiResult<R> {
+        return postData(
+            path = path,
+            postBody = postBody,
+            serializer = serializer,
+            parameters = parameters,
+            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
+        )
+    }
+
     suspend fun <T : Any, R> postData(
         path: String,
         postBody: T,
         serializer: KSerializer<R>,
-        parameters: Map<String, String> = mapOf()
+        parameters: Map<String, String> = mapOf(),
+        headers: Map<String, String> = mapOf(),
     ): ApiResult<R> {
         return try {
             ApiResult.Success(
@@ -191,6 +211,9 @@ class ApiRepository @Inject constructor(
                         }
                         parameters.forEach { parameterMap ->
                             parameter(parameterMap.key, parameterMap.value)
+                        }
+                        headers.forEach { headerEntry ->
+                            header(headerEntry.key, headerEntry.value)
                         }
                     }.execute().readText()
                 )

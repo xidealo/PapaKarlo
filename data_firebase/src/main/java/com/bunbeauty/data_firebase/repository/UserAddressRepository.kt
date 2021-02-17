@@ -1,6 +1,7 @@
 package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.UserAddressDao
+import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
@@ -9,7 +10,6 @@ import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserAddressRepository @Inject constructor(
@@ -19,22 +19,26 @@ class UserAddressRepository @Inject constructor(
     private val userAddressMapper: IUserAddressMapper,
 ) : UserAddressRepo {
 
-    override suspend fun saveUserAddress(userAddress: UserAddress): UserAddress {
-        val userUuid = userAddress.userUuid
-        if (userUuid == null) {
-            val userAddressEntity = userAddressMapper.toEntityModel(userAddress)
-            userAddressDao.insert(userAddressEntity)
-        } else {
-            val userAddressFirebase = userAddressMapper.toFirebaseModel(userAddress)
-            val firebaseUuid = withContext(IO) {
-                firebaseRepo.postUserAddress(userAddressFirebase, userUuid)
-            }
-            val userAddressWithUuid = userAddress.copy(uuid = firebaseUuid)
-            val userAddressEntity = userAddressMapper.toEntityModel(userAddressWithUuid)
-            userAddressDao.insert(userAddressEntity)
-        }
-
-        return userAddress
+    override suspend fun saveUserAddress(
+        token: String,
+        createdUserAddress: CreatedUserAddress
+    ): UserAddress {
+        return Any() as UserAddress
+//        val userUuid = createdUserAddress.userUuid
+//        if (userUuid == null) {
+//            val userAddressEntity = userAddressMapper.toEntityModel(createdUserAddress)
+//            userAddressDao.insert(userAddressEntity)
+//        } else {
+//            val userAddressFirebase = userAddressMapper.toFirebaseModel(createdUserAddress)
+//            val firebaseUuid = withContext(IO) {
+//                firebaseRepo.postUserAddress(userAddressFirebase, userUuid)
+//            }
+//            val userAddressWithUuid = createdUserAddress.copy(uuid = firebaseUuid)
+//            val userAddressEntity = userAddressMapper.toEntityModel(userAddressWithUuid)
+//            userAddressDao.insert(userAddressEntity)
+//        }
+//
+//        return createdUserAddress
     }
 
     override suspend fun saveSelectedUserAddress(userAddressUuid: String) {
@@ -51,24 +55,6 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun getUserAddressList(): List<UserAddress> {
         return emptyList()
-    }
-
-    override suspend fun assignToUser(userUuid: String) {
-        withContext(IO) {
-            val savedUserAddressUuid = dataStoreRepo.userAddressUuid.firstOrNull()
-            val unassignedUserAddressList = userAddressDao.getUnassignedList()
-            unassignedUserAddressList.forEach { userAddressWithStreet ->
-                val userAddressFirebase = userAddressMapper.toFirebaseModel(userAddressWithStreet)
-                val firebaseUuid = firebaseRepo.postUserAddress(userAddressFirebase, userUuid)
-                val userAddressWithFirebaseUuid =
-                    userAddressWithStreet.userAddress.copy(uuid = firebaseUuid)
-                userAddressDao.delete(userAddressWithStreet.userAddress)
-                userAddressDao.insert(userAddressWithFirebaseUuid)
-                if (savedUserAddressUuid == userAddressWithStreet.userAddress.uuid) {
-                    dataStoreRepo.saveUserAddressUuid(firebaseUuid)
-                }
-            }
-        }
     }
 
     override fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?> {

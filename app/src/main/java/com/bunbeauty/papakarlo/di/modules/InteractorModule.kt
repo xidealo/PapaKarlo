@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.di.modules
 
+import com.bunbeauty.domain.interactor.address.AddressInteractor
+import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.cafe.CafeInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.interactor.cart.CartProductInteractor
@@ -10,6 +12,8 @@ import com.bunbeauty.domain.interactor.main.IMainInteractor
 import com.bunbeauty.domain.interactor.main.MainInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.order.OrderInteractor
+import com.bunbeauty.domain.interactor.street.IStreetInteractor
+import com.bunbeauty.domain.interactor.street.StreetInteractor
 import com.bunbeauty.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
@@ -42,6 +46,12 @@ interface InteractorModule {
 
     @Binds
     fun bindsOrderInteractor(orderInteractor: OrderInteractor): IOrderInteractor
+
+    @Binds
+    fun bindsStreetInteractor(streetInteractor: StreetInteractor): IStreetInteractor
+
+    @Binds
+    fun bindsAddressInteractor(addressInteractor: AddressInteractor): IAddressInteractor
 }
 
 fun interactorModule() = module {
@@ -85,4 +95,18 @@ fun interactorModule() = module {
     } bind ICafeInteractor::class
     single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
     single<IOrderInteractor> { OrderInteractor() }
+    single<IAddressInteractor> {
+        AddressInteractor(
+            dataStoreRepo = get(),
+            streetRepo = get(),
+            userAddressRepo = get(),
+            userInteractor = get(),
+        )
+    }
+    single<IStreetInteractor> {
+        StreetInteractor(
+            streetRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
 }

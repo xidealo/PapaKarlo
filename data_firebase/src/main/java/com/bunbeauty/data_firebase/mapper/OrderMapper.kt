@@ -110,7 +110,7 @@ class OrderMapper @Inject constructor(
                 entrance = order.order.userAddressEntrance,
                 floor = order.order.userAddressFloor,
                 comment = order.order.userAddressComment,
-                userUuid = order.order.userAddressComment
+                userUuid = order.order.userAddressComment ?: ""
             )
         } else {
             null

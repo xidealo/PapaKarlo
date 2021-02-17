@@ -223,12 +223,10 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreationAddressViewModel(
-            userAddressRepo = get(),
-            streetRepo = get(),
-            dataStoreRepo = get(),
             resourcesProvider = get(),
-            authRepo = get(),
-            textValidator = get()
+            textValidator = get(),
+            streetInteractor = get(),
+            addressInteractor = get()
         )
     }
     viewModel {

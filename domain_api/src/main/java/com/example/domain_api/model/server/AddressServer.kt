@@ -27,6 +27,6 @@ data class AddressServer(
     @SerialName("comment")
     val comment: String?,
 
-    @SerialName("profileUuid")
+    @SerialName("userUuid")
     val userUuid: String,
 )

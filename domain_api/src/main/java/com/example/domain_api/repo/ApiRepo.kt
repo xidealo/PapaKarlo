@@ -22,7 +22,11 @@ interface ApiRepo {
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
-    suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<AddressServer>
+    suspend fun postUserAddress(
+        token: String,
+        userAddress: UserAddressPostServer
+    ): ApiResult<AddressServer>
+
     suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer>
 
     suspend fun patchProfileEmail(

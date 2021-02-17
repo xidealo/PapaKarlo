@@ -41,7 +41,9 @@ class UserInteractor @Inject constructor(
     }
 
     override suspend fun isUserAuthorize(): Boolean {
-        return authRepo.isAuthorize && (dataStoreRepo.getToken() != null)
+        return authRepo.isAuthorize &&
+                (dataStoreRepo.getToken() != null) &&
+                (dataStoreRepo.getUserUuid() != null)
     }
 
     override fun observeUser(): Flow<User?> {

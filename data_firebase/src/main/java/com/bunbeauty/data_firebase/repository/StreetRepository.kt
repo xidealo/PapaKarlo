@@ -20,8 +20,11 @@ class StreetRepository @Inject constructor(
         //TODO
     }
 
-    override fun observeStreetList(): Flow<List<Street>> {
-        //TODO
-        return flow {}
+    override suspend fun getStreetByNameAndCityUuid(name: String, cityUuid: String): Street? {
+        return null
+    }
+
+    override fun observeStreetListByCityUuid(cityUuid: String): Flow<List<Street>> {
+        return flow { }
     }
 }

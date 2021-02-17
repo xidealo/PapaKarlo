@@ -3,24 +3,24 @@ package com.bunbeauty.papakarlo.presentation.address
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
+import com.bunbeauty.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.domain.model.Street
-import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    @Api private val userAddressRepo: UserAddressRepo,
-    @Api private val streetRepo: StreetRepo,
-    private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
-    private val authRepo: AuthRepo,
-    private val textValidator: ITextValidator
+    private val textValidator: ITextValidator,
+    private val streetInteractor: IStreetInteractor,
+    private val addressInteractor: IAddressInteractor,
 ) : BaseViewModel() {
 
     private var streetList: List<Street> = emptyList()
@@ -33,12 +33,12 @@ class CreationAddressViewModel @Inject constructor(
     }
 
     private fun subscribeOnStreetList() {
-        streetRepo.observeStreetList().onEach { streetList ->
+        streetInteractor.observeStreetList().launchOnEach { streetList ->
             this.streetList = streetList
-            mutableStreetNameList.value = streetList.map { street ->
-                street.name
-            }
-        }.launchIn(viewModelScope)
+        }
+        streetInteractor.observeStreetNameList().launchOnEach { streetNameList ->
+            mutableStreetNameList.value = streetNameList
+        }
     }
 
     fun onCreateAddressClicked(
@@ -49,11 +49,9 @@ class CreationAddressViewModel @Inject constructor(
         comment: String,
         floor: String
     ) {
-        val selectedStreet = streetList.find { street -> street.name == streetName }
-        if (!textValidator.isRequiredFieldContentCorrect(
-                streetName,
-                maxLength = 50
-            ) || selectedStreet == null
+        val incorrectStreetSelected = streetList.none { street -> street.name == streetName }
+        if (!textValidator.isRequiredFieldContentCorrect(streetName, maxLength = 50) ||
+            incorrectStreetSelected
         ) {
             sendFieldError(
                 STREET_ERROR_KEY,
@@ -71,19 +69,19 @@ class CreationAddressViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val userUuid = authRepo.firebaseUserUuid
-            val userAddress = UserAddress(
-                street = selectedStreet,
-                house = house,
-                flat = flat,
-                entrance = entrance,
-                floor = floor,
-                comment = comment,
-                userUuid = userUuid,
+            val userAddress = addressInteractor.createAddress(
+                streetName,
+                house,
+                flat,
+                entrance,
+                comment,
+                floor,
             )
-            val savedUserAddress = userAddressRepo.saveUserAddress(userAddress)
-            dataStoreRepo.saveUserAddressUuid(savedUserAddress.uuid)
-            showMessage(resourcesProvider.getString(R.string.msg_create_address_created))
+            if (userAddress == null) {
+                showError(resourcesProvider.getString(R.string.error_create_address_fail))
+            } else {
+                showMessage(resourcesProvider.getString(R.string.msg_create_address_created))
+            }
             goBack()
         }
     }

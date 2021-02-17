@@ -1,5 +1,6 @@
 package com.example.domain_api.mapper
 
+import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_api.model.entity.user.UserAddressEntity
 import com.example.domain_api.model.server.AddressServer
@@ -15,4 +16,5 @@ interface IUserAddressMapper {
     fun toServerModel(userAddress: UserAddressEntity): AddressServer
     fun toPostServerModel(userAddress: UserAddressEntity): UserAddressPostServer
     fun toPostServerModel(userAddress: UserAddress): UserAddressPostServer
+    fun toPostServerModel(createdUserAddress: CreatedUserAddress): UserAddressPostServer
 }

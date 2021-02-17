@@ -5,11 +5,6 @@ import com.bunbeauty.common.ApiResult
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
 import com.example.domain_api.model.server.ListServer
-import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 
 suspend fun <T, R> ApiResult<T>.handleResultAndReturn(
     tag: String,
@@ -85,24 +80,4 @@ suspend fun <T> ApiResult<ListServer<T>>.handleListResult(
             onError?.invoke(apiError)
         }
     }
-}
-
-fun <MS, M> Flow<List<MS>>.mapListFlow(toModel: ((MS) -> M)): Flow<List<M>> {
-    return flowOn(IO)
-        .map { userAddressList ->
-            userAddressList.map { modelServer ->
-                toModel(modelServer)
-            }
-        }
-        .flowOn(Default)
-}
-
-fun <MI, MO> Flow<MI?>.mapFlow(toModel: ((MI) -> MO)): Flow<MO?> {
-    return flowOn(IO)
-        .map { modelServer ->
-            modelServer?.let {
-                toModel(modelServer)
-            }
-        }
-        .flowOn(Default)
 }

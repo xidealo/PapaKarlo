@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.presentation.model.FieldError
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -63,5 +62,11 @@ abstract class BaseViewModel : ViewModel() {
             }
             else -> null
         }
+    }
+
+    protected fun <T> Flow<T>.launchOnEach(block: (T) -> Unit): Job {
+        return onEach { t ->
+            block(t)
+        }.launchIn(viewModelScope)
     }
 }
