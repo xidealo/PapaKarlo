@@ -14,4 +14,10 @@ data class StreetServer(
 
     @SerialName("cityUuid")
     val cityUuid: String,
+
+    @SerialName("cafeUuid")
+    val cafeUuid: String,
+
+    @SerialName("isVisible")
+    val isVisible: Boolean,
 )

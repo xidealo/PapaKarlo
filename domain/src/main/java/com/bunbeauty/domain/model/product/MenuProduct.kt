@@ -7,9 +7,10 @@ import kotlinx.parcelize.Parcelize
 data class MenuProduct(
     val uuid: String,
     val name: String,
-    override val cost: Int,
-    override val discountCost: Int?,
-    val weight: Int?,
+    override val newPrice: Int,
+    override val oldPrice: Int?,
+    val utils: String?,
+    val nutrition: Int?,
     val description: String,
     val comboDescription: String?,
     val photoLink: String,

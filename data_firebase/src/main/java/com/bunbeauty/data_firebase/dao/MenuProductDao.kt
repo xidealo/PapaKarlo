@@ -17,13 +17,13 @@ interface MenuProductDao : BaseDao<MenuProductEntity> {
 
     // OBSERVE
 
-    @Query("SELECT * FROM MenuProductEntity ORDER BY productCode, cost")
+    @Query("SELECT * FROM MenuProductEntity ORDER BY productCode, newPrice")
     fun observeMenuProductList(): Flow<List<MenuProductEntity>>
 
     @Query("SELECT * FROM MenuProductEntity WHERE uuid = :menuProductUuid ")
     fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProductEntity?>
 
-    @Query("SELECT * FROM MenuProductEntity WHERE productCode = :productCode ORDER BY cost")
+    @Query("SELECT * FROM MenuProductEntity WHERE productCode = :productCode ORDER BY newPrice")
     fun observeMenuProductListByCode(productCode: String): Flow<List<MenuProductEntity>>
 
     // GET

@@ -267,6 +267,7 @@ fun viewModelModule() = module {
             userRepo = get(),
             authUtil = get(),
             orderUIMapper = get(),
+            userInteractor = get(),
         )
     }
     viewModel {

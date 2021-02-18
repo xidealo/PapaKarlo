@@ -6,23 +6,26 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class OrderProductServer(
 
-    @SerialName("count")
-    val count: Int,
-
     @SerialName("uuid")
     val uuid: String,
+
+    @SerialName("count")
+    val count: Int,
 
     @SerialName("name")
     val name: String,
 
-    @SerialName("cost")
-    val cost: Int,
+    @SerialName("newPrice")
+    val newPrice: Int,
 
-    @SerialName("discountCost")
-    val discountCost: Int?,
+    @SerialName("oldPrice")
+    val oldPrice: Int?,
 
-    @SerialName("weight")
-    val weight: Int?,
+    @SerialName("utils")
+    val utils: String?,
+
+    @SerialName("nutrition")
+    val nutrition: Int?,
 
     @SerialName("description")
     val description: String,

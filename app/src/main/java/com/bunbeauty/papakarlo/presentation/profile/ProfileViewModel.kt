@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.UserRepo
@@ -19,6 +20,7 @@ class ProfileViewModel @Inject constructor(
     @Api private val userRepo: UserRepo,
     private val authUtil: IAuthUtil,
     private val orderUIMapper: IOrderUIMapper,
+    private val userInteractor: IUserInteractor
 ) : CartViewModel() {
 
     private var profileUuid: String? = null
@@ -73,17 +75,15 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun subscribeOnProfile() {
-        authUtil.observeUserUuid().flatMapLatest { userUuid ->
-            userRepo.observeUserByUuid(userUuid ?: "").onEach { observedUser ->
-                profileUuid = observedUser?.user?.uuid
-                mutableProfileState.value = observedUser.toSuccessOrEmpty()
+        userInteractor.observeProfile().onEach { profile ->
+            profileUuid = profile?.user?.uuid
+            mutableProfileState.value = profile.toSuccessOrEmpty()
 
-                mutableLastOrder.value = observedUser?.orderList?.maxByOrNull { order ->
-                    order.time
-                }?.let(orderUIMapper::toItem)
+            mutableLastOrder.value = profile?.orderList?.maxByOrNull { order ->
+                order.time
+            }?.let(orderUIMapper::toItem)
 
-                mutableHasAddresses.value = !observedUser?.addressList.isNullOrEmpty()
-            }
+            mutableHasAddresses.value = !profile?.addressList.isNullOrEmpty()
         }.launchIn(viewModelScope)
     }
 }

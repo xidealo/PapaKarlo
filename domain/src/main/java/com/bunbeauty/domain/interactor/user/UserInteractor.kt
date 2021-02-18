@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.interactor.user
 
 import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.DataStoreRepo
@@ -34,13 +35,20 @@ class UserInteractor @Inject constructor(
         userWorkerUtil.cancelRefreshUser()
         authUtil.signOut()
         dataStoreRepo.clearToken()
+        dataStoreRepo.clearUserUuid()
     }
 
     override fun observeUser(): Flow<User?> {
         return authUtil.observeUserUuid().flatMapLatest { userUuid ->
-            userRepo.observeUserByUuid(userUuid ?: "").map { profile ->
+            userRepo.observeProfileByUuid(userUuid ?: "").map { profile ->
                 profile?.user
             }
+        }
+    }
+
+    override fun observeProfile(): Flow<Profile?> {
+        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            userRepo.observeProfileByUuid(userUuid ?: "")
         }
     }
 

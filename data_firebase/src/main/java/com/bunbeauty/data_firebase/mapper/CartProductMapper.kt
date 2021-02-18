@@ -34,9 +34,10 @@ class CartProductMapper @Inject constructor(private val menuProductMapper: IMenu
             count = cartProduct.count,
             menuProduct = OrderMenuProduct(
                 name = cartProduct.menuProduct.name,
-                cost = cartProduct.menuProduct.cost,
-                discountCost = cartProduct.menuProduct.discountCost,
-                weight = cartProduct.menuProduct.weight,
+                newPrice = cartProduct.menuProduct.newPrice,
+                oldPrice = cartProduct.menuProduct.oldPrice,
+                utils = cartProduct.menuProduct.utils,
+                nutrition = cartProduct.menuProduct.nutrition,
                 description = cartProduct.menuProduct.description,
                 comboDescription = cartProduct.menuProduct.comboDescription,
                 photoLink = cartProduct.menuProduct.photoLink

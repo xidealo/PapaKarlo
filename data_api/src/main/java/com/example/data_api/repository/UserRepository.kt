@@ -4,6 +4,7 @@ import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
+import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserDao
 import com.example.data_api.handleResult
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val apiRepo: ApiRepo,
     private val profileMapper: IProfileMapper,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val dataStoreRepo: DataStoreRepo
 ) : UserRepo {
 
     override suspend fun login(userUuid: String, userPhone: String): String? {
@@ -45,7 +47,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override fun observeUserByUuid(userUuid: String): Flow<Profile?> {
+    override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
         return userDao.observeUserByUuid(userUuid).mapFlow(profileMapper::toModel)
     }
 
@@ -60,6 +62,7 @@ class UserRepository @Inject constructor(
 
     suspend fun saveProfileLocally(profile: ProfileServer?) {
         if (profile != null) {
+            dataStoreRepo.saveUserUuid(profile.uuid)
             userDao.insertProfile(profileMapper.toEntityModel(profile))
         }
     }

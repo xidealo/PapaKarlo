@@ -12,7 +12,7 @@ interface UserRepo {
 
     suspend fun getUserByUuid(userUuid: String): Profile?
 
-    fun observeUserByUuid(userUuid: String): Flow<Profile?>
+    fun observeProfileByUuid(userUuid: String): Flow<Profile?>
 
     suspend fun updateUserEmail(user: User): User?
 }

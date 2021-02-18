@@ -33,6 +33,6 @@ data class OrderServer(
     @SerialName("clientUserUuid")
     val clientUserUuid: String,
 
-    @SerialName("orderProducts")
+    @SerialName("oderProductList")
     val oderProductList: List<OrderProductServer>,
 )

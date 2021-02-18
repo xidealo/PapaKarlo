@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProfileServer(
+
     @SerialName("uuid")
     val uuid: String,
 

@@ -30,15 +30,10 @@ class ProductViewModel @Inject constructor(
     }
 
     private fun MenuProduct.toUI(): MenuProductUI {
-        val oldPrice = productHelper.getProductOldPrice(this)?.let { oldPrice ->
-            stringUtil.getCostString(oldPrice)
-        }
-        val newPrice = productHelper.getProductNewPrice(this)
-
         return MenuProductUI(
             name = name,
-            size = stringUtil.getSizeString(weight),
-            oldPrice = oldPrice,
+            size = stringUtil.getSizeString(nutrition),
+            oldPrice = stringUtil.getCostString(oldPrice),
             newPrice = stringUtil.getCostString(newPrice),
             description = description,
         )

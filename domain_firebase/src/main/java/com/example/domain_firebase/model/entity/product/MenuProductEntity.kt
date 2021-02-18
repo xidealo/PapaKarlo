@@ -8,9 +8,10 @@ data class MenuProductEntity(
     @PrimaryKey
     val uuid: String,
     val name: String,
-    val cost: Int,
-    val discountCost: Int?,
-    val weight: Int?,
+    val newPrice: Int,
+    val oldPrice: Int?,
+    val utils: String?,
+    val nutrition: Int?,
     val description: String,
     val comboDescription: String?,
     val photoLink: String,

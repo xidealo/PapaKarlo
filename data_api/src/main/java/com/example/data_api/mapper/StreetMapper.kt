@@ -44,7 +44,9 @@ class StreetMapper @Inject constructor() : IStreetMapper {
         return StreetServer(
             uuid = street.uuid,
             name = street.name,
-            cityUuid = street.cityUuid
+            cityUuid = street.cityUuid,
+            cafeUuid = "",
+            isVisible = true
         )
     }
 
@@ -52,7 +54,9 @@ class StreetMapper @Inject constructor() : IStreetMapper {
         return StreetServer(
             uuid = street.uuid,
             name = street.name,
-            cityUuid = street.cityUuid
+            cityUuid = street.cityUuid,
+            cafeUuid = "",
+            isVisible = true
         )
     }
 }

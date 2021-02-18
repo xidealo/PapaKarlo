@@ -58,10 +58,6 @@ class ProductTabViewModel @Inject constructor(
     }
 
     private fun MenuProduct.toItem(): MenuProductItem {
-        val oldPrice = discountCost?.let {
-            productHelper.getProductOldPrice(this)
-        }
-        val newPrice = productHelper.getProductNewPrice(this)
         return MenuProductItem(
             uuid = uuid,
             name = name,

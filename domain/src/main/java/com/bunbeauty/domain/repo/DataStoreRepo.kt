@@ -22,6 +22,7 @@ interface DataStoreRepo {
 
     val userUuid: Flow<String?>
     suspend fun saveUserUuid(userId: String)
+    suspend fun clearUserUuid()
 
     val deferredTime: Flow<String?>
     suspend fun saveDeferredTime(deferredTime: String)

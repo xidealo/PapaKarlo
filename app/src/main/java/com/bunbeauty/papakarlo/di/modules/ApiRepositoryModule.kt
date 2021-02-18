@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.domain.repo.*
-import com.example.data_api.mapper.*
 import com.example.data_api.repository.*
-import com.example.domain_api.mapper.*
 import com.example.domain_api.repo.ApiRepo
 import dagger.Binds
 import dagger.Module
@@ -119,6 +117,7 @@ fun apiRepositoryModule() = module {
             apiRepo = get(),
             profileMapper = get(),
             userDao = get(),
+            dataStoreRepo = get(),
         )
     } bind UserRepo::class
     single {

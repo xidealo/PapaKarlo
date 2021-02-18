@@ -1,7 +1,6 @@
 package com.bunbeauty.domain.interactor.cart
 
 import com.bunbeauty.domain.model.product.CartProduct
-import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +49,6 @@ class CartProductInteractor @Inject constructor(@Api private val cartProductRepo
         return getTotalCount(cartProductList)
     }
 
-
     // TODO move to base interactor
 
     fun getNewTotalCost(productList: List<CartProduct>): Int {
@@ -58,11 +56,7 @@ class CartProductInteractor @Inject constructor(@Api private val cartProductRepo
     }
 
     fun getProductPositionNewCost(product: CartProduct): Int {
-        return getProductNewPrice(product.menuProduct) * product.count
-    }
-
-    fun getProductNewPrice(product: MenuProduct): Int {
-        return product.discountCost ?: product.cost
+        return product.menuProduct.newPrice * product.count
     }
 
     fun getTotalCount(productList: List<CartProduct>): Int {

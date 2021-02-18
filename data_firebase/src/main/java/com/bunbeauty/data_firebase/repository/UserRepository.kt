@@ -59,7 +59,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override fun observeUserByUuid(userUuid: String): Flow<Profile?> {
+    override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
         return userDao.observeByUuid(userUuid)
             .flowOn(IO)
             .mapNotNull { userEntity ->

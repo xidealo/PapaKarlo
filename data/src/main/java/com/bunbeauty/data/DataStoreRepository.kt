@@ -99,6 +99,12 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
+    override suspend fun clearUserUuid() {
+        context.userUuidDataStore.edit {
+            it.clear()
+        }
+    }
+
     override val deferredTime: Flow<String?> = context.deferredTimeDataStore.data.map {
         it[DEFERRED_TIME_KEY]
     }
