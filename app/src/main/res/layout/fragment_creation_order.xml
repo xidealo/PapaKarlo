@@ -223,6 +223,15 @@
                                 style="@style/MaterialInput"
                                 android:inputType="textCapSentences" />
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            style="@style/HelpText"
+                            android:text="Бесплатная доставка от 500 ₽"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_til_comment" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 

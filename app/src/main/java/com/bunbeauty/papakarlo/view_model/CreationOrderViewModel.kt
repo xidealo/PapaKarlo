@@ -36,7 +36,7 @@ class CreationOrderViewModel @Inject constructor(
     var navigator: WeakReference<CreationOrderNavigator>? = null
 
     val errorMessageLiveData = MutableLiveData<String>()
-    val hasAddressField = ObservableField(false)
+    val hasAddressField = ObservableField(true)
 
     val isDeliveryLiveData = MutableLiveData(true)
     private val deliveryAddressLiveData: LiveData<Address?> by lazy {

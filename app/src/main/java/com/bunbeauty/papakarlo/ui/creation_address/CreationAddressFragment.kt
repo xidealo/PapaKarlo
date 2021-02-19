@@ -40,66 +40,72 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
                 50
             ) || viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() } == null
         ) {
-            viewDataBinding.fragmentCreationAddressEtStreet.error =
-                resources.getString(R.string.error_creation_address_street)
+            viewDataBinding.fragmentCreationAddressTilStreet.error =
+                resources.getString(R.string.error_creation_address_name)
             viewDataBinding.fragmentCreationAddressEtStreet.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilStreet.error = ""
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtHouse.text.toString(),
                 true,
                 5
             )
         ) {
-            viewDataBinding.fragmentCreationAddressEtHouse.error =
-                resources.getString(R.string.error_creation_address_house)
+            viewDataBinding.fragmentCreationAddressTilHouse.error = " "
             viewDataBinding.fragmentCreationAddressEtHouse.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilHouse.error = ""
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtFlat.text.toString(),
                 false,
                 5
             )
         ) {
-            viewDataBinding.fragmentCreationAddressEtFlat.error =
-                resources.getString(R.string.error_creation_address_flat)
+            viewDataBinding.fragmentCreationAddressTilFlat.error = " "
             viewDataBinding.fragmentCreationAddressEtFlat.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilFlat.error = ""
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtEntrance.text.toString(),
                 false,
                 5
             )
         ) {
-            viewDataBinding.fragmentCreationAddressEtEntrance.error =
-                resources.getString(R.string.error_creation_address_entrance)
+            viewDataBinding.fragmentCreationAddressTilEntrance.error = " "
             viewDataBinding.fragmentCreationAddressEtEntrance.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilEntrance.error = ""
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtIntercom.text.toString(),
                 false,
                 5
             )
         ) {
-            viewDataBinding.fragmentCreationAddressEtIntercom.error =
-                resources.getString(R.string.error_creation_address_intercom)
+            viewDataBinding.fragmentCreationAddressTilIntercom.error = " "
             viewDataBinding.fragmentCreationAddressEtIntercom.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilIntercom.error = ""
+
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtFloor.text.toString(),
                 false,
                 5
             )
         ) {
-            viewDataBinding.fragmentCreationAddressEtFloor.error =
-                resources.getString(R.string.error_creation_address_floor)
+            viewDataBinding.fragmentCreationAddressTilFloor.error = " "
             viewDataBinding.fragmentCreationAddressEtFloor.requestFocus()
             return
         }
+        viewDataBinding.fragmentCreationAddressTilFloor.error = ""
 
         viewModel.creationAddress(
             Address(

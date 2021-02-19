@@ -76,12 +76,9 @@
     <string name="hint_creation_address_floor">Этаж</string>
     <string name="msg_creation_address_created_address">Адрес добавлен</string>
     <string name="action_creation_address_address">Добавить адрес</string>
-    <string name="error_creation_address_street">Введите коррекное название улицы</string>
-    <string name="error_creation_address_house">Введите корректный номер дома</string>
-    <string name="error_creation_address_flat">Введите корректный номер квартиры</string>
-    <string name="error_creation_address_entrance">Введите корректный номер подъезда</string>
-    <string name="error_creation_address_intercom">Введите корректный код домофона</string>
-    <string name="error_creation_address_floor">Введите корректный номер этажа</string>
+    <string name="error_creation_address_name">Некорректное название</string>
+    <string name="error_creation_address_number">Некорректный номер</string>
+    <string name="error_creation_address_code">Некорректный код</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>

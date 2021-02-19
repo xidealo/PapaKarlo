@@ -23,29 +23,7 @@
             android:layout_gravity="center_horizontal"
             app:tabMode="scrollable"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.tabs.TabItem
-                style="@style/Widget.AppCompat.ActionBar.TabBar"
-                android:text="Все" />
-
-            <com.google.android.material.tabs.TabItem
-                style="@style/Widget.AppCompat.ActionBar.TabBar"
-                android:text="Пицца" />
-
-            <com.google.android.material.tabs.TabItem
-                style="@style/Widget.AppCompat.ActionBar.TabBar"
-                android:text="Бургеры" />
-
-            <com.google.android.material.tabs.TabItem
-                style="@style/Widget.AppCompat.ActionBar.TabBar"
-                android:text="Картофель" />
-
-            <com.google.android.material.tabs.TabItem
-                style="@style/Widget.AppCompat.ActionBar.TabBar"
-                android:text="На углях" />
-
-        </com.google.android.material.tabs.TabLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/fragment_menu_vp"
