@@ -82,7 +82,9 @@ class ApiRepository @Inject constructor(
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (snapshot in dataSnapshot.children) {
 
-                    val menuProduct = MenuProduct(
+                    val menuProduct = snapshot.getValue(MenuProduct::class.java)!!
+                    menuProduct.uuid = snapshot.key!!
+                        /*MenuProduct(
                         uuid = snapshot.key!!,
                         name = snapshot.child(MenuProduct.NAME).value.toString(),
                         cost = snapshot.child(MenuProduct.COST).value.toString().toInt(),
@@ -94,7 +96,7 @@ class ApiRepository @Inject constructor(
                         productCode = ProductCode.valueOf(
                             snapshot.child(MenuProduct.PRODUCT_CODE).value.toString()
                         )
-                    )
+                    )*/
                     menuProductRepo.insert(menuProduct)
                 }
             }
