@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
 import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
@@ -75,6 +76,16 @@ class CreationOrderViewModel @Inject constructor(
         runBlocking {
             dataStoreHelper.email.first()
         }
+    }
+
+    val cartLiveData by lazy {
+        map(cartProductListLiveData) { productList ->
+            "${productList.sumBy { getFullPrice(it) }} ₽"
+        }
+    }
+
+    private fun getFullPrice(cartProduct: CartProduct): Int {
+        return cartProduct.menuProduct.cost * cartProduct.count
     }
 
     fun createOrder(orderEntity: OrderEntity) {

@@ -24,15 +24,11 @@ data class OrderEntity(
     var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED,
     var isDelivery: Boolean = true,
     var code: String = "",
-    var email: String = ""
+    var email: String = "",
+    var deferred: String = ""
 ) : BaseModel(), Parcelable {
 
     companion object {
         const val ORDERS = "ORDERS"
-
-        const val COMMENT = "comment"
-        const val PHONE = "phone"
-        const val TIMESTAMP = "timestamp"
-        const val ORDER_STATUS = "order status"
     }
 }
