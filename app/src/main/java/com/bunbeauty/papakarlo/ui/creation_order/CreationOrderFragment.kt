@@ -83,7 +83,7 @@ class CreationOrderFragment :
             }
             picker.addOnNegativeButtonClickListener {
                 viewDataBinding.fragmentCreationOrderBtnDeferred.text =
-                    "Время доставки"
+                    "Отложенный заказ"
                 deferredTime = ""
             }
         }
