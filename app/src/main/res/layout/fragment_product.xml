@@ -47,6 +47,7 @@
             style="@style/TitleFragmentProduct"
             android:layout_margin="@dimen/medium_margin"
             android:text="@{product.name}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
 
@@ -54,7 +55,9 @@
             android:id="@+id/fragment_product_tv_cost"
             style="@style/CostFragmentProduct"
             android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{iStringHelper.toStringCost(product)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
@@ -62,7 +65,8 @@
             android:id="@+id/fragment_product_tv_gram"
             style="@style/GramFragmentProduct"
             android:layout_marginStart="@dimen/medium_margin"
-            android:text="@{iStringHelper.toStringWeight(product)}"
+            android:layout_marginEnd="@dimen/medium_margin"            android:text="@{iStringHelper.toStringWeight(product)}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />
 
@@ -88,10 +92,10 @@
 
         <TextView
             android:id="@+id/fragment_product_tv_description"
-            style="@style/DescriptionFragmentProduct"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/medium_margin"
+            style="@style/MainText"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@{product.description}"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
 

@@ -67,7 +67,7 @@
     <style name="TitleFragmentProduct">
         <item name="android:textSize">@dimen/large_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
     </style>
@@ -75,7 +75,7 @@
     <style name="CostFragmentProduct">
         <item name="android:textSize">@dimen/large_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
     </style>
@@ -83,7 +83,7 @@
     <style name="GramFragmentProduct">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_light</item>
     </style>
@@ -91,7 +91,7 @@
     <style name="DescriptionFragmentProduct">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
@@ -135,7 +135,7 @@
     <style name="TitleElementProduct">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
         <item name="android:layout_marginTop">@dimen/small_margin</item>
@@ -214,7 +214,7 @@
     <!--TEXT-->
     <style name="BaseText">
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
