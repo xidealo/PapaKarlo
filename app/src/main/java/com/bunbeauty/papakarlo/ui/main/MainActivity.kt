@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.connectionLiveData.observe(this) { isNetworkConnected ->
             viewModel.isNetworkConnected = isNetworkConnected
         }
+
+        //viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
     fun setCartClickListener(clickListener: KFunction1<View, Unit>) {
