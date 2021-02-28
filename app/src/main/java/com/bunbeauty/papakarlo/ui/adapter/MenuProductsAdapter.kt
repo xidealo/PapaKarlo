@@ -17,8 +17,7 @@ import javax.inject.Inject
 class MenuProductsAdapter @Inject constructor(
     private val context: Context,
     private val iStringHelper: IStringHelper
-) :
-    BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
+) : BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
     lateinit var productsViewModel: ProductsViewModel
     lateinit var productsFragment: ProductsFragment
@@ -33,7 +32,7 @@ class MenuProductsAdapter @Inject constructor(
     override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
         holder.setListener(itemList[i])
         holder.binding?.context = context
-        holder.binding?.iStringHelper = iStringHelper
+        holder.binding?.stringHelper = iStringHelper
         holder.binding?.menuProduct = itemList[i]
     }
 

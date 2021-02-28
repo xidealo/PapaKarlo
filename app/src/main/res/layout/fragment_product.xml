@@ -29,74 +29,83 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            app:layout_constraintBottom_toTopOf="@id/line_1"
+            app:layout_constraintBottom_toTopOf="@id/fragment_product_gl_top"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:image="@{product.photoLink}" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/line_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/fragment_product_gl_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_product_gl_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/medium_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_product_gl_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/medium_margin" />
 
         <TextView
             android:id="@+id/fragment_product_tv_title"
             style="@style/TitleFragmentProduct"
-            android:layout_margin="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:text="@{product.name}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_gl_top" />
 
         <TextView
             android:id="@+id/fragment_product_tv_cost"
             style="@style/CostFragmentProduct"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginEnd="@dimen/medium_margin"
             android:text="@{iStringHelper.toStringCost(product)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
         <TextView
             android:id="@+id/fragment_product_tv_gram"
             style="@style/GramFragmentProduct"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginEnd="@dimen/medium_margin"            android:text="@{iStringHelper.toStringWeight(product)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{iStringHelper.toStringWeight(product)}"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />
 
         <ImageView
             android:id="@+id/element_menu_product_iv_on_fire"
             style="@style/Icon"
-            android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:src="@drawable/ic_on_fire"
             android:visibility="@{product.onFire ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
 
         <ImageView
             android:id="@+id/element_menu_product_iv_in_oven"
             style="@style/Icon"
-            android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:src="@drawable/ic_in_oven"
             android:visibility="@{product.inOven ? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
 
         <TextView
             android:id="@+id/fragment_product_tv_description"
             style="@style/MainText"
-            android:layout_margin="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:text="@{product.description}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
 
         <com.google.android.material.button.MaterialButton
@@ -104,8 +113,8 @@
             style="@style/MainButton"
             android:text="@string/action_product_want"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

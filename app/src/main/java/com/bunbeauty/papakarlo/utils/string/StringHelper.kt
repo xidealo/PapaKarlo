@@ -7,7 +7,7 @@ import com.bunbeauty.papakarlo.data.model.Time
 import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
-import java.lang.StringBuilder
+import com.bunbeauty.papakarlo.enums.ProductCode
 import javax.inject.Inject
 
 class StringHelper @Inject constructor() : IStringHelper {
@@ -67,7 +67,22 @@ class StringHelper @Inject constructor() : IStringHelper {
     }
 
     override fun toStringWeight(menuProduct: MenuProduct): String {
-        return "${menuProduct.weight} г."
+        return if (menuProduct.productCode == ProductCode.DRINK) {
+            val liters = menuProduct.weight / 1000
+            val milliliters = menuProduct.weight % 1000
+            var volumeString = ""
+
+            if (liters != 0) {
+                volumeString += "$liters л "
+            }
+            if (milliliters != 0) {
+                volumeString += "$milliliters мл"
+            }
+
+            volumeString
+        } else {
+            "${menuProduct.weight} г"
+        }
     }
 
     override fun toStringFullPrice(cartProduct: CartProduct): String {
