@@ -55,6 +55,8 @@
     <string name="title_creation_order_email">Email</string>
     <string name="title_creation_order_delivery">Доставка</string>
     <string name="title_creation_order_pickup">Самовывоз</string>
+    <string name="title_creation_order_deferred_time">Выберите время доставки</string>
+    <string name="action_creation_order_deferred">Отложенный заказ</string>
     <string name="action_creation_order_order">Оформить заказ</string>
     <string name="action_creation_order_address">Добавить адрес</string>
     <string name="msg_creation_order_add_address">Добавьте адрес</string>

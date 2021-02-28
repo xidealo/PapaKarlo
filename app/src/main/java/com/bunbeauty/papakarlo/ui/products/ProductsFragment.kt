@@ -45,7 +45,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         viewModel.navigator = WeakReference(this)
         setupRecyclerView()
         viewModel.productListLiveData.observe(viewLifecycleOwner) { productList ->
-            menuProductsAdapter.setItemList(productList)
+            menuProductsAdapter.setItemList(productList.sortedBy { it.name })
         }
     }
 

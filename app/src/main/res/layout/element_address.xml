@@ -23,9 +23,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
         style="@style/DefaultMaterialCard">
-
         <TextView
             style="@style/MainText"
+            android:layout_width="match_parent"
             android:layout_margin="@dimen/medium_margin"
             android:drawablePadding="@dimen/medium_padding"
             android:text="@{iStringHelper.toString(address)}"/>

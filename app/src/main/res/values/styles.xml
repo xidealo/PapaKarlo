@@ -206,7 +206,7 @@
     <style name="MaterialCardCreationOrder">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/backgroundComponent</item>
+        <item name="android:background">@color/cardViewBackground</item>
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
         <item name="cornerRadius">@dimen/default_radius</item>
     </style>
@@ -248,7 +248,7 @@
     <style name="MaterialCardContacts">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/backgroundComponent</item>
+        <item name="android:background">@color/cardViewBackground</item>
     </style>
 
     <style name="LinearLayoutContacts">
@@ -262,7 +262,7 @@
     <style name="MaterialCardCreationAddress">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/backgroundComponent</item>
+        <item name="android:background">@color/cardViewBackground</item>
         <item name="cornerRadius">@dimen/default_radius</item>
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
     </style>

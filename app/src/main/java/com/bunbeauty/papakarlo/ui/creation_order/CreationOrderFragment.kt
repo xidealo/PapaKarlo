@@ -72,7 +72,7 @@ class CreationOrderFragment :
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setHour(0)
                 .setMinute(0)
-                .setTitleText("Выберите время доставки")
+                .setTitleText(requireContext().getString(R.string.title_creation_order_deferred_time))
                 .build()
             picker.show(parentFragmentManager, "TimePicker")
 
@@ -83,7 +83,7 @@ class CreationOrderFragment :
             }
             picker.addOnNegativeButtonClickListener {
                 viewDataBinding.fragmentCreationOrderBtnDeferred.text =
-                    "Отложенный заказ"
+                    requireContext().getString(R.string.action_creation_order_deferred)
                 deferredTime = ""
             }
         }
