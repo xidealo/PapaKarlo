@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.ui.consumer_cart
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -34,6 +35,7 @@ class ConsumerCartFragment :
     @Inject
     lateinit var cartProductsAdapter: CartProductsAdapter
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_cart)
 
@@ -50,6 +52,10 @@ class ConsumerCartFragment :
         }
         viewDataBinding.fragmentConsumerCartBtnCrateOrder.setOnClickListener {
             goToOrder()
+        }
+
+        viewModel.cartLiveData.observe(viewLifecycleOwner) {
+            viewDataBinding.fragmentConsumerCartBtnCrateOrder.text = "Оформить заказ на $it"
         }
     }
 

@@ -16,6 +16,7 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
@@ -78,9 +79,14 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
 
-    val cartLiveData by lazy {
-        map(cartProductListLiveData) { productList ->
-            "${productList.sumBy { getFullPrice(it) }} ₽"
+    val cartLiveData by lazy { MutableLiveData<String>() }
+
+    fun getCartProductsCost() {
+        viewModelScope.launch(IO) {
+            val cartProductsCost = cartProductRepo.getCartProductList().sumBy { getFullPrice(it) }
+            withContext(Main) {
+                cartLiveData.value = "$cartProductsCost ₽"
+            }
         }
     }
 
@@ -91,8 +97,10 @@ class CreationOrderViewModel @Inject constructor(
     fun createOrder(orderEntity: OrderEntity) {
         viewModelScope.launch(IO) {
             if (addressLiveData.value == null) {
-                errorMessageLiveData.value =
-                    resourcesProvider.getString(R.string.error_creation_order_address)
+                withContext(Main) {
+                    errorMessageLiveData.value =
+                        resourcesProvider.getString(R.string.error_creation_order_address)
+                }
                 return@launch
             } else {
                 orderEntity.address = addressLiveData.value!!

@@ -13,13 +13,9 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
         return cartProduct
     }
 
-    override fun getCartProductListLiveData() =
-        cartProductDao.getCartProductListLiveData()
+    override fun getCartProductListLiveData() = cartProductDao.getCartProductListLiveData()
 
-    override suspend fun getCartProductList(): List<CartProduct> =
-        withContext(Dispatchers.IO) {
-            cartProductDao.getCartProductList()
-        }
+    override suspend fun getCartProductList(): List<CartProduct> = cartProductDao.getCartProductList()
 
     override suspend fun update(cartProduct: CartProduct) {
         return cartProductDao.update(cartProduct)

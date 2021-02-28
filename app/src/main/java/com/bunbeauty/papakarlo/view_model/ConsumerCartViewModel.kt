@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.view_model
 
+import androidx.lifecycle.Transformations
+import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -17,6 +19,16 @@ class ConsumerCartViewModel @Inject constructor() : BaseViewModel(),
     override val coroutineContext: CoroutineContext = Job()
 
     var navigator: WeakReference<ConsumerCartNavigator>? = null
+
+    val cartLiveData by lazy {
+        Transformations.map(cartProductListLiveData) { productList ->
+            "${productList.sumBy { getFullPrice(it) }} ₽"
+        }
+    }
+
+    private fun getFullPrice(cartProduct: CartProduct): Int {
+        return cartProduct.menuProduct.cost * cartProduct.count
+    }
 
     fun updateCartProduct(cartProduct: CartProduct) {
         if (cartProduct.count > 0) {

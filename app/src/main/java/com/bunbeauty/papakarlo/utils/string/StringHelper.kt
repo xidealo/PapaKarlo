@@ -48,12 +48,17 @@ class StringHelper @Inject constructor() : IStringHelper {
         else
             orderString.append("Самовывоз\n")
 
-        if(orderEntity.deferred.isNotEmpty())
+        if (orderEntity.deferred.isNotEmpty())
             orderString.append("Время доставки: ${orderEntity.deferred}\n")
 
-        orderString.append("Телефон: ${orderEntity.phone}\n")
-        orderString.append("Комментарий: ${orderEntity.comment}\n")
-        orderString.append("Email: ${orderEntity.email}")
+        if (orderEntity.comment.isNotEmpty())
+            orderString.append("Комментарий: ${orderEntity.comment}\n")
+
+        if (orderEntity.email.isNotEmpty())
+            orderString.append("Email: ${orderEntity.email}\n")
+
+        orderString.append("Телефон: ${orderEntity.phone}")
+
         return orderString.toString()
     }
 

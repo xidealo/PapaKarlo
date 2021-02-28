@@ -37,8 +37,9 @@
                 android:layout_height="@dimen/image_element_height"
                 android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <!--bind:image="@{menuProduct.photoLink}"-->
+                app:layout_constraintTop_toTopOf="parent"
+                bind:image="@{menuProduct.photoLink}" />
+
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
                 style="@style/TitleElementProduct"

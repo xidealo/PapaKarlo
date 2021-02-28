@@ -40,7 +40,6 @@ class CreationOrderFragment :
     }
 
     var deferredTime = ""
-    var emptyCart =  "0 ₽"
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,10 +59,10 @@ class CreationOrderFragment :
         viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
             (activity as MainActivity).showError(it)
         }
+
+        viewModel.getCartProductsCost()
         viewModel.cartLiveData.observe(viewLifecycleOwner) {
-            if (it != emptyCart)
-                viewDataBinding.fragmentCreationOrderBtnCreateOrder.text =
-                    "${viewDataBinding.fragmentCreationOrderBtnCreateOrder.text} на $it"
+            viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = "Оформить заказ на $it"
         }
 
         viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
