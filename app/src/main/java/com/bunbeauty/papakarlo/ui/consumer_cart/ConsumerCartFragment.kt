@@ -41,7 +41,7 @@ class ConsumerCartFragment :
 
         viewModel.navigator = WeakReference(this)
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
-            cartProductsAdapter.setItemList(cartProductList)
+            cartProductsAdapter.setItemList(cartProductList.sortedBy { it.menuProduct.name })
         }
 
         setupRecyclerView()
