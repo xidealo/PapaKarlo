@@ -264,7 +264,6 @@
             android:id="@+id/fragment_creation_order_btn_create_order"
             style="@style/MainButton"
             android:onClick="@{()->viewModel.onOrderClick()}"
-            android:text="@string/action_creation_order_order"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

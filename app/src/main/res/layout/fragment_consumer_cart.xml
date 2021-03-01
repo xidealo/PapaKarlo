@@ -62,7 +62,6 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_crate_order"
             style="@style/MainButton"
-            android:text="@string/action_consumer_cart_checkout"
             android:visibility="@{viewModel.isCartEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
