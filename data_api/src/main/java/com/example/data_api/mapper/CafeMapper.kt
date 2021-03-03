@@ -12,14 +12,15 @@ class CafeMapper @Inject constructor() : ICafeMapper {
     override fun toEntityModel(cafe: CafeServer): CafeEntity {
         return CafeEntity(
             uuid = cafe.uuid,
-            address = cafe.address,
             fromTime = cafe.fromTime,
             toTime = cafe.toTime,
+            offset = cafe.toTime,
             phone = cafe.phone,
             latitude = cafe.latitude,
             longitude = cafe.longitude,
+            address = cafe.address,
             cityUuid = cafe.cityUuid,
-            visible = cafe.visible,
+            isVisible = cafe.isVisible,
         )
     }
 

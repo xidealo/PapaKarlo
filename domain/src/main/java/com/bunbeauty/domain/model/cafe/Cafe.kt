@@ -6,8 +6,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Cafe(
     val uuid: String,
-    val fromTime: String,
-    val toTime: String,
+    val fromTime: Int,
+    val toTime: Int,
     val phone: String,
     val address: String,
     val latitude: Double,

@@ -38,7 +38,7 @@ class CafeListViewModel @Inject constructor(
 
     private fun toItemModel(cafePreview: CafePreview): CafeItem {
         val isOpenColor = if (cafePreview.isOpen) {
-            if (cafePreview.willCloseIn == null) {
+            if (cafePreview.closeIn == null) {
                 resourcesProvider.getColorByAttr(R.attr.colorOpen)
             } else {
                 resourcesProvider.getColorByAttr(R.attr.colorCloseSoon)
@@ -47,11 +47,11 @@ class CafeListViewModel @Inject constructor(
             resourcesProvider.getColorByAttr(R.attr.colorClosed)
         }
         val isOpenMessage = if (cafePreview.isOpen) {
-            if (cafePreview.willCloseIn == null) {
+            if (cafePreview.closeIn == null) {
                 resourcesProvider.getString(R.string.msg_cafe_open)
             } else {
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                        cafePreview.willCloseIn +
+                        cafePreview.closeIn +
                         resourcesProvider.getString(R.string.msg_cafe_minutes)
             }
         } else {

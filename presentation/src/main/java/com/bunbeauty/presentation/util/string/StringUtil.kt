@@ -10,14 +10,12 @@ import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafePreview
-import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.presentation.R
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import javax.inject.Inject
 
 class StringUtil @Inject constructor(
-    private val resourcesProvider: IResourcesProvider,
-    private val dateTimeUtil: IDateTimeUtil
+    private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 
     override fun getCostString(cost: Int?): String {
@@ -107,36 +105,6 @@ class StringUtil @Inject constructor(
 
     override fun getCodeString(code: String): String {
         return code
-    }
-
-    // Рассчитано на то, что кафе заканчивает работать до 24 ночи
-    override fun getIsClosedMessage(cafe: Cafe): String {
-        val beforeStart = dateTimeUtil.getMinutesFromNowToTime(cafe.fromTime)
-        val beforeEnd = dateTimeUtil.getMinutesFromNowToTime(cafe.toTime)
-
-        return when {
-            (beforeStart >= 60) -> {
-                val hoursBeforeStart = beforeStart / 60
-                val minutesBeforeStart = beforeStart % 60
-                "Закрыто. Откроется через " + hoursBeforeStart + "ч " + minutesBeforeStart + " мин"
-            }
-            (beforeStart in 1 until 60) -> {
-                val minutesBeforeStart = beforeStart % 60
-                "Закрыто. Откроется через $minutesBeforeStart мин"
-            }
-            (beforeEnd >= 60) -> {
-                val hoursBeforeEnd = beforeEnd / 60
-                val minutesBeforeEnd = beforeEnd % 60
-                "Открыто. Закроется через $hoursBeforeEnd ч $minutesBeforeEnd мин"
-            }
-            (beforeEnd in 1 until 60) -> {
-                val minutesBeforeEnd = beforeEnd % 60
-                "Открыто. Закроется через $minutesBeforeEnd мин"
-            }
-            else -> {
-                "Закрыто. Откроется завтра"
-            }
-        }
     }
 
     override fun getSizeString(weight: Int?): String {

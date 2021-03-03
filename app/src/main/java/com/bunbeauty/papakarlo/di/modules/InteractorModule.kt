@@ -59,7 +59,6 @@ fun interactorModule() = module {
     } bind IUserInteractor::class
     single {
         CityInteractor(
-
             dataStoreRepo = get(),
             cityRepo = get(),
             cafeWorkerUtil = get(),
@@ -74,7 +73,6 @@ fun interactorModule() = module {
     single {
         CafeInteractor(
             cafeRepo = get(),
-            dateTimeUtil = get(),
         )
     } bind ICafeInteractor::class
     single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }

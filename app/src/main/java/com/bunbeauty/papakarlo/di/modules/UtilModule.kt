@@ -83,7 +83,6 @@ fun utilModule() = module {
     single {
         StringUtil(
             resourcesProvider = get(),
-            dateTimeUtil = get(),
         )
     } bind IStringUtil::class
     single { OrderUtil(productHelper = get()) } bind IOrderUtil::class

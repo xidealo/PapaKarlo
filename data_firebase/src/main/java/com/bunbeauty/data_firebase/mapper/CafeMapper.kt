@@ -18,8 +18,8 @@ class CafeMapper @Inject constructor(
         return Cafe(
             uuid = cafeEntity.uuid,
 
-            fromTime = cafeEntity.fromTime,
-            toTime = cafeEntity.toTime,
+            fromTime = cafeEntity.fromTime.toInt(),
+            toTime = cafeEntity.toTime.toInt(),
             phone = cafeEntity.phone,
             address = toCafeAddress(cafeEntity),
 

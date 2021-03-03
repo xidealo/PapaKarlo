@@ -19,7 +19,6 @@ interface IStringUtil {
     fun getCostString(cost: Int?): String
     fun getTimeString(hour: Int, minute: Int): String
     fun getCodeString(code: String): String
-    fun getIsClosedMessage(cafe: Cafe): String
     fun getSizeString(weight: Int?): String
     fun getCountString(count: Int): String
     fun getOrderStatusString(orderStatus: OrderStatus): String

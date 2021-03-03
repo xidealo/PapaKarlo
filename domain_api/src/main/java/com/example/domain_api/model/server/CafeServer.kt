@@ -9,14 +9,14 @@ data class CafeServer(
     @SerialName("uuid")
     val uuid: String,
 
-    @SerialName("address")
-    val address: String,
-
     @SerialName("fromTime")
-    val fromTime: String,
+    val fromTime: Int,
 
     @SerialName("toTime")
-    val toTime: String,
+    val toTime: Int,
+
+    @SerialName("offset")
+    val offset: Int,
 
     @SerialName("phone")
     val phone: String,
@@ -27,9 +27,12 @@ data class CafeServer(
     @SerialName("longitude")
     val longitude: Double,
 
+    @SerialName("address")
+    val address: String,
+
     @SerialName("cityUuid")
     val cityUuid: String,
 
-    @SerialName("visible")
-    val visible: Boolean,
+    @SerialName("isVisible")
+    val isVisible: Boolean,
 )

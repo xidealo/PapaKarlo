@@ -1,17 +1,19 @@
 package com.bunbeauty.domain.interactor.cafe
 
+import com.bunbeauty.common.Constants.SECONDS_IN_HOUR
+import com.bunbeauty.common.Constants.SECONDS_IN_MINUTE
+import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeInteractor @Inject constructor(
-    @Api private val cafeRepo: CafeRepo,
-    private val dateTimeUtil: IDateTimeUtil
+    @Api private val cafeRepo: CafeRepo
 ) : ICafeInteractor {
 
     override fun observeCafeList(): Flow<List<CafePreview>> {
@@ -19,11 +21,11 @@ class CafeInteractor @Inject constructor(
             observedCafeList.map { cafe ->
                 CafePreview(
                     uuid = cafe.uuid,
-                    fromTime = cafe.fromTime,
-                    toTime = cafe.toTime,
+                    fromTime = getCafeTime(cafe.fromTime),
+                    toTime = getCafeTime(cafe.toTime),
                     address = cafe.address,
-                    isOpen = cafe.isOpen(),
-                    willCloseIn = cafe.getCloseIn(),
+                    isOpen = isOpen(cafe.fromTime, cafe.toTime),
+                    closeIn = getCloseIn(cafe.toTime),
                 )
             }
         }
@@ -33,20 +35,38 @@ class CafeInteractor @Inject constructor(
         return cafeRepo.getCafeByUuid(cafeUuid)
     }
 
-    fun Cafe.isOpen(): Boolean {
-        val beforeStart = dateTimeUtil.getMinutesFromNowToTime(fromTime)
-        val beforeEnd = dateTimeUtil.getMinutesFromNowToTime(toTime)
+    fun getCafeTime(daySeconds: Int): String {
+        val hours = daySeconds / SECONDS_IN_HOUR
+        val minutes = (daySeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE
+        val minutesString = if (minutes < 10) {
+            "0$minutes"
+        } else {
+            minutes.toString()
+        }
+
+        return "$hours$TIME_DIVIDER$minutesString"
+    }
+
+    fun isOpen(fromTime: Int, toTime: Int): Boolean {
+        val beforeStart = getMinutesFromNowToTime(fromTime)
+        val beforeEnd = getMinutesFromNowToTime(toTime)
 
         return beforeStart < 0 && beforeEnd > 0
     }
 
-    fun Cafe.getCloseIn(): Int? {
-        val beforeEnd = dateTimeUtil.getMinutesFromNowToTime(toTime)
+    fun getCloseIn(toTime: Int): Int? {
+        val beforeEnd = getMinutesFromNowToTime(toTime)
 
         return if (beforeEnd in 1 until 60) {
             beforeEnd % 60
         } else {
             null
         }
+    }
+
+    fun getMinutesFromNowToTime(daySeconds: Int): Int {
+        val minutes = daySeconds / SECONDS_IN_MINUTE
+        val nowMinutes = DateTime.now().minuteOfDay
+        return minutes - nowMinutes
     }
 }

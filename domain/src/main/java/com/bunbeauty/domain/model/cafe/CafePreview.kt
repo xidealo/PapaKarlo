@@ -6,5 +6,5 @@ data class CafePreview(
     val toTime: String,
     val address: String,
     val isOpen: Boolean,
-    val willCloseIn: Int?,
+    val closeIn: Int?,
 )
