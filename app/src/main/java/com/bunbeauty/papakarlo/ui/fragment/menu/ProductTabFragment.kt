@@ -29,10 +29,6 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     @Inject
     lateinit var marginItemDecoration: MarginItemDecoration
 
-    override val isLogoVisible = true
-    override val isCartVisible = true
-    override val isBottomBarVisible = true
-
     private val productCode: ProductCode by argument()
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -75,9 +71,6 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     private fun setupRecyclerView() {
         viewDataBinding.fragmentProductsRvResult.addItemDecoration(marginItemDecoration)
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
-
-//        if (productCode == ProductCode.ALL)
-//            viewDataBinding.fragmentProductsRvResult.itemAnimator = SlideInLeftAnimator()
 
         menuProductsAdapter.setOnItemClickListener { menuProductItem ->
             viewModel.onProductClicked(menuProductItem)

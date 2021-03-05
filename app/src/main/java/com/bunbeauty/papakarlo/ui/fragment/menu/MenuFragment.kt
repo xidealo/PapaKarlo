@@ -12,16 +12,13 @@ import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
+class MenuFragment : BaseFragment<FragmentMenuBinding>() {
 
-    override val isLogoVisible = true
-    override val isCartVisible = true
-    override val isBottomBarVisible = true
     override val viewModel: CartViewModel by viewModels { viewModelFactory }
 
     private var mediator: TabLayoutMediator? = null

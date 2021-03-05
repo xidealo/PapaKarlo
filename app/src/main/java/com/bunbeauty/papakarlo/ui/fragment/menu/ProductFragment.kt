@@ -12,18 +12,15 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
+class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     @Inject
     lateinit var stringUtil: IStringUtil
-
-    override val isCartVisible = true
-    override val isBottomBarVisible = true
 
     override val viewModel: ProductViewModel by viewModels { viewModelFactory }
 

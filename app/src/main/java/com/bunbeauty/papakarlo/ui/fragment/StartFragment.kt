@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.onEach
 
 class StartFragment : BaseFragment<FragmentStartBinding>() {
 
-    override val isToolbarVisible = false
     override val viewModel: StartViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {

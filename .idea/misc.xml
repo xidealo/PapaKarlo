@@ -64,7 +64,7 @@
         <entry key="app/src/main/res/drawable/loading_screen_papa_karlo.xml" value="0.356" />
         <entry key="app/src/main/res/drawable/logo_top.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/switcher_thumb.xml" value="0.2085" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/bottom_sheet_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_addresses.xml" value="0.4" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />

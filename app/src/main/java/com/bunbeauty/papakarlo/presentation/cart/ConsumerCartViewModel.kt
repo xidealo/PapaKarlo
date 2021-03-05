@@ -39,6 +39,9 @@ class ConsumerCartViewModel @Inject constructor(
     private val mutableOldTotalCost: MutableStateFlow<String> = MutableStateFlow("")
     val oldTotalCost: StateFlow<String> = mutableOldTotalCost.asStateFlow()
 
+    private val mutableNewTotalCost: MutableStateFlow<String> = MutableStateFlow("")
+    val newTotalCost: StateFlow<String> = mutableNewTotalCost.asStateFlow()
+
     init {
         observeCartProducts()
         observeDelivery()
@@ -75,6 +78,8 @@ class ConsumerCartViewModel @Inject constructor(
             }
             val oldTotalCost = productHelper.getOldTotalCost(productList)
             mutableOldTotalCost.value = stringUtil.getCostString(oldTotalCost)
+            val newTotalCost = productHelper.getNewTotalCost(productList)
+            mutableNewTotalCost.value = stringUtil.getCostString(newTotalCost)
         }.launchIn(viewModelScope)
     }
 

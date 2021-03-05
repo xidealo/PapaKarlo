@@ -45,13 +45,13 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
             fragmentConsumerCartTvOldTotalCost.strikeOutText()
             viewModel.deliveryInfo.onEach { deliveryString ->
                 fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-            }.startedLaunch(viewLifecycleOwner)
+            }.startedLaunch()
             viewModel.oldTotalCost.onEach { oldTotalCost ->
                 fragmentConsumerCartTvOldTotalCost.text = oldTotalCost
-            }.startedLaunch(viewLifecycleOwner)
-            viewModel.cartCost.onEach { cartCost ->
-                fragmentConsumerCartTvNewTotalCost.text = cartCost
-            }.startedLaunch(viewLifecycleOwner)
+            }.startedLaunch()
+            viewModel.newTotalCost.onEach { newTotalCost ->
+                fragmentConsumerCartTvNewTotalCost.text = newTotalCost
+            }.startedLaunch()
         }
     }
 

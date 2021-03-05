@@ -56,7 +56,7 @@ object Application {
 
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
-    const val versionCode = 113
+    const val versionCode = 114
 }
 
 object AndroidSdk {

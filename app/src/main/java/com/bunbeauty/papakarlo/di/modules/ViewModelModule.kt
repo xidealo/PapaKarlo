@@ -166,7 +166,13 @@ fun viewModelModule() = module {
         )
     }
     viewModel { MenuViewModel() }
-    viewModel { MainViewModel() }
+    viewModel {
+        MainViewModel(
+            cartProductInteractor = get(),
+            mainInteractor = get(),
+            stringUtil = get(),
+        )
+    }
     viewModel {
         ConsumerCartViewModel(
             cartProductRepo = get(),

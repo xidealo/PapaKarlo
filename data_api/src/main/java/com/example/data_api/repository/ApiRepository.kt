@@ -52,7 +52,8 @@ class ApiRepository @Inject constructor(
     override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
         return getData(
             path = "city",
-            serializer = ListServer.serializer(CityServer.serializer())
+            serializer = ListServer.serializer(CityServer.serializer()),
+            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
         )
     }
 

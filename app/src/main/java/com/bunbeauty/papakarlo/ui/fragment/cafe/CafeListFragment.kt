@@ -7,21 +7,18 @@ import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CafeAdapter
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
+class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
 
     @Inject
     lateinit var cafeAdapter: CafeAdapter
 
     @Inject
     lateinit var marginItemDecoration: MarginItemDecoration
-
-    override val isCartVisible = true
-    override val isBottomBarVisible = true
 
     override val viewModel: CafeListViewModel by viewModels { viewModelFactory }
 

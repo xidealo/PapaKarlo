@@ -36,11 +36,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     val viewDataBinding: B
         get() = checkNotNull(mutableViewDataBinding)
 
-    open val isToolbarVisible = true
-    open val isLogoVisible = false
-    open val isCartVisible = false
-    open val isBottomBarVisible = false
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -65,12 +60,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? IBottomNavigationBar)?.setupBottomNavigationBar(isBottomBarVisible)
-        (activity as? IToolbar)?.setToolbarConfiguration(
-            isToolbarVisible,
-            isLogoVisible,
-            isCartVisible
-        )
         activity?.invalidateOptionsMenu()
 
         viewDataBinding.lifecycleOwner = this

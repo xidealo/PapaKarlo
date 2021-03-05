@@ -7,7 +7,7 @@
 
     <action
         android:id="@+id/global_to_cartFragment"
-        app:destination="@id/cart_fragment" />
+        app:destination="@id/consumerCartFragment" />
 
     <fragment
         android:id="@+id/startFragment"
@@ -64,7 +64,7 @@
             app:argType="string" />
     </dialog>
     <fragment
-        android:id="@+id/cart_fragment"
+        android:id="@+id/consumerCartFragment"
         android:name="com.bunbeauty.papakarlo.ui.fragment.cart.ConsumerCartFragment"
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_consumer_cart">

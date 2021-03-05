@@ -20,7 +20,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     lateinit var orderAdapter: OrderAdapter
 
     @Inject
-    lateinit var mardinItemDecoration: MarginItemDecoration
+    lateinit var marginItemDecoration: MarginItemDecoration
 
     override val viewModel: OrdersViewModel by viewModels { viewModelFactory }
 
@@ -32,7 +32,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
-            fragmentOrdersRvResult.addItemDecoration(mardinItemDecoration)
+            fragmentOrdersRvResult.addItemDecoration(marginItemDecoration)
             fragmentOrdersRvResult.adapter = orderAdapter
 
             viewModel.ordersState.onEach { state ->

@@ -9,14 +9,11 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 
 
-class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
-
-    override val isCartVisible = true
-    override val isBottomBarVisible = true
+class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override val viewModel: ProfileViewModel by viewModels { viewModelFactory }
 
