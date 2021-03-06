@@ -4,15 +4,18 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
+import com.bunbeauty.papakarlo.data.local.db.discount.DiscountRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val cafeRepo: CafeRepo
+    private val cafeRepo: CafeRepo,
+    private val discountRepo: DiscountRepo
 ) : BaseViewModel() {
 
     var navigator: WeakReference<MainNavigator>? = null
@@ -31,8 +34,14 @@ class MainViewModel @Inject constructor(
     }
 
     fun refreshCafeList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             cafeRepo.refreshCafeList()
+        }
+    }
+
+    fun getDiscounts() {
+        viewModelScope.launch(Dispatchers.IO) {
+            discountRepo.getDiscounts()
         }
     }
 

@@ -22,9 +22,8 @@ class CafeRepository @Inject constructor(
 
     override val cafeEntityListLiveData = cafeDao.getCafeListLiveData()
 
-    override suspend fun refreshCafeList() = withContext(IO) {
+    override suspend fun refreshCafeList() {
         cafeDao.deleteAll()
-
         apiRepository.getCafeList().collect { cafeList ->
             for (cafe in cafeList) {
                 saveCafe(cafe)
@@ -49,11 +48,10 @@ class CafeRepository @Inject constructor(
         }
     }
 
-    override fun getCafeById(cafeId: String): LiveData<Cafe> {
-        return cafeDao.getCafeById(cafeId)
-    }
+    override fun getCafeById(cafeId: String) = cafeDao.getCafeById(cafeId)
 
-    override suspend fun getCafeEntityByDistrict(districtId: String): CafeEntity = withContext(IO) {
+
+    override suspend fun getCafeEntityByDistrict(districtId: String) =
         cafeDao.getCafeEntityByDistrict(districtId)
-    }
+
 }

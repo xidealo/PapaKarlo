@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.enums.ProductCode
 
 interface MenuProductRepo {
 
-    fun insert(menuProduct: MenuProduct)
+    suspend fun insert(menuProduct: MenuProduct)
 
     fun getMenuProductList(productCode: ProductCode): LiveData<List<MenuProduct>>
 }

@@ -10,14 +10,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MenuProductRepository @Inject constructor(private val menuProductDao: MenuProductDao) :
-    MenuProductRepo, CoroutineScope {
+    MenuProductRepo {
 
-    override val coroutineContext = Job() + IO
-
-    override fun insert(menuProduct: MenuProduct) {
-        launch {
-            menuProductDao.insert(menuProduct)
-        }
+    override suspend fun insert(menuProduct: MenuProduct) {
+        menuProductDao.insert(menuProduct)
     }
 
     override fun getMenuProductList(productCode: ProductCode): LiveData<List<MenuProduct>> {

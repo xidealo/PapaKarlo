@@ -2,9 +2,11 @@ package com.bunbeauty.papakarlo.data.api.firebase
 
 import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
+import com.bunbeauty.papakarlo.data.local.db.discount.DiscountRepo
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
+import com.bunbeauty.papakarlo.data.model.discount.Discount
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.enums.ProductCode
@@ -72,11 +74,12 @@ class ApiRepository @Inject constructor(
         return cafeListSharedFlow
     }
 
+    //TODO(refactor to repository call)
     override fun getMenuProductList() {
         val menuProductsRef = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(MenuProduct.MENU_PRODUCTS)
+            .child(MENU_PRODUCTS)
 
         menuProductsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -84,20 +87,9 @@ class ApiRepository @Inject constructor(
 
                     val menuProduct = snapshot.getValue(MenuProduct::class.java)!!
                     menuProduct.uuid = snapshot.key!!
-                        /*MenuProduct(
-                        uuid = snapshot.key!!,
-                        name = snapshot.child(MenuProduct.NAME).value.toString(),
-                        cost = snapshot.child(MenuProduct.COST).value.toString().toInt(),
-                        weight = snapshot.child(MenuProduct.WEIGHT).value.toString().toInt(),
-                        description = snapshot.child(MenuProduct.DESCRIPTION).value.toString(),
-                        photoLink = snapshot.child(MenuProduct.PHOTO_LINK).value.toString(),
-                        onFire = snapshot.child(MenuProduct.ON_FIRE).value.toString().toBoolean(),
-                        inOven = snapshot.child(MenuProduct.IN_OVEN).value.toString().toBoolean(),
-                        productCode = ProductCode.valueOf(
-                            snapshot.child(MenuProduct.PRODUCT_CODE).value.toString()
-                        )
-                    )*/
-                    menuProductRepo.insert(menuProduct)
+                    launch {
+                        menuProductRepo.insert(menuProduct)
+                    }
                 }
             }
 
@@ -106,7 +98,35 @@ class ApiRepository @Inject constructor(
         })
     }
 
+    override fun getDiscounts(): SharedFlow<List<Discount>> {
+        val discountsSharedFlow = MutableSharedFlow<List<Discount>>()
+
+        val discountsRef = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(DISCOUNTS)
+
+        discountsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val discountList = mutableListOf<Discount>()
+                for (snapshot in dataSnapshot.children) {
+                    val discount = snapshot.getValue(Discount::class.java)!!
+                    discount.discountEntity.discountEntityUuid = snapshot.key!!
+                    discountList.add(discount)
+                }
+                launch(IO) {
+                    discountsSharedFlow.emit(discountList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+        return discountsSharedFlow
+    }
+
     companion object {
         private const val COMPANY = "COMPANY"
+        private const val MENU_PRODUCTS: String = "menu_products"
+        private const val DISCOUNTS: String = "discounts"
     }
 }

@@ -22,17 +22,7 @@ data class MenuProduct(
     var barcode: Int = 0
 ) : BaseModel(), Parcelable {
     companion object {
-        const val MENU_PRODUCTS: String = "menu_products"
         const val PRODUCTS: String = "products"
-        const val PRODUCT: String = "product"
-
-        const val NAME: String = "name"
-        const val COST: String = "cost"
-        const val WEIGHT: String = "weight"
-        const val DESCRIPTION: String = "description"
-        const val PHOTO_LINK: String = "photo link"
-        const val ON_FIRE: String = "on fire"
-        const val IN_OVEN: String = "in oven"
         const val PRODUCT_CODE: String = "product code"
     }
 }

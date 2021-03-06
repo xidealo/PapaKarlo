@@ -8,6 +8,8 @@ import com.bunbeauty.papakarlo.data.local.converter.ProductCodeConverter
 import com.bunbeauty.papakarlo.data.local.db.address.AddressDao
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeDao
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductDao
+import com.bunbeauty.papakarlo.data.local.db.discount.DiscountDao
+import com.bunbeauty.papakarlo.data.local.db.discount_product.DiscountProductDao
 import com.bunbeauty.papakarlo.data.local.db.district.DistrictDao
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductDao
 import com.bunbeauty.papakarlo.data.local.db.order.OrderDao
@@ -16,6 +18,8 @@ import com.bunbeauty.papakarlo.data.model.*
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.data.model.DistrictEntity
+import com.bunbeauty.papakarlo.data.model.discount.DiscountEntity
+import com.bunbeauty.papakarlo.data.model.discount.DiscountProduct
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 
 @Database(
@@ -26,8 +30,10 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
         Address::class,
         CafeEntity::class,
         DistrictEntity::class,
-        Street::class
-    ], version = 40
+        Street::class,
+        DiscountEntity::class,
+        DiscountProduct::class
+    ], version = 43
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
@@ -38,4 +44,6 @@ abstract class LocalDatabase : RoomDatabase() {
     abstract fun getCafeDao(): CafeDao
     abstract fun getDistrictDao(): DistrictDao
     abstract fun getStreetDao(): StreetDao
+    abstract fun getDiscountDao(): DiscountDao
+    abstract fun getDiscountProductDao(): DiscountProductDao
 }

@@ -16,9 +16,4 @@ abstract class BaseModel(
     @Transient
     @Ignore
     open var uuid: String = ""
-) {
-    companion object {
-        const val UUID: String = "uuid"
-        const val ID: String = "id"
-    }
-}
+)

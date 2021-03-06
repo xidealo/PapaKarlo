@@ -9,5 +9,4 @@ data class District(
 
     @Relation(parentColumn = "id", entityColumn = "districtId")
     val streets: List<Street> = arrayListOf()
-) {
-}
+)

@@ -16,15 +16,4 @@ data class CafeEntity(
     val phone: String = "",
     @Embedded
     val coordinate: Coordinate = Coordinate()
-) {
-
-    companion object {
-
-        const val START_TIME = "start_time"
-        const val END_TIME = "end_time"
-        const val PHONE = "phone"
-        const val NAME = "name"
-        const val LATITUDE = "latitude"
-        const val LONGITUDE = "longitude"
-    }
-}
+)
