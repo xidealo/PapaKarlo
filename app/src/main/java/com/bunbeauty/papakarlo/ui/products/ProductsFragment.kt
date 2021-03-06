@@ -3,15 +3,13 @@ package com.bunbeauty.papakarlo.ui.products
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.BR
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections
 import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections.actionMainFragmentToProductFragment
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import java.lang.ref.WeakReference
@@ -20,10 +18,6 @@ import javax.inject.Inject
 class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>(),
     ProductsNavigator {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_products
-    override var viewModelClass = ProductsViewModel::class.java
-
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter
 
@@ -31,20 +25,16 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         viewModelComponent.inject(this)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            viewModel.productCode = it.getParcelable(MenuProduct.PRODUCT_CODE)!!
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.navigator = WeakReference(this)
         setupRecyclerView()
-        viewModel.productListLiveData.observe(viewLifecycleOwner) { productList ->
+        viewModel.productCode = requireArguments().getParcelable(MenuProduct.PRODUCT_CODE)!!
+        viewModel.navigator = WeakReference(this)
+        subscribe(viewModel.isLoadingLiveData) { isLoading ->
+            viewDataBinding.activityMainPbLoading.toggleVisibility(isLoading)
+        }
+        subscribe(viewModel.productListLiveData) { productList ->
             menuProductsAdapter.setItemList(productList.sortedBy { it.name })
         }
     }

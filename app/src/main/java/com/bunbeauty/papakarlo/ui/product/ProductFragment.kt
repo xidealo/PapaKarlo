@@ -19,9 +19,6 @@ import javax.inject.Inject
 class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductViewModel>(),
     ProductNavigator {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_product
-    override var viewModelClass = ProductViewModel::class.java
     override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
@@ -17,9 +16,8 @@ import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.CreationOrderViewModel
-import com.bunbeauty.papakarlo.view_model.MainViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
+import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -27,9 +25,6 @@ class CreationOrderFragment :
     CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
     CreationOrderNavigator {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_creation_order
-    override var viewModelClass = CreationOrderViewModel::class.java
     override lateinit var title: String
 
     @Inject
@@ -39,8 +34,6 @@ class CreationOrderFragment :
         viewModelComponent.inject(this)
     }
 
-    var deferredTime = ""
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_order)
@@ -48,45 +41,46 @@ class CreationOrderFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-
-        viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.isDeliveryLiveData.value = isChecked
-        }
         setAddressesObserver()
-        viewDataBinding.fragmentCreationOrderMcvAddressPick.setOnClickListener {
-            goToAddresses()
-        }
         viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
             (activity as MainActivity).showError(it)
         }
-
         viewModel.getCartProductsCost()
         viewModel.cartLiveData.observe(viewLifecycleOwner) {
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = "Оформить заказ на $it"
         }
 
+        viewDataBinding.viewModel = viewModel
+        viewDataBinding.fragmentCreationOrderMcvAddressPick.setOnClickListener {
+            goToAddresses()
+        }
+        viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.isDeliveryLiveData.value = isChecked
+        }
         viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
         viewDataBinding.fragmentOrderEtEmail.setText(viewModel.email)
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
         viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
         viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
             val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(0)
-                .setMinute(0)
+                .setTimeFormat(CLOCK_24H)
+                .setHour(viewModel.deferredHours ?: 0)
+                .setMinute(viewModel.deferredMinutes ?: 0)
                 .setTitleText(requireContext().getString(R.string.title_creation_order_deferred_time))
                 .build()
             picker.show(parentFragmentManager, "TimePicker")
 
             picker.addOnPositiveButtonClickListener {
+                viewModel.deferredHours = picker.hour
+                viewModel.deferredMinutes = picker.minute
                 viewDataBinding.fragmentCreationOrderBtnDeferred.text =
-                    "Время доставки ${picker.hour}:${picker.minute}"
-                deferredTime = "${picker.hour}:${picker.minute}"
+                    "Время доставки " + stringHelper.toStringTime(picker.hour, picker.minute)
             }
             picker.addOnNegativeButtonClickListener {
                 viewDataBinding.fragmentCreationOrderBtnDeferred.text =
                     requireContext().getString(R.string.action_creation_order_deferred)
-                deferredTime = ""
+                viewModel.deferredHours = null
+                viewModel.deferredMinutes = null
             }
         }
     }
@@ -98,7 +92,7 @@ class CreationOrderFragment :
     }
 
     override fun createDeliveryOrder() {
-        if (!(activity as MainActivity).viewModel.isNetworkConnected) {
+        if (!viewModel.isNetworkConnected()) {
             (activity as MainActivity).showError(requireContext().getString(R.string.error_creation_order_connect))
             return
         }
@@ -128,12 +122,11 @@ class CreationOrderFragment :
         }
 
         viewModel.createOrder(
-            OrderEntity(
-                comment = viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
-                phone = viewDataBinding.fragmentOrderEtPhone.text.toString(),
-                email = viewDataBinding.fragmentOrderEtEmail.text.toString().trim(),
-                deferred = deferredTime
-            )
+            viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
+            viewDataBinding.fragmentOrderEtPhone.text.toString(),
+            viewDataBinding.fragmentOrderEtEmail.text.toString().trim(),
+            viewModel.deferredHours,
+            viewModel.deferredMinutes
         )
 
         val inputMethodManager =
@@ -154,7 +147,7 @@ class CreationOrderFragment :
         findNavController().navigate(toCreationAddressFragment())
     }
 
-    fun goToAddresses() {
+    private fun goToAddresses() {
         findNavController().navigate(
             toAddressesBottomSheet(viewModel.isDeliveryLiveData.value!!)
         )

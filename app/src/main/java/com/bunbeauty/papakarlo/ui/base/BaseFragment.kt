@@ -4,29 +4,23 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import com.google.android.material.snackbar.Snackbar
+import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(){
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment() {
 
-    abstract var layoutId: Int
-    abstract var viewModelVariable: Int
-    abstract var viewModelClass: Class<VM>
 
-    lateinit var viewDataBinding: B
-    lateinit var viewModel: VM
+    private var _viewDataBinding: B? = null
+    protected val viewDataBinding get() = _viewDataBinding!!
+    protected lateinit var viewModel: VM
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
@@ -39,32 +33,50 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
                 .getViewModelComponent()
                 .create(this)
         inject(viewModelComponent)
-
-        viewModel = ViewModelProvider(this, modelFactory).get(viewModelClass)
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(false)
-    }
-
+    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        setHasOptionsMenu(false)
+
+        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
+
+        val viewBindingClass = getViewBindingClass()
+        val inflateMethod = viewBindingClass.getMethod(
+            "inflate",
+            LayoutInflater::class.java,
+            ViewGroup::class.java,
+            Boolean::class.java,
+        )
+        _viewDataBinding = inflateMethod.invoke(viewBindingClass, inflater, container, false) as B
+
         return viewDataBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewBindingClass() =
+        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
+
+    @Suppress("UNCHECKED_CAST")
+    private fun getViewModelClass() =
+        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
+
+    protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
+        liveData.observe(viewLifecycleOwner, observer::invoke)
+    }
+
+
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.setVariable(viewModelVariable, viewModel)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
-    }
+    }*/
 }

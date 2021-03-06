@@ -228,7 +228,6 @@
                             android:id="@+id/fragment_creation_order_btn_deferred"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            android:onClick="@{()->viewModel.onAddAddressClick()}"
                             android:text="@string/hint_creation_order_deferred"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

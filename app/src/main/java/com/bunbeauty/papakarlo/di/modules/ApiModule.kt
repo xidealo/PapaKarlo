@@ -4,6 +4,8 @@ import com.bunbeauty.papakarlo.data.api.firebase.ApiRepository
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.local.datastore.DataStoreHelper
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
+import com.bunbeauty.papakarlo.utils.network.INetworkHelper
+import com.bunbeauty.papakarlo.utils.network.NetworkHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
@@ -38,4 +40,7 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
+
+    @Binds
+    abstract fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
 }

@@ -16,9 +16,6 @@ import com.bunbeauty.papakarlo.view_model.MainViewModel
 
 class MainFragment: CartClickableFragment<FragmentMainBinding, MainViewModel>(), MainNavigator {
 
-    override var layoutId = R.layout.fragment_main
-    override var viewModelClass: Class<MainViewModel> = MainViewModel::class.java
-    override var viewModelVariable: Int = BR.viewModel
     override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
