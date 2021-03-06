@@ -6,7 +6,6 @@ import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
-import com.bunbeauty.papakarlo.utils.live_data.ConnectionLiveData
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
@@ -17,11 +16,6 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var navigator: WeakReference<MainNavigator>? = null
-
-    var isNetworkConnected = false
-
-    @Inject
-    lateinit var connectionLiveData: ConnectionLiveData
 
     @Inject
     lateinit var dataStoreHelper: IDataStoreHelper

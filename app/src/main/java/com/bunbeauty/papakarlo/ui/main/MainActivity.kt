@@ -54,10 +54,6 @@ class MainActivity : AppCompatActivity() {
             appBarConfiguration
         )
 
-        viewModel.connectionLiveData.observe(this) { isNetworkConnected ->
-            viewModel.isNetworkConnected = isNetworkConnected
-        }
-
         // Uploading menu products to FB
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }

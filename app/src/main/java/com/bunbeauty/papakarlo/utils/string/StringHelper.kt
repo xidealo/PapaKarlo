@@ -101,6 +101,14 @@ class StringHelper @Inject constructor() : IStringHelper {
         return Time(orderEntity.time, 3).toStringTimeHHMM()
     }
 
+    override fun toStringTime(hours: Int?, minutes: Int?): String {
+        return if (hours == null || minutes == null) {
+            ""
+        } else {
+            hours.toString() + ":" + addFirstZero(minutes)
+        }
+    }
+
     override fun toStringWorkingHours(cafeEntity: CafeEntity): String {
         return "${cafeEntity.fromTime} - ${cafeEntity.toTime}"
     }
@@ -138,5 +146,13 @@ class StringHelper @Inject constructor() : IStringHelper {
             "Этаж: ${address.floor}"
         else
             ""
+    }
+
+    private fun addFirstZero(number: Int): String {
+        return if (number < 10) {
+             "0$number"
+        } else {
+            number.toString()
+        }
     }
 }

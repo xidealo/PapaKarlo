@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.view_model
 
 import androidx.lifecycle.Transformations
-import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +15,6 @@ class ConsumerCartViewModel @Inject constructor() : BaseViewModel(),
     CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
-
-    var navigator: WeakReference<ConsumerCartNavigator>? = null
 
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->

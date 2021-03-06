@@ -16,5 +16,6 @@ interface IStringHelper {
     fun toStringFullPrice(cartProduct: CartProduct): String
     fun toStringFullPrice(order: Order): String
     fun toStringTime(orderEntity: OrderEntity): String
+    fun toStringTime(hours: Int?, minutes: Int?): String
     fun toStringWorkingHours(cafeEntity: CafeEntity): String
 }

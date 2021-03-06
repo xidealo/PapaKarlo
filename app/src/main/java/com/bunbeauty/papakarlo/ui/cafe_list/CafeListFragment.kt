@@ -26,9 +26,6 @@ import javax.inject.Inject
 class CafeListFragment : TopBarFragment<FragmentCafeListBinding, CafeListViewModel>(),
     CafeListNavigator {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_cafe_list
-    override var viewModelClass = CafeListViewModel::class.java
     override lateinit var title: String
 
     @Inject

@@ -16,9 +16,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_menu
-    override var viewModelClass = MenuViewModel::class.java
     override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -71,12 +68,5 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
 
     companion object {
         const val TAG = "MenuFragment"
-
-        @JvmStatic
-        fun newInstance(menuProducts: ArrayList<MenuProduct>) = MenuFragment().apply {
-            arguments = Bundle().apply {
-                putParcelableArrayList(MenuProduct.PRODUCTS, menuProducts)
-            }
-        }
     }
 }

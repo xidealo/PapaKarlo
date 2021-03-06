@@ -16,9 +16,6 @@ import java.lang.ref.WeakReference
 class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBinding,
         CreationAddressViewModel>(), CreationAddressNavigator {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_creation_address
-    override var viewModelClass = CreationAddressViewModel::class.java
     override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -27,10 +24,13 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_creation_address)
+
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel.navigator = WeakReference(this)
         viewModel.getStreets()
 
-        super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.viewModel = viewModel
     }
 
     override fun createAddress() {

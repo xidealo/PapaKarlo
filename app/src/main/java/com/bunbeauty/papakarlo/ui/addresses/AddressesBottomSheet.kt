@@ -7,7 +7,7 @@ import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.setViewVisibility
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
@@ -31,19 +31,19 @@ class AddressesBottomSheet :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.navigator = WeakReference(this)
-        
         val isDelivery = fromBundle(requireArguments()).isDelivery
-        viewDataBinding.bottomSheetAddressBtnCreateAddress.setViewVisibility(isDelivery)
-        viewDataBinding.fragmentCreationOrderIvCreateAddress.setViewVisibility(isDelivery)
-        viewModel.isDelivery = isDelivery
-
         addressesAdapter.addressesViewModel = viewModel
-        viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
 
+        viewModel.navigator = WeakReference(this)
+        viewModel.isDelivery = isDelivery
         viewModel.addressesLiveData.observe(viewLifecycleOwner) {
             addressesAdapter.setItemList(it)
         }
+
+        viewDataBinding.viewModel = viewModel
+        viewDataBinding.bottomSheetAddressBtnCreateAddress.toggleVisibility(isDelivery)
+        viewDataBinding.fragmentCreationOrderIvCreateAddress.toggleVisibility(isDelivery)
+        viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
     }
 
     override fun goToBack() {

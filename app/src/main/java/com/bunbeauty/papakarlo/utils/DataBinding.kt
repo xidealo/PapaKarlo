@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.utils
 
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ProgressBar

@@ -19,13 +19,8 @@ import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ConsumerCartFragment :
-    CartClickableFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>(),
-    ConsumerCartNavigator {
+class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>() {
 
-    override var viewModelVariable: Int = BR.viewModel
-    override var layoutId: Int = R.layout.fragment_consumer_cart
-    override var viewModelClass = ConsumerCartViewModel::class.java
     override lateinit var title: String
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -41,21 +36,20 @@ class ConsumerCartFragment :
 
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.navigator = WeakReference(this)
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList.sortedBy { it.menuProduct.name })
         }
+        viewModel.cartLiveData.observe(viewLifecycleOwner) {
+            viewDataBinding.fragmentConsumerCartBtnCrateOrder.text = "Оформить заказ на $it"
+        }
 
         setupRecyclerView()
+        viewDataBinding.viewModel = viewModel
         viewDataBinding.fragmentConsumerCartBtnMenu.setOnClickListener {
             goToMenu()
         }
         viewDataBinding.fragmentConsumerCartBtnCrateOrder.setOnClickListener {
             goToOrder()
-        }
-
-        viewModel.cartLiveData.observe(viewLifecycleOwner) {
-            viewDataBinding.fragmentConsumerCartBtnCrateOrder.text = "Оформить заказ на $it"
         }
     }
 
@@ -71,12 +65,8 @@ class ConsumerCartFragment :
         findNavController().navigate(backToMainFragment())
     }
 
-    override fun goToOrder() {
+    private fun goToOrder() {
         findNavController().navigate(toCreationOrder())
-    }
-
-    override fun showError(message: String) {
-        (activity as MainActivity).showError(message)
     }
 
 }

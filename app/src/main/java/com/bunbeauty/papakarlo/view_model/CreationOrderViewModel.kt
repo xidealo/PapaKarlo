@@ -14,9 +14,10 @@ import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
+import com.bunbeauty.papakarlo.utils.network.INetworkHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
+import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
@@ -29,7 +30,9 @@ import javax.inject.Inject
 
 class CreationOrderViewModel @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
+    private val networkHelper: INetworkHelper,
     private val resourcesProvider: IResourcesProvider,
+    private val stringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
@@ -39,6 +42,9 @@ class CreationOrderViewModel @Inject constructor(
 
     val errorMessageLiveData = MutableLiveData<String>()
     val hasAddressField = ObservableField(true)
+
+    var deferredHours: Int? = null
+    var deferredMinutes: Int? = null
 
     val isDeliveryLiveData = MutableLiveData(true)
     private val deliveryAddressLiveData: LiveData<Address?> by lazy {
@@ -94,7 +100,20 @@ class CreationOrderViewModel @Inject constructor(
         return cartProduct.menuProduct.cost * cartProduct.count
     }
 
-    fun createOrder(orderEntity: OrderEntity) {
+    fun createOrder(
+        comment: String,
+        phone: String,
+        email: String,
+        deferredHours: Int?,
+        deferredMinutes: Int?
+    ) {
+        val orderEntity = OrderEntity(
+            comment = comment,
+            phone = phone,
+            email = email,
+            deferred = stringHelper.toStringTime(deferredHours, deferredMinutes)
+        )
+
         viewModelScope.launch(IO) {
             if (addressLiveData.value == null) {
                 withContext(Main) {
@@ -129,11 +148,13 @@ class CreationOrderViewModel @Inject constructor(
     }
 
     fun generateCode(): String {
-        val number = (DateTime.now().secondOfDay % CODE_COUNT)
         val letters = resourcesProvider.getString(R.string.code_letters)
-        val letter = letters[number % letters.length]
 
-        return letter.toString() + (number / letters.length)
+        val number = (DateTime.now().secondOfDay % (letters.length * CODE_NUMBER_COUNT))
+        val codeLetter = letters[number % letters.length].toString()
+        val codeNumber = (number / letters.length).toString()
+
+        return codeLetter + codeNumber
     }
 
     fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {
@@ -164,6 +185,10 @@ class CreationOrderViewModel @Inject constructor(
         return true
     }
 
+    fun isNetworkConnected(): Boolean {
+        return networkHelper.isNetworkConnected()
+    }
+
     fun onOrderClick() {
         navigator?.get()?.createDeliveryOrder()
     }
@@ -173,6 +198,6 @@ class CreationOrderViewModel @Inject constructor(
     }
 
     companion object {
-        private const val CODE_COUNT = 2400
+        private const val CODE_NUMBER_COUNT = 100 // 0 - 99
     }
 }
