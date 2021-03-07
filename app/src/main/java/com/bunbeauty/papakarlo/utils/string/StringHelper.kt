@@ -67,7 +67,7 @@ class StringHelper @Inject constructor() : IStringHelper {
     }
 
     override fun toStringWeight(menuProduct: MenuProduct): String {
-        return if (menuProduct.productCode == ProductCode.DRINK) {
+        return if (menuProduct.productCode == ProductCode.DRINK.name) {
             val liters = menuProduct.weight / 1000
             val milliliters = menuProduct.weight % 1000
             var volumeString = ""
@@ -81,7 +81,11 @@ class StringHelper @Inject constructor() : IStringHelper {
 
             volumeString
         } else {
-            "${menuProduct.weight} г"
+            if (menuProduct.weight > 0) {
+                "${menuProduct.weight} г"
+            } else {
+                ""
+            }
         }
     }
 

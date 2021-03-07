@@ -49,7 +49,7 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         )
         val tabIconList = arrayListOf(
             R.drawable.ic_all_products,
-            R.drawable.ic_all_products,
+            R.drawable.ic_combo,
             R.drawable.ic_pizza,
             R.drawable.ic_barbecue,
             R.drawable.ic_burger,

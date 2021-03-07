@@ -14,5 +14,5 @@ interface MenuProductDao: BaseDao<MenuProduct> {
     fun getMenuProductListLiveData(): LiveData<List<MenuProduct>>
 
     @Query("SELECT * FROM MenuProduct WHERE productCode = :productCode ORDER BY cost")
-    fun getMenuProductListByCodeLiveData(productCode: ProductCode): LiveData<List<MenuProduct>>
+    fun getMenuProductListByCodeLiveData(productCode: String): LiveData<List<MenuProduct>>
 }

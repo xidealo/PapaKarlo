@@ -20,7 +20,7 @@ class MenuProductRepository @Inject constructor(private val menuProductDao: Menu
         return if (productCode == ProductCode.ALL) {
             menuProductDao.getMenuProductListLiveData()
         } else {
-            menuProductDao.getMenuProductListByCodeLiveData(productCode)
+            menuProductDao.getMenuProductListByCodeLiveData(productCode.name)
         }
     }
 }
