@@ -29,6 +29,7 @@
 
     <!-- MENU -->
     <string name="title_menu_all">Все</string>
+    <string name="title_menu_combo">Комбо</string>
     <string name="title_menu_pizza">Пицца</string>
     <string name="title_menu_barbecue">На мангале</string>
     <string name="title_menu_burger">Бургеры</string>

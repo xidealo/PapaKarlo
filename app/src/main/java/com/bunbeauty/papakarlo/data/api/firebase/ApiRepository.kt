@@ -1,15 +1,11 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
-import android.util.Log
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.papakarlo.data.local.db.discount.DiscountRepo
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
-import com.bunbeauty.papakarlo.data.model.discount.Discount
-import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.data.model.order.Order
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -98,29 +94,14 @@ class ApiRepository @Inject constructor(
         })
     }
 
-    override fun getDiscounts(): SharedFlow<List<Discount>> {
-        val discountsSharedFlow = MutableSharedFlow<List<Discount>>()
+    override fun getDiscounts(): SharedFlow<List<*>> {
+        val discountsSharedFlow = MutableSharedFlow<List<*>>()
 
         val discountsRef = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(DISCOUNTS)
 
-        discountsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val discountList = mutableListOf<Discount>()
-                for (snapshot in dataSnapshot.children) {
-                    val discount = snapshot.getValue(Discount::class.java)!!
-                    discount.discountEntity.discountEntityUuid = snapshot.key!!
-                    discountList.add(discount)
-                }
-                launch(IO) {
-                    discountsSharedFlow.emit(discountList)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
         return discountsSharedFlow
     }
 

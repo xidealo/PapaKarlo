@@ -37,6 +37,7 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         )
         val tabNameList = arrayListOf(
             resources.getString(R.string.title_menu_all),
+            resources.getString(R.string.title_menu_combo),
             resources.getString(R.string.title_menu_pizza),
             resources.getString(R.string.title_menu_barbecue),
             resources.getString(R.string.title_menu_burger),
@@ -47,6 +48,7 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
             resources.getString(R.string.title_menu_oven)
         )
         val tabIconList = arrayListOf(
+            R.drawable.ic_all_products,
             R.drawable.ic_all_products,
             R.drawable.ic_pizza,
             R.drawable.ic_barbecue,
@@ -64,9 +66,5 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
             tab.setIcon(tabIconList[i])
             tab.text = tabNameList[i]
         }.attach()
-    }
-
-    companion object {
-        const val TAG = "MenuFragment"
     }
 }

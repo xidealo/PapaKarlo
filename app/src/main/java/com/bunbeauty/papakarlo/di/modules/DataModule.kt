@@ -41,10 +41,4 @@ class DataModule {
     @Provides
     fun provideStreetDao(localDatabase: LocalDatabase) = localDatabase.getStreetDao()
 
-    @Provides
-    fun provideDiscountDao(localDatabase: LocalDatabase) = localDatabase.getDiscountDao()
-
-    @Provides
-    fun provideDiscountProductDao(localDatabase: LocalDatabase) = localDatabase.getDiscountProductDao()
-
 }

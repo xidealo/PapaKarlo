@@ -8,6 +8,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.invisible
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.product.ProductFragmentDirections.toCartFragment
@@ -33,6 +35,9 @@ class ProductFragment : CartClickableFragment<FragmentProductBinding, ProductVie
         title = product.name
 
         super.onViewCreated(view, savedInstanceState)
+
+        if(product.weight == 0)
+            viewDataBinding.fragmentProductTvWeight.invisible()
 
         viewDataBinding.product = product
         viewDataBinding.iStringHelper = iStringHelper

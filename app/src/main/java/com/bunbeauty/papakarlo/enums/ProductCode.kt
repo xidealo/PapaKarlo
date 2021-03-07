@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 enum class ProductCode : Parcelable {
     ALL,
+    COMBO,
     PIZZA,
     BARBECUE,
     BURGER,

@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
         <TextView
-            android:id="@+id/fragment_product_tv_gram"
+            android:id="@+id/fragment_product_tv_weight"
             style="@style/GramFragmentProduct"
             android:text="@{iStringHelper.toStringWeight(product)}"
             app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
@@ -88,7 +88,7 @@
             android:src="@drawable/ic_on_fire"
             android:visibility="@{product.onFire ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
 
         <ImageView
             android:id="@+id/element_menu_product_iv_in_oven"
@@ -97,7 +97,7 @@
             android:src="@drawable/ic_in_oven"
             android:visibility="@{product.inOven ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_gram" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
 
         <TextView
             android:id="@+id/fragment_product_tv_description"
