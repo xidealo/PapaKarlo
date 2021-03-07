@@ -43,10 +43,27 @@ class CreationOrderViewModel @Inject constructor(
     val errorMessageLiveData = MutableLiveData<String>()
     val hasAddressField = ObservableField(true)
 
-    var deferredHours: Int? = null
-    var deferredMinutes: Int? = null
+    var deferredHoursLiveData = MutableLiveData<Int?>(null)
+    var deferredMinutesLiveData = MutableLiveData<Int?>(null)
 
     val isDeliveryLiveData = MutableLiveData(true)
+    val deferredTextLiveData = switchMap(isDeliveryLiveData) { isDelivery ->
+        switchMap(deferredHoursLiveData) { deferredHours ->
+            map(deferredMinutesLiveData) { deferredMinutes ->
+                if (isDelivery) {
+                    resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringHelper.toStringTime(
+                        deferredHours,
+                        deferredMinutes
+                    )
+                } else {
+                    resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringHelper.toStringTime(
+                        deferredHours,
+                        deferredMinutes
+                    )
+                }
+            }
+        }
+    }
     private val deliveryAddressLiveData: LiveData<Address?> by lazy {
         switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
             switchMap(addressRepo.getAddressById(addressId)) { address ->
@@ -85,15 +102,20 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
 
-    val cartLiveData by lazy { MutableLiveData<String>() }
+    val totalCartPriceLiveData by lazy { MutableLiveData<String>() }
 
     fun getCartProductsCost() {
         viewModelScope.launch(IO) {
             val cartProductsCost = cartProductRepo.getCartProductList().sumBy { getFullPrice(it) }
-            withContext(Main) {
-                cartLiveData.value = "$cartProductsCost ₽"
-            }
+            totalCartPriceLiveData.postValue("$cartProductsCost ₽")
         }
+    }
+
+    fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
+        val limitMinutes = DateTime.now().minuteOfDay + HALF_HOUR
+        val pickedMinutes = deferredHours * MINUTES_IN_HOURS + deferredMinutes
+
+        return pickedMinutes > limitMinutes
     }
 
     private fun getFullPrice(cartProduct: CartProduct): Int {
@@ -199,5 +221,7 @@ class CreationOrderViewModel @Inject constructor(
 
     companion object {
         private const val CODE_NUMBER_COUNT = 100 // 0 - 99
+        private const val MINUTES_IN_HOURS = 60
+        private const val HALF_HOUR = 30
     }
 }

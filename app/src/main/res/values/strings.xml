@@ -70,6 +70,11 @@
     <string name="error_creation_order_phone">Введите корректный номер телефона</string>
     <string name="error_creation_order_connect">Нет подключения к интернету</string>
     <string name="error_creation_order_address">Выберите адрес</string>
+    <string name="action_creation_order_delivery_time">Время доставки&#160;</string>
+    <string name="action_creation_order_pickup_time">Заберу заказ в&#160;</string>
+    <string name="action_creation_order_checkout">Оформить заказ на&#160;</string>
+    <string name="msg_creation_order_order_code">Код заказа&#160;</string>
+    <string name="error_creation_order_deferred">Выберите время хотя бы на 30 мин больше текущего</string>
 
     <!-- CREATION ADDRESS -->
     <string name="title_creation_address_address">Адрес</string>
