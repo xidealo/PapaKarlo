@@ -17,8 +17,8 @@
             type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
 
         <variable
-            name="stringHelper"
-            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
+            name="productHelper"
+            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -53,8 +53,16 @@
                 android:id="@+id/element_menu_product_tv_cost"
                 style="@style/CostElementProduct"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{stringHelper.toStringCost(menuProduct)}"
+                android:text="@{productHelper.getMenuProductPriceString(menuProduct)}"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
+
+            <TextView
+                android:id="@+id/element_menu_product_tv_cost_old"
+                style="@style/OldCostElementProduct"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:text="@{productHelper.getMenuProductOldPriceString(menuProduct)}"
+                app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_cost"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
             <ImageView

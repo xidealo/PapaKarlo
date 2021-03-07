@@ -6,6 +6,8 @@ import com.bunbeauty.papakarlo.data.local.datastore.DataStoreHelper
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.utils.network.INetworkHelper
 import com.bunbeauty.papakarlo.utils.network.NetworkHelper
+import com.bunbeauty.papakarlo.utils.product.IProductHelper
+import com.bunbeauty.papakarlo.utils.product.ProductHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
@@ -43,4 +45,7 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
+
+    @Binds
+    abstract fun bindProductHelper(productHelper: ProductHelper): IProductHelper
 }

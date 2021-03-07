@@ -2,7 +2,9 @@ package com.bunbeauty.papakarlo.view_model.base
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
@@ -24,9 +26,9 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     val isCartEmpty = ObservableField(false)
 
     val cartProductListLiveData by lazy {
-        Transformations.map(cartProductRepo.getCartProductListLiveData()) { cartProductList ->
-            isCartEmpty.set(cartProductList.isEmpty())
-            cartProductList
+        map(cartProductRepo.getCartProductListLiveData()) { productList ->
+            isCartEmpty.set(productList.isEmpty())
+            productList
         }
     }
 

@@ -53,10 +53,8 @@ class CreationOrderFragment :
         viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
             (activity as MainActivity).showError(it)
         }
-        viewModel.getCartProductsCost()
-        viewModel.totalCartPriceLiveData.observe(viewLifecycleOwner) { totalCartPrice ->
-            viewDataBinding.fragmentCreationOrderBtnCreateOrder.text =
-                resourcesProvider.getString(R.string.action_creation_order_checkout) + totalCartPrice
+        viewModel.orderStringLiveData.observe(viewLifecycleOwner) { orderString ->
+            viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
         }
 
         viewDataBinding.viewModel = viewModel

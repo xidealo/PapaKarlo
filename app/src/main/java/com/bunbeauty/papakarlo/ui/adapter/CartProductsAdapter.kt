@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
+import android.graphics.Paint
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
+import com.bunbeauty.papakarlo.utils.product.IProductHelper
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import javax.inject.Inject
 
-class CartProductsAdapter @Inject constructor(private val iStringHelper: IStringHelper) :
-    BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProduct>() {
+class CartProductsAdapter @Inject constructor(
+    private val stringHelper: IStringHelper,
+    private val productHelper: IProductHelper
+) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProduct>() {
 
     lateinit var consumerCartViewModel: ConsumerCartViewModel
 
@@ -26,8 +31,13 @@ class CartProductsAdapter @Inject constructor(private val iStringHelper: IString
 
     override fun onBindViewHolder(holder: CartProductViewHolder, i: Int) {
         holder.binding?.cartProduct = itemList[i]
-        holder.binding?.iStringHelper = iStringHelper
+        holder.binding?.stringHelper = stringHelper
+        holder.binding?.productHelper = productHelper
         holder.setCountChangeListener(itemList[i])
+        if (holder.binding?.elementCartProductTvOldPrice != null) {
+            holder.binding.elementCartProductTvOldPrice.paintFlags =
+                holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
+        }
     }
 
     inner class CartProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {

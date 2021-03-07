@@ -11,15 +11,16 @@ import kotlinx.parcelize.Parcelize
 data class MenuProduct(
     @PrimaryKey
     override var uuid: String = "",
-    var name: String = "",
-    var cost: Int = 0,
-    var weight: Int = 0,
-    var description: String = "",
-    var photoLink: String = "",
-    var onFire: Boolean = false,
-    var inOven: Boolean = false,
-    var productCode: String = "",
-    var barcode: Int = 0
+    val name: String = "",
+    val cost: Int = 0,
+    val discountCost: Int? = null,
+    val weight: Int = 0,
+    val description: String = "",
+    val photoLink: String = "",
+    val onFire: Boolean = false,
+    val inOven: Boolean = false,
+    val productCode: String = "",
+    val barcode: Int = 0
 ) : BaseModel(), Parcelable {
     companion object {
         const val PRODUCTS: String = "products"

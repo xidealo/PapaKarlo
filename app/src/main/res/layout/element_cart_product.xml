@@ -17,7 +17,11 @@
             type="com.bunbeauty.papakarlo.data.model.CartProduct" />
 
         <variable
-            name="iStringHelper"
+            name="productHelper"
+            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
+
+        <variable
+            name="stringHelper"
             type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
     </data>
 
@@ -50,16 +54,25 @@
                 android:id="@+id/element_cart_product_tv_gram"
                 style="@style/GramCartProduct"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{iStringHelper.toStringWeight(cartProduct.menuProduct)}"
+                android:text="@{stringHelper.toStringWeight(cartProduct.menuProduct)}"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_full_price"
-                style="@style/FullPriceCartProduct"
-                android:text="@{iStringHelper.toStringFullPrice(cartProduct)}"
+                android:id="@+id/element_cart_product_tv_price"
+                style="@style/PriceCartProduct"
+                android:text="@{productHelper.getCartProductPriceString(cartProduct)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
+
+            <TextView
+                android:id="@+id/element_cart_product_tv_old_price"
+                style="@style/OldPriceCartProduct"
+                android:layout_marginStart="@dimen/small_margin"
+                android:text="@{productHelper.getCartProductOldPriceString(cartProduct)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/element_cart_product_tv_price"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
 
             <com.bunbeauty.papakarlo.ui.view.CountPicker

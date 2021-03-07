@@ -30,7 +30,6 @@ class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, 
     @Inject
     lateinit var cartProductsAdapter: CartProductsAdapter
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         title = resources.getString(R.string.title_cart)
 
@@ -39,8 +38,8 @@ class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, 
         viewModel.cartProductListLiveData.observe(viewLifecycleOwner) { cartProductList ->
             cartProductsAdapter.setItemList(cartProductList.sortedBy { it.menuProduct.name })
         }
-        viewModel.cartLiveData.observe(viewLifecycleOwner) {
-            viewDataBinding.fragmentConsumerCartBtnCrateOrder.text = "Оформить заказ на $it"
+        viewModel.orderStringLiveData.observe(viewLifecycleOwner) { orderString ->
+            viewDataBinding.fragmentConsumerCartBtnCrateOrder.text = orderString
         }
 
         setupRecyclerView()

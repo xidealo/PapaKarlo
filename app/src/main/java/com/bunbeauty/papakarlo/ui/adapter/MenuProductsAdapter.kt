@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.content.Context
+import android.graphics.Paint
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +12,13 @@ import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
-import com.bunbeauty.papakarlo.utils.string.IStringHelper
+import com.bunbeauty.papakarlo.utils.product.IProductHelper
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor(
     private val context: Context,
-    private val iStringHelper: IStringHelper
+    private val productHelper: IProductHelper
 ) : BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
     lateinit var productsViewModel: ProductsViewModel
@@ -32,8 +34,12 @@ class MenuProductsAdapter @Inject constructor(
     override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
         holder.setListener(itemList[i])
         holder.binding?.context = context
-        holder.binding?.stringHelper = iStringHelper
+        holder.binding?.productHelper = productHelper
         holder.binding?.menuProduct = itemList[i]
+        if (holder.binding?.elementMenuProductTvCostOld != null) {
+            holder.binding.elementMenuProductTvCostOld.paintFlags =
+                holder.binding.elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
+        }
     }
 
     inner class MenuProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {

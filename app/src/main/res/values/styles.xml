@@ -75,9 +75,13 @@
     <style name="CostFragmentProduct">
         <item name="android:textSize">@dimen/large_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="OldCostFragmentProduct" parent="CostFragmentProduct">
+        <item name="android:textColor">@color/grey</item>
     </style>
 
     <style name="GramFragmentProduct">
@@ -149,6 +153,10 @@
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
+    <style name="OldCostElementProduct" parent="CostElementProduct">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
     <!--IMAGE VIEW-->
     <style name="Icon">
         <item name="android:layout_width">wrap_content</item>
@@ -174,13 +182,17 @@
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
-    <style name="FullPriceCartProduct">
+    <style name="PriceCartProduct">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
         <item name="android:layout_marginTop">@dimen/small_margin</item>
+    </style>
+
+    <style name="OldPriceCartProduct" parent="PriceCartProduct">
+        <item name="android:textColor">@color/grey</item>
     </style>
 
     <!--CREATION ADDRESS-->

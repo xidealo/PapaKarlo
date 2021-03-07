@@ -14,8 +14,12 @@
             type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
 
         <variable
-            name="iStringHelper"
+            name="stringHelper"
             type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
+
+        <variable
+            name="productHelper"
+            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,15 +72,22 @@
         <TextView
             android:id="@+id/fragment_product_tv_cost"
             style="@style/CostFragmentProduct"
-            android:text="@{iStringHelper.toStringCost(product)}"
-            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
+            android:text="@{productHelper.getMenuProductPriceString(product)}"
             app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
+
+        <TextView
+            android:id="@+id/fragment_product_tv_old_cost"
+            style="@style/OldCostFragmentProduct"
+            android:layout_marginStart="@dimen/small_margin"
+            android:text="@{productHelper.getMenuProductOldPriceString(product)}"
+            app:layout_constraintStart_toEndOf="@+id/fragment_product_tv_cost"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
         <TextView
             android:id="@+id/fragment_product_tv_weight"
             style="@style/GramFragmentProduct"
-            android:text="@{iStringHelper.toStringWeight(product)}"
+            android:text="@{stringHelper.toStringWeight(product)}"
             app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
             app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left"
             app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />

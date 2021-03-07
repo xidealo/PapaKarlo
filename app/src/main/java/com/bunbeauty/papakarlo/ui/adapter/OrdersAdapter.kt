@@ -24,7 +24,7 @@ class OrdersAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
         holder.binding?.order = itemList[i]
-        holder.binding?.iStringHelper = iStringHelper
+        holder.binding?.stringHelper = iStringHelper
     }
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

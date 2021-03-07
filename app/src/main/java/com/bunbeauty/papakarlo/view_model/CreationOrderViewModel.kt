@@ -15,6 +15,8 @@ import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.network.INetworkHelper
+import com.bunbeauty.papakarlo.utils.product.IProductHelper
+import com.bunbeauty.papakarlo.utils.product.ProductHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -33,6 +35,7 @@ class CreationOrderViewModel @Inject constructor(
     private val networkHelper: INetworkHelper,
     private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
+    private val productHelper: IProductHelper,
     private val orderRepo: OrderRepo,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
@@ -102,12 +105,10 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
 
-    val totalCartPriceLiveData by lazy { MutableLiveData<String>() }
-
-    fun getCartProductsCost() {
-        viewModelScope.launch(IO) {
-            val cartProductsCost = cartProductRepo.getCartProductList().sumBy { getFullPrice(it) }
-            totalCartPriceLiveData.postValue("$cartProductsCost ₽")
+    val orderStringLiveData by lazy {
+        map(cartProductRepo.getCartProductListLiveData()) { productList ->
+            resourcesProvider.getString(R.string.action_creation_order_checkout) +
+                    productHelper.getFullPriceString(productList)
         }
     }
 
@@ -116,10 +117,6 @@ class CreationOrderViewModel @Inject constructor(
         val pickedMinutes = deferredHours * MINUTES_IN_HOURS + deferredMinutes
 
         return pickedMinutes > limitMinutes
-    }
-
-    private fun getFullPrice(cartProduct: CartProduct): Int {
-        return cartProduct.menuProduct.cost * cartProduct.count
     }
 
     fun createOrder(

@@ -10,6 +10,8 @@
     title_registration_pass
     -->
 
+    <string name="part_ruble">&#160;₽</string>
+
     <!-- TITLES -->
     <string name="title_main">Главная</string>
     <string name="title_menu">Меню</string>

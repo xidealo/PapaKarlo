@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.utils.string
 
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.model.Address
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
@@ -8,9 +9,11 @@ import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
+import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
 import javax.inject.Inject
 
-class StringHelper @Inject constructor() : IStringHelper {
+class StringHelper @Inject constructor(private val resourcesProvider: IResourcesProvider) : IStringHelper {
 
     override fun toString(address: Address?): String {
         if (address == null) {
@@ -62,10 +65,6 @@ class StringHelper @Inject constructor() : IStringHelper {
         return orderString.toString()
     }
 
-    override fun toStringCost(menuProduct: MenuProduct): String {
-        return "${menuProduct.cost} ₽"
-    }
-
     override fun toStringWeight(menuProduct: MenuProduct): String {
         return if (menuProduct.productCode == ProductCode.DRINK.name) {
             val liters = menuProduct.weight / 1000
@@ -89,16 +88,8 @@ class StringHelper @Inject constructor() : IStringHelper {
         }
     }
 
-    override fun toStringFullPrice(cartProduct: CartProduct): String {
-        return (cartProduct.menuProduct.cost * cartProduct.count).toString() + " ₽"
-    }
-
-    override fun toStringFullPrice(order: Order): String {
-        var fullPrice = 0
-        for (cartProduct in order.cartProducts)
-            fullPrice += cartProduct.count * cartProduct.menuProduct.cost
-
-        return "Стоимость заказа: $fullPrice ₽"
+    override fun toStringPrice(price: Int): String {
+        return price.toString() + resourcesProvider.getString(R.string.part_ruble)
     }
 
     override fun toStringTime(orderEntity: OrderEntity): String {
