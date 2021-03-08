@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         style="@style/DefaultPage"
         tools:context=".ui.cafe_list.CafeListFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_cafe_list_rv_cafe_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/DefaultPage"
+            android:paddingBottom="@dimen/small_margin">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin"
-            app:cardCornerRadius="@dimen/large_radius"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_rv_cafe_list">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment_cafe_list_rv_cafe_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/fragment_cafe_list_btn_tv_payment"
-                    style="@style/MainTitle"
-                    android:text="@string/title_cafe_list_payment"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="@dimen/small_margin"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:cardCornerRadius="@dimen/large_radius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_rv_cafe_list">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_cafe_list_btn_card_number"
-                    style="@style/OutLineButton"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:text="@string/action_cafe_list_copy_card_number"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_btn_tv_payment" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_cafe_list_btn_phone_number"
-                    style="@style/OutLineButton"
-                    android:layout_width="0dp"
-                    android:text="@string/action_cafe_list_copy_phone_number"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_btn_card_number" />
+                    <TextView
+                        android:id="@+id/fragment_cafe_list_btn_tv_payment"
+                        style="@style/MainTitle"
+                        android:layout_margin="@dimen/small_margin"
+                        android:text="@string/title_cafe_list_payment"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_cafe_list_btn_card_number"
+                        style="@style/OutLineButton"
+                        android:layout_width="match_parent"
+                        android:text="@string/action_cafe_list_copy_card_number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_btn_tv_payment" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/fragment_cafe_list_btn_phone_number"
+                        style="@style/OutLineButton"
+                        android:layout_width="0dp"
+                        android:text="@string/action_cafe_list_copy_phone_number"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_btn_card_number" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

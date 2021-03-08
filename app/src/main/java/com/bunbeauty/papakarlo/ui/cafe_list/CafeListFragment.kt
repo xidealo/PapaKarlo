@@ -22,7 +22,6 @@ import com.bunbeauty.papakarlo.view_model.CafeListViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-
 class CafeListFragment : TopBarFragment<FragmentCafeListBinding, CafeListViewModel>(),
     CafeListNavigator {
 
