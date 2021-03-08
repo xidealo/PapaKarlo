@@ -250,6 +250,12 @@
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
+    <style name="HelpTextCenter" parent="HelpText">
+        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="CenterText" parent="BaseText">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="fontFamily">@font/font_roboto_regular</item>

@@ -1,10 +1,8 @@
 package com.bunbeauty.papakarlo.view_model.base
 
-import androidx.databinding.ObservableField
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.MenuProduct
@@ -12,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -23,11 +20,11 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     @Inject
     lateinit var cartProductRepo: CartProductRepo
 
-    val isCartEmpty = ObservableField(false)
+    val isCartEmptyLiveData = MutableLiveData(false)
 
     val cartProductListLiveData by lazy {
         map(cartProductRepo.getCartProductListLiveData()) { productList ->
-            isCartEmpty.set(productList.isEmpty())
+            isCartEmptyLiveData.value = productList.isEmpty()
             productList
         }
     }

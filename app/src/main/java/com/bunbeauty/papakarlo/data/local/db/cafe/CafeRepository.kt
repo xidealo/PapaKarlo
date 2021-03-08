@@ -1,15 +1,11 @@
 package com.bunbeauty.papakarlo.data.local.db.cafe
 
-import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.district.DistrictRepo
 import com.bunbeauty.papakarlo.data.local.db.street.StreetRepo
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.data.api.firebase
 
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
+import com.bunbeauty.papakarlo.data.model.Delivery
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.data.model.order.Order
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
@@ -94,6 +96,27 @@ class ApiRepository @Inject constructor(
         })
     }
 
+    override fun getDeliveryCost(): Flow<Delivery> {
+        val cafeListSharedFlow = MutableSharedFlow<Delivery>()
+        val deliveryCostReference = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(DELIVERY)
+
+        deliveryCostReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                launch(IO) {
+                    cafeListSharedFlow.emit(snapshot.getValue(Delivery::class.java)!!)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+
+        return cafeListSharedFlow
+    }
+
     override fun getDiscounts(): SharedFlow<List<*>> {
         val discountsSharedFlow = MutableSharedFlow<List<*>>()
 
@@ -108,6 +131,7 @@ class ApiRepository @Inject constructor(
     companion object {
         private const val COMPANY = "COMPANY"
         private const val MENU_PRODUCTS: String = "menu_products"
+        private const val DELIVERY: String = "delivery"
         private const val DISCOUNTS: String = "discounts"
     }
 }

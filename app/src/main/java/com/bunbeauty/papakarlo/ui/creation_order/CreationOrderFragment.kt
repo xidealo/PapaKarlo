@@ -11,6 +11,7 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.*
@@ -47,14 +48,21 @@ class CreationOrderFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.navigator = WeakReference(this)
-        viewModel.addressLiveData.observe(viewLifecycleOwner) { address ->
+
+        subscribe(viewModel.addressLiveData) { address ->
             viewDataBinding.fragmentCreationOrderTvLastAddress.text = stringHelper.toString(address)
         }
-        viewModel.errorMessageLiveData.observe(viewLifecycleOwner) {
+        subscribe(viewModel.errorMessageLiveData) {
             (activity as MainActivity).showError(it)
         }
-        viewModel.orderStringLiveData.observe(viewLifecycleOwner) { orderString ->
+        subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
+            viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
+        }
+        subscribe(viewModel.orderStringLiveData) { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
+        }
+        subscribe(viewModel.isDeliveryLiveData) { isDelivery ->
+            viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
         }
 
         viewDataBinding.viewModel = viewModel

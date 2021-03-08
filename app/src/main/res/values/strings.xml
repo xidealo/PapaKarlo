@@ -49,6 +49,9 @@
     <string name="action_consumer_cart_checkout">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавьте товар из \"Меню\"</string>
+    <string name="msg_consumer_cart_free_delivery">Доставка бесплатно</string>
+    <string name="part_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
+    <string name="part_consumer_cart_difference_before_free_delivery">\nДо бесплатной доставки нехватает&#160;</string>
 
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>
@@ -77,6 +80,8 @@
     <string name="action_creation_order_checkout">Оформить заказ на&#160;</string>
     <string name="msg_creation_order_order_code">Код заказа&#160;</string>
     <string name="error_creation_order_deferred">Выберите время хотя бы на 30 мин больше текущего</string>
+    <string name="part_creation_order_delivery_cost">Стоимость доставки:&#160;</string>
+    <string name="part_creation_order_free_delivery_from">\nБесплатная доставка от&#160;</string>
 
     <!-- CREATION ADDRESS -->
     <string name="title_creation_address_address">Адрес</string>
@@ -98,8 +103,8 @@
     <string name="title_bottom_navigation_menu_orders">Заказы</string>
 
     <!-- CONTACTS  -->
-    <string name="msg_contacts_work_time">Время работы:\u0020</string>
-    <string name="msg_contacts_work_time_divider">\u0020-\u0020</string>
+    <string name="msg_contacts_work_time">Время работы:&#160;</string>
+    <string name="msg_contacts_work_time_divider">&#160;-&#160;</string>
 
     <!-- CAFE LIST -->
     <string name="action_cafe_list_copy_card_number">Скопировать номер карты</string>

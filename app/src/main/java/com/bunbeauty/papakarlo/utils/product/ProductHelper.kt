@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.utils.product
 
-import android.util.Log
 import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.papakarlo.data.model.Delivery
 import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import javax.inject.Inject
@@ -33,17 +33,50 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
     }
 
     override fun getFullPriceString(cartProductList: List<CartProduct>): String {
-        return stringHelper.toStringPrice(cartProductList.map { cartProduct ->
-            getCartProductPrice(cartProduct)
-        }.sum())
+        return stringHelper.toStringPrice(getFullPrice(cartProductList))
     }
 
-    private fun getMenuProductPrice(menuProduct: MenuProduct): Int {
+    override fun getFullPriceStringWithDelivery(
+        cartProductList: List<CartProduct>,
+        delivery: Delivery
+    ): String {
+        return if (getDifferenceBeforeFreeDelivery(cartProductList, delivery.forFree) > 0) {
+            stringHelper.toStringPrice(getFullPrice(cartProductList) + delivery.cost)
+        } else {
+            getFullPriceString(cartProductList)
+        }
+    }
+
+    override fun getDifferenceBeforeFreeDeliveryString(
+        cartProductList: List<CartProduct>,
+        priceForFreeDelivery: Int
+    ): String {
+        return if (getDifferenceBeforeFreeDelivery(cartProductList, priceForFreeDelivery) > 0) {
+            stringHelper.toStringPrice(priceForFreeDelivery - getFullPrice(cartProductList))
+        } else {
+            ""
+        }
+    }
+
+    fun getMenuProductPrice(menuProduct: MenuProduct): Int {
         return menuProduct.discountCost ?: menuProduct.cost
     }
 
-    private fun getCartProductPrice(cartProduct: CartProduct): Int {
+    fun getCartProductPrice(cartProduct: CartProduct): Int {
         return getMenuProductPrice(cartProduct.menuProduct) * cartProduct.count
+    }
+
+    fun getFullPrice(cartProductList: List<CartProduct>): Int {
+        return cartProductList.map { cartProduct ->
+            getCartProductPrice(cartProduct)
+        }.sum()
+    }
+
+    fun getDifferenceBeforeFreeDelivery(
+        cartProductList: List<CartProduct>,
+        priceForFreeDelivery: Int
+    ): Int {
+        return priceForFreeDelivery - getFullPrice(cartProductList)
     }
 
 

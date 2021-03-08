@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.data.local.datastore
 
+import com.bunbeauty.papakarlo.data.model.Delivery
 import kotlinx.coroutines.flow.Flow
 
 interface IDataStoreHelper {
@@ -15,6 +16,9 @@ interface IDataStoreHelper {
 
     val email: Flow<String>
     suspend fun saveEmail(email: String)
+
+    val delivery: Flow<Delivery>
+    suspend fun saveDelivery(delivery: Delivery)
 
     suspend fun clearData()
 }

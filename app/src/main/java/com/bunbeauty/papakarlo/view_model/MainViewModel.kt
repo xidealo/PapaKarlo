@@ -4,18 +4,21 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
+import com.bunbeauty.papakarlo.data.local.db.delivery.DeliveryRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
 import com.bunbeauty.papakarlo.utils.product.ProductHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
+    private val deliveryRepo: DeliveryRepo,
     private val productHelper: IProductHelper
 ) : BaseViewModel() {
 
@@ -31,13 +34,19 @@ class MainViewModel @Inject constructor(
     }
 
     fun refreshCafeList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IO) {
             cafeRepo.refreshCafeList()
         }
     }
 
+    fun refreshDeliveryCost() {
+        viewModelScope.launch(IO) {
+            deliveryRepo.refreshDeliveryCost()
+        }
+    }
+
     fun getDiscounts() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(IO) {
 
         }
     }

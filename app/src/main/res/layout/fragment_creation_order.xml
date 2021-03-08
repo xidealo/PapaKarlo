@@ -31,7 +31,7 @@
                 android:padding="@dimen/small_padding">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_address"
+                    android:id="@+id/fragment_creation_order_mcv_delivery"
                     style="@style/MaterialCardCreationOrder"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -69,11 +69,36 @@
                         </RadioGroup>
 
                         <TextView
+                            android:id="@+id/fragment_creation_order_tv_delivery"
+                            style="@style/HelpTextCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_rg_delivery_method"
+                            tools:text="@string/msg_creation_order_free" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_creation_order_mcv_address"
+                    style="@style/MaterialCardCreationOrder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_delivery">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/small_padding">
+
+                        <TextView
                             android:id="@+id/fragment_creation_order_tv_address"
                             style="@style/MainTitle"
                             android:text="@string/title_creation_order_address"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_rg_delivery_method" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/fragment_creation_order_mcv_address_pick"
@@ -286,18 +311,8 @@
                                     app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_tv_deferred" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </com.google.android.material.card.MaterialCardView>
-
-                        <TextView
-                            style="@style/HelpText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/msg_creation_order_free"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_deferred" />
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

@@ -6,6 +6,8 @@ import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepository
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepository
+import com.bunbeauty.papakarlo.data.local.db.delivery.DeliveryRepo
+import com.bunbeauty.papakarlo.data.local.db.delivery.DeliveryRepository
 import com.bunbeauty.papakarlo.data.local.db.district.DistrictRepo
 import com.bunbeauty.papakarlo.data.local.db.district.DistrictRepository
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
@@ -39,4 +41,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+
+    @Binds
+    abstract fun bindDeliveryRepo(deliveryRepo: DeliveryRepository): DeliveryRepo
 }

@@ -5,12 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,12 +12,17 @@
         style="@style/DefaultPage"
         tools:context=".ui.consumer_cart.ConsumerCartFragment">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_consumer_cart_group_empty_cart"
+            app:constraint_referenced_ids="fragment_consumer_cart_iv_empty_cart, fragment_consumer_cart_tv_empty_cart, fragment_consumer_cart_btn_menu"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
         <ImageView
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
             android:src="@drawable/ic_cart_empty"
-            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,6 @@
             android:id="@+id/fragment_consumer_cart_tv_empty_cart"
             style="@style/CenterText"
             android:text="@string/msg_consumer_cart_empty"
-            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_iv_empty_cart" />
@@ -42,27 +40,41 @@
             android:id="@+id/fragment_consumer_cart_btn_menu"
             style="@style/SmallButton"
             android:text="@string/action_consumer_cart_menu"
-            android:visibility="@{viewModel.isCartEmpty ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_empty_cart" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_consumer_cart_group_not_empty_cart"
+            app:constraint_referenced_ids="fragment_consumer_cart_tv_delivery_info, fragment_consumer_cart_rv_result, fragment_consumer_cart_btn_crate_order"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/fragment_consumer_cart_tv_delivery_info"
+            style="@style/HelpTextCenter"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_consumer_cart_rv_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/small_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_crate_order"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_delivery_info"
             tools:itemCount="2"
             tools:listitem="@layout/element_cart_product" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_crate_order"
+            android:text="@string/action_consumer_cart_checkout"
             style="@style/MainButton"
-            android:visibility="@{viewModel.isCartEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

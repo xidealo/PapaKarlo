@@ -10,13 +10,11 @@ import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
 import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.data.model.order.Order
 import com.bunbeauty.papakarlo.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.network.INetworkHelper
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
-import com.bunbeauty.papakarlo.utils.product.ProductHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
@@ -94,6 +92,24 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
+    val deliveryStringLiveData by lazy {
+        switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
+            map(cartProductRepo.getCartProductListLiveData()) { productList ->
+                val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
+                    productList,
+                    delivery.forFree
+                )
+                if (differenceString.isEmpty()) {
+                    resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
+                } else {
+                    resourcesProvider.getString(R.string.part_creation_order_delivery_cost) +
+                            stringHelper.toStringPrice(delivery.cost) +
+                            resourcesProvider.getString(R.string.part_creation_order_free_delivery_from) +
+                            stringHelper.toStringPrice(delivery.forFree)
+                }
+            }
+        }
+    }
     val phoneNumber by lazy {
         runBlocking {
             dataStoreHelper.phoneNumber.first()
@@ -106,9 +122,18 @@ class CreationOrderViewModel @Inject constructor(
     }
 
     val orderStringLiveData by lazy {
-        map(cartProductRepo.getCartProductListLiveData()) { productList ->
-            resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                    productHelper.getFullPriceString(productList)
+        switchMap(cartProductRepo.getCartProductListLiveData()) { productList ->
+            switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
+                map(isDeliveryLiveData) { isDelivery ->
+                    if (isDelivery) {
+                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
+                                productHelper.getFullPriceStringWithDelivery(productList, delivery)
+                    } else {
+                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
+                                productHelper.getFullPriceString(productList)
+                    }
+                }
+            }
         }
     }
 
