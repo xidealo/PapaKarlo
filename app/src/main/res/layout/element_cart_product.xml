@@ -47,6 +47,7 @@
                 style="@style/TitleCartProduct"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{cartProduct.menuProduct.name}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
 

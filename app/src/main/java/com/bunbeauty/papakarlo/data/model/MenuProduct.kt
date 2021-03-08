@@ -23,7 +23,6 @@ data class MenuProduct(
     val barcode: Int = 0
 ) : BaseModel(), Parcelable {
     companion object {
-        const val PRODUCTS: String = "products"
         const val PRODUCT_CODE: String = "product code"
     }
 }
