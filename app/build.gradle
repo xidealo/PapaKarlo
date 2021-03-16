@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -16,7 +17,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,9 +76,10 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatV7Version"
     implementation "com.android.support:design:$rootProject.designVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
-    androidTestImplementation "androidx.navigation:navigation-testing:2.3.3"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
+
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.4"
 
     testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"
@@ -108,19 +110,11 @@ dependencies {
     //Сoroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.corountinesVersion"
 
-    //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.convertorScalarsVersion"
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.moshiVersion"
-
     //Design
     implementation "com.google.android.material:material:$rootProject.materialDesignVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "com.miguelcatalan:materialsearchview:$rootProject.materialSerachVersion"
     implementation "com.github.Triggertrap:SeekArc:$rootProject.seekArcVersion"
-
-    //Charts
-    implementation "com.github.PhilJay:MPAndroidChart:$rootProject.mPAndroidChartVersion"
 
     //Database
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
@@ -145,5 +139,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
 

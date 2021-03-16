@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.delivery.DeliveryRepo
+import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.data.model.CartProduct
 import com.bunbeauty.papakarlo.ui.main.MainNavigator
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
     private val deliveryRepo: DeliveryRepo,
+    private val menuProductRepo: MenuProductRepo,
     private val productHelper: IProductHelper
 ) : BaseViewModel() {
 
@@ -45,9 +47,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun getDiscounts() {
+    fun refreshMenuProducts() {
         viewModelScope.launch(IO) {
-
+            menuProductRepo.getMenuProductRequest()
         }
     }
 

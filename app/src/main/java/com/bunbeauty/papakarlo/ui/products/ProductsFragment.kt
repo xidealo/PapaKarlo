@@ -36,6 +36,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         }
         subscribe(viewModel.productListLiveData) { productList ->
             menuProductsAdapter.setItemList(productList.sortedBy { it.name })
+            viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
         }
     }
 

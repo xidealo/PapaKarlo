@@ -8,5 +8,6 @@ interface MenuProductRepo {
 
     suspend fun insert(menuProduct: MenuProduct)
 
+    suspend fun getMenuProductRequest()
     fun getMenuProductList(productCode: ProductCode): LiveData<List<MenuProduct>>
 }

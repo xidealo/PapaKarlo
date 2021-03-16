@@ -10,6 +10,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.5'
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -37,8 +38,8 @@ ext {
 
     // App dependencies
     viewModelVersion = "2.3.0-beta01"
-    dagger2Version = "2.31.1"
-    corountinesVersion = "1.4.1"
+    dagger2Version = "2.33"
+    corountinesVersion = "1.4.2"
 
     retrofitVersion = "2.9.0"
     moshiVersion = "2.4.0"
@@ -47,21 +48,20 @@ ext {
     convertorScalarsVersion = "2.0.1"
     mPAndroidChartVersion = "v3.1.0"
     roomDatabaseVersion = "2.2.6"
-    datastoreVersion = "1.0.0-alpha07"
+    datastoreVersion = "1.0.0-alpha08"
     extensionsVersion = "2.2.0"
     viewmodelVersion = "2.3.0"
     livedataVersion = "2.3.0"
-    activityVersion = "1.2.0"
-    fragmentVersion = "1.3.0"
+    activityVersion = "1.2.1"
+    fragmentVersion = "1.3.1"
     workManagerVersion = "2.5.0"
     bluetoothManagerVersion = "1.3.9"
     bluetoothVersion = "1.3.9"
     jodaVersion = "2.10.6"
     picassoVersion = "2.71828"
-    pdfVersion = "2.8.2"
     coreKtxVersion = "1.3.2"
     appcompatVersion = "1.2.0"
-    firebaseVersion = "26.1.1"
+    firebaseVersion = "26.7.0"
 
     //design
     materialDesignVersion = "1.3.0"
@@ -76,12 +76,11 @@ ext {
     appcompatV7Version = "28.0.0"
 
     // Test dependencies
-    mockitoVerchion = "3.0.0"
-    junitVerchion = "4.13.1"
+    mockitoVerchion = "3.3.3"
+    junitVerchion = "4.13.2"
     testJunitVerchion = "1.1.2"
     espressoVerchion = "3.3.0"
     mockVerchion = "1.9.3"
     runnerVerchion = "1.3.0"
     rulesVerchion = "1.3.0"
-    junitVerchion = "4.13.1"
 }

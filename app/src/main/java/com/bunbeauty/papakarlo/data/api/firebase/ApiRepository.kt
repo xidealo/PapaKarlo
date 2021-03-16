@@ -23,9 +23,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ApiRepository @Inject constructor(
-    private val menuProductRepo: MenuProductRepo
-) : IApiRepository, CoroutineScope {
+class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job() + IO
 
@@ -72,28 +70,28 @@ class ApiRepository @Inject constructor(
         return cafeListSharedFlow
     }
 
-    //TODO(refactor to repository call)
-    override fun getMenuProductList() {
+    override fun getMenuProductList(): Flow<List<MenuProduct>> {
+        val menuProductListSharedFlow = MutableSharedFlow<List<MenuProduct>>()
         val menuProductsRef = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(MENU_PRODUCTS)
 
         menuProductsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (snapshot in dataSnapshot.children) {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val menuProductList = snapshot.children.map { menuProductSnapshot ->
+                    menuProductSnapshot.getValue(MenuProduct::class.java)!!.also { it.uuid = menuProductSnapshot.key!! }
 
-                    val menuProduct = snapshot.getValue(MenuProduct::class.java)!!
-                    menuProduct.uuid = snapshot.key!!
-                    launch {
-                        menuProductRepo.insert(menuProduct)
-                    }
+                }
+                launch(IO) {
+                    menuProductListSharedFlow.emit(menuProductList)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
             }
         })
+        return menuProductListSharedFlow
     }
 
     override fun getDeliveryCost(): Flow<Delivery> {
@@ -115,17 +113,6 @@ class ApiRepository @Inject constructor(
         })
 
         return cafeListSharedFlow
-    }
-
-    override fun getDiscounts(): SharedFlow<List<*>> {
-        val discountsSharedFlow = MutableSharedFlow<List<*>>()
-
-        val discountsRef = firebaseInstance
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(DISCOUNTS)
-
-        return discountsSharedFlow
     }
 
     companion object {

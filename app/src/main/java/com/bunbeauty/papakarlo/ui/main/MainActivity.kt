@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
         viewModel.refreshCafeList()
         viewModel.refreshDeliveryCost()
-        viewModel.getDiscounts()
+        viewModel.refreshMenuProducts()
         viewModel.cartLiveData.observe(this) { cartText ->
             viewDataBinding.activityMainTbTopBar.partTopBarTvCart.text = cartText
         }

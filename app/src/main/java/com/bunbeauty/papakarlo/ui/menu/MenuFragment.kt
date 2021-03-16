@@ -28,7 +28,6 @@ class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         setTopBarImage(R.drawable.logo_top)
-        viewModel.getMenuProductList()
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             ProductCode.values().asList().map {
                 ProductsFragment.newInstance(it)
