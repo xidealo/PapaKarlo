@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.data.model.order.OrderEntity
         CafeEntity::class,
         DistrictEntity::class,
         Street::class
-    ], version = 45
+    ], version = 46
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {

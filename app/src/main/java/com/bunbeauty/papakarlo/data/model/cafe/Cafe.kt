@@ -14,7 +14,7 @@ data class Cafe(
     val districts: List<District> = arrayListOf(),
 
     @Relation(parentColumn = "id", entityColumn = "cafeId")
-    val address: Address = Address(),
+    val address: Address? = Address(),
 ) {
     companion object {
         const val CAFES = "cafes"
