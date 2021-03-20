@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import javax.inject.Inject

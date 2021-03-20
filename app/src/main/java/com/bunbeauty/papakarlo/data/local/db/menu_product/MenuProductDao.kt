@@ -5,8 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
-import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.model.MenuProduct
 
 @Dao
 interface MenuProductDao : BaseDao<MenuProduct> {

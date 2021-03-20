@@ -1,18 +1,18 @@
 package com.bunbeauty.papakarlo.utils.product
 
-import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.Delivery
-import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.data.model.CartProduct
+import com.bunbeauty.data.model.Delivery
+import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import javax.inject.Inject
 
 class ProductHelper @Inject constructor(private val stringHelper: IStringHelper) : IProductHelper {
 
-    override fun getMenuProductPriceString(menuProduct: MenuProduct): String {
+    override fun getMenuProductPriceString(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
         return stringHelper.toStringPrice(getMenuProductPrice(menuProduct))
     }
 
-    override fun getMenuProductOldPriceString(menuProduct: MenuProduct): String {
+    override fun getMenuProductOldPriceString(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
         return if (menuProduct.discountCost == null) {
             ""
         } else {
@@ -20,11 +20,11 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         }
     }
 
-    override fun getCartProductPriceString(cartProduct: CartProduct): String {
+    override fun getCartProductPriceString(cartProduct: com.bunbeauty.data.model.CartProduct): String {
         return stringHelper.toStringPrice(getCartProductPrice(cartProduct))
     }
 
-    override fun getCartProductOldPriceString(cartProduct: CartProduct): String {
+    override fun getCartProductOldPriceString(cartProduct: com.bunbeauty.data.model.CartProduct): String {
         return if (cartProduct.menuProduct.discountCost == null) {
             ""
         } else {
@@ -32,13 +32,13 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         }
     }
 
-    override fun getFullPriceString(cartProductList: List<CartProduct>): String {
+    override fun getFullPriceString(cartProductList: List<com.bunbeauty.data.model.CartProduct>): String {
         return stringHelper.toStringPrice(getFullPrice(cartProductList))
     }
 
     override fun getFullPriceStringWithDelivery(
-        cartProductList: List<CartProduct>,
-        delivery: Delivery
+        cartProductList: List<com.bunbeauty.data.model.CartProduct>,
+        delivery: com.bunbeauty.data.model.Delivery
     ): String {
         return if (getDifferenceBeforeFreeDelivery(cartProductList, delivery.forFree) > 0) {
             stringHelper.toStringPrice(getFullPrice(cartProductList) + delivery.cost)
@@ -48,7 +48,7 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
     }
 
     override fun getDifferenceBeforeFreeDeliveryString(
-        cartProductList: List<CartProduct>,
+        cartProductList: List<com.bunbeauty.data.model.CartProduct>,
         priceForFreeDelivery: Int
     ): String {
         return if (getDifferenceBeforeFreeDelivery(cartProductList, priceForFreeDelivery) > 0) {
@@ -58,22 +58,22 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         }
     }
 
-    fun getMenuProductPrice(menuProduct: MenuProduct): Int {
+    fun getMenuProductPrice(menuProduct: com.bunbeauty.data.model.MenuProduct): Int {
         return menuProduct.discountCost ?: menuProduct.cost
     }
 
-    fun getCartProductPrice(cartProduct: CartProduct): Int {
+    fun getCartProductPrice(cartProduct: com.bunbeauty.data.model.CartProduct): Int {
         return getMenuProductPrice(cartProduct.menuProduct) * cartProduct.count
     }
 
-    fun getFullPrice(cartProductList: List<CartProduct>): Int {
+    fun getFullPrice(cartProductList: List<com.bunbeauty.data.model.CartProduct>): Int {
         return cartProductList.map { cartProduct ->
             getCartProductPrice(cartProduct)
         }.sum()
     }
 
     fun getDifferenceBeforeFreeDelivery(
-        cartProductList: List<CartProduct>,
+        cartProductList: List<com.bunbeauty.data.model.CartProduct>,
         priceForFreeDelivery: Int
     ): Int {
         return priceForFreeDelivery - getFullPrice(cartProductList)

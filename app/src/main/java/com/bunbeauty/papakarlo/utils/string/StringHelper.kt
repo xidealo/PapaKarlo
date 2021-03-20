@@ -1,21 +1,15 @@
 package com.bunbeauty.papakarlo.utils.string
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.data.model.Time
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import com.bunbeauty.papakarlo.data.model.order.Order
-import com.bunbeauty.papakarlo.data.model.order.OrderEntity
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.model.cafe.CafeEntity
+import com.bunbeauty.data.model.order.OrderEntity
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
-import com.bunbeauty.papakarlo.utils.resoures.ResourcesProvider
 import javax.inject.Inject
 
 class StringHelper @Inject constructor(private val resourcesProvider: IResourcesProvider) : IStringHelper {
 
-    override fun toString(address: Address?): String {
+    override fun toString(address: com.bunbeauty.data.model.Address?): String {
         if (address == null) {
             return ""
         }
@@ -31,7 +25,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         )
     }
 
-    override fun toString(cartProducts: List<CartProduct>): String {
+    override fun toString(cartProducts: List<com.bunbeauty.data.model.CartProduct>): String {
         var structure = ""
 
         for (cartProduct in cartProducts)
@@ -65,7 +59,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return orderString.toString()
     }
 
-    override fun toStringWeight(menuProduct: MenuProduct): String {
+    override fun toStringWeight(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
         return if (menuProduct.productCode == ProductCode.DRINK.name) {
             val liters = menuProduct.weight / 1000
             val milliliters = menuProduct.weight % 1000
@@ -93,7 +87,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
     }
 
     override fun toStringTime(orderEntity: OrderEntity): String {
-        return Time(orderEntity.time, 3).toStringTimeHHMM()
+        return com.bunbeauty.data.model.Time(orderEntity.time, 3).toStringTimeHHMM()
     }
 
     override fun toStringTime(hours: Int?, minutes: Int?): String {
@@ -115,28 +109,28 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return data
     }
 
-    fun flatString(address: Address): String {
+    fun flatString(address: com.bunbeauty.data.model.Address): String {
         return if (address.flat.isNotEmpty())
             "Квартира: ${address.flat}, "
         else
             ""
     }
 
-    fun entranceString(address: Address): String {
+    fun entranceString(address: com.bunbeauty.data.model.Address): String {
         return if (address.entrance.isNotEmpty())
             "Подъезд: ${address.entrance}, "
         else
             ""
     }
 
-    fun intercomString(address: Address): String {
+    fun intercomString(address: com.bunbeauty.data.model.Address): String {
         return if (address.intercom.isNotEmpty())
             "Домофон: ${address.intercom}, "
         else
             ""
     }
 
-    fun floorString(address: Address): String {
+    fun floorString(address: com.bunbeauty.data.model.Address): String {
         return if (address.floor.isNotEmpty())
             "Этаж: ${address.floor}"
         else

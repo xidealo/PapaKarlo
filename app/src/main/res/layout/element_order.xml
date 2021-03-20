@@ -13,7 +13,7 @@
 
         <variable
             name="order"
-            type="com.bunbeauty.papakarlo.data.model.order.Order" />
+            type="com.bunbeauty.data.model.order.Order" />
 
         <variable
             name="stringHelper"

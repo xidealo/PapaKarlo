@@ -14,7 +14,7 @@
 
         <variable
             name="cartProduct"
-            type="com.bunbeauty.papakarlo.data.model.CartProduct" />
+            type="com.bunbeauty.data.model.CartProduct" />
 
         <variable
             name="productHelper"

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.data.model
+package com.bunbeauty.data.model
 
 import android.os.Parcelable
 import androidx.room.Embedded

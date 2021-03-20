@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.data.local.datastore
 
-import com.bunbeauty.papakarlo.data.model.Delivery
+import com.bunbeauty.data.model.Delivery
 import kotlinx.coroutines.flow.Flow
 
 interface IDataStoreHelper {

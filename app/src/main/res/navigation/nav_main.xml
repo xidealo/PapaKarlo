@@ -64,7 +64,7 @@
         tools:layout="@layout/fragment_product">
         <argument
             android:name="menuProduct"
-            app:argType="com.bunbeauty.papakarlo.data.model.MenuProduct" />
+            app:argType="com.bunbeauty.data.model.MenuProduct" />
         <action
             android:id="@+id/to_cart_fragment"
             app:destination="@id/cart_fragment" />

@@ -4,7 +4,7 @@ import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.district.DistrictRepo
 import com.bunbeauty.papakarlo.data.local.db.street.StreetRepo
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
+import com.bunbeauty.data.model.cafe.Cafe
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 

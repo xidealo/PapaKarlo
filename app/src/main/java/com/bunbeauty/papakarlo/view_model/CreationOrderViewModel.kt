@@ -9,9 +9,8 @@ import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.order.Order
-import com.bunbeauty.papakarlo.data.model.order.OrderEntity
+import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
 import com.bunbeauty.papakarlo.utils.network.INetworkHelper
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
@@ -65,7 +64,7 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val deliveryAddressLiveData: LiveData<Address?> by lazy {
+    private val deliveryAddressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
         switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
             switchMap(addressRepo.getAddressById(addressId)) { address ->
                 map(addressRepo.getAddressById(addressId)) { firstAddress ->
@@ -76,12 +75,12 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val pickupAddressLiveData: LiveData<Address?> by lazy {
+    private val pickupAddressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
         switchMap(dataStoreHelper.cafeId.asLiveData()) { addressId ->
             addressRepo.getAddressByCafeId(addressId)
         }
     }
-    val addressLiveData: LiveData<Address?> by lazy {
+    val addressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
         switchMap(isDeliveryLiveData) { isDelivery ->
             if (isDelivery) {
                 hasAddressField.set(deliveryAddressLiveData.value != null)

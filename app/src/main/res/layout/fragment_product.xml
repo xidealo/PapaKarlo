@@ -11,7 +11,7 @@
 
         <variable
             name="product"
-            type="com.bunbeauty.papakarlo.data.model.MenuProduct" />
+            type="com.bunbeauty.data.model.MenuProduct" />
 
         <variable
             name="stringHelper"

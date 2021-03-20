@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.street.StreetRepo
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.Street
+import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.Street
 import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,7 @@ class CreationAddressViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var navigator: WeakReference<CreationAddressNavigator>? = null
-    var streets = listOf<Street>()
+    var streets = listOf<com.bunbeauty.data.model.Street>()
     var streetNamesFiled = ObservableField<List<String>>()
 
     fun getStreets() {
@@ -35,7 +35,7 @@ class CreationAddressViewModel @Inject constructor(
         }
     }
 
-    fun creationAddress(address: Address) {
+    fun creationAddress(address: com.bunbeauty.data.model.Address) {
         viewModelScope.launch(Dispatchers.IO) {
 
             val addressId = addressRepo.insert(address)

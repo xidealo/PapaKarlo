@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.data.local.db.order
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.data.model.order.Order
 
 interface OrderRepo {
     suspend fun saveOrder(order: Order)

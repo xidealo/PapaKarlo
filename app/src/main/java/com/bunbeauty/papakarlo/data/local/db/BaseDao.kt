@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.data.local.db
 
 import androidx.room.*
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
 
 interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

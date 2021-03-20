@@ -1,6 +1,6 @@
-package com.bunbeauty.papakarlo.data.model.fb_model
+package com.bunbeauty.data.model
 
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.enums.ProductCode
 
 data class MenuProductFB(
     var name: String = "",

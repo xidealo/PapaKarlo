@@ -1,8 +1,8 @@
-package com.bunbeauty.papakarlo.data.model
+package com.bunbeauty.data.model
 
 import android.os.Parcelable
 import androidx.room.*
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
+import com.bunbeauty.data.model.cafe.CafeEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -1,13 +1,12 @@
 package com.bunbeauty.papakarlo.ui.cafe_list
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
+import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.CafeListViewModel

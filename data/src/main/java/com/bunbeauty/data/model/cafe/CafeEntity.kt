@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.data.model.cafe
+package com.bunbeauty.data.model.cafe
 
 import androidx.room.Embedded
 import androidx.room.Entity

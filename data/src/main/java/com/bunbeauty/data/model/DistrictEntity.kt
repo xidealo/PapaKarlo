@@ -1,11 +1,11 @@
-package com.bunbeauty.papakarlo.data.model
+package com.bunbeauty.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
+import com.bunbeauty.data.model.cafe.CafeEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

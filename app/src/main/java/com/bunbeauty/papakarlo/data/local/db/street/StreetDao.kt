@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
-import com.bunbeauty.papakarlo.data.model.Street
+import com.bunbeauty.data.model.Street
 import kotlinx.coroutines.flow.Flow
 
 @Dao

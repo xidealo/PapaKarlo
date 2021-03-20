@@ -3,10 +3,9 @@ package com.bunbeauty.papakarlo.ui.products
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -29,13 +28,13 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        viewModel.productCode = requireArguments().getParcelable(MenuProduct.PRODUCT_CODE)!!
+        viewModel.productCode = requireArguments().getParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE)!!
         viewModel.navigator = WeakReference(this)
         subscribe(viewModel.isLoadingLiveData) { isLoading ->
             viewDataBinding.activityMainPbLoading.toggleVisibility(isLoading)
         }
         subscribe(viewModel.productListLiveData) { productList ->
-            menuProductsAdapter.setItemList(productList.sortedBy { it.name })
+            menuProductsAdapter.setItemList(productList)
             viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
         }
     }
@@ -46,7 +45,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
     }
 
-    override fun goToProduct(menuProduct: MenuProduct) {
+    override fun goToProduct(menuProduct: com.bunbeauty.data.model.MenuProduct) {
         findNavController().navigate(actionMainFragmentToProductFragment(menuProduct))
     }
 
@@ -55,7 +54,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         fun newInstance(productCode: ProductCode) =
             ProductsFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(MenuProduct.PRODUCT_CODE, productCode)
+                    putParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE, productCode)
                 }
             }
     }

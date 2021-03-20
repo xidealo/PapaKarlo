@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.utils
 
-import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -8,7 +7,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.BaseModel
+import com.bunbeauty.data.model.BaseModel
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
@@ -37,7 +36,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:items")
-    fun <T : BaseModel> setListItems(recyclerView: RecyclerView, items: List<T>?) {
+    fun <T : com.bunbeauty.data.model.BaseModel> setListItems(recyclerView: RecyclerView, items: List<T>?) {
         if (items != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).setItemList(items)
         }
@@ -45,7 +44,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:removeItem")
-    fun <T : BaseModel> removeItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : com.bunbeauty.data.model.BaseModel> removeItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).removeItem(item)
         }
@@ -53,7 +52,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:addItem")
-    fun <T : BaseModel> addItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : com.bunbeauty.data.model.BaseModel> addItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).addItem(item)
         }

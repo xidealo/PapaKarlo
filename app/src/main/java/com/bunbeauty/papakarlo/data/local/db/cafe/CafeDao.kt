@@ -3,10 +3,8 @@ package com.bunbeauty.papakarlo.data.local.db.cafe
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
-import com.bunbeauty.papakarlo.data.model.Street
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
-import kotlinx.coroutines.Deferred
+import com.bunbeauty.data.model.cafe.Cafe
+import com.bunbeauty.data.model.cafe.CafeEntity
 
 @Dao
 interface CafeDao : BaseDao<CafeEntity> {

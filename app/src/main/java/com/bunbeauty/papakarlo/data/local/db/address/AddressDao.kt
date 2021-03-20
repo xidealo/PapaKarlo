@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
-import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.data.model.Address
 
 @Dao
 interface AddressDao : BaseDao<Address> {

@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.bunbeauty.papakarlo.data.model.Delivery
+import com.bunbeauty.data.model.Delivery
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -62,13 +62,13 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
     }
 
     override val delivery = context.deliveryDataStore.data.map {
-        Delivery(
+        com.bunbeauty.data.model.Delivery(
             it[DELIVERY_COST_KEY] ?: DEFAULT_DELIVERY_COST,
             it[FOR_FREE_DELIVERY_KEY] ?: DEFAULT_FOR_FREE_DELIVERY
         )
     }
 
-    override suspend fun saveDelivery(delivery: Delivery) {
+    override suspend fun saveDelivery(delivery: com.bunbeauty.data.model.Delivery) {
         context.deliveryDataStore.edit {
             it[DELIVERY_COST_KEY] = delivery.cost
             it[FOR_FREE_DELIVERY_KEY] = delivery.forFree

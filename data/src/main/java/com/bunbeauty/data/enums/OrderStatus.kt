@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.enums
+package com.bunbeauty.data.enums
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

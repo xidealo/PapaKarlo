@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.data.model
+package com.bunbeauty.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -19,7 +19,8 @@ data class MenuProduct(
     val onFire: Boolean = false,
     val inOven: Boolean = false,
     val productCode: String = "",
-    val barcode: Int = 0
+    val barcode: Int = 0,
+    val visible: Boolean = true
 ) : BaseModel(), Parcelable {
     companion object {
         const val PRODUCT_CODE: String = "product code"

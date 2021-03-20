@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.data.local.db.cafe
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
-import com.bunbeauty.papakarlo.data.model.cafe.CafeEntity
+import com.bunbeauty.data.model.cafe.Cafe
+import com.bunbeauty.data.model.cafe.CafeEntity
 
 interface CafeRepo {
     val cafeEntityListLiveData: LiveData<List<Cafe>>

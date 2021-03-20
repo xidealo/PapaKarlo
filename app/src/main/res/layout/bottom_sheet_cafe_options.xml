@@ -8,7 +8,7 @@
 
         <variable
             name="cafe"
-            type="com.bunbeauty.papakarlo.data.model.cafe.Cafe" />
+            type="com.bunbeauty.data.model.cafe.Cafe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

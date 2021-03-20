@@ -1,15 +1,12 @@
 package com.bunbeauty.papakarlo.data.api.firebase
 
-import com.bunbeauty.papakarlo.data.model.Delivery
-import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.data.model.cafe.Cafe
+import com.bunbeauty.data.model.order.Order
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
 
 interface IApiRepository {
     fun insertOrder(order: Order)
     fun getCafeList(): Flow<List<Cafe>>
-    fun getMenuProductList(): Flow<List<MenuProduct>>
-    fun getDeliveryCost(): Flow<Delivery>
+    fun getMenuProductList(): Flow<List<com.bunbeauty.data.model.MenuProduct>>
+    fun getDeliveryCost(): Flow<com.bunbeauty.data.model.Delivery>
 }

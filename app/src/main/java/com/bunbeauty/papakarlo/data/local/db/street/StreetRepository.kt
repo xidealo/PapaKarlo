@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.data.local.db.street
 
-import com.bunbeauty.papakarlo.data.model.Street
+import com.bunbeauty.data.model.Street
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

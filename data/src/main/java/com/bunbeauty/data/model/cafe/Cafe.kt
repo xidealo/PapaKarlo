@@ -1,10 +1,10 @@
-package com.bunbeauty.papakarlo.data.model.cafe
+package com.bunbeauty.data.model.cafe
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.District
-import com.bunbeauty.papakarlo.data.model.DistrictEntity
+import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.District
+import com.bunbeauty.data.model.DistrictEntity
 
 data class Cafe(
     @Embedded

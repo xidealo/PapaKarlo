@@ -1,13 +1,12 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
-import android.graphics.Paint
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
@@ -18,7 +17,7 @@ import javax.inject.Inject
 class CartProductsAdapter @Inject constructor(
     private val stringHelper: IStringHelper,
     private val productHelper: IProductHelper
-) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProduct>() {
+) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, com.bunbeauty.data.model.CartProduct>() {
 
     lateinit var consumerCartViewModel: ConsumerCartViewModel
 
@@ -43,7 +42,7 @@ class CartProductsAdapter @Inject constructor(
     inner class CartProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementCartProductBinding>(view)
 
-        fun setCountChangeListener(cartProduct: CartProduct) {
+        fun setCountChangeListener(cartProduct: com.bunbeauty.data.model.CartProduct) {
             binding?.elementCartProductCpCount?.countChangeListener =
                 object : CountPicker.CountChangeListener {
                     override fun onCountIncreased() {

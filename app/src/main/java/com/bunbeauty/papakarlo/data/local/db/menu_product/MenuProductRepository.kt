@@ -2,13 +2,9 @@ package com.bunbeauty.papakarlo.data.local.db.menu_product
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
-import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.enums.ProductCode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Job
+import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.data.model.MenuProduct
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MenuProductRepository @Inject constructor(

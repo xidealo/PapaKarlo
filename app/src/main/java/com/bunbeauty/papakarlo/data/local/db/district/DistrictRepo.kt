@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.data.local.db.district
 
-import com.bunbeauty.papakarlo.data.model.DistrictEntity
+import com.bunbeauty.data.model.DistrictEntity
 import kotlinx.coroutines.flow.Flow
 
 interface DistrictRepo {

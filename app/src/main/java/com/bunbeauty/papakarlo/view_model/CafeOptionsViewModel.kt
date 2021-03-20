@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.view_model
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
-import com.bunbeauty.papakarlo.data.model.cafe.Cafe
+import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import javax.inject.Inject
 

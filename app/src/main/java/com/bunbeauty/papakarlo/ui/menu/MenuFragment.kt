@@ -2,12 +2,10 @@ package com.bunbeauty.papakarlo.ui.menu
 
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopBarFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment

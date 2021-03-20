@@ -1,13 +1,11 @@
-package com.bunbeauty.papakarlo.data.model.order
+package com.bunbeauty.data.model.order
 
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.bunbeauty.papakarlo.data.model.Address
-import com.bunbeauty.papakarlo.data.model.BaseModel
-import com.bunbeauty.papakarlo.data.model.Time
-import com.bunbeauty.papakarlo.enums.OrderStatus
+import com.bunbeauty.data.enums.OrderStatus
+import com.bunbeauty.data.model.Address
 import kotlinx.parcelize.Parcelize
 import org.joda.time.DateTime
 
@@ -26,7 +24,7 @@ data class OrderEntity(
     var code: String = "",
     var email: String = "",
     var deferred: String = ""
-) : BaseModel(), Parcelable {
+) : com.bunbeauty.data.model.BaseModel(), Parcelable {
 
     companion object {
         const val ORDERS = "ORDERS"

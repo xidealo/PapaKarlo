@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.data.local.db.cart_product
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.data.model.CartProduct
 
 interface CartProductRepo {
     suspend fun insert(cartProduct: CartProduct): CartProduct

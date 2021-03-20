@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
-import com.bunbeauty.papakarlo.data.model.CartProduct
-import com.bunbeauty.papakarlo.data.model.MenuProduct
+import com.bunbeauty.data.model.CartProduct
+import com.bunbeauty.data.model.MenuProduct
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,13 +29,13 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
         }
     }
 
-    fun addProductToCart(menuProduct: MenuProduct) = launch(Dispatchers.IO) {
+    fun addProductToCart(menuProduct: com.bunbeauty.data.model.MenuProduct) = launch(Dispatchers.IO) {
         val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
             cartProduct.menuProduct == menuProduct
         }
 
         if (cartProduct == null) {
-            cartProductRepo.insert(CartProduct(menuProduct = menuProduct))
+            cartProductRepo.insert(com.bunbeauty.data.model.CartProduct(menuProduct = menuProduct))
         } else {
             cartProduct.count++
             cartProductRepo.update(cartProduct)

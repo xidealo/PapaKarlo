@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.data.local.db.address
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.papakarlo.data.model.Address
+import com.bunbeauty.data.model.Address
 import javax.inject.Inject
 
 class AddressRepository @Inject constructor(

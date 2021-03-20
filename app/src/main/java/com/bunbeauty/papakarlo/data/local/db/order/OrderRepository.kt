@@ -3,8 +3,7 @@ package com.bunbeauty.papakarlo.data.local.db.order
 import androidx.lifecycle.LiveData
 import com.bunbeauty.papakarlo.data.api.firebase.IApiRepository
 import com.bunbeauty.papakarlo.data.local.db.cart_product.CartProductRepo
-import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
-import com.bunbeauty.papakarlo.data.model.order.Order
+import com.bunbeauty.data.model.order.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

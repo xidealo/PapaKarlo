@@ -13,7 +13,7 @@
 
         <variable
             name="address"
-            type="com.bunbeauty.papakarlo.data.model.Address" />
+            type="com.bunbeauty.data.model.Address" />
 
         <variable
             name="iStringHelper"

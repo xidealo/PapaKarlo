@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.data.model.cafe
+package com.bunbeauty.data.model.cafe
 
 data class Coordinate(
     val latitude: Double = 0.0,

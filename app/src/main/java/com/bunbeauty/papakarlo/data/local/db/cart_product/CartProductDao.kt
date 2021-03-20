@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.papakarlo.data.local.db.BaseDao
-import com.bunbeauty.papakarlo.data.model.CartProduct
-import kotlinx.coroutines.Deferred
+import com.bunbeauty.data.model.CartProduct
 
 @Dao
 interface CartProductDao : BaseDao<CartProduct> {

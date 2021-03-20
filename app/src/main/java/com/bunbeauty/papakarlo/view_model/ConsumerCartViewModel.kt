@@ -5,7 +5,7 @@ import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
-import com.bunbeauty.papakarlo.data.model.CartProduct
+import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.papakarlo.utils.product.IProductHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
@@ -52,7 +52,7 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-    fun updateCartProduct(cartProduct: CartProduct) {
+    fun updateCartProduct(cartProduct: com.bunbeauty.data.model.CartProduct) {
         if (cartProduct.count > 0) {
             launch(Dispatchers.IO) {
                 cartProductRepo.update(cartProduct)

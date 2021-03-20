@@ -3,8 +3,7 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
-import com.bunbeauty.papakarlo.data.model.MenuProduct
-import com.bunbeauty.papakarlo.enums.ProductCode
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.products.ProductsNavigator
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import java.lang.ref.WeakReference
@@ -20,11 +19,11 @@ class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuPro
     val productListLiveData by lazy {
         map(menuProductRepo.getMenuProductList(productCode)) { menuProductList ->
             isLoadingLiveData.value = false
-            menuProductList
+            menuProductList.sortedBy { it.name }.filter { it.visible }
         }
     }
 
-    fun goToProduct(menuProduct: MenuProduct) {
+    fun goToProduct(menuProduct: com.bunbeauty.data.model.MenuProduct) {
         navigator?.get()?.goToProduct(menuProduct)
     }
 }

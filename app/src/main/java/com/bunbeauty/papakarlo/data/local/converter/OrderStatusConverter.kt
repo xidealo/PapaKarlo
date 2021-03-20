@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.data.local.converter
 
 import androidx.room.TypeConverter
-import com.bunbeauty.papakarlo.enums.OrderStatus
+import com.bunbeauty.data.enums.OrderStatus
 
 class OrderStatusConverter {
     @TypeConverter
