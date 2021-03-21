@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import com.bunbeauty.papakarlo.view_model.CafeListViewModel
 import javax.inject.Inject
 
-class CafeAdapter @Inject constructor(private val iStringHelper: IStringHelper) :
+class CafeAdapter @Inject constructor(private val stringHelper: IStringHelper) :
     ListAdapter<Cafe, CafeAdapter.CafeViewHolder>(CafeDiffUtilCallback()) {
 
     lateinit var cafeListViewModel: CafeListViewModel
@@ -20,7 +20,7 @@ class CafeAdapter @Inject constructor(private val iStringHelper: IStringHelper) 
     override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
         holder.binding?.cafe = getItem(position)
         holder.binding?.cafeListViewModel = cafeListViewModel
-        holder.binding?.iStringHelper = iStringHelper
+        holder.binding?.stringHelper = stringHelper
         holder.setCafeClickListener(getItem(position))
     }
 

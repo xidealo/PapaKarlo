@@ -3,20 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/menu_fragment">
+
+    <action
+        android:id="@+id/global_to_cartFragment"
+        app:destination="@id/cart_fragment" />
 
     <fragment
-        android:id="@+id/main_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.main.MainFragment"
-        android:label="@string/title_main"
-        tools:layout="@layout/fragment_main">
+        android:id="@+id/cafe_list_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment"
+        android:label="@string/title_cafe_list"
+        tools:layout="@layout/fragment_cafe_list">
         <action
-            android:id="@+id/action_main_fragment_to_cart_fragment"
-            app:destination="@id/cart_fragment" />
+            android:id="@+id/to_cafe_options_bottom_sheet"
+            app:destination="@id/cafe_options_bottom_sheet" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/menu_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.menu.MenuFragment"
+        android:label="@string/title_menu"
+        tools:layout="@layout/fragment_menu" >
         <action
-            android:id="@+id/action_main_fragment_to_product_fragment"
+            android:id="@+id/to_product_fragment"
             app:destination="@id/product_fragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/orders_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.orders.OrdersFragment"
+        android:label="@string/title_orders"
+        tools:layout="@layout/fragment_orders" />
+
+    <dialog
+        android:id="@+id/cafe_options_bottom_sheet"
+        android:name="com.bunbeauty.papakarlo.ui.cafe_options.CafeOptionsBottomSheet"
+        android:label="CafeOptionsBottomSheet"
+        tools:layout="@layout/bottom_sheet_cafe_options">
+        <argument
+            android:name="cafeId"
+            app:argType="string" />
+    </dialog>
 
     <fragment
         android:id="@+id/cart_fragment"
@@ -27,9 +54,9 @@
             android:id="@+id/to_creation_order"
             app:destination="@id/creation_order" />
         <action
-            android:id="@+id/back_to_main_fragment"
-            app:destination="@id/main_fragment"
-            app:popUpTo="@id/main_fragment"
+            android:id="@+id/back_to_menu_fragment"
+            app:destination="@id/menu_fragment"
+            app:popUpTo="@id/menu_fragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -39,56 +66,41 @@
         android:label="@string/title_order"
         tools:layout="@layout/fragment_creation_order">
         <action
-            android:id="@+id/back_to_cart_fragment"
-            app:destination="@id/cart_fragment"
-            app:popUpTo="@id/cart_fragment"
+            android:id="@+id/back_to_menu_fragment"
+            app:destination="@id/menu_fragment"
+            app:popUpTo="@id/menu_fragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/back_to_main_fragment"
-            app:destination="@id/main_fragment"
-            app:popUpTo="@id/main_fragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/to_creation_address_fragment"
+            app:destination="@id/creation_address_fragment" />
         <action
-            android:id="@+id/to_creationAddressFragment"
-            app:destination="@id/creationAddressFragment" />
-        <action
-            android:id="@+id/to_addressesBottomSheet"
-            app:destination="@id/addressesBottomSheet">
+            android:id="@+id/to_addresses_bottom_sheet"
+            app:destination="@id/addresses_bottom_sheet">
         </action>
     </fragment>
 
     <fragment
         android:id="@+id/product_fragment"
         android:name="com.bunbeauty.papakarlo.ui.product.ProductFragment"
-        android:label="@string/title_product"
+        android:label="{menuProductName}"
         tools:layout="@layout/fragment_product">
         <argument
             android:name="menuProduct"
             app:argType="com.bunbeauty.data.model.MenuProduct" />
-        <action
-            android:id="@+id/to_cart_fragment"
-            app:destination="@id/cart_fragment" />
+        <argument
+            android:name="menuProductName"
+            app:argType="string" />
     </fragment>
 
     <fragment
-        android:id="@+id/creationAddressFragment"
+        android:id="@+id/creation_address_fragment"
         android:name="com.bunbeauty.papakarlo.ui.creation_address.CreationAddressFragment"
-        android:label="Создание адреса"
+        android:label="@string/title_creation_address"
         tools:layout="@layout/fragment_creation_address">
-        <action
-            android:id="@+id/back_to_creation_order"
-            app:destination="@id/creation_order"
-            app:popUpTo="@id/creation_order"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/creationAddress_back_to_cart_fragment"
-            app:destination="@id/cart_fragment"
-            app:popUpTo="@id/cart_fragment"
-            app:popUpToInclusive="true" />
     </fragment>
 
     <dialog
-        android:id="@+id/addressesBottomSheet"
+        android:id="@+id/addresses_bottom_sheet"
         android:name="com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet"
         android:label="bottom_sheet_addresses"
         tools:layout="@layout/bottom_sheet_addresses">
@@ -96,8 +108,8 @@
             android:name="isDelivery"
             app:argType="boolean" />
         <action
-            android:id="@+id/action_addressesBottomSheet_to_creationAddressFragment"
-            app:destination="@id/creationAddressFragment" />
+            android:id="@+id/to_creation_address_fragment"
+            app:destination="@id/creation_address_fragment" />
     </dialog>
 
 </navigation>

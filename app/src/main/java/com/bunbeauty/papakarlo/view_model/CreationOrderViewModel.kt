@@ -1,22 +1,24 @@
 package com.bunbeauty.papakarlo.view_model
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
 import com.bunbeauty.papakarlo.data.local.db.order.OrderRepo
-import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.data.model.order.OrderEntity
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderNavigator
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.*
 import com.bunbeauty.papakarlo.utils.network.INetworkHelper
-import com.bunbeauty.papakarlo.utils.product.IProductHelper
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.bunbeauty.papakarlo.view_model.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.first
@@ -24,7 +26,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class CreationOrderViewModel @Inject constructor(
@@ -32,15 +33,11 @@ class CreationOrderViewModel @Inject constructor(
     private val networkHelper: INetworkHelper,
     private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
-    private val productHelper: IProductHelper,
     private val orderRepo: OrderRepo,
     private val addressRepo: AddressRepo,
     private val cafeRepo: CafeRepo
-) : BaseViewModel() {
+) : ToolbarViewModel() {
 
-    var navigator: WeakReference<CreationOrderNavigator>? = null
-
-    val errorMessageLiveData = MutableLiveData<String>()
     val hasAddressField = ObservableField(true)
 
     var deferredHoursLiveData = MutableLiveData<Int?>(null)
@@ -150,26 +147,21 @@ class CreationOrderViewModel @Inject constructor(
         deferredHours: Int?,
         deferredMinutes: Int?
     ) {
+        if (addressLiveData.value == null) {
+            showError(resourcesProvider.getString(R.string.error_creation_order_address))
+            return
+        }
+
         val orderEntity = OrderEntity(
             comment = comment,
             phone = phone,
             email = email,
-            deferred = stringHelper.toStringTime(deferredHours, deferredMinutes)
+            deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
+            isDelivery = isDeliveryLiveData.value!!,
+            code = generateCode(),
+            address = addressLiveData.value!!
         )
-
         viewModelScope.launch(IO) {
-            if (addressLiveData.value == null) {
-                withContext(Main) {
-                    errorMessageLiveData.value =
-                        resourcesProvider.getString(R.string.error_creation_order_address)
-                }
-                return@launch
-            } else {
-                orderEntity.address = addressLiveData.value!!
-            }
-
-            orderEntity.isDelivery = isDeliveryLiveData.value!!
-            orderEntity.code = generateCode()
             val order = Order(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
@@ -177,7 +169,6 @@ class CreationOrderViewModel @Inject constructor(
                     orderEntity.address.street?.districtId ?: "ERROR CAFE"
                 ).id
             )
-
             dataStoreHelper.savePhoneNumber(orderEntity.phone)
             if (orderEntity.email.isNotEmpty()) {
                 dataStoreHelper.saveEmail(orderEntity.email)
@@ -185,12 +176,13 @@ class CreationOrderViewModel @Inject constructor(
             orderRepo.saveOrder(order)
 
             withContext(Main) {
-                navigator?.get()?.goToMain(orderEntity)
+                showMessage(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
+                router.navigate(backToMenuFragment())
             }
         }
     }
 
-    fun generateCode(): String {
+    private fun generateCode(): String {
         val letters = resourcesProvider.getString(R.string.code_letters)
 
         val number = (DateTime.now().secondOfDay % (letters.length * CODE_NUMBER_COUNT))
@@ -232,12 +224,12 @@ class CreationOrderViewModel @Inject constructor(
         return networkHelper.isNetworkConnected()
     }
 
-    fun onOrderClick() {
-        navigator?.get()?.createDeliveryOrder()
+    fun onAddressClicked() {
+        router.navigate(toAddressesBottomSheet(isDeliveryLiveData.value!!))
     }
 
-    fun onAddAddressClick() {
-        navigator?.get()?.goToCreationAddress()
+    fun onCreateAddressClicked() {
+        router.navigate(toCreationAddressFragment())
     }
 
     companion object {

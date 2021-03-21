@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
 import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.data.model.Address
-import com.bunbeauty.papakarlo.ui.addresses.AddressesNavigator
+import com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
@@ -16,7 +16,6 @@ class AddressesViewModel @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper
 ) : BaseViewModel() {
 
-    var navigator: WeakReference<AddressesNavigator>? = null
     var isDelivery = false
 
     val addressesLiveData by lazy {
@@ -29,7 +28,7 @@ class AddressesViewModel @Inject constructor(
         }
     }
 
-    fun saveSelectedAddress(address: com.bunbeauty.data.model.Address) {
+    fun saveSelectedAddress(address: Address) {
         viewModelScope.launch {
             if (isDelivery)
                 dataStoreHelper.saveDeliveryAddressId(address.id)
@@ -37,11 +36,11 @@ class AddressesViewModel @Inject constructor(
                 dataStoreHelper.saveCafeId(address.cafeId!!)
             }
 
-            navigator?.get()?.goToBack()
+            router.navigateUp()
         }
     }
 
     fun createAddressClick() {
-        navigator?.get()?.goToCreationAddress()
+        router.navigate(toCreationAddressFragment())
     }
 }

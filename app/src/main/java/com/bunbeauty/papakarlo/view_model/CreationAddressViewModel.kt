@@ -7,8 +7,7 @@ import com.bunbeauty.papakarlo.data.local.db.address.AddressRepo
 import com.bunbeauty.papakarlo.data.local.db.street.StreetRepo
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.model.Street
-import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressNavigator
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.bunbeauty.papakarlo.view_model.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,10 +19,9 @@ class CreationAddressViewModel @Inject constructor(
     private val addressRepo: AddressRepo,
     private val iDataStoreHelper: IDataStoreHelper,
     private val streetRepo: StreetRepo
-) : BaseViewModel() {
+) : ToolbarViewModel() {
 
-    var navigator: WeakReference<CreationAddressNavigator>? = null
-    var streets = listOf<com.bunbeauty.data.model.Street>()
+    var streets = listOf<Street>()
     var streetNamesFiled = ObservableField<List<String>>()
 
     fun getStreets() {
@@ -35,19 +33,15 @@ class CreationAddressViewModel @Inject constructor(
         }
     }
 
-    fun creationAddress(address: com.bunbeauty.data.model.Address) {
+    fun onCreateAddressClicked(address: Address) {
         viewModelScope.launch(Dispatchers.IO) {
 
             val addressId = addressRepo.insert(address)
             iDataStoreHelper.saveDeliveryAddressId(addressId)
             withContext(Dispatchers.Main) {
-                navigator?.get()?.goToCreationOrder()
+                router.navigateUp()
             }
         }
-    }
-
-    fun creationAddressClick() {
-        navigator?.get()?.createAddress()
     }
 
     fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {

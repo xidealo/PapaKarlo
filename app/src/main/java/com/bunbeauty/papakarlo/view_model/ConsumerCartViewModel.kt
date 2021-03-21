@@ -3,13 +3,13 @@ package com.bunbeauty.papakarlo.view_model
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
+import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.datastore.IDataStoreHelper
-import com.bunbeauty.data.model.CartProduct
-import com.bunbeauty.papakarlo.utils.product.IProductHelper
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.bunbeauty.papakarlo.view_model.base.ToolbarViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -18,11 +18,10 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class ConsumerCartViewModel @Inject constructor(
-    private val productHelper: IProductHelper,
     private val dataStoreHelper: IDataStoreHelper,
     private val stringHelper: IStringHelper,
     private val resourcesProvider: IResourcesProvider
-) : BaseViewModel(), CoroutineScope {
+) : ToolbarViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
 
@@ -35,7 +34,7 @@ class ConsumerCartViewModel @Inject constructor(
 
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.getCartProductListLiveData()) { productList ->
+           map(cartProductRepo.getCartProductListLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree
@@ -52,7 +51,7 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-    fun updateCartProduct(cartProduct: com.bunbeauty.data.model.CartProduct) {
+    fun updateCartProduct(cartProduct: CartProduct) {
         if (cartProduct.count > 0) {
             launch(Dispatchers.IO) {
                 cartProductRepo.update(cartProduct)
@@ -62,6 +61,14 @@ class ConsumerCartViewModel @Inject constructor(
                 cartProductRepo.delete(cartProduct)
             }
         }
+    }
+
+    fun onMenuClicked() {
+        router.navigate(ConsumerCartFragmentDirections.backToMenuFragment())
+    }
+
+    fun onCreateOrderClicked() {
+        router.navigate(ConsumerCartFragmentDirections.toCreationOrder())
     }
 
 }

@@ -1,20 +1,18 @@
 package com.bunbeauty.papakarlo.ui.creation_order
 
 import android.annotation.SuppressLint
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
-import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.*
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.toAddressesBottomSheet
+import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
@@ -25,11 +23,7 @@ import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class CreationOrderFragment :
-    CartClickableFragment<FragmentCreationOrderBinding, CreationOrderViewModel>(),
-    CreationOrderNavigator {
-
-    override lateinit var title: String
+class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, CreationOrderViewModel>() {
 
     @Inject
     lateinit var stringHelper: IStringHelper
@@ -43,17 +37,10 @@ class CreationOrderFragment :
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        title = resources.getString(R.string.title_order)
-
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.navigator = WeakReference(this)
 
         subscribe(viewModel.addressLiveData) { address ->
             viewDataBinding.fragmentCreationOrderTvLastAddress.text = stringHelper.toString(address)
-        }
-        subscribe(viewModel.errorMessageLiveData) {
-            (activity as MainActivity).showError(it)
         }
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
@@ -67,7 +54,13 @@ class CreationOrderFragment :
 
         viewDataBinding.viewModel = viewModel
         viewDataBinding.fragmentCreationOrderMcvAddressPick.setOnClickListener {
-            goToAddresses()
+            viewModel.onAddressClicked()
+        }
+        viewDataBinding.fragmentCreationOrderBtnCreateAddress.setOnClickListener {
+            viewModel.onCreateAddressClicked()
+        }
+        viewDataBinding.fragmentCreationOrderBtnCreateOrder.setOnClickListener {
+            createOrder()
         }
         viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
             viewModel.isDeliveryLiveData.value = isChecked
@@ -103,7 +96,7 @@ class CreationOrderFragment :
                 viewModel.deferredHoursLiveData.value = picker.hour
                 viewModel.deferredMinutesLiveData.value = picker.minute
             } else {
-                (activity as MainActivity).showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
+                showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
             }
         }
         picker.addOnNegativeButtonClickListener {
@@ -114,9 +107,9 @@ class CreationOrderFragment :
         }
     }
 
-    override fun createDeliveryOrder() {
+    private fun createOrder() {
         if (!viewModel.isNetworkConnected()) {
-            (activity as MainActivity).showError(requireContext().getString(R.string.error_creation_order_connect))
+            showError(requireContext().getString(R.string.error_creation_order_connect))
             return
         }
 
@@ -150,29 +143,6 @@ class CreationOrderFragment :
             viewDataBinding.fragmentOrderEtEmail.text.toString().trim(),
             viewModel.deferredHoursLiveData.value,
             viewModel.deferredMinutesLiveData.value
-        )
-
-        val inputMethodManager =
-            requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
-    }
-
-    override fun goToMain(orderEntity: OrderEntity) {
-        (activity as MainActivity).showMessage(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
-        findNavController().navigate(backToMainFragment())
-    }
-
-    override fun goToCart(view: View) {
-        findNavController().navigate(backToCartFragment())
-    }
-
-    override fun goToCreationAddress() {
-        findNavController().navigate(toCreationAddressFragment())
-    }
-
-    private fun goToAddresses() {
-        findNavController().navigate(
-            toAddressesBottomSheet(viewModel.isDeliveryLiveData.value!!)
         )
     }
 }

@@ -2,37 +2,36 @@ package com.bunbeauty.papakarlo.ui.creation_address
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.data.model.Address
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
-import com.bunbeauty.papakarlo.ui.main.MainActivity
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.view_model.CreationAddressViewModel
-import java.lang.ref.WeakReference
+import javax.inject.Inject
 
-class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBinding,
-        CreationAddressViewModel>(), CreationAddressNavigator {
+class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding, CreationAddressViewModel>() {
 
-    override lateinit var title: String
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        title = resources.getString(R.string.title_creation_address)
-
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.navigator = WeakReference(this)
         viewModel.getStreets()
 
         viewDataBinding.viewModel = viewModel
+        viewDataBinding.fragmentCreationAddressBtnCreationAddress.setOnClickListener {
+            createAddress()
+        }
     }
 
-    override fun createAddress() {
+    private fun createAddress() {
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtStreet.text.toString(),
                 true,
@@ -106,8 +105,9 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
         }
         viewDataBinding.fragmentCreationAddressTilFloor.error = ""
 
-        viewModel.creationAddress(
-            com.bunbeauty.data.model.Address(
+
+        viewModel.onCreateAddressClicked(
+            Address(
                 street = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() },
                 house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
                 flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
@@ -116,14 +116,6 @@ class CreationAddressFragment : CartClickableFragment<FragmentCreationAddressBin
                 floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim(),
             )
         )
-    }
-
-    override fun goToCart(view: View) {
-        findNavController().navigate(CreationAddressFragmentDirections.creationAddressBackToCartFragment())
-    }
-
-    override fun goToCreationOrder() {
-        (activity as MainActivity).showMessage(requireContext().getString(R.string.msg_creation_address_created_address))
-        findNavController().navigate(CreationAddressFragmentDirections.backToCreationOrder())
+        showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
     }
 }

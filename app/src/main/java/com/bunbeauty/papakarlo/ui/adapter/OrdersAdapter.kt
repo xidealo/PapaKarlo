@@ -11,9 +11,8 @@ import com.bunbeauty.papakarlo.utils.string.IStringHelper
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor(
-    private val iStringHelper: IStringHelper
-) :
-    BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
+    private val stringHelper: IStringHelper
+) : BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -24,7 +23,7 @@ class OrdersAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
         holder.binding?.order = itemList[i]
-        holder.binding?.stringHelper = iStringHelper
+        holder.binding?.stringHelper = stringHelper
     }
 
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {

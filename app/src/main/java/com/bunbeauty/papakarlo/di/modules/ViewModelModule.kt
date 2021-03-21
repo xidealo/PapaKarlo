@@ -17,11 +17,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProductViewModel::class)
-    internal abstract fun provideProductViewModel(productViewModel: ProductViewModel): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(ProductsViewModel::class)
     internal abstract fun provideProductsViewModel(productsViewModel: ProductsViewModel): ViewModel
 
@@ -29,11 +24,6 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     internal abstract fun provideMainViewModel(mainViewModel: MainViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MenuViewModel::class)
-    internal abstract fun provideMenuViewModel(menuViewModel: MenuViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -69,4 +59,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CafeOptionsViewModel::class)
     internal abstract fun provideCafeOptionsViewModel(cafeOptionsViewModel: CafeOptionsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EmptyViewModel::class)
+    internal abstract fun provideEmptyViewModel(emptyViewModel: EmptyViewModel): ViewModel
 }

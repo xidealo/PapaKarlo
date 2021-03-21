@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import com.bunbeauty.papakarlo.data.local.db.menu_product.MenuProductRepo
 import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.papakarlo.ui.products.ProductsNavigator
+import com.bunbeauty.data.model.MenuProduct
+import com.bunbeauty.papakarlo.ui.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -12,7 +13,6 @@ import javax.inject.Inject
 class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuProductRepo) :
     BaseViewModel() {
 
-    var navigator: WeakReference<ProductsNavigator>? = null
     val isLoadingLiveData = MutableLiveData(true)
     lateinit var productCode: ProductCode
 
@@ -23,7 +23,7 @@ class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuPro
         }
     }
 
-    fun goToProduct(menuProduct: com.bunbeauty.data.model.MenuProduct) {
-        navigator?.get()?.goToProduct(menuProduct)
+    fun onProductClicked(menuProduct: MenuProduct) {
+        router.navigate(toProductFragment(menuProduct, menuProduct.name))
     }
 }

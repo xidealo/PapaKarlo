@@ -26,7 +26,6 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
     abstract var viewModelClass: Class<V>
 
     lateinit var viewDataBinding: T
-    private var mActivity: BaseActivity<*>? = null
 
     lateinit var viewModel: V
 
@@ -48,11 +47,6 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
         inject(viewModelComponent)
 
         viewModel = ViewModelProvider(this, modelFactory).get(viewModelClass)
-
-        if (context is BaseActivity<*>) {
-            val mActivity: BaseActivity<*> = context
-            this.mActivity = mActivity
-        }
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
@@ -84,11 +78,6 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
         viewDataBinding.executePendingBindings()
     }
 
-    override fun onDetach() {
-        mActivity = null
-        super.onDetach()
-    }
-
     override fun show(fragmentManager: FragmentManager, tag: String?) {
         val transaction = fragmentManager.beginTransaction()
         val prevFragment = fragmentManager.findFragmentByTag(tag)
@@ -97,13 +86,5 @@ abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragme
         }
         transaction.addToBackStack(null)
         show(transaction, tag)
-    }
-
-    open fun dismissDialog(tag: String?) {
-        dismiss()
-    }
-
-    open fun getBaseActivity(): BaseActivity<*>? {
-        return mActivity
     }
 }

@@ -5,12 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.AddressesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +26,6 @@
             android:id="@+id/bottom_sheet_address_btn_create_address"
             style="@style/OutLineButton"
             android:layout_width="0dp"
-            android:onClick="@{()->viewModel.createAddressClick()}"
             android:text="@string/action_creation_address_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

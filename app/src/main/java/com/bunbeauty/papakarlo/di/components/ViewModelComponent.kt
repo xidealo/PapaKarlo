@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
 import com.bunbeauty.papakarlo.ui.cafe_options.CafeOptionsBottomSheet
 import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment
 import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.ui.main.MainFragment
 import com.bunbeauty.papakarlo.ui.menu.MenuFragment
 import com.bunbeauty.papakarlo.ui.creation_address.CreationAddressFragment
 import com.bunbeauty.papakarlo.ui.orders.OrdersFragment
@@ -36,7 +35,6 @@ interface ViewModelComponent {
     fun inject(creationOrderFragment: CreationOrderFragment)
     fun inject(cafeListFragment: CafeListFragment)
     fun inject(ordersFragment: OrdersFragment)
-    fun inject(mainFragment: MainFragment)
     fun inject(creationAddressFragment: CreationAddressFragment)
 
     //bottom sheet

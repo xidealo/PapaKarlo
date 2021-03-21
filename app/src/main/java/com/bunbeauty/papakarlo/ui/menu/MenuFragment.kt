@@ -1,31 +1,32 @@
 package com.bunbeauty.papakarlo.ui.menu
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
-import com.bunbeauty.papakarlo.ui.base.TopBarFragment
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.products.ProductsFragment
-import com.bunbeauty.papakarlo.view_model.MenuViewModel
+import com.bunbeauty.papakarlo.view_model.EmptyViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MenuFragment : TopBarFragment<FragmentMenuBinding, MenuViewModel>() {
+class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
 
-    override lateinit var title: String
+    override val isToolbarLogoVisible = true
+    override val isBottomBarVisible = true
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        title = resources.getString(R.string.title_menu)
-
         super.onViewCreated(view, savedInstanceState)
 
-        setTopBarImage(R.drawable.logo_top)
+        Log.d("test", "onViewCreated")
+
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             ProductCode.values().asList().map {
                 ProductsFragment.newInstance(it)

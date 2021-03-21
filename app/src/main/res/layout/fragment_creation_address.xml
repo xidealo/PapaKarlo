@@ -156,7 +156,6 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_creation_address_btn_creation_address"
             style="@style/MainButton"
-            android:onClick="@{()->viewModel.creationAddressClick()}"
             android:text="@string/action_creation_address_address"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

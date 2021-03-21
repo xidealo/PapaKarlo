@@ -46,11 +46,10 @@ class MenuProductsAdapter @Inject constructor(
 
         fun setListener(menuProduct: MenuProduct) {
             binding?.elementMenuProductMcvMain?.setOnClickListener {
-                productsViewModel.goToProduct(menuProduct)
+                productsViewModel.onProductClicked(menuProduct)
             }
             binding?.elementMenuProductBtnWant?.setOnClickListener {
                 productsViewModel.addProductToCart(menuProduct)
-                (productsFragment.activity as MainActivity).showMessage("Вы добавили ${menuProduct.name} в корзину")
             }
         }
     }

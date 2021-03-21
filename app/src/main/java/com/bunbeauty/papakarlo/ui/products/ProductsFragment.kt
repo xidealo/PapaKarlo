@@ -9,13 +9,12 @@ import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.main.MainFragmentDirections.actionMainFragmentToProductFragment
+import com.bunbeauty.papakarlo.ui.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.view_model.ProductsViewModel
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
-class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>(),
-    ProductsNavigator {
+class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>() {
 
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter
@@ -29,7 +28,6 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
 
         setupRecyclerView()
         viewModel.productCode = requireArguments().getParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE)!!
-        viewModel.navigator = WeakReference(this)
         subscribe(viewModel.isLoadingLiveData) { isLoading ->
             viewDataBinding.activityMainPbLoading.toggleVisibility(isLoading)
         }
@@ -43,10 +41,6 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         menuProductsAdapter.productsViewModel = viewModel
         menuProductsAdapter.productsFragment = this
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
-    }
-
-    override fun goToProduct(menuProduct: com.bunbeauty.data.model.MenuProduct) {
-        findNavController().navigate(actionMainFragmentToProductFragment(menuProduct))
     }
 
     companion object {

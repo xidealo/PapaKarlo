@@ -1,30 +1,27 @@
 package com.bunbeauty.papakarlo.view_model
 
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.data.local.db.cafe.CafeRepo
-import com.bunbeauty.papakarlo.ui.cafe_list.CafeListNavigator
+import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.papakarlo.utils.resoures.IResourcesProvider
 import com.bunbeauty.papakarlo.utils.string.IStringHelper
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import kotlinx.coroutines.launch
+import com.bunbeauty.papakarlo.view_model.base.ToolbarViewModel
 import org.joda.time.DateTime
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class CafeListViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
     private val resourcesProvider: IResourcesProvider,
     val iStringHelper: IStringHelper
-) : BaseViewModel() {
+) : ToolbarViewModel() {
 
     init {
         startTimer()
     }
 
-    var navigator: WeakReference<CafeListNavigator>? = null
     val currentTime = ObservableField(DateTime.now())
 
     val cafeListLiveData by lazy {
@@ -91,7 +88,7 @@ class CafeListViewModel @Inject constructor(
     }
 
     fun onCafeCardClick(cafeId: String) {
-        navigator?.get()?.goToCafeOptions(cafeId)
+        router.navigate(toCafeOptionsBottomSheet(cafeId))
     }
 
     companion object {

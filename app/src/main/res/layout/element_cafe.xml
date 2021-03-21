@@ -15,7 +15,7 @@
             type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
 
         <variable
-            name="iStringHelper"
+            name="stringHelper"
             type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
     </data>
 
@@ -35,7 +35,7 @@
                 android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
                 android:drawablePadding="@dimen/medium_padding"
-                android:text="@{cafeListViewModel.iStringHelper.toString(cafe.address)}"
+                android:text="@{stringHelper.toString(cafe.address)}"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,7 @@
                 style="@style/MainText"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:drawablePadding="@dimen/medium_padding"
-                android:text="@{iStringHelper.toStringWorkingHours(cafe.cafeEntity)}"
+                android:text="@{stringHelper.toStringWorkingHours(cafe.cafeEntity)}"
                 app:drawableLeftCompat="@drawable/ic_clock"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintStart_toStartOf="parent"

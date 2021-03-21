@@ -3,20 +3,17 @@ package com.bunbeauty.papakarlo.ui.consumer_cart
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.base.CartClickableFragment
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragmentDirections.toCreationOrder
-import com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragmentDirections.backToMainFragment
 import com.bunbeauty.papakarlo.view_model.ConsumerCartViewModel
 import javax.inject.Inject
 
-class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>() {
-
-    override lateinit var title: String
+class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>() {
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -26,8 +23,6 @@ class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, 
     lateinit var cartProductsAdapter: CartProductsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        title = resources.getString(R.string.title_cart)
-
         super.onViewCreated(view, savedInstanceState)
 
         subscribe(viewModel.cartProductListLiveData) { cartProductList ->
@@ -43,27 +38,16 @@ class ConsumerCartFragment : CartClickableFragment<FragmentConsumerCartBinding, 
 
         setupRecyclerView()
         viewDataBinding.fragmentConsumerCartBtnMenu.setOnClickListener {
-            goToMenu()
+            viewModel.onMenuClicked()
         }
         viewDataBinding.fragmentConsumerCartBtnCrateOrder.setOnClickListener {
-            goToOrder()
+            viewModel.onCreateOrderClicked()
         }
     }
 
     private fun setupRecyclerView() {
         cartProductsAdapter.consumerCartViewModel = viewModel
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
-    }
-
-    override fun goToCart(view: View) {
-    }
-
-    private fun goToMenu() {
-        findNavController().navigate(backToMainFragment())
-    }
-
-    private fun goToOrder() {
-        findNavController().navigate(toCreationOrder())
     }
 
 }

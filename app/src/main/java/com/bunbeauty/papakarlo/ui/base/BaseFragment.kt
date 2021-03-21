@@ -5,18 +5,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.google.android.material.snackbar.Snackbar
+import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment() {
-
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(), IMessageShowable {
 
     private var _viewDataBinding: B? = null
     protected val viewDataBinding get() = _viewDataBinding!!
@@ -46,6 +50,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
         setHasOptionsMenu(false)
 
         viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
+        viewModel.messageShowable = WeakReference(this)
 
         val viewBindingClass = getViewBindingClass()
         val inflateMethod = viewBindingClass.getMethod(
@@ -71,12 +76,23 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
         liveData.observe(viewLifecycleOwner, observer::invoke)
     }
 
+    override fun showMessage(message: String) {
+        val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
+        snack.show()
+    }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewDataBinding.setVariable(viewModelVariable, viewModel)
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.executePendingBindings()
-    }*/
+    override fun showError(error: String) {
+        val snack = Snackbar.make(viewDataBinding.root, error, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.errorColor))
+            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
+        snack.show()
+    }
 }
