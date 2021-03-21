@@ -14,6 +14,8 @@ import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 
 object DataBinding {
@@ -36,7 +38,10 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:items")
-    fun <T : com.bunbeauty.data.model.BaseModel> setListItems(recyclerView: RecyclerView, items: List<T>?) {
+    fun <T : com.bunbeauty.data.model.BaseModel> setListItems(
+        recyclerView: RecyclerView,
+        items: List<T>?
+    ) {
         if (items != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).setItemList(items)
         }
@@ -78,7 +83,10 @@ object DataBinding {
     @BindingAdapter("bind:image")
     fun setImage(imageView: ImageView, link: String?) {
         if (!link.isNullOrEmpty()) {
-            Picasso.get().load(link).into(imageView)
+            Picasso.get().load(link)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into(imageView)
         }
     }
 
@@ -91,7 +99,7 @@ object DataBinding {
     @JvmStatic
     @BindingAdapter("bind:setAdapter")
     fun setAdapter(autoCompleteTextView: MaterialAutoCompleteTextView, data: List<String>?) {
-        if(data != null){
+        if (data != null) {
             val adapter = ArrayAdapter(
                 autoCompleteTextView.context,
                 R.layout.support_simple_spinner_dropdown_item,
