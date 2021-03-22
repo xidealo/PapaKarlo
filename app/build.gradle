@@ -67,6 +67,9 @@ repositories {
 
 dependencies {
     implementation project(":data")
+    implementation project(":domain")
+    implementation project(":common")
+    implementation project(":presentation")
 
     implementation fileTree(dir: "libs", include: ["*.jar", "*.arr"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -117,22 +120,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "com.miguelcatalan:materialsearchview:$rootProject.materialSerachVersion"
     implementation "com.github.Triggertrap:SeekArc:$rootProject.seekArcVersion"
-
-    //Database
-    implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
-    implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"
-    kapt "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
-
-    //DataStore
-    implementation "androidx.datastore:datastore-preferences:$rootProject.datastoreVersion"
-
-    //WorkManager
-    implementation "androidx.work:work-runtime-ktx:$rootProject.workManagerVersion"
-    implementation "androidx.work:work-gcm:$rootProject.workManagerVersion"
-    androidTestImplementation "androidx.work:work-testing:$rootProject.workManagerVersion"
-
-    //Joda time
-    implementation "joda-time:joda-time:$rootProject.jodaVersion"
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"

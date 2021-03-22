@@ -17,11 +17,11 @@
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
+            type="com.bunbeauty.domain.string_helper.IStringHelper" />
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
+            type="com.bunbeauty.domain.product.IProductHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView style="@style/DefaultMaterialCard">

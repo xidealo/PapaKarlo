@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/menu_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.menu.MenuFragment"
+        android:name="com.bunbeauty.papakarlo.ui.MenuFragment"
         android:label="@string/title_menu"
         tools:layout="@layout/fragment_menu" >
         <action
@@ -31,13 +31,13 @@
 
     <fragment
         android:id="@+id/orders_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.orders.OrdersFragment"
+        android:name="com.bunbeauty.papakarlo.ui.OrdersFragment"
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders" />
 
     <dialog
         android:id="@+id/cafe_options_bottom_sheet"
-        android:name="com.bunbeauty.papakarlo.ui.cafe_options.CafeOptionsBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheet"
         android:label="CafeOptionsBottomSheet"
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/cart_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.consumer_cart.ConsumerCartFragment"
+        android:name="com.bunbeauty.papakarlo.ui.ConsumerCartFragment"
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_consumer_cart">
         <action
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/creation_order"
-        android:name="com.bunbeauty.papakarlo.ui.creation_order.CreationOrderFragment"
+        android:name="com.bunbeauty.papakarlo.ui.CreationOrderFragment"
         android:label="@string/title_order"
         tools:layout="@layout/fragment_creation_order">
         <action
@@ -81,7 +81,7 @@
 
     <fragment
         android:id="@+id/product_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.product.ProductFragment"
+        android:name="com.bunbeauty.papakarlo.ui.ProductFragment"
         android:label="{menuProductName}"
         tools:layout="@layout/fragment_product">
         <argument
@@ -94,14 +94,14 @@
 
     <fragment
         android:id="@+id/creation_address_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.creation_address.CreationAddressFragment"
+        android:name="com.bunbeauty.papakarlo.ui.CreationAddressFragment"
         android:label="@string/title_creation_address"
         tools:layout="@layout/fragment_creation_address">
     </fragment>
 
     <dialog
         android:id="@+id/addresses_bottom_sheet"
-        android:name="com.bunbeauty.papakarlo.ui.addresses.AddressesBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.AddressesBottomSheet"
         android:label="bottom_sheet_addresses"
         tools:layout="@layout/bottom_sheet_addresses">
         <argument

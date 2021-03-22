@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
-import com.bunbeauty.papakarlo.utils.string.IStringHelper
+import com.bunbeauty.domain.string_helper.IStringHelper
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor(

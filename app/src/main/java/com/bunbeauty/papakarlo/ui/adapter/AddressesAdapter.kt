@@ -7,14 +7,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
-import com.bunbeauty.papakarlo.utils.string.IStringHelper
-import com.bunbeauty.papakarlo.view_model.AddressesViewModel
+import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor(
     private val iStringHelper: IStringHelper
 ) :
-    BaseAdapter<AddressesAdapter.AddressViewHolder, com.bunbeauty.data.model.Address>() {
+    BaseAdapter<AddressesAdapter.AddressViewHolder, Address>() {
 
     lateinit var addressesViewModel: AddressesViewModel
 
@@ -34,7 +34,7 @@ class AddressesAdapter @Inject constructor(
     inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementAddressBinding>(view)
 
-        fun setOnClickListener(address: com.bunbeauty.data.model.Address) {
+        fun setOnClickListener(address: Address) {
             binding?.elementAddressMcvMain?.setOnClickListener {
                 addressesViewModel.saveSelectedAddress(address)
             }

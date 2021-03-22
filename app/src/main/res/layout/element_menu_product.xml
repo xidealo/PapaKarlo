@@ -18,7 +18,7 @@
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
+            type="com.bunbeauty.domain.product.IProductHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

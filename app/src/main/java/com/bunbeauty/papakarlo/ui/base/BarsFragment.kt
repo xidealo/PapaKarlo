@@ -3,8 +3,7 @@ package com.bunbeauty.papakarlo.ui.base
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
-import com.bunbeauty.papakarlo.view_model.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 
 abstract class BarsFragment<T : ViewDataBinding, VM : ToolbarViewModel> : BaseFragment<T, VM>() {
 

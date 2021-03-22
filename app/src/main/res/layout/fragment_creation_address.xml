@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.CreationAddressViewModel" />
+            type="com.bunbeauty.papakarlo.presentation.CreationAddressViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:context=".ui.creation_address.CreationAddressFragment">
+            tools:context=".ui.CreationAddressFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -6,16 +6,12 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
-import androidx.navigation.fragment.findNavController
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.utils.uri.IUriHelper
-import com.bunbeauty.papakarlo.view_model.CafeListViewModel
-import java.lang.ref.WeakReference
+import com.bunbeauty.domain.uri.IUriHelper
+import com.bunbeauty.papakarlo.presentation.CafeListViewModel
 import javax.inject.Inject
 
 class CafeListFragment : BarsFragment<FragmentCafeListBinding, CafeListViewModel>() {

@@ -3,8 +3,8 @@ package com.bunbeauty.papakarlo.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
-import com.bunbeauty.papakarlo.view_model.*
-import com.bunbeauty.papakarlo.view_model.base.ViewModelFactory
+import com.bunbeauty.papakarlo.presentation.*
+import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -6,10 +6,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bunbeauty.common.extensions.gone
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.data.model.BaseModel
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
 import com.google.android.material.card.MaterialCardView
@@ -38,7 +38,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:items")
-    fun <T : com.bunbeauty.data.model.BaseModel> setListItems(
+    fun <T : BaseModel> setListItems(
         recyclerView: RecyclerView,
         items: List<T>?
     ) {
@@ -49,7 +49,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:removeItem")
-    fun <T : com.bunbeauty.data.model.BaseModel> removeItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : BaseModel> removeItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).removeItem(item)
         }
@@ -57,7 +57,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:addItem")
-    fun <T : com.bunbeauty.data.model.BaseModel> addItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : BaseModel> addItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).addItem(item)
         }
@@ -66,6 +66,7 @@ object DataBinding {
     @JvmStatic
     @BindingAdapter("bind:isLoading")
     fun setLoading(progressBar: ProgressBar, isLoading: Boolean) {
+        //TODO(change to toggleVisibility)
         if (isLoading) {
             progressBar.visible()
         } else {

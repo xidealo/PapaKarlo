@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.addresses.AddressesBottomSheet">
+        tools:context=".ui.AddressesBottomSheet">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_address_rv_result"

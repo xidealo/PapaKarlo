@@ -13,9 +13,9 @@ import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import com.bunbeauty.common.extensions.gone
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.visible
 import com.google.android.material.button.MaterialButton
 
 class ProgressButton @JvmOverloads constructor(

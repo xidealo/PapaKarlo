@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.bunbeauty.papakarlo.data.local.db.LocalDatabase
+import com.bunbeauty.domain.LocalDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

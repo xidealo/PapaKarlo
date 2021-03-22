@@ -15,18 +15,18 @@
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
+            type="com.bunbeauty.domain.string_helper.IStringHelper" />
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.papakarlo.utils.product.IProductHelper" />
+            type="com.bunbeauty.domain.product.IProductHelper" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.product.ProductFragment">
+        tools:context=".ui.ProductFragment">
 
         <ImageView
             android:id="@+id/fragment_product_iv_photo"

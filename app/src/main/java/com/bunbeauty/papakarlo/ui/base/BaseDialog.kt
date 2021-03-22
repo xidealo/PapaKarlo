@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import javax.inject.Inject
 
 abstract class BaseDialog<T : ViewDataBinding, V : BaseViewModel> : DialogFragment() {

@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.cafe_options.CafeOptionsBottomSheet">
+        tools:context=".ui.CafeOptionsBottomSheet">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/bottom_sheet_cafe_options_cv_call"

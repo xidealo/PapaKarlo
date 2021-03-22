@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import com.bunbeauty.papakarlo.utils.string.IStringHelper
-import com.bunbeauty.papakarlo.view_model.CafeListViewModel
+import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.presentation.CafeListViewModel
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor(private val stringHelper: IStringHelper) :

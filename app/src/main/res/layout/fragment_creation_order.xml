@@ -9,12 +9,12 @@
 
         <variable
             name="viewModel"
-            type="com.bunbeauty.papakarlo.view_model.CreationOrderViewModel" />
+            type="com.bunbeauty.papakarlo.presentation.CreationOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.creation_order.CreationOrderFragment">
+        tools:context=".ui.CreationOrderFragment">
 
         <ScrollView
             android:layout_width="match_parent"

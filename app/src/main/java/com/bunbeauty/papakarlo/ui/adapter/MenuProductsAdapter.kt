@@ -9,10 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.main.MainActivity
-import com.bunbeauty.papakarlo.ui.products.ProductsFragment
-import com.bunbeauty.papakarlo.utils.product.IProductHelper
-import com.bunbeauty.papakarlo.view_model.ProductsViewModel
+import com.bunbeauty.papakarlo.ui.ProductsFragment
+import com.bunbeauty.domain.product.IProductHelper
+import com.bunbeauty.papakarlo.presentation.ProductsViewModel
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor(

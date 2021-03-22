@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_products_cl_main"
         style="@style/DefaultPage"
-        tools:context=".ui.products.ProductsFragment">
+        tools:context=".ui.ProductsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_products_rv_result"

@@ -11,16 +11,18 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.bunbeauty.domain.IMessageShowable
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.view_model.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(), IMessageShowable {
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(),
+    IMessageShowable {
 
     private var _viewDataBinding: B? = null
     protected val viewDataBinding get() = _viewDataBinding!!

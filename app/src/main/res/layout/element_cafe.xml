@@ -12,11 +12,11 @@
 
         <variable
             name="cafeListViewModel"
-            type="com.bunbeauty.papakarlo.view_model.CafeListViewModel" />
+            type="com.bunbeauty.papakarlo.presentation.CafeListViewModel" />
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.papakarlo.utils.string.IStringHelper" />
+            type="com.bunbeauty.domain.string_helper.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

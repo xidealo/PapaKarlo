@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_consumer_cart_cl_main"
         style="@style/DefaultPage"
-        tools:context=".ui.consumer_cart.ConsumerCartFragment">
+        tools:context=".ui.ConsumerCartFragment">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_consumer_cart_group_empty_cart"
