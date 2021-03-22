@@ -14,7 +14,7 @@ import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.NavMainDirections.globalToCartFragment
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.domain.Router
+import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar

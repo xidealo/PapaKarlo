@@ -1,5 +1,7 @@
-package com.bunbeauty.domain
+package com.bunbeauty.papakarlo
 
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDirections
@@ -47,11 +49,9 @@ class Router @Inject constructor() {
     }
 
     private fun hideKeyboard(activity: AppCompatActivity?) {
-        /*activity?.currentFocus?.also { view ->
+        activity?.currentFocus?.also { view ->
             val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
-        }*/
+        }
     }
-
-
 }

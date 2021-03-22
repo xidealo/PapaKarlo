@@ -121,6 +121,14 @@ dependencies {
     implementation "com.miguelcatalan:materialsearchview:$rootProject.materialSerachVersion"
     implementation "com.github.Triggertrap:SeekArc:$rootProject.seekArcVersion"
 
+    //Database
+    implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
+
+    //Joda time
+    implementation "joda-time:joda-time:$rootProject.jodaVersion"
+
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
 

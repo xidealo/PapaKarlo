@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.IMessageShowable
-import com.bunbeauty.domain.Router
+import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
