@@ -16,8 +16,8 @@ android {
         applicationId "com.bunbeuaty.papakarlo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -81,10 +81,9 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
     implementation "com.android.support:appcompat-v7:$rootProject.appcompatV7Version"
     implementation "com.android.support:design:$rootProject.designVersion"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
-
-    androidTestImplementation "androidx.navigation:navigation-testing:2.3.4"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$rootProject.navigationVersion"
 
     testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"
@@ -134,7 +133,6 @@ dependencies {
 
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
-    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'

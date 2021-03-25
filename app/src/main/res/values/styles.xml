@@ -17,7 +17,7 @@
         <item name="background">@color/cardViewBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">1dp</item>
+        <item name="cardCornerRadius">@dimen/large_radius</item>
     </style>
 
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -48,12 +48,15 @@
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="cornerRadius">0dp</item>
+        <item name="cornerRadius">@dimen/large_radius</item>
         <item name="android:layout_margin">@dimen/medium_margin</item>
     </style>
 
-    <style name="SmallButton" parent="MainButton">
+    <style name="SmallButton">
         <item name="android:layout_width">@dimen/small_button_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">@dimen/large_radius</item>
     </style>
 
     <style name="OutLineButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
@@ -123,26 +126,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="elevation">10dp</item>
-        <item name="android:background">@color/colorPrimary</item>
         <item name="itemIconTint">@color/selector_navigation</item>
-    </style>
-
-    <style name="BottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconSize">24dp</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="menu">@menu/bottom_navigation_menu</item>
+        <item name="itemTextColor">@color/selector_navigation</item>
     </style>
 
     <!--PRODUCTS-->
-    <style name="TitleElementProduct">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/small_margin</item>
-    </style>
 
     <style name="CostElementProduct">
         <item name="android:textSize">@dimen/very_small_text_size</item>
@@ -164,23 +152,6 @@
     </style>
 
     <!--CART PRODUCT-->
-    <style name="TitleCartProduct">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/small_margin</item>
-    </style>
-
-    <style name="GramCartProduct">
-        <item name="android:textSize">@dimen/very_small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
     <style name="PriceCartProduct">
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
@@ -231,6 +202,11 @@
 
     <style name="MainTitle" parent="BaseText">
         <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="SmallTitle" parent="BaseText">
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
     </style>
 

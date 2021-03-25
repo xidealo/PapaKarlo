@@ -23,25 +23,30 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_menu_product_mcv_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/DefaultMaterialCard"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/very_small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/very_small_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/small_padding">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/element_menu_product_iv_photo"
                 android:layout_width="@dimen/image_element_width"
                 android:layout_height="@dimen/image_element_height"
                 android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 bind:image="@{menuProduct.photoLink}" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
-                style="@style/TitleElementProduct"
+                style="@style/SmallTitle"
+                android:layout_marginTop="@dimen/very_small_margin"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:layout_marginEnd="@dimen/very_small_margin"
                 android:text="@{menuProduct.name}"
@@ -51,7 +56,7 @@
 
             <TextView
                 android:id="@+id/element_menu_product_tv_cost"
-                style="@style/CostElementProduct"
+                style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{productHelper.getMenuProductPriceString(menuProduct)}"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
@@ -59,9 +64,10 @@
 
             <TextView
                 android:id="@+id/element_menu_product_tv_cost_old"
-                style="@style/OldCostElementProduct"
+                style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{productHelper.getMenuProductOldPriceString(menuProduct)}"
+                android:textColor="@color/grey"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_cost"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
@@ -86,11 +92,9 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/element_menu_product_btn_want"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/SmallButton"
                 android:layout_marginEnd="@dimen/medium_margin"
                 android:text="@string/action_product_want"
-                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

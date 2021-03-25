@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_consumer_cart_cl_main"
@@ -14,9 +13,9 @@
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_consumer_cart_group_empty_cart"
-            app:constraint_referenced_ids="fragment_consumer_cart_iv_empty_cart, fragment_consumer_cart_tv_empty_cart, fragment_consumer_cart_btn_menu"
             android:layout_width="0dp"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="fragment_consumer_cart_iv_empty_cart, fragment_consumer_cart_tv_empty_cart, fragment_consumer_cart_btn_menu" />
 
         <ImageView
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
@@ -46,9 +45,9 @@
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_consumer_cart_group_not_empty_cart"
-            app:constraint_referenced_ids="fragment_consumer_cart_tv_delivery_info, fragment_consumer_cart_rv_result, fragment_consumer_cart_btn_crate_order"
             android:layout_width="0dp"
-            android:layout_height="0dp" />
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="fragment_consumer_cart_tv_delivery_info, fragment_consumer_cart_rv_result, fragment_consumer_cart_btn_crate_order" />
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_delivery_info"
@@ -73,8 +72,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_crate_order"
-            android:text="@string/action_consumer_cart_checkout"
             style="@style/MainButton"
+            android:text="@string/action_consumer_cart_checkout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

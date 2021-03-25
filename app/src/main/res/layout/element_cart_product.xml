@@ -27,12 +27,15 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cart_product_mcv_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/DefaultMaterialCard"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/very_small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/very_small_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/small_padding">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/element_cart_product_iv_photo"
@@ -44,7 +47,8 @@
 
             <TextView
                 android:id="@+id/element_cart_product_tv_title"
-                style="@style/TitleCartProduct"
+                style="@style/SmallTitle"
+                android:layout_marginTop="@dimen/very_small_margin"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:text="@{cartProduct.menuProduct.name}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,39 +56,32 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_gram"
-                style="@style/GramCartProduct"
+                android:id="@+id/element_cart_product_tv_cost"
+                style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{stringHelper.toStringWeight(cartProduct.menuProduct)}"
-                app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
-
-            <TextView
-                android:id="@+id/element_cart_product_tv_price"
-                style="@style/PriceCartProduct"
                 android:text="@{productHelper.getCartProductPriceString(cartProduct)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
+                app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title"  />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_old_price"
-                style="@style/OldPriceCartProduct"
+                style="@style/SmallText"
+                android:textColor="@color/grey"
                 android:layout_marginStart="@dimen/small_margin"
                 android:text="@{productHelper.getCartProductOldPriceString(cartProduct)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/element_cart_product_tv_price"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
+                app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_cost"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 
             <com.bunbeauty.papakarlo.ui.view.CountPicker
                 android:id="@+id/element_cart_product_cp_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:buttonTextColor="@color/white"
+                android:layout_marginEnd="@dimen/small_margin"
                 app:count="@{cartProduct.count}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_iv_photo" />
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

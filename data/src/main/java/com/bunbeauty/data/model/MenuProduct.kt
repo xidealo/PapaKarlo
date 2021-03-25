@@ -15,6 +15,7 @@ data class MenuProduct(
     val discountCost: Int? = null,
     val weight: Int = 0,
     val description: String = "",
+    val comboDescription: String = "",
     val photoLink: String = "",
     val onFire: Boolean = false,
     val inOven: Boolean = false,

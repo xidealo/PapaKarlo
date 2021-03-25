@@ -11,12 +11,12 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/activity_main_tb_toolbar"
             android:layout_width="0dp"
-            app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/black">
 
             <TextView
                 android:id="@+id/activity_main_tv_cart"
@@ -53,11 +53,12 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/activity_main_bnv_bottom_navigation"
+            style="@style/BottomNavigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/bottom_navigation_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_navigation_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
