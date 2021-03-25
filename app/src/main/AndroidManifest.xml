@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name="com.bunbeauty.papakarlo.ui.MainActivity">
+        <activity
+            android:name="com.bunbeauty.papakarlo.ui.MainActivity"
+            android:theme="@style/AppTheme.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

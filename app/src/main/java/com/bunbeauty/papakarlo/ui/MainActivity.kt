@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
     lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
 
         (application as PapaKarloApplication).appComponent

@@ -21,10 +21,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cafe_cv_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/small_margin"
-        app:cardCornerRadius="@dimen/large_radius">
+        style="@style/DefaultMaterialCard"
+        android:layout_margin="@dimen/small_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

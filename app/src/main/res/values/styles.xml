@@ -7,6 +7,10 @@
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="AppTheme.LoadingScreen">
+        <item name="android:windowBackground">@drawable/loading_screen</item>
+    </style>
+
     <style name="DefaultPage">
         <item name="android:background">@color/backgroundPage</item>
         <item name="android:layout_width">match_parent</item>
@@ -59,11 +63,14 @@
         <item name="cornerRadius">@dimen/large_radius</item>
     </style>
 
-    <style name="OutLineButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+    <style name="OutLineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/cardViewBackground</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="android:padding">@dimen/small_padding</item>
     </style>
 
     <!-- FRAGMENT_PRODUCT -->

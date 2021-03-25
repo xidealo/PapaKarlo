@@ -107,8 +107,8 @@
     <string name="msg_contacts_work_time_divider">&#160;-&#160;</string>
 
     <!-- CAFE LIST -->
-    <string name="action_cafe_list_copy_card_number">Скопировать номер карты</string>
-    <string name="action_cafe_list_copy_phone_number">Скопировать номер телефона</string>
+    <string name="action_cafe_list_copy_card_number">Номер карты</string>
+    <string name="action_cafe_list_copy_phone_number">Номер телефона</string>
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="title_cafe_list_payment">Оплата</string>

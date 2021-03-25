@@ -90,13 +90,14 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/small_padding">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/fragment_creation_order_tv_address"
                             style="@style/MainTitle"
+                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_address"
+
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -119,6 +120,7 @@
                                     style="@style/SmallText"
                                     android:layout_width="0dp"
                                     android:layout_gravity="center_vertical"
+                                    android:layout_margin="@dimen/small_margin"
                                     android:layout_weight="1"
                                     android:paddingVertical="@dimen/small_padding"
                                     app:layout_constraintEnd_toStartOf="@+id/fragment_creation_order_iv_address"
@@ -142,8 +144,10 @@
                             android:id="@+id/fragment_creation_order_btn_create_address"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
+                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/action_creation_address_address"
                             android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address_pick" />
@@ -152,8 +156,7 @@
                             android:id="@+id/fragment_creation_order_iv_create_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/small_margin"
-                            android:contentDescription="Description"
+                            android:layout_marginEnd="@dimen/medium_margin"                            android:contentDescription="Description"
                             android:src="@drawable/ic_add"
                             android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                             app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
@@ -171,12 +174,12 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/small_padding">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/fragment_creation_order_tv_contact"
                             style="@style/MainTitle"
+                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_contact"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -184,8 +187,10 @@
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_phone"
                             style="@style/MaterialInputLayout"
+                            android:layout_margin="@dimen/small_margin"
                             android:layout_marginTop="@dimen/small_margin"
                             android:hint="@string/title_creation_order_phone"
+
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
@@ -193,14 +198,17 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/fragment_order_et_phone"
                                 style="@style/MaterialInput"
+
                                 android:inputType="phone" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/fragment_creation_order_til_email"
                             style="@style/MaterialInputLayout"
+                            android:layout_margin="@dimen/small_margin"
                             android:layout_marginTop="@dimen/small_margin"
                             android:hint="@string/title_creation_order_email"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
@@ -221,12 +229,12 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/small_padding">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/fragment_creation_order_tv_comment"
                             style="@style/MainTitle"
+                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_extra_extra_comment"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -238,6 +246,7 @@
                             android:hint="@string/hint_creation_order_extra_comment"
                             app:counterEnabled="true"
                             app:counterMaxLength="100"
+                            android:layout_margin="@dimen/small_margin"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
@@ -258,7 +267,9 @@
                             android:id="@+id/fragment_creation_order_btn_deferred"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
+                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/hint_creation_order_deferred"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
@@ -267,7 +278,7 @@
                             android:id="@+id/fragment_creation_order_iv_deferred"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/small_margin"
+                            android:layout_marginEnd="@dimen/medium_margin"
                             android:contentDescription="Description"
                             android:src="@drawable/ic_add"
                             app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_deferred"
