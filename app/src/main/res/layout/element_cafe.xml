@@ -27,12 +27,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/medium_padding">
+            android:padding="@dimen/large_padding">
 
             <TextView
                 android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
-                android:drawablePadding="@dimen/medium_padding"
+                android:drawablePadding="@dimen/large_padding"
                 android:text="@{stringHelper.toString(cafe.address)}"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
@@ -44,7 +44,7 @@
                 android:id="@+id/element_cafe_tv_phone"
                 style="@style/MainText"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:drawablePadding="@dimen/medium_padding"
+                android:drawablePadding="@dimen/large_padding"
                 android:text="@{cafe.cafeEntity.phone}"
                 app:drawableLeftCompat="@drawable/ic_phone"
                 app:drawableTint="@color/mainTextColor"
@@ -56,7 +56,7 @@
                 android:id="@+id/element_cafe_tv_work_time"
                 style="@style/MainText"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:drawablePadding="@dimen/medium_padding"
+                android:drawablePadding="@dimen/large_padding"
                 android:text="@{stringHelper.toStringWorkingHours(cafe.cafeEntity)}"
                 app:drawableLeftCompat="@drawable/ic_clock"
                 app:drawableTint="@color/mainTextColor"

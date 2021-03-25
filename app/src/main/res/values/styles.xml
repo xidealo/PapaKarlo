@@ -97,7 +97,7 @@
     <style name="GramFragmentProduct">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_light</item>
     </style>
@@ -197,7 +197,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/cardViewBackground</item>
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
-        <item name="cornerRadius">@dimen/default_radius</item>
+        <item name="cornerRadius">@dimen/large_radius</item>
     </style>
 
     <!--TEXT-->
@@ -255,7 +255,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/medium_padding</item>
+        <item name="android:padding">@dimen/large_padding</item>
     </style>
 
     <!--ORDER ELEMENT-->
@@ -263,7 +263,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/cardViewBackground</item>
-        <item name="cornerRadius">@dimen/default_radius</item>
+        <item name="cornerRadius">@dimen/large_radius</item>
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
     </style>
 

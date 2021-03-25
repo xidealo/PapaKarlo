@@ -27,7 +27,7 @@
             style="@style/MainText"
             android:layout_width="match_parent"
             android:layout_margin="@dimen/medium_margin"
-            android:drawablePadding="@dimen/medium_padding"
+            android:drawablePadding="@dimen/large_padding"
             android:text="@{iStringHelper.toString(address)}"/>
     </com.google.android.material.card.MaterialCardView>
 </layout>

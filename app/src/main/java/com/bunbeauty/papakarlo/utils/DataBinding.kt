@@ -8,8 +8,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.data.model.BaseModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
 import com.google.android.material.card.MaterialCardView
@@ -84,7 +84,9 @@ object DataBinding {
     @BindingAdapter("bind:image")
     fun setImage(imageView: ImageView, link: String?) {
         if (!link.isNullOrEmpty()) {
-            Picasso.get().load(link)
+            Picasso.get()
+                .load(link)
+                .placeholder(R.drawable.default_product)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .into(imageView)

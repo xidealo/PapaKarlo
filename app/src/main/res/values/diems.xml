@@ -31,18 +31,15 @@
     <dimen name="very_small_margin">4dp</dimen>
 
     <!-- PADDING -->
-    <dimen name="large_padding">24dp</dimen>
-    <dimen name="medium_padding">16dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
     <dimen name="small_padding">8dp</dimen>
-    <dimen name="drawable_padding">4dp</dimen>
 
     <!-- IMAGE -->
     <dimen name="image_element_width">108dp</dimen>
     <dimen name="image_element_height">72dp</dimen>
 
     <!-- RADIUS -->
-    <dimen name="small_radius">2dp</dimen>
-    <dimen name="default_radius">4dp</dimen>
+    <dimen name="small_radius">4dp</dimen>
     <dimen name="large_radius">8dp</dimen>
 
 </resources>
