@@ -3,6 +3,9 @@ package com.bunbeauty.domain.string_helper
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.CartProduct
+import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.resources.IResourcesProvider
 import javax.inject.Inject
@@ -10,7 +13,7 @@ import javax.inject.Inject
 class StringHelper @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     IStringHelper {
 
-    override fun toString(address: com.bunbeauty.data.model.Address?): String {
+    override fun toString(address: Address?): String {
         if (address == null) {
             return ""
         }
@@ -26,7 +29,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         )
     }
 
-    override fun toString(cartProducts: List<com.bunbeauty.data.model.CartProduct>): String {
+    override fun toString(cartProducts: List<CartProduct>): String {
         var structure = ""
 
         for (cartProduct in cartProducts)
@@ -60,7 +63,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return orderString.toString()
     }
 
-    override fun toStringWeight(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
+    override fun toStringWeight(menuProduct: MenuProduct): String {
         return if (menuProduct.productCode == ProductCode.DRINK.name) {
             val liters = menuProduct.weight / 1000
             val milliliters = menuProduct.weight % 1000

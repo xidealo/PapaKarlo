@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.bunbeauty.data.model.cafe.Coordinate
+import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
@@ -13,6 +14,7 @@ import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
+import javax.inject.Inject
 
 class CafeOptionsBottomSheet :
     BaseBottomSheetDialog<BottomSheetCafeOptionsBinding, CafeOptionsViewModel>() {
@@ -24,18 +26,22 @@ class CafeOptionsBottomSheet :
         viewModelComponent.inject(this)
     }
 
+    @Inject
+    lateinit var iStringHelper: IStringHelper
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             val cafeId = fromBundle(it).cafeId
             viewModel.getCafeLiveData(cafeId).observe(this) { cafe ->
-                viewDataBinding.bottomSheetCafeOptionsCvCall.setOnClickListener {
+                viewDataBinding.bottomSheetCafeOptionsBtnCall.setOnClickListener {
                     goToPhone(cafe.cafeEntity.phone)
                 }
-                viewDataBinding.bottomSheetCafeOptionsCvShowMap.setOnClickListener {
+                viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
                     goToAddress(cafe.cafeEntity.coordinate)
                 }
+                viewDataBinding.bottomSheetCafeOptionsTvAddress.text = iStringHelper.toString(cafe.address)
             }
         }
     }

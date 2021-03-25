@@ -16,43 +16,59 @@
         android:layout_height="wrap_content"
         tools:context=".ui.CafeOptionsBottomSheet">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottom_sheet_cafe_options_cv_call"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                style="@style/CenterText"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/medium_margin"
-                android:drawablePadding="@dimen/medium_padding"
-                android:text="@string/action_call"
-                app:drawableLeftCompat="@drawable/ic_phone"
-                app:drawableTint="@color/mainTextColor" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <View
-            android:id="@+id/bottom_sheet_cafe_options_dv"
-            style="@style/Divider.Horizontal"
+        <TextView
+            android:id="@+id/bottom_sheet_cafe_options_tv_address"
+            style="@style/MainTitle"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_options_cv_call" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottom_sheet_cafe_options_cv_show_map"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_cafe_options_btn_call"
+            style="@style/OutLineButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_options_dv">
+            android:layout_margin="@dimen/small_margin"
+            android:text="@string/action_call"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cafe_options_tv_address" />
 
-            <TextView
-                style="@style/CenterText"
-                android:layout_width="match_parent"
-                android:layout_margin="@dimen/medium_margin"
-                android:drawablePadding="@dimen/medium_padding"
-                android:text="@string/action_show_map"
-                app:drawableLeftCompat="@drawable/ic_address"
-                app:drawableTint="@color/mainTextColor" />
-        </com.google.android.material.card.MaterialCardView>
+        <ImageView
+            android:id="@+id/bottom_sheet_cafe_options_iv_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:contentDescription="Description"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_cafe_options_btn_call"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_call"
+            app:tint="@color/colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bottom_sheet_cafe_options_btn_show_map"
+            style="@style/OutLineButton"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@string/action_show_map"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cafe_options_btn_call" />
+
+        <ImageView
+            android:id="@+id/bottom_sheet_cafe_options_iv_show_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:contentDescription="Description"
+            android:src="@drawable/ic_address"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_cafe_options_btn_show_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_show_map"
+            app:tint="@color/colorPrimary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
