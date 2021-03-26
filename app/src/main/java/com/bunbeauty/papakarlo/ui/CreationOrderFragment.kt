@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.common.extensions.visible
@@ -33,9 +34,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewDataBinding.viewModel = viewModel
 
         subscribe(viewModel.addressLiveData) { address ->
-            viewDataBinding.fragmentCreationOrderTvLastAddress.text = stringHelper.toString(address)
+            viewDataBinding.fragmentCreationOrderBtnAddressPick.text = stringHelper.toString(address)
         }
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
@@ -47,8 +49,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
         }
 
-        viewDataBinding.viewModel = viewModel
-        viewDataBinding.fragmentCreationOrderMcvAddressPick.setOnClickListener {
+        viewDataBinding.fragmentCreationOrderBtnAddressPick.setOnClickListener {
             viewModel.onAddressClicked()
         }
         viewDataBinding.fragmentCreationOrderBtnCreateAddress.setOnClickListener {
@@ -67,11 +68,11 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
         viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
             showTimePicker()
         }
-        viewDataBinding.fragmentCreationOrderMcvDeferred.setOnClickListener {
+        viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.setOnClickListener {
             showTimePicker()
         }
         subscribe(viewModel.deferredTextLiveData) { deferredText ->
-            viewDataBinding.fragmentCreationOrderTvDeferred.text = deferredText
+            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
         }
     }
 
@@ -87,15 +88,16 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
         picker.addOnPositiveButtonClickListener {
             if (viewModel.isDeferredTimeCorrect(picker.hour, picker.minute)) {
                 viewDataBinding.fragmentCreationOrderGroupDeferred.gone()
-                viewDataBinding.fragmentCreationOrderMcvDeferred.visible()
+                viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.visible()
                 viewModel.deferredHoursLiveData.value = picker.hour
                 viewModel.deferredMinutesLiveData.value = picker.minute
+
             } else {
                 showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
             }
         }
         picker.addOnNegativeButtonClickListener {
-            viewDataBinding.fragmentCreationOrderMcvDeferred.gone()
+            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.gone()
             viewDataBinding.fragmentCreationOrderGroupDeferred.visible()
             viewModel.deferredHoursLiveData.value = null
             viewModel.deferredMinutesLiveData.value = null

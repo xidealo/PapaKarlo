@@ -12,13 +12,24 @@
         android:layout_height="wrap_content"
         tools:context=".ui.AddressesBottomSheet">
 
+        <TextView
+            android:id="@+id/bottom_sheet_address_tv_address"
+            style="@style/MainTitle"
+            android:layout_marginTop="@dimen/small_margin"
+
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_address_rv_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_address_tv_address"
             tools:itemCount="2"
             tools:listitem="@layout/element_address" />
 
@@ -26,6 +37,7 @@
             android:id="@+id/bottom_sheet_address_btn_create_address"
             style="@style/OutLineButton"
             android:layout_width="0dp"
+            android:layout_margin="@dimen/small_margin"
             android:text="@string/action_creation_address_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +47,7 @@
             android:id="@+id/fragment_creation_order_iv_create_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:contentDescription="Description"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_address_btn_create_address"

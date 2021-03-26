@@ -37,6 +37,14 @@ class AddressesBottomSheet :
             addressesAdapter.setItemList(it)
         }
 
+        if (isDelivery) {
+            viewDataBinding.bottomSheetAddressTvAddress.text =
+                requireContext().resources.getString(R.string.title_bottom_sheet_addresses_your_address)
+        } else {
+            viewDataBinding.bottomSheetAddressTvAddress.text =
+                requireContext().resources.getString(R.string.title_bottom_sheet_addresses_cafe_address)
+        }
+
         viewDataBinding.bottomSheetAddressBtnCreateAddress.toggleVisibility(isDelivery)
         viewDataBinding.fragmentCreationOrderIvCreateAddress.toggleVisibility(isDelivery)
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter

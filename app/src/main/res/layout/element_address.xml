@@ -22,11 +22,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
+        app:cardCornerRadius="0dp"
         style="@style/DefaultMaterialCard">
         <TextView
             style="@style/MainText"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/medium_margin"
+            android:layout_margin="@dimen/small_margin"
             android:drawablePadding="@dimen/large_padding"
             android:text="@{iStringHelper.toString(address)}"/>
     </com.google.android.material.card.MaterialCardView>

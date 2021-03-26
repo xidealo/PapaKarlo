@@ -4,8 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_consumer_cart_cl_main"
         style="@style/DefaultPage"
@@ -37,16 +35,17 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_menu"
-            style="@style/SmallButton"
+            style="@style/MainButton"
             android:text="@string/action_consumer_cart_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_empty_cart" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_consumer_cart_group_not_empty_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="invisible"
             app:constraint_referenced_ids="fragment_consumer_cart_tv_delivery_info, fragment_consumer_cart_rv_result, fragment_consumer_cart_btn_crate_order" />
 
         <TextView
