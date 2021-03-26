@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.presentation
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
@@ -40,7 +39,7 @@ class CreationOrderViewModel @Inject constructor(
     private val cafeRepo: CafeRepo
 ) : ToolbarViewModel() {
 
-    val hasAddressField = ObservableField(true)
+    val hasAddressLiveData = MutableLiveData(false)
 
     var deferredHoursLiveData = MutableLiveData<Int?>(null)
     var deferredMinutesLiveData = MutableLiveData<Int?>(null)
@@ -68,7 +67,7 @@ class CreationOrderViewModel @Inject constructor(
             switchMap(addressRepo.getAddressById(addressId)) { address ->
                 map(addressRepo.getAddressById(addressId)) { firstAddress ->
                     val deliveryAddress = address ?: firstAddress
-                    hasAddressField.set(deliveryAddress != null)
+                    hasAddressLiveData.value = deliveryAddress != null
                     deliveryAddress
                 }
             }
@@ -82,10 +81,10 @@ class CreationOrderViewModel @Inject constructor(
     val addressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
         switchMap(isDeliveryLiveData) { isDelivery ->
             if (isDelivery) {
-                hasAddressField.set(deliveryAddressLiveData.value != null)
+                hasAddressLiveData.value = deliveryAddressLiveData.value != null
                 deliveryAddressLiveData
             } else {
-                hasAddressField.set(true)
+                hasAddressLiveData.value = true
                 pickupAddressLiveData
             }
         }

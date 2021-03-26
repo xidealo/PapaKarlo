@@ -2,7 +2,9 @@ package com.bunbeauty.papakarlo.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
@@ -33,7 +35,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        subscribe(viewModel.hasAddressLiveData){
+            viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
+            viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
+        }
         viewDataBinding.viewModel = viewModel
 
         subscribe(viewModel.addressLiveData) { address ->
@@ -74,6 +79,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
         subscribe(viewModel.deferredTextLiveData) { deferredText ->
             viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
         }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showTimePicker() {

@@ -48,6 +48,7 @@
             android:id="@+id/bottom_sheet_order_tv_delivery_value"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
+            android:text="@{stringHelper.toStringDelivery(order.orderEntity)}"
             android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_delivery"

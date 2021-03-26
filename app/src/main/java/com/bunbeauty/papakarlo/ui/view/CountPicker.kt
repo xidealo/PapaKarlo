@@ -166,7 +166,7 @@ class CountPicker @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_BUTTON_SIZE = 39f
+        private const val DEFAULT_BUTTON_SIZE = 39.5f
         private const val DEFAULT_BUTTON_COLOR = R.color.white
         private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.white
     }

@@ -110,7 +110,6 @@
                             android:text="@string/action_creation_address_address"
                             android:textAllCaps="false"
                             android:textColor="@color/mainTextColor"
-                            android:visibility="@{viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address" />
@@ -122,11 +121,17 @@
                             android:layout_marginEnd="@dimen/medium_margin"
                             android:contentDescription="Description"
                             android:src="@drawable/ic_chevron_right_solid"
-                            android:visibility="@{viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
                             app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_address_pick"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_address_pick"
                             app:tint="@color/colorPrimary" />
+
+                        <androidx.constraintlayout.widget.Group
+                            android:id="@+id/fragment_creation_order_group_has_address"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:visibility="gone"
+                            app:constraint_referenced_ids="fragment_creation_order_btn_address_pick, fragment_creation_order_iv_select_address" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fragment_creation_order_btn_create_address"
@@ -134,7 +139,7 @@
                             android:layout_width="0dp"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/action_creation_address_address"
-                            android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -147,13 +152,20 @@
                             android:layout_marginEnd="@dimen/medium_margin"
                             android:contentDescription="Description"
                             android:src="@drawable/ic_add"
-                            android:visibility="@{!viewModel.hasAddressField ? View.VISIBLE : View.GONE}"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:id="@+id/fragment_creation_order_group_no_address"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:visibility="gone"
+                            app:constraint_referenced_ids="fragment_creation_order_btn_create_address, fragment_creation_order_iv_create_address" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
+
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_contacts"
