@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="order"
+            type="com.bunbeauty.data.model.order.Order" />
+
+        <variable
+            name="stringHelper"
+            type="com.bunbeauty.domain.string_helper.IStringHelper" />
+
+        <variable
+            name="productHelper"
+            type="com.bunbeauty.domain.product.IProductHelper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.OrderBottomSheet">
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_title"
+            style="@style/MainTitle"
+            android:layout_marginTop="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@{order.orderEntity.code}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_delivery"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Доставка"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_delivery_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_delivery_value"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_delivery"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_deferrer"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Отложенный заказ"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_deferrer_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_deferrer_value"
+            style="@style/MainText"
+            android:gravity="end"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@{stringHelper.toStringDeferred(order.orderEntity)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_deferrer"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_address"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Адрес"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_address_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_address_value"
+            style="@style/MainText"
+            android:gravity="end"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@{stringHelper.toString(order.orderEntity.address)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_address"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_comment"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Комментарий"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_comment_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_comment_value"
+            style="@style/MainText"
+            android:gravity="end"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@{stringHelper.toStringComment(order.orderEntity)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_comment"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:text="Сумма заказа"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost_value"
+            style="@style/MainText"
+            android:gravity="end"
+            android:layout_margin="@dimen/small_margin"
+            android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_cost"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment_value" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

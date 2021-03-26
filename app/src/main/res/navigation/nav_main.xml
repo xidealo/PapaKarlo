@@ -33,7 +33,11 @@
         android:id="@+id/orders_fragment"
         android:name="com.bunbeauty.papakarlo.ui.OrdersFragment"
         android:label="@string/title_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders" >
+        <action
+            android:id="@+id/to_orderBottomSheet"
+            app:destination="@id/orderBottomSheet" />
+    </fragment>
 
     <dialog
         android:id="@+id/cafe_options_bottom_sheet"
@@ -110,6 +114,15 @@
         <action
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/creation_address_fragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/orderBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.OrderBottomSheet"
+        android:label="OrderBottomSheet"
+        tools:layout="@layout/bottom_sheet_order">
+        <argument
+            android:name="Order"
+            app:argType="com.bunbeauty.data.model.order.Order" />
     </dialog>
 
 </navigation>

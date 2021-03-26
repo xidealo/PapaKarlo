@@ -64,4 +64,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EmptyViewModel::class)
     internal abstract fun provideEmptyViewModel(emptyViewModel: EmptyViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OrderViewModel::class)
+    internal abstract fun provideOrderViewModel(orderViewModel: OrderViewModel): ViewModel
 }

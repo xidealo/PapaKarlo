@@ -1,15 +1,20 @@
 package com.bunbeauty.data.model.order
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
+import com.bunbeauty.data.model.BaseModel
+import com.bunbeauty.data.model.CartProduct
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Order(
     @Embedded
     var orderEntity: OrderEntity = OrderEntity(),
 
     @Relation(parentColumn = "id", entityColumn = "orderId")
-    var cartProducts: List<com.bunbeauty.data.model.CartProduct> = ArrayList(),
+    var cartProducts: List<CartProduct> = ArrayList(),
 
     @Ignore
     var cafeId: String = "",
@@ -17,4 +22,4 @@ data class Order(
     @Ignore
     var timestamp: Map<String, String>? = null
 
-) : com.bunbeauty.data.model.BaseModel()
+) : BaseModel(), Parcelable

@@ -11,18 +11,17 @@ import javax.inject.Inject
 
 class OrdersFragment : BarsFragment<FragmentOrdersBinding, OrdersViewModel>() {
 
-    @Inject
-    lateinit var ordersAdapter: OrdersAdapter
-
     override val isBottomBarVisible = true
-
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
+    @Inject
+    lateinit var ordersAdapter: OrdersAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        ordersAdapter.ordersViewModel = viewModel
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
         viewModel.orderWithCartProductsLiveData.observe(viewLifecycleOwner) { orderWithCartProducts ->
             ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.orderEntity.time })

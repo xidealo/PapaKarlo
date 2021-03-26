@@ -2,17 +2,8 @@ package com.bunbeauty.papakarlo.di.components
 
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
-import com.bunbeauty.papakarlo.ui.AddressesBottomSheet
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragment
+import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
-import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheet
-import com.bunbeauty.papakarlo.ui.CreationOrderFragment
-import com.bunbeauty.papakarlo.ui.MainActivity
-import com.bunbeauty.papakarlo.ui.MenuFragment
-import com.bunbeauty.papakarlo.ui.CreationAddressFragment
-import com.bunbeauty.papakarlo.ui.OrdersFragment
-import com.bunbeauty.papakarlo.ui.ProductFragment
-import com.bunbeauty.papakarlo.ui.ProductsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -40,6 +31,7 @@ interface ViewModelComponent {
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)
     fun inject(cafeOptionsBottomSheet: CafeOptionsBottomSheet)
+    fun inject(orderBottomSheet: OrderBottomSheet)
 
     // dialogs
 }

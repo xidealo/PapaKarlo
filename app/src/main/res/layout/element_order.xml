@@ -8,70 +8,44 @@
         <import type="android.view.View" />
 
         <variable
-            name="context"
-            type="android.content.Context" />
-
-        <variable
             name="order"
             type="com.bunbeauty.data.model.order.Order" />
 
         <variable
             name="stringHelper"
             type="com.bunbeauty.domain.string_helper.IStringHelper" />
-
-        <variable
-            name="productHelper"
-            type="com.bunbeauty.domain.product.IProductHelper" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView style="@style/DefaultMaterialCard">
+    <com.google.android.material.card.MaterialCardView
+        style="@style/DefaultMaterialCard"
+        android:id="@+id/element_order_mcv_order"
+        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/very_small_margin"
+        android:layout_marginEnd="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/very_small_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/small_padding">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/element_order_tv_time"
                 style="@style/MainText"
+                android:layout_marginEnd="@dimen/very_small_margin"
                 android:text="@{stringHelper.toStringTime(order.orderEntity)}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_order_tv_code"
                 style="@style/MainTitle"
+                android:layout_margin="@dimen/small_margin"
                 android:text="@{order.orderEntity.code}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/element_order_tv_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/element_order_tv_order"
-                style="@style/MainText"
-                android:text="@{stringHelper.toString(order.orderEntity)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_code" />
-
-            <TextView
-                android:id="@+id/element_order_tv_address"
-                style="@style/MainText"
-                android:text="@{stringHelper.toString(order.orderEntity.address)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_order" />
-
-            <TextView
-                android:id="@+id/element_order_tv_structure"
-                style="@style/MainText"
-                android:text="@{stringHelper.toString(order.cartProducts)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_address" />
-
-            <TextView
-                android:id="@+id/element_order_tv_full_price"
-                style="@style/MainText"
-                android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_order_tv_structure" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

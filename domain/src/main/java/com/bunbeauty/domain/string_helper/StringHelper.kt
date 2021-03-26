@@ -41,6 +41,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         )
     }
 
+
     override fun toString(orderEntity: OrderEntity): String {
         val orderString = StringBuilder()
 
@@ -61,6 +62,27 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         orderString.append("Телефон: ${orderEntity.phone}")
 
         return orderString.toString()
+    }
+
+    override fun toStringDelivery(orderEntity: OrderEntity): String {
+        return if (orderEntity.isDelivery)
+            "Доставка"
+        else
+            "Самовывоз"
+    }
+
+    override fun toStringDeferred(orderEntity: OrderEntity): String {
+        return if (orderEntity.deferred.isEmpty())
+            "-"
+        else
+            orderEntity.deferred
+    }
+
+    override fun toStringComment(orderEntity: OrderEntity): String {
+        return if (orderEntity.comment.isEmpty())
+            "-"
+        else
+            orderEntity.comment
     }
 
     override fun toStringWeight(menuProduct: MenuProduct): String {
@@ -143,7 +165,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
 
     private fun addFirstZero(number: Int): String {
         return if (number < 10) {
-             "0$number"
+            "0$number"
         } else {
             number.toString()
         }
