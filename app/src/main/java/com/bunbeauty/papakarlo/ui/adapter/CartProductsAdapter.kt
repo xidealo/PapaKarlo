@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bunbeauty.common.extensions.toggleVisibility
+import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.domain.product.IProductHelper
@@ -16,9 +18,10 @@ import javax.inject.Inject
 class CartProductsAdapter @Inject constructor(
     private val stringHelper: IStringHelper,
     private val productHelper: IProductHelper
-) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, com.bunbeauty.data.model.CartProduct>() {
+) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProduct>() {
 
     lateinit var consumerCartViewModel: ConsumerCartViewModel
+    var canBeChanged: Boolean = true
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CartProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -31,17 +34,21 @@ class CartProductsAdapter @Inject constructor(
         holder.binding?.cartProduct = itemList[i]
         holder.binding?.stringHelper = stringHelper
         holder.binding?.productHelper = productHelper
-        holder.setCountChangeListener(itemList[i])
-        if (holder.binding?.elementCartProductTvOldPrice != null) {
-            holder.binding.elementCartProductTvOldPrice.paintFlags =
-                holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
+        holder.binding?.elementCartProductCpCount?.toggleVisibility(canBeChanged)
+
+        if (canBeChanged) {
+            holder.setCountChangeListener(itemList[i])
+            if (holder.binding?.elementCartProductTvOldPrice != null) {
+                holder.binding.elementCartProductTvOldPrice.paintFlags =
+                    holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
+            }
         }
     }
 
     inner class CartProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementCartProductBinding>(view)
 
-        fun setCountChangeListener(cartProduct: com.bunbeauty.data.model.CartProduct) {
+        fun setCountChangeListener(cartProduct: CartProduct) {
             binding?.elementCartProductCpCount?.countChangeListener =
                 object : CountPicker.CountChangeListener {
                     override fun onCountIncreased() {

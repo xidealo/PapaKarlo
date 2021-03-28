@@ -118,6 +118,5 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         private const val COMPANY = "COMPANY"
         private const val MENU_PRODUCTS: String = "menu_products"
         private const val DELIVERY: String = "delivery"
-        private const val DISCOUNTS: String = "discounts"
     }
 }

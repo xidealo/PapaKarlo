@@ -2,21 +2,18 @@ package com.bunbeauty.papakarlo.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.common.extensions.visible
+import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import javax.inject.Inject

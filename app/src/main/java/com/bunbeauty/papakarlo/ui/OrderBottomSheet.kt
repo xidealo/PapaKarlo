@@ -9,6 +9,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.OrderViewModel
+import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import javax.inject.Inject
 
@@ -23,6 +24,9 @@ class OrderBottomSheet : BaseBottomSheetDialog<BottomSheetOrderBinding, OrderVie
     @Inject
     lateinit var productHelper: IProductHelper
 
+    @Inject
+    lateinit var cartProductsAdapter: CartProductsAdapter
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -32,6 +36,9 @@ class OrderBottomSheet : BaseBottomSheetDialog<BottomSheetOrderBinding, OrderVie
         viewDataBinding.stringHelper = iStringHelper
         viewDataBinding.productHelper = productHelper
         viewDataBinding.order = OrderBottomSheetArgs.fromBundle(requireArguments()).order
+        cartProductsAdapter.canBeChanged = false
+        viewDataBinding.bottomSheetOrderRvCartProducts.adapter = cartProductsAdapter
+        cartProductsAdapter.setItemList(OrderBottomSheetArgs.fromBundle(requireArguments()).order.cartProducts)
     }
 
 }
