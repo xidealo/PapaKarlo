@@ -45,8 +45,8 @@
         android:label="CafeOptionsBottomSheet"
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
-            android:name="cafeId"
-            app:argType="string" />
+            android:name="cafe"
+            app:argType="com.bunbeauty.data.model.cafe.Cafe" />
     </dialog>
 
     <fragment

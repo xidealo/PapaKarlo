@@ -15,8 +15,10 @@
                 android:id="@+id/fragment_cafe_list_mcv_payment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_margin"
-                app:cardCornerRadius="@dimen/large_radius"
+                android:layout_marginStart="@dimen/small_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                app:cardCornerRadius="@dimen/medium_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -26,6 +28,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/fragment_cafe_list_btn_tv_payment"
                         style="@style/MainTitle"
@@ -38,7 +41,7 @@
                         android:id="@+id/fragment_cafe_list_btn_card_number"
                         style="@style/OutLineButton"
                         android:layout_width="match_parent"
-                        android:layout_margin="@dimen/small_margin"
+                        android:layout_margin="@dimen/medium_margin"
                         android:text="@string/action_cafe_list_copy_card_number"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -46,34 +49,32 @@
 
                     <ImageView
                         android:id="@+id/fragment_cafe_list_iv_copy_card_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/medium_margin"
-                        android:contentDescription="Description"
+                        style="@style/IconImageView"
                         android:src="@drawable/ic_copy"
                         app:layout_constraintBottom_toBottomOf="@+id/fragment_cafe_list_btn_card_number"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/fragment_cafe_list_btn_card_number"
                         app:layout_constraintTop_toTopOf="@+id/fragment_cafe_list_btn_card_number" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/fragment_cafe_list_btn_phone_number"
                         style="@style/OutLineButton"
                         android:layout_width="0dp"
-                        android:layout_margin="@dimen/small_margin"
+                        android:layout_marginStart="@dimen/medium_margin"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:layout_marginEnd="@dimen/medium_margin"
+                        android:layout_marginBottom="@dimen/medium_margin"
                         android:text="@string/action_cafe_list_copy_phone_number"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_btn_card_number" />
 
                     <ImageView
                         android:id="@+id/fragment_cafe_list_iv_copy_phone_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/medium_margin"
-                        android:contentDescription="Description"
+                        style="@style/IconImageView"
                         android:src="@drawable/ic_copy"
                         app:layout_constraintBottom_toBottomOf="@+id/fragment_cafe_list_btn_phone_number"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/fragment_cafe_list_btn_phone_number"
                         app:layout_constraintTop_toTopOf="@+id/fragment_cafe_list_btn_phone_number" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -88,7 +89,8 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_mcv_payment" />
+                app:layout_constraintTop_toBottomOf="@id/fragment_cafe_list_mcv_payment"
+                tools:listitem="@layout/element_cafe" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

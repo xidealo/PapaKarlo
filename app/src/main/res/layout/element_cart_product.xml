@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
                 app:buttonTextColor="@color/white"
+                app:buttonColor="@color/colorPrimary"
                 app:count="@{cartProduct.count}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

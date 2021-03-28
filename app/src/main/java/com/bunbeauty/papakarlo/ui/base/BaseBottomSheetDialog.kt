@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -30,6 +31,8 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        setStyle(STYLE_NORMAL, R.style.BottomSheetTheme)
 
         val viewModelComponent =
             (requireActivity().application as PapaKarloApplication).appComponent

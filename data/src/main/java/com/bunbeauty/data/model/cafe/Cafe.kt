@@ -1,11 +1,14 @@
 package com.bunbeauty.data.model.cafe
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.model.District
 import com.bunbeauty.data.model.DistrictEntity
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Cafe(
     @Embedded
     val cafeEntity: CafeEntity = CafeEntity(),
@@ -15,7 +18,7 @@ data class Cafe(
 
     @Relation(parentColumn = "id", entityColumn = "cafeId")
     val address: Address? = Address(),
-) {
+) : Parcelable {
     companion object {
         const val CAFES = "cafes"
     }

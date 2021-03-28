@@ -1,18 +1,25 @@
 package com.bunbeauty.papakarlo.ui
 
+import android.graphics.PorterDuff.Mode.SRC_IN
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.annotation.ColorRes
 import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.papakarlo.presentation.EmptyViewModel
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import javax.inject.Inject
 
 class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     override val isToolbarLogoVisible = true
     override val isBottomBarVisible = true
@@ -24,8 +31,24 @@ class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("test", "onViewCreated")
+        viewDataBinding.fragmentMenuTl.addOnTabSelectedListener(
+            object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    setIconColor(tab, R.color.colorPrimary)
+                }
 
+                override fun onTabUnselected(tab: TabLayout.Tab?) {
+                    setIconColor(tab, R.color.black)
+                }
+
+                override fun onTabReselected(tab: TabLayout.Tab?) {
+                }
+
+                fun setIconColor(tab: TabLayout.Tab?, @ColorRes colorId: Int) {
+                    tab?.icon?.setColorFilter(resourcesProvider.getColor(colorId), SRC_IN)
+                }
+            }
+        )
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             ProductCode.values().asList().map {
                 ProductsFragment.newInstance(it)

@@ -27,23 +27,20 @@ class CafeOptionsBottomSheet :
     }
 
     @Inject
-    lateinit var iStringHelper: IStringHelper
+    lateinit var stringHelper: IStringHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            val cafeId = fromBundle(it).cafeId
-            viewModel.getCafeLiveData(cafeId).observe(this) { cafe ->
-                viewDataBinding.bottomSheetCafeOptionsBtnCall.setOnClickListener {
-                    goToPhone(cafe.cafeEntity.phone)
-                }
-                viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
-                    goToAddress(cafe.cafeEntity.coordinate)
-                }
-                viewDataBinding.bottomSheetCafeOptionsTvAddress.text = iStringHelper.toString(cafe.address)
-            }
+        val cafe = fromBundle(requireArguments()).cafe
+
+        viewDataBinding.bottomSheetCafeOptionsBtnCall.setOnClickListener {
+            goToPhone(cafe.cafeEntity.phone)
         }
+        viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
+            goToAddress(cafe.cafeEntity.coordinate)
+        }
+        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.address)
     }
 
     private fun goToAddress(coordinate: Coordinate) {
