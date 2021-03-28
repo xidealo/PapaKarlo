@@ -63,9 +63,9 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
         viewDataBinding.fragmentCreationOrderBtnCreateOrder.setOnClickListener {
             createOrder()
         }
-        viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
+        /*viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
             viewModel.isDeliveryLiveData.value = isChecked
-        }
+        }*/
         viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
         viewDataBinding.fragmentOrderEtEmail.setText(viewModel.email)
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)

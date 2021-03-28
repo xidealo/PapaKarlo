@@ -1,12 +1,15 @@
 package com.bunbeauty.data.model.cafe
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 /**
  * Company information
  */
+@Parcelize
 @Entity
 data class CafeEntity(
     @PrimaryKey
@@ -16,4 +19,4 @@ data class CafeEntity(
     val phone: String = "",
     @Embedded
     val coordinate: Coordinate = Coordinate()
-)
+): Parcelable

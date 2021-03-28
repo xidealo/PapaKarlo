@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:theme="@style/ToolbarTheme"
             android:id="@+id/activity_main_tb_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

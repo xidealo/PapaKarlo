@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:tabMode="scrollable"
-            app:tabIconTint="@color/selector_navigation"
+            app:tabIconTint="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.databinding.ObservableField
+import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.domain.repository.cafe.CafeRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.domain.string_helper.IStringHelper
@@ -86,8 +87,8 @@ class CafeListViewModel @Inject constructor(
         return minutes - nowMinutes
     }
 
-    fun onCafeCardClick(cafeId: String) {
-        router.navigate(toCafeOptionsBottomSheet(cafeId))
+    fun onCafeCardClick(cafe: Cafe) {
+        router.navigate(toCafeOptionsBottomSheet(cafe))
     }
 
     companion object {

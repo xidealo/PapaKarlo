@@ -36,7 +36,7 @@ class CafeAdapter @Inject constructor(private val stringHelper: IStringHelper) :
 
         fun setCafeClickListener(cafe: Cafe) {
             binding?.elementCafeCvMain?.setOnClickListener {
-                cafeListViewModel.onCafeCardClick(cafe.cafeEntity.id)
+                cafeListViewModel.onCafeCardClick(cafe)
             }
         }
     }

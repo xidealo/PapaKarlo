@@ -5,15 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/DefaultBottomSheet"
         tools:context=".ui.AddressesBottomSheet">
 
         <TextView
             android:id="@+id/bottom_sheet_address_tv_address"
             style="@style/MainTitle"
             android:layout_marginTop="@dimen/small_margin"
-
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

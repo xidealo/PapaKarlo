@@ -4,71 +4,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="cafe"
-            type="com.bunbeauty.data.model.cafe.Cafe" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/DefaultBottomSheet"
         tools:context=".ui.CafeOptionsBottomSheet">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_sheet_cafe_options_gl_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/small_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_sheet_cafe_options_gl_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/small_margin" />
 
         <TextView
             android:id="@+id/bottom_sheet_cafe_options_tv_address"
             style="@style/MainTitle"
+            android:layout_marginTop="@dimen/medium_margin"
             android:gravity="center"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_cafe_options_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_cafe_options_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom_sheet_cafe_options_btn_call"
             style="@style/OutLineButton"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/medium_margin"
             android:text="@string/action_call"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_cafe_options_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_cafe_options_gl_left"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cafe_options_tv_address" />
 
         <ImageView
             android:id="@+id/bottom_sheet_cafe_options_iv_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/medium_margin"
-            android:contentDescription="Description"
+            style="@style/IconImageView"
             android:src="@drawable/ic_phone"
             app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_cafe_options_btn_call"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_call"
-            app:tint="@color/colorPrimary" />
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_cafe_options_btn_call"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_call" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom_sheet_cafe_options_btn_show_map"
             style="@style/OutLineButton"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
             android:text="@string/action_show_map"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_cafe_options_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_cafe_options_gl_left"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_cafe_options_btn_call" />
 
         <ImageView
             android:id="@+id/bottom_sheet_cafe_options_iv_show_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/medium_margin"
-            android:contentDescription="Description"
+            style="@style/IconImageView"
             android:src="@drawable/ic_address"
             app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_cafe_options_btn_show_map"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_show_map"
-            app:tint="@color/colorPrimary" />
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_cafe_options_btn_show_map"
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_cafe_options_btn_show_map" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

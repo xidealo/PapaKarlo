@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui.view
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -15,7 +16,7 @@ class CountPicker @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attributeSet, defStyleAttr) {
+) : LinearLayout(context, attributeSet, defStyleAttr), Customizable {
 
     var countChangeListener: CountChangeListener? = null
     var count = 0
@@ -65,7 +66,7 @@ class CountPicker @JvmOverloads constructor(
             z = 10f
         }
         button.text = text
-        //button.backgroundTintList = ColorStateList.valueOf(buttonColor)
+        button.backgroundTintList = ColorStateList.valueOf(buttonColor)
         button.setTextColor(buttonTextColor)
 
         button.setOnClickListener(onClickListener)
@@ -97,67 +98,6 @@ class CountPicker @JvmOverloads constructor(
         textView.text = count.toString()
 
         return textView
-    }
-
-    fun getDimensionPixel(
-        context: Context,
-        attributeSet: AttributeSet?,
-        attributeId: Int,
-        defaultDip: Float
-    ): Int {
-        return if (attributeSet != null) {
-            val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
-            val dimensionPixel = typedArray.getLayoutDimension(
-                attributeId,
-                getPixels(defaultDip)
-            )
-            typedArray.recycle()
-
-            dimensionPixel
-        } else {
-            getPixels(defaultDip)
-        }
-    }
-
-    fun getInteger(
-        context: Context,
-        attributeSet: AttributeSet?,
-        attributeId: Int,
-        defaultInt: Int
-    ): Int {
-        return if (attributeSet != null) {
-            val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
-            val integerValue = typedArray.getInteger(attributeId, defaultInt)
-            typedArray.recycle()
-
-            integerValue
-        } else {
-            defaultInt
-        }
-    }
-
-    fun getPixels(dip: Float): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, resources.displayMetrics)
-            .toInt()
-    }
-
-    private fun getColor(
-        context: Context,
-        attributeSet: AttributeSet?,
-        attributeId: Int,
-        defaultColor: Int
-    ): Int {
-        return if (attributeSet != null) {
-            val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
-            val color = typedArray.getColor(attributeId, defaultColor)
-            typedArray.recycle()
-
-            color
-        } else {
-            defaultColor
-        }
     }
 
     interface CountChangeListener {
