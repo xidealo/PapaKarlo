@@ -6,6 +6,8 @@ import com.bunbeauty.domain.repository.cafe.CafeRepo
 import com.bunbeauty.domain.repository.cafe.CafeRepository
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import com.bunbeauty.domain.repository.cart_product.CartProductRepository
+import com.bunbeauty.domain.repository.delivery.DeliveryRepo
+import com.bunbeauty.domain.repository.delivery.DeliveryRepository
 import com.bunbeauty.domain.repository.district.DistrictRepo
 import com.bunbeauty.domain.repository.district.DistrictRepository
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
@@ -39,4 +41,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+
+    @Binds
+    abstract fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
 }

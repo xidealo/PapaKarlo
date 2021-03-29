@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
         viewModel.refreshCafeList()
         viewModel.refreshMenuProducts()
+        viewModel.refreshDeliveryInfo()
 
         setupToolbar()
         setupBottomNavigationBar()

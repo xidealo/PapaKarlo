@@ -46,9 +46,6 @@ class OrderBottomSheet : BaseBottomSheetDialog<BottomSheetOrderBinding, OrderVie
         if (order.orderEntity.deferred.isEmpty()) {
             viewDataBinding.bottomSheetOrderGroupDeferrer.gone()
         }
-        viewDataBinding.bottomSheetOrderRvCartProducts.setOnTouchListener { _, _ ->
-            true
-        }
 
         cartProductsAdapter.canBeChanged = false
         viewDataBinding.bottomSheetOrderRvCartProducts.adapter = cartProductsAdapter

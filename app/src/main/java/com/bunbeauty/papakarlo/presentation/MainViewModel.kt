@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.repository.cafe.CafeRepo
+import com.bunbeauty.domain.repository.delivery.DeliveryRepo
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
@@ -10,7 +11,8 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
-    private val menuProductRepo: MenuProductRepo
+    private val menuProductRepo: MenuProductRepo,
+    private val deliveryRepo: DeliveryRepo
 ) : BaseViewModel() {
 
     fun refreshCafeList() {
@@ -22,6 +24,12 @@ class MainViewModel @Inject constructor(
     fun refreshMenuProducts() {
         viewModelScope.launch(IO) {
             menuProductRepo.getMenuProductRequest()
+        }
+    }
+
+    fun refreshDeliveryInfo() {
+        viewModelScope.launch(IO) {
+            deliveryRepo.refreshDeliveryCost()
         }
     }
 

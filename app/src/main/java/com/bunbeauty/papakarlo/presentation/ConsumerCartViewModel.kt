@@ -1,10 +1,11 @@
 package com.bunbeauty.papakarlo.presentation
 
+import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
-import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.common.utils.IDataStoreHelper
+import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
@@ -34,11 +35,12 @@ class ConsumerCartViewModel @Inject constructor(
 
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
-           map(cartProductRepo.getCartProductListLiveData()) { productList ->
+            map(cartProductRepo.getCartProductListLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree
                 )
+                Log.d("test", "delivery " + delivery.cost)
                 if (differenceString.isEmpty()) {
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {

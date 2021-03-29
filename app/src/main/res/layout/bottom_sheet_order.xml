@@ -76,7 +76,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_deferred"
-            style="@style/MainTextWrap"
+            style="@style/MainText"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_deferred"
@@ -96,7 +96,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_address"
-            style="@style/MainTextWrap"
+            style="@style/MainText"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_address"
@@ -116,7 +116,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_comment"
-            style="@style/MainTextWrap"
+            style="@style/MainText"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_comment"
@@ -134,38 +134,38 @@
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_comment"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
 
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost"
+            style="@style/MainTitle"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:text="@string/title_bottom_sheet_order_cost"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
+            app:layout_constraintStart_toStartOf="@id/bottom_sheet_order_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment_value" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost_value"
+            style="@style/MainText"
+            android:layout_marginTop="@dimen/small_margin"
+            android:gravity="end"
+            android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
+            app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_cost"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment_value" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_order_rv_cart_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="300dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_cost"
             tools:itemCount="6"
             tools:listitem="@layout/element_cart_product" />
-
-        <TextView
-            android:id="@+id/bottom_sheet_order_tv_cost"
-            style="@style/MainTitle"
-            android:layout_width="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
-            android:text="@string/title_bottom_sheet_order_cost"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_rv_cart_products" />
-
-        <TextView
-            android:id="@+id/bottom_sheet_order_tv_cost_value"
-            style="@style/MainText"
-            android:layout_margin="@dimen/medium_margin"
-            android:gravity="end"
-            android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_cost"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_rv_cart_products" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
