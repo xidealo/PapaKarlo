@@ -121,6 +121,13 @@
     <string name="title_bottom_sheet_addresses_your_address">Ваши адреса</string>
     <string name="title_bottom_sheet_addresses_cafe_address">Адреса ресторанов</string>
 
+    <!-- BOTTOM SHEET ORDER -->
+    <string name="title_bottom_sheet_order_delivery">Доставка</string>
+    <string name="title_bottom_sheet_order_deferred">Отложенный заказ</string>
+    <string name="title_bottom_sheet_order_address">Адрес</string>
+    <string name="title_bottom_sheet_order_comment">Комментарий</string>
+    <string name="title_bottom_sheet_order_cost">Сумма заказа</string>
+
     <!-- CAFE OPTIONS -->
     <string name="action_call">Позвонить</string>
     <string name="action_show_map">Показать на карте</string>

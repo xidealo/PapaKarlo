@@ -38,7 +38,7 @@
             android:id="@+id/bottom_sheet_order_tv_delivery"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:text="Доставка"
+            android:text="@string/title_bottom_sheet_order_delivery"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_delivery_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
@@ -54,10 +54,10 @@
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
 
         <TextView
-            android:id="@+id/bottom_sheet_order_tv_deferrer"
+            android:id="@+id/bottom_sheet_order_tv_deferred"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:text="Отложенный заказ"
+            android:text="@string/title_bottom_sheet_order_deferred"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_deferrer_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery_value" />
@@ -69,14 +69,14 @@
             android:gravity="end"
             android:text="@{stringHelper.toStringDeferred(order.orderEntity)}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_deferrer"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_deferred"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery_value" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_address"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:text="Адрес"
+            android:text="@string/title_bottom_sheet_order_address"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_address_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />
@@ -95,7 +95,7 @@
             android:id="@+id/bottom_sheet_order_tv_comment"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:text="Комментарий"
+            android:text="@string/title_bottom_sheet_order_comment"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_comment_value"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
@@ -114,7 +114,7 @@
             android:id="@+id/bottom_sheet_order_tv_cost"
             style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:text="Сумма заказа"
+            android:text="@string/title_bottom_sheet_order_cost"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_order_rv_cart_products"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
