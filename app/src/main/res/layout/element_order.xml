@@ -20,9 +20,8 @@
         style="@style/DefaultMaterialCard"
         android:id="@+id/element_order_mcv_order"
         android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginTop="@dimen/very_small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:layout_marginBottom="@dimen/very_small_margin">
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/small_margin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +30,7 @@
             <TextView
                 android:id="@+id/element_order_tv_time"
                 style="@style/MainText"
-                android:layout_marginEnd="@dimen/very_small_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:text="@{stringHelper.toStringTime(order.orderEntity)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +39,7 @@
             <TextView
                 android:id="@+id/element_order_tv_code"
                 style="@style/MainTitle"
-                android:layout_margin="@dimen/small_margin"
+                android:layout_margin="@dimen/medium_margin"
                 android:text="@{order.orderEntity.code}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/element_order_tv_time"

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -42,90 +43,17 @@
                         android:layout_height="match_parent">
 
                         <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_margin="@dimen/very_small_margin"
-                            android:layout_weight="1"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:text="@string/action_creation_order_delivery"
-                            android:textAllCaps="false" />
+                            android:id="@+id/fragment_creation_order_btn_delivery"
+                            style="@style/ActiveSwitcherButton"
+                            android:text="@string/action_creation_order_delivery" />
 
                         <com.google.android.material.button.MaterialButton
-                            android:layout_width="match_parent"
-                            android:layout_height="34dp"
-                            android:layout_margin="@dimen/very_small_margin"
-                            android:layout_weight="1"
-                            android:insetTop="0dp"
-                            android:insetBottom="0dp"
-                            android:text="@string/action_creation_order_pickup"
-                            android:textAllCaps="false" />
+                            android:id="@+id/fragment_creation_order_btn_pickup"
+                            style="@style/ActiveSwitcherButton"
+                            android:text="@string/action_creation_order_pickup" />
 
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
-
-                <!--<com.bunbeauty.papakarlo.ui.view.CustomSwitcher
-                    android:id="@+id/fragment_creation_order_sch_delivery"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    app:activeColor="@color/colorPrimary"
-                    app:activeTextColor="@color/white"
-                    app:backgroundColor="@color/black"
-                    app:backgroundRadius="@dimen/large_radius"
-                    app:buttonHeight="24dp"
-                    app:buttonRadius="@dimen/small_radius"
-                    app:buttonTextSize="@dimen/medium_text_size"
-
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:leftButtonText="@string/title_creation_order_delivery"
-                    app:rightButtonText="@string/title_creation_order_pickup"
-                    app:switchPadding="@dimen/small_padding" />-->
-
-                <!-- <com.google.android.material.card.MaterialCardView
-                     android:id="@+id/fragment_creation_order_mcv_delivery"
-                     style="@style/MaterialCardCreationOrder"
-                     android:visibility="gone"
-                     app:layout_constraintEnd_toEndOf="parent"
-                     app:layout_constraintStart_toStartOf="parent"
-                     app:layout_constraintTop_toTopOf="parent">
-
-                     <androidx.constraintlayout.widget.ConstraintLayout
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:padding="@dimen/medium_padding">
-
-                         <RadioGroup
-                             android:id="@+id/fragment_creation_order_rg_delivery_method"
-                             android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:orientation="horizontal"
-                             android:visibility="invisible"
-                             app:layout_constraintEnd_toEndOf="parent"
-                             app:layout_constraintStart_toStartOf="parent"
-                             app:layout_constraintTop_toTopOf="parent">
-
-                             <RadioButton
-                                 android:id="@+id/fragment_creation_order_rb_delivery"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:layout_marginEnd="@dimen/large_margin"
-                                 android:buttonTint="@color/colorPrimary"
-                                 android:checked="true"
-                                 android:text="@string/title_creation_order_delivery" />
-
-                             <RadioButton
-                                 android:id="@+id/fragment_creation_order_rb_pickup"
-                                 android:layout_width="wrap_content"
-                                 android:layout_height="wrap_content"
-                                 android:buttonTint="@color/colorPrimary"
-                                 android:text="@string/title_creation_order_pickup" />
-                         </RadioGroup>
-
-                     </androidx.constraintlayout.widget.ConstraintLayout>
-                 </com.google.android.material.card.MaterialCardView>-->
 
                 <TextView
                     android:id="@+id/fragment_creation_order_tv_delivery"
@@ -318,7 +246,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <androidx.constraintlayout.widget.Group
-                            android:id="@+id/fragment_creation_order_group_deferred"
+                            android:id="@+id/fragment_creation_order_group_add_deferred"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             app:constraint_referenced_ids="fragment_creation_order_btn_deferred, fragment_creation_order_iv_deferred" />
@@ -327,9 +255,9 @@
                             android:id="@+id/fragment_creation_order_btn_deferred"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/hint_creation_order_deferred"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
@@ -342,6 +270,13 @@
                             app:layout_constraintEnd_toEndOf="@+id/fragment_creation_order_btn_deferred"
                             app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_deferred" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:id="@+id/fragment_creation_order_group_picked_deferred"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:visibility="gone"
+                            app:constraint_referenced_ids="fragment_creation_order_btn_selected_deferred, fragment_creation_order_iv_selected_deferred" />
+
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fragment_creation_order_btn_selected_deferred"
                             style="@style/OutLineButton"
@@ -352,17 +287,15 @@
                             android:text="@string/action_creation_address_address"
                             android:textAllCaps="false"
                             android:textColor="@color/mainTextColor"
-                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_btn_deferred" />
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
 
                         <ImageView
                             android:id="@+id/fragment_creation_order_iv_selected_deferred"
                             style="@style/IconImageView"
                             android:src="@drawable/ic_chevron_right_solid"
-                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_selected_deferred"
                             app:layout_constraintEnd_toEndOf="@+id/fragment_creation_order_btn_selected_deferred"
                             app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_selected_deferred" />

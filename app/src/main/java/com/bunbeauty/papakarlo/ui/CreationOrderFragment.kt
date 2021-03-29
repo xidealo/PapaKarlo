@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import com.bunbeauty.common.extensions.gone
@@ -14,6 +16,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import javax.inject.Inject
@@ -32,14 +35,15 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        subscribe(viewModel.hasAddressLiveData){
+        subscribe(viewModel.hasAddressLiveData) {
             viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
             viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
         }
         viewDataBinding.viewModel = viewModel
 
         subscribe(viewModel.addressLiveData) { address ->
-            viewDataBinding.fragmentCreationOrderBtnAddressPick.text = stringHelper.toString(address)
+            viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
+                stringHelper.toString(address)
         }
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
@@ -48,6 +52,13 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
         }
         subscribe(viewModel.isDeliveryLiveData) { isDelivery ->
+            if (isDelivery) {
+                activateButton(viewDataBinding.fragmentCreationOrderBtnDelivery)
+                inactivateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
+            } else {
+                inactivateButton(viewDataBinding.fragmentCreationOrderBtnDelivery)
+                activateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
+            }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
         }
 
@@ -60,9 +71,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
         viewDataBinding.fragmentCreationOrderBtnCreateOrder.setOnClickListener {
             createOrder()
         }
-        /*viewDataBinding.fragmentCreationOrderRbDelivery.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.isDeliveryLiveData.value = isChecked
-        }*/
+        viewDataBinding.fragmentCreationOrderBtnDelivery.setOnClickListener {
+            viewModel.isDeliveryLiveData.value = true
+        }
+        viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
+            viewModel.isDeliveryLiveData.value = false
+        }
         viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
         viewDataBinding.fragmentOrderEtEmail.setText(viewModel.email)
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
@@ -90,8 +104,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
 
         picker.addOnPositiveButtonClickListener {
             if (viewModel.isDeferredTimeCorrect(picker.hour, picker.minute)) {
-                viewDataBinding.fragmentCreationOrderGroupDeferred.gone()
-                viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.visible()
+                viewDataBinding.fragmentCreationOrderGroupAddDeferred.gone()
+                viewDataBinding.fragmentCreationOrderGroupPickedDeferred.visible()
                 viewModel.deferredHoursLiveData.value = picker.hour
                 viewModel.deferredMinutesLiveData.value = picker.minute
 
@@ -100,8 +114,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             }
         }
         picker.addOnNegativeButtonClickListener {
-            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.gone()
-            viewDataBinding.fragmentCreationOrderGroupDeferred.visible()
+            viewDataBinding.fragmentCreationOrderGroupAddDeferred.visible()
+            viewDataBinding.fragmentCreationOrderGroupPickedDeferred.gone()
             viewModel.deferredHoursLiveData.value = null
             viewModel.deferredMinutesLiveData.value = null
         }
@@ -144,5 +158,16 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             viewModel.deferredHoursLiveData.value,
             viewModel.deferredMinutesLiveData.value
         )
+    }
+
+    private fun activateButton(button: MaterialButton) {
+        button.backgroundTintList =
+            ColorStateList.valueOf(resourcesProvider.getColor(R.color.colorPrimary))
+        button.setTextColor(resourcesProvider.getColor(R.color.white))
+    }
+
+    private fun inactivateButton(button: MaterialButton) {
+        button.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+        button.setTextColor(resourcesProvider.getColor(R.color.grey))
     }
 }

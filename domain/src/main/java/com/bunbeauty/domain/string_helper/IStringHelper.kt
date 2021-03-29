@@ -6,7 +6,7 @@ import com.bunbeauty.data.model.order.OrderEntity
 interface IStringHelper {
     fun toString(address: com.bunbeauty.data.model.Address?): String
     fun toString(orderEntity: OrderEntity): String
-    fun toStringDelivery(orderEntity: OrderEntity): String
+    fun toStringOrderType(orderEntity: OrderEntity): String
     fun toStringDeferred(orderEntity: OrderEntity): String
     fun toStringComment(orderEntity: OrderEntity): String
     fun toString(cartProducts: List<com.bunbeauty.data.model.CartProduct>): String

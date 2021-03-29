@@ -22,124 +22,150 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
+
         tools:context=".ui.OrderBottomSheet">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_sheet_order_gl_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/medium_margin" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottom_sheet_order_gl_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/medium_margin" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_title"
             style="@style/MainTitle"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:gravity="center"
             android:text="@{order.orderEntity.code}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_order_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_order_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_delivery"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
-            android:text="@string/title_bottom_sheet_order_delivery"
-            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_delivery_value"
-            app:layout_constraintStart_toStartOf="parent"
+            style="@style/MainTextWrap"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:text="@{stringHelper.toStringOrderType(order.orderEntity)}"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_order_gl_left"
             app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/bottom_sheet_order_tv_delivery_value"
             style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             android:gravity="end"
-            android:text="@{stringHelper.toStringDelivery(order.orderEntity)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{stringHelper.toStringOrderType(order.orderEntity)}"
+            app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_delivery"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_title" />-->
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/bottom_sheet_order_group_deferrer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="bottom_sheet_order_tv_deferred, bottom_sheet_order_tv_deferrer_value" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_deferred"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            style="@style/MainTextWrap"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_deferred"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_deferrer_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_delivery_value" />
+            app:layout_constraintStart_toStartOf="@id/bottom_sheet_order_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_deferrer_value"
             style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:gravity="end"
             android:text="@{stringHelper.toStringDeferred(order.orderEntity)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_deferred"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_delivery_value" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_delivery" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_address"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            style="@style/MainTextWrap"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_address"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_address_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_deferrer_value" />
+            app:layout_constraintStart_toStartOf="@id/bottom_sheet_order_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_address_value"
             style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:gravity="end"
             android:text="@{stringHelper.toString(order.orderEntity.address)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_address"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_deferrer_value" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_comment"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            style="@style/MainTextWrap"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
             android:text="@string/title_bottom_sheet_order_comment"
             app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_comment_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_address_value" />
+            app:layout_constraintStart_toStartOf="@id/bottom_sheet_order_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
 
         <TextView
             android:id="@+id/bottom_sheet_order_tv_comment_value"
             style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
             android:gravity="end"
-            android:text="@{stringHelper.toStringComment(order.orderEntity)}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{order.orderEntity.comment}"
+            app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_comment"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_address_value" />
-
-        <TextView
-            android:id="@+id/bottom_sheet_order_tv_cost"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
-            android:text="@string/title_bottom_sheet_order_cost"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/bottom_sheet_order_rv_cart_products"
-            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_comment" />
-
-        <TextView
-            android:id="@+id/bottom_sheet_order_tv_cost_value"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
-            android:gravity="end"
-            android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
-            app:layout_constraintBottom_toTopOf="@id/bottom_sheet_order_rv_cart_products"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_cost"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_comment_value" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_address_value" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_order_rv_cart_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_order_tv_cost" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_comment"
+            tools:itemCount="6"
+            tools:listitem="@layout/element_cart_product" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost"
+            style="@style/MainTitle"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:text="@string/title_bottom_sheet_order_cost"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/bottom_sheet_order_tv_cost_value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_rv_cart_products" />
+
+        <TextView
+            android:id="@+id/bottom_sheet_order_tv_cost_value"
+            style="@style/MainText"
+            android:layout_margin="@dimen/medium_margin"
+            android:gravity="end"
+            android:text="@{productHelper.getFullPriceString(order.cartProducts)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_cost"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_rv_cart_products" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

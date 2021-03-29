@@ -64,7 +64,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return orderString.toString()
     }
 
-    override fun toStringDelivery(orderEntity: OrderEntity): String {
+    override fun toStringOrderType(orderEntity: OrderEntity): String {
         return if (orderEntity.isDelivery)
             "Доставка"
         else
