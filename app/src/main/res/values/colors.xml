@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#ff6900</color>
-    <color name="cream">#F2F1F6</color>
-
-
-
 
     <color name="colorPrimaryDark">#000000</color>
     <color name="errorColor">#B1021D</color>
@@ -20,8 +16,6 @@
     <color name="backgroundPage">#242526</color>
     <color name="backgroundComponent">#3C3D40</color>
     <color name="cardViewBackground">#2B2C2E</color>
-    <color name="fragmentBackground">#2B2C2E</color>
-    <color name="dialogBackground">#2B2C2E</color>
     <color name="tabLayoutBackground">#2B2C2E</color>
     <color name="actionChipBackground">#F3F2F3</color>
     <color name="backgroundRed">#47140D</color>

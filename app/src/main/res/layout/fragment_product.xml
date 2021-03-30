@@ -24,9 +24,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/cream"
+        style="@style/DefaultPage"
         tools:context=".ui.ProductFragment">
 
         <androidx.constraintlayout.widget.Guideline

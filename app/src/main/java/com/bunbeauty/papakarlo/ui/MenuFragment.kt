@@ -4,6 +4,8 @@ import android.graphics.PorterDuff.Mode.SRC_IN
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
@@ -38,14 +40,18 @@ class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    setIconColor(tab, R.color.black)
+                    setIconColor(tab, R.color.mainTextColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                 }
 
                 fun setIconColor(tab: TabLayout.Tab?, @ColorRes colorId: Int) {
-                    tab?.icon?.setColorFilter(resourcesProvider.getColor(colorId), SRC_IN)
+                    tab?.icon?.colorFilter =
+                        BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                            resourcesProvider.getColor(colorId),
+                            BlendModeCompat.SRC_ATOP
+                        )
                 }
             }
         )

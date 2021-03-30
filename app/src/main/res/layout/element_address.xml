@@ -22,13 +22,22 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
-        app:cardCornerRadius="0dp"
-        style="@style/DefaultMaterialCard">
-        <TextView
-            style="@style/MainText"
+        style="@style/DefaultMaterialCard"
+        app:cardCornerRadius="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/small_margin"
-            android:drawablePadding="@dimen/large_padding"
-            android:text="@{iStringHelper.toString(address)}"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                style="@style/LargeMainText"
+                android:layout_width="match_parent"
+                android:padding="@dimen/large_padding"
+                android:text="@{iStringHelper.toString(address)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

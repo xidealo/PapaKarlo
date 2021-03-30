@@ -3,12 +3,10 @@
     <color name="colorPrimaryDark">#ff6900</color>
 
     <!-- BACKGROUND -->
-    <color name="backgroundPage">#f3f2f7</color>
+    <color name="backgroundPage">#F2F1F6</color>
     <color name="backgroundComponent">#F3F2F3</color>
     <color name="cardViewBackground">#FFFFFF</color>
-    <color name="fragmentBackground">#FFFFFF</color>
-    <color name="dialogBackground">#FFFFFF</color>
-    <color name="tabLayoutBackground">#FFFFFF</color>
+    <color name="tabLayoutBackground">#F2F1F6</color>
     <color name="actionChipBackground">#F3F2F3</color>
     <color name="backgroundRed">#FF8572</color>
     <color name="backgroundYellow">#FFD57C</color>

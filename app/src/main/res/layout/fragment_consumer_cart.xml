@@ -27,7 +27,8 @@
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_empty_cart"
-            style="@style/CenterText"
+            style="@style/MainText"
+            android:gravity="center"
             android:text="@string/msg_consumer_cart_empty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
