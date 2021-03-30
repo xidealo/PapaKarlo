@@ -1,6 +1,5 @@
 package com.bunbeauty.domain.repository.order
 
-import androidx.lifecycle.LiveData
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.domain.repository.api.IApiRepository
@@ -16,7 +15,7 @@ class OrderRepository @Inject constructor(
 
     override suspend fun saveOrder(order: Order) {
         withContext(Dispatchers.IO) {
-            //apiRepository.insertOrder(order)
+            apiRepository.insertOrder(order)
             val orderEntityId = orderDao.insert(order.orderEntity)
             for (cardProduct in order.cartProducts) {
                 cardProduct.orderId = orderEntityId
@@ -25,7 +24,6 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    override fun getOrdersWithCartProducts(): LiveData<List<Order>> {
-        return orderDao.getOrders()
-    }
+    override fun getOrdersWithCartProducts() = orderDao.getOrders()
+
 }
