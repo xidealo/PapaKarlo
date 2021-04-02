@@ -1,26 +1,50 @@
 package com.bunbeauty.papakarlo.presentation
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations.map
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuProductRepo) :
     BaseViewModel() {
 
-    val isLoadingLiveData = MutableLiveData(true)
     lateinit var productCode: ProductCode
 
-    val productListLiveData by lazy {
-        map(menuProductRepo.getMenuProductList(productCode)) { menuProductList ->
-            isLoadingLiveData.value = false
-            menuProductList.sortedBy { it.name }.filter { it.visible }
+    @ExperimentalCoroutinesApi
+    private val actionSender = BroadcastChannel<List<MenuProduct>>(Channel.BUFFERED)
+
+    @ExperimentalCoroutinesApi
+    @FlowPreview
+    val productListReceiver = actionSender.asFlow()
+
+    @ExperimentalCoroutinesApi
+    fun getProducts() {
+        viewModelScope.launch {
+            menuProductRepo.getMenuProductList()
+                .map { list ->
+                    list.sortedBy { it.name }.filter { it.visible }
+                }.collect { menuProductList ->
+                    if (menuProductList.isNotEmpty()) {
+                        if (productCode == ProductCode.ALL)
+                            actionSender.send(menuProductList)
+                        else
+                            actionSender.send(menuProductList.filter { it.productCode == productCode.name })
+                    }
+                }
         }
     }
+
 
     fun onProductClicked(menuProduct: MenuProduct) {
         router.navigate(toProductFragment(menuProduct, menuProduct.name))

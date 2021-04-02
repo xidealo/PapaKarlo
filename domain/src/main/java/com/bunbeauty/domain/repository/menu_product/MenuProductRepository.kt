@@ -1,10 +1,9 @@
 package com.bunbeauty.domain.repository.menu_product
 
-import androidx.lifecycle.LiveData
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.repository.api.IApiRepository
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class MenuProductRepository @Inject constructor(
@@ -19,17 +18,11 @@ class MenuProductRepository @Inject constructor(
     override suspend fun getMenuProductRequest() {
         menuProductDao.deleteAll()
         apiRepository.getMenuProductList().collect { menuProductList ->
-            for (menuProduct in menuProductList) {
-                insert(menuProduct)
-            }
+            menuProductDao.insertAll(menuProductList)
         }
     }
 
-    override fun getMenuProductList(productCode: ProductCode): LiveData<List<MenuProduct>> {
-        return if (productCode == ProductCode.ALL) {
-            menuProductDao.getMenuProductListLiveData()
-        } else {
-            menuProductDao.getMenuProductListByCodeLiveData(productCode.name)
-        }
+    override fun getMenuProductList(): Flow<List<MenuProduct>> {
+        return menuProductDao.getMenuProductListLiveData()
     }
 }

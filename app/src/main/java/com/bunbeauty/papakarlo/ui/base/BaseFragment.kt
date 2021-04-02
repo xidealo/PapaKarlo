@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.domain.IMessageShowable
@@ -17,6 +18,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
@@ -76,6 +79,12 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
 
     protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
         liveData.observe(viewLifecycleOwner, observer::invoke)
+    }
+
+    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope){
+        lifecycleCoroutineScope.launchWhenStarted {
+            this@launchWhenStarted.collect()
+        }
     }
 
     override fun showMessage(message: String) {

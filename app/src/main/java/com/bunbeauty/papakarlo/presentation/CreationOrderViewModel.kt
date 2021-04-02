@@ -100,9 +100,9 @@ class CreationOrderViewModel @Inject constructor(
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {
                     resourcesProvider.getString(R.string.part_creation_order_delivery_cost) +
-                            stringHelper.toStringPrice(delivery.cost) +
+                            stringHelper.toStringCost(delivery.cost) +
                             resourcesProvider.getString(R.string.part_creation_order_free_delivery_from) +
-                            stringHelper.toStringPrice(delivery.forFree)
+                            stringHelper.toStringCost(delivery.forFree)
                 }
             }
         }

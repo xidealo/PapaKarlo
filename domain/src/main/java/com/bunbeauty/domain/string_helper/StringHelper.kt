@@ -108,8 +108,8 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         }
     }
 
-    override fun toStringPrice(price: Int): String {
-        return price.toString() + resourcesProvider.getString(R.string.part_ruble)
+    override fun toStringCost(cost: Int): String {
+        return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
     }
 
     override fun toStringTime(orderEntity: OrderEntity): String {

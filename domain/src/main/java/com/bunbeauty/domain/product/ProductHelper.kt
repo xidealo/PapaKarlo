@@ -6,31 +6,31 @@ import javax.inject.Inject
 class ProductHelper @Inject constructor(private val stringHelper: IStringHelper) : IProductHelper {
 
     override fun getMenuProductPriceString(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
-        return stringHelper.toStringPrice(getMenuProductPrice(menuProduct))
+        return stringHelper.toStringCost(getMenuProductPrice(menuProduct))
     }
 
     override fun getMenuProductOldPriceString(menuProduct: com.bunbeauty.data.model.MenuProduct): String {
         return if (menuProduct.discountCost == null) {
             ""
         } else {
-            stringHelper.toStringPrice(menuProduct.cost)
+            stringHelper.toStringCost(menuProduct.cost)
         }
     }
 
     override fun getCartProductPriceString(cartProduct: com.bunbeauty.data.model.CartProduct): String {
-        return stringHelper.toStringPrice(getCartProductPrice(cartProduct))
+        return stringHelper.toStringCost(getCartProductPrice(cartProduct))
     }
 
     override fun getCartProductOldPriceString(cartProduct: com.bunbeauty.data.model.CartProduct): String {
         return if (cartProduct.menuProduct.discountCost == null) {
             ""
         } else {
-            stringHelper.toStringPrice(cartProduct.menuProduct.cost * cartProduct.count)
+            stringHelper.toStringCost(cartProduct.menuProduct.cost * cartProduct.count)
         }
     }
 
     override fun getFullPriceString(cartProductList: List<com.bunbeauty.data.model.CartProduct>): String {
-        return stringHelper.toStringPrice(getFullPrice(cartProductList))
+        return stringHelper.toStringCost(getFullPrice(cartProductList))
     }
 
     override fun getFullPriceStringWithDelivery(
@@ -38,7 +38,7 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         delivery: com.bunbeauty.data.model.Delivery
     ): String {
         return if (getDifferenceBeforeFreeDelivery(cartProductList, delivery.forFree) > 0) {
-            stringHelper.toStringPrice(getFullPrice(cartProductList) + delivery.cost)
+            stringHelper.toStringCost(getFullPrice(cartProductList) + delivery.cost)
         } else {
             getFullPriceString(cartProductList)
         }
@@ -49,7 +49,7 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         priceForFreeDelivery: Int
     ): String {
         return if (getDifferenceBeforeFreeDelivery(cartProductList, priceForFreeDelivery) > 0) {
-            stringHelper.toStringPrice(priceForFreeDelivery - getFullPrice(cartProductList))
+            stringHelper.toStringCost(priceForFreeDelivery - getFullPrice(cartProductList))
         } else {
             ""
         }

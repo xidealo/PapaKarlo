@@ -8,7 +8,7 @@ interface BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards
-    fun insertAll(cafeList: List<T>)
+    fun insertAll(objects: List<T>)
 
     @Update
     suspend fun update(obj: T)
