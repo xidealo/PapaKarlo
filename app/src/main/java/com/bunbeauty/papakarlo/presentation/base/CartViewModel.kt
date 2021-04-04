@@ -1,9 +1,9 @@
 package com.bunbeauty.papakarlo.presentation.base
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,11 +15,13 @@ import javax.inject.Inject
 open class CartViewModel : BaseViewModel() {
 
     @Inject
-    @Api
-    lateinit var baseCartProductRepo: CartProductRepo
+    lateinit var baseStringUtil: IStringUtil
 
     @Inject
-    lateinit var baseStringUtil: IStringUtil
+    lateinit var baseCartProductInteractor: ICartProductInteractor
+
+    @Inject
+    lateinit var baseResourcesProvider: IResourcesProvider
 
     private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
     val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
@@ -28,40 +30,31 @@ open class CartViewModel : BaseViewModel() {
     val cartProductCount: StateFlow<String> = mutableCartProductCount.asStateFlow()
 
     @Inject
-    fun subscribeOnCartProductList(productHelper: IProductHelper) {
-        baseCartProductRepo.observeCartProductList().onEach { cartProductList ->
-            val cartProductCount = productHelper.getTotalCount(cartProductList)
+    fun observeTotalCartCount() {
+        baseCartProductInteractor.observeTotalCartCount().onEach { count ->
+            mutableCartProductCount.value = count.toString()
+        }.launchIn(viewModelScope)
+    }
 
-            mutableCartProductCount.value = cartProductCount.toString()
-            val cartCost = productHelper.getNewTotalCost(cartProductList)
-            mutableCartCost.value = baseStringUtil.getCostString(cartCost)
+    @Inject
+    fun observeTotalCartCost() {
+        baseCartProductInteractor.observeNewTotalCartCost().onEach { cost ->
+            mutableCartCost.value = baseStringUtil.getCostString(cost)
         }.launchIn(viewModelScope)
     }
 
     fun addProductToCart(menuProductUuid: String) {
         viewModelScope.launch {
-            val cartProduct = baseCartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+            val cartProduct = baseCartProductInteractor.addProductToCart(menuProductUuid)
             if (cartProduct == null) {
-                val savedCartProduct = baseCartProductRepo.saveAsCartProduct(menuProductUuid)
-                if (savedCartProduct != null) {
-                    showMessage(baseStringUtil.getAddedToCartString(savedCartProduct.menuProduct.name))
-                }
-            } else {
-                baseCartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count + 1)
+                showError(baseResourcesProvider.getString(R.string.error_consumer_cart_full))
             }
         }
     }
 
     fun removeProductFromCart(menuProductUuid: String) {
         viewModelScope.launch {
-            val cartProduct = baseCartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
-                ?: return@launch
-            if (cartProduct.count > 1) {
-                baseCartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count - 1)
-            } else {
-                baseCartProductRepo.deleteCartProduct(cartProduct)
-                showMessage(baseStringUtil.getRemovedFromCartString(cartProduct.menuProduct.name))
-            }
+            baseCartProductInteractor.removeProductFromCart(menuProductUuid)
         }
     }
 }

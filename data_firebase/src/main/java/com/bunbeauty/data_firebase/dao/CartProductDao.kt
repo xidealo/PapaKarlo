@@ -22,6 +22,9 @@ interface CartProductDao : BaseDao<CartProductEntity> {
     @Query("SELECT * FROM CartProductEntity")
     suspend fun getCartProductList(): List<CartProductWithMenuProduct>
 
+    @Query("SELECT * FROM CartProductEntity WHERE uuid = :uuid")
+    suspend fun getCartProductByUuid(uuid: String): CartProductWithMenuProduct?
+
     @Query("SELECT * FROM CartProductEntity WHERE menuProductUuid = :menuProductUuid")
     suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProductWithMenuProduct?
 

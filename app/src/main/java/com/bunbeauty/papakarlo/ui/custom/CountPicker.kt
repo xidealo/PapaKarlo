@@ -97,21 +97,11 @@ class CountPicker @JvmOverloads constructor(
     }
 
     private fun onPlus(view: View) {
-        if (count >= 99) {
-            return
-        }
-
-        count++
         countChangeListener?.onCountIncreased()
         countTextView.text = count.toString()
     }
 
     private fun onMinus(view: View) {
-        if (count == 0) {
-            return
-        }
-
-        count--
         countChangeListener?.onCountDecreased()
         countTextView.text = count.toString()
     }

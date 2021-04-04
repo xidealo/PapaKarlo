@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.di.modules
 
+import com.bunbeauty.domain.interactor.cart.CartProductInteractor
+import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.city.CityInteractor
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
@@ -21,4 +23,7 @@ interface InteractorModule {
 
     @Binds
     fun bindsCityInteractor(cityInteractor: CityInteractor): ICityInteractor
+
+    @Binds
+    fun bindsCartProductInteractor(cartProductInteractor: CartProductInteractor): ICartProductInteractor
 }

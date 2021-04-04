@@ -39,6 +39,7 @@
     <string name="msg_consumer_cart_free_delivery">Доставка бесплатно</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
+    <string name="error_consumer_cart_full">Корзина переполнена</string>
 
     <!-- CREATE ORDER -->
     <string name="title_create_order">Оформление заказа</string>

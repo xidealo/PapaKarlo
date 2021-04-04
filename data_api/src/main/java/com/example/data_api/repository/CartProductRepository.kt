@@ -48,12 +48,16 @@ class CartProductRepository @Inject constructor(
         return cartProductDao.getCartProductByUuid(uuid).toCartProduct()
     }
 
-    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
+    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {
         val cartProductCount = CartProductCount(
             uuid = cartProductUuid,
             count = count
         )
         cartProductDao.updateCartProductCount(cartProductCount)
+
+        return cartProductDao.getCartProductByUuid(cartProductUuid)?.let { updatedCartProduct ->
+            cartProductMapper.toModel(updatedCartProduct)
+        }
     }
 
     override suspend fun deleteCartProduct(cartProduct: CartProduct) {

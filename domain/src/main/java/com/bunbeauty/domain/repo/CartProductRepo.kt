@@ -13,7 +13,7 @@ interface CartProductRepo {
 
     suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct?
 
-    suspend fun updateCartProductCount(cartProductUuid: String, count: Int)
+    suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct?
 
     suspend fun deleteCartProduct(cartProduct: CartProduct)
 
