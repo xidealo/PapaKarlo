@@ -38,7 +38,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
         val orderReference = firebaseInstance
             .getReference(OrderEntity.ORDERS)
-            .child("ASdasdas")
+            .child(BuildConfig.APP_ID)
             .child(cafeId)
             .child(orderUuid)
         orderReference.setValue(orderFirebase)
