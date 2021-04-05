@@ -8,7 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.data.model.BaseModel
+import com.bunbeauty.data.model.BaseDiffUtilModel
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
 import com.bunbeauty.papakarlo.ui.view.ProgressButton
@@ -38,7 +38,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:items")
-    fun <T : BaseModel> setListItems(
+    fun <T : BaseDiffUtilModel> setListItems(
         recyclerView: RecyclerView,
         items: List<T>?
     ) {
@@ -49,7 +49,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:removeItem")
-    fun <T : BaseModel> removeItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : BaseDiffUtilModel> removeItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).removeItem(item)
         }
@@ -57,7 +57,7 @@ object DataBinding {
 
     @JvmStatic
     @BindingAdapter("bind:addItem")
-    fun <T : BaseModel> addItem(recyclerView: RecyclerView, item: T?) {
+    fun <T : BaseDiffUtilModel> addItem(recyclerView: RecyclerView, item: T?) {
         if (item != null && recyclerView.adapter != null) {
             (recyclerView.adapter as BaseAdapter<out RecyclerView.ViewHolder, T>).addItem(item)
         }

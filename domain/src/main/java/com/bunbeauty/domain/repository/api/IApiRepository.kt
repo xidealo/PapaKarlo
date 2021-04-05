@@ -7,7 +7,7 @@ import com.bunbeauty.data.model.order.Order
 import kotlinx.coroutines.flow.Flow
 
 interface IApiRepository {
-    fun insertOrder(order: Order)
+    fun insertOrder(order: Order):String
     fun getCafeList(): Flow<List<Cafe>>
     fun getMenuProductList(): Flow<List<MenuProduct>>
     fun getDeliveryCost(): Flow<Delivery>

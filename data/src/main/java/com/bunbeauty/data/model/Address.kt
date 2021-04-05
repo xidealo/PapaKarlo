@@ -16,8 +16,9 @@ import kotlinx.parcelize.Parcelize
     )]
 )
 data class Address(
+    override var uuid: String = "",
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0,
+    var id: Long = 0,
     @Embedded(prefix = "street_")
     var street: Street? = Street(),
     var house: String = "",
@@ -26,4 +27,4 @@ data class Address(
     var intercom: String = "",
     var floor: String = "",
     var cafeId: String? = null
-) : BaseModel(), Parcelable
+) : BaseDiffUtilModel, Parcelable

@@ -1,6 +1,5 @@
 package com.bunbeauty.domain.repository.menu_product
 
-import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.repository.api.IApiRepository
 import kotlinx.coroutines.flow.*
@@ -23,6 +22,6 @@ class MenuProductRepository @Inject constructor(
     }
 
     override fun getMenuProductList(): Flow<List<MenuProduct>> {
-        return menuProductDao.getMenuProductListLiveData()
+        return menuProductDao.getMenuProductListFlow()
     }
 }

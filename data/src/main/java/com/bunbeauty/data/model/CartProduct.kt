@@ -9,9 +9,10 @@ import kotlinx.parcelize.Parcelize
 @Entity
 @Parcelize
 data class CartProduct(
+    override var uuid: String = "",
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0,
+    var id: Long = 0,
     @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct = MenuProduct(),
     var count: Int = 1,
     var orderId: Long? = null
-) : BaseModel(), Parcelable
+) : BaseDiffUtilModel, Parcelable

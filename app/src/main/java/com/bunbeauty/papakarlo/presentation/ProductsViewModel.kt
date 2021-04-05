@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -21,14 +22,8 @@ class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuPro
 
     lateinit var productCode: ProductCode
 
-    @ExperimentalCoroutinesApi
-    private val actionSender = BroadcastChannel<List<MenuProduct>>(Channel.BUFFERED)
+    val productListSharedFlow = MutableSharedFlow<List<MenuProduct>>()
 
-    @ExperimentalCoroutinesApi
-    @FlowPreview
-    val productListReceiver = actionSender.asFlow()
-
-    @ExperimentalCoroutinesApi
     fun getProducts() {
         viewModelScope.launch {
             menuProductRepo.getMenuProductList()
@@ -37,14 +32,13 @@ class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuPro
                 }.collect { menuProductList ->
                     if (menuProductList.isNotEmpty()) {
                         if (productCode == ProductCode.ALL)
-                            actionSender.send(menuProductList)
+                            productListSharedFlow.emit(menuProductList)
                         else
-                            actionSender.send(menuProductList.filter { it.productCode == productCode.name })
+                            productListSharedFlow.emit(menuProductList.filter { it.productCode == productCode.name })
                     }
                 }
         }
     }
-
 
     fun onProductClicked(menuProduct: MenuProduct) {
         router.navigate(toProductFragment(menuProduct, menuProduct.name))

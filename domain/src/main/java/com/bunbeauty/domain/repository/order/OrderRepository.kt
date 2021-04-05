@@ -4,6 +4,7 @@ import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.domain.repository.api.IApiRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class OrderRepository @Inject constructor(
 
     override suspend fun saveOrder(order: Order) {
         withContext(Dispatchers.IO) {
-            apiRepository.insertOrder(order)
+            order.orderEntity.uuid = apiRepository.insertOrder(order)
             val orderEntityId = orderDao.insert(order.orderEntity)
             for (cardProduct in order.cartProducts) {
                 cardProduct.orderId = orderEntityId
@@ -24,6 +25,6 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    override fun getOrdersWithCartProducts() = orderDao.getOrders()
+    override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
 
 }

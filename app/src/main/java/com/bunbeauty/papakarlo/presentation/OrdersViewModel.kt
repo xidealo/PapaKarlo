@@ -8,9 +8,7 @@ import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(private val orderRepo: OrderRepo) : ToolbarViewModel() {
 
-    val orderWithCartProductsLiveData by lazy {
-        orderRepo.getOrdersWithCartProducts()
-    }
+    val orderWithCartProductsLiveData = orderRepo.getOrdersWithCartProducts()
 
     fun onOrderClicked(order:Order){
         router.navigate(toOrderBottomSheet(order))

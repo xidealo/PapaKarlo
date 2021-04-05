@@ -6,14 +6,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bunbeauty.data.enums.OrderStatus
 import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.BaseDiffUtilModel
 import kotlinx.parcelize.Parcelize
 import org.joda.time.DateTime
 
 @Parcelize
 @Entity
 data class OrderEntity(
+    override var uuid: String = "",
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0,
+    var id: Long = 0,
     @Embedded(prefix = "address_")
     var address: Address = Address(),
     var comment: String = "",
@@ -24,7 +26,7 @@ data class OrderEntity(
     var code: String = "",
     var email: String = "",
     var deferred: String = ""
-) : com.bunbeauty.data.model.BaseModel(), Parcelable {
+) : BaseDiffUtilModel, Parcelable {
 
     companion object {
         const val ORDERS = "ORDERS"

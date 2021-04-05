@@ -33,7 +33,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         viewModel.productCode =
             requireArguments().getParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE)!!
         viewModel.getProducts()
-        viewModel.productListReceiver.onEach {
+        viewModel.productListSharedFlow.onEach {
             viewDataBinding.activityMainPbLoading.toggleVisibility(false)
             menuProductsAdapter.setItemList(it)
             viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)

@@ -28,7 +28,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
-    override fun insertOrder(order: Order) {
+    override fun insertOrder(order: Order): String {
         val orderUuid = firebaseInstance.getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
@@ -41,6 +41,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             .child(order.cafeId)
             .child(orderUuid)
         orderReference.setValue(order)
+        return orderUuid
     }
 
     @ExperimentalCoroutinesApi
@@ -79,7 +80,8 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         menuProductsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val menuProductList = snapshot.children.map { menuProductSnapshot ->
-                    menuProductSnapshot.getValue(MenuProduct::class.java)!!.also { it.uuid = menuProductSnapshot.key!! }
+                    menuProductSnapshot.getValue(MenuProduct::class.java)!!
+                        .also { it.uuid = menuProductSnapshot.key!! }
 
                 }
                 launch(IO) {

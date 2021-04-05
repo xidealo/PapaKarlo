@@ -1,11 +1,10 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.data.model.BaseModel
 
 class MyDiffCallback(
-    private val newList: List<com.bunbeauty.data.model.BaseModel>,
-    private val oldList: List<com.bunbeauty.data.model.BaseModel>
+    private val newList: List<com.bunbeauty.data.model.BaseDiffUtilModel>,
+    private val oldList: List<com.bunbeauty.data.model.BaseDiffUtilModel>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldList.size

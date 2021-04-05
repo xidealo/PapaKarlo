@@ -12,5 +12,4 @@ data class MenuProductFB(
     var inOven: Boolean = false,
     var productCode: ProductCode = ProductCode.ALL,
     var barcode: Int = 0
-) {
-}
+)

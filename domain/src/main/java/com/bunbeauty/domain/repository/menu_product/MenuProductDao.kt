@@ -18,7 +18,7 @@ interface MenuProductDao : BaseDao<MenuProduct> {
     fun deleteAll()
 
     @Query("SELECT * FROM MenuProduct ORDER BY productCode, cost")
-    fun getMenuProductListLiveData(): Flow<List<MenuProduct>>
+    fun getMenuProductListFlow(): Flow<List<MenuProduct>>
 
     @Query("SELECT * FROM MenuProduct WHERE productCode = :productCode ORDER BY cost")
     fun getMenuProductListByCodeLiveData(productCode: String): Flow<List<MenuProduct>>
