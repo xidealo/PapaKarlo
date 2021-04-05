@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repository.delivery
 
-import com.bunbeauty.common.utils.IDataStoreHelper
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.repository.api.IApiRepository
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect

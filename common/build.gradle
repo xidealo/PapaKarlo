@@ -34,7 +34,6 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
@@ -43,9 +42,6 @@ dependencies {
     testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"
     androidTestImplementation "androidx.test:rules:$rootProject.rulesVerchion"
-
-    //DataStore
-    implementation "androidx.datastore:datastore-preferences:$rootProject.datastoreVersion"
 
     //Сoroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.corountinesVersion"

@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.utils.IDataStoreHelper
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.domain.repository.address.AddressRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel

@@ -1,4 +1,4 @@
-package com.bunbeauty.common.utils
+package com.bunbeauty.data.utils
 
 import com.bunbeauty.data.model.Delivery
 import kotlinx.coroutines.flow.Flow

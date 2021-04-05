@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.utils.IDataStoreHelper
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.network.INetworkHelper

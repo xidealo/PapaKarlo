@@ -78,7 +78,7 @@ ext {
     junitVerchion = "4.13.2"
     testJunitVerchion = "1.1.2"
     espressoVerchion = "3.3.0"
-    mockVerchion = "1.9.3"
+    mockVerchion = "1.10.6"
     runnerVerchion = "1.3.0"
     rulesVerchion = "1.3.0"
 }

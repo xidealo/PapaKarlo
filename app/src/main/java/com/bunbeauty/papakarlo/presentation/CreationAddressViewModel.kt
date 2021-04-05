@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.utils.IDataStoreHelper
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.model.Street
 import com.bunbeauty.domain.repository.address.AddressRepo

@@ -3,6 +3,7 @@ package com.bunbeauty.domain.repository.api
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.cafe.Cafe
+import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.BuildConfig
@@ -28,19 +29,19 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
-    override fun insertOrder(order: Order): String {
+    override fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String {
         val orderUuid = firebaseInstance.getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
             .key!!
-        order.timestamp = TIMESTAMP
+        orderFirebase.timestamp = TIMESTAMP
 
         val orderReference = firebaseInstance
             .getReference(OrderEntity.ORDERS)
-            .child(BuildConfig.APP_ID)
-            .child(order.cafeId)
+            .child("ASdasdas")
+            .child(cafeId)
             .child(orderUuid)
-        orderReference.setValue(order)
+        orderReference.setValue(orderFirebase)
         return orderUuid
     }
 
