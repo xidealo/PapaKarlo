@@ -12,5 +12,5 @@ data class OrderEntityFirebase(
     var isDelivery: Boolean = true,
     var code: String = "",
     var email: String? = null,
-    var deferred: String = ""
+    var deferred: String? = null
 )

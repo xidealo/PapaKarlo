@@ -18,7 +18,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             e.isDelivery,
             e.code,
             e.email,
-            e.deferred,
+            checkEmptyString(e.deferred),
         )
     }
 
@@ -36,7 +36,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             isDelivery = t.isDelivery,
             code = t.code,
             email = t.email ?: "",
-            deferred = t.deferred,
+            deferred = t.deferred ?: "",
         )
     }
 }
