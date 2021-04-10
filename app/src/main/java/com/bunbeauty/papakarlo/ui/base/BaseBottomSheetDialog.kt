@@ -13,18 +13,15 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
+abstract class BaseBottomSheetDialog<B : ViewDataBinding> :
     BottomSheetDialogFragment() {
 
     abstract var layoutId: Int
-    abstract var viewModelVariable: Int
+    lateinit var viewDataBinding: B
 
-    private var _viewDataBinding: B? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
-    lateinit var viewModel: VM
+    abstract val viewModel: BaseViewModel
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
@@ -48,30 +45,16 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
-        _viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+
         return viewDataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.setVariable(viewModelVariable, viewModel)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewModelClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
-
-
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewBindingClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewDataBinding = null
-    }
 }

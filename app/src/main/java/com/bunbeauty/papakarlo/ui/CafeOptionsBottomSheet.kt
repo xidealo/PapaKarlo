@@ -4,12 +4,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.data.model.cafe.Coordinate
 import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
@@ -17,10 +19,10 @@ import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
 import javax.inject.Inject
 
 class CafeOptionsBottomSheet :
-    BaseBottomSheetDialog<BottomSheetCafeOptionsBinding, CafeOptionsViewModel>() {
+    BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
 
     override var layoutId = R.layout.bottom_sheet_cafe_options
-    override var viewModelVariable = BR.viewModel
+    override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

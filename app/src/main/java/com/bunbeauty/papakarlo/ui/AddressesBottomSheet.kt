@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
@@ -10,14 +11,14 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.presentation.AddressesViewModel
+import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
 import javax.inject.Inject
 
-class AddressesBottomSheet :
-    BaseBottomSheetDialog<BottomSheetAddressesBinding, AddressesViewModel>() {
+class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>() {
 
     override var layoutId = R.layout.bottom_sheet_addresses
-    override var viewModelVariable = BR.viewModel
+    override val viewModel: AddressesViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
