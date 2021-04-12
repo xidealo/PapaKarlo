@@ -6,15 +6,20 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.domain.uri.IUriHelper
 import com.bunbeauty.papakarlo.presentation.CafeListViewModel
+import com.bunbeauty.papakarlo.presentation.ProductsViewModel
 import javax.inject.Inject
 
-class CafeListFragment : BarsFragment<FragmentCafeListBinding, CafeListViewModel>() {
+class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
+
+    override var layoutId = R.layout.fragment_cafe_list
+    override val viewModel: CafeListViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var uriHelper: IUriHelper

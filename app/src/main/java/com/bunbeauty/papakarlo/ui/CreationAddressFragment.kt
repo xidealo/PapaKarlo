@@ -2,16 +2,21 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
 import javax.inject.Inject
 
-class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding, CreationAddressViewModel>() {
+class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding>() {
+
+    override var layoutId = R.layout.fragment_creation_address
+    override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider

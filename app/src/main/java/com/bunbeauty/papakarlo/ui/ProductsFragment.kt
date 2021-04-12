@@ -2,11 +2,14 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.presentation.ProductsViewModel
@@ -15,7 +18,10 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>() {
+class ProductsFragment : BaseFragment<FragmentProductsBinding, >() {
+
+    override var layoutId = R.layout.fragment_products
+    override val viewModel: ProductsViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter

@@ -3,9 +3,16 @@ package com.bunbeauty.papakarlo.ui.base
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import com.bunbeauty.papakarlo.presentation.MainViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import javax.inject.Inject
 
-abstract class BarsFragment<T : ViewDataBinding, VM : ToolbarViewModel> : BaseFragment<T, VM>() {
+abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
+
+    override val viewModel: ToolbarViewModel by viewModels { modelFactory }
 
     open val isToolbarVisible = true
     open val isToolbarLogoVisible = false

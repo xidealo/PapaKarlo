@@ -3,17 +3,22 @@ package com.bunbeauty.papakarlo.ui
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.common.extensions.invisible
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.domain.product.IProductHelper
 import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.ProductFragmentArgs.fromBundle
 import javax.inject.Inject
 
-class ProductFragment : BarsFragment<FragmentProductBinding, EmptyViewModel>() {
+class ProductFragment : BarsFragment<FragmentProductBinding>() {
+
+    override var layoutId = R.layout.fragment_product
+    override val viewModel: EmptyViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

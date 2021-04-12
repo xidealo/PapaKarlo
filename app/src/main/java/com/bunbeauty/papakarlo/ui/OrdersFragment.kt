@@ -2,16 +2,22 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.OrdersViewModel
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class OrdersFragment : BarsFragment<FragmentOrdersBinding, OrdersViewModel>() {
+class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
+
+    override var layoutId = R.layout.fragment_orders
+    override val viewModel: OrdersViewModel by viewModels { modelFactory }
 
     override val isBottomBarVisible = true
     override fun inject(viewModelComponent: ViewModelComponent) {

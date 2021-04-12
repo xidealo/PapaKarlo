@@ -58,12 +58,12 @@ ext {
     picassoVersion = "2.71828"
     coreKtxVersion = "1.3.2"
     appcompatVersion = "1.2.0"
-    navigationVersion = "2.3.4"
+    navigationVersion = "2.3.5"
     firebaseVersion = "26.7.0"
 
     //design
     materialDesignVersion = "1.3.0"
-    recyclerViewVersion = "1.1.0"
+    recyclerViewVersion = "1.2.0"
     materialSerachVersion = "1.4.0"
     drawVersion = "v0.1"
     seekArcVersion = "v1.1"

@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.common.extensions.visible
@@ -13,6 +14,7 @@ import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
@@ -21,17 +23,19 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import javax.inject.Inject
 
-class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, CreationOrderViewModel>() {
+class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
+
+    override var layoutId = R.layout.fragment_creation_order
+    override val viewModel: CreationOrderViewModel by viewModels { modelFactory }
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
+    }
 
     @Inject
     lateinit var stringHelper: IStringHelper
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

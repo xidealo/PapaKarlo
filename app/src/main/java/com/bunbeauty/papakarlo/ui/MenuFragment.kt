@@ -1,11 +1,11 @@
 package com.bunbeauty.papakarlo.ui
 
-import android.graphics.PorterDuff.Mode.SRC_IN
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.fragment.app.viewModels
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
@@ -18,7 +18,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
-class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
+class MenuFragment : BarsFragment<FragmentMenuBinding>() {
+
+    override var layoutId = R.layout.fragment_menu
+    override val viewModel: EmptyViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider

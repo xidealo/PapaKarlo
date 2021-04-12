@@ -2,7 +2,9 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import com.bunbeauty.common.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
@@ -10,7 +12,10 @@ import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import javax.inject.Inject
 
-class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding, ConsumerCartViewModel>() {
+class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
+
+    override var layoutId = R.layout.fragment_consumer_cart
+    override val viewModel: ConsumerCartViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

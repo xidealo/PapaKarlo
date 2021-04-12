@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -24,12 +25,11 @@ import java.lang.ref.WeakReference
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(),
-    IMessageShowable {
+abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable {
 
-    private var _viewDataBinding: B? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
-    protected lateinit var viewModel: VM
+    abstract var layoutId: Int
+    lateinit var viewDataBinding: B
+    abstract val viewModel: BaseViewModel
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
@@ -46,42 +46,28 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
 
-    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(false)
-
-        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
-        viewModel.messageShowable = WeakReference(this)
-
-        val viewBindingClass = getViewBindingClass()
-        val inflateMethod = viewBindingClass.getMethod(
-            "inflate",
-            LayoutInflater::class.java,
-            ViewGroup::class.java,
-            Boolean::class.java,
-        )
-        _viewDataBinding = inflateMethod.invoke(viewBindingClass, inflater, container, false) as B
+        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
 
         return viewDataBinding.root
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewBindingClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewModelClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
+        viewDataBinding.lifecycleOwner = this
+        viewDataBinding.executePendingBindings()
+    }
 
     protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
         liveData.observe(viewLifecycleOwner, observer::invoke)
     }
 
-    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope){
+    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope) {
         lifecycleCoroutineScope.launchWhenStarted {
             this@launchWhenStarted.collect()
         }
