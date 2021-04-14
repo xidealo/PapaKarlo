@@ -56,6 +56,7 @@
             android:id="@+id/activity_main_bnv_bottom_navigation"
             style="@style/BottomNavigation"
             android:layout_width="match_parent"
+            app:labelVisibilityMode="labeled"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

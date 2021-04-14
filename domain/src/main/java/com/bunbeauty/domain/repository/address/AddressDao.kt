@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.domain.repository.BaseDao
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AddressDao : BaseDao<Address> {
@@ -21,7 +22,7 @@ interface AddressDao : BaseDao<Address> {
     fun getAddressById(id: Long): LiveData<Address?>
 
     @Query("SELECT * FROM Address WHERE cafeId == :cafeId")
-    fun getAddressByCafeId(cafeId: String): LiveData<Address?>
+    fun getAddressByCafeId(cafeId: String): Flow<Address?>
 
     @Query("SELECT * FROM Address LIMIT 1")
     fun getFirstAddress(): LiveData<Address?>

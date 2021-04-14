@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.OrdersFragmentDirections.toOrderBottomSheet
 import javax.inject.Inject
 
-class OrdersViewModel @Inject constructor(private val orderRepo: OrderRepo) : ToolbarViewModel() {
+class OrdersViewModel @Inject constructor(orderRepo: OrderRepo) : ToolbarViewModel() {
 
     val orderWithCartProductsLiveData = orderRepo.getOrdersWithCartProducts()
 

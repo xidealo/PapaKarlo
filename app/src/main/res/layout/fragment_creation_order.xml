@@ -83,6 +83,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_address"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,7 +153,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_contacts"
                     style="@style/MaterialCardCreationOrder"
@@ -168,6 +168,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_contact"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -223,6 +224,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_extra_extra_comment"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 

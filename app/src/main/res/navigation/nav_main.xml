@@ -23,7 +23,7 @@
         android:id="@+id/menu_fragment"
         android:name="com.bunbeauty.papakarlo.ui.MenuFragment"
         android:label="@string/title_menu"
-        tools:layout="@layout/fragment_menu" >
+        tools:layout="@layout/fragment_menu">
         <action
             android:id="@+id/to_product_fragment"
             app:destination="@id/product_fragment" />
@@ -33,10 +33,13 @@
         android:id="@+id/orders_fragment"
         android:name="com.bunbeauty.papakarlo.ui.OrdersFragment"
         android:label="@string/title_orders"
-        tools:layout="@layout/fragment_orders" >
+        tools:layout="@layout/fragment_orders">
         <action
             android:id="@+id/to_orderBottomSheet"
             app:destination="@id/orderBottomSheet" />
+        <argument
+            android:name="userUuid"
+            app:argType="string" />
     </fragment>
 
     <dialog
@@ -79,8 +82,7 @@
             app:destination="@id/creation_address_fragment" />
         <action
             android:id="@+id/to_addresses_bottom_sheet"
-            app:destination="@id/addresses_bottom_sheet">
-        </action>
+            app:destination="@id/addresses_bottom_sheet"/>
     </fragment>
 
     <fragment
@@ -100,8 +102,7 @@
         android:id="@+id/creation_address_fragment"
         android:name="com.bunbeauty.papakarlo.ui.CreationAddressFragment"
         android:label="@string/title_creation_address"
-        tools:layout="@layout/fragment_creation_address">
-    </fragment>
+        tools:layout="@layout/fragment_creation_address"/>
 
     <dialog
         android:id="@+id/addresses_bottom_sheet"
@@ -124,5 +125,15 @@
             android:name="Order"
             app:argType="com.bunbeauty.data.model.order.Order" />
     </dialog>
+
+    <fragment
+        android:id="@+id/profile_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_orders_fragment"
+            app:destination="@id/orders_fragment" />
+    </fragment>
 
 </navigation>

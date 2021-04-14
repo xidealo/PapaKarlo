@@ -19,7 +19,6 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
     override var layoutId = R.layout.fragment_orders
     override val viewModel: OrdersViewModel by viewModels { modelFactory }
 
-    override val isBottomBarVisible = true
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }

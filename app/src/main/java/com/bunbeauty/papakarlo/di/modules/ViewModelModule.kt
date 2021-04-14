@@ -69,4 +69,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(OrderViewModel::class)
     internal abstract fun provideOrderViewModel(orderViewModel: OrderViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    internal abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
 }

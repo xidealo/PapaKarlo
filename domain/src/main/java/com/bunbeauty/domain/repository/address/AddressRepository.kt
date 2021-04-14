@@ -2,6 +2,7 @@ package com.bunbeauty.domain.repository.address
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.data.model.Address
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AddressRepository @Inject constructor(
@@ -32,7 +33,7 @@ class AddressRepository @Inject constructor(
         return addressDao.getAddressById(id)
     }
 
-    override fun getAddressByCafeId(cafeId: String): LiveData<Address?> {
+    override fun getAddressByCafeId(cafeId: String): Flow<Address?> {
         return addressDao.getAddressByCafeId(cafeId)
     }
 

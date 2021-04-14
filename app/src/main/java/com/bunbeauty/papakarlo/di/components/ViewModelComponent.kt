@@ -27,6 +27,7 @@ interface ViewModelComponent {
     fun inject(cafeListFragment: CafeListFragment)
     fun inject(ordersFragment: OrdersFragment)
     fun inject(creationAddressFragment: CreationAddressFragment)
+    fun inject(profileFragment: ProfileFragment)
 
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)

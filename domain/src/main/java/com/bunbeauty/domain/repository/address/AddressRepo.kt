@@ -2,6 +2,7 @@ package com.bunbeauty.domain.repository.address
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.data.model.Address
+import kotlinx.coroutines.flow.Flow
 
 interface AddressRepo {
     suspend fun insert(address: Address): Long
@@ -10,6 +11,6 @@ interface AddressRepo {
     fun getCafeAddresses(): LiveData<List<Address>>
     fun getNotCafeAddresses(): LiveData<List<Address>>
     fun getAddressById(id: Long): LiveData<Address?>
-    fun getAddressByCafeId(cafeId: String): LiveData<Address?>
+    fun getAddressByCafeId(cafeId: String): Flow<Address?>
     fun getFirstAddress(): LiveData<Address?>
 }

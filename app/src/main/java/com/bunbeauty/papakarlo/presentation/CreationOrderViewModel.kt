@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
@@ -62,7 +63,7 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val deliveryAddressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
+    private val deliveryAddressLiveData: LiveData<Address?> by lazy {
         switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
             switchMap(addressRepo.getAddressById(addressId)) { address ->
                 map(addressRepo.getAddressById(addressId)) { firstAddress ->
@@ -73,12 +74,14 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val pickupAddressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
+
+    private val pickupAddressLiveData: LiveData<Address?> by lazy {
         switchMap(dataStoreHelper.cafeId.asLiveData()) { addressId ->
-            addressRepo.getAddressByCafeId(addressId)
+            addressRepo.getAddressByCafeId(addressId).asLiveData()
         }
     }
-    val addressLiveData: LiveData<com.bunbeauty.data.model.Address?> by lazy {
+
+    val addressLiveData: LiveData<Address?> by lazy {
         switchMap(isDeliveryLiveData) { isDelivery ->
             if (isDelivery) {
                 hasAddressLiveData.value = deliveryAddressLiveData.value != null
