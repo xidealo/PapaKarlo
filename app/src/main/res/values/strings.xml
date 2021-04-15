@@ -101,7 +101,7 @@
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>
     <string name="title_bottom_navigation_menu_menu">Меню</string>
-    <string name="title_bottom_navigation_profile">Профль</string>
+    <string name="title_bottom_navigation_profile">Профиль</string>
     <string name="title_bottom_navigation_discount">Акции</string>
 
     <!-- CONTACTS  -->
@@ -133,8 +133,8 @@
     <!-- PROFILE  -->
     <string name="title_profile_contact">Контактная информация</string>
     <string name="title_profile_email">Email</string>
-    <string name="title_profile_address">Адрес</string>
-    <string name="title_profile_orders">Список заказов</string>
+    <string name="title_profile_address">Ваши адерса</string>
+    <string name="title_profile_orders">Заказы</string>
     <string name="action_profile_orders">Список заказов</string>
     <string name="action_profile_address_list">Список адресов</string>
     <string name="title_profile_bonuses">Бонусы</string>
