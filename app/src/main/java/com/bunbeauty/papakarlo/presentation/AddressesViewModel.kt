@@ -34,7 +34,6 @@ class AddressesViewModel @Inject constructor(
             else {
                 dataStoreHelper.saveCafeId(address.cafeId!!)
             }
-
             router.navigateUp()
         }
     }

@@ -4,11 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
-import com.bunbeauty.papakarlo.presentation.MainViewModel
-import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
-import javax.inject.Inject
 
 abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
 

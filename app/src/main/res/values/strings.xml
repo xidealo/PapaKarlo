@@ -135,6 +135,8 @@
     <string name="title_profile_email">Email</string>
     <string name="title_profile_address">Адрес</string>
     <string name="title_profile_orders">Список заказов</string>
+    <string name="action_profile_orders">Список заказов</string>
+    <string name="action_profile_address_list">Список адресов</string>
     <string name="title_profile_bonuses">Бонусы</string>
 
     <!-- CAFE OPTIONS -->

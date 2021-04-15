@@ -16,8 +16,6 @@ class AddressesAdapter @Inject constructor(
 ) :
     BaseAdapter<AddressesAdapter.AddressViewHolder, Address>() {
 
-    lateinit var addressesViewModel: AddressesViewModel
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AddressViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ElementAddressBinding.inflate(inflater, viewGroup, false)
@@ -28,16 +26,12 @@ class AddressesAdapter @Inject constructor(
     override fun onBindViewHolder(holder: AddressViewHolder, i: Int) {
         holder.binding?.address = itemList[i]
         holder.binding?.iStringHelper = iStringHelper
-        holder.setOnClickListener(itemList[i])
+        holder.binding?.elementAddressMcvMain?.setOnClickListener{
+            onItemClickListener?.invoke(itemList[i])
+        }
     }
 
     inner class AddressViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementAddressBinding>(view)
-
-        fun setOnClickListener(address: Address) {
-            binding?.elementAddressMcvMain?.setOnClickListener {
-                addressesViewModel.saveSelectedAddress(address)
-            }
-        }
     }
 }

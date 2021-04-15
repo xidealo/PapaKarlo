@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
@@ -18,6 +19,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     override var layoutId = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels { modelFactory }
     override val isBottomBarVisible = true
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -27,14 +29,25 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.fragmentProfileTvPhone.text = viewModel.phoneNumber
-        viewDataBinding.fragmentProfileEtEmail.setText(viewModel.email)
-
-
-        viewModel.addressStateFlow.onEach { address ->
-            viewDataBinding.fragmentProfileBtnAddressPick.text =
-                iStringHelper.toString(address)
+        viewDataBinding.fragmentProfileTvEmail.text = viewModel.email
+        viewModel.getAddress().onEach { address ->
+            if (address == null) {
+                viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
+                viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
+            } else {
+                viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(true)
+                viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
+            }
         }.launchWhenStarted(lifecycleScope)
-
+        viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
+            viewModel.onOrderListClicked()
+        }
+        viewDataBinding.fragmentProfileBtnAddressPick.setOnClickListener {
+            viewModel.onAddressClicked()
+        }
+        viewDataBinding.fragmentProfileBtnCreateAddress.setOnClickListener {
+            viewModel.onCreateAddressClicked()
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 

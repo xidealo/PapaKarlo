@@ -10,7 +10,7 @@ interface AddressRepo {
     fun getAddresses(): LiveData<List<Address>>
     fun getCafeAddresses(): LiveData<List<Address>>
     fun getNotCafeAddresses(): LiveData<List<Address>>
-    fun getAddressById(id: Long): LiveData<Address?>
+    fun getAddressById(id: Long): Flow<Address?>
     fun getAddressByCafeId(cafeId: String): Flow<Address?>
     fun getFirstAddress(): LiveData<Address?>
 }

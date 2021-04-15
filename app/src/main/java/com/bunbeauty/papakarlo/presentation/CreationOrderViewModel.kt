@@ -65,8 +65,8 @@ class CreationOrderViewModel @Inject constructor(
     }
     private val deliveryAddressLiveData: LiveData<Address?> by lazy {
         switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
-            switchMap(addressRepo.getAddressById(addressId)) { address ->
-                map(addressRepo.getAddressById(addressId)) { firstAddress ->
+            switchMap(addressRepo.getAddressById(addressId).asLiveData()) { address ->
+                map(addressRepo.getFirstAddress()) { firstAddress ->
                     val deliveryAddress = address ?: firstAddress
                     hasAddressLiveData.value = deliveryAddress != null
                     deliveryAddress

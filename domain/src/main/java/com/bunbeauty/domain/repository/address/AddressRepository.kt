@@ -29,7 +29,7 @@ class AddressRepository @Inject constructor(
         return addressDao.getNotCafeAddresses()
     }
 
-    override fun getAddressById(id: Long): LiveData<Address?> {
+    override fun getAddressById(id: Long): Flow<Address?> {
         return addressDao.getAddressById(id)
     }
 

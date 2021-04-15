@@ -39,12 +39,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewDataBinding.viewModel = viewModel
+
         subscribe(viewModel.hasAddressLiveData) {
             viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
             viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
         }
-        viewDataBinding.viewModel = viewModel
-
         subscribe(viewModel.addressLiveData) { address ->
             viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
                 stringHelper.toString(address)

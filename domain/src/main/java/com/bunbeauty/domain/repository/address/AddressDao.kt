@@ -19,7 +19,7 @@ interface AddressDao : BaseDao<Address> {
     fun getCafeAddresses(): LiveData<List<Address>>
 
     @Query("SELECT * FROM Address WHERE id == :id")
-    fun getAddressById(id: Long): LiveData<Address?>
+    fun getAddressById(id: Long): Flow<Address?>
 
     @Query("SELECT * FROM Address WHERE cafeId == :cafeId")
     fun getAddressByCafeId(cafeId: String): Flow<Address?>

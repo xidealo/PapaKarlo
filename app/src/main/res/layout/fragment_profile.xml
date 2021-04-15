@@ -3,15 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.presentation.ProfileViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
         tools:context=".ui.ProfileFragment">
@@ -49,22 +40,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_contact"
                     tools:text="8 (910) 000-00-00" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_profile_til_email"
-                    style="@style/MaterialInputLayout"
+                <TextView
+                    android:id="@+id/fragment_profile_tv_email"
+                    style="@style/MainText"
                     android:layout_margin="@dimen/small_margin"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:hint="@string/title_profile_email"
+                    android:drawablePadding="@dimen/large_padding"
+                    app:drawableLeftCompat="@drawable/ic_email"
+                    app:drawableTint="@color/mainTextColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_phone">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_phone"
+                    tools:text="@string/title_profile_email" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_profile_et_email"
-                        style="@style/MaterialInput"
-                        android:inputType="textEmailAddress" />
-                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -97,10 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_margin="@dimen/small_margin"
                     android:fontFamily="@font/font_roboto_regular"
-                    android:gravity="start"
-                    android:text="@string/action_creation_address_address"
-                    android:textAllCaps="false"
-                    android:textColor="@color/mainTextColor"
+                    android:text="@string/action_profile_address_list"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_address" />
@@ -181,12 +166,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_profile_btn_orders_pick"
+                    android:id="@+id/fragment_profile_btn_order_list_pick"
                     style="@style/OutLineButton"
                     android:layout_width="0dp"
                     android:layout_margin="@dimen/small_margin"
                     android:fontFamily="@font/font_roboto_regular"
-                    android:text="@string/title_profile_orders"
+                    android:text="@string/action_profile_orders"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -199,9 +184,9 @@
                     android:layout_marginEnd="@dimen/medium_margin"
                     android:contentDescription="Description"
                     android:src="@drawable/ic_chevron_right_solid"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_orders_pick"
+                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_order_list_pick"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_orders_pick"
+                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_order_list_pick"
                     app:tint="@color/colorPrimary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

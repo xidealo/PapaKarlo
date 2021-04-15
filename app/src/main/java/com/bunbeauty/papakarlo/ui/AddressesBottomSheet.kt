@@ -31,8 +31,9 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
         super.onViewCreated(view, savedInstanceState)
 
         val isDelivery = fromBundle(requireArguments()).isDelivery
-        addressesAdapter.addressesViewModel = viewModel
-
+        addressesAdapter.onItemClickListener = { address ->
+            viewModel.saveSelectedAddress(address)
+        }
         viewModel.isDelivery = isDelivery
         viewModel.addressesLiveData.observe(viewLifecycleOwner) {
             addressesAdapter.setItemList(it)

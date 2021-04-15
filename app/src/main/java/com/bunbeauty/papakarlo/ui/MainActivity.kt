@@ -60,7 +60,10 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
-    override fun setupToolbar(isVisible: Boolean, isLogoVisible: Boolean) {
+    override fun setupToolbar(
+        isVisible: Boolean,
+        isLogoVisible: Boolean
+    ) {
         viewDataBinding.activityMainTbToolbar.toggleVisibility(isVisible)
         viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
     }
