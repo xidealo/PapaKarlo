@@ -5,10 +5,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.LoginFragment">
+        tools:context=".ui.ConfirmFragment">
+
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_login_mcv_extra_info"
+            android:id="@+id/fragment_creation_order_mcv_extra_info"
             style="@style/MaterialCardCreationOrder"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
@@ -21,7 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/fragment_login_tv_phone_number"
+                    android:id="@+id/fragment_confirm_tv_code"
                     style="@style/MainTitle"
                     android:layout_margin="@dimen/small_margin"
                     android:text="@string/title_login_phone_number"
@@ -39,7 +40,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_phone_number" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_login_til_phone"
+                    android:id="@+id/fragment_creation_order_til_phone"
                     style="@style/MaterialInputLayout"
                     android:layout_margin="@dimen/small_margin"
                     android:hint="@string/title_login_phone"
@@ -49,20 +50,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_login_et_comment"
+                        android:id="@+id/fragment_order_et_comment"
                         style="@style/MaterialInput"
                         android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_login_btn_login"
-            style="@style/MainButton"
-            android:text="@string/action_login_continue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

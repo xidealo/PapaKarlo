@@ -183,9 +183,8 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_phone"
+                                android:id="@+id/fragment_creation_order_et_phone"
                                 style="@style/MaterialInput"
-
                                 android:inputType="phone" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,7 +200,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_email"
+                                android:id="@+id/fragment_creation_order_et_email"
                                 style="@style/MaterialInput"
                                 android:inputType="textEmailAddress" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -241,7 +240,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_comment"
+                                android:id="@+id/fragment_creation_order_et_comment"
                                 style="@style/MaterialInput"
                                 android:inputType="textCapSentences" />
                         </com.google.android.material.textfield.TextInputLayout>

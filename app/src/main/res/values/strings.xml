@@ -139,6 +139,12 @@
     <string name="action_profile_address_list">Список адресов</string>
     <string name="title_profile_bonuses">Бонусы</string>
 
+    <!-- LOGIN  -->
+    <string name="title_login_phone_number">Номер телефона</string>
+    <string name="title_login_info">Для оформления заказа введите номер вашего телефона 😊</string>
+    <string name="title_login_phone">Телефон</string>
+    <string name="action_login_continue">Продолжить</string>
+
     <!-- CAFE OPTIONS -->
     <string name="action_call">Позвонить</string>
     <string name="action_show_map">Показать на карте</string>
