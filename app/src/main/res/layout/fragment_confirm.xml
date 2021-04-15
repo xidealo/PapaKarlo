@@ -7,9 +7,8 @@
         style="@style/DefaultPage"
         tools:context=".ui.ConfirmFragment">
 
-
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_creation_order_mcv_extra_info"
+            android:id="@+id/fragment_confirm_mcv_extra_info"
             style="@style/MaterialCardCreationOrder"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
@@ -25,37 +24,66 @@
                     android:id="@+id/fragment_confirm_tv_code"
                     style="@style/MainTitle"
                     android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_login_phone_number"
+                    android:text="@string/title_confirm_code"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/fragment_login_tv_information"
+                    android:id="@+id/fragment_confirm_tv_information"
                     style="@style/MainText"
                     android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_login_info"
+                    android:text="@string/title_confirm_information"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_phone_number" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_code" />
+
+                <TextView
+                    android:id="@+id/fragment_confirm_tv_phone_information"
+                    style="@style/MainText"
+                    android:layout_marginStart="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    android:layout_marginBottom="@dimen/small_margin"
+                    android:text="@string/title_confirm_prone_information"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_information" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_order_til_phone"
+                    android:id="@+id/fragment_confirm_til_phone"
                     style="@style/MaterialInputLayout"
                     android:layout_margin="@dimen/small_margin"
-                    android:hint="@string/title_login_phone"
+                    android:hint="Код"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_phone_information">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_order_et_comment"
+                        android:id="@+id/fragment_confirm_et_comment"
                         style="@style/MaterialInput"
                         android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_confirm_btn_resend"
+            style="@style/OutLineButton"
+            android:layout_width="0dp"
+            android:layout_margin="@dimen/medium_margin"
+            android:text="@string/action_confirm_resend"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/fragment_confirm_iv_resend"
+            style="@style/IconImageView"
+            android:src="@drawable/ic_resend"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_confirm_btn_resend"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_confirm_btn_resend"
+            app:layout_constraintTop_toTopOf="@+id/fragment_confirm_btn_resend" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
