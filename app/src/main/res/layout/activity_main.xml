@@ -9,10 +9,10 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:theme="@style/ToolbarTheme"
             android:id="@+id/activity_main_tb_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:theme="@style/ToolbarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +36,6 @@
                 android:layout_gravity="center"
                 android:src="@drawable/logo_top"
                 app:layout_constraintBottom_toBottomOf="parent" />
-
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.fragment.app.FragmentContainerView
@@ -55,8 +54,8 @@
             android:id="@+id/activity_main_bnv_bottom_navigation"
             style="@style/BottomNavigation"
             android:layout_width="match_parent"
-            app:labelVisibilityMode="labeled"
             android:layout_height="wrap_content"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

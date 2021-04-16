@@ -18,8 +18,4 @@ data class Cafe(
 
     @Relation(parentColumn = "id", entityColumn = "cafeId")
     val address: Address? = Address(),
-) : Parcelable {
-    companion object {
-        const val CAFES = "cafes"
-    }
-}
+) : Parcelable

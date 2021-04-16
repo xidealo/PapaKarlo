@@ -1,10 +1,10 @@
-package com.bunbeauty.domain.repository.order
+package com.bunbeauty.data
 
 import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.domain.repository.BaseDao
+import com.bunbeauty.data.BaseDao
 import kotlinx.coroutines.flow.Flow
 
 @Dao

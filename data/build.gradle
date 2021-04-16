@@ -32,12 +32,18 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    flavorDimensions "api"
+    productFlavors {
+        prod {
+            buildConfigField 'String', 'APP_ID', '"papakarlo"'
+        }
+    }
 }
 
 dependencies {
     implementation project(":common")
 
-        //Dagger 2
+    //Dagger 2
     implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     implementation "com.google.dagger:dagger-android:$rootProject.dagger2Version"
@@ -56,9 +62,15 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
+
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
     //DataStore
     implementation "androidx.datastore:datastore-preferences:$rootProject.datastoreVersion"
 
+    //Firebase
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 }

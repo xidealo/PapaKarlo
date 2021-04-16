@@ -1,14 +1,11 @@
-package com.bunbeauty.domain.repository.menu_product
+package com.bunbeauty.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.domain.repository.BaseDao
+import com.bunbeauty.data.BaseDao
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @Dao
 interface MenuProductDao : BaseDao<MenuProduct> {

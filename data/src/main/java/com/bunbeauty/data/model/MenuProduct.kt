@@ -22,8 +22,4 @@ data class MenuProduct(
     val productCode: String = "",
     val barcode: Int = 0,
     val visible: Boolean = true
-) : BaseDiffUtilModel, Parcelable {
-    companion object {
-        const val PRODUCT_CODE: String = "product code"
-    }
-}
+) : BaseDiffUtilModel, Parcelable

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.Constants
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.R
@@ -37,7 +38,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, >() {
 
         setupRecyclerView()
         viewModel.productCode =
-            requireArguments().getParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE)!!
+            requireArguments().getParcelable(Constants.PRODUCT_CODE)!!
         viewModel.getProducts()
         viewModel.productListSharedFlow.onEach {
             viewDataBinding.activityMainPbLoading.toggleVisibility(false)
@@ -57,7 +58,7 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, >() {
         fun newInstance(productCode: ProductCode) =
             ProductsFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE, productCode)
+                    putParcelable(Constants.PRODUCT_CODE, productCode)
                 }
             }
     }

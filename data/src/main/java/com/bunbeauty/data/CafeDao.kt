@@ -1,10 +1,10 @@
-package com.bunbeauty.domain.repository.cafe
+package com.bunbeauty.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.cafe.CafeEntity
-import com.bunbeauty.domain.repository.BaseDao
+import com.bunbeauty.data.BaseDao
 
 @Dao
 interface CafeDao : BaseDao<CafeEntity> {

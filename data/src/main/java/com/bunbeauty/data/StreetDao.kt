@@ -1,10 +1,10 @@
-package com.bunbeauty.domain.repository.street
+package com.bunbeauty.data
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bunbeauty.data.model.Street
-import com.bunbeauty.domain.repository.BaseDao
+import com.bunbeauty.data.BaseDao
 import kotlinx.coroutines.flow.Flow
 
 @Dao

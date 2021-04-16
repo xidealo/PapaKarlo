@@ -1,10 +1,10 @@
-package com.bunbeauty.domain.repository.address
+package com.bunbeauty.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
+import com.bunbeauty.data.BaseDao
 import com.bunbeauty.data.model.Address
-import com.bunbeauty.domain.repository.BaseDao
 import kotlinx.coroutines.flow.Flow
 
 @Dao

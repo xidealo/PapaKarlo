@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.repository
+package com.bunbeauty.data
 
 import androidx.room.*
 

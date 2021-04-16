@@ -1,8 +1,9 @@
-package com.bunbeauty.domain.repository.cafe
+package com.bunbeauty.domain.cafe
 
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.data.CafeDao
 import com.bunbeauty.data.model.cafe.Cafe
-import com.bunbeauty.domain.repository.api.IApiRepository
+import com.bunbeauty.data.api.IApiRepository
+import com.bunbeauty.domain.repository.address.AddressRepo
 import com.bunbeauty.domain.repository.district.DistrictRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
 import kotlinx.coroutines.flow.collect

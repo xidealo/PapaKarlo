@@ -1,5 +1,6 @@
 package com.bunbeauty.domain.repository.street
 
+import com.bunbeauty.data.StreetDao
 import com.bunbeauty.data.model.Street
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

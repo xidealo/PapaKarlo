@@ -74,4 +74,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     internal abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    internal abstract fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConfirmViewModel::class)
+    internal abstract fun provideConfirmViewModel(confirmViewModel: ConfirmViewModel): ViewModel
 }

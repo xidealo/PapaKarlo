@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.bunbeauty.domain.LocalDatabase
+import com.bunbeauty.data.LocalDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -40,5 +40,8 @@ class DataModule {
 
     @Provides
     fun provideStreetDao(localDatabase: LocalDatabase) = localDatabase.getStreetDao()
+
+    @Provides
+    fun provideUserDao(localDatabase: LocalDatabase) = localDatabase.getUserDao()
 
 }

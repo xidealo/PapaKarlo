@@ -12,7 +12,7 @@ import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.network.INetworkHelper
 import com.bunbeauty.domain.repository.address.AddressRepo
-import com.bunbeauty.domain.repository.cafe.CafeRepo
+import com.bunbeauty.domain.cafe.CafeRepo
 import com.bunbeauty.domain.repository.order.OrderRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.domain.string_helper.IStringHelper

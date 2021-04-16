@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.domain.repository.address.AddressRepo
 import com.bunbeauty.domain.repository.address.AddressRepository
-import com.bunbeauty.domain.repository.cafe.CafeRepo
-import com.bunbeauty.domain.repository.cafe.CafeRepository
+import com.bunbeauty.domain.cafe.CafeRepo
+import com.bunbeauty.domain.cafe.CafeRepository
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import com.bunbeauty.domain.repository.cart_product.CartProductRepository
 import com.bunbeauty.domain.repository.delivery.DeliveryRepo
@@ -16,6 +16,8 @@ import com.bunbeauty.domain.repository.order.OrderRepo
 import com.bunbeauty.domain.repository.order.OrderRepository
 import com.bunbeauty.domain.repository.street.StreetRepo
 import com.bunbeauty.domain.repository.street.StreetRepository
+import com.bunbeauty.domain.repository.user.UserRepo
+import com.bunbeauty.domain.repository.user.UserRepository
 import dagger.Binds
 import dagger.Module
 
@@ -44,4 +46,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
+
+    @Binds
+    abstract fun bindUserRepo(userRepository: UserRepository): UserRepo
 }

@@ -26,9 +26,4 @@ data class OrderEntity(
     var code: String = "",
     var email: String = "",
     var deferred: String = ""
-) : BaseDiffUtilModel, Parcelable {
-
-    companion object {
-        const val ORDERS = "ORDERS"
-    }
-}
+) : BaseDiffUtilModel, Parcelable

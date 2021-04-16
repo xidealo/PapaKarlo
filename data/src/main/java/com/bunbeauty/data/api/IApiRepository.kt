@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.repository.api
+package com.bunbeauty.data.api
 
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct

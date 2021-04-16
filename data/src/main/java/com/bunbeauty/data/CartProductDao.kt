@@ -1,10 +1,10 @@
-package com.bunbeauty.domain.repository.cart_product
+package com.bunbeauty.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.data.model.CartProduct
-import com.bunbeauty.domain.repository.BaseDao
+import com.bunbeauty.data.BaseDao
 
 @Dao
 interface CartProductDao : BaseDao<CartProduct> {

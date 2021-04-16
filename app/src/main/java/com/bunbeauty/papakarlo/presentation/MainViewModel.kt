@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.repository.cafe.CafeRepo
+import com.bunbeauty.domain.cafe.CafeRepo
 import com.bunbeauty.domain.repository.delivery.DeliveryRepo
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel

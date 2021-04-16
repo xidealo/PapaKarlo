@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.domain.repository.api.ApiRepository
-import com.bunbeauty.domain.repository.api.IApiRepository
+import com.bunbeauty.data.api.ApiRepository
+import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.utils.DataStoreHelper
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.network.INetworkHelper

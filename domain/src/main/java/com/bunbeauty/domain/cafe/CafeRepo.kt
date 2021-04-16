@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.repository.cafe
+package com.bunbeauty.domain.cafe
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.data.model.cafe.Cafe

@@ -1,7 +1,8 @@
 package com.bunbeauty.domain.repository.menu_product
 
+import com.bunbeauty.data.MenuProductDao
 import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.domain.repository.api.IApiRepository
+import com.bunbeauty.data.api.IApiRepository
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
