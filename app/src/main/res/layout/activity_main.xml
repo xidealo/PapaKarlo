@@ -16,8 +16,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="@color/black">
+            app:navigationIcon="@drawable/ic_back">
 
             <TextView
                 android:id="@+id/activity_main_tv_cart"

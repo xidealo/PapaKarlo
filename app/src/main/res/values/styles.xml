@@ -333,7 +333,7 @@
     <!--TOOLBAR-->
 
     <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/mainTextColor</item>
     </style>
 
 </resources>
