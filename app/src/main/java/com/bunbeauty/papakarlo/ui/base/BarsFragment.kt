@@ -18,7 +18,7 @@ abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as? IBottomNavigationBar)?.setupBottomNavigationBar(isBottomBarVisible)
-        (activity as? IToolbar)?.setupToolbar(isToolbarVisible, isToolbarLogoVisible)
+        (activity as? IToolbar)?.setToolbarConfiguration(isToolbarVisible, isToolbarLogoVisible)
         subscribe(viewModel.cartLiveData) { cartText ->
             (activity as? IToolbar)?.setCartText(cartText)
         }

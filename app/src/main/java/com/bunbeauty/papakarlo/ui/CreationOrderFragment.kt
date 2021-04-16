@@ -81,10 +81,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
             viewModel.isDeliveryLiveData.value = false
         }
-        viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
-        viewDataBinding.fragmentOrderEtEmail.setText(viewModel.email)
-        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
-        viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
+        viewDataBinding.fragmentCreationOrderEtPhone.setText(viewModel.phoneNumber)
+        viewDataBinding.fragmentCreationOrderEtEmail.setText(viewModel.email)
+        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
+        viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
         viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
             showTimePicker()
         }
@@ -132,33 +132,33 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         }
 
         if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtComment.text.toString(),
+                viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
             )
         ) {
-            viewDataBinding.fragmentOrderEtComment.error =
+            viewDataBinding.fragmentCreationOrderEtComment.error =
                 resources.getString(R.string.error_creation_order_comment)
-            viewDataBinding.fragmentOrderEtComment.requestFocus()
+            viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
         if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtPhone.text.toString(),
+                viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,
                 18
             )
         ) {
-            viewDataBinding.fragmentOrderEtPhone.error =
+            viewDataBinding.fragmentCreationOrderEtPhone.error =
                 resources.getString(R.string.error_creation_order_phone)
-            viewDataBinding.fragmentOrderEtPhone.requestFocus()
+            viewDataBinding.fragmentCreationOrderEtPhone.requestFocus()
             return
         }
 
         viewModel.createOrder(
-            viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
-            viewDataBinding.fragmentOrderEtPhone.text.toString(),
-            viewDataBinding.fragmentOrderEtEmail.text.toString().trim(),
+            viewDataBinding.fragmentCreationOrderEtComment.text.toString().trim(),
+            viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
+            viewDataBinding.fragmentCreationOrderEtEmail.text.toString().trim(),
             viewModel.deferredHoursLiveData.value,
             viewModel.deferredMinutesLiveData.value
         )

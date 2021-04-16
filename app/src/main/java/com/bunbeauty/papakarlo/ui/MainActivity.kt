@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
-    override fun setupToolbar(
+    override fun setToolbarConfiguration(
         isVisible: Boolean,
         isLogoVisible: Boolean
     ) {
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         setSupportActionBar(viewDataBinding.activityMainTbToolbar)
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.cafe_list_fragment, R.id.menu_fragment, R.id.orders_fragment)
+            setOf(R.id.cafe_list_fragment, R.id.menu_fragment, R.id.profile_fragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewDataBinding.activityMainTvCart.setOnClickListener {

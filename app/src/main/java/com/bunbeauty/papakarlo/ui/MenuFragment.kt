@@ -22,16 +22,15 @@ class MenuFragment : BarsFragment<FragmentMenuBinding>() {
 
     override var layoutId = R.layout.fragment_menu
     override val viewModel: EmptyViewModel by viewModels { modelFactory }
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
+    }
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
     override val isToolbarLogoVisible = true
     override val isBottomBarVisible = true
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
