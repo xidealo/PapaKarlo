@@ -17,15 +17,9 @@ class ProfileViewModel @Inject constructor(
     private val addressRepo: AddressRepo
 ) : ToolbarViewModel() {
 
-    val phoneNumber by lazy {
+    val userId by lazy {
         runBlocking {
-            dataStoreHelper.phoneNumber.first()
-        }
-    }
-
-    val email by lazy {
-        runBlocking {
-            dataStoreHelper.email.first()
+            dataStoreHelper.userId.first()
         }
     }
 

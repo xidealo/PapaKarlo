@@ -110,14 +110,10 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    val phoneNumber by lazy {
+
+    val userId by lazy {
         runBlocking {
-            dataStoreHelper.phoneNumber.first()
-        }
-    }
-    val email by lazy {
-        runBlocking {
-            dataStoreHelper.email.first()
+            dataStoreHelper.userId.first()
         }
     }
 
@@ -173,10 +169,13 @@ class CreationOrderViewModel @Inject constructor(
                     orderEntity.address.street?.districtId ?: "ERROR CAFE"
                 ).id
             )
-            dataStoreHelper.savePhoneNumber(orderEntity.phone)
-            if (orderEntity.email.isNotEmpty()) {
-                dataStoreHelper.saveEmail(orderEntity.email)
-            }
+
+            /*
+             dataStoreHelper.savePhoneNumber(orderEntity.phone)
+              if (orderEntity.email.isNotEmpty()) {
+                  dataStoreHelper.saveEmail(orderEntity.email)
+              }*/
+
             orderRepo.saveOrder(order)
 
             withContext(Main) {

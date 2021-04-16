@@ -81,8 +81,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
             viewModel.isDeliveryLiveData.value = false
         }
-        viewDataBinding.fragmentCreationOrderEtPhone.setText(viewModel.phoneNumber)
-        viewDataBinding.fragmentCreationOrderEtEmail.setText(viewModel.email)
+
+        // viewDataBinding.fragmentCreationOrderEtPhone.setText(viewModel.phoneNumber)
+        // viewDataBinding.fragmentCreationOrderEtEmail.setText(viewModel.email)
+
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
         viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
         viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {

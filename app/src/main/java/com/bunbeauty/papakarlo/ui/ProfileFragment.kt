@@ -28,8 +28,12 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     lateinit var iStringHelper: IStringHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewDataBinding.fragmentProfileTvPhone.text = viewModel.phoneNumber
-        viewDataBinding.fragmentProfileTvEmail.text = viewModel.email
+        //TODO (get user by userId)
+        /*
+         viewDataBinding.fragmentProfileTvPhone.text = viewModel.phoneNumber
+               viewDataBinding.fragmentProfileTvEmail.text = viewModel.email
+               */
+
         viewModel.getAddress().onEach { address ->
             if (address == null) {
                 viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
@@ -39,6 +43,8 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
             }
         }.launchWhenStarted(lifecycleScope)
+
+
         viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
             viewModel.onOrderListClicked()
         }

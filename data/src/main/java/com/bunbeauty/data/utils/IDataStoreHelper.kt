@@ -11,14 +11,11 @@ interface IDataStoreHelper {
     val cafeId: Flow<String>
     suspend fun saveCafeId(cafeId: String)
 
-    val phoneNumber: Flow<String>
-    suspend fun savePhoneNumber(phoneNumber: String)
-
-    val email: Flow<String>
-    suspend fun saveEmail(email: String)
-
     val delivery: Flow<Delivery>
     suspend fun saveDelivery(delivery: Delivery)
+
+    val userId: Flow<String>
+    suspend fun saveUserId(userId: String)
 
     suspend fun clearData()
 }
