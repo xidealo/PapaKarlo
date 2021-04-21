@@ -6,14 +6,8 @@ import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,23 +15,25 @@ class ProductsViewModel @Inject constructor(private val menuProductRepo: MenuPro
     BaseViewModel() {
 
     lateinit var productCode: ProductCode
+    private val productListStateFlow = MutableStateFlow<List<MenuProduct>?>(null)
 
-    val productListSharedFlow = MutableSharedFlow<List<MenuProduct>>()
+    fun getProducts(): MutableStateFlow<List<MenuProduct>?> {
+        if (productListStateFlow.value != null) return productListStateFlow
 
-    fun getProducts() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             menuProductRepo.getMenuProductList()
                 .map { list ->
                     list.sortedBy { it.name }.filter { it.visible }
                 }.collect { menuProductList ->
                     if (menuProductList.isNotEmpty()) {
                         if (productCode == ProductCode.ALL)
-                            productListSharedFlow.emit(menuProductList)
+                            productListStateFlow.emit(menuProductList)
                         else
-                            productListSharedFlow.emit(menuProductList.filter { it.productCode == productCode.name })
+                            productListStateFlow.emit(menuProductList.filter { it.productCode == productCode.name })
                     }
                 }
         }
+        return productListStateFlow
     }
 
     fun onProductClicked(menuProduct: MenuProduct) {

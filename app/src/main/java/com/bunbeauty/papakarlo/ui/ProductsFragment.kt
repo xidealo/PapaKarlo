@@ -19,7 +19,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ProductsFragment : BaseFragment<FragmentProductsBinding, >() {
+class ProductsFragment : BaseFragment<FragmentProductsBinding>() {
 
     override var layoutId = R.layout.fragment_products
     override val viewModel: ProductsViewModel by viewModels { modelFactory }
@@ -39,11 +39,12 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, >() {
         setupRecyclerView()
         viewModel.productCode =
             requireArguments().getParcelable(Constants.PRODUCT_CODE)!!
-        viewModel.getProducts()
-        viewModel.productListSharedFlow.onEach {
-            viewDataBinding.activityMainPbLoading.toggleVisibility(false)
-            menuProductsAdapter.setItemList(it)
-            viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
+        viewModel.getProducts().onEach {
+            if (it != null) {
+                viewDataBinding.activityMainPbLoading.toggleVisibility(false)
+                menuProductsAdapter.setItemList(it)
+                viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
+            }
         }.launchWhenStarted(lifecycleScope)
     }
 
