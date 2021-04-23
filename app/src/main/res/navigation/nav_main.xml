@@ -156,7 +156,7 @@
         android:label="@string/title_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_confirmFragment"
+            android:id="@+id/to_confirmFragment"
             app:destination="@id/confirmFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
@@ -165,5 +165,9 @@
         android:id="@+id/confirmFragment"
         android:name="com.bunbeauty.papakarlo.ui.ConfirmFragment"
         android:label="@string/title_confirm"
-        tools:layout="@layout/fragment_confirm" />
+        tools:layout="@layout/fragment_confirm" >
+        <argument
+            android:name="phone"
+            app:argType="string" />
+    </fragment>
 </navigation>

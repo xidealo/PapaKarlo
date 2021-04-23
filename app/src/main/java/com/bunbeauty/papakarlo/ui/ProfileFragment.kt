@@ -26,26 +26,16 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
         viewModelComponent.inject(this)
     }
 
-    @Inject
-    lateinit var iStringHelper: IStringHelper
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.getUserId().onEach { resource ->
-            when (resource) {
-                is Resource.Success -> {
-                    if (resource.data.isEmpty()) {
-                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
-                    } else {
-                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
-                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                    }
-                    viewDataBinding.fragmentProfilePbLoading.gone()
-                }
-                else -> {
-                    //log
-                }
+        viewModel.userIdFlow.onEach { userId ->
+            if (userId.isEmpty()) {
+                viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
+                viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
+            } else {
+                viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
+                viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
             }
+            viewDataBinding.fragmentProfilePbLoading.gone()
         }.launchWhenStarted(lifecycleScope)
 
         viewModel.getAddress().onEach { resource ->
@@ -59,10 +49,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
                     }
                 }
-                is Resource.Error -> {
-                }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
 

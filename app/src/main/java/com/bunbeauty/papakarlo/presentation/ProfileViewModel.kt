@@ -20,16 +20,7 @@ class ProfileViewModel @Inject constructor(
     private val addressRepo: AddressRepo
 ) : ToolbarViewModel() {
 
-    private val userStateFlow = MutableStateFlow<Resource<String>>(Resource.Loading(true))
-
-    fun getUserId(): MutableStateFlow<Resource<String>> {
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStoreHelper.userId.collect {
-                userStateFlow.emit(it.toResourceSuccess())
-            }
-        }
-        return userStateFlow
-    }
+    val userIdFlow by lazy { dataStoreHelper.userId }
 
     fun getAddress(): MutableStateFlow<Resource<Address?>> {
         val addressStateFlow = MutableStateFlow<Resource<Address?>>(Resource.Loading(true))

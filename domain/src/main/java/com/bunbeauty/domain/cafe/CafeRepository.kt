@@ -6,6 +6,7 @@ import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.domain.repository.address.AddressRepo
 import com.bunbeauty.domain.repository.district.DistrictRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class CafeRepository @Inject constructor(
     private val streetRepo: StreetRepo
 ) : CafeRepo {
 
-    override val cafeEntityListLiveData = cafeDao.getCafeListLiveData()
+    override val cafeEntityListFlow: Flow<List<Cafe>> = cafeDao.getCafeListFlow()
 
     override suspend fun refreshCafeList() {
         cafeDao.deleteAll()

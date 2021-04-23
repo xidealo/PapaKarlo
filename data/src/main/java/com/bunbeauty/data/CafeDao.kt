@@ -5,12 +5,13 @@ import androidx.room.*
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.BaseDao
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CafeDao : BaseDao<CafeEntity> {
 
     @Query("SELECT * FROM CafeEntity")
-    fun getCafeListLiveData(): LiveData<List<Cafe>>
+    fun getCafeListFlow(): Flow<List<Cafe>>
 
     @Query("SELECT * FROM CafeEntity")
     fun getCafeList(): List<Cafe>

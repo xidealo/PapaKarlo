@@ -10,7 +10,6 @@ import com.bunbeauty.papakarlo.presentation.LoginViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 
-
 class LoginFragment : BarsFragment<FragmentLoginBinding>() {
 
     override var layoutId = R.layout.fragment_login
@@ -23,6 +22,9 @@ class LoginFragment : BarsFragment<FragmentLoginBinding>() {
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentLoginEtPhone)
         viewDataBinding.fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
 
+        viewDataBinding.fragmentLoginBtnLogin.setOnClickListener {
+            viewModel.goToConfirm(viewDataBinding.fragmentLoginEtPhone.text.toString())
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 
