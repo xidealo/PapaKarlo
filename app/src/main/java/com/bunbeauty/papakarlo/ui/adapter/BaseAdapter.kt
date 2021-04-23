@@ -2,9 +2,9 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.BaseDiffUtilModel
+import com.bunbeauty.data.model.BaseModel
 
-abstract class BaseAdapter<T : RecyclerView.ViewHolder, E : BaseDiffUtilModel> : RecyclerView.Adapter<T>() {
+abstract class BaseAdapter<T : RecyclerView.ViewHolder, E : BaseModel> : RecyclerView.Adapter<T>() {
 
     protected val itemList: MutableList<E> = ArrayList()
     var onItemClickListener: ((E) -> Unit)? = null

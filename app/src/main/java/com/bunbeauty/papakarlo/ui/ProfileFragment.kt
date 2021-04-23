@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.Resource
+import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
@@ -28,22 +30,41 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     lateinit var iStringHelper: IStringHelper
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //TODO (get user by userId)
-        /*
-         viewDataBinding.fragmentProfileTvPhone.text = viewModel.phoneNumber
-               viewDataBinding.fragmentProfileTvEmail.text = viewModel.email
-               */
-
-        viewModel.getAddress().onEach { address ->
-            if (address == null) {
-                viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
-                viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
-            } else {
-                viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(true)
-                viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
+        viewModel.getUserId().onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    if (resource.data.isEmpty()) {
+                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
+                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
+                    } else {
+                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
+                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
+                    }
+                    viewDataBinding.fragmentProfilePbLoading.gone()
+                }
+                else -> {
+                    //log
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 
+        viewModel.getAddress().onEach { resource ->
+            when (resource) {
+                is Resource.Success -> {
+                    if (resource.data == null) {
+                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
+                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
+                    } else {
+                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(true)
+                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
+                    }
+                }
+                is Resource.Error -> {
+                }
+                else -> {
+                }
+            }
+        }.launchWhenStarted(lifecycleScope)
 
         viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
             viewModel.onOrderListClicked()
@@ -54,7 +75,12 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
         viewDataBinding.fragmentProfileBtnCreateAddress.setOnClickListener {
             viewModel.onCreateAddressClicked()
         }
+        viewDataBinding.fragmentProfileBtnLogin.setOnClickListener {
+            viewModel.goToLogin()
+        }
+        viewDataBinding.fragmentProfileBtnLogout.setOnClickListener {
+            viewModel.logout()
+        }
         super.onViewCreated(view, savedInstanceState)
     }
-
 }

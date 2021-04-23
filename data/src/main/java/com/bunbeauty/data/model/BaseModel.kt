@@ -1,5 +1,5 @@
 package com.bunbeauty.data.model
 
-interface BaseDiffUtilModel {
+interface BaseModel {
     var uuid: String
 }

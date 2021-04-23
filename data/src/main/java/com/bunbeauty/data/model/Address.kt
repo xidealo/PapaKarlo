@@ -27,4 +27,4 @@ data class Address(
     var intercom: String = "",
     var floor: String = "",
     var cafeId: String? = null
-) : BaseDiffUtilModel, Parcelable
+) : BaseModel, Parcelable

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
-import com.bunbeauty.data.model.BaseDiffUtilModel
+import com.bunbeauty.data.model.BaseModel
 import com.bunbeauty.data.model.CartProduct
 import kotlinx.parcelize.Parcelize
 
@@ -28,4 +28,4 @@ data class Order(
     @Ignore
     override var uuid: String = "",
 
-) : BaseDiffUtilModel, Parcelable
+) : BaseModel, Parcelable

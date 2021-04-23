@@ -49,7 +49,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_login_et_comment"
+                        android:id="@+id/fragment_login_et_phone"
                         style="@style/MaterialInput"
                         android:inputType="phone" />
                 </com.google.android.material.textfield.TextInputLayout>

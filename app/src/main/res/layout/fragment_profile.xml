@@ -146,7 +146,6 @@
             android:id="@+id/fragment_profile_mcv_orders"
             style="@style/MaterialCardCreationOrder"
             android:layout_margin="@dimen/small_margin"
-
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,6 +226,64 @@
                     tools:text="0 ₽" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_profile_btn_logout"
+            style="@style/MainButton"
+            android:text="@string/action_profile_logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_profile_group_has_profile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:constraint_referenced_ids="
+            fragment_profile_mcv_contacts,
+            fragment_profile_mcv_address,
+            fragment_profile_mcv_orders,
+            fragment_profile_mcv_bonuses,
+            fragment_profile_btn_logout" />
+
+        <TextView
+            android:id="@+id/fragment_profile_tv_no_profile"
+            style="@style/MainText"
+            android:gravity="center"
+            android:text="@string/title_profile_no_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
+
+        <ImageView
+            android:id="@+id/fragment_profile_iv_no_profile"
+            android:layout_width="@dimen/empty_cart_img_size"
+            android:layout_height="@dimen/empty_cart_img_size"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_profile_girl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_profile_btn_login"
+            style="@style/MainButton"
+            android:text="@string/action_profile_login"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_profile_group_no_profile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:constraint_referenced_ids="
+            fragment_profile_tv_no_profile,
+            fragment_profile_iv_no_profile,
+            fragment_profile_btn_login" />
 
         <ProgressBar
             android:id="@+id/fragment_profile_pb_loading"

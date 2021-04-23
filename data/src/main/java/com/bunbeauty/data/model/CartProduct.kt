@@ -15,4 +15,4 @@ data class CartProduct(
     @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct = MenuProduct(),
     var count: Int = 1,
     var orderId: Long? = null
-) : BaseDiffUtilModel, Parcelable
+) : BaseModel, Parcelable

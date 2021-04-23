@@ -13,7 +13,10 @@
             android:id="@+id/fragment_consumer_cart_group_empty_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:constraint_referenced_ids="fragment_consumer_cart_iv_empty_cart, fragment_consumer_cart_tv_empty_cart, fragment_consumer_cart_btn_menu" />
+            app:constraint_referenced_ids="
+            fragment_consumer_cart_iv_empty_cart,
+            fragment_consumer_cart_tv_empty_cart,
+            fragment_consumer_cart_btn_menu" />
 
         <ImageView
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
@@ -40,14 +43,17 @@
             android:text="@string/action_consumer_cart_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_consumer_cart_group_not_empty_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="invisible"
-            app:constraint_referenced_ids="fragment_consumer_cart_tv_delivery_info, fragment_consumer_cart_rv_result, fragment_consumer_cart_btn_crate_order" />
+            app:constraint_referenced_ids="
+            fragment_consumer_cart_tv_delivery_info,
+            fragment_consumer_cart_rv_result,
+            fragment_consumer_cart_btn_crate_order" />
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_delivery_info"

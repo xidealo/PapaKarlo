@@ -1,6 +1,9 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Resource
+import com.bunbeauty.common.extensions.toResourceNullableSuccess
+import com.bunbeauty.common.extensions.toResourceSuccess
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.repository.address.AddressRepo
@@ -17,18 +20,23 @@ class ProfileViewModel @Inject constructor(
     private val addressRepo: AddressRepo
 ) : ToolbarViewModel() {
 
-    val userId by lazy {
-        runBlocking {
-            dataStoreHelper.userId.first()
+    private val userStateFlow = MutableStateFlow<Resource<String>>(Resource.Loading(true))
+
+    fun getUserId(): MutableStateFlow<Resource<String>> {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreHelper.userId.collect {
+                userStateFlow.emit(it.toResourceSuccess())
+            }
         }
+        return userStateFlow
     }
 
-    fun getAddress(): MutableStateFlow<Address?> {
-        val addressStateFlow = MutableStateFlow<Address?>(null)
+    fun getAddress(): MutableStateFlow<Resource<Address?>> {
+        val addressStateFlow = MutableStateFlow<Resource<Address?>>(Resource.Loading(true))
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreHelper.deliveryAddressId.collect { deliveryAddressId ->
                 addressRepo.getAddressById(deliveryAddressId).collect {
-                    addressStateFlow.emit(it)
+                    addressStateFlow.emit(it.toResourceNullableSuccess())
                 }
             }
         }
@@ -45,5 +53,15 @@ class ProfileViewModel @Inject constructor(
 
     fun onCreateAddressClicked() {
         router.navigate(ProfileFragmentDirections.toCreationAddressFragment())
+    }
+
+    fun goToLogin() {
+        router.navigate(ProfileFragmentDirections.toLoginFragment())
+    } 
+    
+    fun logout() {
+        viewModelScope.launch {
+            dataStoreHelper.saveUserId("")
+        }
     }
 }
