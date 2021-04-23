@@ -27,7 +27,7 @@ class MenuProductRepository @Inject constructor(
         }
     }
 
-    override fun getMenuProductListAsFlow(productCode: ProductCode): Flow<List<MenuProduct>> {
+    override fun getMenuProductListAsFlow(): Flow<List<MenuProduct>> {
         return menuProductDao.getMenuProductListFlow()
             .flowOn(IO)
             .map { menuProductList ->
@@ -36,13 +36,6 @@ class MenuProductRepository @Inject constructor(
                 }.filter { menuProduct ->
                     menuProduct.visible
                 }
-            }.map { menuProductList ->
-                if (productCode == ProductCode.ALL)
-                    menuProductList
-                else
-                    menuProductList.filter { menuProduct ->
-                        menuProduct.productCode == productCode.name
-                    }
             }.flowOn(Default)
     }
 }

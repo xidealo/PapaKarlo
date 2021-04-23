@@ -41,6 +41,7 @@
     <string name="title_menu_bakery">Выпечка</string>
     <string name="title_menu_oven">В печи</string>
     <string name="action_menu_want">Хочу!</string>
+    <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
 
     <!-- TOP BAR -->
     <string name="title_top_bar_title">Заголовок</string>
