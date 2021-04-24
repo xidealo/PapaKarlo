@@ -5,17 +5,18 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.data.model.MenuProduct.Companion.PRODUCT_CODE
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.presentation.ProductsViewModel
+import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel>() {
+class ProductTabFragment : BaseFragment<FragmentProductsBinding, ProductTabViewModel>() {
 
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter
@@ -30,9 +31,8 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        viewModel.productCode =
-            requireArguments().getParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE)!!
-        viewModel.getProducts()
+        val productCode = requireArguments().getParcelable<ProductCode>(PRODUCT_CODE)!!
+        viewModel.getMenuProductList(productCode)
         viewModel.productListSharedFlow.onEach {
             viewDataBinding.activityMainPbLoading.toggleVisibility(false)
             menuProductsAdapter.setItemList(it)
@@ -41,17 +41,17 @@ class ProductsFragment : BaseFragment<FragmentProductsBinding, ProductsViewModel
     }
 
     private fun setupRecyclerView() {
-        menuProductsAdapter.productsViewModel = viewModel
-        menuProductsAdapter.productsFragment = this
+        menuProductsAdapter.productTabViewModel = viewModel
+        menuProductsAdapter.productTabFragment = this
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
     }
 
     companion object {
         @JvmStatic
         fun newInstance(productCode: ProductCode) =
-            ProductsFragment().apply {
+            ProductTabFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(com.bunbeauty.data.model.MenuProduct.PRODUCT_CODE, productCode)
+                    putParcelable(PRODUCT_CODE, productCode)
                 }
             }
     }

@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.ui
 
-import android.graphics.PorterDuff.Mode.SRC_IN
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
@@ -57,7 +56,7 @@ class MenuFragment : BarsFragment<FragmentMenuBinding, EmptyViewModel>() {
         )
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             ProductCode.values().asList().map {
-                ProductsFragment.newInstance(it)
+                ProductTabFragment.newInstance(it)
             },
             requireActivity()
         )

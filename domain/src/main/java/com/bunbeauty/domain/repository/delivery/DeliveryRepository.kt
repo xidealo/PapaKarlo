@@ -13,7 +13,7 @@ class DeliveryRepository @Inject constructor(
 
     @InternalCoroutinesApi
     override suspend fun refreshDeliveryCost() {
-        apiRepository.getDeliveryCost().collect { delivery ->
+        apiRepository.getDelivery().collect { delivery ->
             dataStoreHelper.saveDelivery(delivery)
         }
     }

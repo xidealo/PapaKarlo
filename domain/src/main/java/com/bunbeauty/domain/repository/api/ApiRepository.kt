@@ -4,7 +4,6 @@ import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.OrderFirebase
-import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.BuildConfig
 import com.google.firebase.database.DataSnapshot
@@ -16,9 +15,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -29,7 +28,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
-    override fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String {
+    override suspend fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String {
         val orderUuid = firebaseInstance.getReference(OrderEntity.ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
@@ -42,79 +41,77 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             .child(cafeId)
             .child(orderUuid)
         orderReference.setValue(orderFirebase)
+
         return orderUuid
     }
 
     @ExperimentalCoroutinesApi
-    override fun getCafeList(): SharedFlow<List<Cafe>> {
-        val cafeListSharedFlow = MutableSharedFlow<List<Cafe>>()
-        val contactInfoRef = firebaseInstance
+    override fun getCafeList(): Flow<List<Cafe>> = callbackFlow {
+        val cafeReference = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(Cafe.CAFES)
 
-        contactInfoRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val cafeList = snapshot.children.map { cafeSnapshot ->
                     cafeSnapshot.getValue(Cafe::class.java)!!
                 }
-                launch(IO) {
-                    cafeListSharedFlow.emit(cafeList)
-                }
+                offer(cafeList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
-        })
+        }
+        cafeReference.addListenerForSingleValueEvent(valueEventListener)
 
-        return cafeListSharedFlow
+        awaitClose { cafeReference.removeEventListener(valueEventListener) }
     }
 
-    override fun getMenuProductList(): Flow<List<MenuProduct>> {
-        val menuProductListSharedFlow = MutableSharedFlow<List<MenuProduct>>()
-        val menuProductsRef = firebaseInstance
+    @ExperimentalCoroutinesApi
+    override fun getMenuProductList(): Flow<List<MenuProduct>> = callbackFlow {
+        val menuProductsReference = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(MENU_PRODUCTS)
 
-        menuProductsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val menuProductList = snapshot.children.map { menuProductSnapshot ->
                     menuProductSnapshot.getValue(MenuProduct::class.java)!!
                         .also { it.uuid = menuProductSnapshot.key!! }
-
                 }
-                launch(IO) {
-                    menuProductListSharedFlow.emit(menuProductList)
-                }
+                offer(menuProductList)
             }
 
             override fun onCancelled(error: DatabaseError) {
             }
-        })
-        return menuProductListSharedFlow
+        }
+        menuProductsReference.addListenerForSingleValueEvent(valueEventListener)
+
+        awaitClose { menuProductsReference.removeEventListener(valueEventListener) }
     }
 
-    override fun getDeliveryCost(): Flow<Delivery> {
-        val cafeListSharedFlow = MutableSharedFlow<Delivery>()
-        val deliveryCostReference = firebaseInstance
+    @ExperimentalCoroutinesApi
+    override fun getDelivery(): Flow<Delivery> = callbackFlow {
+        val deliveryReference = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(DELIVERY)
 
-        deliveryCostReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                launch(IO) {
-                    cafeListSharedFlow.emit(snapshot.getValue(Delivery::class.java)!!)
+                launch {
+                    offer(snapshot.getValue(Delivery::class.java)!!)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
             }
-        })
+        }
+        deliveryReference.addListenerForSingleValueEvent(valueEventListener)
 
-        return cafeListSharedFlow
+        awaitClose { deliveryReference.removeEventListener(valueEventListener) }
     }
 
     companion object {
