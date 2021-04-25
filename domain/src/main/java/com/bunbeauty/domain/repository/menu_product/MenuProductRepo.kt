@@ -8,5 +8,5 @@ interface MenuProductRepo {
     suspend fun insert(menuProduct: MenuProduct)
 
     suspend fun getMenuProductRequest()
-    fun getMenuProductList(): Flow<List<MenuProduct>>
+    fun getMenuProductListAsFlow(): Flow<List<MenuProduct>>
 }

@@ -8,8 +8,8 @@ import com.bunbeauty.data.model.order.Order
 import kotlinx.coroutines.flow.Flow
 
 interface IApiRepository {
-    fun insertOrder(order: OrderFirebase, cafeId: String): String
+    suspend fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String
     fun getCafeList(): Flow<List<Cafe>>
     fun getMenuProductList(): Flow<List<MenuProduct>>
-    fun getDeliveryCost(): Flow<Delivery>
+    fun getDelivery(): Flow<Delivery>
 }

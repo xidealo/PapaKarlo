@@ -19,7 +19,7 @@ interface ViewModelComponent {
     fun inject(mainActivity: MainActivity)
 
     // fragments
-    fun inject(productsFragment: ProductsFragment)
+    fun inject(productTabFragment: ProductTabFragment)
     fun inject(productFragment: ProductFragment)
     fun inject(menuFragment: MenuFragment)
     fun inject(consumerCartFragment: ConsumerCartFragment)

@@ -2,16 +2,12 @@ package com.bunbeauty.papakarlo.utils
 
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.data.model.BaseModel
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.ui.adapter.BaseAdapter
-import com.bunbeauty.papakarlo.ui.view.ProgressButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.squareup.picasso.MemoryPolicy
@@ -86,6 +82,7 @@ object DataBinding {
         if (!link.isNullOrEmpty()) {
             Picasso.get()
                 .load(link)
+                .fit()
                 .placeholder(R.drawable.default_product)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)

@@ -9,9 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.ProductsFragment
+import com.bunbeauty.papakarlo.ui.ProductTabFragment
 import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.papakarlo.presentation.ProductsViewModel
+import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor(
@@ -19,8 +19,8 @@ class MenuProductsAdapter @Inject constructor(
     private val productHelper: IProductHelper
 ) : BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
 
-    lateinit var productsViewModel: ProductsViewModel
-    lateinit var productsFragment: ProductsFragment
+    lateinit var productTabViewModel: ProductTabViewModel
+    lateinit var productTabFragment: ProductTabFragment
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -45,10 +45,10 @@ class MenuProductsAdapter @Inject constructor(
 
         fun setListener(menuProduct: MenuProduct) {
             binding?.elementMenuProductMcvMain?.setOnClickListener {
-                productsViewModel.onProductClicked(menuProduct)
+                productTabViewModel.onProductClicked(menuProduct)
             }
             binding?.elementMenuProductBtnWant?.setOnClickListener {
-                productsViewModel.addProductToCart(menuProduct)
+                productTabViewModel.addProductToCart(menuProduct)
             }
         }
     }

@@ -59,7 +59,7 @@ class MenuFragment : BarsFragment<FragmentMenuBinding>() {
         )
         viewDataBinding.fragmentMenuVp.adapter = ProductsPagerAdapter(
             ProductCode.values().asList().map {
-                ProductsFragment.newInstance(it)
+                ProductTabFragment.newInstance(it)
             },
             requireActivity()
         )
