@@ -7,14 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.Resource
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 

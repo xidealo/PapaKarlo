@@ -49,21 +49,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_information" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_confirm_til_code"
-                    style="@style/MaterialInputLayout"
-                    android:layout_margin="@dimen/small_margin"
-                    android:hint="Код"
+                <com.alimuzaffar.lib.pin.PinEntryEditText
+                    android:id="@+id/txt_pin_entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    app:pinAnimationType="fromBottom"
+                    android:textIsSelectable="false"
+                    android:layout_margin="@dimen/medium_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_phone_information">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_phone_information"
+                    app:pinBackgroundDrawable="@color/colorPrimary" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_confirm_et_code"
-                        style="@style/MaterialInput"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 

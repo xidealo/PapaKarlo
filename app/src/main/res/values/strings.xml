@@ -154,7 +154,7 @@
     <!-- LOGIN  -->
     <string name="title_confirm_code">Код подтверждения</string>
     <string name="title_confirm_information">Введите код подтверждения ✉</string>
-    <string name="title_confirm_prone_information">Код был отправлен на номер +7(999)888 77 66</string>
+    <string name="title_confirm_prone_information">Код был отправлен на номер</string>
     <string name="action_confirm_resend">ПОЛУЧИТЬ НОВЫЙ КОД</string>
 
     <!-- CAFE OPTIONS -->
