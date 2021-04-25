@@ -42,7 +42,7 @@ class ProductTabViewModelImpl @Inject constructor(private val menuProductRepo: M
                         if (filteredMenuProductList.isEmpty()) {
                             productListState.value = State.Empty()
                         } else {
-                            productListState.value = State.Data(menuProductList)
+                            productListState.value = State.Data(filteredMenuProductList)
                         }
                     }
                 }
