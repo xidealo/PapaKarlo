@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.domain.uri.IUriHelper
 import com.bunbeauty.papakarlo.presentation.CafeListViewModel
-import com.bunbeauty.papakarlo.presentation.ProductsViewModel
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

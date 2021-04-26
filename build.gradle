@@ -72,7 +72,7 @@ ext {
     scannerVersion = "1.4.2"
     legacySupportVersion = "1.0.0"
     appcompatV7Version = "28.0.0"
-    pinentryedittextVersion = "28.0.0"
+    pinentryedittextVersion = "2.0.6"
 
     // Test dependencies
     mockitoVerchion = "3.3.3"

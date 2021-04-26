@@ -29,7 +29,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
     private val firebaseInstance = FirebaseDatabase.getInstance()
 
     override suspend fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String {
-        val orderUuid = firebaseInstance.getReference(OrderEntity.ORDERS)
+        val orderUuid = firebaseInstance.getReference(Constants.ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
             .key!!
