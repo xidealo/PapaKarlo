@@ -9,6 +9,10 @@ import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.*
+import java.util.concurrent.TimeUnit
 
 class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
 
@@ -18,6 +22,8 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
         viewModelComponent.inject(this)
     }
 
+    private var phoneVerificationId: String? = null
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,6 +31,67 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
                 ConfirmFragmentArgs.fromBundle(requireArguments()).phone
             }"
+        sendVerificationCode(
+            getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
+        )
+
+        viewDataBinding.fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
+            phoneVerificationId?.apply {
+                val credential = PhoneAuthProvider.getCredential(phoneVerificationId, code.toString())
+                val firebase = FirebaseAuth.getInstance()
+                firebase.signInWithCredential(credential)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val userId = firebase.currentUser?.uid
+                            viewModel.saveUserId( userId?: "")
+                        } else {
+                            if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                                //wrong
+                                val t = 0
+                            }
+                        }
+                    }
+            }
+        }
     }
 
+    fun sendVerificationCode(
+        phoneNumber: String
+    ) {
+        val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+            .setPhoneNumber("+$phoneNumber") // Phone number to verify
+            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+            .setActivity(requireActivity()) // Activity (for callback binding)
+            .setCallbacks(verificationCallbacks) // OnVerificationStateChangedCallbacks
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+
+    private val verificationCallbacks =
+        object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                var t = 0
+                //verifyPhoneNumberCallback.returnCredential(credential)
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                if (e is FirebaseAuthInvalidCredentialsException) {
+                    // verifyPhoneNumberCallback.returnVerificationFailed()
+                } else if (e is FirebaseTooManyRequestsException) {
+                    // verifyPhoneNumberCallback.returnTooManyRequestsError()
+                }
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                phoneVerificationId = verificationId
+            }
+        }
+
+    fun getPhoneNumberDigits(phone: String): String {
+        return phone.replace(Regex("\\D"), "")
+    }
 }

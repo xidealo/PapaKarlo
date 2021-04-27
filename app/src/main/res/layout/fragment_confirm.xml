@@ -50,13 +50,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_information" />
 
                 <com.alimuzaffar.lib.pin.PinEntryEditText
-                    android:id="@+id/txt_pin_entry"
+                    android:id="@+id/fragment_confirm_peet_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="6"
                     app:pinAnimationType="fromBottom"
                     android:textIsSelectable="false"
                     android:layout_margin="@dimen/medium_margin"
@@ -64,7 +64,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_phone_information"
-                    app:pinBackgroundDrawable="@color/colorPrimary" />
+                    app:pinBackgroundDrawable="@color/hintColor" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
