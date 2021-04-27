@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.State
+import com.bunbeauty.common.State
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
@@ -34,7 +34,7 @@ class ProductTabViewModelImpl @Inject constructor(private val menuProductRepo: M
                     productListState.value = State.Loading()
                 } else {
                     if (productCode == ProductCode.ALL) {
-                        productListState.value = State.Data(menuProductList)
+                        productListState.value = State.Success(menuProductList)
                     } else {
                         val filteredMenuProductList = menuProductList.filter { menuProduct ->
                             menuProduct.productCode == productCode.name
@@ -42,7 +42,7 @@ class ProductTabViewModelImpl @Inject constructor(private val menuProductRepo: M
                         if (filteredMenuProductList.isEmpty()) {
                             productListState.value = State.Empty()
                         } else {
-                            productListState.value = State.Data(filteredMenuProductList)
+                            productListState.value = State.Success(filteredMenuProductList)
                         }
                     }
                 }

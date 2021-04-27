@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repository.order
 
-import com.bunbeauty.data.OrderDao
+import com.bunbeauty.data.dao.OrderDao
 import com.bunbeauty.data.mapper.OrderMapper
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import com.bunbeauty.data.model.order.Order

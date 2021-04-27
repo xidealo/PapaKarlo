@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.databinding.ObservableField
-import com.bunbeauty.common.extensions.toResourceSuccess
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.domain.cafe.CafeRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
@@ -10,8 +9,6 @@ import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import org.joda.time.DateTime
 import javax.inject.Inject
 

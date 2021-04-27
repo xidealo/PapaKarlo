@@ -3,6 +3,7 @@ package com.bunbeauty.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.bunbeauty.data.dao.*
 import com.bunbeauty.data.model.*
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.order.OrderEntity

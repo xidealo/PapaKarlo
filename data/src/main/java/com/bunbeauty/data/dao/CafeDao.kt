@@ -1,10 +1,9 @@
-package com.bunbeauty.data
+package com.bunbeauty.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.cafe.CafeEntity
-import com.bunbeauty.data.BaseDao
 import kotlinx.coroutines.flow.Flow
 
 @Dao

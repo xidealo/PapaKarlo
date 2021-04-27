@@ -1,9 +1,8 @@
-package com.bunbeauty.data
+package com.bunbeauty.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.bunbeauty.data.BaseDao
 import com.bunbeauty.data.model.Address
 import kotlinx.coroutines.flow.Flow
 

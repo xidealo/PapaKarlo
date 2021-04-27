@@ -1,4 +1,4 @@
-package com.bunbeauty.data
+package com.bunbeauty.data.dao
 
 import androidx.room.*
 

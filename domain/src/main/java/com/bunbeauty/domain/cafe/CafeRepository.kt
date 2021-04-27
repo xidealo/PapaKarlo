@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.cafe
 
-import com.bunbeauty.data.CafeDao
+import com.bunbeauty.data.dao.CafeDao
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.domain.repository.address.AddressRepo

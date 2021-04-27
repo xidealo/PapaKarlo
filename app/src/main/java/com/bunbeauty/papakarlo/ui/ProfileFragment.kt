@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bunbeauty.common.Resource
+import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.R
@@ -38,7 +38,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 
         viewModel.getAddress().onEach { resource ->
             when (resource) {
-                is Resource.Success -> {
+                is State.Success -> {
                     if (resource.data == null) {
                         viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)

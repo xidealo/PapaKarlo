@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repository.menu_product
 
-import com.bunbeauty.data.MenuProductDao
+import com.bunbeauty.data.dao.MenuProductDao
 import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.model.MenuProduct
 import kotlinx.coroutines.Dispatchers.Default

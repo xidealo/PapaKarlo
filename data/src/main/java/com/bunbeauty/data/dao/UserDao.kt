@@ -1,8 +1,7 @@
-package com.bunbeauty.data
+package com.bunbeauty.data.dao
 
 import androidx.room.Dao
 import com.bunbeauty.data.model.user.User
-import com.bunbeauty.data.BaseDao
 
 @Dao
 interface UserDao : BaseDao<User>

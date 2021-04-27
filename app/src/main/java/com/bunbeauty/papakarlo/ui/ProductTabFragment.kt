@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.Constants.PRODUCT_CODE
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.data.State
+import com.bunbeauty.common.State
 import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
@@ -47,7 +47,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.fragmentProductsRvResult.gone()
                     viewDataBinding.activityMainPbLoading.visible()
                 }
-                is State.Data -> {
+                is State.Success -> {
                     viewDataBinding.fragmentProductsTvEmpty.gone()
                     viewDataBinding.fragmentProductsRvResult.visible()
                     viewDataBinding.activityMainPbLoading.gone()

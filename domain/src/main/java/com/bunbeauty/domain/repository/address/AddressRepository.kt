@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.repository.address
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.data.AddressDao
+import com.bunbeauty.data.dao.AddressDao
 import com.bunbeauty.data.model.Address
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

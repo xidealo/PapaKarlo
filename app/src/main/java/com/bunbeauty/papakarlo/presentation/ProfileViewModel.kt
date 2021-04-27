@@ -1,9 +1,8 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Resource
-import com.bunbeauty.common.extensions.toResourceNullableSuccess
-import com.bunbeauty.common.extensions.toResourceSuccess
+import com.bunbeauty.common.State
+import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.data.model.Address
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.repository.address.AddressRepo
@@ -12,7 +11,6 @@ import com.bunbeauty.papakarlo.ui.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
@@ -22,12 +20,12 @@ class ProfileViewModel @Inject constructor(
 
     val userIdFlow by lazy { dataStoreHelper.userId }
 
-    fun getAddress(): MutableStateFlow<Resource<Address?>> {
-        val addressStateFlow = MutableStateFlow<Resource<Address?>>(Resource.Loading(true))
+    fun getAddress(): MutableStateFlow<State<Address?>> {
+        val addressStateFlow = MutableStateFlow<State<Address?>>(State.Loading())
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreHelper.deliveryAddressId.collect { deliveryAddressId ->
                 addressRepo.getAddressById(deliveryAddressId).collect {
-                    addressStateFlow.emit(it.toResourceNullableSuccess())
+                    addressStateFlow.emit(it.toStateNullableSuccess())
                 }
             }
         }

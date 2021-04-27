@@ -1,10 +1,9 @@
-package com.bunbeauty.data
+package com.bunbeauty.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import com.bunbeauty.data.model.DistrictEntity
-import com.bunbeauty.data.BaseDao
 import kotlinx.coroutines.flow.Flow
 
 @Dao
