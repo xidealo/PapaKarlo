@@ -12,13 +12,18 @@ abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
 
     open val isToolbarVisible = true
     open val isToolbarLogoVisible = false
+    open val isToolbarCartProductVisible = true
     open val isBottomBarVisible = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as? IBottomNavigationBar)?.setupBottomNavigationBar(isBottomBarVisible)
-        (activity as? IToolbar)?.setToolbarConfiguration(isToolbarVisible, isToolbarLogoVisible)
+        (activity as? IToolbar)?.setToolbarConfiguration(
+            isToolbarVisible,
+            isToolbarLogoVisible,
+            isToolbarCartProductVisible
+        )
         subscribe(viewModel.cartLiveData) { cartText ->
             (activity as? IToolbar)?.setCartText(cartText)
         }

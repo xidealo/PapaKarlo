@@ -18,7 +18,7 @@
     <string name="title_cafe_list">Рестораны</string>
     <string name="title_orders">Ваши заказы</string>
     <string name="title_profile">Профиль</string>
-    <string name="title_login">Ввод номера</string>
+    <string name="title_login">Регистрация</string>
     <string name="title_confirm">Подтверждение номера</string>
     <string name="title_cart">Корзина</string>
     <string name="title_order">Оформление заказа</string>
@@ -135,21 +135,25 @@
 
     <!-- PROFILE  -->
     <string name="title_profile_contact">Контактная информация</string>
-    <string name="title_profile_email">Email</string>
+    <string name="title_profile_value_email">Email</string>
+    <string name="title_profile_email">Электронная почта</string>
     <string name="title_profile_address">Ваши адерса</string>
     <string name="title_profile_orders">Заказы</string>
     <string name="title_profile_bonuses">Бонусы</string>
     <string name="title_profile_no_profile">В профиле будут отбражаться история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
     <string name="action_profile_orders">Список заказов</string>
+    <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_address_list">Список адресов</string>
     <string name="action_profile_login">Войти</string>
     <string name="action_profile_logout">Выйти</string>
 
     <!-- LOGIN  -->
-    <string name="title_login_phone_number">Номер телефона</string>
-    <string name="title_login_info">Для оформления заказа введите номер вашего телефона 😊</string>
-    <string name="title_login_phone">Телефон</string>
+    <string name="title_login_registration">Регистрация</string>
+    <string name="title_login_info">Введите номер вашего телефона и почту 😊</string>
+    <string name="title_login_phone">Телефон*</string>
+    <string name="title_login_email">Email</string>
     <string name="action_login_continue">Продолжить</string>
+    <string name="error_login_phone">Введите корректный номер телефона</string>
 
     <!-- LOGIN  -->
     <string name="title_confirm_code">Код подтверждения</string>

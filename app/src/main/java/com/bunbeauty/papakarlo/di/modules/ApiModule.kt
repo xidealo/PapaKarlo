@@ -4,6 +4,8 @@ import com.bunbeauty.data.api.ApiRepository
 import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.utils.DataStoreHelper
 import com.bunbeauty.data.utils.IDataStoreHelper
+import com.bunbeauty.domain.field_helper.FieldHelper
+import com.bunbeauty.domain.field_helper.IFieldHelper
 import com.bunbeauty.domain.network.INetworkHelper
 import com.bunbeauty.domain.network.NetworkHelper
 import com.bunbeauty.domain.product.IProductHelper
@@ -48,4 +50,7 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindProductHelper(productHelper: ProductHelper): IProductHelper
+
+    @Binds
+    abstract fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
 }

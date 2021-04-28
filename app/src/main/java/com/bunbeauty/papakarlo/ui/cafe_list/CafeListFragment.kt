@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.ui.cafe_list
 
-
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle

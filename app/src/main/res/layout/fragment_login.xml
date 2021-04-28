@@ -24,7 +24,7 @@
                     android:id="@+id/fragment_login_tv_phone_number"
                     style="@style/MainTitle"
                     android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_login_phone_number"
+                    android:text="@string/title_login_registration"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,6 @@
                     style="@style/MaterialInputLayout"
                     android:layout_margin="@dimen/small_margin"
                     android:hint="@string/title_login_phone"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information">
@@ -52,6 +51,22 @@
                         android:id="@+id/fragment_login_et_phone"
                         style="@style/MaterialInput"
                         android:inputType="phone" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_login_til_email"
+                    style="@style/MaterialInputLayout"
+                    android:layout_margin="@dimen/small_margin"
+                    android:hint="@string/title_login_email"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_til_phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_login_et_email"
+                        style="@style/MaterialInput"
+                        android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

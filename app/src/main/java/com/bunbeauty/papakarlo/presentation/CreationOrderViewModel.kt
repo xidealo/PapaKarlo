@@ -13,6 +13,7 @@ import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.network.INetworkHelper
 import com.bunbeauty.domain.repository.address.AddressRepo
 import com.bunbeauty.domain.cafe.CafeRepo
+import com.bunbeauty.domain.field_helper.IFieldHelper
 import com.bunbeauty.domain.repository.order.OrderRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.domain.string_helper.IStringHelper
@@ -37,7 +38,8 @@ class CreationOrderViewModel @Inject constructor(
     private val stringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
     private val addressRepo: AddressRepo,
-    private val cafeRepo: CafeRepo
+    private val cafeRepo: CafeRepo,
+    val iFieldHelper: IFieldHelper
 ) : ToolbarViewModel() {
 
     val hasAddressLiveData = MutableLiveData(false)
@@ -161,6 +163,7 @@ class CreationOrderViewModel @Inject constructor(
             code = generateCode(),
             address = addressLiveData.value!!
         )
+
         viewModelScope.launch(IO) {
             val order = Order(
                 orderEntity,
@@ -193,34 +196,6 @@ class CreationOrderViewModel @Inject constructor(
         val codeNumber = (number / letters.length).toString()
 
         return codeLetter + codeNumber
-    }
-
-    fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {
-        if (text.isEmpty() && isRequired) {
-            return false
-        }
-
-        if (text.length > maxLength) {
-            return false
-        }
-        return true
-    }
-
-    fun isCorrectFieldContent(
-        text: String,
-        isRequired: Boolean,
-        minLength: Int,
-        maxLength: Int
-    ): Boolean {
-        if (!isCorrectFieldContent(text, isRequired, maxLength)) {
-            return false
-        }
-
-        if (text.length < minLength) {
-            return false
-        }
-
-        return true
     }
 
     fun isNetworkConnected(): Boolean {

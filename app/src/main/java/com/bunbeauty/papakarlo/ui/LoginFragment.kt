@@ -18,12 +18,32 @@ class LoginFragment : BarsFragment<FragmentLoginBinding>() {
         viewModelComponent.inject(this)
     }
 
+    override val isToolbarCartProductVisible = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentLoginEtPhone)
         viewDataBinding.fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
 
         viewDataBinding.fragmentLoginBtnLogin.setOnClickListener {
-            viewModel.goToConfirm(viewDataBinding.fragmentLoginEtPhone.text.toString())
+
+            if (!viewModel.iFieldHelper.isCorrectFieldContent(
+                    viewDataBinding.fragmentLoginEtPhone.text.toString(),
+                    true,
+                    18,
+                    18
+                )
+            ) {
+                viewDataBinding.fragmentLoginEtPhone.error =
+                    resources.getString(R.string.error_creation_order_phone)
+                viewDataBinding.fragmentLoginEtPhone.requestFocus()
+                return@setOnClickListener
+            }
+
+
+            viewModel.goToConfirm(
+                viewDataBinding.fragmentLoginEtPhone.text.toString(),
+                viewDataBinding.fragmentLoginEtEmail.text.toString()
+            )
         }
         super.onViewCreated(view, savedInstanceState)
     }

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.extensions.invisible
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -23,6 +25,14 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
     }
 
     private var phoneVerificationId: String? = null
+    override val isToolbarCartProductVisible = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sendVerificationCode(
+            getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
+        )
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,23 +41,20 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
                 ConfirmFragmentArgs.fromBundle(requireArguments()).phone
             }"
-        sendVerificationCode(
-            getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
-        )
-
         viewDataBinding.fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
+            showLoading()
             phoneVerificationId?.apply {
-                val credential = PhoneAuthProvider.getCredential(phoneVerificationId, code.toString())
+                val credential =
+                    PhoneAuthProvider.getCredential(phoneVerificationId!!, code.toString())
                 val firebase = FirebaseAuth.getInstance()
                 firebase.signInWithCredential(credential)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val userId = firebase.currentUser?.uid
-                            viewModel.saveUserId( userId?: "")
+                            viewModel.saveUserId(userId ?: "")
                         } else {
                             if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                                //wrong
-                                val t = 0
+                                hideLoading()
                             }
                         }
                     }
@@ -88,8 +95,19 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
                 phoneVerificationId = verificationId
+                hideLoading()
             }
         }
+
+    fun hideLoading() {
+        viewDataBinding.fragmentConfirmPeetCode.visible()
+        viewDataBinding.fragmentConfirmPbLoading.invisible()
+    }
+
+    fun showLoading() {
+        viewDataBinding.fragmentConfirmPeetCode.invisible()
+        viewDataBinding.fragmentConfirmPbLoading.visible()
+    }
 
     fun getPhoneNumberDigits(phone: String): String {
         return phone.replace(Regex("\\D"), "")

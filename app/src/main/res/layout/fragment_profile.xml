@@ -47,12 +47,34 @@
                     android:drawablePadding="@dimen/large_padding"
                     app:drawableLeftCompat="@drawable/ic_email"
                     app:drawableTint="@color/mainTextColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_phone"
                     tools:text="@string/title_profile_email" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_profile_btn_settings"
+                    style="@style/OutLineButton"
+                    android:layout_width="0dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:fontFamily="@font/font_roboto_regular"
+                    android:text="@string/action_profile_settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_profile_tv_email" />
+
+                <ImageView
+                    android:id="@+id/fragment_profile_iv_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:contentDescription="Description"
+                    android:src="@drawable/ic_settings"
+                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_settings"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_settings"
+                    app:tint="@color/colorPrimary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -60,7 +82,6 @@
             android:id="@+id/fragment_profile_mcv_address"
             style="@style/MaterialCardCreationOrder"
             android:layout_margin="@dimen/small_margin"
-
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,19 +248,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_profile_btn_logout"
-            style="@style/MainButton"
-            android:text="@string/action_profile_logout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:constraint_referenced_ids="
             fragment_profile_mcv_contacts,
             fragment_profile_mcv_address,
@@ -293,6 +306,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_profile_btn_logout"
+            style="@style/MainButton"
+            android:text="@string/action_profile_logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

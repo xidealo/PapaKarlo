@@ -133,7 +133,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             return
         }
 
-        if (!viewModel.isCorrectFieldContent(
+        if (!viewModel.iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
@@ -144,7 +144,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
-        if (!viewModel.isCorrectFieldContent(
+        if (!viewModel.iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,

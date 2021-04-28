@@ -157,9 +157,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/to_confirmFragment"
-            app:destination="@id/confirmFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/confirmFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/confirmFragment"
@@ -171,6 +170,11 @@
             app:argType="string" />
         <action
             android:id="@+id/to_profile_fragment"
-            app:destination="@id/profile_fragment" />
+            app:destination="@id/profile_fragment"
+            app:popUpTo="@id/profile_fragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>

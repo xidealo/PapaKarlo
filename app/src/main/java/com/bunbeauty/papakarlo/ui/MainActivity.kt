@@ -62,10 +62,12 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
     override fun setToolbarConfiguration(
         isVisible: Boolean,
-        isLogoVisible: Boolean
+        isLogoVisible: Boolean,
+        isCartProductVisible: Boolean
     ) {
         viewDataBinding.activityMainTbToolbar.toggleVisibility(isVisible)
         viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
+        viewDataBinding.activityMainTvCart.toggleVisibility(isCartProductVisible)
     }
 
     override fun setCartText(cartText: String) {

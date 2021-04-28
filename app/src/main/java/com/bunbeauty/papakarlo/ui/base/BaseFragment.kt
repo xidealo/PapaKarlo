@@ -52,7 +52,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable 
         savedInstanceState: Bundle?
     ): View? {
         viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-
         return viewDataBinding.root
     }
 
