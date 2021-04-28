@@ -1,5 +1,19 @@
 package com.bunbeauty.domain.repository.user
 
-class UserRepository : UserRepo {
+import com.bunbeauty.data.api.IApiRepository
+import com.bunbeauty.data.dao.UserDao
+import com.bunbeauty.data.mapper.UserMapper
+import com.bunbeauty.data.model.user.User
+import javax.inject.Inject
 
+class UserRepository @Inject constructor(
+    private val userDao: UserDao,
+    private val apiRepository: IApiRepository,
+    private val userMapper: UserMapper
+) : UserRepo {
+
+    override suspend fun insert(user: User) {
+        userDao.insert(user)
+        apiRepository.insertUser(userMapper.from(user), user.userId)
+    }
 }

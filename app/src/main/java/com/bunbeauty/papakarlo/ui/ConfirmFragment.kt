@@ -51,7 +51,11 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val userId = firebase.currentUser?.uid
-                            viewModel.saveUserId(userId ?: "")
+                            viewModel.createUser(
+                                userId ?: "",
+                                ConfirmFragmentArgs.fromBundle(requireArguments()).phone,
+                                ConfirmFragmentArgs.fromBundle(requireArguments()).email
+                            )
                         } else {
                             if (task.exception is FirebaseAuthInvalidCredentialsException) {
                                 hideLoading()

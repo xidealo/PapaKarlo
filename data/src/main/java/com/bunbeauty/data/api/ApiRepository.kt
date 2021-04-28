@@ -6,6 +6,7 @@ import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.OrderFirebase
+import com.bunbeauty.data.model.firebase.UserFirebase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -43,6 +44,15 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         orderReference.setValue(orderFirebase)
 
         return orderUuid
+    }
+
+    override suspend fun insertUser(userFirebase: UserFirebase, userId: String) {
+        val userReference = firebaseInstance
+            .getReference(Constants.COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(Constants.USERS)
+            .child(userId)
+        userReference.setValue(userFirebase)
     }
 
     @ExperimentalCoroutinesApi

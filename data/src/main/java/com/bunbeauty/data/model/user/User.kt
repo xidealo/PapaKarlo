@@ -10,7 +10,6 @@ import kotlinx.parcelize.Parcelize
 data class User(
     @PrimaryKey
     var userId: String = "",
-    var token: String = "",
     var phone: String = "",
     var email: String = "",
     var bonus: Int = 0
