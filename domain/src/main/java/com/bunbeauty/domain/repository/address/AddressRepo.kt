@@ -5,6 +5,7 @@ import com.bunbeauty.data.model.Address
 import kotlinx.coroutines.flow.Flow
 
 interface AddressRepo {
+    suspend fun insert(token: String, address: Address): Long
     suspend fun insert(address: Address): Long
     suspend fun update(address: Address)
     fun getAddresses(): LiveData<List<Address>>

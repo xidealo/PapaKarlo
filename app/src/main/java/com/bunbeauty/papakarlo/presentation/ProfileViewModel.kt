@@ -3,9 +3,14 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
+import com.bunbeauty.data.enums.ProductCode
 import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.MenuProduct
+import com.bunbeauty.data.model.user.User
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.domain.repository.user.UserRepo
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -13,42 +18,72 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(
+
+abstract class ProfileViewModel : ToolbarViewModel() {
+    abstract val userState: StateFlow<State<User?>>
+    abstract val addressListState: StateFlow<State<Address?>>
+
+    abstract fun getUser()
+    abstract fun getAddress(userId: String)
+    abstract fun onOrderListClicked()
+    abstract fun onAddressClicked()
+    abstract fun onCreateAddressClicked()
+    abstract fun goToLogin()
+    abstract fun logout()
+}
+
+class ProfileViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
-    private val addressRepo: AddressRepo
-) : ToolbarViewModel() {
+    private val addressRepo: AddressRepo,
+    private val userRepo: UserRepo
+) : ProfileViewModel() {
 
-    val userIdFlow by lazy { dataStoreHelper.userId }
+    override val userState: MutableStateFlow<State<User?>> =
+        MutableStateFlow(State.Loading())
 
-    fun getAddress(): MutableStateFlow<State<Address?>> {
-        val addressStateFlow = MutableStateFlow<State<Address?>>(State.Loading())
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStoreHelper.deliveryAddressId.collect { deliveryAddressId ->
-                addressRepo.getAddressById(deliveryAddressId).collect {
-                    addressStateFlow.emit(it.toStateNullableSuccess())
-                }
+    override val addressListState: MutableStateFlow<State<Address?>> =
+        MutableStateFlow(State.Loading())
+
+    override fun getUser() {
+        viewModelScope.launch(Dispatchers.Default) {
+            val useId = dataStoreHelper.userId.first()
+            if (useId.isEmpty()) {
+                userState.value = State.Success(null)
+            } else {
+                userRepo.getUserAsFlow(useId).onEach {
+                    userState.value = it.toStateNullableSuccess()
+                }.launchIn(viewModelScope)
             }
         }
-        return addressStateFlow
     }
 
-    fun onOrderListClicked() {
+    override fun getAddress(userId: String) {
+        viewModelScope.launch(Dispatchers.Default) {
+          /*  dataStoreHelper.deliveryAddressId.collect { deliveryAddressId ->
+                addressRepo.getAddressById(deliveryAddressId).collect {
+                    addressListState.emit(it.toStateNullableSuccess())
+                }
+            }*/
+        }
+    }
+
+    override fun onOrderListClicked() {
         router.navigate(ProfileFragmentDirections.toOrdersFragment("a"))
     }
 
-    fun onAddressClicked() {
+    override fun onAddressClicked() {
         router.navigate(ProfileFragmentDirections.toAddressesBottomSheet(true))
     }
 
-    fun onCreateAddressClicked() {
+    override fun onCreateAddressClicked() {
         router.navigate(ProfileFragmentDirections.toCreationAddressFragment())
     }
 
-    fun goToLogin() {
+    override fun goToLogin() {
         router.navigate(ProfileFragmentDirections.toLoginFragment())
-    } 
-    
-    fun logout() {
+    }
+
+    override fun logout() {
         viewModelScope.launch {
             dataStoreHelper.saveUserId("")
         }

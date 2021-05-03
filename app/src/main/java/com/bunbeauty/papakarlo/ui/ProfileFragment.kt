@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -25,18 +26,30 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.userIdFlow.onEach { userId ->
-            if (userId.isEmpty()) {
-                viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
-                viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
-            } else {
-                viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
-                viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
+        viewModel.getUser()
+        viewModel.userState.onEach { state ->
+            when (state) {
+                is State.Loading -> {
+                    viewDataBinding.fragmentProfilePbLoading.visible()
+                }
+                is State.Success -> {
+                    if (state.data == null) {
+                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
+                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
+                    } else {
+                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
+                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
+                        viewDataBinding.fragmentProfileTvPhone.text = state.data?.phone
+                        viewDataBinding.fragmentProfileTvEmail.text = state.data?.email
+                        viewDataBinding.fragmentProfileTvBonusesValue.text = state.data?.bonus.toString()
+                    }
+                    viewDataBinding.fragmentProfilePbLoading.gone()
+                }
+                else ->{}
             }
-            viewDataBinding.fragmentProfilePbLoading.gone()
         }.launchWhenStarted(lifecycleScope)
 
-        viewModel.getAddress().onEach { resource ->
+   /*     viewModel.getAddress().onEach { resource ->
             when (resource) {
                 is State.Success -> {
                     if (resource.data == null) {
@@ -47,9 +60,10 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
                     }
                 }
-                else -> { }
+                else -> {
+                }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.launchWhenStarted(lifecycleScope)*/
 
         viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
             viewModel.onOrderListClicked()

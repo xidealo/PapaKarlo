@@ -29,7 +29,6 @@ class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getStreets()
-
         viewDataBinding.viewModel = viewModel
         viewDataBinding.fragmentCreationAddressBtnCreationAddress.setOnClickListener {
             createAddress()

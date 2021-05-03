@@ -73,7 +73,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    internal abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
+    internal abstract fun provideProfileViewModel(profileViewModelImpl: ProfileViewModelImpl): ViewModel
 
     @Binds
     @IntoMap

@@ -4,6 +4,9 @@ import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.dao.UserDao
 import com.bunbeauty.data.mapper.UserMapper
 import com.bunbeauty.data.model.user.User
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -14,6 +17,10 @@ class UserRepository @Inject constructor(
 
     override suspend fun insert(user: User) {
         userDao.insert(user)
-        apiRepository.insertUser(userMapper.from(user), user.userId)
+        apiRepository.insert(userMapper.from(user), user.userId)
+    }
+
+    override fun getUserAsFlow(userId: String): Flow<User> {
+        return userDao.getUserFlow(userId).flowOn(IO)
     }
 }

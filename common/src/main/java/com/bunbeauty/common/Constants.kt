@@ -4,6 +4,9 @@ object Constants {
     const val PRODUCT_CODE: String = "product code"
     const val ORDERS = "ORDERS"
     const val USERS = "USERS"
+    const val ADDRESSES = "ADDRESSES"
     const val COMPANY = "COMPANY"
     const val CAFES = "cafes"
+    const val MENU_PRODUCTS: String = "menu_products"
+    const val DELIVERY: String = "delivery"
 }

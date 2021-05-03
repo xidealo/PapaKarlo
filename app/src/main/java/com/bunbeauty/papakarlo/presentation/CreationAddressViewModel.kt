@@ -10,6 +10,7 @@ import com.bunbeauty.domain.repository.street.StreetRepo
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -34,8 +35,8 @@ class CreationAddressViewModel @Inject constructor(
 
     fun onCreateAddressClicked(address: Address) {
         viewModelScope.launch(Dispatchers.IO) {
-
-            val addressId = addressRepo.insert(address)
+            address.userId = iDataStoreHelper.userId.first()
+            val addressId = addressRepo.insert("token", address)
             iDataStoreHelper.saveDeliveryAddressId(addressId)
             withContext(Dispatchers.Main) {
                 router.navigateUp()

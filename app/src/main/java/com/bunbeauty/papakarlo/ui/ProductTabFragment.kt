@@ -61,6 +61,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.activityMainPbLoading.gone()
                 }
                 is State.Error -> {
+
                 }
             }
         }.launchWhenStarted(lifecycleScope)

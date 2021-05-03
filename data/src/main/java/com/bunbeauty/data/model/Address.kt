@@ -26,5 +26,6 @@ data class Address(
     var entrance: String = "",
     var intercom: String = "",
     var floor: String = "",
-    var cafeId: String? = null
+    var cafeId: String? = null,
+    var userId: String? = null
 ) : BaseModel, Parcelable

@@ -1,10 +1,15 @@
 package com.bunbeauty.data.api
 
 import com.bunbeauty.common.Constants
+import com.bunbeauty.common.Constants.ADDRESSES
+import com.bunbeauty.common.Constants.COMPANY
+import com.bunbeauty.common.Constants.DELIVERY
+import com.bunbeauty.common.Constants.MENU_PRODUCTS
 import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.cafe.Cafe
+import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
 import com.google.firebase.database.DataSnapshot
@@ -28,8 +33,9 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
     override val coroutineContext: CoroutineContext = Job() + IO
 
     private val firebaseInstance = FirebaseDatabase.getInstance()
+    private val testFirebaseInstance = FirebaseDatabase.getInstance("https://test-fooddelivery.firebaseio.com")
 
-    override suspend fun insertOrder(orderFirebase: OrderFirebase, cafeId: String): String {
+    override fun insert(orderFirebase: OrderFirebase, cafeId: String): String {
         val orderUuid = firebaseInstance.getReference(Constants.ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
@@ -46,13 +52,33 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         return orderUuid
     }
 
-    override suspend fun insertUser(userFirebase: UserFirebase, userId: String) {
-        val userReference = firebaseInstance
-            .getReference(Constants.COMPANY)
+    override fun insert(userFirebase: UserFirebase, userId: String) {
+        val userReference = testFirebaseInstance
+            .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(Constants.USERS)
             .child(userId)
         userReference.setValue(userFirebase)
+    }
+
+    override fun insert(addressFirebase: AddressFirebase, userId: String) :String{
+        val addressUuid = testFirebaseInstance.getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(Constants.USERS)
+            .child(userId)
+            .push()
+            .key!!
+
+        val addressReference = testFirebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(Constants.USERS)
+            .child(userId)
+            .child(ADDRESSES)
+            .child(addressUuid)
+        addressReference.setValue(addressFirebase)
+
+        return addressUuid
     }
 
     @ExperimentalCoroutinesApi
@@ -120,13 +146,6 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             }
         }
         deliveryReference.addListenerForSingleValueEvent(valueEventListener)
-
         awaitClose { deliveryReference.removeEventListener(valueEventListener) }
-    }
-
-    companion object {
-        private const val COMPANY = "COMPANY"
-        private const val MENU_PRODUCTS: String = "menu_products"
-        private const val DELIVERY: String = "delivery"
     }
 }

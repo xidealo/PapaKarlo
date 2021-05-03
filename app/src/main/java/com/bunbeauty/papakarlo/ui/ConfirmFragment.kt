@@ -30,14 +30,14 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sendVerificationCode(
-            getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
+            viewModel.getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
         )
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.fragmentConfirmTvPhoneInformation.text =
+       /* viewDataBinding.fragmentConfirmTvPhoneInformation.text =
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
                 ConfirmFragmentArgs.fromBundle(requireArguments()).phone
             }"
@@ -63,7 +63,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                         }
                     }
             }
-        }
+        }*/
     }
 
     fun sendVerificationCode(
@@ -77,7 +77,6 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-
 
     private val verificationCallbacks =
         object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -113,7 +112,4 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
         viewDataBinding.fragmentConfirmPbLoading.visible()
     }
 
-    fun getPhoneNumberDigits(phone: String): String {
-        return phone.replace(Regex("\\D"), "")
-    }
 }

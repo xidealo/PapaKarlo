@@ -20,7 +20,7 @@ class OrderRepository @Inject constructor(
     override suspend fun saveOrder(order: Order) {
         withContext(Dispatchers.IO) {
             order.orderEntity.uuid =
-                apiRepository.insertOrder(orderMapper.from(order), order.cafeId)
+                apiRepository.insert(orderMapper.from(order), order.cafeId)
             val orderEntityId = orderDao.insert(order.orderEntity)
             for (cardProduct in order.cartProducts) {
                 cardProduct.orderId = orderEntityId
