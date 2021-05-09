@@ -178,5 +178,9 @@ dependencies {
     implementation "io.ktor:ktor-client-serialization:$rootProject.ktorVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
     implementation "io.ktor:ktor-client-logging-jvm:$rootProject.ktorVersion"
+
+    //FB
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
+    implementation 'com.google.firebase:firebase-auth-ktx'
 }
 

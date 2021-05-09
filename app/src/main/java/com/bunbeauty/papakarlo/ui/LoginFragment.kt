@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.ui.custom.PhoneTextWatcher
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override val viewModel: LoginViewModel by viewModels { modelFactory }
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -23,7 +24,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
             fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
             fragmentLoginBtnLogin.setOnClickListener {
-                viewModel.goToConfirm(fragmentLoginEtPhone.text.toString())
+                viewModel.onNextClicked(fragmentLoginEtPhone.text.toString())
             }
         }
     }

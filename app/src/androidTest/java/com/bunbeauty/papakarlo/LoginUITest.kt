@@ -44,7 +44,7 @@ class LoginUITest : MainTest() {
             .perform(ViewActions.click())
         Thread.sleep(LONG_PAUSE)
 
-        onView(withId(R.id.fragment_confirm_peet_code))
+        onView(withId(R.id.fragment_confirm_et_code))
             .perform(ViewActions.typeText(code))
         Espresso.closeSoftKeyboard()
         Thread.sleep(PAUSE)

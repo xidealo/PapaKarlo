@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.di.modules
 
+import com.bunbeauty.data.AuthUtil
 import com.bunbeauty.data.DataStoreRepository
-import com.bunbeauty.domain.auth.AuthUtil
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.cafe.CafeUtil
@@ -16,8 +16,8 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.product.ProductHelper
 import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.domain.util.uri.UriHelper
-import com.bunbeauty.presentation.util.field_helper.FieldHelper
-import com.bunbeauty.presentation.util.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.validator.ITextValidator
+import com.bunbeauty.domain.util.validator.TextValidator
 import com.bunbeauty.presentation.util.network.INetworkHelper
 import com.bunbeauty.presentation.util.network.NetworkHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
@@ -56,7 +56,7 @@ interface UtilModule {
     fun bindProductHelper(productHelper: ProductHelper): IProductHelper
 
     @Binds
-    fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
+    fun bindFieldHelper(fieldHelper: TextValidator): ITextValidator
 
     @Binds
     fun bindCafeUtil(cafeUtil: CafeUtil): ICafeUtil

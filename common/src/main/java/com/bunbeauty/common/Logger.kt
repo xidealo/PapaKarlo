@@ -13,6 +13,7 @@ object Logger {
     const val CITY_TAG = "cityTag"
     const val CAFE_TAG = "cafeTag"
     const val MENU_PRODUCT_TAG = "menuProductTag"
+    const val AUTH_TAG = "authTag"
 
     fun logD(tag: String, message: Any) {
         Log.d(COMMON_TAG, "$tag $message")

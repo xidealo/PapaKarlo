@@ -9,10 +9,10 @@ import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.presentation.util.field_helper.IFieldHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,7 +24,7 @@ class CreationAddressViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
     private val authUtil: IAuthUtil,
-    private val fieldHelper: IFieldHelper
+    private val textValidator: ITextValidator
 ) : BaseViewModel() {
 
     private var streetList: List<Street> = emptyList()
@@ -54,7 +54,11 @@ class CreationAddressViewModel @Inject constructor(
         floor: String
     ) {
         val selectedStreet = streetList.find { street -> street.name == streetName }
-        if (!fieldHelper.isCorrectFieldContent(streetName, true, 50) || selectedStreet == null) {
+        if (!textValidator.isRequiredFieldContentCorrect(
+                streetName,
+                maxLength = 50
+            ) || selectedStreet == null
+        ) {
             sendFieldError(
                 STREET_ERROR_KEY,
                 resourcesProvider.getString(R.string.error_create_address_street)
@@ -62,7 +66,7 @@ class CreationAddressViewModel @Inject constructor(
             return
         }
 
-        if (!fieldHelper.isCorrectFieldContent(house, true, 5)) {
+        if (!textValidator.isRequiredFieldContentCorrect(house, maxLength = 5)) {
             sendFieldError(
                 HOUSE_ERROR_KEY,
                 resourcesProvider.getString(R.string.error_create_address_house)

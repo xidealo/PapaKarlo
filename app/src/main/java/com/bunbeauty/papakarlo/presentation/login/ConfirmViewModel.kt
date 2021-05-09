@@ -1,69 +1,93 @@
 package com.bunbeauty.papakarlo.presentation.login
 
-import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Logger.AUTH_TAG
+import com.bunbeauty.common.Logger.logD
+import com.bunbeauty.domain.model.AuthResult
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Firebase
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class ConfirmViewModel : BaseViewModel() {
-    abstract val timerStringState: StateFlow<String>
-    abstract val isFinishedTimerState: StateFlow<Boolean>
-    abstract fun startResendTimer()
-    abstract fun showCodeError()
-    abstract fun refreshUser(phone: String)
-    abstract fun getPhoneNumberDigits(phone: String): String
-}
-
-class ConfirmViewModelImpl @Inject constructor(
-    @Firebase private val userRepo: UserRepo,
+class ConfirmViewModel @Inject constructor(
+    @Api private val userRepo: UserRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider
-) : ConfirmViewModel() {
+) : BaseViewModel() {
 
-    override val timerStringState: MutableStateFlow<String> = MutableStateFlow(
-        resourcesProvider.getString(
-            R.string.msg_confirm_prone_resend
-        ) + " 60"
-    )
+    private val label = resourcesProvider.getString(R.string.msg_confirm_code_info)
+    private val seconds = resourcesProvider.getString(R.string.msg_confirm_seconds)
+    private val timerSecondCount = 60
+    private val timerIntervalMillis = 1000L
 
-    override val isFinishedTimerState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val mutableResendSecondsInfo: MutableStateFlow<String> =
+        MutableStateFlow(label + timerSecondCount + seconds)
+    val resendSecondsInfo: StateFlow<String> = mutableResendSecondsInfo.asStateFlow()
 
-    override fun startResendTimer() {
-        isFinishedTimerState.value = false
-        val label = resourcesProvider.getString(R.string.msg_confirm_prone_resend)
-        object : CountDownTimer(60 * 1000L, 1000L) {
-            override fun onFinish() {
-                isFinishedTimerState.value = true
+    private val mutableIsTimerRun: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isTimerRun: StateFlow<Boolean> = mutableIsTimerRun.asStateFlow()
+
+    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
+
+    fun onCodeEntered(verifyCodeFlow: Flow<AuthResult>) {
+        mutableIsLoading.value = true
+        verifyCodeFlow.onEach { authResult ->
+            when (authResult) {
+                is AuthResult.AuthSuccess -> {
+                    refreshUser()
+                }
+                is AuthResult.AuthError -> {
+                    showError(resourcesProvider.getString(R.string.msg_confirm_error_code))
+                    logD(AUTH_TAG, authResult.errorMessage)
+                }
             }
-
-            override fun onTick(millisUntilFinished: Long) {
-                timerStringState.value = "$label ${(millisUntilFinished / 1000)}"
-            }
-        }.start()
+            mutableIsLoading.value = false
+        }.launchIn(viewModelScope)
     }
 
-    override fun refreshUser(phone: String) {
+    fun getPhoneInfo(phone: String): String {
+        return resourcesProvider.getString(R.string.msg_confirm_phone_info) + phone
+    }
+
+    fun onChangePhoneClicked() {
+        goBack()
+    }
+
+    fun formatPhone(phone: String): String {
+        return phone.replace(Regex("[\\s()-]"), "")
+    }
+
+    fun startResendTimer() {
+        if (mutableIsTimerRun.value) {
+            return
+        }
+        mutableIsTimerRun.value = true
+
+        var secondCount = timerSecondCount
+        viewModelScope.launch {
+            while (secondCount > 0) {
+                delay(timerIntervalMillis)
+                secondCount--
+                mutableResendSecondsInfo.value = label + secondCount + seconds
+            }
+            mutableIsTimerRun.value = false
+            mutableResendSecondsInfo.value = label + timerSecondCount + seconds
+        }
+    }
+
+    private fun refreshUser() {
         viewModelScope.launch {
             dataStoreRepo.clearUserAddressUuid()
             userRepo.refreshUser()
             goBack()
             goBack()
         }
-    }
-
-    override fun showCodeError() {
-        showError(resourcesProvider.getString(R.string.msg_confirm_prone_error_code))
-    }
-
-    override fun getPhoneNumberDigits(phone: String): String {
-        return phone.replace(Regex("\\D"), "")
     }
 }

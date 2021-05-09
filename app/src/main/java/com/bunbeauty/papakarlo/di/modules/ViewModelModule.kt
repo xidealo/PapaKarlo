@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
-import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
+import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
@@ -106,8 +106,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ConfirmViewModelImpl::class)
-    internal abstract fun provideConfirmViewModel(confirmViewModelImpl: ConfirmViewModelImpl): ViewModel
+    @ViewModelKey(ConfirmViewModel::class)
+    internal abstract fun provideConfirmViewModel(confirmViewModel: ConfirmViewModel): ViewModel
 
     @Binds
     @IntoMap

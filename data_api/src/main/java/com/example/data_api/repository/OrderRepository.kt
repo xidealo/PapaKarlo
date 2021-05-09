@@ -1,6 +1,6 @@
 package com.example.data_api.repository
 
-import com.bunbeauty.domain.auth.AuthUtil
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.data_api.dao.OrderDao
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
-    private val authUtil: AuthUtil,
+    private val authUtil: IAuthUtil,
     private val orderDao: OrderDao,
     private val orderMapper: IOrderMapper,
     private val apiRepo: ApiRepo

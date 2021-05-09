@@ -1,7 +1,7 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.USER_TAG
-import com.bunbeauty.domain.auth.AuthUtil
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserDao
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val apiRepo: ApiRepo,
-    private val authUtil: AuthUtil,
+    private val authUtil: IAuthUtil,
     private val profileMapper: IProfileMapper,
     private val userDao: UserDao
 ) : UserRepo {

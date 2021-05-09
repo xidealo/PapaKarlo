@@ -37,6 +37,15 @@ fun View.toggleVisibility(isVisible: Boolean): View {
     return this
 }
 
+fun View.toggleVisibilityInvisibility(isVisible: Boolean): View {
+    if (isVisible) {
+        this.visible()
+    } else {
+        this.invisible()
+    }
+    return this
+}
+
 fun View.showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
     val snack = Snackbar.make(this, errorMessage, Snackbar.LENGTH_SHORT)
         .setBackgroundTint(ContextCompat.getColor(context, backgroundColorId))
@@ -58,7 +67,11 @@ private fun getPixels(context: Context, dp: Int): Int {
 }
 
 fun TextView.strikeOutText() {
-    this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+}
+
+fun TextView.underlineText() {
+    paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
 }
 
 fun TextInputLayout.setErrorFocus(errorMessage: String) {

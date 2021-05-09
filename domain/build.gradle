@@ -60,8 +60,4 @@ dependencies {
     //True time
     implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
-    //FB
-    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
-    implementation 'com.google.firebase:firebase-auth-ktx'
-
  }
