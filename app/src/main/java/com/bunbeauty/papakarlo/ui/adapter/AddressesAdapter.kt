@@ -5,16 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor(
     private val iStringHelper: IStringHelper
 ) :
-    BaseAdapter<AddressesAdapter.AddressViewHolder, Address>() {
+    BaseAdapter<AddressesAdapter.AddressViewHolder, CafeAddress>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AddressViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

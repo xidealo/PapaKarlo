@@ -3,14 +3,14 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.data.model.Address
-import com.bunbeauty.data.model.MenuProduct
+import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.data.model.address.CafeAddress
+import com.bunbeauty.data.model.address.UserAddress
 import com.bunbeauty.data.model.user.User
 import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
+import com.bunbeauty.domain.repository.address.UserAddressRepo
 import com.bunbeauty.domain.repository.user.UserRepo
-import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 abstract class ProfileViewModel : ToolbarViewModel() {
     abstract val userState: StateFlow<State<User?>>
-    abstract val addressListState: StateFlow<State<Address?>>
+    abstract val addressListState: StateFlow<State<List<UserAddress>>>
 
     abstract fun getUser()
     abstract fun getAddress(userId: String)
@@ -34,14 +34,14 @@ abstract class ProfileViewModel : ToolbarViewModel() {
 
 class ProfileViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
-    private val addressRepo: AddressRepo,
+    private val userAddressRepo: UserAddressRepo,
     private val userRepo: UserRepo
 ) : ProfileViewModel() {
 
     override val userState: MutableStateFlow<State<User?>> =
         MutableStateFlow(State.Loading())
 
-    override val addressListState: MutableStateFlow<State<Address?>> =
+    override val addressListState: MutableStateFlow<State<List<UserAddress>>> =
         MutableStateFlow(State.Loading())
 
     override fun getUser() {
@@ -59,11 +59,9 @@ class ProfileViewModelImpl @Inject constructor(
 
     override fun getAddress(userId: String) {
         viewModelScope.launch(Dispatchers.Default) {
-          /*  dataStoreHelper.deliveryAddressId.collect { deliveryAddressId ->
-                addressRepo.getAddressById(deliveryAddressId).collect {
-                    addressListState.emit(it.toStateNullableSuccess())
-                }
-            }*/
+            userAddressRepo.getUserAddressByUserId(userId).collect {
+                addressListState.emit(it.toStateSuccess())
+            }
         }
     }
 

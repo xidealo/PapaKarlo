@@ -3,7 +3,7 @@ package com.bunbeauty.domain.cafe
 import com.bunbeauty.data.dao.CafeDao
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.api.IApiRepository
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.domain.repository.district.DistrictRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class CafeRepository @Inject constructor(
     private val apiRepository: IApiRepository,
     private val cafeDao: CafeDao,
-    private val addressRepo: AddressRepo,
+    private val cafeAddressRepo: CafeAddressRepo,
     private val districtRepo: DistrictRepo,
     private val streetRepo: StreetRepo
 ) : CafeRepo {
@@ -32,9 +32,9 @@ class CafeRepository @Inject constructor(
     suspend fun saveCafe(cafe: Cafe) {
         cafeDao.insert(cafe.cafeEntity)
 
-        cafe.address?.let { address ->
+        cafe.cafeAddress?.let { address ->
             address.cafeId = cafe.cafeEntity.id
-            addressRepo.insert(address)
+            cafeAddressRepo.insert(address)
         }
 
         for (district in cafe.districts) {

@@ -60,12 +60,6 @@ android {
     }
 }
 
-repositories {
-    maven { url 'https://jitpack.io' }
-    google()
-    jcenter()
-}
-
 dependencies {
     implementation project(":data")
     implementation project(":domain")
@@ -118,8 +112,6 @@ dependencies {
     //Design
     implementation "com.google.android.material:material:$rootProject.materialDesignVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-    implementation "com.miguelcatalan:materialsearchview:$rootProject.materialSerachVersion"
-    implementation "com.github.Triggertrap:SeekArc:$rootProject.seekArcVersion"
 
     //Database
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"

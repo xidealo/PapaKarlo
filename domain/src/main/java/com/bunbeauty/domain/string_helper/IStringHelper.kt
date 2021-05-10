@@ -1,10 +1,11 @@
 package com.bunbeauty.domain.string_helper
 
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.order.OrderEntity
 
 interface IStringHelper {
-    fun toString(address: com.bunbeauty.data.model.Address?): String
+    fun toString(cafeAddress: CafeAddress?): String
     fun toString(orderEntity: OrderEntity): String
     fun toStringOrderType(orderEntity: OrderEntity): String
     fun toStringDeferred(orderEntity: OrderEntity): String

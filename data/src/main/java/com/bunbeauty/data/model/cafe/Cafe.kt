@@ -3,7 +3,7 @@ package com.bunbeauty.data.model.cafe
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.District
 import com.bunbeauty.data.model.DistrictEntity
 import kotlinx.parcelize.Parcelize
@@ -17,5 +17,5 @@ data class Cafe(
     val districts: List<District> = arrayListOf(),
 
     @Relation(parentColumn = "id", entityColumn = "cafeId")
-    val address: Address? = Address(),
+    val cafeAddress: CafeAddress? = CafeAddress(),
 ) : Parcelable

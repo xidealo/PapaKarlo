@@ -7,11 +7,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.data.model.cafe.Coordinate
 import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.BR
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
@@ -42,7 +40,7 @@ class CafeOptionsBottomSheet :
         viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
             goToAddress(cafe.cafeEntity.coordinate)
         }
-        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.address)
+        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.cafeAddress)
     }
 
     private fun goToAddress(coordinate: Coordinate) {

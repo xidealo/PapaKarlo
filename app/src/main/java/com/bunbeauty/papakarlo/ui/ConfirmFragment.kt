@@ -37,7 +37,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       /* viewDataBinding.fragmentConfirmTvPhoneInformation.text =
+        viewDataBinding.fragmentConfirmTvPhoneInformation.text =
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
                 ConfirmFragmentArgs.fromBundle(requireArguments()).phone
             }"
@@ -63,7 +63,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                         }
                     }
             }
-        }*/
+        }
     }
 
     fun sendVerificationCode(

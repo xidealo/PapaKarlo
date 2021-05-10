@@ -6,12 +6,12 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.domain.network.INetworkHelper
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.domain.cafe.CafeRepo
 import com.bunbeauty.domain.field_helper.IFieldHelper
 import com.bunbeauty.domain.repository.order.OrderRepo
@@ -37,7 +37,7 @@ class CreationOrderViewModel @Inject constructor(
     private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
-    private val addressRepo: AddressRepo,
+    private val cafeAddressRepo: CafeAddressRepo,
     private val cafeRepo: CafeRepo,
     val iFieldHelper: IFieldHelper
 ) : ToolbarViewModel() {
@@ -65,10 +65,10 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val deliveryAddressLiveData: LiveData<Address?> by lazy {
+    private val deliveryCafeAddressLiveData: LiveData<CafeAddress?> by lazy {
         switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
-            switchMap(addressRepo.getAddressById(addressId).asLiveData()) { address ->
-                map(addressRepo.getFirstAddress()) { firstAddress ->
+            switchMap(cafeAddressRepo.getCafeAddressById(addressId).asLiveData()) { address ->
+                map(cafeAddressRepo.getFirstAddress()) { firstAddress ->
                     val deliveryAddress = address ?: firstAddress
                     hasAddressLiveData.value = deliveryAddress != null
                     deliveryAddress
@@ -77,20 +77,20 @@ class CreationOrderViewModel @Inject constructor(
         }
     }
 
-    private val pickupAddressLiveData: LiveData<Address?> by lazy {
+    private val pickupCafeAddressLiveData: LiveData<CafeAddress?> by lazy {
         switchMap(dataStoreHelper.cafeId.asLiveData()) { addressId ->
-            addressRepo.getAddressByCafeId(addressId).asLiveData()
+            cafeAddressRepo.getCafeAddressByCafeId(addressId).asLiveData()
         }
     }
 
-    val addressLiveData: LiveData<Address?> by lazy {
+    val cafeAddressLiveData: LiveData<CafeAddress?> by lazy {
         switchMap(isDeliveryLiveData) { isDelivery ->
             if (isDelivery) {
-                hasAddressLiveData.value = deliveryAddressLiveData.value != null
-                deliveryAddressLiveData
+                hasAddressLiveData.value = deliveryCafeAddressLiveData.value != null
+                deliveryCafeAddressLiveData
             } else {
                 hasAddressLiveData.value = true
-                pickupAddressLiveData
+                pickupCafeAddressLiveData
             }
         }
     }
@@ -149,7 +149,7 @@ class CreationOrderViewModel @Inject constructor(
         deferredHours: Int?,
         deferredMinutes: Int?
     ) {
-        if (addressLiveData.value == null) {
+        if (cafeAddressLiveData.value == null) {
             showError(resourcesProvider.getString(R.string.error_creation_order_address))
             return
         }
@@ -161,7 +161,7 @@ class CreationOrderViewModel @Inject constructor(
             deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
             isDelivery = isDeliveryLiveData.value!!,
             code = generateCode(),
-            address = addressLiveData.value!!
+            cafeAddress = cafeAddressLiveData.value!!
         )
 
         viewModelScope.launch(IO) {
@@ -169,7 +169,7 @@ class CreationOrderViewModel @Inject constructor(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
                 cafeRepo.getCafeEntityByDistrict(
-                    orderEntity.address.street?.districtId ?: "ERROR CAFE"
+                    orderEntity.cafeAddress.street?.districtId ?: "ERROR CAFE"
                 ).id
             )
 

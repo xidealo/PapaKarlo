@@ -3,36 +3,36 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.data.model.Address
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.data.model.address.CafeAddress
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AddressesViewModel @Inject constructor(
-    private val addressRepo: AddressRepo,
+    private val cafeAddressRepo: CafeAddressRepo,
     private val dataStoreHelper: IDataStoreHelper
 ) : BaseViewModel() {
 
     var isDelivery = false
 
-    val addressesLiveData by lazy {
+    /*val addressesLiveData by lazy {
         if (isDelivery) {
-            Transformations.map(addressRepo.getNotCafeAddresses()) {
+            Transformations.map(cafeAddressRepo.getNotCafeAddresses()) {
                 it.reversed()
             }
         } else {
-            addressRepo.getCafeAddresses()
+            cafeAddressRepo.getCafeAddresses()
         }
     }
-
-    fun saveSelectedAddress(address: Address) {
+*/
+    fun saveSelectedAddress(cafeAddress: CafeAddress) {
         viewModelScope.launch {
             if (isDelivery)
-                dataStoreHelper.saveDeliveryAddressId(address.id)
+                dataStoreHelper.saveDeliveryAddressId(cafeAddress.id)
             else {
-                dataStoreHelper.saveCafeId(address.cafeId!!)
+                dataStoreHelper.saveCafeId(cafeAddress.cafeId!!)
             }
             router.navigateUp()
         }

@@ -3,7 +3,7 @@ package com.bunbeauty.domain.string_helper
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.R
@@ -13,18 +13,18 @@ import javax.inject.Inject
 class StringHelper @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     IStringHelper {
 
-    override fun toString(address: Address?): String {
-        if (address == null) {
+    override fun toString(cafeAddress: CafeAddress?): String {
+        if (cafeAddress == null) {
             return ""
         }
 
         return checkLastSymbol(
-            "${address.street?.name ?: "НЕТ"}, " +
-                    "Дом: ${address.house}, " +
-                    flatString(address) +
-                    entranceString(address) +
-                    intercomString(address) +
-                    floorString(address),
+            "${cafeAddress.street?.name ?: "НЕТ"}, " +
+                    "Дом: ${cafeAddress.house}, " +
+                    flatString(cafeAddress) +
+                    entranceString(cafeAddress) +
+                    intercomString(cafeAddress) +
+                    floorString(cafeAddress),
             ','
         )
     }
@@ -135,30 +135,30 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return data
     }
 
-    fun flatString(address: com.bunbeauty.data.model.Address): String {
-        return if (address.flat.isNotEmpty())
-            "Квартира: ${address.flat}, "
+    fun flatString(cafeAddress: CafeAddress): String {
+        return if (cafeAddress.flat.isNotEmpty())
+            "Квартира: ${cafeAddress.flat}, "
         else
             ""
     }
 
-    fun entranceString(address: com.bunbeauty.data.model.Address): String {
-        return if (address.entrance.isNotEmpty())
-            "Подъезд: ${address.entrance}, "
+    fun entranceString(cafeAddress: CafeAddress): String {
+        return if (cafeAddress.entrance.isNotEmpty())
+            "Подъезд: ${cafeAddress.entrance}, "
         else
             ""
     }
 
-    fun intercomString(address: com.bunbeauty.data.model.Address): String {
-        return if (address.intercom.isNotEmpty())
-            "Домофон: ${address.intercom}, "
+    fun intercomString(cafeAddress: CafeAddress): String {
+        return if (cafeAddress.intercom.isNotEmpty())
+            "Домофон: ${cafeAddress.intercom}, "
         else
             ""
     }
 
-    fun floorString(address: com.bunbeauty.data.model.Address): String {
-        return if (address.floor.isNotEmpty())
-            "Этаж: ${address.floor}"
+    fun floorString(cafeAddress: CafeAddress): String {
+        return if (cafeAddress.floor.isNotEmpty())
+            "Этаж: ${cafeAddress.floor}"
         else
             ""
     }

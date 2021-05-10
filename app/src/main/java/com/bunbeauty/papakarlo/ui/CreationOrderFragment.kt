@@ -14,7 +14,6 @@ import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
@@ -45,7 +44,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
             viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
         }
-        subscribe(viewModel.addressLiveData) { address ->
+        subscribe(viewModel.cafeAddressLiveData) { address ->
             viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
                 stringHelper.toString(address)
         }

@@ -3,9 +3,11 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.Street
-import com.bunbeauty.domain.repository.address.AddressRepo
+import com.bunbeauty.data.model.address.UserAddress
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
+import com.bunbeauty.domain.repository.address.UserAddressRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +18,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    private val addressRepo: AddressRepo,
+    private val userAddressRepo: UserAddressRepo,
     private val iDataStoreHelper: IDataStoreHelper,
     private val streetRepo: StreetRepo
 ) : ToolbarViewModel() {
@@ -33,10 +35,10 @@ class CreationAddressViewModel @Inject constructor(
         }
     }
 
-    fun onCreateAddressClicked(address: Address) {
+    fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
-            address.userId = iDataStoreHelper.userId.first()
-            val addressId = addressRepo.insert("token", address)
+            userAddress.userId = iDataStoreHelper.userId.first()
+            val addressId = userAddressRepo.insert("token", userAddress)
             iDataStoreHelper.saveDeliveryAddressId(addressId)
             withContext(Dispatchers.Main) {
                 router.navigateUp()
@@ -48,11 +50,9 @@ class CreationAddressViewModel @Inject constructor(
         if (text.isEmpty() && isRequired) {
             return false
         }
-
         if (text.length > maxLength) {
             return false
         }
-
         return true
     }
 }

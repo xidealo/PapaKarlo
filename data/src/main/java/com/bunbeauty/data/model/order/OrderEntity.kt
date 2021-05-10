@@ -5,7 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.bunbeauty.data.enums.OrderStatus
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.BaseModel
 import kotlinx.parcelize.Parcelize
 import org.joda.time.DateTime
@@ -17,7 +17,7 @@ data class OrderEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     @Embedded(prefix = "address_")
-    var address: Address = Address(),
+    var cafeAddress: CafeAddress = CafeAddress(),
     var comment: String = "",
     var phone: String = "",
     var time: Long = DateTime.now().millis,

@@ -30,7 +30,10 @@ class DataModule {
     fun provideMenuProductDao(localDatabase: LocalDatabase) = localDatabase.getMenuProductDao()
 
     @Provides
-    fun provideAddressDao(localDatabase: LocalDatabase) = localDatabase.getAddressDao()
+    fun provideCafeAddressDao(localDatabase: LocalDatabase) = localDatabase.getCafeAddressDao()
+
+    @Provides
+    fun provideUserAddressDao(localDatabase: LocalDatabase) = localDatabase.getUserAddressDao()
 
     @Provides
     fun provideCafeDao(localDatabase: LocalDatabase) = localDatabase.getCafeDao()

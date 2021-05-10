@@ -1,4 +1,4 @@
-package com.bunbeauty.data.model
+package com.bunbeauty.data.model.address
 
 import android.os.Parcelable
 import androidx.room.*
@@ -15,17 +15,8 @@ import kotlinx.parcelize.Parcelize
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class Address(
-    override var uuid: String = "",
+data class CafeAddress(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-    @Embedded(prefix = "street_")
-    var street: Street? = Street(),
-    var house: String = "",
-    var flat: String = "",
-    var entrance: String = "",
-    var intercom: String = "",
-    var floor: String = "",
     var cafeId: String? = null,
-    var userId: String? = null
-) : BaseModel, Parcelable
+) : Address(), Parcelable

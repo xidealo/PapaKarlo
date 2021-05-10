@@ -41,18 +41,21 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
                         viewDataBinding.fragmentProfileTvPhone.text = state.data?.phone
                         viewDataBinding.fragmentProfileTvEmail.text = state.data?.email
-                        viewDataBinding.fragmentProfileTvBonusesValue.text = state.data?.bonus.toString()
+                        viewDataBinding.fragmentProfileTvBonusesValue.text =
+                            state.data?.bonus.toString()
+                        viewModel.getAddress(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else ->{}
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 
-   /*     viewModel.getAddress().onEach { resource ->
+        viewModel.addressListState.onEach { resource ->
             when (resource) {
                 is State.Success -> {
-                    if (resource.data == null) {
+                    if (resource.data.isEmpty()) {
                         viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
                     } else {
@@ -60,10 +63,9 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
                     }
                 }
-                else -> {
-                }
+                else -> { }
             }
-        }.launchWhenStarted(lifecycleScope)*/
+        }.launchWhenStarted(lifecycleScope)
 
         viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
             viewModel.onOrderListClicked()

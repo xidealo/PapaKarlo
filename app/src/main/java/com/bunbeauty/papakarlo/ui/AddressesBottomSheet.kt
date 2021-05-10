@@ -33,9 +33,9 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
             viewModel.saveSelectedAddress(address)
         }
         viewModel.isDelivery = isDelivery
-        viewModel.addressesLiveData.observe(viewLifecycleOwner) {
+        /*viewModel.addressesLiveData.observe(viewLifecycleOwner) {
             addressesAdapter.setItemList(it)
-        }
+        }*/
 
         if (isDelivery) {
             viewDataBinding.bottomSheetAddressTvAddress.text =

@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo
 
-import com.bunbeauty.data.model.Address
+import com.bunbeauty.data.model.address.CafeAddress
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -19,25 +19,25 @@ class ExampleUnitTest {
 
     @Test
     fun addition_isCorrectAddressWithFlat() {
-        val address = com.bunbeauty.data.model.Address(4, "Держиснкого", "5a", "54")
+        val address = CafeAddress(4, "Держиснкого", "5a", "54")
         assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54", address.addressString())
     }
 
     @Test
     fun addition_isCorrectAddressWithEntrance() {
-        val address = com.bunbeauty.data.model.Address(4, "Держиснкого", "5a", "54", "4")
+        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4")
         assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4", address.addressString())
     }
 
     @Test
     fun addition_isCorrectAddressWithIntercom() {
-        val address = com.bunbeauty.data.model.Address(4, "Держиснкого", "5a", "54", "4", "23")
+        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4", "23")
         assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4, Домофон:23", address.addressString())
     }
 
     @Test
     fun addition_isCorrectAddressWithFloor() {
-        val address = com.bunbeauty.data.model.Address(4, "Держиснкого", "5a", "54", "4", "23", "3")
+        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4", "23", "3")
         assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4, Домофон:23, Этаж:3", address.addressString())
     }
 }
