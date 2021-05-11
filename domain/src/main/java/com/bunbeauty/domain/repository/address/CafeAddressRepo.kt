@@ -10,6 +10,7 @@ interface CafeAddressRepo {
     suspend fun update(cafeAddress: CafeAddress)
     fun getCafeAddresses(): Flow<List<CafeAddress>>
     fun getCafeAddressById(id: Long): Flow<CafeAddress?>
+    fun getCafeAddressByUuid(uuid: String): Flow<CafeAddress?>
     fun getCafeAddressByCafeId(cafeId: String): Flow<CafeAddress?>
     fun getFirstAddress(): LiveData<CafeAddress?>
 }

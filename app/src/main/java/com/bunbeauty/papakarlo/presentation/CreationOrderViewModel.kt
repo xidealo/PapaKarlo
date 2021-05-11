@@ -1,19 +1,20 @@
 package com.bunbeauty.papakarlo.presentation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.utils.IDataStoreHelper
+import com.bunbeauty.common.State
+import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
-import com.bunbeauty.domain.network.INetworkHelper
-import com.bunbeauty.domain.repository.address.CafeAddressRepo
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.cafe.CafeRepo
 import com.bunbeauty.domain.field_helper.IFieldHelper
+import com.bunbeauty.domain.network.INetworkHelper
+import com.bunbeauty.domain.repository.address.CafeAddressRepo
+import com.bunbeauty.domain.repository.address.UserAddressRepo
 import com.bunbeauty.domain.repository.order.OrderRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.domain.string_helper.IStringHelper
@@ -22,32 +23,78 @@ import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.CreationOrderFragmentDirections.toAddressesBottomSheet
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import javax.inject.Inject
 
-class CreationOrderViewModel @Inject constructor(
+abstract class CreationOrderViewModel : ToolbarViewModel() {
+    abstract val hasAddressState: StateFlow<State<Boolean>>
+    abstract val selectedAddressState: StateFlow<State<String>>
+
+    abstract val isDeliveryState: StateFlow<Boolean>
+
+    abstract fun getAddress()
+    abstract fun onAddressClicked()
+    abstract fun onCreateAddressClicked()
+}
+
+class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val networkHelper: INetworkHelper,
     private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
     private val cafeAddressRepo: CafeAddressRepo,
+    private val userAddressRepo: UserAddressRepo,
     private val cafeRepo: CafeRepo,
     val iFieldHelper: IFieldHelper
-) : ToolbarViewModel() {
+) : CreationOrderViewModel() {
 
-    val hasAddressLiveData = MutableLiveData(false)
+    val userId by lazy {
+        runBlocking {
+            dataStoreHelper.userId.first()
+        }
+    }
+
+    override val hasAddressState: MutableStateFlow<State<Boolean>> =
+        MutableStateFlow(State.Loading())
+
+    override val selectedAddressState: MutableStateFlow<State<String>> =
+        MutableStateFlow(State.Loading())
+
+    override val isDeliveryState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     var deferredHoursLiveData = MutableLiveData<Int?>(null)
     var deferredMinutesLiveData = MutableLiveData<Int?>(null)
 
-    val isDeliveryLiveData = MutableLiveData(true)
+    override fun getAddress() {
+        viewModelScope.launch(Dispatchers.Default) {
+            if (isDeliveryState.value) {
+                userAddressRepo.getUserAddressByUserId(userId).onEach {
+                    hasAddressState.value = it.isNotEmpty().toStateSuccess()
+                    if (it.isNotEmpty())
+                        selectedAddressState.value =
+                            stringHelper.toString(it.last()).toStateSuccess()
+                }.launchIn(viewModelScope)
+            } else {
+                cafeAddressRepo.getCafeAddressByUuid(dataStoreHelper.cafeAddressId.first()).onEach {
+                    if (it != null)
+                        selectedAddressState.value = stringHelper.toString(it).toStateSuccess()
+                    else
+                        selectedAddressState.value =
+                            resourcesProvider.getString(R.string.msg_creation_order_add_address)
+                                .toStateSuccess()
+                }.launchIn(viewModelScope)
+            }
+        }
+    }
+
     val deferredTextLiveData = switchMap(isDeliveryLiveData) { isDelivery ->
         switchMap(deferredHoursLiveData) { deferredHours ->
             map(deferredMinutesLiveData) { deferredMinutes ->
@@ -65,35 +112,8 @@ class CreationOrderViewModel @Inject constructor(
             }
         }
     }
-    private val deliveryCafeAddressLiveData: LiveData<CafeAddress?> by lazy {
-        switchMap(dataStoreHelper.deliveryAddressId.asLiveData()) { addressId ->
-            switchMap(cafeAddressRepo.getCafeAddressById(1).asLiveData()) { address ->
-                map(cafeAddressRepo.getFirstAddress()) { firstAddress ->
-                    val deliveryAddress = address ?: firstAddress
-                    hasAddressLiveData.value = deliveryAddress != null
-                    deliveryAddress
-                }
-            }
-        }
-    }
 
-    private val pickupCafeAddressLiveData: LiveData<CafeAddress?> by lazy {
-        switchMap(dataStoreHelper.cafeAddressId.asLiveData()) { addressId ->
-            cafeAddressRepo.getCafeAddressByCafeId(addressId).asLiveData()
-        }
-    }
 
-    val cafeAddressLiveData: LiveData<CafeAddress?> by lazy {
-        switchMap(isDeliveryLiveData) { isDelivery ->
-            if (isDelivery) {
-                hasAddressLiveData.value = deliveryCafeAddressLiveData.value != null
-                deliveryCafeAddressLiveData
-            } else {
-                hasAddressLiveData.value = true
-                pickupCafeAddressLiveData
-            }
-        }
-    }
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
             map(cartProductRepo.getCartProductListLiveData()) { productList ->
@@ -110,12 +130,6 @@ class CreationOrderViewModel @Inject constructor(
                             stringHelper.toStringCost(delivery.forFree)
                 }
             }
-        }
-    }
-
-    val userId by lazy {
-        runBlocking {
-            dataStoreHelper.userId.first()
         }
     }
 
@@ -149,7 +163,7 @@ class CreationOrderViewModel @Inject constructor(
         deferredHours: Int?,
         deferredMinutes: Int?
     ) {
-        if (cafeAddressLiveData.value == null) {
+        if (selectedAddressState.value == null) {
             showError(resourcesProvider.getString(R.string.error_creation_order_address))
             return
         }
@@ -159,9 +173,9 @@ class CreationOrderViewModel @Inject constructor(
             phone = phone,
             email = email,
             deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
-            isDelivery = isDeliveryLiveData.value!!,
+            isDelivery = isDeliveryState.value,
             code = generateCode(),
-            cafeAddress = cafeAddressLiveData.value!!
+            cafeAddress = selectedAddressState.value
         )
 
         viewModelScope.launch(IO) {
@@ -202,11 +216,11 @@ class CreationOrderViewModel @Inject constructor(
         return networkHelper.isNetworkConnected()
     }
 
-    fun onAddressClicked() {
-        router.navigate(toAddressesBottomSheet(isDeliveryLiveData.value!!))
+    override fun onAddressClicked() {
+        router.navigate(toAddressesBottomSheet(isDeliveryState.value))
     }
 
-    fun onCreateAddressClicked() {
+    override fun onCreateAddressClicked() {
         router.navigate(toCreationAddressFragment())
     }
 

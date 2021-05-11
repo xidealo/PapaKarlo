@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.common.extensions.visible
@@ -20,6 +22,7 @@ import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
@@ -31,29 +34,39 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     }
 
     @Inject
-    lateinit var stringHelper: IStringHelper
-
-    @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.viewModel = viewModel
 
-        subscribe(viewModel.hasAddressLiveData) {
-            viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
-            viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
-        }
-        subscribe(viewModel.cafeAddressLiveData) { address ->
-            viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
-                stringHelper.toString()
-        }
+        viewModel.hasAddressState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
+                    viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
+                }
+                else -> { }
+            }
+        }.launchWhenStarted(lifecycleScope)
+
+        viewModel.selectedAddressState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    viewDataBinding.fragmentCreationOrderBtnAddressPick.text = state.data
+                }
+                else -> { }
+            }
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.getAddress()
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
         }
+
         subscribe(viewModel.orderStringLiveData) { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
         }
+
         subscribe(viewModel.isDeliveryLiveData) { isDelivery ->
             if (isDelivery) {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnDelivery)
@@ -64,16 +77,30 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
         }
+        subscribe(viewModel.deferredTextLiveData) { deferredText ->
+            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
+        }
 
+        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
+        viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
+
+        setOnClickListeners()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
+    fun setOnClickListeners() {
         viewDataBinding.fragmentCreationOrderBtnAddressPick.setOnClickListener {
             viewModel.onAddressClicked()
         }
+
         viewDataBinding.fragmentCreationOrderBtnCreateAddress.setOnClickListener {
             viewModel.onCreateAddressClicked()
         }
         viewDataBinding.fragmentCreationOrderBtnCreateOrder.setOnClickListener {
             createOrder()
         }
+
         viewDataBinding.fragmentCreationOrderBtnDelivery.setOnClickListener {
             viewModel.isDeliveryLiveData.value = true
         }
@@ -81,21 +108,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewModel.isDeliveryLiveData.value = false
         }
 
-        // viewDataBinding.fragmentCreationOrderEtPhone.setText(viewModel.phoneNumber)
-        // viewDataBinding.fragmentCreationOrderEtEmail.setText(viewModel.email)
-
-        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
-        viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
-        viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
-            showTimePicker()
-        }
         viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.setOnClickListener {
             showTimePicker()
         }
-        subscribe(viewModel.deferredTextLiveData) { deferredText ->
-            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
+        viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
+            showTimePicker()
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showTimePicker() {

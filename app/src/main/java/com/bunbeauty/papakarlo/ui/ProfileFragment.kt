@@ -52,18 +52,19 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
             }
         }.launchWhenStarted(lifecycleScope)
 
-        viewModel.addressListState.onEach { resource ->
-            when (resource) {
+        viewModel.hasAddressState.onEach { state ->
+            when (state) {
                 is State.Success -> {
-                    if (resource.data.isEmpty()) {
-                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
-                    } else {
+                    if (state.data) {
                         viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(true)
                         viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
+                    } else {
+                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
+                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
                     }
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 

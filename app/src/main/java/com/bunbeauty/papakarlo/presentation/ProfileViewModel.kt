@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 abstract class ProfileViewModel : ToolbarViewModel() {
     abstract val userState: StateFlow<State<User?>>
-    abstract val addressListState: StateFlow<State<List<UserAddress>>>
+    abstract val hasAddressState: StateFlow<State<Boolean>>
 
     abstract fun getUser()
     abstract fun getAddress(userId: String)
@@ -41,7 +41,7 @@ class ProfileViewModelImpl @Inject constructor(
     override val userState: MutableStateFlow<State<User?>> =
         MutableStateFlow(State.Loading())
 
-    override val addressListState: MutableStateFlow<State<List<UserAddress>>> =
+    override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
 
     override fun getUser() {
@@ -59,9 +59,9 @@ class ProfileViewModelImpl @Inject constructor(
 
     override fun getAddress(userId: String) {
         viewModelScope.launch(Dispatchers.Default) {
-            userAddressRepo.getUserAddressByUserId(userId).collect {
-                addressListState.emit(it.toStateSuccess())
-            }
+            userAddressRepo.getUserAddressByUserId(userId).onEach {
+                hasAddressState.emit(it.isNotEmpty().toStateSuccess())
+            }.launchIn(viewModelScope)
         }
     }
 
