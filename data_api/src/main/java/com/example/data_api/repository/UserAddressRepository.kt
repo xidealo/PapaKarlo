@@ -10,7 +10,7 @@ import com.example.data_api.handleResult
 import com.example.data_api.mapFlow
 import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.IUserAddressMapper
-import com.example.domain_api.model.server.UserAddressServer
+import com.example.domain_api.model.server.UserAddressPostServer
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -31,7 +31,7 @@ class UserAddressRepository @Inject constructor(
             val userAddressEntity = userAddressMapper.toEntityModel(userAddressWithUuid)
             userAddressDao.insert(userAddressEntity)
         } else {
-            val userAddressServer = userAddressMapper.toServerModel(userAddressWithUuid)
+            val userAddressServer = userAddressMapper.toPostServerModel(userAddressWithUuid)
             postUserAddress(userAddressServer)
         }
 
@@ -42,12 +42,12 @@ class UserAddressRepository @Inject constructor(
         val unassignedUserAddressList = userAddressDao.getUnassignedUserAddressList()
         unassignedUserAddressList.forEach { userAddressEntity ->
             val assignedUserAddress = userAddressEntity.copy(userUuid = userUuid)
-            val userAddressServer = userAddressMapper.toServerModel(assignedUserAddress)
+            val userAddressServer = userAddressMapper.toPostServerModel(assignedUserAddress)
             postUserAddress(userAddressServer)
         }
     }
 
-    suspend fun postUserAddress(userAddress: UserAddressServer) {
+    suspend fun postUserAddress(userAddress: UserAddressPostServer) {
         apiRepo.postUserAddress(userAddress).handleResult(USER_ADDRESS_TAG) { postedUserAddress ->
             if (postedUserAddress != null) {
                 val userAddressEntity = userAddressMapper.toEntityModel(postedUserAddress)

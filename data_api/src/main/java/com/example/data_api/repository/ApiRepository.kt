@@ -8,6 +8,7 @@ import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
@@ -22,28 +23,28 @@ class ApiRepository @Inject constructor(
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
-            path = "/menuProduct",
+            path = "menuProduct",
             serializer = ListServer.serializer(MenuProductServer.serializer())
         )
     }
 
     override suspend fun getCafeList(): ApiResult<ListServer<CafeServer>> {
         return getData(
-            path = "/cafe",
+            path = "cafe",
             serializer = ListServer.serializer(CafeServer.serializer())
         )
     }
 
     override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
         return getData(
-            path = "/city",
+            path = "city",
             serializer = ListServer.serializer(CityServer.serializer())
         )
     }
 
     override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> {
         return getData(
-            path = "/cafe",
+            path = "cafe",
             serializer = ListServer.serializer(CafeServer.serializer()),
             parameters = hashMapOf("cityUuid" to cityUuid)
         )
@@ -51,19 +52,19 @@ class ApiRepository @Inject constructor(
 
     override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> {
         return getData(
-            path = "/street",
+            path = "street",
             serializer = ListServer.serializer(StreetServer.serializer()),
             parameters = hashMapOf("cityUuid" to cityUuid)
         )
     }
 
     override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(path = "/delivery", serializer = DeliveryServer.serializer())
+        return getData(path = "delivery", serializer = DeliveryServer.serializer())
     }
 
     override suspend fun getUserByUuid(userUuid: String): ApiResult<ProfileServer> {
         return getData(
-            path = "/profile",
+            path = "profile",
             serializer = ProfileServer.serializer(),
             parameters = hashMapOf("uuid" to userUuid)
         )
@@ -73,16 +74,16 @@ class ApiRepository @Inject constructor(
 
     override suspend fun postUser(profile: ProfileServer): ApiResult<ProfileServer> {
         return postData(
-            path = "/profile",
-            body = profile,
+            path = "profile",
+            postBody = profile,
             serializer = ProfileServer.serializer()
         )
     }
 
-    override suspend fun postUserAddress(userAddress: UserAddressServer): ApiResult<UserAddressServer> {
+    override suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<UserAddressServer> {
         return postData(
-            path = "/address",
-            body = userAddress,
+            path = "address",
+            postBody = userAddress,
             serializer = UserAddressServer.serializer()
         )
     }
@@ -155,17 +156,30 @@ class ApiRepository @Inject constructor(
         }
     }
 
-    suspend fun <T : Any> postData(
+    suspend fun <T : Any, R> postData(
         path: String,
-        body: T,
-        serializer: KSerializer<T>,
+        postBody: T,
+        serializer: KSerializer<R>,
         parameters: HashMap<String, String> = hashMapOf()
-    ): ApiResult<T> {
+    ): ApiResult<R> {
         return try {
+//            client.post<HttpResponse> {
+//                contentType(ContentType.Application.Json)
+//                body = postBody
+//                url {
+//                    path(path)
+//                }
+////                parameters.forEach { parameterMap ->
+////                    parameter(parameterMap.key, parameterMap.value)
+////                }
+//            }
+//                //.execute()
+//            ApiResult.Success(Any() as R)
             ApiResult.Success(
                 json.decodeFromString(
                     serializer,
-                    client.post<HttpStatement>(body = body) {
+                    client.post<HttpStatement>(body = postBody) {
+                        contentType(ContentType.Application.Json)
                         url {
                             path(path)
                         }

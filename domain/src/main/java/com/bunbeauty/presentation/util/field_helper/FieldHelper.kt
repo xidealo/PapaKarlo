@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.util.field_helper
+package com.bunbeauty.presentation.util.field_helper
 
 import javax.inject.Inject
 

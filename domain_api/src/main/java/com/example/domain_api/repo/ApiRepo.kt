@@ -15,7 +15,7 @@ interface ApiRepo {
     suspend fun getUserByUuid(userUuid: String): ApiResult<ProfileServer>
 
     suspend fun postUser(profile: ProfileServer): ApiResult<ProfileServer>
-    suspend fun postUserAddress(userAddress: UserAddressServer): ApiResult<UserAddressServer>
+    suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<UserAddressServer>
 
     suspend fun patchUserEmail(
         userUuid: String,

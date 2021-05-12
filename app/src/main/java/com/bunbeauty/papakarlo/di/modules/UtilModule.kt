@@ -10,14 +10,14 @@ import com.bunbeauty.domain.util.code.CodeGenerator
 import com.bunbeauty.domain.util.code.ICodeGenerator
 import com.bunbeauty.domain.util.date_time.DateTimeUtil
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
-import com.bunbeauty.domain.util.field_helper.FieldHelper
-import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.order.OrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.product.ProductHelper
 import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.domain.util.uri.UriHelper
+import com.bunbeauty.presentation.util.field_helper.FieldHelper
+import com.bunbeauty.presentation.util.field_helper.IFieldHelper
 import com.bunbeauty.presentation.util.network.INetworkHelper
 import com.bunbeauty.presentation.util.network.NetworkHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider

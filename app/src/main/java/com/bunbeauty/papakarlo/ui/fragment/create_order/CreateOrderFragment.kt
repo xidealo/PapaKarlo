@@ -11,8 +11,6 @@ import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
 import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
-import com.bunbeauty.domain.util.field_helper.IFieldHelper
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -23,6 +21,8 @@ import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
+import com.bunbeauty.presentation.util.field_helper.IFieldHelper
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.button.MaterialButton
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager

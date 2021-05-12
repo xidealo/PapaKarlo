@@ -1,10 +1,10 @@
 package com.bunbeauty.papakarlo.presentation.login
 
 import com.bunbeauty.common.Constants.PHONE_LENGTH
-import com.bunbeauty.domain.util.field_helper.IFieldHelper
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.LoginFragmentDirections.*
+import com.bunbeauty.papakarlo.ui.LoginFragmentDirections.toConfirmFragment
+import com.bunbeauty.presentation.util.field_helper.IFieldHelper
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(

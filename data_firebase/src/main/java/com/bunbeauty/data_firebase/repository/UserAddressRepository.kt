@@ -4,6 +4,7 @@ import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
+import com.example.domain_firebase.mapper.IUserAddressMapper
 import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
@@ -15,7 +16,7 @@ class UserAddressRepository @Inject constructor(
     private val userAddressDao: UserAddressDao,
     private val firebaseRepo: FirebaseRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val userAddressMapper: com.example.domain_firebase.mapper.IUserAddressMapper,
+    private val userAddressMapper: IUserAddressMapper,
 ) : UserAddressRepo {
 
     override suspend fun saveUserAddress(userAddress: UserAddress): UserAddress {

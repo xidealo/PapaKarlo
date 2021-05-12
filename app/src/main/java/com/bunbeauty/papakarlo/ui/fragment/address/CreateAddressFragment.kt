@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 class CreateAddressFragment : BaseFragment<FragmentCreateAddressBinding>() {
 
-    override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
-
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
+
+    override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

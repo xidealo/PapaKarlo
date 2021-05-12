@@ -9,21 +9,18 @@ import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Api
-import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.presentation.util.field_helper.IFieldHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
     @Api private val userAddressRepo: UserAddressRepo,
-    @Firebase private val streetRepo: StreetRepo,
+    @Api private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
     private val authUtil: IAuthUtil,
@@ -36,16 +33,16 @@ class CreationAddressViewModel @Inject constructor(
     val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
 
     init {
-        getStreets()
+        subscribeOnStreetList()
     }
 
-    private fun getStreets() {
-        viewModelScope.launch {
-            streetList = streetRepo.getStreets()
+    private fun subscribeOnStreetList() {
+        streetRepo.observeStreetList().onEach { streetList ->
+            this.streetList = streetList
             mutableStreetNameList.value = streetList.map { street ->
                 street.name
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun onCreateAddressClicked(
@@ -86,7 +83,6 @@ class CreationAddressViewModel @Inject constructor(
             )
             val savedUserAddress = userAddressRepo.saveUserAddress(userAddress)
             dataStoreRepo.saveUserAddressUuid(savedUserAddress.uuid)
-
             showMessage(resourcesProvider.getString(R.string.msg_create_address_created))
             goBack()
         }
