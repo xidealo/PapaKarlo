@@ -32,8 +32,8 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job() + IO
 
-    private val firebaseInstance = FirebaseDatabase.getInstance()
     private val testFirebaseInstance = FirebaseDatabase.getInstance("https://test-fooddelivery.firebaseio.com")
+    private val firebaseInstance = testFirebaseInstance
 
     override fun insert(orderFirebase: OrderFirebase, cafeId: String): String {
         val orderUuid = firebaseInstance.getReference(Constants.ORDERS)

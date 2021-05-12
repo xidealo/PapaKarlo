@@ -45,7 +45,6 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
     abstract val deferredHoursLiveData: MutableLiveData<Int?>
     abstract val deferredMinutesLiveData: MutableLiveData<Int?>
 
-
     abstract val deliveryStringLiveData: LiveData<String>
 
     abstract fun getAddress()
@@ -97,29 +96,33 @@ class CreationOrderViewModelImpl @Inject constructor(
 
     override fun getAddress() {
         viewModelScope.launch(Dispatchers.Default) {
-            if (isDeliveryState.value) {
-                // смотреть на датастор сначала
-                userAddressRepo.getUserAddressByUuid(dataStoreHelper.deliveryAddressId.first())
-                    .onEach { userAddress ->
-                        hasAddressState.value = (userAddress != null).toStateSuccess()
-                        if (userAddress != null) {
-                            selectedAddressTextState.value =
-                                stringHelper.toString(userAddress).toStateSuccess()
-                            selectedAddressState.value = userAddress
-                        }
-                    }.launchIn(viewModelScope)
-            } else {
-                cafeAddressRepo.getCafeAddressByUuid(dataStoreHelper.cafeAddressId.first()).onEach {
-                    if (it != null) {
-                        selectedAddressTextState.value = stringHelper.toString(it).toStateSuccess()
-                        selectedAddressState.value = it
-                    } else {
-                        selectedAddressTextState.value =
-                            resourcesProvider.getString(R.string.msg_creation_order_add_address)
-                                .toStateSuccess()
-                    }
-                }.launchIn(viewModelScope)
-            }
+            isDeliveryState.onEach { isDelivery ->
+                if (isDelivery) {
+                    // смотреть на датастор сначала
+                    userAddressRepo.getUserAddressByUuid(dataStoreHelper.deliveryAddressId.first())
+                        .onEach { userAddress ->
+                            hasAddressState.value = (userAddress != null).toStateSuccess()
+                            if (userAddress != null) {
+                                selectedAddressTextState.value =
+                                    stringHelper.toString(userAddress).toStateSuccess()
+                                selectedAddressState.value = userAddress
+                            }
+                        }.launchIn(viewModelScope)
+                } else {
+                    cafeAddressRepo.getCafeAddressByUuid(dataStoreHelper.cafeAddressId.first())
+                        .onEach {
+                            if (it != null) {
+                                selectedAddressTextState.value =
+                                    stringHelper.toString(it).toStateSuccess()
+                                selectedAddressState.value = it
+                            } else {
+                                selectedAddressTextState.value =
+                                    resourcesProvider.getString(R.string.msg_creation_order_add_address)
+                                        .toStateSuccess()
+                            }
+                        }.launchIn(viewModelScope)
+                }
+            }.launchIn(viewModelScope)
         }
     }
 
