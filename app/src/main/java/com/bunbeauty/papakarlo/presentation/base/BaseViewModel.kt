@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.domain.IMessageShowable
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.domain.repository.cart_product.CartProductRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -27,7 +26,8 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     @Inject
     lateinit var router: Router
 
-    var messageShowable: WeakReference<IMessageShowable>? = null
+    val messageSharedFlow = MutableSharedFlow<String>()
+    val errorSharedFlow = MutableSharedFlow<String>()
 
     val isCartEmptyLiveData = MutableLiveData(false)
 
@@ -49,15 +49,7 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
             cartProduct.count++
             cartProductRepo.update(cartProduct)
         }
-        showMessage("Вы добавили ${menuProduct.name} в корзину")
+        messageSharedFlow.emit("Вы добавили ${menuProduct.name} в корзину")
     }
 
-
-    fun showMessage(message: String) {
-        messageShowable?.get()?.showMessage(message)
-    }
-
-    fun showError(error: String) {
-        messageShowable?.get()?.showError(error)
-    }
 }

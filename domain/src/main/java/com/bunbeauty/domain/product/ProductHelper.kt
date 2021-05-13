@@ -63,7 +63,7 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         return getMenuProductPrice(cartProduct.menuProduct) * cartProduct.count
     }
 
-    fun getFullPrice(cartProductList: List<com.bunbeauty.data.model.CartProduct>): Int {
+    override fun getFullPrice(cartProductList: List<com.bunbeauty.data.model.CartProduct>): Int {
         return cartProductList.map { cartProduct ->
             getCartProductPrice(cartProduct)
         }.sum()

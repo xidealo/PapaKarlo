@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import com.bunbeauty.domain.IMessageShowable
+import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -21,11 +21,10 @@ import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import java.lang.ref.WeakReference
-import java.lang.reflect.ParameterizedType
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable {
+abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     abstract var layoutId: Int
     lateinit var viewDataBinding: B
@@ -60,6 +59,17 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable 
 
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.messageSharedFlow.onEach {
+                showMessage(it)
+            }.launchWhenStarted(lifecycleScope)
+        }
+        lifecycleScope.launchWhenStarted {
+            viewModel.errorSharedFlow.onEach {
+                showError(it)
+            }.launchWhenStarted(lifecycleScope)
+        }
     }
 
     protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
@@ -72,7 +82,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable 
         }
     }
 
-    override fun showMessage(message: String) {
+    fun showMessage(message: String) {
         val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -82,7 +92,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), IMessageShowable 
         snack.show()
     }
 
-    override fun showError(error: String) {
+    fun showError(error: String) {
         val snack = Snackbar.make(viewDataBinding.root, error, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.errorColor))
             .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))

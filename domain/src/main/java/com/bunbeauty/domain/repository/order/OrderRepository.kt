@@ -17,7 +17,7 @@ class OrderRepository @Inject constructor(
     private val orderMapper: OrderMapper
 ) : OrderRepo {
 
-    override suspend fun saveOrder(order: Order) {
+    override suspend fun insert(order: Order) {
         withContext(Dispatchers.IO) {
             order.orderEntity.uuid =
                 apiRepository.insert(orderMapper.from(order), order.cafeId)

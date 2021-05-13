@@ -61,6 +61,15 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         userReference.setValue(userFirebase)
     }
 
+    override fun update(userFirebase: UserFirebase, userId: String) {
+        val userReference = testFirebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(Constants.USERS)
+            .child(userId)
+        userReference.setValue(userFirebase)
+    }
+
     override fun insert(addressFirebase: AddressFirebase, userId: String) :String{
         val addressUuid = testFirebaseInstance.getReference(COMPANY)
             .child(BuildConfig.APP_ID)

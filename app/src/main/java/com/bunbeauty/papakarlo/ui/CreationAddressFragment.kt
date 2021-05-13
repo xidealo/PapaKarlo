@@ -119,6 +119,5 @@ class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding>() {
                 floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim()
             }
         )
-        showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
     }
 }

@@ -60,6 +60,7 @@
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>
     <string name="title_creation_order_extra_extra_comment">Дополнительная информация</string>
+    <string name="title_creation_order_extra_bonuses">Бонусы</string>
     <string name="title_creation_order_contact">Контактная информация</string>
     <string name="title_creation_order_phone">Телефон*</string>
     <string name="title_creation_order_email">Email</string>
@@ -73,6 +74,7 @@
     <string name="msg_creation_order_selected_address">Выбранный адрес:</string>
     <string name="msg_creation_order_free">Бесплатная доставка от 500 ₽</string>
     <string name="hint_creation_order_extra_comment">Комментарий</string>
+    <string name="hint_creation_order_extra_bonuses">Списать бонусы</string>
     <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
     <string name="hint_creation_order_deferred">Отложенный заказ</string>
     <string name="error_creation_order_comment">Введите корректный комментарий</string>

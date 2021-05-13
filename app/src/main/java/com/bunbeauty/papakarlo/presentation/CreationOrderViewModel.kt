@@ -5,6 +5,8 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Constants
+import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
@@ -31,6 +33,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 abstract class CreationOrderViewModel : ToolbarViewModel() {
     abstract val hasAddressState: StateFlow<State<Boolean>>
@@ -57,7 +60,8 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
         phone: String,
         email: String,
         deferredHours: Int?,
-        deferredMinutes: Int?
+        deferredMinutes: Int?,
+        spentBonusesString: String
     )
 }
 
@@ -73,12 +77,6 @@ class CreationOrderViewModelImpl @Inject constructor(
     private val cafeRepo: CafeRepo,
     private val userRepo: UserRepo
 ) : CreationOrderViewModel() {
-
-    val userId by lazy {
-        runBlocking {
-            dataStoreHelper.userId.first()
-        }
-    }
 
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
@@ -201,13 +199,14 @@ class CreationOrderViewModelImpl @Inject constructor(
         phone: String,
         email: String,
         deferredHours: Int?,
-        deferredMinutes: Int?
+        deferredMinutes: Int?,
+        spentBonusesString: String
     ) {
-        if (selectedAddressState.value == null) {
-            showError(resourcesProvider.getString(R.string.error_creation_order_address))
-            return
-        }
         viewModelScope.launch(Dispatchers.Default) {
+            if (selectedAddressState.value == null) {
+                errorSharedFlow.emit(resourcesProvider.getString(R.string.error_creation_order_address))
+                return@launch
+            }
             val orderEntity = OrderEntity(
                 comment = comment,
                 phone = phone,
@@ -217,7 +216,6 @@ class CreationOrderViewModelImpl @Inject constructor(
                 code = generateCode(),
                 address = selectedAddressState.value!!
             )
-
             val order = Order(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
@@ -225,10 +223,28 @@ class CreationOrderViewModelImpl @Inject constructor(
                     orderEntity.address.street?.districtId ?: "ERROR CAFE"
                 ).id
             )
-            orderRepo.saveOrder(order)
-            withContext(Main) {
-                showMessage(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
-                router.navigate(backToMenuFragment())
+            if (userState.value is State.Success) {
+                val user = (userState.value as State.Success<User?>).data!!
+                val spentBonuses = if (spentBonusesString.isEmpty()) {
+                    0
+                } else {
+                    spentBonusesString.toInt()
+                }
+                user.bonus += (productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt()
+                if (user.bonus - spentBonuses < 0) {
+                    //show alert about bonuses
+                    return@launch
+                } else {
+                    user.bonus -= spentBonuses
+                }
+                userRepo.update(user)
+                orderRepo.insert(order)
+                withContext(Main) {
+                    messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
+                    router.navigate(backToMenuFragment())
+                }
+            } else {
+                //show alert about user not loaded
             }
         }
     }

@@ -75,10 +75,13 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                         viewDataBinding.fragmentCreationOrderEtEmail.setText(
                             state.data?.email ?: ""
                         )
+                        viewDataBinding.fragmentCreationOrderTvBonusesValue.text =
+                            state.data?.bonus.toString()
+                    }else{
+                        viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
                     }
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getUser()
@@ -120,21 +123,18 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         viewDataBinding.fragmentCreationOrderBtnAddressPick.setOnClickListener {
             viewModel.onAddressClicked()
         }
-
         viewDataBinding.fragmentCreationOrderBtnCreateAddress.setOnClickListener {
             viewModel.onCreateAddressClicked()
         }
         viewDataBinding.fragmentCreationOrderBtnCreateOrder.setOnClickListener {
             createOrder()
         }
-
         viewDataBinding.fragmentCreationOrderBtnDelivery.setOnClickListener {
             viewModel.isDeliveryState.value = true
         }
         viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
             viewModel.isDeliveryState.value = false
         }
-
         viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.setOnClickListener {
             showTimePicker()
         }
@@ -205,7 +205,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
             viewDataBinding.fragmentCreationOrderEtEmail.text.toString().trim(),
             viewModel.deferredHoursStateFlow.value,
-            viewModel.deferredMinutesStateFlow.value
+            viewModel.deferredMinutesStateFlow.value,
+            viewDataBinding.fragmentCreationOrderEtBonuses.text.toString()
         )
     }
 

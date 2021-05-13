@@ -20,6 +20,11 @@ class UserRepository @Inject constructor(
         apiRepository.insert(userMapper.from(user), user.userId)
     }
 
+    override suspend fun update(user: User) {
+        userDao.update(user)
+        apiRepository.update(userMapper.from(user), user.userId)
+    }
+
     override fun getUserAsFlow(userId: String): Flow<User?> {
         return userDao.getUserFlow(userId).flowOn(IO)
     }

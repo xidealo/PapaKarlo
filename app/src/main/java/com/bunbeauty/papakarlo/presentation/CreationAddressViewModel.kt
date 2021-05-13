@@ -9,6 +9,8 @@ import com.bunbeauty.data.model.address.UserAddress
 import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.domain.repository.address.UserAddressRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
+import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class CreationAddressViewModel @Inject constructor(
     private val userAddressRepo: UserAddressRepo,
     private val iDataStoreHelper: IDataStoreHelper,
-    private val streetRepo: StreetRepo
+    private val streetRepo: StreetRepo,
+    private val resourcesProvider: IResourcesProvider
 ) : ToolbarViewModel() {
 
     var streets = listOf<Street>()
@@ -42,6 +45,7 @@ class CreationAddressViewModel @Inject constructor(
 
             iDataStoreHelper.saveDeliveryAddressId(userAddressWithId.uuid)
             withContext(Dispatchers.Main) {
+                messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_address_created_address))
                 router.navigateUp()
             }
         }

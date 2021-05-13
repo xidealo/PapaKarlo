@@ -7,8 +7,16 @@ import com.bunbeauty.data.model.MenuProduct
 interface IProductHelper {
 
     fun getFullPriceString(cartProductList: List<CartProduct>): String
-    fun getFullPriceStringWithDelivery(cartProductList: List<CartProduct>, delivery: Delivery): String
-    fun getDifferenceBeforeFreeDeliveryString(cartProductList: List<CartProduct>, priceForFreeDelivery: Int): String
+    fun getFullPrice(cartProductList: List<CartProduct>): Int
+    fun getFullPriceStringWithDelivery(
+        cartProductList: List<CartProduct>,
+        delivery: Delivery
+    ): String
+
+    fun getDifferenceBeforeFreeDeliveryString(
+        cartProductList: List<CartProduct>,
+        priceForFreeDelivery: Int
+    ): String
 
     fun getCartProductPriceString(cartProduct: CartProduct): String
     fun getCartProductOldPriceString(cartProduct: CartProduct): String

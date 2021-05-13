@@ -44,7 +44,6 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
             viewDataBinding.fragmentProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(menuProduct)
-            showMessage("${menuProduct.name} был добавлен в корзину")
         }
     }
 }
