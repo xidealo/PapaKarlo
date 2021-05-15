@@ -9,6 +9,6 @@ interface UserAddressRepo {
     suspend fun assignToUser(userUuid: String)
 
     fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?>
-    fun observeUserAddressListByUserUuid(userUuid: String): Flow<List<UserAddress>>
+    fun observeUserAddressList(): Flow<List<UserAddress>>
     fun observeUnassignedUserAddressList(): Flow<List<UserAddress>>
 }

@@ -33,7 +33,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
-            viewModel.userState.onEach { state ->
+            viewModel.profileState.onEach { state ->
                 fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
                 fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
                 fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)

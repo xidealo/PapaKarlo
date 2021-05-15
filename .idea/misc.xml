@@ -14,8 +14,10 @@
         <entry key="app/src/main/res/drawable/ic_vk.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/bottom_sheet_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_city_selection.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/bottom_sheet_defered_time.xml" value="0.5920925747348119" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_select_city.xml" value="0.39791666666666664" />

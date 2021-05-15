@@ -2,7 +2,7 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.domain.auth.AuthUtil
-import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserAddressDao
 import com.example.data_api.dao.UserDao
@@ -45,23 +45,24 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override suspend fun getUserByUuid(userUuid: String): User? {
+    override suspend fun getUserByUuid(userUuid: String): Profile? {
         return userDao.getUserByUuid(userUuid)?.let { user ->
             userMapper.toModel(user)
         }
     }
 
-    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+    override fun observeUserByUuid(userUuid: String): Flow<Profile?> {
         return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toModel)
     }
 
-    override suspend fun updateUserEmail(user: User) {
-        val userEmailServer = userMapper.toUserEmailServer(user)
-        apiRepo.patchUserEmail(user.uuid, userEmailServer).handleResult(USER_TAG) { patchedUser ->
-            patchedUser?.let {
-                userDao.update(userMapper.toEntityModel(patchedUser).user)
+    override suspend fun updateUserEmail(profile: Profile) {
+        val userEmailServer = userMapper.toUserEmailServer(profile)
+        apiRepo.patchUserEmail(profile.uuid, userEmailServer)
+            .handleResult(USER_TAG) { patchedUser ->
+                patchedUser?.let {
+                    userDao.update(userMapper.toEntityModel(patchedUser).user)
+                }
             }
-        }
     }
 
     suspend fun saveUser(profile: ProfileServer?) {

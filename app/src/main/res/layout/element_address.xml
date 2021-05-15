@@ -6,23 +6,13 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
-        style="@style/DefaultMaterialCard"
-        app:cardCornerRadius="0dp">
+        style="@style/MaterialCardWithoutShadow"
+        app:contentPadding="@dimen/large_padding">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/element_address_tv_address"
+            style="@style/LargeRegularText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/element_address_tv_address"
-                style="@style/LargeMainText"
-                android:layout_width="match_parent"
-                android:padding="@dimen/large_padding"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Address" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            tools:text="Address" />
     </com.google.android.material.card.MaterialCardView>
 </layout>

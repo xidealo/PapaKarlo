@@ -36,7 +36,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         viewModel.getUser(userUuid)
 
         viewDataBinding.run {
-            viewModel.userState.onEach { state ->
+            viewModel.profileState.onEach { state ->
                 fragmentSettingsNcPhone.toggleVisibility(state is State.Success)
                 fragmentSettingsNcAddEmail.toggleVisibility(state is State.Success)
                 fragmentSettingsTcEmail.toggleVisibility(state is State.Success)

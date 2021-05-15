@@ -1,6 +1,6 @@
 package com.bunbeauty.data_firebase.mapper
 
-import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.model.Profile
 import com.example.domain_firebase.mapper.IUserAddressMapper
 import com.example.domain_firebase.mapper.IUserMapper
 import com.example.domain_firebase.model.entity.user.UserEntity
@@ -28,8 +28,8 @@ class UserMapper @Inject constructor(private val userAddressMapper: IUserAddress
         )
     }
 
-    override fun toUIModel(user: UserEntity): User {
-        return User(
+    override fun toUIModel(user: UserEntity): Profile {
+        return Profile(
             uuid = user.uuid,
             phone = user.phone,
             email = user.email,

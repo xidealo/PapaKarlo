@@ -8,44 +8,23 @@
         style="@style/DefaultBottomSheet"
         tools:context=".ui.AddressesBottomSheet">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottom_sheet_address_mcv_title"
-            style="@style/DefaultMaterialCard"
-            android:layout_marginHorizontal="@dimen/medium_margin"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+            android:id="@+id/bottom_sheet_address_tv_title"
+            style="@style/MediumBoldCenterText"
+            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_address_iv_create_address"
+            app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_address_iv_create_address"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_address_iv_create_address"
+            tools:text="Ваши адреса" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/bottom_sheet_address_tv_address"
-                    style="@style/MainTitle"
-                    android:gravity="center"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:text="@string/title_bottom_sheet_addresses_your_address"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_address_iv_create_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/bottom_sheet_address_iv_create_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+        <ImageView
+            android:id="@+id/bottom_sheet_address_iv_create_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:src="@drawable/ic_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/bottom_sheet_address_rv_result"
@@ -54,7 +33,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_address_mcv_title"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_address_iv_create_address"
             tools:itemCount="2"
             tools:listitem="@layout/element_address" />
 

@@ -5,7 +5,7 @@ import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.data_firebase.dao.UserDao
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IUserMapper
@@ -51,13 +51,13 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override suspend fun getUserByUuid(userUuid: String): User? {
+    override suspend fun getUserByUuid(userUuid: String): Profile? {
         return userDao.getByUuid(userUuid)?.let { userEntity ->
             userMapper.toUIModel(userEntity)
         }
     }
 
-    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+    override fun observeUserByUuid(userUuid: String): Flow<Profile?> {
         return userDao.observeByUuid(userUuid)
             .flowOn(IO)
             .mapNotNull { userEntity ->
@@ -68,7 +68,7 @@ class UserRepository @Inject constructor(
             .flowOn(Default)
     }
 
-    override suspend fun updateUserEmail(user: User) {
+    override suspend fun updateUserEmail(profile: Profile) {
         // TODO
     }
 

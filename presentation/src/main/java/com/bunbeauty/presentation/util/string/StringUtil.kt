@@ -58,7 +58,7 @@ class StringUtil @Inject constructor(
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
             val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
             val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
-            userAddress.street.name + ADDRESS_DIVIDER +
+            userAddress.street.name +
                     getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
                     getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
                     getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +

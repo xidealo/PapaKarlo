@@ -26,10 +26,14 @@
         <item name="cardCornerRadius">@dimen/medium_radius</item>
     </style>
 
-    <style name="DefaultMaterialCardWithoutRadius">
+    <style name="MaterialCardWithoutRadius">
         <item name="cardBackgroundColor">@color/cardViewBackground</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MaterialCardWithoutShadow" parent="DefaultMaterialCard">
+        <item name="cardElevation">0dp</item>
     </style>
 
     <style name="ElementMaterialCard" parent="DefaultMaterialCard">
@@ -354,6 +358,11 @@
 
     <style name="MediumSecondaryRegularText" parent="SecondaryText">
         <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
+    <style name="LargeRegularText" parent="BaseText">
+        <item name="android:textSize">@dimen/large_text_size</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 

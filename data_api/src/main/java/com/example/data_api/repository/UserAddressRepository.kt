@@ -1,6 +1,7 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.example.data_api.dao.UserAddressDao
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 class UserAddressRepository @Inject constructor(
     private val apiRepo: ApiRepo,
+    private val authUtil: IAuthUtil,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper
 ) : UserAddressRepo {
@@ -56,7 +58,8 @@ class UserAddressRepository @Inject constructor(
             .mapFlow(userAddressMapper::toModel)
     }
 
-    override fun observeUserAddressListByUserUuid(userUuid: String): Flow<List<UserAddress>> {
+    override fun observeUserAddressList(): Flow<List<UserAddress>> {
+        val userUuid = authUtil.userUuid ?: ""
         return userAddressDao.observeUserAddressListByUserUuid(userUuid)
             .mapListFlow(userAddressMapper::toModel)
     }

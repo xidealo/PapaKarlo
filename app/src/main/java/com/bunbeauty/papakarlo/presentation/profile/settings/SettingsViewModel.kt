@@ -8,7 +8,7 @@ import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
@@ -28,9 +28,10 @@ class SettingsViewModel @Inject constructor(
     private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
 
-    private var userValue: User? = null
-    private val mutableUserState: MutableStateFlow<State<User>> = MutableStateFlow(State.Loading())
-    val userState: StateFlow<State<User>> = mutableUserState.asStateFlow()
+    private var profileValue: Profile? = null
+    private val mutableProfileState: MutableStateFlow<State<Profile>> =
+        MutableStateFlow(State.Loading())
+    val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
 
     private val mutableCity: MutableStateFlow<City?> = MutableStateFlow(null)
     val city: StateFlow<City?> = mutableCity.asStateFlow()
@@ -41,13 +42,13 @@ class SettingsViewModel @Inject constructor(
 
     fun getUser(userUuid: String) {
         userRepo.observeUserByUuid(userUuid).onEach { user ->
-            userValue = user
-            mutableUserState.value = user.toSuccessOrEmpty()
+            profileValue = user
+            mutableProfileState.value = user.toSuccessOrEmpty()
         }.launchIn(viewModelScope)
     }
 
     fun onEmailClicked() {
-        val titleResourceId = if (userValue?.email.isNullOrEmpty()) {
+        val titleResourceId = if (profileValue?.email.isNullOrEmpty()) {
             R.string.title_settings_add_email
         } else {
             R.string.title_settings_edit_email
@@ -57,7 +58,7 @@ class SettingsViewModel @Inject constructor(
             infoText = null,
             hint = resourcesProvider.getString(R.string.hint_settings_email),
             type = OneLineActionType.EMAIL,
-            inputText = userValue?.email,
+            inputText = profileValue?.email,
             buttonText = resourcesProvider.getString(R.string.action_settings_save),
             requestKey = EMAIL_REQUEST_KEY,
             resultKey = RESULT_EMAIL_KEY,
@@ -66,12 +67,12 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onEmailChanged(email: String?) {
-        mutableUserState.value = State.Loading()
-        val user = userValue?.copy(email = email ?: return)
-        if (user != null && user.email != userValue?.email) {
+        mutableProfileState.value = State.Loading()
+        val user = profileValue?.copy(email = email ?: return)
+        if (user != null && user.email != profileValue?.email) {
             viewModelScope.launch {
                 userRepo.updateUserEmail(user)
-                mutableUserState.value = userValue.toSuccessOrEmpty()
+                mutableProfileState.value = profileValue.toSuccessOrEmpty()
             }
         }
     }

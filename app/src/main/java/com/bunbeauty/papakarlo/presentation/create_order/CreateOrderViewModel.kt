@@ -206,7 +206,7 @@ class CreateOrderViewModel @Inject constructor(
                                 "CreateOrderViewModel -> subscribeOnAddress; userAddressUuid = $userAddressUuid"
                             )
                             if (userAddressUuid == null) {
-                                userAddressRepo.observeUserAddressListByUserUuid(userUuid)
+                                userAddressRepo.observeUserAddressList()
                                     .onEach { addressList ->
                                         if (addressList.isNotEmpty()) {
                                             userAddress = addressList.first()

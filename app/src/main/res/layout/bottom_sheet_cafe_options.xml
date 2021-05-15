@@ -9,10 +9,9 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_cafe_options_nc_call"
-            style="@style/NavigationCard"
+            style="@style/NavigationCardWithoutShadow"
             android:layout_margin="@dimen/medium_margin"
             android:icon="@drawable/ic_right_arrow"
-            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -20,10 +19,9 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_cafe_options_nc_show_map"
-            style="@style/NavigationCard"
+            style="@style/NavigationCardWithoutShadow"
             android:layout_margin="@dimen/medium_margin"
             android:icon="@drawable/ic_right_arrow"
-            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

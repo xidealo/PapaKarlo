@@ -1,6 +1,6 @@
 package com.example.data_api.mapper
 
-import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.model.Profile
 import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.mapper.IUserMapper
@@ -27,8 +27,8 @@ class UserMapper @Inject constructor(
         )
     }
 
-    override fun toModel(user: ProfileEntity): User {
-        return User(
+    override fun toModel(user: ProfileEntity): Profile {
+        return Profile(
             uuid = user.user.uuid,
             phone = user.user.phone,
             email = user.user.email,
@@ -37,9 +37,9 @@ class UserMapper @Inject constructor(
         )
     }
 
-    override fun toUserEmailServer(user: User): UserEmailServer {
+    override fun toUserEmailServer(profile: Profile): UserEmailServer {
         return UserEmailServer(
-            email = user.email
+            email = profile.email
         )
     }
 }
