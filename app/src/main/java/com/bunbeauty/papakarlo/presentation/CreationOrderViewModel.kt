@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
@@ -7,6 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.data.model.address.Address
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.data.utils.IDataStoreHelper
@@ -35,13 +37,30 @@ import javax.inject.Inject
 
 abstract class CreationOrderViewModel : ToolbarViewModel() {
     abstract val hasAddressState: StateFlow<State<Boolean>>
-    abstract val selectedAddressState: StateFlow<State<String>>
+    abstract val selectedAddressTextState: StateFlow<State<String>>
 
-    abstract val isDeliveryState: StateFlow<Boolean>
+    abstract val isDeliveryState: MutableStateFlow<Boolean>
+    abstract val deferredTextStateFlow: StateFlow<String>
+    abstract val orderStringStateFlow: StateFlow<String>
+    abstract val deferredHoursLiveData: MutableLiveData<Int?>
+    abstract val deferredMinutesLiveData: MutableLiveData<Int?>
+
+
+    abstract val deliveryStringLiveData: LiveData<String>
 
     abstract fun getAddress()
+    abstract fun subscribeOnDeferredText()
+    abstract fun subscribeOnOrderString()
+    abstract fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean
     abstract fun onAddressClicked()
     abstract fun onCreateAddressClicked()
+    abstract fun createOrder(
+        comment: String,
+        phone: String,
+        email: String,
+        deferredHours: Int?,
+        deferredMinutes: Int?
+    )
 }
 
 class CreationOrderViewModelImpl @Inject constructor(
@@ -52,8 +71,7 @@ class CreationOrderViewModelImpl @Inject constructor(
     private val orderRepo: OrderRepo,
     private val cafeAddressRepo: CafeAddressRepo,
     private val userAddressRepo: UserAddressRepo,
-    private val cafeRepo: CafeRepo,
-    val iFieldHelper: IFieldHelper
+    private val cafeRepo: CafeRepo
 ) : CreationOrderViewModel() {
 
     val userId by lazy {
@@ -65,58 +83,82 @@ class CreationOrderViewModelImpl @Inject constructor(
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
 
-    override val selectedAddressState: MutableStateFlow<State<String>> =
+    override val selectedAddressTextState: MutableStateFlow<State<String>> =
         MutableStateFlow(State.Loading())
 
-    override val isDeliveryState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val selectedAddressState: MutableStateFlow<Address?> = MutableStateFlow(null)
 
-    var deferredHoursLiveData = MutableLiveData<Int?>(null)
-    var deferredMinutesLiveData = MutableLiveData<Int?>(null)
+    override val isDeliveryState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    override val deferredTextStateFlow: MutableStateFlow<String> = MutableStateFlow("")
+    override val orderStringStateFlow: MutableStateFlow<String> = MutableStateFlow("")
+
+    override val deferredHoursLiveData = MutableLiveData<Int?>(null)
+    override val deferredMinutesLiveData = MutableLiveData<Int?>(null)
 
     override fun getAddress() {
         viewModelScope.launch(Dispatchers.Default) {
             if (isDeliveryState.value) {
-                userAddressRepo.getUserAddressByUserId(userId).onEach {
-                    hasAddressState.value = it.isNotEmpty().toStateSuccess()
-                    if (it.isNotEmpty())
-                        selectedAddressState.value =
-                            stringHelper.toString(it.last()).toStateSuccess()
-                }.launchIn(viewModelScope)
+                // смотреть на датастор сначала
+                userAddressRepo.getUserAddressByUuid(dataStoreHelper.deliveryAddressId.first())
+                    .onEach { userAddress ->
+                        hasAddressState.value = (userAddress != null).toStateSuccess()
+                        if (userAddress != null) {
+                            selectedAddressTextState.value =
+                                stringHelper.toString(userAddress).toStateSuccess()
+                            selectedAddressState.value = userAddress
+                        }
+                    }.launchIn(viewModelScope)
             } else {
                 cafeAddressRepo.getCafeAddressByUuid(dataStoreHelper.cafeAddressId.first()).onEach {
-                    if (it != null)
-                        selectedAddressState.value = stringHelper.toString(it).toStateSuccess()
-                    else
-                        selectedAddressState.value =
+                    if (it != null) {
+                        selectedAddressTextState.value = stringHelper.toString(it).toStateSuccess()
+                        selectedAddressState.value = it
+                    } else {
+                        selectedAddressTextState.value =
                             resourcesProvider.getString(R.string.msg_creation_order_add_address)
                                 .toStateSuccess()
+                    }
                 }.launchIn(viewModelScope)
             }
         }
     }
 
-    val deferredTextLiveData = switchMap(isDeliveryLiveData) { isDelivery ->
-        switchMap(deferredHoursLiveData) { deferredHours ->
-            map(deferredMinutesLiveData) { deferredMinutes ->
-                if (isDelivery) {
-                    resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringHelper.toStringTime(
-                        deferredHours,
-                        deferredMinutes
-                    )
-                } else {
-                    resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringHelper.toStringTime(
-                        deferredHours,
-                        deferredMinutes
-                    )
-                }
-            }
+    override fun subscribeOnDeferredText() {
+        deferredTextStateFlow.value = if (isDeliveryState.value) {
+            resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringHelper.toStringTime(
+                deferredHoursLiveData.value,
+                deferredMinutesLiveData.value
+            )
+        } else {
+            resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringHelper.toStringTime(
+                deferredHoursLiveData.value,
+                deferredMinutesLiveData.value
+            )
         }
     }
 
+    override fun subscribeOnOrderString() {
+        viewModelScope.launch {
+            cartProductRepo.getCartProductListFlow().onEach { productList ->
+                if (isDeliveryState.value) {
+                    orderStringStateFlow.value =
+                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
+                                productHelper.getFullPriceStringWithDelivery(
+                                    productList,
+                                    dataStoreHelper.delivery.first()
+                                )
+                } else {
+                    orderStringStateFlow.value =
+                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
+                                productHelper.getFullPriceString(productList)
+                }
+            }.launchIn(viewModelScope)
+        }
+    }
 
-    val deliveryStringLiveData by lazy {
+    override val deliveryStringLiveData by lazy {
         switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.getCartProductListLiveData()) { productList ->
+            map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree
@@ -133,30 +175,15 @@ class CreationOrderViewModelImpl @Inject constructor(
         }
     }
 
-    val orderStringLiveData by lazy {
-        switchMap(cartProductRepo.getCartProductListLiveData()) { productList ->
-            switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
-                map(isDeliveryLiveData) { isDelivery ->
-                    if (isDelivery) {
-                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                                productHelper.getFullPriceStringWithDelivery(productList, delivery)
-                    } else {
-                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                                productHelper.getFullPriceString(productList)
-                    }
-                }
-            }
-        }
-    }
 
-    fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
+    override fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
         val limitMinutes = DateTime.now().minuteOfDay + HALF_HOUR
         val pickedMinutes = deferredHours * MINUTES_IN_HOURS + deferredMinutes
 
         return pickedMinutes > limitMinutes
     }
 
-    fun createOrder(
+    override fun createOrder(
         comment: String,
         phone: String,
         email: String,
@@ -175,7 +202,7 @@ class CreationOrderViewModelImpl @Inject constructor(
             deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
             isDelivery = isDeliveryState.value,
             code = generateCode(),
-            cafeAddress = selectedAddressState.value
+            address = selectedAddressState.value!!
         )
 
         viewModelScope.launch(IO) {
@@ -183,7 +210,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
                 cafeRepo.getCafeEntityByDistrict(
-                    orderEntity.cafeAddress.street?.districtId ?: "ERROR CAFE"
+                    orderEntity.address.street?.districtId ?: "ERROR CAFE"
                 ).id
             )
 

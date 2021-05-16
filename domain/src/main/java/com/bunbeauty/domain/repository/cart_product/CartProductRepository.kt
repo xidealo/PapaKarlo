@@ -12,7 +12,7 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
         return cartProduct
     }
 
-    override fun getCartProductListLiveData() = cartProductDao.getCartProductListLiveData()
+    override fun getCartProductListFlow() = cartProductDao.getCartProductListLiveData()
 
     override suspend fun getCartProductList(): List<CartProduct> = cartProductDao.getCartProductList()
 

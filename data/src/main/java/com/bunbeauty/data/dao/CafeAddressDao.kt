@@ -18,6 +18,9 @@ interface CafeAddressDao : BaseDao<CafeAddress> {
     @Query("SELECT * FROM CafeAddress WHERE cafeId == :cafeId")
     fun getAddressByCafeId(cafeId: String): Flow<CafeAddress?>
 
+    @Query("SELECT * FROM CafeAddress WHERE uuid == :cafeUuid")
+    fun getAddressByCafeUuid(cafeUuid: String): Flow<CafeAddress?>
+
     @Query("SELECT * FROM CafeAddress LIMIT 1")
     fun getFirstAddress(): LiveData<CafeAddress?>
 }

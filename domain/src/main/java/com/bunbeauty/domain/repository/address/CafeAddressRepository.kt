@@ -33,4 +33,9 @@ class CafeAddressRepository @Inject constructor(
     override fun getFirstAddress(): LiveData<CafeAddress?> {
         return cafeAddressDao.getFirstAddress()
     }
+
+    override fun getCafeAddressByUuid(uuid: String): Flow<CafeAddress?> {
+        return cafeAddressDao.getAddressByCafeUuid(uuid)
+    }
+
 }

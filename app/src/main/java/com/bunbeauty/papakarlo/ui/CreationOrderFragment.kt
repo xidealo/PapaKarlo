@@ -11,8 +11,8 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
 import com.bunbeauty.common.extensions.visible
+import com.bunbeauty.domain.field_helper.IFieldHelper
 import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -36,6 +36,9 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
+    @Inject
+    lateinit var iFieldHelper: IFieldHelper
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewDataBinding.viewModel = viewModel
@@ -46,28 +49,37 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
                     viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 
-        viewModel.selectedAddressState.onEach { state ->
+        viewModel.selectedAddressTextState.onEach { state ->
             when (state) {
                 is State.Success -> {
                     viewDataBinding.fragmentCreationOrderBtnAddressPick.text = state.data
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getAddress()
+
+        viewModel.deferredTextStateFlow.onEach { deferredText ->
+            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.subscribeOnDeferredText()
+
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
         }
 
-        subscribe(viewModel.orderStringLiveData) { orderString ->
+        viewModel.orderStringStateFlow.onEach { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
-        }
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.subscribeOnOrderString()
 
-        subscribe(viewModel.isDeliveryLiveData) { isDelivery ->
+        viewModel.isDeliveryState.onEach { isDelivery ->
             if (isDelivery) {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnDelivery)
                 inactivateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
@@ -76,10 +88,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
             }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
-        }
-        subscribe(viewModel.deferredTextLiveData) { deferredText ->
-            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
-        }
+        }.launchWhenStarted(lifecycleScope)
 
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
         viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
@@ -102,10 +111,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         }
 
         viewDataBinding.fragmentCreationOrderBtnDelivery.setOnClickListener {
-            viewModel.isDeliveryLiveData.value = true
+            viewModel.isDeliveryState.value = true
         }
         viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
-            viewModel.isDeliveryLiveData.value = false
+            viewModel.isDeliveryState.value = false
         }
 
         viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.setOnClickListener {
@@ -145,12 +154,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     }
 
     private fun createOrder() {
-        if (!viewModel.isNetworkConnected()) {
-            showError(requireContext().getString(R.string.error_creation_order_connect))
-            return
-        }
+        /*  if (!viewModel.isNetworkConnected()) {
+              showError(requireContext().getString(R.string.error_creation_order_connect))
+              return
+          }*/
 
-        if (!viewModel.iFieldHelper.isCorrectFieldContent(
+        if (iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
@@ -161,7 +170,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
-        if (!viewModel.iFieldHelper.isCorrectFieldContent(
+        if (iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,

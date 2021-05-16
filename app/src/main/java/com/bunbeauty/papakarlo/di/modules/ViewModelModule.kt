@@ -32,8 +32,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreationOrderViewModel::class)
-    internal abstract fun provideCreationOrderViewModel(creationOrderViewModelImpl: CreationOrderViewModelImpl): ViewModel
+    @ViewModelKey(CreationOrderViewModelImpl::class)
+    internal abstract fun provideCreationOrderViewModelImpl(creationOrderViewModelImpl: CreationOrderViewModelImpl): ViewModel
 
     @Binds
     @IntoMap

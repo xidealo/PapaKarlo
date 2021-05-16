@@ -35,7 +35,7 @@ class ConsumerCartViewModel @Inject constructor(
 
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.getCartProductListLiveData()) { productList ->
+            map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree

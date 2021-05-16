@@ -22,6 +22,10 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun insert(userAddress: UserAddress) = userAddressDao.insert(userAddress)
 
+    override fun getUserAddressByUuid(uuid: String): Flow<UserAddress?> {
+       return userAddressDao.getUserAddressByUuid(uuid)
+    }
+
     override fun getUserAddressByUserId(userId: String): Flow<List<UserAddress>> {
         return userAddressDao.getUserAddressByUserId(userId)
     }

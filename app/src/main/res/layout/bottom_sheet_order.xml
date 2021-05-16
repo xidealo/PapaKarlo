@@ -109,7 +109,7 @@
             style="@style/MainText"
             android:layout_marginTop="@dimen/small_margin"
             android:gravity="end"
-            android:text="@{stringHelper.toString(order.orderEntity.cafeAddress)}"
+            android:text="@{stringHelper.toString(order.orderEntity.address)}"
             app:layout_constraintEnd_toEndOf="@id/bottom_sheet_order_gl_right"
             app:layout_constraintStart_toEndOf="@id/bottom_sheet_order_tv_address"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_order_tv_deferrer_value" />

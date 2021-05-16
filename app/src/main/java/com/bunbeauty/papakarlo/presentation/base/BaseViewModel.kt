@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.presentation.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.domain.IMessageShowable
@@ -31,7 +32,7 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     val isCartEmptyLiveData = MutableLiveData(false)
 
     val cartProductListLiveData by lazy {
-        map(cartProductRepo.getCartProductListLiveData()) { productList ->
+        map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
             isCartEmptyLiveData.value = productList.isEmpty()
             productList
         }
