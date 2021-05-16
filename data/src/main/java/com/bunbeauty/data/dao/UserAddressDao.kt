@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserAddressDao : BaseDao<UserAddress> {
 
-    @Query("SELECT * FROM UserAddress WHERE userId== :userId")
+    @Query("SELECT * FROM UserAddress WHERE userId == :userId")
     fun getUserAddressByUserId(userId: String): Flow<List<UserAddress>>
 }

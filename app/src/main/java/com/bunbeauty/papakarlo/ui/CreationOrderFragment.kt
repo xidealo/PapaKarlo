@@ -46,7 +46,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         }
         subscribe(viewModel.cafeAddressLiveData) { address ->
             viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
-                stringHelper.toString(address)
+                stringHelper.toString()
         }
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString

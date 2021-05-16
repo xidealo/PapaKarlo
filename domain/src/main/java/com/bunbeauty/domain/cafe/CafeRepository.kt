@@ -32,8 +32,9 @@ class CafeRepository @Inject constructor(
     suspend fun saveCafe(cafe: Cafe) {
         cafeDao.insert(cafe.cafeEntity)
 
-        cafe.cafeAddress?.let { address ->
+        cafe.address?.let { address ->
             address.cafeId = cafe.cafeEntity.id
+            address.uuid = cafe.cafeEntity.id
             cafeAddressRepo.insert(address)
         }
 
@@ -52,5 +53,4 @@ class CafeRepository @Inject constructor(
 
     override suspend fun getCafeEntityByDistrict(districtId: String) =
         cafeDao.getCafeEntityByDistrict(districtId)
-
 }

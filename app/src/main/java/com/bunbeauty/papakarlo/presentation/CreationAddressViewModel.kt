@@ -38,8 +38,9 @@ class CreationAddressViewModel @Inject constructor(
     fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
             userAddress.userId = iDataStoreHelper.userId.first()
-            val addressId = userAddressRepo.insert("token", userAddress)
-            iDataStoreHelper.saveDeliveryAddressId(addressId)
+            val userAddressWithId = userAddressRepo.insert("token", userAddress)
+
+            iDataStoreHelper.saveDeliveryAddressId(userAddressWithId.uuid)
             withContext(Dispatchers.Main) {
                 router.navigateUp()
             }

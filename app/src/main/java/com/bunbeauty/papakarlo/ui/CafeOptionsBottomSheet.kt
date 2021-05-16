@@ -40,7 +40,7 @@ class CafeOptionsBottomSheet :
         viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
             goToAddress(cafe.cafeEntity.coordinate)
         }
-        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.cafeAddress)
+        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString()
     }
 
     private fun goToAddress(coordinate: Coordinate) {

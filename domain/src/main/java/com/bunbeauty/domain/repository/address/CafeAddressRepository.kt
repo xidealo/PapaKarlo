@@ -18,7 +18,7 @@ class CafeAddressRepository @Inject constructor(
         cafeAddressDao.update(cafeAddress)
     }
 
-    override fun getCafeAddresses(): LiveData<List<CafeAddress>> {
+    override fun getCafeAddresses(): Flow<List<CafeAddress>> {
         return cafeAddressDao.getCafeAddresses()
     }
 

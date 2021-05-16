@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 abstract class BaseBottomSheetDialog<B : ViewDataBinding> :
@@ -55,6 +58,12 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding> :
 
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
+    }
+
+    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope) {
+        lifecycleCoroutineScope.launchWhenStarted {
+            this@launchWhenStarted.collect()
+        }
     }
 
 }

@@ -13,10 +13,11 @@ class UserAddressRepository @Inject constructor(
     private val addressMapper: AddressMapper
 ) : UserAddressRepo {
 
-    override suspend fun insert(token: String, userAddress: UserAddress): Long {
+    override suspend fun insert(token: String, userAddress: UserAddress): UserAddress {
         userAddress.uuid =
             apiRepository.insert(addressMapper.from(userAddress), userAddress.userId ?: "")
-        return insert(userAddress)
+        userAddress.id = insert(userAddress)
+        return userAddress
     }
 
     override suspend fun insert(userAddress: UserAddress) = userAddressDao.insert(userAddress)

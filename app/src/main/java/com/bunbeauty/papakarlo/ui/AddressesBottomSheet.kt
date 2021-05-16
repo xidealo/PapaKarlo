@@ -3,7 +3,11 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.State
+import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.toggleVisibility
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -11,6 +15,7 @@ import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>() {
@@ -30,12 +35,22 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
 
         val isDelivery = fromBundle(requireArguments()).isDelivery
         addressesAdapter.onItemClickListener = { address ->
-            viewModel.saveSelectedAddress(address)
+            viewModel.saveSelectedAddress(address.uuid, isDelivery)
         }
-        viewModel.isDelivery = isDelivery
-        /*viewModel.addressesLiveData.observe(viewLifecycleOwner) {
-            addressesAdapter.setItemList(it)
-        }*/
+
+        viewModel.addressListState.onEach { state ->
+            when (state) {
+                is State.Loading -> {
+                }
+                is State.Success -> {
+                    addressesAdapter.setItemList(state.data)
+                }
+                else -> {
+                }
+            }
+        }.launchWhenStarted(lifecycleScope)
+
+        viewModel.getAddresses(isDelivery)
 
         if (isDelivery) {
             viewDataBinding.bottomSheetAddressTvAddress.text =
@@ -49,8 +64,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
         viewDataBinding.fragmentCreationOrderIvCreateAddress.toggleVisibility(isDelivery)
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
         viewDataBinding.bottomSheetAddressBtnCreateAddress.setOnClickListener {
-            viewModel.createAddressClick()
+            viewModel.onCreateAddressClicked()
         }
     }
-
 }

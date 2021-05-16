@@ -24,7 +24,6 @@ class ConfirmViewModel @Inject constructor(
         }
     }
 
-
     fun getPhoneNumberDigits(phone: String): String {
         return phone.replace(Regex("\\D"), "")
     }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface CafeAddressDao : BaseDao<CafeAddress> {
 
     @Query("SELECT * FROM CafeAddress WHERE cafeId IS NOT NULL")
-    fun getCafeAddresses(): LiveData<List<CafeAddress>>
+    fun getCafeAddresses(): Flow<List<CafeAddress>>
 
     @Query("SELECT * FROM CafeAddress WHERE id == :id")
     fun getAddressById(id: Long): Flow<CafeAddress?>

@@ -1,24 +1,23 @@
 package com.bunbeauty.data.model.address
 
 import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.user.User
 import kotlinx.parcelize.Parcelize
 
+/*
+indices = [Index(unique = true, value = ["userId"])],
+foreignKeys = [ForeignKey(
+entity = User::class,
+parentColumns = ["userId"],
+childColumns = ["user_address_user_id"],
+onDelete = ForeignKey.CASCADE
+)]
+*/
+
 @Parcelize
-@Entity(
-    indices = [Index(unique = true, value = ["userId"])],
-    foreignKeys = [ForeignKey(
-        entity = User::class,
-        parentColumns = ["userId"],
-        childColumns = ["userId"],
-        onDelete = ForeignKey.CASCADE
-    )]
-)
+@Entity
 data class UserAddress(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,

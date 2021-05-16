@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface IDataStoreHelper {
 
-    val deliveryAddressId: Flow<Long>
-    suspend fun saveDeliveryAddressId(addressId: Long)
+    val deliveryAddressId: Flow<String>
+    suspend fun saveDeliveryAddressId(addressId: String)
 
-    val cafeId: Flow<String>
-    suspend fun saveCafeId(cafeId: String)
+    val cafeAddressId: Flow<String>
+    suspend fun saveCafeAddressId(addressId: String)
 
     val delivery: Flow<Delivery>
     suspend fun saveDelivery(delivery: Delivery)

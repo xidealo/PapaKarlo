@@ -33,7 +33,7 @@
                 android:id="@+id/element_cafe_tv_address"
                 style="@style/MainTitle"
                 android:drawablePadding="@dimen/large_padding"
-                android:text="@{stringHelper.toString(cafe.cafeAddress)}"
+                android:text="@{stringHelper.toString(cafe.address)}"
                 app:drawableLeftCompat="@drawable/ic_address"
                 app:drawableTint="@color/mainTextColor"
                 app:layout_constraintEnd_toEndOf="parent"

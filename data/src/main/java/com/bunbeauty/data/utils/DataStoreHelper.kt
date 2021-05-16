@@ -16,23 +16,23 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
     private val Context.userId: DataStore<Preferences> by preferencesDataStore(name = USER_ID_DATA_STORE)
 
-    override val deliveryAddressId: Flow<Long> = context.deliveryAddressDataStore.data.map {
-        it[DELIVERY_ADDRESS_ID_KEY] ?: DEFAULT_LONG
+    override val deliveryAddressId: Flow<String> = context.deliveryAddressDataStore.data.map {
+        it[DELIVERY_ADDRESS_ID_KEY] ?: DEFAULT_STRING
     }
 
-    override suspend fun saveDeliveryAddressId(addressId: Long) {
+    override suspend fun saveDeliveryAddressId(addressId: String) {
         context.deliveryAddressDataStore.edit {
             it[DELIVERY_ADDRESS_ID_KEY] = addressId
         }
     }
 
-    override val cafeId: Flow<String> = context.cafeDataStore.data.map {
+    override val cafeAddressId: Flow<String> = context.cafeDataStore.data.map {
         it[CAFE_ID_KEY] ?: DEFAULT_STRING
     }
 
-    override suspend fun saveCafeId(cafeId: String) {
+    override suspend fun saveCafeAddressId(addressId: String) {
         context.cafeDataStore.edit {
-            it[CAFE_ID_KEY] = cafeId
+            it[CAFE_ID_KEY] = addressId
         }
     }
 
@@ -84,7 +84,7 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private const val USER_ID = "user id"
 
-        private val DELIVERY_ADDRESS_ID_KEY = longPreferencesKey(DELIVERY_ADDRESS_ID)
+        private val DELIVERY_ADDRESS_ID_KEY = stringPreferencesKey(DELIVERY_ADDRESS_ID)
         private val CAFE_ID_KEY = stringPreferencesKey(CAFE_ID)
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)

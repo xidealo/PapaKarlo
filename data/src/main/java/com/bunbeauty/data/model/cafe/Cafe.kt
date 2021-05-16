@@ -17,5 +17,5 @@ data class Cafe(
     val districts: List<District> = arrayListOf(),
 
     @Relation(parentColumn = "id", entityColumn = "cafeId")
-    val cafeAddress: CafeAddress? = CafeAddress(),
+    val address: CafeAddress? = CafeAddress(),
 ) : Parcelable
