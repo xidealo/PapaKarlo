@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao : BaseDao<User> {
 
     @Query("SELECT * FROM User WHERE userId = :userId")
-    fun getUserFlow(userId: String): Flow<User>
+    fun getUserFlow(userId: String): Flow<User?>
 }

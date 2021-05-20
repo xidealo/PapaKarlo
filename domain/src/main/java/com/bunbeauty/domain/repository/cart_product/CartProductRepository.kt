@@ -2,6 +2,8 @@ package com.bunbeauty.domain.repository.cart_product
 
 import com.bunbeauty.data.dao.CartProductDao
 import com.bunbeauty.data.model.CartProduct
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class CartProductRepository @Inject constructor(private val cartProductDao: CartProductDao) :
@@ -12,7 +14,7 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
         return cartProduct
     }
 
-    override fun getCartProductListFlow() = cartProductDao.getCartProductListLiveData()
+    override fun getCartProductListFlow() = cartProductDao.getCartProductListLiveData().flowOn(Dispatchers.IO)
 
     override suspend fun getCartProductList(): List<CartProduct> = cartProductDao.getCartProductList()
 

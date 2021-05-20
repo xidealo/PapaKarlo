@@ -83,7 +83,7 @@
     <string name="action_creation_order_pickup_time">Заберу заказ в&#160;</string>
     <string name="action_creation_order_checkout">Оформить заказ на&#160;</string>
     <string name="msg_creation_order_order_code">Код заказа&#160;</string>
-    <string name="error_creation_order_deferred">Выберите время хотя бы на 30 мин больше текущего</string>
+    <string name="error_creation_order_deferred">Выберите время минимум на 30 мин. больше текущего</string>
     <string name="part_creation_order_delivery_cost">Стоимость доставки:&#160;</string>
     <string name="part_creation_order_free_delivery_from">\nБесплатная доставка от&#160;</string>
 

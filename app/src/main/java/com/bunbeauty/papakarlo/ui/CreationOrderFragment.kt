@@ -65,6 +65,24 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         }.launchWhenStarted(lifecycleScope)
         viewModel.getAddress()
 
+        viewModel.userState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    if (state.data != null) {
+                        viewDataBinding.fragmentCreationOrderEtPhone.setText(
+                            state.data?.phone ?: ""
+                        )
+                        viewDataBinding.fragmentCreationOrderEtEmail.setText(
+                            state.data?.email ?: ""
+                        )
+                    }
+                }
+                else -> {
+                }
+            }
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.getUser()
+
         viewModel.deferredTextStateFlow.onEach { deferredText ->
             viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
         }.launchWhenStarted(lifecycleScope)
@@ -128,8 +146,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     private fun showTimePicker() {
         val picker = MaterialTimePicker.Builder()
             .setTimeFormat(CLOCK_24H)
-            .setHour(viewModel.deferredHoursLiveData.value ?: 0)
-            .setMinute(viewModel.deferredMinutesLiveData.value ?: 0)
+            .setHour(viewModel.deferredHoursStateFlow.value ?: 0)
+            .setMinute(viewModel.deferredMinutesStateFlow.value ?: 0)
             .setTitleText(requireContext().getString(R.string.title_creation_order_deferred_time))
             .build()
         picker.show(parentFragmentManager, "TimePicker")
@@ -138,9 +156,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             if (viewModel.isDeferredTimeCorrect(picker.hour, picker.minute)) {
                 viewDataBinding.fragmentCreationOrderGroupAddDeferred.gone()
                 viewDataBinding.fragmentCreationOrderGroupPickedDeferred.visible()
-                viewModel.deferredHoursLiveData.value = picker.hour
-                viewModel.deferredMinutesLiveData.value = picker.minute
-
+                viewModel.deferredHoursStateFlow.value = picker.hour
+                viewModel.deferredMinutesStateFlow.value = picker.minute
             } else {
                 showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
             }
@@ -148,8 +165,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         picker.addOnNegativeButtonClickListener {
             viewDataBinding.fragmentCreationOrderGroupAddDeferred.visible()
             viewDataBinding.fragmentCreationOrderGroupPickedDeferred.gone()
-            viewModel.deferredHoursLiveData.value = null
-            viewModel.deferredMinutesLiveData.value = null
+            viewModel.deferredHoursStateFlow.value = null
+            viewModel.deferredMinutesStateFlow.value = null
         }
     }
 
@@ -159,7 +176,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
               return
           }*/
 
-        if (iFieldHelper.isCorrectFieldContent(
+        if (!iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
@@ -170,7 +187,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
-        if (iFieldHelper.isCorrectFieldContent(
+        if (!iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,
@@ -187,8 +204,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtComment.text.toString().trim(),
             viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
             viewDataBinding.fragmentCreationOrderEtEmail.text.toString().trim(),
-            viewModel.deferredHoursLiveData.value,
-            viewModel.deferredMinutesLiveData.value
+            viewModel.deferredHoursStateFlow.value,
+            viewModel.deferredMinutesStateFlow.value
         )
     }
 
