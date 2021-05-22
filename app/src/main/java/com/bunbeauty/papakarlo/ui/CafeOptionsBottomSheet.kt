@@ -36,18 +36,18 @@ class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() 
             bottomSheetCafeOptionsNcShowMap.cardText = cafeOption.showOnMap
             bottomSheetCafeOptionsNcCall.setOnClickListener {
                 val uri = Uri.parse(PHONE_LINK + cafeOption.phone)
-                goByUri(uri)
+                goByUri(uri, Intent.ACTION_DIAL)
             }
             bottomSheetCafeOptionsNcShowMap.setOnClickListener {
                 val uri =
                     Uri.parse(MAPS_LINK + cafeOption.latitude + COORDINATES_DIVIDER + cafeOption.longitude)
-                goByUri(uri)
+                goByUri(uri, Intent.ACTION_VIEW)
             }
         }
     }
 
-    private fun goByUri(uri: Uri) {
-        val intent = Intent(Intent.ACTION_DIAL, uri)
+    private fun goByUri(uri: Uri, action: String) {
+        val intent = Intent(action, uri)
         startActivity(intent)
     }
 }
