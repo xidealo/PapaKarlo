@@ -17,4 +17,9 @@ interface ApiRepo {
     suspend fun postUser(user: UserServer): ApiResult<UserServer>
     suspend fun postUserAddress(userAddress: UserAddressServer): ApiResult<UserAddressServer>
 
+    suspend fun patchUserEmail(
+        userUuid: String,
+        userEmailServer: UserEmailServer
+    ): ApiResult<UserServer>
+
 }

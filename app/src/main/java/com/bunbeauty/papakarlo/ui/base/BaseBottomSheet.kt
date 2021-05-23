@@ -19,10 +19,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-abstract class BaseBottomSheetDialog<B : ViewDataBinding> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment() {
 
     @Inject
-    lateinit var modelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     abstract val viewModel: BaseViewModel
 

@@ -45,10 +45,12 @@
     <declare-styleable name="TextCard">
         <attr name="android:hint" />
         <attr name="android:text" />
-        <attr name="android:padding"/>
-        <attr name="android:textColor"/>
+        <attr name="android:icon" />
+        <attr name="textCardIconColor" format="color" />
+        <attr name="android:padding" />
+        <attr name="android:textColor" />
         <attr name="hintTextColor" format="color" />
-        <attr name="innerMargin" format="dimension"/>
+        <attr name="innerMargin" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="ProcessScaleView">

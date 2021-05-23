@@ -163,6 +163,8 @@
     <string name="title_settings_add_email">Добавление почты</string>
     <string name="title_settings_edit_email">Редактирование почты</string>
     <string name="action_settings_save">Сохранить</string>
+    <string name="hint_settings_city">Город</string>
+    <string name="title_settings_select_city">Выберите город</string>
 
     <!-- ORDERS -->
     <string name="title_orders">История заказов</string>
@@ -180,8 +182,9 @@
     <string name="action_feedback_instagram">Instagram</string>
     <string name="action_feedback_play_market">Play Маркет</string>
 
-    <!-- FEEDBACK -->
+    <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>
+    <string name="title_city_selection">Выбор города</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="msg_main_activity_downloaded">Обновление установлено</string>

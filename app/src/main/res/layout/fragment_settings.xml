@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.fragment.profile.SettingsFragment">
+        tools:context=".ui.fragment.profile.settings.SettingsFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/fragment_settings_gl_left"
@@ -46,10 +46,22 @@
             style="@style/TextCard"
             android:layout_marginTop="@dimen/small_margin"
             android:hint="@string/hint_settings_email"
+            android:icon="@drawable/ic_right_arrow"
             app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
             app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
             app:layout_constraintTop_toBottomOf="@+id/fragment_settings_nc_add_email"
             tools:text="name@email.com" />
+
+        <com.bunbeauty.papakarlo.ui.custom.TextCard
+            android:id="@+id/fragment_settings_tc_city"
+            style="@style/TextCard"
+            android:layout_marginTop="@dimen/small_margin"
+            android:hint="@string/hint_settings_city"
+            android:icon="@drawable/ic_right_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tc_email"
+            tools:text="Москва" />
 
         <ProgressBar
             android:id="@+id/fragment_settings_pb_loading"

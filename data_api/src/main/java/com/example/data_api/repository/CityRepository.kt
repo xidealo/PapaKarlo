@@ -5,6 +5,7 @@ import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.repo.CityRepo
 import com.example.data_api.dao.CityDao
 import com.example.data_api.handleResult
+import com.example.data_api.mapFlow
 import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.ICityMapper
 import com.example.domain_api.repo.ApiRepo
@@ -28,5 +29,9 @@ class CityRepository @Inject constructor(
 
     override fun observeCityList(): Flow<List<City>> {
         return cityDao.observeCityList().mapListFlow(cityMapper::toModel)
+    }
+
+    override fun observeCityByUuid(cityUuid: String): Flow<City?> {
+        return cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toModel)
     }
 }

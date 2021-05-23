@@ -212,7 +212,7 @@
 
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.SettingsFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -224,6 +224,9 @@
         <argument
             android:name="userUuid"
             app:argType="string" />
+        <action
+            android:id="@+id/to_citySelectionBottomSheet"
+            app:destination="@id/citySelectionBottomSheet" />
     </fragment>
 
     <dialog
@@ -247,4 +250,10 @@
         android:name="com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet"
         android:label="FeedbackBottomSheet"
         tools:layout="@layout/bottom_sheet_feedback" />
+
+    <dialog
+        android:id="@+id/citySelectionBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet"
+        android:label="CitySelectionBottomSheet"
+        tools:layout="@layout/bottom_sheet_city_selection" />
 </navigation>

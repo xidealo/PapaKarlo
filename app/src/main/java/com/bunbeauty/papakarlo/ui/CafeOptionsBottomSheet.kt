@@ -14,11 +14,11 @@ import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 
-class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
+class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() {
 
-    override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }
+    override val viewModel: CafeOptionsViewModel by viewModels { viewModelFactory }
 
     private val cafe: Cafe by argument()
 

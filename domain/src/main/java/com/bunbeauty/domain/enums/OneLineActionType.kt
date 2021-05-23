@@ -5,7 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 enum class OneLineActionType : Parcelable {
-    EMAIL,
-    COMMENT,
-    BONUSES
+    TEXT,
+    EMAIL
 }

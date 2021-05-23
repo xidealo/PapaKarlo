@@ -7,6 +7,8 @@ import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.*
+import com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -44,4 +46,5 @@ interface ViewModelComponent {
     fun inject(paymentBottomSheet: PaymentBottomSheet)
     fun inject(deferredTimeBottomSheet: DeferredTimeBottomSheet)
     fun inject(feedbackBottomSheet: FeedbackBottomSheet)
+    fun inject(citySelectionBottomSheet: CitySelectionBottomSheet)
 }

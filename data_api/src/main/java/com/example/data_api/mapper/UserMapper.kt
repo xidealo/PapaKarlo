@@ -5,6 +5,7 @@ import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.entity.user.UserEntity
 import com.example.domain_api.model.entity.user.UserWithAddresses
+import com.example.domain_api.model.server.UserEmailServer
 import com.example.domain_api.model.server.UserServer
 import javax.inject.Inject
 
@@ -29,6 +30,12 @@ class UserMapper @Inject constructor(
             phone = user.user.phone,
             email = user.user.email,
             addressList = user.userAddressList.map(userAddressMapper::toModel)
+        )
+    }
+
+    override fun toUserEmailServer(user: User): UserEmailServer {
+        return UserEmailServer(
+            email = user.email
         )
     }
 }

@@ -13,13 +13,13 @@ import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.adapter.AddressAdapter
-import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>() {
+class AddressesBottomSheet : BaseBottomSheet<BottomSheetAddressesBinding>() {
 
-    override val viewModel: AddressesViewModel by viewModels { modelFactory }
+    override val viewModel: AddressesViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

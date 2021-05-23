@@ -10,7 +10,7 @@ data class OneLineActionModel(
     val infoText: String?,
     val hint: String,
     val type: OneLineActionType,
-    val inputText: String,
+    val inputText: String?,
     val buttonText: String,
     val requestKey: String,
     val resultKey: String,

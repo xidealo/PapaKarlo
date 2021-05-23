@@ -11,4 +11,7 @@ interface CityDao : BaseDao<CityEntity> {
 
     @Query("SELECT * FROM CityEntity")
     fun observeCityList(): Flow<List<CityEntity>>
+
+    @Query("SELECT * FROM CityEntity WHERE uuid = :uuid")
+    fun observeCityByUuid(uuid: String): Flow<CityEntity?>
 }

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
-import com.bunbeauty.papakarlo.presentation.OneLineActionViewModel
 import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
 import com.bunbeauty.papakarlo.presentation.address.AddressesViewModelImpl
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
@@ -23,7 +22,8 @@ import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
-import com.bunbeauty.papakarlo.presentation.profile.SettingsViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.CitySelectionViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -121,11 +121,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(OneLineActionViewModel::class)
-    internal abstract fun provideOneLineActionViewModel(oneLineActionViewModel: OneLineActionViewModel): ViewModel
-
-    @Binds
-    @IntoMap
     @ViewModelKey(DeferredTimeViewModel::class)
     internal abstract fun provideDeferredTimeViewModel(deferredTimeViewModel: DeferredTimeViewModel): ViewModel
 
@@ -133,4 +128,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SelectCityViewModel::class)
     internal abstract fun provideSelectCityViewModel(selectCityViewModel: SelectCityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CitySelectionViewModel::class)
+    internal abstract fun provideCitySelectionViewModel(citySelectionViewModel: CitySelectionViewModel): ViewModel
 }

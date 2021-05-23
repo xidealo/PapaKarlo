@@ -55,6 +55,15 @@ class UserRepository @Inject constructor(
         return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toModel)
     }
 
+    override suspend fun updateUserEmail(user: User) {
+        val userEmailServer = userMapper.toUserEmailServer(user)
+        apiRepo.patchUserEmail(user.uuid, userEmailServer).handleResult(USER_TAG) { patchedUser ->
+            patchedUser?.let {
+                userDao.update(userMapper.toEntityModel(patchedUser).user)
+            }
+        }
+    }
+
     suspend fun saveUser(user: UserServer?) {
         if (user != null) {
             val userWithAddresses = userMapper.toEntityModel(user)

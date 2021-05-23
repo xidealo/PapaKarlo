@@ -14,11 +14,11 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetPaymentBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
-import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 
-class PaymentBottomSheet : BaseBottomSheetDialog<BottomSheetPaymentBinding>() {
+class PaymentBottomSheet : BaseBottomSheet<BottomSheetPaymentBinding>() {
 
-    override val viewModel: EmptyViewModel by viewModels { modelFactory }
+    override val viewModel: EmptyViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

@@ -51,7 +51,28 @@ class UserRepository @Inject constructor(
         }
     }
 
-    private suspend fun refreshOrders(userOrderFirebaseList: List<UserOrderFirebase>, userUuid: String) {
+    override suspend fun getUserByUuid(userUuid: String): User? {
+        return userDao.getByUuid(userUuid)?.let { userEntity ->
+            userMapper.toUIModel(userEntity)
+        }
+    }
+
+    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+        return userDao.observeByUuid(userUuid)
+            .flowOn(IO)
+            .mapNotNull { userEntity ->
+                userEntity?.let {
+                    userMapper.toUIModel(userEntity)
+                }
+            }
+            .flowOn(Default)
+    }
+
+    override suspend fun updateUserEmail(user: User) {
+        // TODO
+    }
+
+    suspend fun refreshOrders(userOrderFirebaseList: List<UserOrderFirebase>, userUuid: String) {
         firebaseRepo.removeOrderObservers()
         userOrderFirebaseList.forEach { userOrderFirebase ->
             firebaseRepo.getOrder(userOrderFirebase).collect { orderFirebase ->
@@ -69,7 +90,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    private suspend fun observeActiveOrder(
+    suspend fun observeActiveOrder(
         orderStatus: OrderStatus,
         userOrderFirebase: UserOrderFirebase
     ) {
@@ -88,25 +109,8 @@ class UserRepository @Inject constructor(
         }
     }
 
-    private suspend fun refreshUserAddresses(userAddressList: List<UserAddressEntity>) {
+    suspend fun refreshUserAddresses(userAddressList: List<UserAddressEntity>) {
         userAddressDao.deleteAll()
         userAddressDao.insertAll(userAddressList)
-    }
-
-    override suspend fun getUserByUuid(userUuid: String): User? {
-        return userDao.getByUuid(userUuid)?.let { userEntity ->
-            userMapper.toUIModel(userEntity)
-        }
-    }
-
-    override fun observeUserByUuid(userUuid: String): Flow<User?> {
-        return userDao.observeByUuid(userUuid)
-            .flowOn(IO)
-            .mapNotNull { userEntity ->
-                userEntity?.let {
-                    userMapper.toUIModel(userEntity)
-                }
-            }
-            .flowOn(Default)
     }
 }

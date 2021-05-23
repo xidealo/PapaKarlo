@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.profile.settings
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.City
@@ -8,20 +8,16 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragmentDirections.toMenuFragment
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SelectCityViewModel @Inject constructor(
+class CitySelectionViewModel @Inject constructor(
     @Api private val cityRepo: CityRepo,
     @Api private val cafeRepo: CafeRepo,
     @Api private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
 ) : BaseViewModel() {
-
-    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
 
     private val mutableCityList: MutableStateFlow<List<City>> = MutableStateFlow(emptyList())
     val cityList: StateFlow<List<City>> = mutableCityList.asStateFlow()
@@ -30,24 +26,12 @@ class SelectCityViewModel @Inject constructor(
         subscribeOnCityList()
     }
 
-    fun checkIsCitySelected() {
-        viewModelScope.launch {
-            val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
-            if (selectedCityUuid != null) {
-                router.navigate(toMenuFragment())
-            } else {
-                mutableIsLoading.value = false
-            }
-        }
-    }
-
     fun onCitySelected(city: City) {
-        mutableIsLoading.value = true
         viewModelScope.launch {
             dataStoreRepo.saveSelectedCityUuid(city.uuid)
             cafeRepo.refreshCafeList()
             streetRepo.refreshStreetList()
-            router.navigate(toMenuFragment())
+            goBack()
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
@@ -40,6 +41,25 @@ class TextCard @JvmOverloads constructor(
             textView.text = value
         }
 
+    var icon = getDrawable(
+        context,
+        attributeSet,
+        R.styleable.TextCard,
+        R.styleable.TextCard_android_icon
+    )
+        set(value) {
+            field = value
+            imageView.setImageDrawable(value)
+        }
+
+    private val iconColor = getColor(
+        context,
+        attributeSet,
+        R.styleable.TextCard,
+        R.styleable.TextCard_textCardIconColor,
+        DEFAULT_COLOR
+    )
+
     private val textColor = getColor(
         context,
         attributeSet,
@@ -73,15 +93,31 @@ class TextCard @JvmOverloads constructor(
     )
 
     private val hintTextViewId = generateViewId()
+    private val imageViewId = generateViewId()
     private var hintTextView: TextView = createHintTextView(context, hintText, hintTextColor)
     private var textView: TextView = createTextView(context, cardText, textColor)
+    private var imageView: ImageView = createImageView(context)
 
     init {
         val constraintLayout = createConstraintLayout(context).apply {
             addView(hintTextView)
             addView(textView)
+            addView(imageView)
         }
         addView(constraintLayout)
+    }
+
+    private fun createImageView(context: Context): ImageView {
+        return ImageView(context).apply {
+            id = imageViewId
+            layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+                topToTop = PARENT_ID
+                bottomToBottom = PARENT_ID
+                endToEnd = PARENT_ID
+            }
+            setColorFilter(iconColor)
+            setImageDrawable(icon)
+        }
     }
 
     private fun createConstraintLayout(context: Context): ConstraintLayout {
@@ -91,14 +127,19 @@ class TextCard @JvmOverloads constructor(
         }
     }
 
-    private fun createHintTextView(context: Context, textViewText: String, textColor: Int): TextView {
+    private fun createHintTextView(
+        context: Context,
+        textViewText: String,
+        textColor: Int
+    ): TextView {
         return TextView(context).apply {
             id = hintTextViewId
             textSize = 12f
             layoutParams = ConstraintLayout.LayoutParams(0, WRAP_CONTENT).apply {
                 topToTop = PARENT_ID
                 startToStart = PARENT_ID
-                endToEnd = PARENT_ID
+                endToStart = imageViewId
+                setMargins(0, 0, innerMargin, 0)
             }
             setTextColor(textColor)
             text = textViewText
@@ -111,8 +152,8 @@ class TextCard @JvmOverloads constructor(
             layoutParams = ConstraintLayout.LayoutParams(0, WRAP_CONTENT).apply {
                 topToBottom = hintTextViewId
                 startToStart = PARENT_ID
-                endToEnd = PARENT_ID
-                setMargins(0, innerMargin, 0, 0)
+                endToStart = imageViewId
+                setMargins(0, innerMargin, innerMargin, 0)
             }
             setTextColor(textColor)
             text = textViewText
