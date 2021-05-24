@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.ProfileFragment">
+        tools:context=".ui.profile.ProfileFragment">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_contacts"

@@ -230,13 +230,13 @@ class CreationOrderViewModelImpl @Inject constructor(
                 } else {
                     spentBonusesString.toInt()
                 }
-                user.bonus += (productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt()
+             /*   user.bonus += (productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt()
                 if (user.bonus - spentBonuses < 0) {
                     //show alert about bonuses
                     return@launch
                 } else {
                     user.bonus -= spentBonuses
-                }
+                }*/
                 userRepo.update(user)
                 orderRepo.insert(order)
                 withContext(Main) {

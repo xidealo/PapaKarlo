@@ -4,15 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.model.address.UserAddress
 import com.bunbeauty.data.model.user.User
 import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.domain.repository.address.UserAddressRepo
 import com.bunbeauty.domain.repository.user.UserRepo
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
-import com.bunbeauty.papakarlo.ui.ProfileFragmentDirections
+import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/orders_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.OrdersFragment"
+        android:name="com.bunbeauty.papakarlo.ui.profile.OrdersFragment"
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders">
         <action
@@ -130,7 +130,7 @@
 
     <fragment
         android:id="@+id/profile_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.ProfileFragment"
+        android:name="com.bunbeauty.papakarlo.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile">
         <action

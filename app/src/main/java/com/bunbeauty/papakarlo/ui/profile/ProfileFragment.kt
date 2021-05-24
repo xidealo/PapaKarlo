@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.profile
 
 import android.os.Bundle
 import android.view.View
@@ -41,14 +41,11 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
                         viewDataBinding.fragmentProfileTvPhone.text = state.data?.phone
                         viewDataBinding.fragmentProfileTvEmail.text = state.data?.email
-                        viewDataBinding.fragmentProfileTvBonusesValue.text =
-                            state.data?.bonus.toString()
                         viewModel.getAddress(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
 

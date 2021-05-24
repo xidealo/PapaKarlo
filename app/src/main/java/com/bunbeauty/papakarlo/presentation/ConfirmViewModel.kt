@@ -56,7 +56,7 @@ class ConfirmViewModelImpl @Inject constructor(
     override fun createUser(userId: String, phone: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreHelper.saveUserId(userId)
-            val user = User(userId = userId, phone = phone, email = email, bonus = 100)
+            val user = User(userId = userId, phone = phone, email = email)
             userRepo.insert(user)
             router.navigate(ConfirmFragmentDirections.toProfileFragment())
         }

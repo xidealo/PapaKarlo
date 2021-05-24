@@ -75,8 +75,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                         viewDataBinding.fragmentCreationOrderEtEmail.setText(
                             state.data?.email ?: ""
                         )
-                        viewDataBinding.fragmentCreationOrderTvBonusesValue.text =
-                            state.data?.bonus.toString()
+
                     }else{
                         viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
                     }

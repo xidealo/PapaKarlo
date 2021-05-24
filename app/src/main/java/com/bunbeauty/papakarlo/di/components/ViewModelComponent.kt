@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
+import com.bunbeauty.papakarlo.ui.profile.OrdersFragment
+import com.bunbeauty.papakarlo.ui.profile.ProfileFragment
+import com.bunbeauty.papakarlo.ui.profile.SettingsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -30,6 +33,7 @@ interface ViewModelComponent {
     fun inject(profileFragment: ProfileFragment)
     fun inject(confirmFragment: ConfirmFragment)
     fun inject(loginFragment: LoginFragment)
+    fun inject(settingsFragment: SettingsFragment)
 
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)

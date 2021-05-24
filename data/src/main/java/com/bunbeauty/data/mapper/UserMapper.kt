@@ -12,7 +12,6 @@ class UserMapper @Inject constructor(
         return UserFirebase(
             phone = e.phone,
             email = e.email,
-            bonus = e.bonus
         )
     }
 
@@ -23,7 +22,6 @@ class UserMapper @Inject constructor(
         return User(
             phone = t.phone,
             email = t.email,
-            bonus = t.bonus
         )
     }
 }

@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.OrdersFragment">
+        tools:context=".ui.profile.OrdersFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_orders_rv_result"

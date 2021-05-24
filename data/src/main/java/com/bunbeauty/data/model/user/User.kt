@@ -2,6 +2,7 @@ package com.bunbeauty.data.model.user
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
@@ -12,5 +13,6 @@ data class User(
     var userId: String = "",
     var phone: String = "",
     var email: String = "",
-    var bonus: Int = 0
+    @Ignore
+    var bonusList: ArrayList<Int> = arrayListOf()
 ) : Parcelable
