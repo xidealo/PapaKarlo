@@ -5,7 +5,6 @@ import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Constants
 import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
@@ -65,7 +64,6 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
     )
 }
 
-@ExperimentalCoroutinesApi
 class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val networkHelper: INetworkHelper,
@@ -96,6 +94,7 @@ class CreationOrderViewModelImpl @Inject constructor(
     override val deferredHoursStateFlow = MutableStateFlow<Int?>(null)
     override val deferredMinutesStateFlow = MutableStateFlow<Int?>(null)
 
+    @ExperimentalCoroutinesApi
     override fun getAddress() {
         viewModelScope.launch(Dispatchers.Default) {
             isDeliveryState.flatMapLatest { isDelivery ->
@@ -131,6 +130,7 @@ class CreationOrderViewModelImpl @Inject constructor(
         }
     }
 
+    @ExperimentalCoroutinesApi
     override fun subscribeOnDeferredText() {
         isDeliveryState.flatMapLatest {
             deferredHoursStateFlow

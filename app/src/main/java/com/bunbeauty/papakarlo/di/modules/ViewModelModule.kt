@@ -82,6 +82,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ConfirmViewModel::class)
-    internal abstract fun provideConfirmViewModel(confirmViewModel: ConfirmViewModel): ViewModel
+    @ViewModelKey(ConfirmViewModelImpl::class)
+    internal abstract fun provideConfirmViewModel(confirmViewModelImpl: ConfirmViewModelImpl): ViewModel
 }

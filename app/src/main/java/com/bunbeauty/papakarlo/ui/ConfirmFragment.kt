@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.extensions.gone
 import com.bunbeauty.common.extensions.invisible
 import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
@@ -11,9 +13,11 @@ import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
+import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.TimeUnit
 
 class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
@@ -26,6 +30,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
 
     private var phoneVerificationId: String? = null
     override val isToolbarCartProductVisible = false
+    private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +41,33 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        viewModel.timerStringState.onEach {
+            viewDataBinding.fragmentConfirmTvResend.text = it
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.isFinishedTimerState.onEach { isFinished ->
+            if (isFinished) {
+                viewDataBinding.fragmentConfirmTvResend.gone()
+                viewDataBinding.fragmentConfirmBtnResend.visible()
+                viewDataBinding.fragmentConfirmIvResend.visible()
+            } else {
+                viewDataBinding.fragmentConfirmTvResend.visible()
+                viewDataBinding.fragmentConfirmBtnResend.gone()
+                viewDataBinding.fragmentConfirmIvResend.gone()
+            }
+        }.launchWhenStarted(lifecycleScope)
+        viewModel.startResendTimer()
+
+        viewDataBinding.fragmentConfirmBtnResend.setOnClickListener {
+            viewModel.startResendTimer()
+            resendVerificationCode(
+                viewModel.getPhoneNumberDigits(
+                    ConfirmFragmentArgs.fromBundle(
+                        requireArguments()
+                    ).phone
+                )
+            )
+        }
+
         viewDataBinding.fragmentConfirmTvPhoneInformation.text =
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
                 ConfirmFragmentArgs.fromBundle(requireArguments()).phone
@@ -64,18 +95,27 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                     }
             }
         }
+        super.onViewCreated(view, savedInstanceState)
     }
 
-    fun sendVerificationCode(
-        phoneNumber: String
-    ) {
+    private fun sendVerificationCode(phoneNumber: String) {
         val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-            .setPhoneNumber("+$phoneNumber") // Phone number to verify
-            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(requireActivity()) // Activity (for callback binding)
-            .setCallbacks(verificationCallbacks) // OnVerificationStateChangedCallbacks
+            .setPhoneNumber("+$phoneNumber")
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(requireActivity())
+            .setCallbacks(verificationCallbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun resendVerificationCode(phoneNumber: String) {
+        PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+            .setPhoneNumber("+$phoneNumber")
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(requireActivity())
+            .setCallbacks(verificationCallbacks)
+            .setForceResendingToken(resendToken)
+            .build()
     }
 
     private val verificationCallbacks =
@@ -98,6 +138,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
                 phoneVerificationId = verificationId
+                resendToken = token
                 hideLoading()
             }
         }
@@ -107,7 +148,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
         viewDataBinding.fragmentConfirmPbLoading.invisible()
     }
 
-    fun showLoading() {
+    private fun showLoading() {
         viewDataBinding.fragmentConfirmPeetCode.invisible()
         viewDataBinding.fragmentConfirmPbLoading.visible()
     }
