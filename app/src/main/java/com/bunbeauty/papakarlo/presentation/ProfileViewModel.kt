@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 abstract class ProfileViewModel : ToolbarViewModel() {
     abstract val userState: StateFlow<State<User?>>
     abstract val hasAddressState: StateFlow<State<Boolean>>
@@ -26,7 +25,7 @@ abstract class ProfileViewModel : ToolbarViewModel() {
     abstract fun onAddressClicked()
     abstract fun onCreateAddressClicked()
     abstract fun goToLogin()
-    abstract fun logout()
+    abstract fun goToSettings()
 }
 
 class ProfileViewModelImpl @Inject constructor(
@@ -78,9 +77,7 @@ class ProfileViewModelImpl @Inject constructor(
         router.navigate(ProfileFragmentDirections.toLoginFragment())
     }
 
-    override fun logout() {
-        viewModelScope.launch {
-            dataStoreHelper.saveUserId("")
-        }
+    override fun goToSettings() {
+        router.navigate(ProfileFragmentDirections.toSettingsFragment())
     }
 }

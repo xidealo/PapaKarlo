@@ -118,7 +118,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     }
 
 
-    fun setOnClickListeners() {
+    private fun setOnClickListeners() {
         viewDataBinding.fragmentCreationOrderBtnAddressPick.setOnClickListener {
             viewModel.onAddressClicked()
         }

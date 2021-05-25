@@ -2,16 +2,116 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/DefaultPage"
         tools:context=".ui.profile.SettingsFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_settings_mcv_phone"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fragment_settings_tv_phone"
+                    style="@style/MainTitle"
+                    android:layout_margin="@dimen/small_margin"
+                    android:text="@string/title_settings_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fragment_settings_tv_phone_value"
+                    style="@style/MainText"
+                    android:layout_margin="@dimen/small_margin"
+                    android:drawablePadding="@dimen/large_padding"
+                    app:drawableLeftCompat="@drawable/ic_phone"
+                    app:drawableTint="@color/mainTextColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tv_phone"
+                    tools:text="8 (910) 000-00-00" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_settings_mcv_email"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_mcv_phone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fragment_settings_tv_email"
+                    style="@style/MainTitle"
+                    android:layout_margin="@dimen/small_margin"
+                    android:text="@string/title_settings_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_settings_til_email"
+                    style="@style/MaterialInputLayout"
+                    android:layout_margin="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:hint="@string/title_creation_order_email"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tv_email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_settings_et_email"
+                        style="@style/MaterialInput"
+                        android:inputType="textEmailAddress" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_settings_btn_create_address"
+                    style="@style/OutLineButton"
+                    android:layout_width="0dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:text="@string/action_settings_save"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_settings_til_email" />
+
+                <ImageView
+                    android:id="@+id/fragment_settings_iv_create_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:contentDescription="Description"
+                    android:src="@drawable/ic_save"
+                    app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_btn_create_address"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/fragment_settings_btn_create_address" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_settings_btn_logout"
+            style="@style/MainButton"
+            android:text="@string/action_settings_logout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

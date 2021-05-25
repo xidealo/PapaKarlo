@@ -45,7 +45,8 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 
@@ -64,7 +65,12 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
             }
         }.launchWhenStarted(lifecycleScope)
+        setOnClickListeners()
 
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setOnClickListeners() {
         viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
             viewModel.onOrderListClicked()
         }
@@ -77,9 +83,8 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
         viewDataBinding.fragmentProfileBtnLogin.setOnClickListener {
             viewModel.goToLogin()
         }
-        viewDataBinding.fragmentProfileBtnLogout.setOnClickListener {
-            viewModel.logout()
+        viewDataBinding.fragmentProfileBtnSettings.setOnClickListener {
+            viewModel.goToSettings()
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 }

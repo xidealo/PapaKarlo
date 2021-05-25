@@ -18,6 +18,4 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
     }
 
 
-
-
 }

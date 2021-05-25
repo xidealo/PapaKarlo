@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_orders">
         <action
             android:id="@+id/to_orderBottomSheet"
-            app:destination="@id/orderBottomSheet"
+            app:destination="@id/order_bottom_sheet"
             app:popUpTo="@id/orders_fragment"
             app:popUpToInclusive="true" />
         <argument
@@ -119,7 +119,7 @@
             app:destination="@id/creation_address_fragment" />
     </dialog>
     <dialog
-        android:id="@+id/orderBottomSheet"
+        android:id="@+id/order_bottom_sheet"
         android:name="com.bunbeauty.papakarlo.ui.OrderBottomSheet"
         android:label="OrderBottomSheet"
         tools:layout="@layout/bottom_sheet_order">
@@ -127,7 +127,6 @@
             android:name="Order"
             app:argType="com.bunbeauty.data.model.order.Order" />
     </dialog>
-
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.bunbeauty.papakarlo.ui.profile.ProfileFragment"
@@ -146,22 +145,25 @@
             app:destination="@id/creation_address_fragment" />
         <action
             android:id="@+id/to_loginFragment"
-            app:destination="@id/loginFragment"
+            app:destination="@id/login_fragment"
             app:popUpTo="@id/profile_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_settings_fragment"
+            app:destination="@id/settings_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/login_fragment"
         android:name="com.bunbeauty.papakarlo.ui.LoginFragment"
         android:label="@string/title_login"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/to_confirmFragment"
-            app:destination="@id/confirmFragment" />
+            app:destination="@id/confirm_fragment" />
 
     </fragment>
     <fragment
-        android:id="@+id/confirmFragment"
+        android:id="@+id/confirm_fragment"
         android:name="com.bunbeauty.papakarlo.ui.ConfirmFragment"
         android:label="@string/title_confirm"
         tools:layout="@layout/fragment_confirm">
@@ -177,4 +179,10 @@
             android:name="email"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.profile.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

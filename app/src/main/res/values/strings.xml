@@ -20,6 +20,7 @@
     <string name="title_profile">Профиль</string>
     <string name="title_login">Регистрация</string>
     <string name="title_confirm">Подтверждение номера</string>
+    <string name="title_settings">Настройки</string>
     <string name="title_cart">Корзина</string>
     <string name="title_order">Оформление заказа</string>
     <string name="title_creation_address">Добавление адреса</string>
@@ -147,7 +148,6 @@
     <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_address_list">Список адресов</string>
     <string name="action_profile_login">Войти</string>
-    <string name="action_profile_logout">Выйти</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>
@@ -167,6 +167,12 @@
     <!-- CAFE OPTIONS -->
     <string name="action_call">Позвонить</string>
     <string name="action_show_map">Показать на карте</string>
+
+    <!-- SETTINGS -->
+    <string name="title_settings_phone">Номер телефона</string>
+    <string name="title_settings_email">Email</string>
+    <string name="action_settings_save">Сохранить</string>
+    <string name="action_settings_logout">Выйти</string>
 
     <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
 
