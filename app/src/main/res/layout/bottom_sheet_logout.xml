@@ -21,6 +21,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_logout_btn_logout"
             style="@style/MainButton"
+            android:backgroundTint="@color/colorPrimary"
             android:text="@string/action_logout_logout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +31,6 @@
             android:id="@+id/fragment_logout_btn_cancel"
             style="@style/OutLineButton"
             android:layout_width="0dp"
-            android:layout_margin="@dimen/small_margin"
             android:text="@string/action_logout_cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

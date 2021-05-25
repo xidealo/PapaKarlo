@@ -33,7 +33,6 @@
             android:id="@+id/bottom_sheet_address_btn_create_address"
             style="@style/OutLineButton"
             android:layout_width="0dp"
-            android:layout_margin="@dimen/small_margin"
             android:text="@string/action_creation_address_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

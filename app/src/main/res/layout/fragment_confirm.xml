@@ -92,7 +92,6 @@
             android:id="@+id/fragment_confirm_btn_resend"
             style="@style/OutLineButton"
             android:layout_width="0dp"
-            android:layout_margin="@dimen/medium_margin"
             android:visibility="gone"
             android:text="@string/action_confirm_resend"
             app:layout_constraintBottom_toBottomOf="parent"

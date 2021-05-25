@@ -84,7 +84,6 @@
                     android:id="@+id/fragment_settings_btn_save_address"
                     style="@style/OutLineButton"
                     android:layout_width="0dp"
-                    android:layout_margin="@dimen/small_margin"
                     android:text="@string/action_settings_save"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

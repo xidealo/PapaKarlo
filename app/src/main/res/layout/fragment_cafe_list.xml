@@ -41,7 +41,6 @@
                         android:id="@+id/fragment_cafe_list_btn_card_number"
                         style="@style/OutLineButton"
                         android:layout_width="match_parent"
-                        android:layout_margin="@dimen/medium_margin"
                         android:text="@string/action_cafe_list_copy_card_number"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
