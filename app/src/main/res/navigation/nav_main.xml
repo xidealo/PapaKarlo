@@ -184,5 +184,22 @@
         android:id="@+id/settings_fragment"
         android:name="com.bunbeauty.papakarlo.ui.profile.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <argument
+            android:name="User"
+            app:argType="com.bunbeauty.data.model.user.User" />
+        <action
+            android:id="@+id/to_logoutBottomSheet"
+            app:destination="@id/logout_bottomSheet" />
+    </fragment>
+    <dialog
+        android:id="@+id/logout_bottomSheet"
+        tools:layout="@layout/bottom_sheet_logout"
+        android:name="com.bunbeauty.papakarlo.ui.profile.LogoutBottomSheet"
+        android:label="LogoutBottomSheet" >
+        <action
+            android:id="@+id/to_profile_fragment"
+            app:destination="@id/profile_fragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 </navigation>

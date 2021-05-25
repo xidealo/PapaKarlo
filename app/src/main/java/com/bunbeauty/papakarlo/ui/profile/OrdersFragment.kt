@@ -9,7 +9,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.papakarlo.presentation.OrdersViewModel
+import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

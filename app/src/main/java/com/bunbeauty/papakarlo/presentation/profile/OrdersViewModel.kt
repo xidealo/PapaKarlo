@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.profile
 
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.domain.repository.order.OrderRepo

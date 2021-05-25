@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment
+import com.bunbeauty.papakarlo.ui.profile.LogoutBottomSheet
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragment
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragment
 import com.bunbeauty.papakarlo.ui.profile.SettingsFragment
@@ -39,6 +40,7 @@ interface ViewModelComponent {
     fun inject(addressesBottomSheet: AddressesBottomSheet)
     fun inject(cafeOptionsBottomSheet: CafeOptionsBottomSheet)
     fun inject(orderBottomSheet: OrderBottomSheet)
+    fun inject(logoutBottomSheet: LogoutBottomSheet)
 
     // dialogs
 }

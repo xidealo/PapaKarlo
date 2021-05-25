@@ -81,7 +81,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_settings_btn_create_address"
+                    android:id="@+id/fragment_settings_btn_save_address"
                     style="@style/OutLineButton"
                     android:layout_width="0dp"
                     android:layout_margin="@dimen/small_margin"
@@ -92,15 +92,15 @@
                     app:layout_constraintTop_toBottomOf="@id/fragment_settings_til_email" />
 
                 <ImageView
-                    android:id="@+id/fragment_settings_iv_create_address"
+                    android:id="@+id/fragment_settings_iv_save_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/medium_margin"
                     android:contentDescription="Description"
                     android:src="@drawable/ic_save"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_btn_create_address"
+                    app:layout_constraintBottom_toBottomOf="@+id/fragment_settings_btn_save_address"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_settings_btn_create_address" />
+                    app:layout_constraintTop_toTopOf="@+id/fragment_settings_btn_save_address" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -173,6 +173,12 @@
     <string name="title_settings_email">Email</string>
     <string name="action_settings_save">Сохранить</string>
     <string name="action_settings_logout">Выйти</string>
+    <string name="action_settings_successfully_save">Изменения успешно сохранены</string>
+
+    <!-- LOGOUT -->
+    <string name="title_logout_logout">Выйти из профиля?</string>
+    <string name="action_logout_logout">Выйти</string>
+    <string name="action_logout_cancel">Отмена</string>
 
     <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
 

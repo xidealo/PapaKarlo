@@ -11,7 +11,7 @@ import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.ProfileViewModel
+import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import kotlinx.coroutines.flow.onEach
 

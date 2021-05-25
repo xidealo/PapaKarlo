@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
@@ -78,6 +78,8 @@ class ProfileViewModelImpl @Inject constructor(
     }
 
     override fun goToSettings() {
-        router.navigate(ProfileFragmentDirections.toSettingsFragment())
+        if (userState.value is State.Success) {
+            router.navigate(ProfileFragmentDirections.toSettingsFragment((userState.value as State.Success<User?>).data!!))
+        }
     }
 }

@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.OrdersViewModel
+import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor(

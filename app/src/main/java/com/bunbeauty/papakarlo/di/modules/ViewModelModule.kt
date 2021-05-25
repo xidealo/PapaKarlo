@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.*
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
+import com.bunbeauty.papakarlo.presentation.profile.*
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -87,6 +88,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingsViewModel::class)
-    internal abstract fun provideSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+    @ViewModelKey(SettingsViewModelImpl::class)
+    internal abstract fun provideSettingsViewModel(settingsViewModelImpl: SettingsViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LogoutViewModel::class)
+    internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
 }
