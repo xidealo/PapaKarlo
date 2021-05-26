@@ -3,15 +3,15 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
-import com.bunbeauty.papakarlo.presentation.AddressesViewModel
+import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import kotlinx.coroutines.flow.onEach
@@ -19,7 +19,6 @@ import javax.inject.Inject
 
 class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>() {
 
-    override var layoutId = R.layout.bottom_sheet_addresses
     override val viewModel: AddressesViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -50,7 +49,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                 else -> {
                 }
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
 
         viewModel.getAddresses(isDelivery)
 

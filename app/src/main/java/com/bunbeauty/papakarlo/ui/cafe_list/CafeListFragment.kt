@@ -6,25 +6,23 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.util.uri.IUriHelper
-import com.bunbeauty.papakarlo.presentation.CafeListViewModel
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
-
-    override var layoutId = R.layout.fragment_cafe_list
-    override val viewModel: CafeListViewModel by viewModels { modelFactory }
+class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
 
     @Inject
     lateinit var cafeAdapter: CafeAdapter
 
+    override val isCartVisible = true
     override val isBottomBarVisible = true
+
+    override val viewModel: CafeListViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -41,6 +39,6 @@ class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
 
         viewModel.cafeListFlow.onEach { cafeList ->
             cafeAdapter.submitList(cafeList)
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
     }
 }

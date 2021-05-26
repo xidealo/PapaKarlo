@@ -3,33 +3,44 @@ package com.bunbeauty.data.repository
 import com.bunbeauty.data.dao.CartProductDao
 import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CartProductRepository @Inject constructor(private val cartProductDao: CartProductDao) :
     CartProductRepo {
 
     override suspend fun insertToLocal(cartProduct: CartProduct): CartProduct {
-        cartProductDao.insert(cartProduct)
-        return cartProduct
+        return withContext(IO) {
+            cartProductDao.insert(cartProduct)
+            cartProduct
+        }
     }
 
     override fun getCartProductListFlow() =
-        cartProductDao.getCartProductListLiveData().flowOn(Dispatchers.IO)
+        cartProductDao.getCartProductListLiveData().flowOn(IO)
 
     override suspend fun getCartProductList(): List<CartProduct> =
-        cartProductDao.getCartProductList()
+        withContext(IO) {
+            cartProductDao.getCartProductList()
+        }
 
     override suspend fun getCartProduct(cartProductUuid: String): CartProduct? {
-        return cartProductDao.getCartProduct(cartProductUuid)
+        return withContext(IO) {
+            cartProductDao.getCartProduct(cartProductUuid)
+        }
     }
 
     override suspend fun update(cartProduct: CartProduct) {
-        return cartProductDao.update(cartProduct)
+        withContext(IO) {
+            cartProductDao.update(cartProduct)
+        }
     }
 
     override suspend fun delete(cartProduct: CartProduct) {
-        cartProductDao.delete(cartProduct)
+        withContext(IO) {
+            cartProductDao.delete(cartProduct)
+        }
     }
 }

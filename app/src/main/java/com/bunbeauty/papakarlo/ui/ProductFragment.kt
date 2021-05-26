@@ -7,16 +7,19 @@ import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.ProductViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.onEach
 
-class ProductFragment : BarsFragment<FragmentProductBinding>() {
+class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
 
-    override var layoutId = R.layout.fragment_product
+    override val isCartVisible = true
+    override val isBottomBarVisible = true
+
     override val viewModel: ProductViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -51,7 +54,7 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
                 }
                 else -> Unit
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
         }

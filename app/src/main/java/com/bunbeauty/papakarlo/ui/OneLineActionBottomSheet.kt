@@ -16,7 +16,6 @@ import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 class OneLineActionBottomSheet : BaseBottomSheetDialog<BottomSheetOneLineActionBinding>() {
 
-    override var layoutId = R.layout.bottom_sheet_one_line_action
     override val viewModel: OneLineActionViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {

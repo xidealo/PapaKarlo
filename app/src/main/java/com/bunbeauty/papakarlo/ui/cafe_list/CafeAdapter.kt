@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.domain.model.adapter.CafeAdapterModel
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import com.bunbeauty.papakarlo.presentation.CafeListViewModel
+import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CafeDiffUtilCallback
 import javax.inject.Inject

@@ -5,32 +5,30 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.invisible
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
-import com.bunbeauty.papakarlo.presentation.ConfirmViewModel
+import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.ConfirmFragmentArgs.fromBundle
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.TimeUnit
 
-class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
+class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
 
-    override var layoutId = R.layout.fragment_confirm
     override val viewModel: ConfirmViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
     private var phoneVerificationId: String? = null
-    override val isToolbarCartProductVisible = false
+    override val isCartVisible = false
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +43,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
         with(viewModel) {
             timerStringState.onEach {
                 viewDataBinding.fragmentConfirmTvResend.text = it
-            }.startedLaunch(lifecycle)
+            }.startedLaunch(viewLifecycleOwner)
             isFinishedTimerState.onEach { isFinished ->
                 if (isFinished) {
                     viewDataBinding.fragmentConfirmTvResend.gone()
@@ -57,7 +55,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                     viewDataBinding.fragmentConfirmTvResend.visible()
                     viewDataBinding.fragmentConfirmTvResendCode.gone()
                 }
-            }.startedLaunch(lifecycle)
+            }.startedLaunch(viewLifecycleOwner)
             startResendTimer()
         }
 

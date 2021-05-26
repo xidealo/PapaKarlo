@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="com.bunbeauty.papakarlo.presentation.CreationAddressViewModel" />
+            type="com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,12 +7,10 @@ import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.data.mapper.adapter.OrderAdapterMapper
 import com.bunbeauty.domain.model.adapter.OrderAdapterModel
 import com.bunbeauty.domain.model.local.user.User
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.repo.*
+import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -20,7 +18,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-abstract class ProfileViewModel : ToolbarViewModel() {
+abstract class ProfileViewModel(
+    cartProductRepo: CartProductRepo,
+    stringUtil: IStringHelper,
+    productHelper: IProductHelper,
+) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
     abstract val userState: StateFlow<State<User?>>
     abstract val hasAddressState: StateFlow<State<Boolean>>
     abstract val lastOrderState: StateFlow<State<OrderAdapterModel>>
@@ -40,8 +42,11 @@ class ProfileViewModelImpl @Inject constructor(
     private val userRepo: UserRepo,
     private val iStringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
-    private val orderMapper: OrderAdapterMapper
-) : ProfileViewModel() {
+    private val orderMapper: OrderAdapterMapper,
+    cartProductRepo: CartProductRepo,
+    productHelper: IProductHelper,
+    stringUtil: IStringHelper,
+) : ProfileViewModel(cartProductRepo, stringUtil, productHelper) {
 
     init {
         getUser(getUserId())

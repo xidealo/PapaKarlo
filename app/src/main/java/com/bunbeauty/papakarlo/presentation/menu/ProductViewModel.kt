@@ -1,17 +1,22 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.menu
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
-    val stringHelper: IStringHelper
-) : ToolbarViewModel() {
+    val stringHelper: IStringHelper,
+    cartProductRepo: CartProductRepo,
+    stringUtil: IStringHelper,
+    productHelper: IProductHelper,
+) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
 
     private val _menuProductState: MutableStateFlow<State<MenuProduct?>> =
         MutableStateFlow(State.Loading())

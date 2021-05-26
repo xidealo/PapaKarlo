@@ -4,25 +4,18 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.data.mapper.adapter.OrderAdapterMapper
-import com.bunbeauty.data.mapper.firebase.OrderMapper
 import com.bunbeauty.domain.model.adapter.OrderAdapterModel
-import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
-import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentArgs
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
-    private val orderAdapterMapper: OrderAdapterMapper,
-    private val dataStoreRepo: DataStoreRepo
-) : ToolbarViewModel() {
+    private val orderAdapterMapper: OrderAdapterMapper
+) : BaseViewModel() {
 
     private val _ordersState: MutableStateFlow<State<List<OrderAdapterModel?>>> =
         MutableStateFlow(State.Loading())

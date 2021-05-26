@@ -4,7 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.*
+import com.bunbeauty.papakarlo.presentation.address.AddressesViewModelImpl
+import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
+import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
+import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
+import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
+import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
+import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModelImpl
+import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.presentation.profile.*
 import dagger.Binds
 import dagger.Module
@@ -20,6 +30,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProductTabViewModelImpl::class)
     internal abstract fun provideProductTabViewModel(productTabViewModelImpl: ProductTabViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MenuViewModel::class)
+    internal abstract fun provideMenuViewModel(menuViewModel: MenuViewModel): ViewModel
 
     @Binds
     @IntoMap

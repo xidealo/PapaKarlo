@@ -12,6 +12,15 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword 'itisBB15092019'
+            keyAlias 'papakarloKey'
+            keyPassword 'Itispapakarlo08062004'
+        }
+    }
+
     defaultConfig {
         applicationId "com.bunbeuaty.papakarlo"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -23,9 +32,24 @@ android {
     }
 
     buildTypes {
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "Admin_${variant.name}_${versionName}.apk"
+            }
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            buildConfigField 'String', 'FB_LINK', '"https://test-fooddelivery.firebaseio.com/"'
+        }
+
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'FB_LINK', '"https://fooddelivery-ce2ef-default-rtdb.firebaseio.com/"'
+            signingConfig signingConfigs.release
         }
     }
     kotlinOptions {

@@ -19,17 +19,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/ic_back">
 
-            <TextView
-                android:id="@+id/activity_main_tv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:drawablePadding="@dimen/large_padding"
-                android:textColor="@color/mainTextColor"
-                app:drawableStartCompat="@drawable/ic_cart"
-                app:drawableTint="@color/mainTextColor" />
-
             <ImageView
                 android:id="@+id/activity_main_iv_logo"
                 android:layout_width="wrap_content"
@@ -37,6 +26,24 @@
                 android:layout_gravity="center"
                 android:src="@drawable/logo_top"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/activity_main_iv_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:src="@drawable/ic_cart"
+                app:tint="@color/mainTextColor" />
+
+            <TextView
+                android:id="@+id/activity_main_tv_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/very_small_margin"
+                android:drawablePadding="@dimen/large_padding"
+                tools:text="100₽" />
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.fragment.app.FragmentContainerView

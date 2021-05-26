@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.address
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -22,8 +22,8 @@ class CreationAddressViewModel @Inject constructor(
     private val userAddressRepo: UserAddressRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val streetRepo: StreetRepo,
-    private val resourcesProvider: IResourcesProvider
-) : ToolbarViewModel() {
+    private val resourcesProvider: IResourcesProvider,
+) : BaseViewModel() {
 
     var streets = listOf<Street>()
     var streetNamesFiled = ObservableField<List<String>>()
@@ -49,7 +49,7 @@ class CreationAddressViewModel @Inject constructor(
             }
             dataStoreRepo.saveDeliveryAddressId(uuid)
             withContext(Dispatchers.Main) {
-                messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_address_created_address))
+                showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
                 router.navigateUp()
             }
         }

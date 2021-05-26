@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.address
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State

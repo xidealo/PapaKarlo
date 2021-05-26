@@ -1,10 +1,9 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
-import com.bunbeauty.data.mapper.firebase.CartProductMapper
 import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
 import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.model.local.Delivery

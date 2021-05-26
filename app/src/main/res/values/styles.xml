@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/hintColor</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/mainTextColor</item>
     </style>
 
     <style name="AppTheme.LoadingScreen">

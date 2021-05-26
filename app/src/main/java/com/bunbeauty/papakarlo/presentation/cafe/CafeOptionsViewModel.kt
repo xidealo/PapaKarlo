@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.cafe
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.domain.model.local.cafe.Cafe

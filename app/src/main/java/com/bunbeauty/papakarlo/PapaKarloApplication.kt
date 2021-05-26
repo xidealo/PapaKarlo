@@ -17,6 +17,7 @@ class PapaKarloApplication : Application(), CoroutineScope {
 
     override fun onCreate() {
         super.onCreate()
+
         appComponent.inject(this)
         launch(Dispatchers.IO) {
             try {

@@ -11,25 +11,26 @@ import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.EmptyViewModel
+import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
-class MenuFragment : BarsFragment<FragmentMenuBinding>() {
-    override var layoutId = R.layout.fragment_menu
-    override val viewModel: EmptyViewModel by viewModels { modelFactory }
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
+class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
-    override val isToolbarLogoVisible = true
+    override val isLogoVisible = true
+    override val isCartVisible = true
     override val isBottomBarVisible = true
+
+    override val viewModel: MenuViewModel by viewModels { modelFactory }
+    override fun inject(viewModelComponent: ViewModelComponent) {
+        viewModelComponent.inject(this)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

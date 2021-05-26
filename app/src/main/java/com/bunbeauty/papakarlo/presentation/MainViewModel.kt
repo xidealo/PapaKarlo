@@ -22,6 +22,7 @@ class MainViewModel @Inject constructor(
     private val userRepo: UserRepo,
     private val addressRepo: UserAddressRepo,
     private val orderRepo: OrderRepo,
+    private val menuProductRepo: MenuProductRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : BaseViewModel() {
 

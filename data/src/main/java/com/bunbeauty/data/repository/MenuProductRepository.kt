@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MenuProductRepository @Inject constructor(
@@ -44,7 +45,10 @@ class MenuProductRepository @Inject constructor(
         return menuProductDao.getMenuProductFlow(menuProductUuid)
     }
 
-    override fun getMenuProduct(menuProductUuid: String): MenuProduct? {
-        return menuProductDao.getMenuProduct(menuProductUuid)
+    override suspend fun getMenuProduct(menuProductUuid: String): MenuProduct? {
+        return withContext(IO) {
+            menuProductDao.getMenuProduct(menuProductUuid)
+        }
     }
+
 }

@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 class PaymentBottomSheet : BaseBottomSheetDialog<BottomSheetPaymentBinding>() {
 
-    override var layoutId = R.layout.bottom_sheet_payment
     override val viewModel: MainViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {

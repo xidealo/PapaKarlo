@@ -3,21 +3,19 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
+class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
 
-    override var layoutId = R.layout.fragment_consumer_cart
     override val viewModel: ConsumerCartViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -31,7 +29,7 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
         super.onViewCreated(view, savedInstanceState)
         cartProductsAdapter.consumerCartViewModel = viewModel
         with(viewModel) {
-            getCartProductModelFlowList.onEach { cartProductModelList ->
+            cartProductList.onEach { cartProductModelList ->
                 if (cartProductModelList.isEmpty()) {
                     viewDataBinding.fragmentConsumerCartGroupEmptyCart.toggleVisibility(true)
                     viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(false)
@@ -43,11 +41,11 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
                     cartProductsAdapter.submitList(cartProductModelList)
                 }
                 viewDataBinding.fragmentConsumerCartPbLoading.gone()
-            }.startedLaunch(lifecycle)
+            }.startedLaunch(viewLifecycleOwner)
 
             deliveryStringFlow.onEach { deliveryString ->
                 viewDataBinding.fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-            }.startedLaunch(lifecycle)
+            }.startedLaunch(viewLifecycleOwner)
         }
         with(viewDataBinding) {
             fragmentConsumerCartRvResult.adapter = cartProductsAdapter

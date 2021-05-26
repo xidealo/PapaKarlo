@@ -7,14 +7,13 @@ import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
+import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import javax.inject.Inject
 
-class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding>() {
+class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
 
-    override var layoutId = R.layout.fragment_creation_address
     override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
 
     @Inject

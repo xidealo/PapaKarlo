@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.SettingsViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
-    override var layoutId = R.layout.fragment_settings
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
+
     override val viewModel: SettingsViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -23,6 +29,8 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setOnClickListeners()
 
         viewModel.getUser(SettingsFragmentArgs.fromBundle(requireArguments()).userId)
@@ -33,7 +41,7 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
                         fragmentSettingsTvPhoneValue.text = state.data.phone
                         if (state.data.email.isEmpty()) {
                             fragmentSettingsTvEmail.text =
-                                iResourcesProvider.getString(R.string.title_settings_add_email)
+                                resourcesProvider.getString(R.string.title_settings_add_email)
                             fragmentSettingsIvAddEmail.visible()
                             fragmentSettingsIvEditEmail.gone()
                         } else {
@@ -45,9 +53,7 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
                 }
                 else -> Unit
             }
-        }.startedLaunch(lifecycle)
-
-        super.onViewCreated(view, savedInstanceState)
+        }.startedLaunch(viewLifecycleOwner)
     }
 
     private fun setOnClickListeners() {

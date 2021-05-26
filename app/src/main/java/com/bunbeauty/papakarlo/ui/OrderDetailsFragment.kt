@@ -5,17 +5,16 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.OrderDetailsViewModel
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
@@ -23,7 +22,6 @@ import javax.inject.Inject
 
 class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
 
-    override var layoutId = R.layout.fragment_order_details
     override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
 
     @Inject
@@ -121,6 +119,6 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                 }
                 else -> Unit
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
     }
 }

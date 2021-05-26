@@ -94,6 +94,12 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
         return menuProduct.discountCost ?: menuProduct.cost
     }
 
+    override fun getTotalCount(cartProductList: List<CartProduct>): Int {
+        return cartProductList.sumOf { cartProduct ->
+            cartProduct.count
+        }
+    }
+
     override fun getCartProductOldCost(cartProduct: CartProduct): Int? {
         return if (cartProduct.menuProduct.discountCost == null) {
             null
@@ -108,6 +114,4 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
     ): Int {
         return priceForFreeDelivery - getNewTotalCost(cartProductList)
     }
-
-
 }

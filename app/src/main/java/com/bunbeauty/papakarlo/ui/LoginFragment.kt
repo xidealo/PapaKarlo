@@ -6,19 +6,18 @@ import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.LoginViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 
-class LoginFragment : BarsFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
-    override var layoutId = R.layout.fragment_login
     override val viewModel: LoginViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
-    override val isToolbarCartProductVisible = false
+    override val isCartVisible = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentLoginEtPhone)
@@ -26,7 +25,7 @@ class LoginFragment : BarsFragment<FragmentLoginBinding>() {
 
         viewDataBinding.fragmentLoginBtnLogin.setOnClickListener {
 
-            if (!viewModel.iFieldHelper.isCorrectFieldContent(
+            if (!viewModel.fieldHelper.isCorrectFieldContent(
                     viewDataBinding.fragmentLoginEtPhone.text.toString(),
                     true,
                     18,

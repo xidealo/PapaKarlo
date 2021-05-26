@@ -5,25 +5,31 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.Constants
 import com.bunbeauty.common.State
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 
-class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
+class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
 
-    override var layoutId = R.layout.fragment_profile
-    override val viewModel: ProfileViewModel by viewModels { modelFactory }
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
+
+    override val isCartVisible = true
     override val isBottomBarVisible = true
+
+    override val viewModel: ProfileViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -53,7 +59,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
                 else -> Unit
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.hasAddressState.onEach { state ->
             when (state) {
                 is State.Success -> {
@@ -63,7 +69,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                                 viewModel.onAddressClicked()
                             }
                             fragmentProfileTvAddress.text =
-                                iResourcesProvider.getString(R.string.title_profile_your_address)
+                                resourcesProvider.getString(R.string.title_profile_your_address)
                             fragmentProfileIvCreateAddress.gone()
                             fragmentProfileIvSelectAddress.visible()
                         }
@@ -73,7 +79,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                                 viewModel.onCreateAddressClicked()
                             }
                             fragmentProfileTvAddress.text =
-                                iResourcesProvider.getString(R.string.title_profile_create_address)
+                                resourcesProvider.getString(R.string.title_profile_create_address)
                             fragmentProfileIvCreateAddress.visible()
                             fragmentProfileIvSelectAddress.gone()
                         }
@@ -82,7 +88,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 else -> {
                 }
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.lastOrderState.onEach { state ->
             when (state) {
                 is State.Success -> {
@@ -104,7 +110,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
                 else -> Unit
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
 
         setOnClickListeners()
 

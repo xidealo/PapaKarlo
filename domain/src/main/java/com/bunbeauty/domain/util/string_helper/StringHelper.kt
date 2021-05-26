@@ -1,14 +1,14 @@
 package com.bunbeauty.domain.util.string_helper
 
+import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
-import com.bunbeauty.domain.model.local.order.OrderEntity
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.domain.model.local.address.Address
-import com.bunbeauty.domain.R
 import com.bunbeauty.domain.model.local.Time
+import com.bunbeauty.domain.model.local.address.Address
+import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.local.order.OrderEntity
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import javax.inject.Inject
 
@@ -128,6 +128,10 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
             OrderStatus.DONE -> resourcesProvider.getString(R.string.msg_status_ready)
             OrderStatus.CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
         }
+    }
+
+    override fun getAddedToCartString(productName: String): String {
+        return productName + resourcesProvider.getString(R.string.msg_cart_product_added)
     }
 
     override fun getDeliveryString(deliveryCost: Int): String {

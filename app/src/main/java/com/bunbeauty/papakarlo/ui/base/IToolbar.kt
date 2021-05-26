@@ -2,9 +2,9 @@ package com.bunbeauty.papakarlo.ui.base
 
 interface IToolbar {
     fun setToolbarConfiguration(
-        isVisible: Boolean,
+        isToolbarVisible: Boolean,
         isLogoVisible: Boolean,
-        isCartProductVisible: Boolean
+        isCartVisible: Boolean
     )
 
     fun setCartText(cartText: String)

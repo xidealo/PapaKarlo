@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.login
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections.backToProfileFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-abstract class ConfirmViewModel : ToolbarViewModel() {
+abstract class ConfirmViewModel : BaseViewModel() {
     abstract val timerStringState: StateFlow<String>
     abstract val isFinishedTimerState: StateFlow<Boolean>
     abstract fun startResendTimer()
@@ -32,9 +32,9 @@ abstract class ConfirmViewModel : ToolbarViewModel() {
 class ConfirmViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val userRepo: UserRepo,
-    private val resourcesProvider: IResourcesProvider,
     private val addressRepo: UserAddressRepo,
-    private val orderRepo: OrderRepo
+    private val orderRepo: OrderRepo,
+    private val resourcesProvider: IResourcesProvider
 ) : ConfirmViewModel() {
 
     override val timerStringState: MutableStateFlow<String> = MutableStateFlow(

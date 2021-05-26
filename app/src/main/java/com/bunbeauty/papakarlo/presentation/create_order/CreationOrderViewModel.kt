@@ -13,17 +13,14 @@ import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.model.local.order.OrderEntity
 import com.bunbeauty.domain.model.local.user.User
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.network.INetworkHelper
-import com.bunbeauty.domain.repo.CafeAddressRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.CreationOrderFragmentDirections.toAddressesBottomSheet
@@ -35,7 +32,7 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-abstract class CreationOrderViewModel : ToolbarViewModel() {
+abstract class CreationOrderViewModel : BaseViewModel() {
     abstract val hasAddressState: StateFlow<State<Boolean>>
     abstract val selectedAddressTextState: StateFlow<State<String>>
     abstract val userState: StateFlow<State<User?>>
@@ -70,8 +67,10 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
 class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val networkHelper: INetworkHelper,
-    private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
+    private val productHelper: IProductHelper,
+    private val resourcesProvider: IResourcesProvider,
+    private val cartProductRepo: CartProductRepo,
     private val orderRepo: OrderRepo,
     private val cafeAddressRepo: CafeAddressRepo,
     private val userAddressRepo: UserAddressRepo,
@@ -213,27 +212,26 @@ class CreationOrderViewModelImpl @Inject constructor(
         deferredMinutes: Int?,
         spentBonusesString: String
     ) {
-        viewModelScope.launch(Dispatchers.Default) {
-            if (selectedAddressState.value == null) {
-                errorSharedFlow.emit(resourcesProvider.getString(R.string.error_creation_order_address))
-                return@launch
-            }
-            val orderEntity = OrderEntity(
-                comment = comment,
-                phone = phone,
-                email = email,
-                deferredTime = stringHelper.toStringTime(deferredHours, deferredMinutes),
-                isDelivery = isDeliveryState.value,
-                code = generateCode(),
-                address = selectedAddressState.value!!,
-            )
-            //set try to get time?
-            val timestamp = try {
-                TrueTime.now().time
-            }catch (exception:Exception){
-                DateTime.now().millis
-            }
-
+        if (selectedAddressState.value == null) {
+            showError(resourcesProvider.getString(R.string.error_creation_order_address))
+            return
+        }
+        val orderEntity = OrderEntity(
+            comment = comment,
+            phone = phone,
+            email = email,
+            deferredTime = stringHelper.toStringTime(deferredHours, deferredMinutes),
+            isDelivery = isDeliveryState.value,
+            code = generateCode(),
+            address = selectedAddressState.value!!,
+        )
+        //set try to get time?
+        val timestamp = try {
+            TrueTime.now().time
+        } catch (exception: Exception) {
+            DateTime.now().millis
+        }
+        viewModelScope.launch {
             val order = Order(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
@@ -252,7 +250,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                         spentBonusesString.toInt()
                     }
                     if (user.bonusList.sum() - spentBonuses < 0) {
-                        errorSharedFlow.emit("Недостаточно бонусов")
+                        showError("Недостаточно бонусов")
                         return@launch
                     } else {
                         if (spentBonuses != 0)
@@ -269,7 +267,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                 orderRepo.insert(order)
             }
             withContext(Main) {
-                messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
+                showMessage(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
                 router.navigate(backToMenuFragment())
             }
         }

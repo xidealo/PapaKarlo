@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -16,8 +15,10 @@ import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -28,9 +29,8 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
+class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding>() {
 
-    override var layoutId = R.layout.fragment_creation_order
     override val viewModel: CreationOrderViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -40,7 +40,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     lateinit var resourcesProvider: IResourcesProvider
 
     @Inject
-    lateinit var iFieldHelper: IFieldHelper
+    lateinit var fieldHelper: IFieldHelper
 
 
     private var reviewInfo: ReviewInfo? = null
@@ -57,7 +57,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 else -> {
                 }
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
 
         viewModel.selectedAddressTextState.onEach { state ->
             when (state) {
@@ -67,7 +67,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 else -> {
                 }
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.getAddress()
 
         viewModel.userState.onEach { state ->
@@ -97,12 +97,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 else -> {
                 }
             }
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.getUser()
 
         viewModel.deferredTextStateFlow.onEach { deferredText ->
             viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.subscribeOnDeferredText()
 
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
@@ -111,7 +111,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
 
         viewModel.orderStringStateFlow.onEach { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
         viewModel.subscribeOnOrderString()
 
         viewModel.isDeliveryState.onEach { isDelivery ->
@@ -123,7 +123,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
             }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
-        }.startedLaunch(lifecycle)
+        }.startedLaunch(viewLifecycleOwner)
 
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
         viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
@@ -186,7 +186,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 viewModel.deferredHoursStateFlow.value = picker.hour
                 viewModel.deferredMinutesStateFlow.value = picker.minute
             } else {
-                showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
+                //showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
             }
         }
         picker.addOnNegativeButtonClickListener {
@@ -198,7 +198,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     }
 
     private fun createOrder() {
-        if (!iFieldHelper.isCorrectFieldContent(
+        if (!fieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
@@ -209,7 +209,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
-        if (!iFieldHelper.isCorrectFieldContent(
+        if (!fieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,
