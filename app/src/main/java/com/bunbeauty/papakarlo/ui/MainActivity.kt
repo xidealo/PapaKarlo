@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +21,7 @@ import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar
 import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
+import com.example.shared.Greeting
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         setupBottomNavigationBar()
 
         router.attach(this, R.id.activity_main_fcv_container)
+        Log.i("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
 
         // Uploading menu products to FB
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
