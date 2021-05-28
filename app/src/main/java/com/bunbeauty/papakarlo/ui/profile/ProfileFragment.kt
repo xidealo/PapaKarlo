@@ -41,6 +41,8 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
                         viewDataBinding.fragmentProfileTvPhone.text = state.data?.phone
                         viewDataBinding.fragmentProfileTvEmail.text = state.data?.email
+                        viewDataBinding.fragmentProfileTvBonusesValue.text =
+                            state.data?.bonusList?.sum().toString()
                         viewModel.getAddress(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()

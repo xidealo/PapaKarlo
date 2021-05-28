@@ -5,13 +5,16 @@ import com.bunbeauty.common.Constants.ADDRESSES
 import com.bunbeauty.common.Constants.COMPANY
 import com.bunbeauty.common.Constants.DELIVERY
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
+import com.bunbeauty.common.Constants.USERS
 import com.bunbeauty.data.BuildConfig
+import com.bunbeauty.data.mapper.UserMapper
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
+import com.bunbeauty.data.model.user.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -28,11 +31,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
+class ApiRepository @Inject constructor(
+) : IApiRepository, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job() + IO
 
-    private val testFirebaseInstance = FirebaseDatabase.getInstance("https://test-fooddelivery.firebaseio.com")
+    private val testFirebaseInstance =
+        FirebaseDatabase.getInstance("https://test-fooddelivery.firebaseio.com")
     private val firebaseInstance = testFirebaseInstance
 
     override fun insert(orderFirebase: OrderFirebase, cafeId: String): String {
@@ -56,7 +61,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         val userReference = testFirebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(Constants.USERS)
+            .child(USERS)
             .child(userId)
         userReference.setValue(userFirebase)
     }
@@ -65,15 +70,15 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         val userReference = testFirebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(Constants.USERS)
+            .child(USERS)
             .child(userId)
         userReference.setValue(userFirebase)
     }
 
-    override fun insert(addressFirebase: AddressFirebase, userId: String) :String{
+    override fun insert(addressFirebase: AddressFirebase, userId: String): String {
         val addressUuid = testFirebaseInstance.getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(Constants.USERS)
+            .child(USERS)
             .child(userId)
             .push()
             .key!!
@@ -81,7 +86,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         val addressReference = testFirebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
-            .child(Constants.USERS)
+            .child(USERS)
             .child(userId)
             .child(ADDRESSES)
             .child(addressUuid)
@@ -102,7 +107,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
                 val cafeList = snapshot.children.map { cafeSnapshot ->
                     cafeSnapshot.getValue(Cafe::class.java)!!
                 }
-                offer(cafeList)
+                trySend(cafeList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -126,7 +131,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
                     menuProductSnapshot.getValue(MenuProduct::class.java)!!
                         .also { it.uuid = menuProductSnapshot.key!! }
                 }
-                offer(menuProductList)
+                trySend(menuProductList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -147,7 +152,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         val valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 launch {
-                    offer(snapshot.getValue(Delivery::class.java)!!)
+                    trySend(snapshot.getValue(Delivery::class.java)!!)
                 }
             }
 
@@ -156,5 +161,27 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         }
         deliveryReference.addListenerForSingleValueEvent(valueEventListener)
         awaitClose { deliveryReference.removeEventListener(valueEventListener) }
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getUser(userId: String): Flow<UserFirebase?> = callbackFlow {
+        val userReference = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(userId)
+
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                launch {
+                    trySend(snapshot.getValue(UserFirebase::class.java))
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+        userReference.addListenerForSingleValueEvent(valueEventListener)
+        awaitClose { userReference.removeEventListener(valueEventListener) }
     }
 }

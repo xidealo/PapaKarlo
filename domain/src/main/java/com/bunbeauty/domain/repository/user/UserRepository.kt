@@ -4,9 +4,7 @@ import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.dao.UserDao
 import com.bunbeauty.data.mapper.UserMapper
 import com.bunbeauty.data.model.user.User
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -26,6 +24,11 @@ class UserRepository @Inject constructor(
     }
 
     override fun getUserAsFlow(userId: String): Flow<User?> {
-        return userDao.getUserFlow(userId).flowOn(IO)
+        return apiRepository.getUser(userId).map { userFirebase ->
+            if (userFirebase != null)
+                userMapper.to(userFirebase).also { it.userId = userId}
+            else
+                null
+        }
     }
 }

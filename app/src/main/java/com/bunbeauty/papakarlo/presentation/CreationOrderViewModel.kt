@@ -224,20 +224,26 @@ class CreationOrderViewModelImpl @Inject constructor(
                 ).id
             )
             if (userState.value is State.Success) {
-                val user = (userState.value as State.Success<User?>).data!!
-                val spentBonuses = if (spentBonusesString.isEmpty()) {
-                    0
-                } else {
-                    spentBonusesString.toInt()
+                val user = (userState.value as State.Success<User?>).data
+
+                // not login
+                if (user != null) {
+                    val spentBonuses = if (spentBonusesString.isEmpty()) {
+                        0
+                    } else {
+                        spentBonusesString.toInt()
+                    }
+                    user.bonusList.add((productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt())
+                    if (user.bonusList.sum() - spentBonuses < 0) {
+                        //show alert about bonuses
+                        return@launch
+                    } else {
+                        if(spentBonuses != 0)
+                        user.bonusList.add(-spentBonuses)
+                    }
+                    userRepo.update(user)
                 }
-             /*   user.bonus += (productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt()
-                if (user.bonus - spentBonuses < 0) {
-                    //show alert about bonuses
-                    return@launch
-                } else {
-                    user.bonus -= spentBonuses
-                }*/
-                userRepo.update(user)
+
                 orderRepo.insert(order)
                 withContext(Main) {
                     messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)

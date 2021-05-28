@@ -6,6 +6,7 @@ import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
+import com.bunbeauty.data.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface IApiRepository {
@@ -16,4 +17,5 @@ interface IApiRepository {
     fun getCafeList(): Flow<List<Cafe>>
     fun getMenuProductList(): Flow<List<MenuProduct>>
     fun getDelivery(): Flow<Delivery>
+    fun getUser(userId: String): Flow<UserFirebase?>
 }

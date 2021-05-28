@@ -53,8 +53,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddressesViewModel::class)
-    internal abstract fun provideAddressesViewModel(addressesViewModelImpl: AddressesViewModelImpl): ViewModel
+    @ViewModelKey(AddressesViewModelImpl::class)
+    internal abstract fun provideAddressesViewModelImpl(addressesViewModelImpl: AddressesViewModelImpl): ViewModel
 
     @Binds
     @IntoMap

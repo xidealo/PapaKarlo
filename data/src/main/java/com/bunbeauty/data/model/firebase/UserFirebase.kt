@@ -3,5 +3,5 @@ package com.bunbeauty.data.model.firebase
 data class UserFirebase(
     var phone: String = "",
     var email: String = "",
-    var bonus: List<Int> = arrayListOf()
+    var bonusList: ArrayList<Int> = arrayListOf()
 )

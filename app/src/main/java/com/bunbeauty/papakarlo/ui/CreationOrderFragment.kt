@@ -75,12 +75,14 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                         viewDataBinding.fragmentCreationOrderEtEmail.setText(
                             state.data?.email ?: ""
                         )
-
-                    }else{
+                        viewDataBinding.fragmentCreationOrderTvBonusesValue.text =
+                            state.data?.bonusList?.sum().toString()
+                    } else {
                         viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
                     }
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getUser()
