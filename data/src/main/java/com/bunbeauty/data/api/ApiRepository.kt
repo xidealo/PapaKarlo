@@ -75,6 +75,18 @@ class ApiRepository @Inject constructor(
         userReference.setValue(userFirebase)
     }
 
+    override fun updateBonusList(userFirebase: UserFirebase, userId: String) {
+        val userReference = testFirebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(userId)
+
+        val items = HashMap<String, Any>()
+        items["bonusList"] = userFirebase.bonusList
+        userReference.updateChildren(items)
+    }
+
     override fun insert(addressFirebase: AddressFirebase, userId: String): String {
         val addressUuid = testFirebaseInstance.getReference(COMPANY)
             .child(BuildConfig.APP_ID)

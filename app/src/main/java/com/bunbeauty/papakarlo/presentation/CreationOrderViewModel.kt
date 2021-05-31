@@ -241,7 +241,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                         if(spentBonuses != 0)
                         user.bonusList.add(-spentBonuses)
                     }
-                    userRepo.update(user)
+                    userRepo.updateBonusList(user)
                 }
 
                 orderRepo.insert(order)

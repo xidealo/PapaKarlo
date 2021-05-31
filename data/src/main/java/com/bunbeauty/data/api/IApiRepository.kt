@@ -13,6 +13,7 @@ interface IApiRepository {
     fun insert(orderFirebase: OrderFirebase, cafeId: String): String
     fun insert(userFirebase: UserFirebase, userId: String)
     fun update(userFirebase: UserFirebase, userId: String)
+    fun updateBonusList(userFirebase: UserFirebase, userId: String)
     fun insert(addressFirebase: AddressFirebase, userId: String):String
     fun getCafeList(): Flow<List<Cafe>>
     fun getMenuProductList(): Flow<List<MenuProduct>>

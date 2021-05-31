@@ -23,6 +23,11 @@ class UserRepository @Inject constructor(
         apiRepository.update(userMapper.from(user), user.userId)
     }
 
+    override suspend fun updateBonusList(user: User) {
+        userDao.update(user)
+        apiRepository.updateBonusList(userMapper.from(user), user.userId)
+    }
+
     override fun getUserAsFlow(userId: String): Flow<User?> {
         return apiRepository.getUser(userId).map { userFirebase ->
             if (userFirebase != null)
