@@ -26,7 +26,7 @@ class CafeRepository @Inject constructor(
     override suspend fun refreshCafeList() {
         cafeDao.deleteAll()
         apiRepository.getCafeList().collect { cafeList ->
-            for (cafe in cafeList) {
+            for (cafe in cafeList.filter { it.cafeEntity.visible }) {
                 saveCafe(cafe)
             }
             if (dataStoreHelper.cafeAddressId.first().isEmpty())

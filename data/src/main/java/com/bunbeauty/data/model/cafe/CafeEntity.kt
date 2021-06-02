@@ -18,5 +18,6 @@ data class CafeEntity(
     val toTime: String = "",
     val phone: String = "",
     @Embedded
-    val coordinate: Coordinate = Coordinate()
-): Parcelable
+    val coordinate: Coordinate = Coordinate(),
+    val visible: Boolean = false
+) : Parcelable
