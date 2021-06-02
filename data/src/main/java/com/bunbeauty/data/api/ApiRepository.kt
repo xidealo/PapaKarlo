@@ -63,7 +63,13 @@ class ApiRepository @Inject constructor(
             .child(BuildConfig.APP_ID)
             .child(USERS)
             .child(userId)
-        userReference.setValue(userFirebase)
+
+        val items = HashMap<String, Any>()
+        items["phone"] = userFirebase.phone
+
+        if (userFirebase.email.isNotEmpty())
+            items["email"] = userFirebase.email
+        userReference.updateChildren(items)
     }
 
     override fun update(userFirebase: UserFirebase, userId: String) {

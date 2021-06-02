@@ -236,21 +236,20 @@ class CreationOrderViewModelImpl @Inject constructor(
                     user.bonusList.add((productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     if (user.bonusList.sum() - spentBonuses < 0) {
                         //show alert about bonuses
+                        errorSharedFlow.emit("Недостаточно бонусов")
                         return@launch
                     } else {
-                        if(spentBonuses != 0)
-                        user.bonusList.add(-spentBonuses)
+                        if (spentBonuses != 0)
+                            user.bonusList.add(-spentBonuses)
                     }
                     userRepo.updateBonusList(user)
                 }
+            }
 
-                orderRepo.insert(order)
-                withContext(Main) {
-                    messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
-                    router.navigate(backToMenuFragment())
-                }
-            } else {
-                //show alert about user not loaded
+            orderRepo.insert(order)
+            withContext(Main) {
+                messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
+                router.navigate(backToMenuFragment())
             }
         }
     }

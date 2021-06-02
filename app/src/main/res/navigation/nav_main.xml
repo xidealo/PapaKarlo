@@ -145,9 +145,7 @@
             app:destination="@id/creation_address_fragment" />
         <action
             android:id="@+id/to_loginFragment"
-            app:destination="@id/login_fragment"
-            app:popUpTo="@id/profile_fragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/login_fragment" />
         <action
             android:id="@+id/to_settings_fragment"
             app:destination="@id/settings_fragment" />
@@ -173,8 +171,8 @@
         <action
             android:id="@+id/to_profile_fragment"
             app:destination="@id/profile_fragment"
-            app:popUpTo="@id/profile_fragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/nav_main"
+            app:popUpToInclusive="true"  />
         <argument
             android:name="email"
             app:argType="string" />
@@ -184,7 +182,7 @@
         android:id="@+id/settings_fragment"
         android:name="com.bunbeauty.papakarlo.ui.profile.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <argument
             android:name="User"
             app:argType="com.bunbeauty.data.model.user.User" />
@@ -194,12 +192,13 @@
     </fragment>
     <dialog
         android:id="@+id/logout_bottomSheet"
-        tools:layout="@layout/bottom_sheet_logout"
         android:name="com.bunbeauty.papakarlo.ui.profile.LogoutBottomSheet"
-        android:label="LogoutBottomSheet" >
+        android:label="LogoutBottomSheet"
+        tools:layout="@layout/bottom_sheet_logout">
         <action
             android:id="@+id/to_profile_fragment"
             app:destination="@id/profile_fragment"
+            app:popUpTo="@id/nav_main"
             app:popUpToInclusive="true" />
     </dialog>
 </navigation>
