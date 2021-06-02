@@ -3,11 +3,13 @@ package com.bunbeauty.domain.cafe
 import com.bunbeauty.data.dao.CafeDao
 import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.api.IApiRepository
+import com.bunbeauty.data.utils.IDataStoreHelper
 import com.bunbeauty.domain.repository.address.CafeAddressRepo
 import com.bunbeauty.domain.repository.district.DistrictRepo
 import com.bunbeauty.domain.repository.street.StreetRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(
@@ -15,7 +17,8 @@ class CafeRepository @Inject constructor(
     private val cafeDao: CafeDao,
     private val cafeAddressRepo: CafeAddressRepo,
     private val districtRepo: DistrictRepo,
-    private val streetRepo: StreetRepo
+    private val streetRepo: StreetRepo,
+    private val dataStoreHelper: IDataStoreHelper
 ) : CafeRepo {
 
     override val cafeEntityListFlow: Flow<List<Cafe>> = cafeDao.getCafeListFlow()
@@ -26,10 +29,12 @@ class CafeRepository @Inject constructor(
             for (cafe in cafeList) {
                 saveCafe(cafe)
             }
+            if (dataStoreHelper.cafeAddressId.first().isEmpty())
+                dataStoreHelper.saveCafeAddressId(cafeList.first().address?.uuid ?: "")
         }
     }
 
-    suspend fun saveCafe(cafe: Cafe) {
+    private suspend fun saveCafe(cafe: Cafe) {
         cafeDao.insert(cafe.cafeEntity)
 
         cafe.address?.let { address ->

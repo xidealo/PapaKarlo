@@ -41,7 +41,6 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewDataBinding.viewModel = viewModel
 
         viewModel.hasAddressState.onEach { state ->
             when (state) {
@@ -49,8 +48,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
                     viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
 
@@ -59,8 +57,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 is State.Success -> {
                     viewDataBinding.fragmentCreationOrderBtnAddressPick.text = state.data
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getAddress()
