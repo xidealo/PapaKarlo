@@ -26,7 +26,6 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.getUser()
         viewModel.userState.onEach { state ->
             when (state) {
                 is State.Loading -> {
@@ -50,7 +49,6 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
-
         viewModel.hasAddressState.onEach { state ->
             when (state) {
                 is State.Success -> {

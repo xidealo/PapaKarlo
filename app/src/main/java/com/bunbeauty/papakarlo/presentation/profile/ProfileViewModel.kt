@@ -34,6 +34,10 @@ class ProfileViewModelImpl @Inject constructor(
     private val userRepo: UserRepo
 ) : ProfileViewModel() {
 
+    init{
+        getUser()
+    }
+
     override val userState: MutableStateFlow<State<User?>> =
         MutableStateFlow(State.Loading())
 
