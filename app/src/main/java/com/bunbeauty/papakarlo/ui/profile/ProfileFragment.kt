@@ -47,8 +47,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
 

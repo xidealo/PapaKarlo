@@ -9,7 +9,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_login_mcv_extra_info"
-            style="@style/MaterialCardCreationOrder"
+            style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"

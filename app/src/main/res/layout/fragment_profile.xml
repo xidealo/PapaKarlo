@@ -79,7 +79,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_address"
-            style="@style/MaterialCardCreationOrder"
+            style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +162,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_orders"
-            style="@style/MaterialCardCreationOrder"
+            style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
@@ -253,8 +253,7 @@
             fragment_profile_mcv_contacts,
             fragment_profile_mcv_address,
             fragment_profile_mcv_orders,
-            fragment_profile_mcv_bonuses,
-            fragment_profile_btn_logout" />
+            fragment_profile_mcv_bonuses" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_no_profile"

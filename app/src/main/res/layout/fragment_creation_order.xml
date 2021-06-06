@@ -8,6 +8,7 @@
         tools:context=".ui.CreationOrderFragment">
 
         <ScrollView
+            android:id="@+id/fragment_creation_order_sv_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scrollbars="none"
@@ -59,8 +60,8 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_address"
-                    style="@style/MaterialCardCreationOrder"
-                    android:layout_marginTop="@dimen/medium_margin"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_delivery">
@@ -144,7 +145,8 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_contacts"
-                    style="@style/MaterialCardCreationOrder"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address">
 
@@ -198,7 +200,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_extra_info"
-                    style="@style/MaterialCardCreationOrder"
+                    style="@style/DefaultMaterialCard"
                     android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_contacts">
@@ -292,7 +294,8 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_bonuses"
-                    style="@style/MaterialCardCreationOrder"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_extra_info">
 
@@ -351,5 +354,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
+        <ProgressBar
+            android:id="@+id/fragment_creation_order_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

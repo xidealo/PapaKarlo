@@ -11,7 +11,7 @@ abstract class ToolbarViewModel: BaseViewModel() {
 
     val cartLiveData by lazy {
         Transformations.map(cartProductListLiveData) { productList ->
-            productHelper.getFullPriceString(productList) + "\n${productList.sumBy { it.count }} шт."
+            productHelper.getFullPriceString(productList) + "\n${productList.sumOf { it.count }} шт."
         }
     }
 }

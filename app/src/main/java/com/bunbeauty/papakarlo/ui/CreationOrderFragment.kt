@@ -41,14 +41,14 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         viewModel.hasAddressState.onEach { state ->
             when (state) {
                 is State.Success -> {
                     viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
                     viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
 
@@ -57,7 +57,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 is State.Success -> {
                     viewDataBinding.fragmentCreationOrderBtnAddressPick.text = state.data
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getAddress()
@@ -77,9 +78,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     } else {
                         viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
                     }
+                    viewDataBinding.fragmentCreationOrderSvMain.visible()
+                    viewDataBinding.fragmentCreationOrderPbLoading.gone()
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.getUser()
@@ -169,11 +171,6 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     }
 
     private fun createOrder() {
-        /*  if (!viewModel.isNetworkConnected()) {
-              showError(requireContext().getString(R.string.error_creation_order_connect))
-              return
-          }*/
-
         if (!iFieldHelper.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,

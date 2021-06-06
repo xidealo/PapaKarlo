@@ -225,7 +225,6 @@ class CreationOrderViewModelImpl @Inject constructor(
             )
             if (userState.value is State.Success) {
                 val user = (userState.value as State.Success<User?>).data
-
                 // not login
                 if (user != null) {
                     val spentBonuses = if (spentBonusesString.isEmpty()) {
@@ -245,7 +244,6 @@ class CreationOrderViewModelImpl @Inject constructor(
                     userRepo.updateBonusList(user)
                 }
             }
-
             orderRepo.insert(order)
             withContext(Main) {
                 messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
