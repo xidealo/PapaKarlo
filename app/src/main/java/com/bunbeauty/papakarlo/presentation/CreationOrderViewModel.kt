@@ -63,7 +63,6 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
         spentBonusesString: String
     )
 }
-
 class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val networkHelper: INetworkHelper,
@@ -234,7 +233,6 @@ class CreationOrderViewModelImpl @Inject constructor(
                     }
                     user.bonusList.add((productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     if (user.bonusList.sum() - spentBonuses < 0) {
-                        //show alert about bonuses
                         errorSharedFlow.emit("Недостаточно бонусов")
                         return@launch
                     } else {

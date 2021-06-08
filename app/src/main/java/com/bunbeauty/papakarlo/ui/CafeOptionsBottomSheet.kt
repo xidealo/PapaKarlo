@@ -16,8 +16,7 @@ import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
 import javax.inject.Inject
 
-class CafeOptionsBottomSheet :
-    BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
+class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
 
     override var layoutId = R.layout.bottom_sheet_cafe_options
     override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }

@@ -36,9 +36,7 @@
         tools:layout="@layout/fragment_orders">
         <action
             android:id="@+id/to_orderBottomSheet"
-            app:destination="@id/order_bottom_sheet"
-            app:popUpTo="@id/orders_fragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/order_bottom_sheet" />
         <argument
             android:name="userUuid"
             app:argType="string" />
@@ -134,9 +132,7 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/to_orders_fragment"
-            app:destination="@id/orders_fragment"
-            app:popUpTo="@id/profile_fragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/orders_fragment" />
         <action
             android:id="@+id/to_addresses_bottom_sheet"
             app:destination="@id/addresses_bottom_sheet" />
