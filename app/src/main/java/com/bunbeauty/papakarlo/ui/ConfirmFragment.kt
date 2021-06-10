@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.google.android.gms.tasks.TaskExecutors
+import com.bunbeauty.papakarlo.ui.ConfirmFragmentArgs.fromBundle
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -35,7 +35,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sendVerificationCode(
-            viewModel.getPhoneNumberDigits(ConfirmFragmentArgs.fromBundle(requireArguments()).phone)
+            viewModel.getPhoneNumberDigits(fromBundle(requireArguments()).phone)
         )
     }
 
@@ -59,18 +59,12 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
 
         viewDataBinding.fragmentConfirmBtnResend.setOnClickListener {
             viewModel.startResendTimer()
-            resendVerificationCode(
-                viewModel.getPhoneNumberDigits(
-                    ConfirmFragmentArgs.fromBundle(
-                        requireArguments()
-                    ).phone
-                )
-            )
+            resendVerificationCode(viewModel.getPhoneNumberDigits(fromBundle(requireArguments()).phone))
         }
 
         viewDataBinding.fragmentConfirmTvPhoneInformation.text =
             "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
-                ConfirmFragmentArgs.fromBundle(requireArguments()).phone
+                fromBundle(requireArguments()).phone
             }"
         viewDataBinding.fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
             showLoading()
@@ -84,8 +78,8 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                             val userId = firebase.currentUser?.uid
                             viewModel.createUser(
                                 userId ?: "",
-                                ConfirmFragmentArgs.fromBundle(requireArguments()).phone,
-                                ConfirmFragmentArgs.fromBundle(requireArguments()).email
+                                fromBundle(requireArguments()).phone,
+                                fromBundle(requireArguments()).email
                             )
                         } else {
                             if (task.exception is FirebaseAuthInvalidCredentialsException) {

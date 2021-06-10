@@ -9,11 +9,13 @@ import com.bunbeauty.domain.repository.user.UserRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
-import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections
+import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections.backToProfileFragment
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -58,7 +60,10 @@ class ConfirmViewModelImpl @Inject constructor(
             dataStoreHelper.saveUserId(userId)
             val user = User(userId = userId, phone = phone, email = email)
             userRepo.insert(user)
-            router.navigate(ConfirmFragmentDirections.toProfileFragment())
+
+            withContext(Main) {
+                router.navigate(backToProfileFragment())
+            }
         }
     }
 
