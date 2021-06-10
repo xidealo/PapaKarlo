@@ -2,8 +2,12 @@
 buildscript {
     ext.kotlin_version = "1.5.10"
     repositories {
-        google()
-        mavenCentral()
+        google().content() {
+            excludeGroup "Kotlin/Native"
+        }
+        mavenCentral().content() {
+            excludeGroup "Kotlin/Native"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.1'

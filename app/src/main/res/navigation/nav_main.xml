@@ -154,7 +154,6 @@
         <action
             android:id="@+id/to_confirmFragment"
             app:destination="@id/confirm_fragment" />
-
     </fragment>
     <fragment
         android:id="@+id/confirm_fragment"
@@ -164,14 +163,14 @@
         <argument
             android:name="phone"
             app:argType="string" />
-        <action
-            android:id="@+id/to_profile_fragment"
-            app:destination="@id/profile_fragment"
-            app:popUpTo="@id/profile_fragment"
-            app:popUpToInclusive="true" />
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/back_to_profile_fragment"
+            app:destination="@id/profile_fragment"
+            app:popUpTo="@id/profile_fragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
