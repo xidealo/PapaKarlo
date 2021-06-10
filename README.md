@@ -1,4 +1,4 @@
-# PapaKarlo README
+# PapaKarlo
 This application allows you to order food from a cafe
 
 ## Download
