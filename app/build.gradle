@@ -136,7 +136,5 @@ dependencies {
     implementation("com.alimuzaffar.lib:pinentryedittext:$rootProject.pinentryedittextVersion") {
         exclude group: 'androidx.appcompat', module: 'appcompat'
     }
-
-    implementation "androidx.browser:browser:$rootProject.browserVersion"
 }
 
