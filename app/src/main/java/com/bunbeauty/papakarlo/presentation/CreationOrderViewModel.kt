@@ -63,6 +63,7 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
         spentBonusesString: String
     )
 }
+
 class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val networkHelper: INetworkHelper,
@@ -206,6 +207,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                 errorSharedFlow.emit(resourcesProvider.getString(R.string.error_creation_order_address))
                 return@launch
             }
+
             val orderEntity = OrderEntity(
                 comment = comment,
                 phone = phone,
@@ -224,7 +226,7 @@ class CreationOrderViewModelImpl @Inject constructor(
             )
             if (userState.value is State.Success) {
                 val user = (userState.value as State.Success<User?>).data
-                // not login
+                //with login
                 if (user != null) {
                     val spentBonuses = if (spentBonusesString.isEmpty()) {
                         0
@@ -240,9 +242,11 @@ class CreationOrderViewModelImpl @Inject constructor(
                             user.bonusList.add(-spentBonuses)
                     }
                     userRepo.updateBonusList(user)
+                    order.orderEntity.bonus = spentBonuses
                 }
             }
             orderRepo.insert(order)
+
             withContext(Main) {
                 messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
                 router.navigate(backToMenuFragment())

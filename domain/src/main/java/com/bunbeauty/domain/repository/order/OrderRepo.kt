@@ -4,7 +4,7 @@ import com.bunbeauty.data.model.order.Order
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
-    suspend fun insert(order: Order)
+    suspend fun insert(order: Order): String
     fun getOrdersWithCartProducts(): Flow<List<Order>>
 
     //suspend fun deleteAll(orderList: List<OrderWithCartProducts>)

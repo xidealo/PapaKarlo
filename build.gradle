@@ -54,7 +54,7 @@ ext {
     viewmodelVersion = "2.3.1"
     livedataVersion = "2.3.1"
     activityVersion = "1.2.3"
-    fragmentVersion = "1.3.4"
+    fragmentVersion = "1.3.5"
     workManagerVersion = "2.5.0"
     bluetoothManagerVersion = "1.3.9"
     bluetoothVersion = "1.3.9"
@@ -68,7 +68,7 @@ ext {
 
     //design
     materialDesignVersion = "1.3.0"
-    recyclerViewVersion = "1.2.0"
+    recyclerViewVersion = "1.2.1"
     materialSerachVersion = "1.4.0"
     drawVersion = "v0.1"
     seekArcVersion = "v1.1"
@@ -80,7 +80,7 @@ ext {
     pinentryedittextVersion = "2.0.6"
 
     // Test dependencies
-    mockitoVerchion = "3.3.3"
+    mockitoVerchion = "3.11.0"
     junitVerchion = "4.13.2"
     testJunitVerchion = "1.1.2"
     espressoVerchion = "3.3.0"

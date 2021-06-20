@@ -17,7 +17,7 @@ class OrderRepository @Inject constructor(
     private val orderMapper: OrderMapper
 ) : OrderRepo {
 
-    override suspend fun insert(order: Order) {
+    override suspend fun insert(order: Order): String {
         withContext(Dispatchers.IO) {
             order.orderEntity.uuid =
                 apiRepository.insert(orderMapper.from(order), order.cafeId)
@@ -27,6 +27,7 @@ class OrderRepository @Inject constructor(
                 cartProductRepo.update(cardProduct)
             }
         }
+        return order.orderEntity.uuid
     }
 
     override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()

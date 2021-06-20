@@ -31,8 +31,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class ApiRepository @Inject constructor(
-) : IApiRepository, CoroutineScope {
+class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job() + IO
 

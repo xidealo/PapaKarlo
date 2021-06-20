@@ -42,7 +42,8 @@ class LoginFragment : BarsFragment<FragmentLoginBinding>() {
 
             viewModel.goToConfirm(
                 viewDataBinding.fragmentLoginEtPhone.text.toString(),
-                viewDataBinding.fragmentLoginEtEmail.text.toString()
+                ""
+                //viewDataBinding.fragmentLoginEtEmail.text.toString()
             )
         }
         super.onViewCreated(view, savedInstanceState)

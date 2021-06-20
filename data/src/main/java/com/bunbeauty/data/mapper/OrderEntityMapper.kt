@@ -13,7 +13,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
     override fun from(e: OrderEntity): OrderEntityFirebase {
         return OrderEntityFirebase(
             addressMapper.from(e.address),
-            e.comment,
+            checkEmptyString(e.comment),
             e.phone,
             e.time,
             e.orderStatus,
@@ -21,6 +21,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             e.code,
             e.email,
             checkEmptyString(e.deferred),
+            checkEmptyInt(e.bonus)
         )
     }
 
@@ -46,6 +47,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             code = t.code,
             email = t.email ?: "",
             deferred = t.deferred ?: "",
+            bonus = t.bonus ?: 0
         )
     }
 }
