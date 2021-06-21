@@ -52,36 +52,39 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             .child(cafeId)
             .child(orderUuid)
         orderReference.setValue(orderFirebase)
-
-        //set order to User
         if (orderFirebase.orderEntity.userId != null) {
-            val getOrderUserReference = firebaseInstance
-                .getReference(COMPANY)
-                .child(BuildConfig.APP_ID)
-                .child(USERS)
-                .child(orderFirebase.orderEntity.userId!!)
-                .child(ORDERS)
-
-            val orderToUserReference = firebaseInstance
-                .getReference(COMPANY)
-                .child(BuildConfig.APP_ID)
-                .child(USERS)
-                .child(orderFirebase.orderEntity.userId!!)
-                .child(ORDERS)
-            getOrderUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val userOrderList = mutableListOf<UserOrder>()
-                    snapshot.children.forEach {
-                        userOrderList.add(it.getValue(UserOrder::class.java) ?: UserOrder("", ""))
-                    }
-                    userOrderList.add(UserOrder(cafeId, orderUuid))
-                    orderToUserReference.setValue(userOrderList)
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+            addOrderToUser(orderFirebase, cafeId, orderUuid)
         }
         return orderUuid
+    }
+
+    private fun addOrderToUser(orderFirebase: OrderFirebase, cafeId: String, orderUuid: String) {
+        val getOrderUserReference = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(orderFirebase.orderEntity.userId!!)
+            .child(ORDERS)
+
+        val orderToUserReference = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(orderFirebase.orderEntity.userId!!)
+            .child(ORDERS)
+        getOrderUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userOrderList = mutableListOf<UserOrder>()
+                snapshot.children.forEach {
+                    userOrderList.add(it.getValue(UserOrder::class.java) ?: UserOrder("", ""))
+                }
+                userOrderList.add(UserOrder(cafeId, orderUuid))
+                orderToUserReference.setValue(userOrderList)
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
     }
 
     override fun insert(userFirebase: UserFirebase, userId: String) {
