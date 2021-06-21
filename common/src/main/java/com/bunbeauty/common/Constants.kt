@@ -10,5 +10,4 @@ object Constants {
     const val MENU_PRODUCTS: String = "menu_products"
     const val DELIVERY: String = "delivery"
     const val BONUSES_PERCENT: Double = 0.1
-    const val ORDER_LIST: String = "orderList"
 }
