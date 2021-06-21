@@ -7,6 +7,7 @@ import com.bunbeauty.common.Constants.DELIVERY
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
 import com.bunbeauty.common.Constants.ORDERS
 import com.bunbeauty.common.Constants.USERS
+import com.bunbeauty.common.Constants.l_ORDERS
 import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.MenuProduct
@@ -64,14 +65,14 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             .child(BuildConfig.APP_ID)
             .child(USERS)
             .child(orderFirebase.orderEntity.userId!!)
-            .child(ORDERS)
+            .child(l_ORDERS)
 
         val orderToUserReference = firebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
             .child(orderFirebase.orderEntity.userId!!)
-            .child(ORDERS)
+            .child(l_ORDERS)
         getOrderUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userOrderList = mutableListOf<UserOrder>()
@@ -84,7 +85,6 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
 
             override fun onCancelled(error: DatabaseError) {}
         })
-
     }
 
     override fun insert(userFirebase: UserFirebase, userId: String) {

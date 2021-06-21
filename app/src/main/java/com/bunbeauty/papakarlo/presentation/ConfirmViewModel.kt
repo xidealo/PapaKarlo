@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -58,12 +59,23 @@ class ConfirmViewModelImpl @Inject constructor(
     override fun createUser(userId: String, phone: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreHelper.saveUserId(userId)
-            val user = User(userId = userId, phone = phone, email = email)
-            userRepo.insert(user)
-
-            withContext(Main) {
-                router.navigate(backToProfileFragment())
+            //try to get user
+            // if user not null
+            //create new, else load data about user
+            userRepo.getUserAsFlow(userId).onEach { user ->
+                if (user == null) {
+                    userRepo.insert(User(userId = userId, phone = phone, email = email))
+                }else{
+                    //get data for user
+                    //addresses
+                    //orders
+                    //user
+                }
+                withContext(Main) {
+                    router.navigate(backToProfileFragment())
+                }
             }
+
         }
     }
 
