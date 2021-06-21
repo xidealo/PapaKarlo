@@ -27,5 +27,6 @@ data class OrderEntity(
     var code: String = "",
     var email: String = "",
     var deferred: String = "",
-    var bonus: Int = 0
+    var bonus: Int = 0,
+    var userId: String = ""
 ) : BaseModel, Parcelable

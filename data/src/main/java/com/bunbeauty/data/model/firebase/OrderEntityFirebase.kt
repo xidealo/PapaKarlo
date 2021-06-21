@@ -13,5 +13,6 @@ data class OrderEntityFirebase(
     var code: String = "",
     var email: String? = null,
     var deferred: String? = null,
-    var bonus: Int? = null
+    var bonus: Int? = null,
+    var userId: String? = null
 )

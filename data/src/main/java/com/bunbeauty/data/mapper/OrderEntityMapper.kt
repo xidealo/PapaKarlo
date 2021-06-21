@@ -21,7 +21,8 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             e.code,
             e.email,
             checkEmptyString(e.deferred),
-            checkEmptyInt(e.bonus)
+            checkEmptyInt(e.bonus),
+            checkEmptyString(e.userId)
         )
     }
 
@@ -47,7 +48,8 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             code = t.code,
             email = t.email ?: "",
             deferred = t.deferred ?: "",
-            bonus = t.bonus ?: 0
+            bonus = t.bonus ?: 0,
+            userId = t.userId ?: ""
         )
     }
 }

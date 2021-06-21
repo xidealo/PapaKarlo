@@ -207,7 +207,6 @@ class CreationOrderViewModelImpl @Inject constructor(
                 errorSharedFlow.emit(resourcesProvider.getString(R.string.error_creation_order_address))
                 return@launch
             }
-
             val orderEntity = OrderEntity(
                 comment = comment,
                 phone = phone,
@@ -215,7 +214,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                 deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
                 isDelivery = isDeliveryState.value,
                 code = generateCode(),
-                address = selectedAddressState.value!!
+                address = selectedAddressState.value!!,
             )
             val order = Order(
                 orderEntity,
@@ -241,12 +240,12 @@ class CreationOrderViewModelImpl @Inject constructor(
                         if (spentBonuses != 0)
                             user.bonusList.add(-spentBonuses)
                     }
-                    userRepo.updateBonusList(user)
                     order.orderEntity.bonus = spentBonuses
+                    order.orderEntity.userId = user.userId
+                    userRepo.insertToBonusList(user)
                 }
+                orderRepo.insert(order)
             }
-            orderRepo.insert(order)
-
             withContext(Main) {
                 messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
                 router.navigate(backToMenuFragment())

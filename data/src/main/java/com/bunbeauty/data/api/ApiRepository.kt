@@ -5,6 +5,8 @@ import com.bunbeauty.common.Constants.ADDRESSES
 import com.bunbeauty.common.Constants.COMPANY
 import com.bunbeauty.common.Constants.DELIVERY
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
+import com.bunbeauty.common.Constants.ORDERS
+import com.bunbeauty.common.Constants.ORDER_LIST
 import com.bunbeauty.common.Constants.USERS
 import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.data.mapper.UserMapper
@@ -14,6 +16,7 @@ import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
+import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.user.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,19 +43,52 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
     private val firebaseInstance = testFirebaseInstance
 
     override fun insert(orderFirebase: OrderFirebase, cafeId: String): String {
-        val orderUuid = firebaseInstance.getReference(Constants.ORDERS)
+        val orderUuid = firebaseInstance.getReference(ORDERS)
             .child(BuildConfig.APP_ID)
             .push()
             .key!!
         orderFirebase.timestamp = TIMESTAMP
 
         val orderReference = firebaseInstance
-            .getReference(Constants.ORDERS)
+            .getReference(ORDERS)
             .child(BuildConfig.APP_ID)
             .child(cafeId)
             .child(orderUuid)
         orderReference.setValue(orderFirebase)
 
+        //set order to User
+        if (orderFirebase.orderEntity.userId != null) {
+            val getOrderUserReference = firebaseInstance
+                .getReference(COMPANY)
+                .child(BuildConfig.APP_ID)
+                .child(USERS)
+                .child(orderFirebase.orderEntity.userId!!)
+                .child(ORDERS)
+                .child(cafeId)
+                .child(ORDER_LIST)
+
+            val orderToUserReference = firebaseInstance
+                .getReference(COMPANY)
+                .child(BuildConfig.APP_ID)
+                .child(USERS)
+                .child(orderFirebase.orderEntity.userId!!)
+                .child(ORDERS)
+                .child(cafeId)
+            getOrderUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val orderList = mutableListOf<String>()
+                    snapshot.children.forEach {
+                        orderList.add(it.getValue(String::class.java) ?: "")
+                    }
+                    orderList.add(orderFirebase.orderEntity.userId!!)
+                    val items = HashMap<String, Any>()
+                    items[ORDER_LIST] = orderList
+                    orderToUserReference.updateChildren(items)
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+        }
         return orderUuid
     }
 
@@ -80,7 +116,7 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         userReference.setValue(userFirebase)
     }
 
-    override fun updateBonusList(userFirebase: UserFirebase, userId: String) {
+    override fun insertToBonusList(userFirebase: UserFirebase, userId: String) {
         val userReference = testFirebaseInstance
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)

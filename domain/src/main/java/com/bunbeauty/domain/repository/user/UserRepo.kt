@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepo {
     suspend fun insert(user: User)
     suspend fun update(user: User)
-    suspend fun updateBonusList(user: User)
+    suspend fun insertToBonusList(user: User)
     fun getUserAsFlow(userId: String): Flow<User?>
 }
