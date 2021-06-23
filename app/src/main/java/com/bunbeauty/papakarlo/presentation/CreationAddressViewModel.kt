@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
@@ -41,9 +42,14 @@ class CreationAddressViewModel @Inject constructor(
     fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
             userAddress.userId = iDataStoreHelper.userId.first()
-            val userAddressWithId = userAddressRepo.insert("token", userAddress)
-
-            iDataStoreHelper.saveDeliveryAddressId(userAddressWithId.uuid)
+            val uuid = if (!userAddress.userId.isNullOrEmpty()) {
+                userAddressRepo.insert("token", userAddress).uuid
+            } else {
+                userAddress.uuid = UUID.randomUUID().toString()
+                userAddressRepo.insert(userAddress)
+                userAddress.uuid
+            }
+            iDataStoreHelper.saveDeliveryAddressId(uuid)
             withContext(Dispatchers.Main) {
                 messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_address_created_address))
                 router.navigateUp()

@@ -55,5 +55,4 @@ class OrderRepository @Inject constructor(
     }
 
     override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
-
 }

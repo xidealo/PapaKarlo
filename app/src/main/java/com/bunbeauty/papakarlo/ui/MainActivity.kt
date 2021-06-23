@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         viewModel.refreshCafeList()
         viewModel.refreshMenuProducts()
         viewModel.refreshDeliveryInfo()
+        viewModel.refreshUserInfo()
 
         setupToolbar()
         setupBottomNavigationBar()

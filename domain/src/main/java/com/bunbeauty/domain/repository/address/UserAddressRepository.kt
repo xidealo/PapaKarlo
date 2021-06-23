@@ -23,10 +23,10 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun insert(userAddress: UserAddress) = userAddressDao.insert(userAddress)
 
-    override suspend fun insert(userAddressMap: HashMap<String, AddressFirebase>, userId: String) {
+    override suspend fun insert(userAddressMap: HashMap<String, AddressFirebase>, userUuid: String) {
         userAddressMap.forEach { (addressUuid, addressFirebase) ->
             val address = addressMapper.to(addressFirebase).also { it.uuid = addressUuid }
-            insert(UserAddress(userId = userId).also {
+            insert(UserAddress(userId = userUuid).also {
                 it.uuid = address.uuid
                 it.street = address.street
                 it.house = address.house

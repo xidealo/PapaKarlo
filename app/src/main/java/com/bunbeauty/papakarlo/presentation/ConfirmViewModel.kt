@@ -53,7 +53,6 @@ class ConfirmViewModelImpl @Inject constructor(
             override fun onFinish() {
                 isFinishedTimerState.value = true
             }
-
             override fun onTick(millisUntilFinished: Long) {
                 timerStringState.value = "$label ${(millisUntilFinished / 1000)}"
             }
@@ -67,10 +66,6 @@ class ConfirmViewModelImpl @Inject constructor(
                 if (userFirebase == null) {
                     userRepo.insert(User(userId = userId, phone = phone, email = email))
                 } else {
-                    //get data for user
-                    //addresses
-                    //orders
-                    //user
                     userRepo.insert(userFirebase, userId)
                     addressRepo.insert(userFirebase.addresses, userId)
                     orderRepo.loadOrders(userFirebase.orders)
