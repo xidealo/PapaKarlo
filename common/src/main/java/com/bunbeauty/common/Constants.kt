@@ -11,4 +11,6 @@ object Constants {
     const val MENU_PRODUCTS: String = "menu_products"
     const val DELIVERY: String = "delivery"
     const val BONUSES_PERCENT: Double = 0.1
+    const val COMMON_WORKER_TAG = "common worker tag"
+
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class CartProductRepository @Inject constructor(private val cartProductDao: CartProductDao) :
     CartProductRepo {
 
-    override suspend fun insert(cartProduct: CartProduct): CartProduct {
+    override suspend fun insertToLocal(cartProduct: CartProduct): CartProduct {
         cartProduct.id = cartProductDao.insert(cartProduct)
         return cartProduct
     }

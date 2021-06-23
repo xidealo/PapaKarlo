@@ -4,7 +4,7 @@ import com.bunbeauty.data.model.CartProduct
 import kotlinx.coroutines.flow.Flow
 
 interface CartProductRepo {
-    suspend fun insert(cartProduct: CartProduct): CartProduct
+    suspend fun insertToLocal(cartProduct: CartProduct): CartProduct
 
     fun getCartProductListFlow(): Flow<List<CartProduct>>
 

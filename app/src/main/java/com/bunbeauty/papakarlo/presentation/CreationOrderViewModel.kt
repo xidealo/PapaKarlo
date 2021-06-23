@@ -27,6 +27,7 @@ import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.CreationOrderFragmentDirections.toAddressesBottomSheet
+import com.instacart.library.truetime.TrueTime
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.*
@@ -221,7 +222,8 @@ class CreationOrderViewModelImpl @Inject constructor(
                 cartProductRepo.getCartProductList(),
                 cafeRepo.getCafeEntityByDistrict(
                     orderEntity.address.street?.districtId ?: "ERROR CAFE"
-                ).id
+                ).id,
+                timestamp = TrueTime.now().time
             )
             if (userState.value is State.Success) {
                 val user = (userState.value as State.Success<User?>).data

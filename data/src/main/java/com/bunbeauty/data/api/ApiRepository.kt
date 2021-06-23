@@ -15,6 +15,7 @@ import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
+import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.UserOrder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -45,7 +46,6 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
             .child(BuildConfig.APP_ID)
             .push()
             .key!!
-        orderFirebase.timestamp = TIMESTAMP
 
         val orderReference = firebaseInstance
             .getReference(ORDERS)
@@ -232,4 +232,27 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         userReference.addListenerForSingleValueEvent(valueEventListener)
         awaitClose { userReference.removeEventListener(valueEventListener) }
     }
+
+    @ExperimentalCoroutinesApi
+    override fun getOrder(cafeId: String, orderId: String): Flow<OrderFirebase?> = callbackFlow {
+        val orderReference = firebaseInstance
+            .getReference(ORDERS)
+            .child(BuildConfig.APP_ID)
+            .child(cafeId)
+            .child(orderId)
+
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                launch {
+                    trySend(snapshot.getValue(OrderFirebase::class.java))
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+        orderReference.addListenerForSingleValueEvent(valueEventListener)
+        awaitClose { orderReference.removeEventListener(valueEventListener) }
+    }
+
 }

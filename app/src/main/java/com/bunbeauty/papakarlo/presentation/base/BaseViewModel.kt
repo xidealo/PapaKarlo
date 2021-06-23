@@ -44,7 +44,7 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
         }
 
         if (cartProduct == null) {
-            cartProductRepo.insert(CartProduct(menuProduct = menuProduct))
+            cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
         } else {
             cartProduct.count++
             cartProductRepo.update(cartProduct)

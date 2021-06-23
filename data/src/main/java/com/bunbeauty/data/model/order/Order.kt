@@ -21,7 +21,7 @@ data class Order(
     var cafeId: String = "",
 
     @Ignore
-    var timestamp: Map<String, String>? = null,
+    var timestamp: Long? = null,
     /**
      * set UUID when get with ALSO from [OrderEntity.uuid]
      */

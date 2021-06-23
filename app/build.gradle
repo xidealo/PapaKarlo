@@ -121,6 +121,8 @@ dependencies {
 
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
+    //true time
+    implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
@@ -131,6 +133,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth'
+
+    //WorkManager
+    implementation "androidx.work:work-runtime-ktx:$rootProject.workManagerVersion"
+    implementation "androidx.work:work-gcm:$rootProject.workManagerVersion"
+    androidTestImplementation "androidx.work:work-testing:$rootProject.workManagerVersion"
 
     //PinEntryEditText
     implementation("com.alimuzaffar.lib:pinentryedittext:$rootProject.pinentryedittextVersion") {

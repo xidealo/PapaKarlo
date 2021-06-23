@@ -3,7 +3,7 @@ package com.bunbeauty.domain.repository.user
 import com.bunbeauty.data.api.IApiRepository
 import com.bunbeauty.data.dao.UserDao
 import com.bunbeauty.data.mapper.UserMapper
-import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.data.model.firebase.UserFirebase
 import com.bunbeauty.data.model.user.User
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -19,6 +19,14 @@ class UserRepository @Inject constructor(
         apiRepository.insert(userMapper.from(user), user.userId)
     }
 
+    override suspend fun insertToLocal(user: User) {
+        userDao.insert(user)
+    }
+
+    override suspend fun insert(userFirebase: UserFirebase, userId: String) {
+        insertToLocal(userMapper.to(userFirebase).also { it.userId = userId })
+    }
+
     override suspend fun update(user: User) {
         userDao.update(user)
         apiRepository.update(userMapper.from(user), user.userId)
@@ -31,7 +39,16 @@ class UserRepository @Inject constructor(
     override fun getUserAsFlow(userId: String): Flow<User?> {
         return apiRepository.getUser(userId).map { userFirebase ->
             if (userFirebase != null && userFirebase.phone.isNotEmpty())
-                userMapper.to(userFirebase).also { it.userId = userId}
+                userMapper.to(userFirebase).also { it.userId = userId }
+            else
+                null
+        }
+    }
+
+    override fun getUserFirebaseAsFlow(userId: String): Flow<UserFirebase?> {
+        return apiRepository.getUser(userId).map { userFirebase ->
+            if (userFirebase != null && userFirebase.phone.isNotEmpty())
+                userFirebase
             else
                 null
         }

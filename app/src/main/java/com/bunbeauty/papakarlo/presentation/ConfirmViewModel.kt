@@ -2,9 +2,10 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
 import com.bunbeauty.data.model.user.User
 import com.bunbeauty.data.utils.IDataStoreHelper
+import com.bunbeauty.domain.repository.address.UserAddressRepo
+import com.bunbeauty.domain.repository.order.OrderRepo
 import com.bunbeauty.domain.repository.user.UserRepo
 import com.bunbeauty.domain.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,7 +33,9 @@ abstract class ConfirmViewModel : ToolbarViewModel() {
 class ConfirmViewModelImpl @Inject constructor(
     private val dataStoreHelper: IDataStoreHelper,
     private val userRepo: UserRepo,
-    private val resourcesProvider: IResourcesProvider
+    private val resourcesProvider: IResourcesProvider,
+    private val addressRepo: UserAddressRepo,
+    private val orderRepo: OrderRepo
 ) : ConfirmViewModel() {
 
     override val timerStringState: MutableStateFlow<String> = MutableStateFlow(
@@ -59,23 +63,22 @@ class ConfirmViewModelImpl @Inject constructor(
     override fun createUser(userId: String, phone: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreHelper.saveUserId(userId)
-            //try to get user
-            // if user not null
-            //create new, else load data about user
-            userRepo.getUserAsFlow(userId).onEach { user ->
-                if (user == null) {
+            userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
+                if (userFirebase == null) {
                     userRepo.insert(User(userId = userId, phone = phone, email = email))
-                }else{
+                } else {
                     //get data for user
                     //addresses
                     //orders
                     //user
+                    userRepo.insert(userFirebase, userId)
+                    addressRepo.insert(userFirebase.addresses, userId)
+                    orderRepo.loadOrders(userFirebase.orders)
                 }
                 withContext(Main) {
                     router.navigate(backToProfileFragment())
                 }
-            }
-
+            }.launchIn(viewModelScope)
         }
     }
 

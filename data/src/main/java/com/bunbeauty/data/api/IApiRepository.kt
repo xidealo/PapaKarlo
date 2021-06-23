@@ -7,7 +7,6 @@ import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
 import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.data.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 interface IApiRepository {
@@ -15,9 +14,10 @@ interface IApiRepository {
     fun insert(userFirebase: UserFirebase, userId: String)
     fun update(userFirebase: UserFirebase, userId: String)
     fun insertToBonusList(userFirebase: UserFirebase, userId: String)
-    fun insert(addressFirebase: AddressFirebase, userId: String):String
+    fun insert(addressFirebase: AddressFirebase, userId: String): String
     fun getCafeList(): Flow<List<Cafe>>
     fun getMenuProductList(): Flow<List<MenuProduct>>
     fun getDelivery(): Flow<Delivery>
     fun getUser(userId: String): Flow<UserFirebase?>
+    fun getOrder(cafeId: String, orderId: String): Flow<OrderFirebase?>
 }
