@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -82,6 +83,9 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                                     viewModel.delivery
                                 )
                             )
+                        viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.paintFlags =
+                            viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
                         viewDataBinding.fragmentOrderDetailsTvOrderNewTotalCost.text =
                             stringHelper.getCostString(
                                 orderUtil.getNewOrderCost(

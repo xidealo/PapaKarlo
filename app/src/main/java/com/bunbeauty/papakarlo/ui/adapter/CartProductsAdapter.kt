@@ -39,8 +39,7 @@ class CartProductsAdapter @Inject constructor(
         if (canBeChanged) {
             holder.setCountChangeListener(itemList[i])
             if (holder.binding?.elementCartProductTvOldPrice != null) {
-                holder.binding.elementCartProductTvOldPrice.paintFlags =
-                    holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
+                holder.binding.elementCartProductTvOldPrice.paintFlags = holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
             }
         }
     }
