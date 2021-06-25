@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 abstract class ConfirmViewModel : ToolbarViewModel() {
     abstract val timerStringState: StateFlow<String>
     abstract val isFinishedTimerState: StateFlow<Boolean>

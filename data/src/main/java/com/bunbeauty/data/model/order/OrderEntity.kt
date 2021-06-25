@@ -14,9 +14,8 @@ import org.joda.time.DateTime
 @Parcelize
 @Entity
 data class OrderEntity(
+    @PrimaryKey
     override var uuid: String = "",
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0,
     @Embedded(prefix = "address_")
     var address: Address = Address(),
     var comment: String = "",

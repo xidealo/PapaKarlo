@@ -27,19 +27,21 @@ class OrderRepository @Inject constructor(
     override suspend fun insert(order: Order): String {
         order.orderEntity.uuid =
             apiRepository.insert(orderMapper.from(order), order.cafeId)
-        val orderEntityId = orderDao.insert(order.orderEntity)
+        orderDao.insert(order.orderEntity)
         for (cardProduct in order.cartProducts) {
-            cardProduct.orderId = orderEntityId
+            cardProduct.orderId = order.orderEntity.uuid
             cartProductRepo.update(cardProduct)
         }
         return order.orderEntity.uuid
     }
 
     suspend fun insertToLocal(order: Order) {
-        val orderEntityId = orderDao.insert(order.orderEntity)
-        for (cardProduct in order.cartProducts) {
-            cardProduct.orderId = orderEntityId
-            cartProductRepo.insertToLocal(cardProduct)
+        if (orderDao.getOrderByUuid(order.orderEntity.uuid) == null) {
+            orderDao.insert(order.orderEntity)
+            for (cardProduct in order.cartProducts) {
+                cardProduct.orderId = order.orderEntity.uuid
+                cartProductRepo.insertToLocal(cardProduct)
+            }
         }
     }
 

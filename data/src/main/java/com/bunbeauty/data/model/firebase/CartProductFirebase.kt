@@ -4,5 +4,5 @@ package com.bunbeauty.data.model.firebase
 data class CartProductFirebase(
     var menuProduct: MenuProductFirebase = MenuProductFirebase(),
     var count: Int = 1,
-    var orderId: Long? = null
+    var orderId: String? = null
 )

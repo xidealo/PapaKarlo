@@ -14,7 +14,7 @@ data class Order(
     @Embedded
     var orderEntity: OrderEntity = OrderEntity(),
 
-    @Relation(parentColumn = "id", entityColumn = "orderId")
+    @Relation(parentColumn = "uuid", entityColumn = "orderId")
     var cartProducts: List<CartProduct> = ArrayList(),
 
     @Ignore

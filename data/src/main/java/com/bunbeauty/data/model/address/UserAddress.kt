@@ -19,7 +19,7 @@ onDelete = ForeignKey.CASCADE
 @Parcelize
 @Entity
 data class UserAddress(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0,
+    @PrimaryKey
+    override var uuid: String = "",
     var userId: String? = null,
 ) : Address(), Parcelable

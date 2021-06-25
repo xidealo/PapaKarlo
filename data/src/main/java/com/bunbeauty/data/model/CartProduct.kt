@@ -14,5 +14,5 @@ data class CartProduct(
     var id: Long = 0,
     @Embedded(prefix = "menuProduct") var menuProduct: MenuProduct = MenuProduct(),
     var count: Int = 1,
-    var orderId: Long? = null
+    var orderId: String? = null
 ) : BaseModel, Parcelable

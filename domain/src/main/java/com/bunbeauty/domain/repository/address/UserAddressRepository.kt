@@ -17,7 +17,7 @@ class UserAddressRepository @Inject constructor(
     override suspend fun insert(token: String, userAddress: UserAddress): UserAddress {
         userAddress.uuid =
             apiRepository.insert(addressMapper.from(userAddress), userAddress.userId ?: "")
-        userAddress.id = insert(userAddress)
+        insert(userAddress)
         return userAddress
     }
 

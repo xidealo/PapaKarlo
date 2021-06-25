@@ -11,4 +11,7 @@ interface OrderDao : BaseDao<OrderEntity> {
 
     @Query("SELECT * FROM OrderEntity")
     fun getOrders(): Flow<List<Order>>
+
+    @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")
+    fun getOrderByUuid(uuid: String): Order?
 }
