@@ -50,6 +50,8 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
 
     abstract fun getAddress()
     abstract fun getUser()
+    abstract fun getCachedPhone(): String
+    abstract fun getCachedEmail(): String
     abstract fun subscribeOnDeferredText()
     abstract fun subscribeOnOrderString()
     abstract fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean
@@ -129,6 +131,14 @@ class CreationOrderViewModelImpl @Inject constructor(
                 userState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
+    }
+
+    override fun getCachedEmail(): String {
+        return runBlocking { dataStoreHelper.email.first() }
+    }
+
+    override fun getCachedPhone(): String {
+        return runBlocking { dataStoreHelper.phone.first() }
     }
 
     @ExperimentalCoroutinesApi
@@ -245,6 +255,9 @@ class CreationOrderViewModelImpl @Inject constructor(
                     order.orderEntity.bonus = spentBonuses
                     order.orderEntity.userId = user.userId
                     userRepo.insertToBonusList(user)
+                } else {
+                    dataStoreHelper.savePhone(phone)
+                    dataStoreHelper.saveEmail(email)
                 }
                 orderRepo.insert(order)
             }

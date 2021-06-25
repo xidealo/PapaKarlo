@@ -17,5 +17,11 @@ interface IDataStoreHelper {
     val userId: Flow<String>
     suspend fun saveUserId(userId: String)
 
+    val phone: Flow<String>
+    suspend fun savePhone(phone: String)
+
+    val email: Flow<String>
+    suspend fun saveEmail(email: String)
+
     suspend fun clearData()
 }

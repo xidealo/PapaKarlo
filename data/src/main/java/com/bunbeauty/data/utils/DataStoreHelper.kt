@@ -16,6 +16,12 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
     private val Context.userId: DataStore<Preferences> by preferencesDataStore(name = USER_ID_DATA_STORE)
 
+    /**
+     * if user didnt login
+     */
+    private val Context.phone: DataStore<Preferences> by preferencesDataStore(name = PHONE_DATA_STORE)
+    private val Context.email: DataStore<Preferences> by preferencesDataStore(name = EMAIL_DATA_STORE)
+
     override val deliveryAddressId: Flow<String> = context.deliveryAddressDataStore.data.map {
         it[DELIVERY_ADDRESS_ID_KEY] ?: DEFAULT_STRING
     }
@@ -60,6 +66,26 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
         }
     }
 
+    override val phone: Flow<String> = context.phone.data.map {
+        it[PHONE_KEY] ?: DEFAULT_STRING
+    }
+
+    override suspend fun savePhone(phone: String) {
+        context.phone.edit {
+            it[PHONE_KEY] = phone
+        }
+    }
+
+    override val email: Flow<String> = context.email.data.map {
+        it[EMAIL_KEY] ?: DEFAULT_STRING
+    }
+
+    override suspend fun saveEmail(email: String) {
+        context.email.edit {
+            it[EMAIL_KEY] = email
+        }
+    }
+
     override suspend fun clearData() {
         context.deliveryAddressDataStore.edit {
             it.clear()
@@ -78,17 +104,25 @@ class DataStoreHelper @Inject constructor(private val context: Context) : IDataS
         private const val DELIVERY_DATA_STORE = "delivery data store"
         private const val USER_ID_DATA_STORE = "user id data store"
 
+        private const val PHONE_DATA_STORE = "phone data store"
+        private const val EMAIL_DATA_STORE = "email data store"
+
         private const val DELIVERY_ADDRESS_ID = "delivery address id"
         private const val CAFE_ID = "cafe id"
         private const val DELIVERY_COST = "delivery cost"
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private const val USER_ID = "user id"
 
+        private const val PHONE = "phone"
+        private const val EMAIL = "email"
+
         private val DELIVERY_ADDRESS_ID_KEY = stringPreferencesKey(DELIVERY_ADDRESS_ID)
         private val CAFE_ID_KEY = stringPreferencesKey(CAFE_ID)
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
         private val USER_ID_KEY = stringPreferencesKey(USER_ID)
+        private val PHONE_KEY = stringPreferencesKey(PHONE)
+        private val EMAIL_KEY = stringPreferencesKey(EMAIL)
 
         private const val DEFAULT_LONG = 0L
         private const val DEFAULT_STRING = ""

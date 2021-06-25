@@ -47,8 +47,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
                     viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.launchWhenStarted(lifecycleScope)
 
@@ -76,6 +75,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                         viewDataBinding.fragmentCreationOrderTvBonusesValue.text =
                             state.data?.bonusList?.sum().toString()
                     } else {
+                        viewDataBinding.fragmentCreationOrderEtPhone.setText(
+                            viewModel.getCachedPhone()
+                        )
+                        viewDataBinding.fragmentCreationOrderEtEmail.setText(
+                            viewModel.getCachedEmail()
+                        )
                         viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
                     }
                     viewDataBinding.fragmentCreationOrderSvMain.visible()
