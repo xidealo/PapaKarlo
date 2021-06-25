@@ -34,7 +34,7 @@ class ProfileViewModelImpl @Inject constructor(
     private val userRepo: UserRepo
 ) : ProfileViewModel() {
 
-    init{
+    init {
         getUser()
     }
 
@@ -46,14 +46,9 @@ class ProfileViewModelImpl @Inject constructor(
 
     override fun getUser() {
         viewModelScope.launch(Dispatchers.Default) {
-            val useId = dataStoreHelper.userId.first()
-            if (useId.isEmpty()) {
-                userState.value = State.Success(null)
-            } else {
-                userRepo.getUserAsFlow(useId).onEach {
-                    userState.value = it.toStateNullableSuccess()
-                }.launchIn(viewModelScope)
-            }
+            userRepo.getUserWithBonuses(dataStoreHelper.userId.first()).onEach {
+                userState.value = it.toStateNullableSuccess()
+            }.launchIn(viewModelScope)
         }
     }
 

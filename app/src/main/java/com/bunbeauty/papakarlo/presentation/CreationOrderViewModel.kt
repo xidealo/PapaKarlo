@@ -127,7 +127,7 @@ class CreationOrderViewModelImpl @Inject constructor(
 
     override fun getUser() {
         viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserAsFlow(dataStoreHelper.userId.first()).onEach {
+            userRepo.getUserWithBonuses(dataStoreHelper.userId.first()).onEach {
                 userState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }

@@ -2,6 +2,7 @@ package com.bunbeauty.data.api
 
 import com.bunbeauty.common.Constants
 import com.bunbeauty.common.Constants.ADDRESSES
+import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.Constants.COMPANY
 import com.bunbeauty.common.Constants.DELIVERY
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
@@ -15,12 +16,10 @@ import com.bunbeauty.data.model.cafe.Cafe
 import com.bunbeauty.data.model.firebase.AddressFirebase
 import com.bunbeauty.data.model.firebase.OrderFirebase
 import com.bunbeauty.data.model.firebase.UserFirebase
-import com.bunbeauty.data.model.order.Order
 import com.bunbeauty.data.model.order.UserOrder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ServerValue.TIMESTAMP
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -226,11 +225,34 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-            }
+            override fun onCancelled(error: DatabaseError) {}
         }
         userReference.addListenerForSingleValueEvent(valueEventListener)
         awaitClose { userReference.removeEventListener(valueEventListener) }
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getUserBonusList(userId: String): Flow<List<Int>> = callbackFlow {
+        val bonusReference = firebaseInstance
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(userId)
+            .child("bonusList")
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                launch {
+                    val bonusList = snapshot.children.map { cafeSnapshot ->
+                        cafeSnapshot.getValue(Int::class.java)!!
+                    }
+                    trySend(bonusList)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        }
+        bonusReference.addValueEventListener(valueEventListener)
+        awaitClose { bonusReference.removeEventListener(valueEventListener) }
     }
 
     @ExperimentalCoroutinesApi

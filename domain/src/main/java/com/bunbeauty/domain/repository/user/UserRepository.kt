@@ -36,7 +36,15 @@ class UserRepository @Inject constructor(
         apiRepository.insertToBonusList(userMapper.from(user), user.userId)
     }
 
-    override fun getUserAsFlow(userId: String): Flow<User?> {
+    override fun getUserWithBonuses(userId: String): Flow<User?> {
+        return apiRepository.getUserBonusList(userId).flatMapLatest { bonusList ->
+            userDao.getUserFlow(userId).map {
+                it?.also { it.bonusList = bonusList.toMutableList() }
+            }
+        }
+    }
+
+    override fun getUserAsFlowFromFirebase(userId: String): Flow<User?> {
         return apiRepository.getUser(userId).map { userFirebase ->
             if (userFirebase != null && userFirebase.phone.isNotEmpty())
                 userMapper.to(userFirebase).also { it.userId = userId }
@@ -53,4 +61,5 @@ class UserRepository @Inject constructor(
                 null
         }
     }
+
 }

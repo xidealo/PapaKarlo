@@ -10,6 +10,7 @@ interface UserRepo {
     suspend fun insert(userFirebase: UserFirebase, userId: String)
     suspend fun update(user: User)
     suspend fun insertToBonusList(user: User)
-    fun getUserAsFlow(userId: String): Flow<User?>
+    fun getUserWithBonuses(userId: String): Flow<User?>
+    fun getUserAsFlowFromFirebase(userId: String): Flow<User?>
     fun getUserFirebaseAsFlow(userId: String): Flow<UserFirebase?>
 }

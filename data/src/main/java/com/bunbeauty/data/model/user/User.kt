@@ -14,5 +14,5 @@ data class User(
     var phone: String = "",
     var email: String = "",
     @Ignore
-    var bonusList: ArrayList<Int> = arrayListOf()
+    var bonusList: MutableList<Int> = arrayListOf()
 ) : Parcelable
