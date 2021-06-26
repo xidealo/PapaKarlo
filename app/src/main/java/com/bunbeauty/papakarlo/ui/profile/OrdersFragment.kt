@@ -33,5 +33,8 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
             ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.orderEntity.time }
                 .also { ordersList -> ordersList.map { it.uuid = it.orderEntity.uuid } })
         }.launchWhenStarted(lifecycleScope)
+        ordersAdapter.onItemClickListener = { order ->
+            viewModel.onOrderClicked(order)
+        }
     }
 }

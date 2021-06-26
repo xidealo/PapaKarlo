@@ -11,6 +11,6 @@ class OrdersViewModel @Inject constructor(orderRepo: OrderRepo) : ToolbarViewMod
     val orderWithCartProductsLiveData = orderRepo.getOrdersWithCartProducts()
 
     fun onOrderClicked(order: Order) {
-        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(order))
+        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(order.orderEntity.uuid))
     }
 }

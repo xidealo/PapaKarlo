@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.string_helper
 
+import com.bunbeauty.data.enums.OrderStatus
 import com.bunbeauty.data.model.cafe.CafeEntity
 import com.bunbeauty.data.model.order.OrderEntity
 import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.data.model.address.CafeAddress
 import com.bunbeauty.data.model.CartProduct
 import com.bunbeauty.data.model.MenuProduct
 import com.bunbeauty.data.model.address.Address
@@ -51,8 +51,8 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         else
             orderString.append("Самовывоз\n")
 
-        if (orderEntity.deferred.isNotEmpty())
-            orderString.append("Время доставки: ${orderEntity.deferred}\n")
+        if (orderEntity.deferredTime.isNotEmpty())
+            orderString.append("Время доставки: ${orderEntity.deferredTime}\n")
 
         if (orderEntity.comment.isNotEmpty())
             orderString.append("Комментарий: ${orderEntity.comment}\n")
@@ -65,7 +65,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         return orderString.toString()
     }
 
-    override fun toStringOrderType(orderEntity: OrderEntity): String {
+    override fun toStringIsDelivery(orderEntity: OrderEntity): String {
         return if (orderEntity.isDelivery)
             "Доставка"
         else
@@ -73,10 +73,10 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
     }
 
     override fun toStringDeferred(orderEntity: OrderEntity): String {
-        return if (orderEntity.deferred.isEmpty())
+        return if (orderEntity.deferredTime.isEmpty())
             "-"
         else
-            orderEntity.deferred
+            orderEntity.deferredTime
     }
 
     override fun toStringComment(orderEntity: OrderEntity): String {
@@ -109,8 +109,32 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
         }
     }
 
-    override fun toStringCost(cost: Int): String {
-        return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
+    override fun getCostString(cost: Int?): String {
+        return if (cost == null) {
+            ""
+        } else {
+            cost.toString() + resourcesProvider.getString(R.string.part_ruble)
+        }
+    }
+
+    override fun toStringOrderStatus(orderStatus: OrderStatus): String {
+        return when (orderStatus) {
+            OrderStatus.NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
+            OrderStatus.ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
+            OrderStatus.PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
+            OrderStatus.SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
+            OrderStatus.DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
+            OrderStatus.DONE -> resourcesProvider.getString(R.string.msg_status_ready)
+            OrderStatus.CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
+        }
+    }
+
+    override fun getDeliveryString(deliveryCost: Int): String {
+        return if (deliveryCost == 0) {
+            resourcesProvider.getString(R.string.msg_order_details_delivery_free)
+        } else {
+            getCostString(deliveryCost)
+        }
     }
 
     override fun toStringTime(orderEntity: OrderEntity): String {

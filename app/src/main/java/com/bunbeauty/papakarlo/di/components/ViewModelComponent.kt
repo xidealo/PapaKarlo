@@ -39,7 +39,7 @@ interface ViewModelComponent {
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)
     fun inject(cafeOptionsBottomSheet: CafeOptionsBottomSheet)
-    fun inject(orderBottomSheet: OrderBottomSheet)
+    fun inject(orderDetailsFragment: OrderDetailsFragment)
     fun inject(logoutBottomSheet: LogoutBottomSheet)
 
     // dialogs

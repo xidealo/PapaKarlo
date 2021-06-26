@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_orders">
         <action
             android:id="@+id/to_orderBottomSheet"
-            app:destination="@id/order_bottom_sheet" />
+            app:destination="@id/order_derails_fragment" />
         <argument
             android:name="userUuid"
             app:argType="string" />
@@ -116,15 +116,15 @@
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/creation_address_fragment" />
     </dialog>
-    <dialog
-        android:id="@+id/order_bottom_sheet"
-        android:name="com.bunbeauty.papakarlo.ui.OrderBottomSheet"
+    <fragment
+        android:id="@+id/order_derails_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.OrderDetailsFragment"
         android:label="OrderBottomSheet"
-        tools:layout="@layout/bottom_sheet_order">
+        tools:layout="@layout/fragment_order_details">
         <argument
-            android:name="Order"
-            app:argType="com.bunbeauty.data.model.order.Order" />
-    </dialog>
+            android:name="orderUuid"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.bunbeauty.papakarlo.ui.profile.ProfileFragment"

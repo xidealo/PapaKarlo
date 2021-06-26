@@ -19,7 +19,11 @@ class PapaKarloApplication : Application(), CoroutineScope {
         super.onCreate()
         appComponent.inject(this)
         launch(Dispatchers.IO) {
-            TrueTime.build().initialize()
+            try {
+                TrueTime.build().initialize()
+            }catch (exception:Exception){
+                //try reconnect
+            }
         }
     }
 }

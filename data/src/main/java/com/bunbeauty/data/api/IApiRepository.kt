@@ -21,4 +21,5 @@ interface IApiRepository {
     fun getUser(userId: String): Flow<UserFirebase?>
     fun getUserBonusList(userId: String): Flow<List<Int>>
     fun getOrder(cafeId: String, orderId: String): Flow<OrderFirebase?>
+    fun getOrderWithSubscribe(cafeId: String, orderId: String): Flow<OrderFirebase?>
 }

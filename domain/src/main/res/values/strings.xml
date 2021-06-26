@@ -1,3 +1,14 @@
 <resources>
     <string name="part_ruble">&#160;₽</string>
+    <!-- ORDER STATUS-->
+    <string name="msg_status_not_accepted">Обрабатывается</string>
+    <string name="msg_status_accepted">Принят</string>
+    <string name="msg_status_preparing">Готовится</string>
+    <string name="msg_status_sent_out">В пути</string>
+    <string name="msg_status_delivered">Выдан</string>
+    <string name="msg_status_ready">Готов</string>
+    <string name="msg_status_canceled">Отменен</string>
+
+    <string name="msg_order_details_delivery_free">Бесплатно</string>
+
 </resources>

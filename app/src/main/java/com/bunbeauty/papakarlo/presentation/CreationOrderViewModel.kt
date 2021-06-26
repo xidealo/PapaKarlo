@@ -190,9 +190,9 @@ class CreationOrderViewModelImpl @Inject constructor(
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {
                     resourcesProvider.getString(R.string.part_creation_order_delivery_cost) +
-                            stringHelper.toStringCost(delivery.cost) +
+                            stringHelper.getCostString(delivery.cost) +
                             resourcesProvider.getString(R.string.part_creation_order_free_delivery_from) +
-                            stringHelper.toStringCost(delivery.forFree)
+                            stringHelper.getCostString(delivery.forFree)
                 }
             }
         }
@@ -222,18 +222,25 @@ class CreationOrderViewModelImpl @Inject constructor(
                 comment = comment,
                 phone = phone,
                 email = email,
-                deferred = stringHelper.toStringTime(deferredHours, deferredMinutes),
+                deferredTime = stringHelper.toStringTime(deferredHours, deferredMinutes),
                 isDelivery = isDeliveryState.value,
                 code = generateCode(),
                 address = selectedAddressState.value!!,
             )
+            //set try to get time?
+            val timestamp = try {
+                TrueTime.now().time
+            }catch (exception:Exception){
+                DateTime.now().millis
+            }
+
             val order = Order(
                 orderEntity,
                 cartProductRepo.getCartProductList(),
                 cafeRepo.getCafeEntityByDistrict(
                     orderEntity.address.street?.districtId ?: "ERROR CAFE"
                 ).id,
-                timestamp = TrueTime.now().time
+                timestamp = timestamp
             )
             if (userState.value is State.Success) {
                 val user = (userState.value as State.Success<User?>).data
@@ -244,7 +251,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                     } else {
                         spentBonusesString.toInt()
                     }
-                    user.bonusList.add((productHelper.getFullPrice(order.cartProducts) * BONUSES_PERCENT).roundToInt())
+                    user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     if (user.bonusList.sum() - spentBonuses < 0) {
                         errorSharedFlow.emit("Недостаточно бонусов")
                         return@launch

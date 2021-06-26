@@ -277,4 +277,26 @@ class ApiRepository @Inject constructor() : IApiRepository, CoroutineScope {
         awaitClose { orderReference.removeEventListener(valueEventListener) }
     }
 
+    @ExperimentalCoroutinesApi
+    override fun getOrderWithSubscribe(cafeId: String, orderId: String): Flow<OrderFirebase?> = callbackFlow {
+        val orderReference = firebaseInstance
+            .getReference(ORDERS)
+            .child(BuildConfig.APP_ID)
+            .child(cafeId)
+            .child(orderId)
+
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                launch {
+                    trySend(snapshot.getValue(OrderFirebase::class.java))
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+        orderReference.addValueEventListener(valueEventListener)
+        awaitClose { orderReference.removeEventListener(valueEventListener) }
+    }
+
 }

@@ -45,4 +45,10 @@
     <dimen name="medium_radius">8dp</dimen>
     <dimen name="small_radius">4dp</dimen>
 
+    <!-- STROKE -->
+    <dimen name="button_stroke_width">2dp</dimen>
+
+    <!-- RECYCLER_VIEW -->
+    <dimen name="recycler_view_max_height">264dp</dimen>
+
 </resources>

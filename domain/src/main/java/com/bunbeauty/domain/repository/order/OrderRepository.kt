@@ -9,7 +9,6 @@ import com.bunbeauty.data.model.order.UserOrder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -32,29 +31,46 @@ class OrderRepository @Inject constructor(
             cardProduct.orderId = order.orderEntity.uuid
             cartProductRepo.update(cardProduct)
         }
+        subscribeOnActiveOrder(UserOrder(cafeId = order.cafeId, orderId = order.orderEntity.uuid))
         return order.orderEntity.uuid
     }
 
     suspend fun insertToLocal(order: Order) {
         if (orderDao.getOrderByUuid(order.orderEntity.uuid) == null) {
-            orderDao.insert(order.orderEntity)
             for (cardProduct in order.cartProducts) {
                 cardProduct.orderId = order.orderEntity.uuid
                 cartProductRepo.insertToLocal(cardProduct)
             }
         }
+        orderDao.insert(order.orderEntity)
     }
 
-    override suspend fun loadOrders(orders: List<UserOrder>) {
-        orders.forEach { userOrder ->
+    override suspend fun loadOrders(userOrderList: List<UserOrder>) {
+        userOrderList.forEach { userOrder ->
             apiRepository.getOrder(userOrder.cafeId, userOrder.orderId).onEach { order ->
-                if (order != null)
+                if (order != null) {
                     insertToLocal(
                         order = orderMapper.to(order)
                             .also { it.orderEntity.uuid = userOrder.orderId })
+                    subscribeOnActiveOrder(userOrder)
+                }
             }.launchIn(this)
         }
     }
 
     override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
+
+    override fun getOrderWithCartProducts(orderUuid: String): Flow<Order?> {
+       return orderDao.getOrderFlowByUuid(orderUuid)
+    }
+
+    private fun subscribeOnActiveOrder(userOrder: UserOrder) {
+        apiRepository.getOrderWithSubscribe(userOrder.cafeId, userOrder.orderId).onEach { order ->
+            if (order != null)
+                insertToLocal(
+                    order = orderMapper.to(order)
+                        .also { it.orderEntity.uuid = userOrder.orderId })
+        }.launchIn(this)
+    }
+
 }

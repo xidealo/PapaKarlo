@@ -45,7 +45,7 @@ class ConsumerCartViewModel @Inject constructor(
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {
                     resourcesProvider.getString(R.string.part_consumer_cart_free_delivery_from) +
-                            stringHelper.toStringCost(delivery.forFree) +
+                            stringHelper.getCostString(delivery.forFree) +
                             resourcesProvider.getString(R.string.part_consumer_cart_difference_before_free_delivery) +
                             differenceString
                 }

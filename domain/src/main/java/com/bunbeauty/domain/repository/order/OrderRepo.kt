@@ -6,8 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
     suspend fun insert(order: Order): String
-    suspend fun loadOrders(orders: List<UserOrder>)
+    suspend fun loadOrders(userOrderList: List<UserOrder>)
     fun getOrdersWithCartProducts(): Flow<List<Order>>
+    fun getOrderWithCartProducts(orderUuid:String): Flow<Order?>
 
     //suspend fun deleteAll(orderList: List<OrderWithCartProducts>)
 }

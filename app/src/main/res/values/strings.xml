@@ -129,12 +129,26 @@
     <string name="title_bottom_sheet_addresses_your_address">Ваши адреса</string>
     <string name="title_bottom_sheet_addresses_cafe_address">Адреса ресторанов</string>
 
-    <!-- BOTTOM SHEET ORDER -->
-    <string name="title_bottom_sheet_order_delivery">Доставка</string>
-    <string name="title_bottom_sheet_order_deferred">Отложенный заказ</string>
-    <string name="title_bottom_sheet_order_address">Адрес</string>
-    <string name="title_bottom_sheet_order_comment">Комментарий</string>
-    <string name="title_bottom_sheet_order_cost">Сумма заказа</string>
+    <!-- ORDER DETAILS -->
+    <string name="msg_order_details_order">Заказ&#160;</string>
+    <string name="msg_order_details_order_time">Дата и время заказа</string>
+    <string name="msg_order_details_pickup_method">Способ получения</string>
+    <string name="msg_order_details_delivery">Доставка</string>
+    <string name="msg_order_details_pickup">Самовывоз</string>
+    <string name="msg_order_details_deferred_time">Ко времени</string>
+    <string name="msg_order_details_address">Адрес</string>
+    <string name="msg_order_details_comment">Комментарий</string>
+    <string name="msg_order_details_order_status">Статус</string>
+    <string name="msg_order_details_order_list">Список заказанных блюд</string>
+    <string name="msg_order_details_order_cost">Сумма заказа</string>
+    <string name="msg_order_details_delivery_cost">Доставка</string>
+    <string name="msg_order_details_delivery_free">Бесплатно</string>
+    <string name="action_order_details_cancel">Отменить</string>
+    <string name="action_order_details_save">Сохранить</string>
+    <string name="title_order_details_alert">Внимание!</string>
+    <string name="msg_order_details_alert">Отменить заказ?</string>
+    <string name="action_order_details_yes">Да</string>
+    <string name="action_order_details_no">Нет</string>
 
     <!-- PROFILE  -->
     <string name="title_profile_contact">Контактная информация</string>

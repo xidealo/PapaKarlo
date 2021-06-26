@@ -8,6 +8,8 @@ import com.bunbeauty.domain.field_helper.FieldHelper
 import com.bunbeauty.domain.field_helper.IFieldHelper
 import com.bunbeauty.domain.network.INetworkHelper
 import com.bunbeauty.domain.network.NetworkHelper
+import com.bunbeauty.domain.order.IOrderUtil
+import com.bunbeauty.domain.order.OrderUtil
 import com.bunbeauty.domain.product.IProductHelper
 import com.bunbeauty.domain.product.ProductHelper
 import com.bunbeauty.domain.resources.IResourcesProvider
@@ -44,6 +46,9 @@ abstract class ApiModule {
 
     @Binds
     abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
+
+    @Binds
+    abstract fun bindOrderUtil(orderUtil: OrderUtil): IOrderUtil
 
     @Binds
     abstract fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
