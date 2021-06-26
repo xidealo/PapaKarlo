@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/creation_order"
         android:name="com.bunbeauty.papakarlo.ui.CreationOrderFragment"
-        android:label="@string/title_order"
+        android:label="@string/title_creation_order"
         tools:layout="@layout/fragment_creation_order">
         <action
             android:id="@+id/back_to_menu_fragment"
@@ -119,7 +119,7 @@
     <fragment
         android:id="@+id/order_derails_fragment"
         android:name="com.bunbeauty.papakarlo.ui.OrderDetailsFragment"
-        android:label="OrderBottomSheet"
+        android:label="@string/title_order_details"
         tools:layout="@layout/fragment_order_details">
         <argument
             android:name="orderUuid"

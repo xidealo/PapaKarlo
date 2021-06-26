@@ -7,7 +7,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module(subcomponents = [ViewModelComponent::class])
-class AppModule {
+class  AppModule {
 
     @Provides
     fun provideLinearLayoutManager(context: Context) = LinearLayoutManager(context)

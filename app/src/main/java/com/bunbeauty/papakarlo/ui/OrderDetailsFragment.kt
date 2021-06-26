@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.gone
+import com.bunbeauty.common.extensions.visible
 import com.bunbeauty.domain.order.IOrderUtil
 import com.bunbeauty.domain.product.IProductHelper
 import com.bunbeauty.domain.string_helper.IStringHelper
@@ -97,7 +98,13 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                             viewDataBinding.fragmentOrderDetailsTvDeliveryCostValue.gone()
                             viewDataBinding.fragmentOrderDetailsTvDeliveryCost.gone()
                         }
+                        viewDataBinding.fragmentOrderDetailsCvMain.visible()
+                        viewDataBinding.fragmentOrderDetailsPbLoading.gone()
                     }
+                }
+                is State.Loading -> {
+                    viewDataBinding.fragmentOrderDetailsCvMain.gone()
+                    viewDataBinding.fragmentOrderDetailsPbLoading.visible()
                 }
                 else -> Unit
             }

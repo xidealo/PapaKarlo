@@ -27,15 +27,22 @@ class OrdersAdapter @Inject constructor(private val iStringHelper: IStringHelper
 
     override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
         holder.binding?.elementOrderTvCode?.text = itemList[i].orderEntity.code
-        holder.binding?.elementOrderTvDeferred?.text = itemList[i].orderEntity.deferredTime
-        holder.binding?.elementOrderTvTime?.text = iStringHelper.toStringTime(itemList[i].orderEntity)
-        holder.binding?.elementOrderChipStatus?.text = iStringHelper.toStringOrderStatus(itemList[i].orderEntity.orderStatus)
+        holder.binding?.elementOrderTvDeferred?.text =
+            if (itemList[i].orderEntity.deferredTime.isNotEmpty())
+                "Ко времени: ${itemList[i].orderEntity.deferredTime}"
+            else
+                ""
+
+        holder.binding?.elementOrderTvTime?.text =
+            iStringHelper.toStringTime(itemList[i].orderEntity)
+        holder.binding?.elementOrderChipStatus?.text =
+            iStringHelper.toStringOrderStatus(itemList[i].orderEntity.orderStatus)
         holder.binding?.elementOrderChipStatus?.setChipBackgroundColorResource(
             getBackgroundColor(
                 itemList[i].orderEntity.orderStatus
             )
         )
-        holder.binding?.elementOrderMvcMain?.setOnClickListener{
+        holder.binding?.elementOrderMvcMain?.setOnClickListener {
             onItemClickListener?.invoke(itemList[i])
         }
     }

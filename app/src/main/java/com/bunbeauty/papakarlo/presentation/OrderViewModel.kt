@@ -13,32 +13,26 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-
-abstract class OrderViewModel : BaseViewModel() {
-    abstract val orderState: StateFlow<State<Order?>>
-    abstract val delivery: Delivery
-    abstract fun getOrder(orderUuid: String)
-}
-
-class OrderViewModelImpl @Inject constructor(
+class OrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreHelper: IDataStoreHelper
-) : OrderViewModel() {
+) : BaseViewModel() {
 
-    override val delivery: Delivery
+    private val _orderState: MutableStateFlow<State<Order?>> = MutableStateFlow(State.Loading())
+    val orderState: StateFlow<State<Order?>>
+        get() = _orderState.asStateFlow()
+
+    val delivery: Delivery
         get() = runBlocking {
             dataStoreHelper.delivery.first()
         }
 
-    override val orderState: MutableStateFlow<State<Order?>> =
-        MutableStateFlow(State.Loading())
-
-    override fun getOrder(orderUuid: String) {
+    fun getOrder(orderUuid: String) {
         orderRepo.getOrderWithCartProducts(orderUuid).onEach { order ->
             if (order != null)
-                orderState.value = order.toStateNullableSuccess()
+                _orderState.value = order.toStateNullableSuccess()
             else
-                orderState.value = State.Empty()
+                _orderState.value = State.Empty()
         }.launchIn(viewModelScope)
     }
 }
