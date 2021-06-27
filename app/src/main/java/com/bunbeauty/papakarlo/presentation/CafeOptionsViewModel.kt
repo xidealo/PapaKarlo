@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.data.model.cafe.Cafe
-import com.bunbeauty.domain.cafe.CafeRepo
+import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import javax.inject.Inject
 

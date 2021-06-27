@@ -1,10 +1,9 @@
 package com.bunbeauty.data.mapper
 
 import com.bunbeauty.common.Mapper
-import com.bunbeauty.data.model.address.Address
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.model.firebase.OrderEntityFirebase
-import com.bunbeauty.data.model.order.OrderEntity
+import com.bunbeauty.domain.model.address.Address
+import com.bunbeauty.domain.model.firebase.OrderEntityFirebase
+import com.bunbeauty.domain.model.order.OrderEntity
 import javax.inject.Inject
 
 class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMapper) :

@@ -3,7 +3,7 @@ package com.bunbeauty.data.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.bunbeauty.data.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.CafeAddress
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.MenuProduct
+import com.bunbeauty.domain.model.MenuProduct
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.ProductTabFragment
-import com.bunbeauty.domain.product.IProductHelper
+import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import javax.inject.Inject
 

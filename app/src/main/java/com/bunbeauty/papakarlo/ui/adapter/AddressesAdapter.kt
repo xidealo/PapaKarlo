@@ -5,10 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.address.Address
-import com.bunbeauty.data.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.Address
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
-import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor(

@@ -2,14 +2,12 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.model.Street
-import com.bunbeauty.data.model.address.UserAddress
-import com.bunbeauty.domain.repository.address.CafeAddressRepo
-import com.bunbeauty.domain.repository.address.UserAddressRepo
-import com.bunbeauty.domain.repository.street.StreetRepo
-import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.model.Street
+import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.StreetRepo
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +20,7 @@ import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
     private val userAddressRepo: UserAddressRepo,
-    private val iDataStoreHelper: IDataStoreHelper,
+    private val dataStoreRepo: DataStoreRepo,
     private val streetRepo: StreetRepo,
     private val resourcesProvider: IResourcesProvider
 ) : ToolbarViewModel() {
@@ -41,7 +39,7 @@ class CreationAddressViewModel @Inject constructor(
 
     fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
-            userAddress.userId = iDataStoreHelper.userId.first()
+            userAddress.userId = dataStoreRepo.userId.first()
             val uuid = if (!userAddress.userId.isNullOrEmpty()) {
                 userAddressRepo.insert("token", userAddress).uuid
             } else {
@@ -49,7 +47,7 @@ class CreationAddressViewModel @Inject constructor(
                 userAddressRepo.insert(userAddress)
                 userAddress.uuid
             }
-            iDataStoreHelper.saveDeliveryAddressId(uuid)
+            dataStoreRepo.saveDeliveryAddressId(uuid)
             withContext(Dispatchers.Main) {
                 messageSharedFlow.emit(resourcesProvider.getString(R.string.msg_creation_address_created_address))
                 router.navigateUp()

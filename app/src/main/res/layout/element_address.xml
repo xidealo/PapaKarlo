@@ -13,11 +13,11 @@
 
         <variable
             name="address"
-            type="com.bunbeauty.data.model.address.Address" />
+            type="com.bunbeauty.domain.model.address.Address" />
 
         <variable
             name="iStringHelper"
-            type="com.bunbeauty.domain.string_helper.IStringHelper" />
+            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

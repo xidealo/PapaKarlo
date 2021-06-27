@@ -8,11 +8,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.gone
-import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.domain.field_helper.IFieldHelper
-import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.presentation.extensions.gone
+import com.bunbeauty.papakarlo.presentation.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.domain.util.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

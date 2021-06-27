@@ -14,11 +14,11 @@
 
         <variable
             name="menuProduct"
-            type="com.bunbeauty.data.model.MenuProduct" />
+            type="com.bunbeauty.domain.model.MenuProduct" />
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.domain.product.IProductHelper" />
+            type="com.bunbeauty.domain.util.product.IProductHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

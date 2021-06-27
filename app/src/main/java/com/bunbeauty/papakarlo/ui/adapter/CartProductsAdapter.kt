@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.data.model.CartProduct
+import com.bunbeauty.papakarlo.presentation.extensions.toggleVisibility
+import com.bunbeauty.domain.model.CartProduct
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import javax.inject.Inject
 

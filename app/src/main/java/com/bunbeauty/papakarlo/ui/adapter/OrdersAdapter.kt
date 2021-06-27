@@ -5,14 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.enums.OrderStatus
-import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.domain.order.IOrderUtil
-import com.bunbeauty.domain.order.OrderUtil
+import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor(

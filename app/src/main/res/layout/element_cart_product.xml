@@ -14,15 +14,15 @@
 
         <variable
             name="cartProduct"
-            type="com.bunbeauty.data.model.CartProduct" />
+            type="com.bunbeauty.domain.model.CartProduct" />
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.domain.product.IProductHelper" />
+            type="com.bunbeauty.domain.util.product.IProductHelper" />
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.domain.string_helper.IStringHelper" />
+            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

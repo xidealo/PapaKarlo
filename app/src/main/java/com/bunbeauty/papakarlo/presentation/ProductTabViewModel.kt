@@ -2,10 +2,10 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
+import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.domain.enums.ProductCode
+import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import kotlinx.coroutines.flow.MutableStateFlow

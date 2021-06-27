@@ -1,24 +1,19 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.model.user.User
-import com.bunbeauty.data.utils.DataStoreHelper
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.cafe.CafeRepo
-import com.bunbeauty.domain.repository.address.UserAddressRepo
-import com.bunbeauty.domain.repository.delivery.DeliveryRepo
-import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
-import com.bunbeauty.domain.repository.order.OrderRepo
-import com.bunbeauty.domain.repository.user.UserRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.DeliveryRepo
+import com.bunbeauty.domain.repo.MenuProductRepo
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -28,7 +23,7 @@ class MainViewModel @Inject constructor(
     private val userRepo: UserRepo,
     private val addressRepo: UserAddressRepo,
     private val orderRepo: OrderRepo,
-    private val dataStoreHelper: IDataStoreHelper
+    private val dataStoreRepo: DataStoreRepo
 ) : BaseViewModel() {
 
     fun refreshCafeList() {
@@ -51,7 +46,7 @@ class MainViewModel @Inject constructor(
 
     fun refreshUserInfo() {
         viewModelScope.launch(IO) {
-            val userId = dataStoreHelper.userId.first()
+            val userId = dataStoreRepo.userId.first()
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase != null) {
                     userRepo.insert(userFirebase, userId)

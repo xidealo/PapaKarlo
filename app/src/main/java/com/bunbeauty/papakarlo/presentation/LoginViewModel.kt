@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.presentation
 
-import com.bunbeauty.domain.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.LoginFragmentDirections
 import javax.inject.Inject

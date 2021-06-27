@@ -11,15 +11,15 @@
 
         <variable
             name="product"
-            type="com.bunbeauty.data.model.MenuProduct" />
+            type="com.bunbeauty.domain.model.MenuProduct" />
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.domain.string_helper.IStringHelper" />
+            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
 
         <variable
             name="productHelper"
-            type="com.bunbeauty.domain.product.IProductHelper" />
+            type="com.bunbeauty.domain.util.product.IProductHelper" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

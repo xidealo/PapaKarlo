@@ -1,8 +1,8 @@
 package com.bunbeauty.data.mapper
 
 import com.bunbeauty.common.Mapper
-import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.data.model.firebase.MenuProductFirebase
+import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.model.firebase.MenuProductFirebase
 import javax.inject.Inject
 
 class MenuProductMapper @Inject constructor() : Mapper<MenuProductFirebase, MenuProduct> {

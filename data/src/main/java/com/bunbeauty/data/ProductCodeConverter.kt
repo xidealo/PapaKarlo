@@ -1,7 +1,7 @@
 package com.bunbeauty.data
 
 import androidx.room.TypeConverter
-import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.domain.enums.ProductCode
 
 class ProductCodeConverter {
     @TypeConverter

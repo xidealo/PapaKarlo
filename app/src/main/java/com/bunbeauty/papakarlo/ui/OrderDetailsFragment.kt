@@ -6,11 +6,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.gone
-import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.domain.order.IOrderUtil
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.presentation.extensions.gone
+import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.domain.util.order.IOrderUtil
+import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

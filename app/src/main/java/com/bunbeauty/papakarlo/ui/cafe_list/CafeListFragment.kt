@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.uri.IUriHelper
+import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.papakarlo.presentation.CafeListViewModel
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

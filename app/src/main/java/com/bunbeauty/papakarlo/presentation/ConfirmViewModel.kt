@@ -2,12 +2,12 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.model.user.User
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.repository.address.UserAddressRepo
-import com.bunbeauty.domain.repository.order.OrderRepo
-import com.bunbeauty.domain.repository.user.UserRepo
-import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections.backToProfileFragment
@@ -30,7 +30,7 @@ abstract class ConfirmViewModel : ToolbarViewModel() {
 }
 
 class ConfirmViewModelImpl @Inject constructor(
-    private val dataStoreHelper: IDataStoreHelper,
+    private val dataStoreRepo: DataStoreRepo,
     private val userRepo: UserRepo,
     private val resourcesProvider: IResourcesProvider,
     private val addressRepo: UserAddressRepo,
@@ -60,7 +60,7 @@ class ConfirmViewModelImpl @Inject constructor(
 
     override fun createUser(userId: String, phone: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreHelper.saveUserId(userId)
+            dataStoreRepo.saveUserId(userId)
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase == null) {
                     userRepo.insert(User(userId = userId, phone = phone, email = email))

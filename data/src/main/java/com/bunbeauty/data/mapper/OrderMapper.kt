@@ -1,8 +1,8 @@
 package com.bunbeauty.data.mapper
 
 import com.bunbeauty.common.Mapper
-import com.bunbeauty.data.model.firebase.OrderFirebase
-import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.domain.model.firebase.OrderFirebase
+import com.bunbeauty.domain.model.order.Order
 import javax.inject.Inject
 
 class OrderMapper @Inject constructor(

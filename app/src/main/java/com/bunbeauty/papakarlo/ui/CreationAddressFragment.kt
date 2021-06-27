@@ -3,13 +3,12 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.model.address.UserAddress
+import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
 import javax.inject.Inject
 

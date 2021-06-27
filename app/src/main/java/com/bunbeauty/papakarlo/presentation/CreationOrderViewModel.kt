@@ -7,21 +7,21 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.model.address.Address
-import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.data.model.order.OrderEntity
-import com.bunbeauty.data.model.user.User
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.cafe.CafeRepo
-import com.bunbeauty.domain.network.INetworkHelper
-import com.bunbeauty.domain.repository.address.CafeAddressRepo
-import com.bunbeauty.domain.repository.address.UserAddressRepo
-import com.bunbeauty.domain.repository.order.OrderRepo
-import com.bunbeauty.domain.repository.user.UserRepo
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
+import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.domain.model.address.Address
+import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.order.OrderEntity
+import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.util.network.INetworkHelper
+import com.bunbeauty.domain.repo.CafeAddressRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
@@ -68,7 +68,7 @@ abstract class CreationOrderViewModel : ToolbarViewModel() {
 }
 
 class CreationOrderViewModelImpl @Inject constructor(
-    private val dataStoreHelper: IDataStoreHelper,
+    private val dataStoreRepo: DataStoreRepo,
     private val networkHelper: INetworkHelper,
     private val resourcesProvider: IResourcesProvider,
     private val stringHelper: IStringHelper,
@@ -102,11 +102,11 @@ class CreationOrderViewModelImpl @Inject constructor(
         viewModelScope.launch(Dispatchers.Default) {
             isDeliveryState.flatMapLatest { isDelivery ->
                 if (isDelivery) {
-                    dataStoreHelper.deliveryAddressId.flatMapLatest {
+                    dataStoreRepo.deliveryAddressId.flatMapLatest {
                         userAddressRepo.getUserAddressByUuid(it)
                     }
                 } else {
-                    dataStoreHelper.cafeAddressId.flatMapLatest {
+                    dataStoreRepo.cafeAddressId.flatMapLatest {
                         cafeAddressRepo.getCafeAddressByCafeId(it)
                     }
                 }
@@ -127,18 +127,18 @@ class CreationOrderViewModelImpl @Inject constructor(
 
     override fun getUser() {
         viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(dataStoreHelper.userId.first()).onEach {
+            userRepo.getUserWithBonuses(dataStoreRepo.userId.first()).onEach {
                 userState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
     }
 
     override fun getCachedEmail(): String {
-        return runBlocking { dataStoreHelper.email.first() }
+        return runBlocking { dataStoreRepo.email.first() }
     }
 
     override fun getCachedPhone(): String {
-        return runBlocking { dataStoreHelper.phone.first() }
+        return runBlocking { dataStoreRepo.phone.first() }
     }
 
     @ExperimentalCoroutinesApi
@@ -168,7 +168,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                         resourcesProvider.getString(R.string.action_creation_order_checkout) +
                                 productHelper.getFullPriceStringWithDelivery(
                                     productList,
-                                    dataStoreHelper.delivery.first()
+                                    dataStoreRepo.delivery.first()
                                 )
                 } else {
                     orderStringStateFlow.value =
@@ -180,7 +180,7 @@ class CreationOrderViewModelImpl @Inject constructor(
     }
 
     override val deliveryStringLiveData by lazy {
-        switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
+        switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
             map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
@@ -263,8 +263,8 @@ class CreationOrderViewModelImpl @Inject constructor(
                     order.orderEntity.userId = user.userId
                     userRepo.insertToBonusList(user)
                 } else {
-                    dataStoreHelper.savePhone(phone)
-                    dataStoreHelper.saveEmail(email)
+                    dataStoreRepo.savePhone(phone)
+                    dataStoreRepo.saveEmail(email)
                 }
                 orderRepo.insert(order)
             }

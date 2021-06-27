@@ -4,10 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.bunbeauty.data.model.CartProduct
-import com.bunbeauty.data.model.MenuProduct
+import com.bunbeauty.domain.model.CartProduct
+import com.bunbeauty.domain.model.MenuProduct
 import com.bunbeauty.papakarlo.Router
-import com.bunbeauty.domain.repository.cart_product.CartProductRepo
+import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

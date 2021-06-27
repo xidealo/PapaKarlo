@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bunbeauty.common.extensions.gone
-import com.bunbeauty.common.extensions.invisible
-import com.bunbeauty.common.extensions.visible
+import com.bunbeauty.papakarlo.presentation.extensions.gone
+import com.bunbeauty.papakarlo.presentation.extensions.invisible
+import com.bunbeauty.papakarlo.presentation.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

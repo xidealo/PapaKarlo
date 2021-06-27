@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.BaseModel
+import com.bunbeauty.domain.model.BaseModel
 
 abstract class BaseAdapter<T : RecyclerView.ViewHolder, E : BaseModel> : RecyclerView.Adapter<T>() {
 

@@ -1,23 +1,23 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.data.api.ApiRepository
-import com.bunbeauty.data.api.IApiRepository
-import com.bunbeauty.data.utils.DataStoreHelper
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.field_helper.FieldHelper
-import com.bunbeauty.domain.field_helper.IFieldHelper
-import com.bunbeauty.domain.network.INetworkHelper
-import com.bunbeauty.domain.network.NetworkHelper
-import com.bunbeauty.domain.order.IOrderUtil
-import com.bunbeauty.domain.order.OrderUtil
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.product.ProductHelper
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.resources.ResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.domain.string_helper.StringHelper
-import com.bunbeauty.domain.uri.IUriHelper
-import com.bunbeauty.domain.uri.UriHelper
+import com.bunbeauty.data.repository.ApiRepository
+import com.bunbeauty.data.repository.DataStoreRepository
+import com.bunbeauty.domain.repo.ApiRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.util.field_helper.FieldHelper
+import com.bunbeauty.domain.util.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.network.INetworkHelper
+import com.bunbeauty.domain.util.network.NetworkHelper
+import com.bunbeauty.domain.util.order.IOrderUtil
+import com.bunbeauty.domain.util.order.OrderUtil
+import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.util.product.ProductHelper
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.domain.util.resources.ResourcesProvider
+import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.StringHelper
+import com.bunbeauty.domain.util.uri.IUriHelper
+import com.bunbeauty.domain.util.uri.UriHelper
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -28,13 +28,13 @@ abstract class ApiModule {
     //NETWORK
 
     @Binds
-    abstract fun bindApiRepository(apiRepository: ApiRepository): IApiRepository
+    abstract fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
 
     // DATA_STORE
 
     @Singleton
     @Binds
-    abstract fun bindDataStoreHelper(dataStoreHelper: DataStoreHelper): IDataStoreHelper
+    abstract fun bindDataStoreHelper(dataStoreRepository: DataStoreRepository): DataStoreRepo
 
     // HELPERS
 

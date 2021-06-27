@@ -1,8 +1,8 @@
 package com.bunbeauty.data.mapper
 
 import com.bunbeauty.common.Mapper
-import com.bunbeauty.data.model.firebase.UserFirebase
-import com.bunbeauty.data.model.user.User
+import com.bunbeauty.domain.model.firebase.UserFirebase
+import com.bunbeauty.domain.model.user.User
 import javax.inject.Inject
 
 class UserMapper @Inject constructor() : Mapper<UserFirebase, User> {

@@ -5,10 +5,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.Constants.PRODUCT_CODE
-import com.bunbeauty.common.extensions.gone
-import com.bunbeauty.common.extensions.visible
+import com.bunbeauty.papakarlo.presentation.extensions.gone
+import com.bunbeauty.papakarlo.presentation.extensions.visible
 import com.bunbeauty.common.State
-import com.bunbeauty.data.enums.ProductCode
+import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

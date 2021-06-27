@@ -6,8 +6,8 @@ import androidx.annotation.ColorRes
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.viewModels
-import com.bunbeauty.data.enums.ProductCode
-import com.bunbeauty.domain.resources.IResourcesProvider
+import com.bunbeauty.domain.enums.ProductCode
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

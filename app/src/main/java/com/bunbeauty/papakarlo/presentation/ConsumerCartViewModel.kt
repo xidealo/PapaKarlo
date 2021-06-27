@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.data.model.CartProduct
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.model.CartProduct
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections
@@ -19,7 +19,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 class ConsumerCartViewModel @Inject constructor(
-    private val dataStoreHelper: IDataStoreHelper,
+    private val dataStoreRepo: DataStoreRepo,
     private val stringHelper: IStringHelper,
     private val resourcesProvider: IResourcesProvider
 ) : ToolbarViewModel(), CoroutineScope {
@@ -34,7 +34,7 @@ class ConsumerCartViewModel @Inject constructor(
     }*/
 
     val deliveryStringLiveData by lazy {
-        switchMap(dataStoreHelper.delivery.asLiveData()) { delivery ->
+        switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
             map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,

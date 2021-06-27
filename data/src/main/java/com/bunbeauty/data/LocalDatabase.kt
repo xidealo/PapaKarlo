@@ -4,12 +4,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bunbeauty.data.dao.*
-import com.bunbeauty.data.model.*
-import com.bunbeauty.data.model.address.CafeAddress
-import com.bunbeauty.data.model.address.UserAddress
-import com.bunbeauty.data.model.cafe.CafeEntity
-import com.bunbeauty.data.model.order.OrderEntity
-import com.bunbeauty.data.model.user.User
+import com.bunbeauty.domain.model.*
+import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.cafe.CafeEntity
+import com.bunbeauty.domain.model.order.OrderEntity
+import com.bunbeauty.domain.model.user.User
 
 @Database(
     entities = [

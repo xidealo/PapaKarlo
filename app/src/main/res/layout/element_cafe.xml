@@ -8,7 +8,7 @@
 
         <variable
             name="cafe"
-            type="com.bunbeauty.data.model.cafe.Cafe" />
+            type="com.bunbeauty.domain.model.cafe.Cafe" />
 
         <variable
             name="cafeListViewModel"
@@ -16,7 +16,7 @@
 
         <variable
             name="stringHelper"
-            type="com.bunbeauty.domain.string_helper.IStringHelper" />
+            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

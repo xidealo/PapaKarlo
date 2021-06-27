@@ -2,12 +2,11 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.model.Delivery
-import com.bunbeauty.data.model.order.Order
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.repository.order.OrderRepo
+import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
+import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 class OrderViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
-    private val dataStoreHelper: IDataStoreHelper
+    private val dataStoreRepo: DataStoreRepo
 ) : BaseViewModel() {
 
     private val _orderState: MutableStateFlow<State<Order?>> = MutableStateFlow(State.Loading())
@@ -24,7 +23,7 @@ class OrderViewModel @Inject constructor(
 
     val delivery: Delivery
         get() = runBlocking {
-            dataStoreHelper.delivery.first()
+            dataStoreRepo.delivery.first()
         }
 
     fun getOrder(orderUuid: String) {

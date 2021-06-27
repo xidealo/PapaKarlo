@@ -2,12 +2,12 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.model.user.User
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.repository.address.UserAddressRepo
-import com.bunbeauty.domain.repository.user.UserRepo
+import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
+import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ abstract class ProfileViewModel : ToolbarViewModel() {
 }
 
 class ProfileViewModelImpl @Inject constructor(
-    private val dataStoreHelper: IDataStoreHelper,
+    private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
     private val userRepo: UserRepo
 ) : ProfileViewModel() {
@@ -46,7 +46,7 @@ class ProfileViewModelImpl @Inject constructor(
 
     override fun getUser() {
         viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(dataStoreHelper.userId.first()).onEach {
+            userRepo.getUserWithBonuses(dataStoreRepo.userId.first()).onEach {
                 userState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
