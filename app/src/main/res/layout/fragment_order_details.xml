@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tool="http://schemas.android.com/apk/res/android"
     tools:context=".ui.OrderDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout style="@style/DefaultPage">
@@ -47,13 +48,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/fragment_order_details_chip_status"
+                    tool:text="Готов"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_margin"
+                    android:clickable="false"
+                    app:chipMinTouchTargetSize="20dp"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_order_details_gl_right"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_code" />
+
                 <TextView
                     android:id="@+id/fragment_order_details_tv_time"
                     style="@style/SmallSecondaryText"
-                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/msg_order_details_order_time"
                     app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_code" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_chip_status" />
 
                 <TextView
                     android:id="@+id/fragment_order_details_tv_time_value"

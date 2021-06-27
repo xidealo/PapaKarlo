@@ -50,7 +50,14 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                 is State.Success -> {
                     if (state.data != null) {
                         viewDataBinding.fragmentOrderDetailsTvCode.text =
-                            state.data!!.orderEntity.code
+                            "Заказ ${state.data!!.orderEntity.code}"
+                        viewDataBinding.fragmentOrderDetailsChipStatus.text =
+                            stringHelper.toStringOrderStatus(state.data!!.orderEntity.orderStatus)
+                        viewDataBinding.fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(
+                            orderUtil.getBackgroundColor(
+                                state.data!!.orderEntity.orderStatus
+                            )
+                        )
                         viewDataBinding.fragmentOrderDetailsTvTimeValue.text =
                             stringHelper.toStringTime(state.data!!.orderEntity)
                         viewDataBinding.fragmentOrderDetailsTvPickupMethodValue.text =

@@ -13,3 +13,4 @@ enum class OrderStatus : Parcelable {
     DONE,
     CANCELED
 }
+

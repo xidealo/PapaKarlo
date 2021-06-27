@@ -27,7 +27,6 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ordersAdapter.ordersViewModel = viewModel
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
         viewModel.orderWithCartProductsLiveData.onEach { orderWithCartProducts ->
             ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.orderEntity.time }

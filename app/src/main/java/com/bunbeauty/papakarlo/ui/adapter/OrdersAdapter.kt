@@ -7,16 +7,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.data.enums.OrderStatus
 import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.domain.order.IOrderUtil
+import com.bunbeauty.domain.order.OrderUtil
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.domain.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
 import javax.inject.Inject
 
-class OrdersAdapter @Inject constructor(private val iStringHelper: IStringHelper) :
+class OrdersAdapter @Inject constructor(
+    private val iStringHelper: IStringHelper,
+    private val orderUtil: IOrderUtil
+) :
     BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
-
-    lateinit var ordersViewModel: OrdersViewModel
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -38,7 +41,7 @@ class OrdersAdapter @Inject constructor(private val iStringHelper: IStringHelper
         holder.binding?.elementOrderChipStatus?.text =
             iStringHelper.toStringOrderStatus(itemList[i].orderEntity.orderStatus)
         holder.binding?.elementOrderChipStatus?.setChipBackgroundColorResource(
-            getBackgroundColor(
+            orderUtil.getBackgroundColor(
                 itemList[i].orderEntity.orderStatus
             )
         )
@@ -47,20 +50,7 @@ class OrdersAdapter @Inject constructor(private val iStringHelper: IStringHelper
         }
     }
 
-    private fun getBackgroundColor(status: OrderStatus): Int {
-        return when (status) {
-            OrderStatus.NOT_ACCEPTED -> R.color.notAcceptedColor
-            OrderStatus.ACCEPTED -> R.color.acceptedColor
-            OrderStatus.PREPARING -> R.color.preparingColor
-            OrderStatus.SENT_OUT -> R.color.sentOutColor
-            OrderStatus.DONE -> R.color.doneColor
-            OrderStatus.DELIVERED -> R.color.deliveredColor
-            else -> R.color.notAcceptedColor
-        }
-    }
-
     inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ElementOrderBinding>(view)
-
     }
 }

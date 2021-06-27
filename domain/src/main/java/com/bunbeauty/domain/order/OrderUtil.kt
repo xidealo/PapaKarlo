@@ -1,7 +1,9 @@
 package com.bunbeauty.domain.order
 
+import com.bunbeauty.data.enums.OrderStatus
 import com.bunbeauty.data.model.Delivery
 import com.bunbeauty.data.model.order.Order
+import com.bunbeauty.domain.R
 import com.bunbeauty.domain.product.IProductHelper
 import javax.inject.Inject
 
@@ -44,4 +46,17 @@ class OrderUtil @Inject constructor(
 
         return proceeds / orderList.size
     }
+
+    override fun getBackgroundColor(status: OrderStatus): Int {
+        return when (status) {
+            OrderStatus.NOT_ACCEPTED -> R.color.notAcceptedColor
+            OrderStatus.ACCEPTED -> R.color.acceptedColor
+            OrderStatus.PREPARING -> R.color.preparingColor
+            OrderStatus.SENT_OUT -> R.color.sentOutColor
+            OrderStatus.DONE -> R.color.doneColor
+            OrderStatus.DELIVERED -> R.color.deliveredColor
+            else -> R.color.notAcceptedColor
+        }
+    }
+
 }
