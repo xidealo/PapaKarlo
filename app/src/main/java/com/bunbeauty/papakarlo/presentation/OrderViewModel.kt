@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
+import com.bunbeauty.papakarlo.extensions.toStateNullableSuccess
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.repo.DataStoreRepo

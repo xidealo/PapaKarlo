@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.papakarlo.presentation.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.domain.model.CartProduct
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker

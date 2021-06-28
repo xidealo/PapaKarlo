@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.domain.model.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo

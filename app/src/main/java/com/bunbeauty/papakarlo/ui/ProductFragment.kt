@@ -4,7 +4,7 @@ import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.papakarlo.presentation.extensions.invisible
+import com.bunbeauty.papakarlo.extensions.invisible
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment

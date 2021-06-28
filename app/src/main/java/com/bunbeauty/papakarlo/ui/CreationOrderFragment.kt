@@ -8,9 +8,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.gone
-import com.bunbeauty.papakarlo.presentation.extensions.toggleVisibility
-import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R

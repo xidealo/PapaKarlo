@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.presentation.extensions
+package com.bunbeauty.papakarlo.extensions
 
 import android.view.View
 

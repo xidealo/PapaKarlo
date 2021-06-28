@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
-import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateNullableSuccess
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.domain.model.user.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo

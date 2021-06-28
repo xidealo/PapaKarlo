@@ -13,8 +13,8 @@ import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import com.bunbeauty.papakarlo.presentation.extensions.gone
-import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.button.MaterialButton
 

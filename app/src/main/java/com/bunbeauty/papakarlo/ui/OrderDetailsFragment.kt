@@ -7,8 +7,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.gone
-import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper

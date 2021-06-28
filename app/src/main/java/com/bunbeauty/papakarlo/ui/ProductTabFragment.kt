@@ -5,8 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.Constants.PRODUCT_CODE
-import com.bunbeauty.papakarlo.presentation.extensions.gone
-import com.bunbeauty.papakarlo.presentation.extensions.visible
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.common.State
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.papakarlo.R

@@ -7,8 +7,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.presentation.extensions.toStateNullableSuccess
-import com.bunbeauty.papakarlo.presentation.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateNullableSuccess
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.domain.model.address.Address
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderEntity
