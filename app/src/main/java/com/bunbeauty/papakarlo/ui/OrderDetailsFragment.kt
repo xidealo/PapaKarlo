@@ -15,7 +15,7 @@ import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.OrderViewModel
+import com.bunbeauty.papakarlo.presentation.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
 
     override var layoutId = R.layout.fragment_order_details
-    override val viewModel: OrderViewModel by viewModels { modelFactory }
+    override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var stringHelper: IStringHelper

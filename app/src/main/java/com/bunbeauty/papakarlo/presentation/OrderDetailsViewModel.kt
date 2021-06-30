@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
-class OrderViewModel @Inject constructor(
+class OrderDetailsViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val cartProductAdapterMapper: CartProductAdapterMapper

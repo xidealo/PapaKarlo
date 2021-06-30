@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
@@ -10,37 +12,47 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
+import com.bunbeauty.papakarlo.presentation.ProductViewModel
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ProductFragment : BarsFragment<FragmentProductBinding>() {
 
     override var layoutId = R.layout.fragment_product
-    override val viewModel: EmptyViewModel by viewModels { modelFactory }
+    override val viewModel: ProductViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
-    @Inject
-    lateinit var stringHelper: IStringHelper
-
-    @Inject
-    lateinit var productHelper: IProductHelper
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*val menuProduct = fromBundle(requireArguments())
-        if (menuProduct.weight == 0)
-            viewDataBinding.fragmentProductTvWeight.invisible()
-
-        viewDataBinding.product = menuProduct
-        viewDataBinding.stringHelper = stringHelper
-        viewDataBinding.productHelper = productHelper
-        viewDataBinding.fragmentProductTvOldCost.paintFlags =
-            viewDataBinding.fragmentProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
-        viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
-            viewModel.addProductToCart(menuProduct)
-        }*/
+        viewModel.getMenuProduct(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
+        viewModel.menuProductState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    with(viewDataBinding) {
+                        fragmentProductTvTitle.text = state.data?.name
+                        fragmentProductTvCost.text =
+                            viewModel.productHelper.getMenuProductPriceString(state.data!!)
+                        fragmentProductTvOldCost.text =
+                            viewModel.productHelper.getMenuProductOldPriceString(state.data!!)
+                        fragmentProductTvWeight.text =
+                            viewModel.stringHelper.toStringWeight(state.data!!)
+                        fragmentProductTvDescription.text = state.data?.description
+                        Picasso.get()
+                            .load(state.data?.photoLink)
+                            .fit()
+                            .placeholder(R.drawable.default_product)
+                            .into(fragmentProductIvPhoto)
+                    }
+                }
+                else -> Unit
+            }
+        }.launchWhenStarted(lifecycleScope)
     }
 }

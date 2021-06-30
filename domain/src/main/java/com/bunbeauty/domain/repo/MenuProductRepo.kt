@@ -9,4 +9,5 @@ interface MenuProductRepo {
 
     suspend fun getMenuProductRequest()
     fun getMenuProductListAsFlow(): Flow<List<MenuProduct>>
+    fun getMenuProductAsFlow(menuProductUuid: String): Flow<MenuProduct?>
 }
