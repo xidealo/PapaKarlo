@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.databinding.ObservableField
-import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.local.cafe.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringHelper

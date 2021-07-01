@@ -1,8 +1,9 @@
 package com.bunbeauty.domain.util.product
 
-import com.bunbeauty.domain.model.CartProduct
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
+import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.local.MenuProduct
 
 interface IProductHelper {
 

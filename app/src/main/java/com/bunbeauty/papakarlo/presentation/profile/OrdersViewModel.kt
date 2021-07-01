@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
-import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections

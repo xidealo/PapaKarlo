@@ -11,7 +11,7 @@
 
         <variable
             name="product"
-            type="com.bunbeauty.domain.model.MenuProduct" />
+            type="com.bunbeauty.domain.model.local.MenuProduct" />
 
         <variable
             name="stringHelper"

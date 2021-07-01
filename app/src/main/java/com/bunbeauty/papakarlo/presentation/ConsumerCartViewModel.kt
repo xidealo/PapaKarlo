@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
+import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
+import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.model.CartProduct
+import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
@@ -21,17 +23,11 @@ import kotlin.coroutines.CoroutineContext
 class ConsumerCartViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val stringHelper: IStringHelper,
-    private val resourcesProvider: IResourcesProvider
+    private val resourcesProvider: IResourcesProvider,
+    private val cartProductAdapterMapper: CartProductAdapterMapper
 ) : ToolbarViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Job()
-
-    /*val orderStringLiveData by lazy {
-        map(cartProductRepo.getCartProductListLiveData()) { productList ->
-            resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                    productHelper.getFullPriceString(productList)
-        }
-    }*/
 
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
@@ -63,6 +59,10 @@ class ConsumerCartViewModel @Inject constructor(
                 cartProductRepo.delete(cartProduct)
             }
         }
+    }
+
+    fun getCartProductModel(cartProductList:List<CartProduct>): List<CartProductAdapterModel>{
+        return cartProductList.map { cartProductAdapterMapper.from(it) }
     }
 
     fun onMenuClicked() {

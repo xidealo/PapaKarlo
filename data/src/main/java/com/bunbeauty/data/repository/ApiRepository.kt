@@ -10,13 +10,13 @@ import com.bunbeauty.common.Constants.USERS
 import com.bunbeauty.common.Constants.l_ORDERS
 import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.domain.repo.ApiRepo
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.MenuProduct
-import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.local.cafe.Cafe
 import com.bunbeauty.domain.model.firebase.AddressFirebase
 import com.bunbeauty.domain.model.firebase.OrderFirebase
 import com.bunbeauty.domain.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.order.UserOrder
+import com.bunbeauty.domain.model.local.order.UserOrder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

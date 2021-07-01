@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.local.Delivery
 import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepo {

@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.OrderRepo

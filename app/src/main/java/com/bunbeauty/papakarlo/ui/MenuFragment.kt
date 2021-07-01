@@ -19,7 +19,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
 
 class MenuFragment : BarsFragment<FragmentMenuBinding>() {
-
     override var layoutId = R.layout.fragment_menu
     override val viewModel: EmptyViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {

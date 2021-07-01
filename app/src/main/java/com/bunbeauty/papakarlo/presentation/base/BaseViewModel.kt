@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.bunbeauty.domain.model.CartProduct
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
+import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.CoroutineScope
@@ -34,22 +35,23 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     val cartProductListLiveData by lazy {
         map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
             isCartEmptyLiveData.value = productList.isEmpty()
-            productList
+            productList.sortedBy { it.menuProduct.name }
         }
     }
 
-    fun addProductToCart(menuProduct: MenuProduct) = launch(Dispatchers.IO) {
-        val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
-            cartProduct.menuProduct == menuProduct
-        }
+    fun addProductToCart(menuProductUuid: String) = launch(Dispatchers.IO) {
 
-        if (cartProduct == null) {
-            cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
-        } else {
-            cartProduct.count++
-            cartProductRepo.update(cartProduct)
-        }
-        messageSharedFlow.emit("Вы добавили ${menuProduct.name} в корзину")
+        /*   val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
+               cartProduct.menuProduct == menuProduct
+           }
+
+           if (cartProduct == null) {
+               cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
+           } else {
+               cartProduct.count++
+               cartProductRepo.update(cartProduct)
+           }
+           messageSharedFlow.emit("Вы добавили ${menuProduct.name} в корзину")*/
     }
 
 }

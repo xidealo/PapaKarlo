@@ -1,11 +1,11 @@
 package com.bunbeauty.domain.util.string_helper
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.CartProduct
-import com.bunbeauty.domain.model.MenuProduct
-import com.bunbeauty.domain.model.address.Address
-import com.bunbeauty.domain.model.cafe.CafeEntity
-import com.bunbeauty.domain.model.order.OrderEntity
+import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.local.address.Address
+import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.local.order.OrderEntity
 
 interface IStringHelper {
     fun toString(address: Address?): String

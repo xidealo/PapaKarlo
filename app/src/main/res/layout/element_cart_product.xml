@@ -4,27 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="context"
-            type="android.content.Context" />
-
-        <variable
-            name="cartProduct"
-            type="com.bunbeauty.domain.model.CartProduct" />
-
-        <variable
-            name="productHelper"
-            type="com.bunbeauty.domain.util.product.IProductHelper" />
-
-        <variable
-            name="stringHelper"
-            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
-    </data>
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cart_product_mcv_main"
         style="@style/DefaultMaterialCard"
@@ -44,15 +23,13 @@
                 android:src="@drawable/default_product"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:image="@{cartProduct.menuProduct.photoLink}" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/element_cart_product_tv_title"
                 style="@style/SmallTitle"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:layout_marginTop="@dimen/very_small_margin"
-                android:text="@{cartProduct.menuProduct.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -61,15 +38,13 @@
                 android:id="@+id/element_cart_product_tv_cost"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{productHelper.getCartProductPriceString(cartProduct)}"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_old_price"
+                android:id="@+id/element_cart_product_tv_old_cost"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/small_margin"
-                android:text="@{productHelper.getCartProductOldPriceString(cartProduct)}"
                 android:textColor="@color/grey"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_cost"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
@@ -81,7 +56,6 @@
                 android:layout_marginEnd="@dimen/small_margin"
                 app:buttonTextColor="@color/white"
                 app:buttonColor="@color/colorPrimary"
-                app:count="@{cartProduct.count}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />

@@ -2,7 +2,7 @@ package com.bunbeauty.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.bunbeauty.domain.model.CartProduct
+import com.bunbeauty.domain.model.local.CartProduct
 import kotlinx.coroutines.flow.Flow
 
 @Dao

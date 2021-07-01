@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.model.local.MenuProduct
 import kotlinx.coroutines.flow.Flow
 
 interface MenuProductRepo {

@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
 import javax.inject.Inject
 
 class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
@@ -26,9 +27,14 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         subscribe(viewModel.cartProductListLiveData) { cartProductList ->
-            cartProductsAdapter.setItemList(cartProductList.sortedBy { it.menuProduct.name })
+            cartProductsAdapter.setItemList(
+                viewModel.getCartProductModel(cartProductList),
+                MyDiffCallback(
+                    viewModel.getCartProductModel(cartProductList),
+                    cartProductsAdapter.itemList
+                )
+            )
         }
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentConsumerCartTvDeliveryInfo.text = deliveryString
@@ -48,7 +54,6 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
     }
 
     private fun setupRecyclerView() {
-        cartProductsAdapter.consumerCartViewModel = viewModel
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
     }
 

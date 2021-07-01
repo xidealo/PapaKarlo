@@ -1,25 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="context"
-            type="android.content.Context" />
-
-        <variable
-            name="menuProduct"
-            type="com.bunbeauty.domain.model.MenuProduct" />
-
-        <variable
-            name="productHelper"
-            type="com.bunbeauty.domain.util.product.IProductHelper" />
-    </data>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_menu_product_mcv_main"
@@ -40,8 +22,7 @@
                 android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                bind:image="@{menuProduct.photoLink}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
@@ -49,7 +30,6 @@
                 android:layout_marginTop="@dimen/very_small_margin"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:layout_marginEnd="@dimen/very_small_margin"
-                android:text="@{menuProduct.name}"
                 app:layout_constraintEnd_toStartOf="@+id/element_menu_product_btn_want"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +38,6 @@
                 android:id="@+id/element_menu_product_tv_cost"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{productHelper.getMenuProductPriceString(menuProduct)}"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
@@ -66,18 +45,16 @@
                 android:id="@+id/element_menu_product_tv_cost_old"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:text="@{productHelper.getMenuProductOldPriceString(menuProduct)}"
                 android:textColor="@color/grey"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_cost"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
-            <ImageView
+   <!--         <ImageView
                 android:id="@+id/element_menu_product_iv_on_fire"
                 style="@style/Icon"
                 android:adjustViewBounds="true"
                 android:src="@drawable/ic_on_fire"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:visibility="@{menuProduct.onFire ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toEndOf="@+id/element_menu_product_tv_cost_old"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
 
@@ -86,9 +63,8 @@
                 style="@style/Icon"
                 android:src="@drawable/ic_in_oven"
                 android:layout_marginStart="@dimen/very_small_margin"
-                android:visibility="@{menuProduct.inOven ? View.VISIBLE : View.GONE}"
                 app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
-                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/element_menu_product_btn_want"

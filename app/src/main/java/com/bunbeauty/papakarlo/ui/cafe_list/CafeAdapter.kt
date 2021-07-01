@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.local.cafe.Cafe
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.presentation.CafeListViewModel

@@ -2,8 +2,8 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.data.dao.UserAddressDao
-import com.bunbeauty.data.mapper.AddressMapper
-import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.data.mapper.firebase.AddressMapper
+import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.domain.model.firebase.AddressFirebase
 import com.bunbeauty.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow

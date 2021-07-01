@@ -1,7 +1,8 @@
 package com.bunbeauty.domain.util.product
 
-import com.bunbeauty.domain.model.CartProduct
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import javax.inject.Inject
 
@@ -37,7 +38,7 @@ class ProductHelper @Inject constructor(private val stringHelper: IStringHelper)
 
     override fun getFullPriceStringWithDelivery(
         cartProductList: List<CartProduct>,
-        delivery: com.bunbeauty.domain.model.Delivery
+        delivery: Delivery
     ): String {
         return if (getDifferenceBeforeFreeDelivery(cartProductList, delivery.forFree) > 0) {
             stringHelper.getCostString(getNewTotalCost(cartProductList) + delivery.cost)

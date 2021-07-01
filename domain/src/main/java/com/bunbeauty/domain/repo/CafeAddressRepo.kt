@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.repo
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.local.address.CafeAddress
 import kotlinx.coroutines.flow.Flow
 
 interface CafeAddressRepo {

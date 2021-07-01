@@ -14,6 +14,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
+import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -52,7 +53,10 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.fragmentProductsRvResult.visible()
                     viewDataBinding.activityMainPbLoading.gone()
 
-                    menuProductsAdapter.setItemList(state.data)
+                    menuProductsAdapter.setItemList(
+                        state.data,
+                        MyDiffCallback(state.data, menuProductsAdapter.itemList)
+                    )
                     viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
                 }
                 is State.Empty -> {
@@ -61,16 +65,19 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.activityMainPbLoading.gone()
                 }
                 is State.Error -> {
-
                 }
             }
         }.launchWhenStarted(lifecycleScope)
     }
 
     private fun setupRecyclerView() {
-        menuProductsAdapter.productTabViewModel = viewModel
-        menuProductsAdapter.productTabFragment = this
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
+        menuProductsAdapter.onItemClickListener = { menuProductAdapterModel ->
+            viewModel.onProductClicked(menuProductAdapterModel)
+        }
+        menuProductsAdapter.btnItemClickListener = { menuProductAdapterModel ->
+            viewModel.addProductToCart(menuProductAdapterModel.uuid)
+        }
     }
 
     companion object {

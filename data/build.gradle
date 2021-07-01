@@ -64,6 +64,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
 
+    //Picasso
+    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
     //DataStore

@@ -1,13 +1,14 @@
 package com.bunbeauty.domain.util.string_helper
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.cafe.CafeEntity
-import com.bunbeauty.domain.model.order.OrderEntity
+import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.local.order.OrderEntity
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.CartProduct
-import com.bunbeauty.domain.model.MenuProduct
-import com.bunbeauty.domain.model.address.Address
+import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.R
+import com.bunbeauty.domain.model.local.Time
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import javax.inject.Inject
 
@@ -138,7 +139,7 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
     }
 
     override fun toStringTime(orderEntity: OrderEntity): String {
-        return com.bunbeauty.domain.model.Time(orderEntity.time, 3).toStringTimeHHMM()
+        return Time(orderEntity.time, 3).toStringTimeHHMM()
     }
 
     override fun toStringTime(hours: Int?, minutes: Int?): String {

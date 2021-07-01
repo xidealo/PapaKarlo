@@ -1,10 +1,11 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
+import com.bunbeauty.domain.model.local.BaseModel
 
 class MyDiffCallback(
-    private val newList: List<com.bunbeauty.domain.model.BaseModel>,
-    private val oldList: List<com.bunbeauty.domain.model.BaseModel>
+    private val newList: List<BaseModel>,
+    private val oldList: List<BaseModel>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize() = oldList.size
@@ -17,6 +18,10 @@ class MyDiffCallback(
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return newList[newItemPosition] == oldList[oldItemPosition]
+    }
+
+    override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+        return super.getChangePayload(oldItemPosition, newItemPosition)
     }
 
 }

@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R

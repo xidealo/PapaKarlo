@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.CartProductDao
-import com.bunbeauty.domain.model.CartProduct
+import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

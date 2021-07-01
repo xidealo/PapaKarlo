@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.extensions.toStateSuccess
-import com.bunbeauty.domain.model.address.Address
+import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.CafeAddressRepo
 import com.bunbeauty.domain.repo.UserAddressRepo

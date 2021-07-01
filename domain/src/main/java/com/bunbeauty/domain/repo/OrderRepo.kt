@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.UserOrder
+import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.local.order.UserOrder
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {

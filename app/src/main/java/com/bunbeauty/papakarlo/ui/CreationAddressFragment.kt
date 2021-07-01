@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

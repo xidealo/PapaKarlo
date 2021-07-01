@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.DistrictDao
-import com.bunbeauty.domain.model.DistrictEntity
+import com.bunbeauty.domain.model.local.DistrictEntity
 import com.bunbeauty.domain.repo.DistrictRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

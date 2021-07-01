@@ -1,26 +1,24 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
-import android.content.Context
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.common.State
+import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.ProductTabFragment
-import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
-class MenuProductsAdapter @Inject constructor(
-    private val context: Context,
-    private val productHelper: IProductHelper
-) : BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
+class MenuProductsAdapter @Inject constructor() :
+    BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProductAdapterModel, MyDiffCallback>() {
 
-    lateinit var productTabViewModel: ProductTabViewModel
-    lateinit var productTabFragment: ProductTabFragment
+    var btnItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -30,26 +28,51 @@ class MenuProductsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
-        holder.setListener(itemList[i])
-        holder.binding?.context = context
-        holder.binding?.productHelper = productHelper
-        holder.binding?.menuProduct = itemList[i]
-        if (holder.binding?.elementMenuProductTvCostOld != null) {
-            holder.binding.elementMenuProductTvCostOld.paintFlags =
-                holder.binding.elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
+        holder.onBind(itemList[i])
+    }
+
+    override fun onBindViewHolder(
+        holder: MenuProductViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(itemList[position], payloads)
         }
     }
 
-    inner class MenuProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = DataBindingUtil.bind<ElementMenuProductBinding>(view)
+    inner class MenuProductViewHolder(view: View) :
+        BaseViewHolder<ElementMenuProductBinding, MenuProductAdapterModel>(
+            DataBindingUtil.bind(view)!!
+        ) {
 
-        fun setListener(menuProduct: MenuProduct) {
-            binding?.elementMenuProductMcvMain?.setOnClickListener {
-                productTabViewModel.onProductClicked(menuProduct)
+        override fun onBind(item: MenuProductAdapterModel) {
+            super.onBind(item)
+            with(binding){
+                elementMenuProductTvTitle.text = item.name
+                elementMenuProductTvCost.text = item.discountCost
+                elementMenuProductTvCostOld.text = item.cost
+
+                Picasso.get()
+                    .load(item.photoLink)
+                    .fit()
+                    .placeholder(R.drawable.default_product)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .into(elementMenuProductIvPhoto)
+
+                elementMenuProductTvCostOld.paintFlags =
+                    elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
+                elementMenuProductMcvMain.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
+                elementMenuProductBtnWant.setOnClickListener {
+                    btnItemClickListener?.invoke(item)
+                }
             }
-            binding?.elementMenuProductBtnWant?.setOnClickListener {
-                productTabViewModel.addProductToCart(menuProduct)
-            }
+
         }
     }
 }

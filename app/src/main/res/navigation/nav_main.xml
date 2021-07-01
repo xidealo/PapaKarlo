@@ -49,7 +49,7 @@
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
             android:name="cafe"
-            app:argType="com.bunbeauty.domain.model.cafe.Cafe" />
+            app:argType="com.bunbeauty.domain.model.local.cafe.Cafe" />
     </dialog>
 
     <fragment
@@ -91,10 +91,7 @@
         android:label="{menuProductName}"
         tools:layout="@layout/fragment_product">
         <argument
-            android:name="menuProduct"
-            app:argType="com.bunbeauty.domain.model.MenuProduct" />
-        <argument
-            android:name="menuProductName"
+            android:name="menuProductUuid"
             app:argType="string" />
     </fragment>
 
@@ -180,7 +177,7 @@
         tools:layout="@layout/fragment_settings">
         <argument
             android:name="User"
-            app:argType="com.bunbeauty.domain.model.user.User" />
+            app:argType="com.bunbeauty.domain.model.local.user.User" />
         <action
             android:id="@+id/to_logoutBottomSheet"
             app:destination="@id/logout_bottomSheet" />

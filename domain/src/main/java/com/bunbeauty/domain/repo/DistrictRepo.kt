@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.DistrictEntity
+import com.bunbeauty.domain.model.local.DistrictEntity
 import kotlinx.coroutines.flow.Flow
 
 interface DistrictRepo {

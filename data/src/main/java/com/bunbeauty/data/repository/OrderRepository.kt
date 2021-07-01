@@ -1,11 +1,11 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.OrderDao
-import com.bunbeauty.data.mapper.OrderMapper
+import com.bunbeauty.data.mapper.firebase.OrderMapper
 import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.repo.ApiRepo
-import com.bunbeauty.domain.model.order.UserOrder
+import com.bunbeauty.domain.model.local.order.UserOrder
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.domain.util.string_helper.IStringHelper
@@ -15,7 +15,7 @@ class OrdersAdapter @Inject constructor(
     private val iStringHelper: IStringHelper,
     private val orderUtil: IOrderUtil
 ) :
-    BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
+    BaseAdapter<OrdersAdapter.OrderViewHolder, Order, MyDiffCallback>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

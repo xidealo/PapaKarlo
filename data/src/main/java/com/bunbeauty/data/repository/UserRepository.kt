@@ -2,9 +2,9 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.data.dao.UserDao
-import com.bunbeauty.data.mapper.UserMapper
+import com.bunbeauty.data.mapper.firebase.UserMapper
 import com.bunbeauty.domain.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.user.User
+import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.UserRepo
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

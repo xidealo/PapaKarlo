@@ -2,7 +2,7 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.MenuProductDao
 import com.bunbeauty.domain.repo.ApiRepo
-import com.bunbeauty.domain.model.MenuProduct
+import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO

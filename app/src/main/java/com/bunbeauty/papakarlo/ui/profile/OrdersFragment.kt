@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -29,8 +30,12 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
         viewModel.orderWithCartProductsLiveData.onEach { orderWithCartProducts ->
-            ordersAdapter.setItemList(orderWithCartProducts.sortedByDescending { it.orderEntity.time }
-                .also { ordersList -> ordersList.map { it.uuid = it.orderEntity.uuid } })
+            val orderList = orderWithCartProducts.sortedByDescending { it.orderEntity.time }
+                .also { ordersList -> ordersList.map { it.uuid = it.orderEntity.uuid } }
+            ordersAdapter.setItemList(
+                orderList,
+                MyDiffCallback(orderList, ordersAdapter.itemList)
+            )
         }.launchWhenStarted(lifecycleScope)
         ordersAdapter.onItemClickListener = { order ->
             viewModel.onOrderClicked(order)

@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
+import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -41,7 +42,10 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                 is State.Loading -> {
                 }
                 is State.Success -> {
-                    addressesAdapter.setItemList(state.data)
+                    addressesAdapter.setItemList(
+                        state.data,
+                        MyDiffCallback(state.data, addressesAdapter.itemList)
+                    )
                 }
                 else -> {
                 }

@@ -3,8 +3,8 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.model.Street
-import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.local.Street
+import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider

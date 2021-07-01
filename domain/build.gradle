@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation project(":common")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"

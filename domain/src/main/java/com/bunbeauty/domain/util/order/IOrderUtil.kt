@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.util.order
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.local.order.Order
 
 interface IOrderUtil {
 

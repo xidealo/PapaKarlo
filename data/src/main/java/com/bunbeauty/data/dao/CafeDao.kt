@@ -2,8 +2,8 @@ package com.bunbeauty.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.bunbeauty.domain.model.cafe.Cafe
-import com.bunbeauty.domain.model.cafe.CafeEntity
+import com.bunbeauty.domain.model.local.cafe.Cafe
+import com.bunbeauty.domain.model.local.cafe.CafeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

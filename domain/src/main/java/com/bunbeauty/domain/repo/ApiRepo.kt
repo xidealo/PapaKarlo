@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.MenuProduct
-import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.local.cafe.Cafe
 import com.bunbeauty.domain.model.firebase.AddressFirebase
 import com.bunbeauty.domain.model.firebase.OrderFirebase
 import com.bunbeauty.domain.model.firebase.UserFirebase
