@@ -11,7 +11,7 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
     CartProductRepo {
 
     override suspend fun insertToLocal(cartProduct: CartProduct): CartProduct {
-        cartProduct.id = cartProductDao.insert(cartProduct)
+        cartProductDao.insert(cartProduct)
         return cartProduct
     }
 

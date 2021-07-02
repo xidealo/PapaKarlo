@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -51,7 +52,12 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
         }
 
         if (cartProduct == null) {
-            cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
+            cartProductRepo.insertToLocal(
+                CartProduct(
+                    uuid = UUID.randomUUID().toString(),
+                    menuProduct = menuProduct
+                )
+            )
         } else {
             cartProduct.count++
             cartProductRepo.update(cartProduct)

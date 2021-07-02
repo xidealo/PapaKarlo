@@ -25,7 +25,7 @@ import com.bunbeauty.domain.model.local.user.User
         DistrictEntity::class,
         Street::class,
         User::class
-    ], version = 71
+    ], version = 72
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {

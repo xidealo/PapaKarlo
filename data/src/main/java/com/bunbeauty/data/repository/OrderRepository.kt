@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -40,6 +41,7 @@ class OrderRepository @Inject constructor(
         if (orderDao.getOrderByUuid(order.orderEntity.uuid) == null) {
             for (cardProduct in order.cartProducts) {
                 cardProduct.orderId = order.orderEntity.uuid
+                cardProduct.uuid = UUID.randomUUID().toString()
                 cartProductRepo.insertToLocal(cardProduct)
             }
         }
@@ -62,7 +64,7 @@ class OrderRepository @Inject constructor(
     override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
 
     override fun getOrderWithCartProducts(orderUuid: String): Flow<Order?> {
-       return orderDao.getOrderFlowByUuid(orderUuid)
+        return orderDao.getOrderFlowByUuid(orderUuid)
     }
 
     private fun subscribeOnActiveOrder(userOrder: UserOrder) {

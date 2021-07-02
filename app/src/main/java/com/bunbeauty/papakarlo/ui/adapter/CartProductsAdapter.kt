@@ -57,10 +57,6 @@ class CartProductsAdapter @Inject constructor() :
                         elementCartProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
                 }
 
-                if (canBeChanged) {
-
-                }
-
                 elementCartProductCpCount.countChangeListener =
                     object : CountPicker.CountChangeListener {
                         override fun onCountIncreased() {

@@ -58,9 +58,8 @@ class ConsumerCartViewModel @Inject constructor(
             }
         } else {
             launch(Dispatchers.IO) {
-                cartProductRepo.delete(
-                    cartProductRepo.getCartProduct(cartProductUuid) ?: return@launch
-                )
+                val cartProduct = cartProductRepo.getCartProduct(cartProductUuid) ?: return@launch
+                cartProductRepo.delete(cartProduct)
             }
         }
     }
