@@ -24,7 +24,6 @@ abstract class ProductTabViewModel : BaseViewModel() {
 }
 
 class ProductTabViewModelImpl @Inject constructor(
-    private val menuProductRepo: MenuProductRepo,
     private val mapper: MenuProductAdapterMapper
 ) : ProductTabViewModel() {
 

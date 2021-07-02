@@ -45,7 +45,6 @@
                 android:id="@+id/element_cart_product_tv_old_cost"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/small_margin"
-                android:textColor="@color/grey"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_cost"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
 

@@ -19,6 +19,9 @@ interface MenuProductDao : BaseDao<MenuProduct> {
     @Query("SELECT * FROM MenuProduct WHERE uuid = :menuProductUuid ")
     fun getMenuProductFlow(menuProductUuid: String): Flow<MenuProduct?>
 
+    @Query("SELECT * FROM MenuProduct WHERE uuid = :menuProductUuid ")
+    fun getMenuProduct(menuProductUuid: String): MenuProduct?
+
     @Query("SELECT * FROM MenuProduct WHERE productCode = :productCode ORDER BY cost")
     fun getMenuProductListByCodeLiveData(productCode: String): Flow<List<MenuProduct>>
 }

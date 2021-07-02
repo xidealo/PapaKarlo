@@ -49,19 +49,23 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-    fun updateCartProduct(cartProduct: CartProduct) {
-        if (cartProduct.count > 0) {
+    fun updateCartProduct(cartProductUuid: String, count: Int) {
+        if (count > 0) {
             launch(Dispatchers.IO) {
-                cartProductRepo.update(cartProduct)
+                cartProductRepo.update(
+                    cartProductRepo.getCartProduct(cartProductUuid).also { it?.count = count }
+                        ?: return@launch)
             }
         } else {
             launch(Dispatchers.IO) {
-                cartProductRepo.delete(cartProduct)
+                cartProductRepo.delete(
+                    cartProductRepo.getCartProduct(cartProductUuid) ?: return@launch
+                )
             }
         }
     }
 
-    fun getCartProductModel(cartProductList:List<CartProduct>): List<CartProductAdapterModel>{
+    fun getCartProductModel(cartProductList: List<CartProduct>): List<CartProductAdapterModel> {
         return cartProductList.map { cartProductAdapterMapper.from(it) }
     }
 

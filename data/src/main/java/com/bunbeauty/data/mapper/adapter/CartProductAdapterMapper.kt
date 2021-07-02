@@ -20,7 +20,7 @@ class CartProductAdapterMapper @Inject constructor(
             cost = productHelper.getCartProductPriceString(e),
             discountCost = productHelper.getCartProductOldPriceString(e),
             photoLink = e.menuProduct.photoLink,
-            count = e.count.toString()
+            count = e.count
         )
     }
 

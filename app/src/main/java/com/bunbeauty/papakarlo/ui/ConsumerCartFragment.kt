@@ -54,6 +54,7 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
     }
 
     private fun setupRecyclerView() {
+        cartProductsAdapter.consumerCartViewModel = viewModel
         viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
     }
 

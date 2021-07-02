@@ -8,5 +8,5 @@ data class CartProductAdapterModel(
     var cost: String,
     val discountCost: String,
     var photoLink: String,
-    var count: String
+    var count: Int
 ) : BaseModel

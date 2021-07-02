@@ -13,4 +13,7 @@ interface CartProductDao : BaseDao<CartProduct> {
 
     @Query("SELECT * FROM CartProduct WHERE orderId IS NULL")
     fun getCartProductList(): List<CartProduct>
+
+    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL AND uuid = :cartProductUuid")
+    fun getCartProduct(cartProductUuid: String): CartProduct?
 }

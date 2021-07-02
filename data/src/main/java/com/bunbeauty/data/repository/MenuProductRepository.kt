@@ -43,4 +43,8 @@ class MenuProductRepository @Inject constructor(
     override fun getMenuProductAsFlow(menuProductUuid: String): Flow<MenuProduct?> {
         return menuProductDao.getMenuProductFlow(menuProductUuid)
     }
+
+    override fun getMenuProduct(menuProductUuid: String): MenuProduct? {
+        return menuProductDao.getMenuProduct(menuProductUuid)
+    }
 }

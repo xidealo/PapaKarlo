@@ -9,6 +9,7 @@ import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,6 +24,9 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
 
     @Inject
     lateinit var cartProductRepo: CartProductRepo
+
+    @Inject
+    lateinit var menuProductRepo: MenuProductRepo
 
     @Inject
     lateinit var router: Router
@@ -40,18 +44,18 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     }
 
     fun addProductToCart(menuProductUuid: String) = launch(Dispatchers.IO) {
+        val menuProduct = menuProductRepo.getMenuProduct(menuProductUuid) ?: return@launch
 
-        /*   val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
-               cartProduct.menuProduct == menuProduct
-           }
+        val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
+            cartProduct.menuProduct == menuProduct
+        }
 
-           if (cartProduct == null) {
-               cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
-           } else {
-               cartProduct.count++
-               cartProductRepo.update(cartProduct)
-           }
-           messageSharedFlow.emit("Вы добавили ${menuProduct.name} в корзину")*/
+        if (cartProduct == null) {
+            cartProductRepo.insertToLocal(CartProduct(menuProduct = menuProduct))
+        } else {
+            cartProduct.count++
+            cartProductRepo.update(cartProduct)
+        }
+        messageSharedFlow.emit("Вы добавили ${menuProduct.name} в корзину")
     }
-
 }

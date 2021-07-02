@@ -10,6 +10,7 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -19,6 +20,7 @@ class CartProductsAdapter @Inject constructor() :
     BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProductAdapterModel, MyDiffCallback>() {
 
     var canBeChanged: Boolean = true
+    lateinit var consumerCartViewModel: ConsumerCartViewModel
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CartProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -34,28 +36,13 @@ class CartProductsAdapter @Inject constructor() :
     inner class CartProductViewHolder(view: View) :
         BaseViewHolder<ElementCartProductBinding, CartProductAdapterModel>(DataBindingUtil.bind(view)!!) {
 
-        fun setCountChangeListener(cartProduct: CartProductAdapterModel) {
-            binding.elementCartProductCpCount.countChangeListener =
-                object : CountPicker.CountChangeListener {
-                    override fun onCountIncreased() {
-                        //val updatedProduct = cartProduct.copy(count = cartProduct.count + 1)
-                        //consumerCartViewModel.updateCartProduct(updatedProduct)
-                    }
-
-                    override fun onCountDecreased() {
-                        //val updatedProduct = cartProduct.copy(count = cartProduct.count - 1)
-                        //consumerCartViewModel.updateCartProduct(updatedProduct)
-                    }
-                }
-        }
-
         override fun onBind(item: CartProductAdapterModel) {
             super.onBind(item)
             with(binding) {
                 elementCartProductTvTitle.text = item.name
                 elementCartProductTvCost.text = item.discountCost
                 elementCartProductTvOldCost.text = item.cost
-
+                elementCartProductCpCount.count = item.count
                 Picasso.get()
                     .load(item.photoLink)
                     .fit()
@@ -70,7 +57,26 @@ class CartProductsAdapter @Inject constructor() :
                         elementCartProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
                 }
 
-                if (canBeChanged) { }
+                if (canBeChanged) {
+
+                }
+
+                elementCartProductCpCount.countChangeListener =
+                    object : CountPicker.CountChangeListener {
+                        override fun onCountIncreased() {
+                            consumerCartViewModel.updateCartProduct(
+                                item.uuid,
+                                item.count + 1
+                            )
+                        }
+
+                        override fun onCountDecreased() {
+                            consumerCartViewModel.updateCartProduct(
+                                item.uuid,
+                                item.count - 1
+                            )
+                        }
+                    }
             }
         }
 

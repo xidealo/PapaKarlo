@@ -15,9 +15,15 @@ class CartProductRepository @Inject constructor(private val cartProductDao: Cart
         return cartProduct
     }
 
-    override fun getCartProductListFlow() = cartProductDao.getCartProductListLiveData().flowOn(Dispatchers.IO)
+    override fun getCartProductListFlow() =
+        cartProductDao.getCartProductListLiveData().flowOn(Dispatchers.IO)
 
-    override suspend fun getCartProductList(): List<CartProduct> = cartProductDao.getCartProductList()
+    override suspend fun getCartProductList(): List<CartProduct> =
+        cartProductDao.getCartProductList()
+
+    override suspend fun getCartProduct(cartProductUuid: String): CartProduct? {
+        return cartProductDao.getCartProduct(cartProductUuid)
+    }
 
     override suspend fun update(cartProduct: CartProduct) {
         return cartProductDao.update(cartProduct)

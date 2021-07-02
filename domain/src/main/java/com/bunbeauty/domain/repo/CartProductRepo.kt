@@ -10,6 +10,8 @@ interface CartProductRepo {
 
     suspend fun getCartProductList(): List<CartProduct>
 
+    suspend fun getCartProduct(cartProductUuid: String): CartProduct?
+
     suspend fun update(cartProduct: CartProduct)
 
     suspend fun delete(cartProduct: CartProduct)

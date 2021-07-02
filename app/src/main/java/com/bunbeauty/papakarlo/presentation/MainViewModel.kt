@@ -18,7 +18,6 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
-    private val menuProductRepo: MenuProductRepo,
     private val deliveryRepo: DeliveryRepo,
     private val userRepo: UserRepo,
     private val addressRepo: UserAddressRepo,
