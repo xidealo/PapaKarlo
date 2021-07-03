@@ -8,9 +8,6 @@ data class MenuProductFirebase(
     var description: String = "",
     val comboDescription: String? = null,
     var photoLink: String = "",
-    var onFire: Boolean = false,
-    var inOven: Boolean = false,
     var productCode: String = "",
     var barcode: Int = 0,
-    var visible: Boolean = true
 )

@@ -9,18 +9,15 @@ class MenuProductMapper @Inject constructor() : Mapper<MenuProductFirebase, Menu
 
     override fun from(e: MenuProduct): MenuProductFirebase {
         return MenuProductFirebase(
-            e.name,
-            e.cost,
-            e.discountCost,
-            e.weight,
-            e.description,
-            checkEmptyString(e.comboDescription),
-            e.photoLink,
-            e.onFire,
-            e.inOven,
-            e.productCode,
-            e.barcode,
-            e.visible
+            name = e.name,
+            cost = e.cost,
+            discountCost = e.discountCost,
+            weight = e.weight,
+            description = e.description,
+            comboDescription = checkEmptyString(e.comboDescription),
+            photoLink = e.photoLink,
+            productCode = e.productCode,
+            barcode = e.barcode,
         )
     }
 
@@ -30,18 +27,15 @@ class MenuProductMapper @Inject constructor() : Mapper<MenuProductFirebase, Menu
     override fun to(t: MenuProductFirebase): MenuProduct {
         return MenuProduct(
             "empty uuid",
-            t.name,
-            t.cost,
-            t.discountCost,
-            t.weight,
-            t.description,
-            t.comboDescription ?: "",
-            t.photoLink,
-            t.onFire,
-            t.inOven,
-            t.productCode,
-            t.barcode,
-            t.visible
+            name = t.name,
+            cost = t.cost,
+            discountCost = t.discountCost,
+            weight = t.weight,
+            description = t.description,
+            comboDescription = t.comboDescription ?: "",
+            photoLink = t.photoLink,
+            productCode = t.productCode,
+            barcode = t.barcode,
         )
     }
 }
