@@ -55,6 +55,6 @@ class ProductTabViewModelImpl @Inject constructor(
     }
 
     override fun onProductClicked(menuProductAdapterModel: MenuProductAdapterModel) {
-        router.navigate(toProductFragment(menuProductAdapterModel.uuid))
+        router.navigate(toProductFragment(menuProductAdapterModel.uuid, menuProductAdapterModel.name))
     }
 }

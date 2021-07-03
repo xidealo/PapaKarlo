@@ -93,6 +93,9 @@
         <argument
             android:name="menuProductUuid"
             app:argType="string" />
+        <argument
+            android:name="menuProductName"
+            app:argType="string" />
     </fragment>
 
     <fragment

@@ -16,6 +16,7 @@ import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.onEach
@@ -37,9 +38,8 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupRecyclerView()
         val productCode = requireArguments().getParcelable<ProductCode>(PRODUCT_CODE)!!
+        setupRecyclerView(productCode)
         viewModel.getMenuProductList(productCode)
         viewModel.productListState.onEach { state ->
             when (state) {
@@ -53,7 +53,13 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.fragmentProductsRvResult.visible()
                     viewDataBinding.activityMainPbLoading.gone()
 
-                    menuProductsAdapter.submitList(state.data)
+                    viewDataBinding.fragmentProductsRvResult.postDelayed(
+                        {
+                            menuProductsAdapter.submitList(state.data)
+                        },
+                        10
+                    )
+
                     viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
                 }
                 is State.Empty -> {
@@ -66,8 +72,12 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
         }.launchWhenStarted(lifecycleScope)
     }
 
-    private fun setupRecyclerView() {
+    private fun setupRecyclerView(productCode: ProductCode) {
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
+
+        if (productCode == ProductCode.ALL)
+            viewDataBinding.fragmentProductsRvResult.itemAnimator = SlideInLeftAnimator()
+
         menuProductsAdapter.onItemClickListener = { menuProductAdapterModel ->
             viewModel.onProductClicked(menuProductAdapterModel)
         }
