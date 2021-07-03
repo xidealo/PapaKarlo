@@ -9,6 +9,7 @@ import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor(

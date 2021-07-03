@@ -5,19 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
 import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
+import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class CartProductsAdapter @Inject constructor() :
-    BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProductAdapterModel, MyDiffCallback>() {
+    ListAdapter<CartProductAdapterModel, BaseViewHolder<ViewBinding, CartProductAdapterModel>>(
+        CartProductDiffCallback()
+    ) {
 
     var canBeChanged: Boolean = true
     lateinit var consumerCartViewModel: ConsumerCartViewModel
@@ -29,8 +37,23 @@ class CartProductsAdapter @Inject constructor() :
         return CartProductViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: CartProductViewHolder, i: Int) {
-        holder.onBind(itemList[i])
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, CartProductAdapterModel>,
+        position: Int
+    ) {
+        holder.onBind(getItem(position))
+    }
+
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, CartProductAdapterModel>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(getItem(position), payloads)
+        }
     }
 
     inner class CartProductViewHolder(view: View) :
@@ -78,8 +101,30 @@ class CartProductsAdapter @Inject constructor() :
 
         override fun onBind(item: CartProductAdapterModel, payloads: List<Any>) {
             super.onBind(item, payloads)
-            /*   val isSaved = payloads.last() as Boolean
-               binding.tbLike.setChecked(isSaved)*/
+            if (payloads.last() as Boolean) {
+                with(binding) {
+                    elementCartProductTvCost.text = item.discountCost
+                    elementCartProductTvOldCost.text = item.cost
+                    elementCartProductCpCount.count = item.count
+
+                    elementCartProductCpCount.countChangeListener =
+                        object : CountPicker.CountChangeListener {
+                            override fun onCountIncreased() {
+                                consumerCartViewModel.updateCartProduct(
+                                    item.uuid,
+                                    item.count + 1
+                                )
+                            }
+
+                            override fun onCountDecreased() {
+                                consumerCartViewModel.updateCartProduct(
+                                    item.uuid,
+                                    item.count - 1
+                                )
+                            }
+                        }
+                }
+            }
         }
     }
 }

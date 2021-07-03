@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
-import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -53,10 +53,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.fragmentProductsRvResult.visible()
                     viewDataBinding.activityMainPbLoading.gone()
 
-                    menuProductsAdapter.setItemList(
-                        state.data,
-                        MyDiffCallback(state.data, menuProductsAdapter.itemList)
-                    )
+                    menuProductsAdapter.submitList(state.data)
                     viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
                 }
                 is State.Empty -> {
@@ -64,8 +61,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                     viewDataBinding.fragmentProductsRvResult.gone()
                     viewDataBinding.activityMainPbLoading.gone()
                 }
-                is State.Error -> {
-                }
+                is State.Error -> Unit
             }
         }.launchWhenStarted(lifecycleScope)
     }

@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.presentation.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
-import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

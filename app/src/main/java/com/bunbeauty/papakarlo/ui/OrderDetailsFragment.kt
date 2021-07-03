@@ -17,7 +17,8 @@ import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -98,10 +99,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                             cartProductsAdapter
                         val mappedCartProducts =
                             viewModel.getCartProductModel(state.data!!.cartProducts)
-                        cartProductsAdapter.setItemList(
-                            mappedCartProducts,
-                            MyDiffCallback(mappedCartProducts, cartProductsAdapter.itemList)
-                        )
+                        cartProductsAdapter.submitList(mappedCartProducts)
 
                         if (state.data!!.orderEntity.deferredTime.isEmpty()) {
                             viewDataBinding.fragmentOrderDetailsTvDeferredTimeValue.gone()

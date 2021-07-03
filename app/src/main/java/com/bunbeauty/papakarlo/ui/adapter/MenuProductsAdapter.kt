@@ -1,23 +1,30 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.bunbeauty.common.State
+import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
+import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
 import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
-    BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProductAdapterModel, MyDiffCallback>() {
+    ListAdapter<MenuProductAdapterModel, BaseViewHolder<ViewBinding, MenuProductAdapterModel>>(
+        MenuProductDiffCallback()
+    ) {
 
+    var onItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
     var btnItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
@@ -27,20 +34,11 @@ class MenuProductsAdapter @Inject constructor() :
         return MenuProductViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
-        holder.onBind(itemList[i])
-    }
-
     override fun onBindViewHolder(
-        holder: MenuProductViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
+        holder: BaseViewHolder<ViewBinding, MenuProductAdapterModel>,
+        position: Int
     ) {
-        if (payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            holder.onBind(itemList[position], payloads)
-        }
+        holder.onBind(getItem(position))
     }
 
     inner class MenuProductViewHolder(view: View) :
@@ -50,7 +48,7 @@ class MenuProductsAdapter @Inject constructor() :
 
         override fun onBind(item: MenuProductAdapterModel) {
             super.onBind(item)
-            with(binding){
+            with(binding) {
                 elementMenuProductTvTitle.text = item.name
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost

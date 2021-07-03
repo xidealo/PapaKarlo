@@ -10,7 +10,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
-import com.bunbeauty.papakarlo.ui.adapter.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 

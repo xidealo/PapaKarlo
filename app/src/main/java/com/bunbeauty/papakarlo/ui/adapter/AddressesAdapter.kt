@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor(
