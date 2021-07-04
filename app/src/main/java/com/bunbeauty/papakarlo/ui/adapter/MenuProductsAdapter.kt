@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
+import android.graphics.Bitmap
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
@@ -50,14 +53,40 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost
 
-                Picasso.get()
-                    .load(item.photoLink)
+                if(item.photo == null){
+                    val target = object : Target {
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                            if (bitmap != null) {
+                                item.photo = bitmap
+                                elementMenuProductIvPhoto.setImageBitmap(bitmap)
+                            }
+                        }
+
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                            elementMenuProductIvPhoto.setImageDrawable(placeHolderDrawable)
+                        }
+                    }
+                    elementMenuProductIvPhoto.tag = target
+                    Picasso.get()
+                        .load(item.photoLink)
+                        .fit()
+                        .placeholder(R.drawable.default_product)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(target)
+                }else{
+                    elementMenuProductIvPhoto.setImageBitmap(item.photo)
+                }
+       /*         Picasso.get()
+                    .load()
                     .fit()
                     .placeholder(R.drawable.default_product)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .memoryPolicy(MemoryPolicy.NO_CACHE)
                     .into(elementMenuProductIvPhoto)
-
+*/
                 elementMenuProductTvCostOld.paintFlags =
                     elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
                 elementMenuProductMcvMain.setOnClickListener {
