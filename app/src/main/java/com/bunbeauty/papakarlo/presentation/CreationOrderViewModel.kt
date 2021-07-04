@@ -251,7 +251,6 @@ class CreationOrderViewModelImpl @Inject constructor(
                     } else {
                         spentBonusesString.toInt()
                     }
-                    user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     if (user.bonusList.sum() - spentBonuses < 0) {
                         errorSharedFlow.emit("Недостаточно бонусов")
                         return@launch
@@ -259,6 +258,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                         if (spentBonuses != 0)
                             user.bonusList.add(-spentBonuses)
                     }
+                    user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     order.orderEntity.bonus = spentBonuses
                     order.orderEntity.userId = user.userId
                     userRepo.insertToBonusList(user)

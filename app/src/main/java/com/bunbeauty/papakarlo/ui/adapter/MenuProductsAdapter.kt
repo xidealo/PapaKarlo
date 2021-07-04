@@ -17,6 +17,8 @@ import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import java.lang.ref.SoftReference
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
@@ -53,11 +55,11 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost
 
-                if(item.photo == null){
+                if(item.photo.get() == null){
                     val target = object : Target {
                         override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                             if (bitmap != null) {
-                                item.photo = bitmap
+                                item.photo = SoftReference(bitmap)
                                 elementMenuProductIvPhoto.setImageBitmap(bitmap)
                             }
                         }
@@ -71,22 +73,13 @@ class MenuProductsAdapter @Inject constructor() :
                     elementMenuProductIvPhoto.tag = target
                     Picasso.get()
                         .load(item.photoLink)
-                        .fit()
                         .placeholder(R.drawable.default_product)
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .into(target)
                 }else{
-                    elementMenuProductIvPhoto.setImageBitmap(item.photo)
+                    elementMenuProductIvPhoto.setImageBitmap(item.photo.get())
                 }
-       /*         Picasso.get()
-                    .load()
-                    .fit()
-                    .placeholder(R.drawable.default_product)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .into(elementMenuProductIvPhoto)
-*/
                 elementMenuProductTvCostOld.paintFlags =
                     elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
                 elementMenuProductMcvMain.setOnClickListener {

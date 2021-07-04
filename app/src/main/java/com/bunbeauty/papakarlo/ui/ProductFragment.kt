@@ -5,19 +5,15 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.ProductViewModel
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 class ProductFragment : BarsFragment<FragmentProductBinding>() {
 
@@ -48,6 +44,8 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
                             .load(state.data?.photoLink)
                             .fit()
                             .placeholder(R.drawable.default_product)
+                            .networkPolicy(NetworkPolicy.NO_CACHE)
+                            .memoryPolicy(MemoryPolicy.NO_CACHE)
                             .into(fragmentProductIvPhoto)
                     }
                 }
