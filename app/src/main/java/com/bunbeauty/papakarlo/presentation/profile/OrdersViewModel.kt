@@ -28,18 +28,29 @@ class OrdersViewModel @Inject constructor(
     val ordersState: StateFlow<State<List<OrderAdapterModel?>>>
         get() = _ordersState.asStateFlow()
 
-    fun getOrders() {
-        val userId = runBlocking { dataStoreRepo.userId.first() }
-        orderRepo.getOrdersWithCartProductsByUserId(userId)
-            .onEach { orderWithCartProducts ->
-                if (orderWithCartProducts.isEmpty())
-                    _ordersState.value = State.Empty()
-                else
-                    _ordersState.value =
-                        orderWithCartProducts.sortedByDescending { it.orderEntity.time }
-                            .map { orderAdapterMapper.from(it) }.toStateSuccess()
+    fun getOrders(userId: String) {
+        if (userId.isNotEmpty())
+            orderRepo.getOrdersWithCartProductsByUserId(userId)
+                .onEach { orderWithCartProducts ->
+                    if (orderWithCartProducts.isEmpty())
+                        _ordersState.value = State.Empty()
+                    else
+                        _ordersState.value =
+                            orderWithCartProducts.sortedByDescending { it.orderEntity.time }
+                                .map { orderAdapterMapper.from(it) }.toStateSuccess()
 
-            }.launchIn(viewModelScope)
+                }.launchIn(viewModelScope)
+        else
+            orderRepo.getOrdersWithCartProductsWithEmptyUserId()
+                .onEach { orderWithCartProducts ->
+                    if (orderWithCartProducts.isEmpty())
+                        _ordersState.value = State.Empty()
+                    else
+                        _ordersState.value =
+                            orderWithCartProducts.sortedByDescending { it.orderEntity.time }
+                                .map { orderAdapterMapper.from(it) }.toStateSuccess()
+
+                }.launchIn(viewModelScope)
     }
 
 

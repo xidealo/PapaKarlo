@@ -262,18 +262,29 @@
             android:text="@string/title_profile_no_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_profile_btn_no_profile_orders"
             app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
 
         <ImageView
             android:id="@+id/fragment_profile_iv_no_profile"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
+            android:layout_marginTop="@dimen/medium_margin"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_profile_girl"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_profile_btn_no_profile_orders"
+            style="@style/OutLineButton"
+            android:layout_width="0dp"
+            android:fontFamily="@font/font_roboto_regular"
+            android:text="@string/action_profile_orders"
+            app:layout_constraintBottom_toTopOf="@id/fragment_profile_btn_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_profile_btn_login"
@@ -289,6 +300,7 @@
             android:layout_height="0dp"
             android:visibility="gone"
             app:constraint_referenced_ids="
+            fragment_profile_btn_no_profile_orders,
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,
             fragment_profile_btn_login" />

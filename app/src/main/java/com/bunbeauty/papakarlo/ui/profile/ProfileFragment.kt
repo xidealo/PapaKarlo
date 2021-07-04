@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
+import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
@@ -46,7 +47,8 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.hasAddressState.onEach { state ->
@@ -70,20 +72,26 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     }
 
     private fun setOnClickListeners() {
-        viewDataBinding.fragmentProfileBtnOrderListPick.setOnClickListener {
-            viewModel.onOrderListClicked()
+        with(viewDataBinding) {
+            fragmentProfileBtnOrderListPick.setOnClickListener {
+                viewModel.onOrderListClicked(viewModel.getUserId())
+            }
+            fragmentProfileBtnNoProfileOrders.setOnClickListener {
+                viewModel.onOrderListClicked(viewModel.getUserId())
+            }
+            fragmentProfileBtnAddressPick.setOnClickListener {
+                viewModel.onAddressClicked()
+            }
+            fragmentProfileBtnCreateAddress.setOnClickListener {
+                viewModel.onCreateAddressClicked()
+            }
+            fragmentProfileBtnLogin.setOnClickListener {
+                viewModel.goToLogin()
+            }
+            fragmentProfileBtnSettings.setOnClickListener {
+                viewModel.goToSettings()
+            }
         }
-        viewDataBinding.fragmentProfileBtnAddressPick.setOnClickListener {
-            viewModel.onAddressClicked()
-        }
-        viewDataBinding.fragmentProfileBtnCreateAddress.setOnClickListener {
-            viewModel.onCreateAddressClicked()
-        }
-        viewDataBinding.fragmentProfileBtnLogin.setOnClickListener {
-            viewModel.goToLogin()
-        }
-        viewDataBinding.fragmentProfileBtnSettings.setOnClickListener {
-            viewModel.goToSettings()
-        }
+
     }
 }

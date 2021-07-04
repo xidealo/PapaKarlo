@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 abstract class ProfileViewModel : ToolbarViewModel() {
@@ -20,8 +21,9 @@ abstract class ProfileViewModel : ToolbarViewModel() {
     abstract val hasAddressState: StateFlow<State<Boolean>>
 
     abstract fun getUser()
+    abstract fun getUserId(): String
     abstract fun getAddress(userId: String)
-    abstract fun onOrderListClicked()
+    abstract fun onOrderListClicked(userId: String)
     abstract fun onAddressClicked()
     abstract fun onCreateAddressClicked()
     abstract fun goToLogin()
@@ -52,6 +54,8 @@ class ProfileViewModelImpl @Inject constructor(
         }
     }
 
+    override fun getUserId() = runBlocking { dataStoreRepo.userId.first() }
+
     override fun getAddress(userId: String) {
         viewModelScope.launch(Dispatchers.Default) {
             userAddressRepo.getUserAddressByUserId(userId).onEach {
@@ -60,8 +64,8 @@ class ProfileViewModelImpl @Inject constructor(
         }
     }
 
-    override fun onOrderListClicked() {
-        router.navigate(ProfileFragmentDirections.toOrdersFragment("a"))
+    override fun onOrderListClicked(userId: String) {
+        router.navigate(ProfileFragmentDirections.toOrdersFragment(userId))
     }
 
     override fun onAddressClicked() {

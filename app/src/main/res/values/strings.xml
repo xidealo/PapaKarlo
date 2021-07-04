@@ -158,7 +158,7 @@
     <string name="title_profile_address">Ваши адерса</string>
     <string name="title_profile_orders">Заказы</string>
     <string name="title_profile_bonuses">Бонусы</string>
-    <string name="title_profile_no_profile">В профиле будут отбражаться история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
+    <string name="title_profile_no_profile">В профиле будут отбражаться: история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
     <string name="action_profile_orders">Список заказов</string>
     <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_address_list">Список адресов</string>
