@@ -29,13 +29,8 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewDataBinding.fragmentOrdersRvResult.adapter = ordersAdapter
-        viewModel.orderWithCartProductsLiveData.onEach { orderWithCartProducts ->
-            val orderList = orderWithCartProducts.sortedByDescending { it.orderEntity.time }
-                .also { ordersList -> ordersList.map { it.uuid = it.orderEntity.uuid } }
-            ordersAdapter.setItemList(
-                orderList,
-                MyDiffCallback(orderList, ordersAdapter.itemList)
-            )
+        viewModel.orderWithCartProductsLiveData.onEach { orderList ->
+            ordersAdapter.submitList(orderList)
         }.launchWhenStarted(lifecycleScope)
         ordersAdapter.onItemClickListener = { order ->
             viewModel.onOrderClicked(order)

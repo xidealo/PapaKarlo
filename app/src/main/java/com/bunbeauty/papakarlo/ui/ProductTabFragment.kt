@@ -57,7 +57,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                         {
                             menuProductsAdapter.submitList(state.data)
                         },
-                        10
+                        1
                     )
 
                     viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)

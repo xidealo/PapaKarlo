@@ -28,4 +28,4 @@ data class Order(
     @Ignore
     override var uuid: String = "",
 
-    ) : BaseModel, Parcelable
+) : BaseModel, Parcelable
