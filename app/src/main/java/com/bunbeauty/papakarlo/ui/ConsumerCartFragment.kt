@@ -10,8 +10,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import javax.inject.Inject
 
 class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {

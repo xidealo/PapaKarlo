@@ -195,6 +195,9 @@
     <string name="action_logout_logout">Выйти</string>
     <string name="action_logout_cancel">Отмена</string>
 
+    <!-- ORDERS -->
+    <string name="msg_orders_empty">Нет заказов</string>
+
     <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
 
     <!-- TODO: Remove or change this placeholder text -->

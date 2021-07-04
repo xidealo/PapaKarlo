@@ -63,6 +63,9 @@ class OrderRepository @Inject constructor(
 
     override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
 
+    override fun getOrdersWithCartProductsByUserId(userId: String): Flow<List<Order>> {
+        return orderDao.getOrdersByUserId(userId)
+    }
     override fun getOrderWithCartProducts(orderUuid: String): Flow<Order?> {
         return orderDao.getOrderFlowByUuid(orderUuid)
     }

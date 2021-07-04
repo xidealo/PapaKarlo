@@ -17,8 +17,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

@@ -8,15 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
-import com.bunbeauty.domain.model.local.BaseModel
-import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso

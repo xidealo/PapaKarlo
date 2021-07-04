@@ -115,7 +115,6 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
     private val verificationCallbacks =
         object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                var t = 0
                 //verifyPhoneNumberCallback.returnCredential(credential)
             }
 

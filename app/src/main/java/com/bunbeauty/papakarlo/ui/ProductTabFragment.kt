@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
