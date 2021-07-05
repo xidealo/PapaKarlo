@@ -23,39 +23,39 @@ import dagger.Module
 import javax.inject.Singleton
 
 @Module
-abstract class ApiModule {
+interface ApiModule {
 
     //NETWORK
 
     @Binds
-    abstract fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
+    fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
 
     // DATA_STORE
 
     @Singleton
     @Binds
-    abstract fun bindDataStoreHelper(dataStoreRepository: DataStoreRepository): DataStoreRepo
+    fun bindDataStoreHelper(dataStoreRepository: DataStoreRepository): DataStoreRepo
 
     // HELPERS
 
     @Binds
-    abstract fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
+    fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
 
     @Binds
-    abstract fun bindUriHelper(uriHelper: UriHelper): IUriHelper
+    fun bindUriHelper(uriHelper: UriHelper): IUriHelper
 
     @Binds
-    abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
+    fun bindStringHelper(stringHelper: StringHelper): IStringHelper
 
     @Binds
-    abstract fun bindOrderUtil(orderUtil: OrderUtil): IOrderUtil
+    fun bindOrderUtil(orderUtil: OrderUtil): IOrderUtil
 
     @Binds
-    abstract fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
+    fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
 
     @Binds
-    abstract fun bindProductHelper(productHelper: ProductHelper): IProductHelper
+    fun bindProductHelper(productHelper: ProductHelper): IProductHelper
 
     @Binds
-    abstract fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
+    fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
 }

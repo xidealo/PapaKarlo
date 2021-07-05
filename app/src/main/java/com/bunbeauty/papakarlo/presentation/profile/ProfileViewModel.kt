@@ -8,6 +8,7 @@ import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
@@ -28,12 +29,14 @@ abstract class ProfileViewModel : ToolbarViewModel() {
     abstract fun onCreateAddressClicked()
     abstract fun goToLogin()
     abstract fun goToSettings()
+    abstract fun getBonuses(bonusList: MutableList<Int>): String
 }
 
 class ProfileViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
-    private val userRepo: UserRepo
+    private val userRepo: UserRepo,
+    private val iStringHelper: IStringHelper
 ) : ProfileViewModel() {
 
     init {
@@ -62,6 +65,10 @@ class ProfileViewModelImpl @Inject constructor(
                 hasAddressState.emit(it.isNotEmpty().toStateSuccess())
             }.launchIn(viewModelScope)
         }
+    }
+
+    override fun getBonuses(bonusList: MutableList<Int>): String {
+        return iStringHelper.getCostString(bonusList.sum())
     }
 
     override fun onOrderListClicked(userId: String) {

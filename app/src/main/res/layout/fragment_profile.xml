@@ -8,7 +8,7 @@
         tools:context=".ui.profile.ProfileFragment">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_contacts"
+            android:id="@+id/fragment_profile_mcv_bonuses"
             style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
@@ -20,60 +20,26 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/fragment_profile_tv_contact"
+                    android:id="@+id/fragment_profile_tv_bonuses"
                     style="@style/MainTitle"
-                    android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_profile_contact"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/title_profile_bonuses"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/fragment_profile_tv_phone"
+                    android:id="@+id/fragment_profile_tv_bonuses_value"
                     style="@style/MainText"
-                    android:layout_margin="@dimen/small_margin"
+                    android:layout_margin="@dimen/medium_margin"
                     android:drawablePadding="@dimen/large_padding"
-                    app:drawableLeftCompat="@drawable/ic_phone"
+                    android:textAlignment="textEnd"
                     app:drawableTint="@color/mainTextColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_contact"
-                    tools:text="8 (910) 000-00-00" />
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_email"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/small_margin"
-                    android:drawablePadding="@dimen/large_padding"
-                    app:drawableLeftCompat="@drawable/ic_email"
-                    app:drawableTint="@color/mainTextColor"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_phone"
-                    tools:text="@string/title_profile_email" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_profile_btn_settings"
-                    style="@style/OutLineButton"
-                    android:layout_width="0dp"
-                    android:fontFamily="@font/font_roboto_regular"
-                    android:text="@string/action_profile_settings"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_profile_tv_email" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_settings"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_settings"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_settings"
-                    app:tint="@color/colorPrimary" />
+                    app:layout_constraintStart_toEndOf="@+id/fragment_profile_tv_bonuses"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="0 ₽" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -84,7 +50,7 @@
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_contacts">
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_bonuses">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -93,21 +59,11 @@
                 <TextView
                     android:id="@+id/fragment_profile_tv_address"
                     style="@style/MainTitle"
-                    android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_profile_address"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="@dimen/medium_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_select_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_profile_btn_address_pick"
-                    style="@style/OutLineButton"
-                    android:layout_width="0dp"
-                    android:fontFamily="@font/font_roboto_regular"
-                    android:text="@string/action_profile_address_list"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_address" />
 
                 <ImageView
                     android:id="@+id/fragment_profile_iv_select_address"
@@ -116,28 +72,10 @@
                     android:layout_marginEnd="@dimen/medium_margin"
                     android:contentDescription="Description"
                     android:src="@drawable/ic_chevron_right_solid"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_address_pick"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_address_pick"
-                    app:tint="@color/colorPrimary" />
-
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/fragment_profile_group_has_address"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="fragment_profile_btn_address_pick, fragment_profile_iv_select_address" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_profile_btn_create_address"
-                    style="@style/OutLineButton"
-                    android:layout_width="0dp"
-                    android:text="@string/action_creation_address_address"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_profile_btn_address_pick" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/fragment_profile_iv_create_address"
@@ -147,16 +85,11 @@
                     android:contentDescription="Description"
                     android:src="@drawable/ic_add"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_create_address"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_create_address" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/mainTextColor" />
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/fragment_profile_group_no_address"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:visibility="gone"
-                    app:constraint_referenced_ids="fragment_profile_btn_create_address, fragment_profile_iv_create_address" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -176,22 +109,12 @@
                 <TextView
                     android:id="@+id/fragment_profile_tv_orders"
                     style="@style/MainTitle"
-                    android:layout_margin="@dimen/small_margin"
+                    android:layout_margin="@dimen/medium_margin"
                     android:text="@string/title_profile_orders"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_select_orders"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_profile_btn_order_list_pick"
-                    style="@style/OutLineButton"
-                    android:layout_width="0dp"
-                    android:fontFamily="@font/font_roboto_regular"
-                    android:text="@string/action_profile_orders"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_orders" />
 
                 <ImageView
                     android:id="@+id/fragment_profile_iv_select_orders"
@@ -200,48 +123,11 @@
                     android:layout_marginEnd="@dimen/medium_margin"
                     android:contentDescription="Description"
                     android:src="@drawable/ic_chevron_right_solid"
-                    app:layout_constraintBottom_toBottomOf="@+id/fragment_profile_btn_order_list_pick"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_profile_btn_order_list_pick"
-                    app:tint="@color/colorPrimary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_bonuses"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_orders">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_bonuses"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_profile_bonuses"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_bonuses_value"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/small_margin"
-                    android:drawablePadding="@dimen/large_padding"
-                    app:drawableLeftCompat="@drawable/ic_bonus"
-                    app:drawableTint="@color/mainTextColor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_bonuses"
-                    tools:text="0 ₽" />
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <androidx.constraintlayout.widget.Group
@@ -250,7 +136,6 @@
             android:layout_height="0dp"
             android:visibility="gone"
             app:constraint_referenced_ids="
-            fragment_profile_mcv_contacts,
             fragment_profile_mcv_address,
             fragment_profile_mcv_orders,
             fragment_profile_mcv_bonuses" />
@@ -262,29 +147,18 @@
             android:text="@string/title_profile_no_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_profile_btn_no_profile_orders"
             app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
 
         <ImageView
             android:id="@+id/fragment_profile_iv_no_profile"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
-            android:layout_marginTop="@dimen/medium_margin"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_profile_girl"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_profile_btn_no_profile_orders"
-            style="@style/OutLineButton"
-            android:layout_width="0dp"
-            android:fontFamily="@font/font_roboto_regular"
-            android:text="@string/action_profile_orders"
-            app:layout_constraintBottom_toTopOf="@id/fragment_profile_btn_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_profile_btn_login"
@@ -300,7 +174,6 @@
             android:layout_height="0dp"
             android:visibility="gone"
             app:constraint_referenced_ids="
-            fragment_profile_btn_no_profile_orders,
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,
             fragment_profile_btn_login" />

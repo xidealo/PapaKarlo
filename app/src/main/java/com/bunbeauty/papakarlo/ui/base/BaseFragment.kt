@@ -14,6 +14,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -32,6 +33,9 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var iResourcesProvider: IResourcesProvider
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

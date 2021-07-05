@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
@@ -15,6 +16,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 
@@ -25,6 +27,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.userState.onEach { state ->
@@ -39,27 +42,40 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     } else {
                         viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileTvPhone.text = state.data?.phone
-                        viewDataBinding.fragmentProfileTvEmail.text = state.data?.email
-                        viewDataBinding.fragmentProfileTvBonusesValue.text =
-                            state.data?.bonusList?.sum().toString()
+                        viewDataBinding.fragmentProfileTvBonusesValue.text = viewModel.getBonuses(
+                            state.data?.bonusList!!
+                        )
                         viewModel.getAddress(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
-                else -> {
-                }
+                else -> Unit
             }
         }.launchWhenStarted(lifecycleScope)
         viewModel.hasAddressState.onEach { state ->
             when (state) {
                 is State.Success -> {
                     if (state.data) {
-                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(true)
-                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(false)
+                        //has address
+                        with(viewDataBinding) {
+                            fragmentProfileMcvAddress.setOnClickListener {
+                                viewModel.onAddressClicked()
+                            }
+                            fragmentProfileTvAddress.text =
+                                iResourcesProvider.getString(R.string.title_profile_your_address)
+                            fragmentProfileIvCreateAddress.gone()
+                            fragmentProfileIvSelectAddress.visible()
+                        }
                     } else {
-                        viewDataBinding.fragmentProfileGroupHasAddress.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileGroupNoAddress.toggleVisibility(true)
+                        with(viewDataBinding) {
+                            fragmentProfileMcvAddress.setOnClickListener {
+                                viewModel.onCreateAddressClicked()
+                            }
+                            fragmentProfileTvAddress.text =
+                                iResourcesProvider.getString(R.string.title_profile_create_address)
+                            fragmentProfileIvCreateAddress.visible()
+                            fragmentProfileIvSelectAddress.gone()
+                        }
                     }
                 }
                 else -> {
@@ -73,24 +89,15 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 
     private fun setOnClickListeners() {
         with(viewDataBinding) {
-            fragmentProfileBtnOrderListPick.setOnClickListener {
+            fragmentProfileMcvOrders.setOnClickListener {
                 viewModel.onOrderListClicked(viewModel.getUserId())
-            }
-            fragmentProfileBtnNoProfileOrders.setOnClickListener {
-                viewModel.onOrderListClicked(viewModel.getUserId())
-            }
-            fragmentProfileBtnAddressPick.setOnClickListener {
-                viewModel.onAddressClicked()
-            }
-            fragmentProfileBtnCreateAddress.setOnClickListener {
-                viewModel.onCreateAddressClicked()
             }
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.goToLogin()
             }
-            fragmentProfileBtnSettings.setOnClickListener {
-                viewModel.goToSettings()
-            }
+            /*   fragmentProfileBtnSettings.setOnClickListener {
+                   viewModel.goToSettings()
+               }*/
         }
 
     }

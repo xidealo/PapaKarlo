@@ -24,34 +24,34 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class RepositoryModule {
+interface RepositoryModule {
     @Binds
-    abstract fun bindCartProductRepo(cartProductRepository: CartProductRepository): CartProductRepo
+    fun bindCartProductRepo(cartProductRepository: CartProductRepository): CartProductRepo
 
     @Binds
-    abstract fun bindOrderRepo(orderRepository: OrderRepository): OrderRepo
+    fun bindOrderRepo(orderRepository: OrderRepository): OrderRepo
 
     @Binds
-    abstract fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
+    fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
 
     @Binds
-    abstract fun bindCafeAddressRepo(cafeAddressRepository: CafeAddressRepository): CafeAddressRepo
+    fun bindCafeAddressRepo(cafeAddressRepository: CafeAddressRepository): CafeAddressRepo
 
     @Binds
-    abstract fun bindUserAddressRepo(userAddressRepository: UserAddressRepository): UserAddressRepo
+    fun bindUserAddressRepo(userAddressRepository: UserAddressRepository): UserAddressRepo
 
     @Binds
-    abstract fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
+    fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
 
     @Binds
-    abstract fun bindDistrictRepo(districtRepository: DistrictRepository): DistrictRepo
+    fun bindDistrictRepo(districtRepository: DistrictRepository): DistrictRepo
 
     @Binds
-    abstract fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+    fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
 
     @Binds
-    abstract fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
+    fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
 
     @Binds
-    abstract fun bindUserRepo(userRepository: UserRepository): UserRepo
+    fun bindUserRepo(userRepository: UserRepository): UserRepo
 }
