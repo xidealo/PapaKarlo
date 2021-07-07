@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,7 +13,7 @@
             <TextView
                 android:id="@+id/element_order_tv_code"
                 style="@style/LargeBoldCenterText"
-                android:layout_margin="@dimen/small_margin"
+                android:layout_margin="@dimen/medium_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

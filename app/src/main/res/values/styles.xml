@@ -26,7 +26,6 @@
     </style>
 
     <style name="ElementMaterialCard" parent="DefaultMaterialCard">
-        <item name="cardElevation">0dp</item>
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
         <item name="android:layout_marginBottom">@dimen/very_small_margin</item>
         <item name="android:layout_marginStart">@dimen/small_margin</item>

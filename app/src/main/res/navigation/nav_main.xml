@@ -145,6 +145,9 @@
         <action
             android:id="@+id/to_settings_fragment"
             app:destination="@id/settings_fragment" />
+        <action
+            android:id="@+id/to_order_derails_fragment"
+            app:destination="@id/order_derails_fragment" />
     </fragment>
     <fragment
         android:id="@+id/login_fragment"

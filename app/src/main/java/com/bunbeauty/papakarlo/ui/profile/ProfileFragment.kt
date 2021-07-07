@@ -28,7 +28,6 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
         viewModelComponent.inject(this)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.userState.onEach { state ->
             when (state) {
@@ -46,6 +45,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                             state.data?.bonusList!!
                         )
                         viewModel.getAddress(state.data?.userId ?: "")
+                        viewModel.getLastOrder(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
@@ -56,7 +56,6 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
             when (state) {
                 is State.Success -> {
                     if (state.data) {
-                        //has address
                         with(viewDataBinding) {
                             fragmentProfileMcvAddress.setOnClickListener {
                                 viewModel.onAddressClicked()
@@ -82,6 +81,30 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
             }
         }.launchWhenStarted(lifecycleScope)
+        viewModel.lastOrderState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    with(viewDataBinding) {
+                        with(fragmentProfileILastOrder) {
+                            elementOrderTvCode.text = state.data.code
+                            elementOrderTvDeferred.text = state.data.deferredTime
+                            elementOrderTvTime.text = state.data.time
+                            elementOrderChipStatus.text = state.data.orderStatus
+                            elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
+                            elementOrderMvcMain.visible()
+                            elementOrderMvcMain.setOnClickListener{
+                                viewModel.goToOrder(state.data.uuid)
+                            }
+                        }
+                    }
+                }
+                is State.Empty -> {
+                    viewDataBinding.fragmentProfileILastOrder.elementOrderMvcMain.gone()
+                }
+                else -> Unit
+            }
+        }.launchWhenStarted(lifecycleScope)
+
         setOnClickListeners()
 
         super.onViewCreated(view, savedInstanceState)
