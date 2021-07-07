@@ -92,7 +92,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                             elementOrderChipStatus.text = state.data.orderStatus
                             elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
                             elementOrderMvcMain.visible()
-                            elementOrderMvcMain.setOnClickListener{
+                            elementOrderMvcMain.setOnClickListener {
                                 viewModel.goToOrder(state.data.uuid)
                             }
                         }
@@ -118,9 +118,9 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.goToLogin()
             }
-            /*   fragmentProfileBtnSettings.setOnClickListener {
-                   viewModel.goToSettings()
-               }*/
+            fragmentProfileMcvSettings.setOnClickListener {
+                viewModel.goToSettings()
+            }
         }
 
     }
