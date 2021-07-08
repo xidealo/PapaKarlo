@@ -152,44 +152,35 @@
     <string name="action_order_details_no">Нет</string>
 
     <!-- PROFILE  -->
-    <string name="title_profile_contact">Контактная информация</string>
-    <string name="title_profile_value_email">Email</string>
-    <string name="title_profile_email">Электронная почта</string>
     <string name="title_profile_your_address">Ваши адерса</string>
     <string name="title_profile_create_address">Добавить адрес</string>
     <string name="title_profile_orders">История заказов</string>
     <string name="title_profile_bonuses">Бонусы</string>
+    <string name="title_profile_reviews">Мы всегда рады вашим отзывам</string>
     <string name="title_profile_no_profile">В профиле будут отбражаться: история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
-    <string name="action_profile_orders">Список заказов</string>
     <string name="action_profile_settings">Настройки</string>
-    <string name="action_profile_address_list">Список адресов</string>
     <string name="action_profile_login">Войти</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>
-    <string name="title_login_info">Введите номер вашего телефона и почту 😊</string>
+    <string name="title_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="title_login_phone">Телефон*</string>
     <string name="title_login_email">Email</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
 
     <!-- CONFIRM  -->
-    <string name="title_confirm_code">Код подтверждения</string>
     <string name="title_confirm_information">Введите код подтверждения ✉</string>
     <string name="title_confirm_prone_information">Код был отправлен на номер</string>
     <string name="msg_confirm_prone_resend">Получить повторно код можно через:</string>
-    <string name="action_confirm_resend">ПОЛУЧИТЬ КОД</string>
+    <string name="msg_confirm_prone_resend_code">Отправить код повторно</string>
 
     <!-- CAFE OPTIONS -->
     <string name="action_call">Позвонить</string>
     <string name="action_show_map">Показать на карте</string>
 
     <!-- SETTINGS -->
-    <string name="title_settings_phone">Номер телефона</string>
-    <string name="title_settings_email">Email</string>
-    <string name="action_settings_save">Сохранить</string>
-    <string name="action_settings_logout">Выйти</string>
-    <string name="action_settings_successfully_save">Изменения успешно сохранены</string>
+    <string name="title_settings_add_email">Добавить почту</string>
 
     <!-- LOGOUT -->
     <string name="title_logout_logout">Выйти из профиля?</string>
@@ -198,6 +189,11 @@
 
     <!-- ORDERS -->
     <string name="msg_orders_empty">Нет заказов</string>
+
+    <!-- CONTENT DESCRIPTIONS -->
+    <string name="description_vk">vk image</string>
+    <string name="description_inst">inst image</string>
+    <string name="description_google_play">google play image</string>
 
     <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
 

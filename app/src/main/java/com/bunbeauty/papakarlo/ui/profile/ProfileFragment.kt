@@ -121,6 +121,15 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
             fragmentProfileMcvSettings.setOnClickListener {
                 viewModel.goToSettings()
             }
+            fragmentProfileMcvVk.setOnClickListener {
+
+            }
+            fragmentProfileMcvInstagram.setOnClickListener {
+
+            }
+            fragmentProfileMcvGooglePlay.setOnClickListener {
+
+            }
         }
 
     }

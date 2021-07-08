@@ -4,73 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.LoginFragment">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_login_mcv_extra_info"
-            style="@style/DefaultMaterialCard"
+        <ImageView
+            android:id="@+id/fragment_login_iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_login"
+            android:layout_margin="@dimen/large_margin"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_tv_information"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_login_tv_information"
+            style="@style/MainText"
             android:layout_margin="@dimen/small_margin"
-            android:layout_marginTop="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/title_login_info"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_login_til_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_login_til_phone"
+            style="@style/MaterialInputLayout"
+            android:layout_margin="@dimen/small_margin"
+            android:hint="@string/title_login_phone"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_login_et_phone"
+                style="@style/MaterialInput"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/fragment_login_tv_phone_number"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_login_registration"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <!--  <com.google.android.material.textfield.TextInputLayout
+              android:id="@+id/fragment_login_til_email"
+              style="@style/MaterialInputLayout"
+              android:layout_margin="@dimen/small_margin"
+              android:hint="@string/title_login_email"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toBottomOf="@+id/fragment_login_til_phone">
 
-                <TextView
-                    android:id="@+id/fragment_login_tv_information"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/small_margin"
-                    android:text="@string/title_login_info"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_phone_number" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_login_til_phone"
-                    style="@style/MaterialInputLayout"
-                    android:layout_margin="@dimen/small_margin"
-                    android:hint="@string/title_login_phone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_login_et_phone"
-                        style="@style/MaterialInput"
-                        android:inputType="phone" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-              <!--  <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_login_til_email"
-                    style="@style/MaterialInputLayout"
-                    android:layout_margin="@dimen/small_margin"
-                    android:hint="@string/title_login_email"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_login_til_phone">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_login_et_email"
-                        style="@style/MaterialInput"
-                        android:inputType="textEmailAddress" />
-                </com.google.android.material.textfield.TextInputLayout>-->
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+              <com.google.android.material.textfield.TextInputEditText
+                  android:id="@+id/fragment_login_et_email"
+                  style="@style/MaterialInput"
+                  android:inputType="textEmailAddress" />
+          </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_login_btn_login"

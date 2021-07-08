@@ -24,7 +24,7 @@ class SettingsViewModelImpl @Inject constructor(
     override fun updateUser(user: User) {
         viewModelScope.launch(Dispatchers.Default) {
             userRepo.update(user)
-            messageSharedFlow.emit(resourcesProvider.getString(R.string.action_settings_successfully_save))
+            //messageSharedFlow.emit(resourcesProvider.getString(R.string.action_settings_successfully_save))
         }
     }
 

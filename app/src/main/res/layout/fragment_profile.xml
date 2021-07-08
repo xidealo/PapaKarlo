@@ -175,11 +175,115 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_orders" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_profile_mcv_review"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fragment_profile_tv_review"
+                    style="@style/MainText"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/title_profile_reviews"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_profile_mcv_vk"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:elevation="0dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/large_radius"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_profile_tv_review"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/description_vk"
+                            android:src="@drawable/ic_vk" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_profile_mcv_instagram"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:elevation="0dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/large_radius"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_vk"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/fragment_profile_iv_instagram"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_margin"
+                            android:contentDescription="@string/description_inst"
+                            android:src="@drawable/ic_inst" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_profile_mcv_google_play"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="@dimen/small_margin"
+                    android:elevation="0dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/large_radius"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_instagram"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/fragment_profile_iv_google_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_margin"
+                            android:background="@color/colorPrimary"
+                            android:contentDescription="@string/description_google_play"
+                            android:src="@drawable/ic_google_play" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:constraint_referenced_ids="
             fragment_profile_mcv_address,
             fragment_profile_i_last_order,

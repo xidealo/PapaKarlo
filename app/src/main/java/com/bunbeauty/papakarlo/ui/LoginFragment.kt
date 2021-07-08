@@ -39,7 +39,6 @@ class LoginFragment : BarsFragment<FragmentLoginBinding>() {
                 return@setOnClickListener
             }
 
-
             viewModel.goToConfirm(
                 viewDataBinding.fragmentLoginEtPhone.text.toString(),
                 ""

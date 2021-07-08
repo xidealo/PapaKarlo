@@ -1,19 +1,20 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.invisible
-import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.invisible
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.ConfirmViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.ui.ConfirmFragmentArgs.fromBundle
+import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
@@ -41,54 +42,59 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.timerStringState.onEach {
-            viewDataBinding.fragmentConfirmTvResend.text = it
-        }.launchWhenStarted(lifecycleScope)
-        viewModel.isFinishedTimerState.onEach { isFinished ->
-            if (isFinished) {
-                viewDataBinding.fragmentConfirmTvResend.gone()
-                viewDataBinding.fragmentConfirmBtnResend.visible()
-                viewDataBinding.fragmentConfirmIvResend.visible()
-            } else {
-                viewDataBinding.fragmentConfirmTvResend.visible()
-                viewDataBinding.fragmentConfirmBtnResend.gone()
-                viewDataBinding.fragmentConfirmIvResend.gone()
-            }
-        }.launchWhenStarted(lifecycleScope)
-        viewModel.startResendTimer()
+        with(viewModel) {
+            timerStringState.onEach {
+                viewDataBinding.fragmentConfirmTvResend.text = it
+            }.launchWhenStarted(lifecycleScope)
+            isFinishedTimerState.onEach { isFinished ->
+                if (isFinished) {
+                    viewDataBinding.fragmentConfirmTvResend.gone()
+                    viewDataBinding.fragmentConfirmTvResendCode.visible()
+                    viewDataBinding.fragmentConfirmTvResendCode.paintFlags =
+                        viewDataBinding.fragmentConfirmTvResendCode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        viewDataBinding.fragmentConfirmBtnResend.setOnClickListener {
-            viewModel.startResendTimer()
-            resendVerificationCode(viewModel.getPhoneNumberDigits(fromBundle(requireArguments()).phone))
+                } else {
+                    viewDataBinding.fragmentConfirmTvResend.visible()
+                    viewDataBinding.fragmentConfirmTvResendCode.gone()
+                }
+            }.launchWhenStarted(lifecycleScope)
+            startResendTimer()
         }
 
-        viewDataBinding.fragmentConfirmTvPhoneInformation.text =
-            "${viewDataBinding.fragmentConfirmTvPhoneInformation.text} ${
-                fromBundle(requireArguments()).phone
-            }"
-        viewDataBinding.fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
-            showLoading()
-            phoneVerificationId?.apply {
-                val credential =
-                    PhoneAuthProvider.getCredential(phoneVerificationId!!, code.toString())
-                val firebase = FirebaseAuth.getInstance()
-                firebase.signInWithCredential(credential)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val userId = firebase.currentUser?.uid
-                            viewModel.createUser(
-                                userId ?: "",
-                                fromBundle(requireArguments()).phone,
-                                fromBundle(requireArguments()).email
-                            )
-                        } else {
-                            if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                                hideLoading()
+        with(viewDataBinding) {
+            fragmentConfirmTvResendCode.setOnClickListener {
+                viewModel.startResendTimer()
+                resendVerificationCode(viewModel.getPhoneNumberDigits(fromBundle(requireArguments()).phone))
+            }
+            fragmentConfirmTvPhoneInformation.text =
+                "${viewDataBinding.fragmentConfirmTvPhoneInformation.text}\n${
+                    fromBundle(requireArguments()).phone
+                }"
+            fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
+                showLoading()
+                phoneVerificationId?.apply {
+                    val credential =
+                        PhoneAuthProvider.getCredential(phoneVerificationId!!, code.toString())
+                    val firebase = FirebaseAuth.getInstance()
+                    firebase.signInWithCredential(credential)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val userId = firebase.currentUser?.uid
+                                viewModel.createUser(
+                                    userId ?: "",
+                                    fromBundle(requireArguments()).phone,
+                                    fromBundle(requireArguments()).email
+                                )
+                            } else {
+                                if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                                    hideLoading()
+                                }
                             }
                         }
-                    }
+                }
             }
         }
+
         super.onViewCreated(view, savedInstanceState)
     }
 
