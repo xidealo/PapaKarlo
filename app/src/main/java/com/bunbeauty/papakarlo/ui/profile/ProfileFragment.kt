@@ -1,22 +1,23 @@
 package com.bunbeauty.papakarlo.ui.profile
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bunbeauty.common.Constants
 import com.bunbeauty.common.State
-import com.bunbeauty.domain.model.local.user.User
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
+
 
 class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
 
@@ -122,13 +123,23 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 viewModel.goToSettings()
             }
             fragmentProfileMcvVk.setOnClickListener {
-
+                val browserIntent =
+                    Intent(Intent.ACTION_VIEW, Uri.parse(Constants.VK_LINK))
+                startActivity(browserIntent)
             }
             fragmentProfileMcvInstagram.setOnClickListener {
-
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.INSTAGRAM_LINK)
+                )
+                startActivity(browserIntent)
             }
             fragmentProfileMcvGooglePlay.setOnClickListener {
-
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.GOOGLE_PLAY_LINK)
+                )
+                startActivity(browserIntent)
             }
         }
 

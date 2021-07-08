@@ -283,13 +283,15 @@
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="0dp"
             app:constraint_referenced_ids="
             fragment_profile_mcv_address,
             fragment_profile_i_last_order,
             fragment_profile_mcv_settings,
             fragment_profile_mcv_orders,
-            fragment_profile_mcv_bonuses" />
+            fragment_profile_mcv_bonuses,
+            fragment_profile_mcv_review" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_no_profile"

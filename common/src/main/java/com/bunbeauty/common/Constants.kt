@@ -13,4 +13,8 @@ object Constants {
     const val BONUSES_PERCENT: Double = 0.1
     const val COMMON_WORKER_TAG = "common worker tag"
 
+    const val VK_LINK = "https://vk.com/papakarlokimry"
+    const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
+    const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
+
 }
