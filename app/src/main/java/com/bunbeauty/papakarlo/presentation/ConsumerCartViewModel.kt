@@ -32,6 +32,12 @@ class ConsumerCartViewModel @Inject constructor(
     private val cartProductAdapterMapper: CartProductAdapterMapper
 ) : ToolbarViewModel() {
 
+    val getCartProductModelFlowList by lazy {
+        cartProductListFlow.map { productList ->
+            productList.map { cartProductAdapterMapper.from(it) }
+        }
+    }
+
     val deliveryStringFlow by lazy {
         dataStoreRepo.delivery.flatMapLatest { delivery ->
             cartProductRepo.getCartProductListFlow().map { productList ->
@@ -65,9 +71,6 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-    fun getCartProductModel(cartProductList: List<CartProduct>): List<CartProductAdapterModel> {
-        return cartProductList.map { cartProductAdapterMapper.from(it) }
-    }
 
     fun onMenuClicked() {
         router.navigate(ConsumerCartFragmentDirections.backToMenuFragment())

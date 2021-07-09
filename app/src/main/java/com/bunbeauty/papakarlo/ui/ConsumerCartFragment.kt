@@ -31,8 +31,8 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
         super.onViewCreated(view, savedInstanceState)
         cartProductsAdapter.consumerCartViewModel = viewModel
         with(viewModel) {
-            cartProductListFlow.onEach { cartProductList ->
-                if (cartProductList.isEmpty()) {
+            getCartProductModelFlowList.onEach { cartProductModelList ->
+                if (cartProductModelList.isEmpty()) {
                     viewDataBinding.fragmentConsumerCartGroupEmptyCart.toggleVisibility(true)
                     viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(false)
                 } else {
@@ -40,7 +40,7 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
                     viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(
                         true
                     )
-                    cartProductsAdapter.submitList(viewModel.getCartProductModel(cartProductList))
+                    cartProductsAdapter.submitList(cartProductModelList)
                 }
                 viewDataBinding.fragmentConsumerCartPbLoading.gone()
             }.launchWhenStarted(lifecycleScope)
