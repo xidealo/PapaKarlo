@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import kotlinx.coroutines.flow.onEach
 
 abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
 
@@ -24,8 +26,8 @@ abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
             isToolbarLogoVisible,
             isToolbarCartProductVisible
         )
-        subscribe(viewModel.cartLiveData) { cartText ->
+        viewModel.cartFlow.onEach { cartText ->
             (activity as? IToolbar)?.setCartText(cartText)
-        }
+        }.launchWhenStarted(lifecycleScope)
     }
 }

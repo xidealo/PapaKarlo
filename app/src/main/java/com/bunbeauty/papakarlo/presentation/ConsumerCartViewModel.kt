@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
 import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
 import com.bunbeauty.domain.repo.DataStoreRepo
@@ -16,6 +17,10 @@ import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -25,13 +30,11 @@ class ConsumerCartViewModel @Inject constructor(
     private val stringHelper: IStringHelper,
     private val resourcesProvider: IResourcesProvider,
     private val cartProductAdapterMapper: CartProductAdapterMapper
-) : ToolbarViewModel(), CoroutineScope {
+) : ToolbarViewModel() {
 
-    override val coroutineContext: CoroutineContext = Job()
-
-    val deliveryStringLiveData by lazy {
-        switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
+    val deliveryStringFlow by lazy {
+        dataStoreRepo.delivery.flatMapLatest { delivery ->
+            cartProductRepo.getCartProductListFlow().map { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree
@@ -50,14 +53,12 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun updateCartProduct(cartProductUuid: String, count: Int) {
-        if (count > 0) {
-            launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (count > 0) {
                 cartProductRepo.update(
                     cartProductRepo.getCartProduct(cartProductUuid).also { it?.count = count }
                         ?: return@launch)
-            }
-        } else {
-            launch(Dispatchers.IO) {
+            } else {
                 val cartProduct = cartProductRepo.getCartProduct(cartProductUuid) ?: return@launch
                 cartProductRepo.delete(cartProduct)
             }

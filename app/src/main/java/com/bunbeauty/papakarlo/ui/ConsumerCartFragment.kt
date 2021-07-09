@@ -3,13 +3,16 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
 import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
@@ -26,28 +29,34 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        subscribe(viewModel.cartProductListLiveData) { cartProductList ->
-            cartProductsAdapter.submitList(viewModel.getCartProductModel(cartProductList))
-        }
-        subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
-            viewDataBinding.fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-        }
-        subscribe(viewModel.isCartEmptyLiveData) { isCartEmpty ->
-            viewDataBinding.fragmentConsumerCartGroupEmptyCart.toggleVisibility(isCartEmpty)
-            viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(!isCartEmpty)
-        }
-        setupRecyclerView()
-        viewDataBinding.fragmentConsumerCartBtnMenu.setOnClickListener {
-            viewModel.onMenuClicked()
-        }
-        viewDataBinding.fragmentConsumerCartBtnCrateOrder.setOnClickListener {
-            viewModel.onCreateOrderClicked()
-        }
-    }
-
-    private fun setupRecyclerView() {
         cartProductsAdapter.consumerCartViewModel = viewModel
-        viewDataBinding.fragmentConsumerCartRvResult.adapter = cartProductsAdapter
-    }
+        with(viewModel) {
+            cartProductListFlow.onEach { cartProductList ->
+                if (cartProductList.isEmpty()) {
+                    viewDataBinding.fragmentConsumerCartGroupEmptyCart.toggleVisibility(true)
+                    viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(false)
+                } else {
+                    viewDataBinding.fragmentConsumerCartGroupEmptyCart.toggleVisibility(false)
+                    viewDataBinding.fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(
+                        true
+                    )
+                    cartProductsAdapter.submitList(viewModel.getCartProductModel(cartProductList))
+                }
+                viewDataBinding.fragmentConsumerCartPbLoading.gone()
+            }.launchWhenStarted(lifecycleScope)
 
+            deliveryStringFlow.onEach { deliveryString ->
+                viewDataBinding.fragmentConsumerCartTvDeliveryInfo.text = deliveryString
+            }.launchWhenStarted(lifecycleScope)
+        }
+        with(viewDataBinding) {
+            fragmentConsumerCartRvResult.adapter = cartProductsAdapter
+            fragmentConsumerCartBtnMenu.setOnClickListener {
+                viewModel.onMenuClicked()
+            }
+            fragmentConsumerCartBtnCrateOrder.setOnClickListener {
+                viewModel.onCreateOrderClicked()
+            }
+        }
+    }
 }

@@ -44,7 +44,7 @@
                     android:adjustViewBounds="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_product_gl_inner_left"
@@ -64,7 +64,7 @@
                     android:id="@+id/fragment_product_tv_title"
                     style="@style/TitleFragmentProduct"
                     android:layout_marginTop="@dimen/medium_margin"
-                    app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_tv_weight"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
                     app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
 
@@ -85,38 +85,38 @@
                 <TextView
                     android:id="@+id/fragment_product_tv_weight"
                     style="@style/GramFragmentProduct"
-                    android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />
-
-                <ImageView
-                    android:id="@+id/element_menu_product_iv_on_fire"
-                    style="@style/Icon"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:src="@drawable/ic_on_fire"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toStartOf="@+id/element_menu_product_iv_in_oven"
-                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_gl_inner_right"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_product_iv_photo" />
 
-                <ImageView
-                    android:id="@+id/element_menu_product_iv_in_oven"
-                    style="@style/Icon"
-                    android:visibility="invisible"
-                    android:src="@drawable/ic_in_oven"
-                    app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight"
-                    app:layout_constraintTop_toTopOf="@+id/element_menu_product_iv_on_fire" />
+                <!--           <ImageView
+                               android:id="@+id/element_menu_product_iv_on_fire"
+                               style="@style/Icon"
+                               android:layout_marginTop="@dimen/medium_margin"
+                               android:src="@drawable/ic_on_fire"
+                               android:visibility="invisible"
+                               app:layout_constraintEnd_toStartOf="@+id/element_menu_product_iv_in_oven"
+                               app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
+                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
 
+                           <ImageView
+                               android:id="@+id/element_menu_product_iv_in_oven"
+                               style="@style/Icon"
+                               android:visibility="invisible"
+                               android:src="@drawable/ic_in_oven"
+                               app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
+                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight"
+                               app:layout_constraintTop_toTopOf="@+id/element_menu_product_iv_on_fire" />
+           -->
                 <TextView
                     android:id="@+id/fragment_product_tv_description"
                     style="@style/MainText"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:layout_marginBottom="@dimen/medium_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginBottom="@dimen/small_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_old_cost" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

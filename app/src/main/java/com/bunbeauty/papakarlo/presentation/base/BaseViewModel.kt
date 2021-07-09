@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,11 +36,8 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     val messageSharedFlow = MutableSharedFlow<String>()
     val errorSharedFlow = MutableSharedFlow<String>()
 
-    val isCartEmptyLiveData = MutableLiveData(false)
-
-    val cartProductListLiveData by lazy {
-        map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
-            isCartEmptyLiveData.value = productList.isEmpty()
+    val cartProductListFlow by lazy {
+        cartProductRepo.getCartProductListFlow().map { productList ->
             productList.sortedBy { it.menuProduct.name }
         }
     }

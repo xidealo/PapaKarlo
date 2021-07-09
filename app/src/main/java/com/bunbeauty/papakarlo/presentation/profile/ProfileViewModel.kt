@@ -5,9 +5,7 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.data.mapper.adapter.OrderAdapterMapper
-import com.bunbeauty.data.mapper.firebase.OrderMapper
 import com.bunbeauty.domain.model.adapter.OrderAdapterModel
-import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
@@ -27,16 +25,12 @@ abstract class ProfileViewModel : ToolbarViewModel() {
     abstract val hasAddressState: StateFlow<State<Boolean>>
     abstract val lastOrderState: StateFlow<State<OrderAdapterModel>>
 
-    abstract fun getUser()
-    abstract fun getUserId(): String
-    abstract fun getAddress(userId: String)
-    abstract fun getLastOrder(userId: String)
-    abstract fun onOrderListClicked(userId: String)
+    abstract fun getBonusesString(bonusList: MutableList<Int>): String
+    abstract fun onOrderListClicked()
     abstract fun onAddressClicked()
     abstract fun onCreateAddressClicked()
     abstract fun goToLogin()
     abstract fun goToSettings()
-    abstract fun getBonuses(bonusList: MutableList<Int>): String
     abstract fun goToOrder(orderUuid: String)
 }
 
@@ -50,7 +44,9 @@ class ProfileViewModelImpl @Inject constructor(
 ) : ProfileViewModel() {
 
     init {
-        getUser()
+        getUser(getUserId())
+        getAddress(getUserId())
+        getLastOrder(getUserId())
     }
 
     override val userState: MutableStateFlow<State<User?>> =
@@ -62,23 +58,23 @@ class ProfileViewModelImpl @Inject constructor(
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
 
-    override fun getUser() {
+    private fun getUser(userId: String) {
         viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(dataStoreRepo.userId.first()).onEach {
+            userRepo.getUserWithBonuses(userId).onEach {
                 userState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
     }
 
-    override fun getUserId() = runBlocking { dataStoreRepo.userId.first() }
+    private fun getUserId() = runBlocking { dataStoreRepo.userId.first() }
 
-    override fun getAddress(userId: String) {
+    private fun getAddress(userId: String) {
         userAddressRepo.getUserAddressByUserId(userId).onEach {
             hasAddressState.emit(it.isNotEmpty().toStateSuccess())
         }.launchIn(viewModelScope)
     }
 
-    override fun getLastOrder(userId: String) {
+    private fun getLastOrder(userId: String) {
         orderRepo.getOrdersWithCartProductsByUserId(userId).onEach { orderList ->
             if (orderList.isNotEmpty()) {
                 lastOrderState.value =
@@ -88,12 +84,12 @@ class ProfileViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override fun getBonuses(bonusList: MutableList<Int>): String {
+    override fun getBonusesString(bonusList: MutableList<Int>): String {
         return iStringHelper.getCostString(bonusList.sum())
     }
 
-    override fun onOrderListClicked(userId: String) {
-        router.navigate(ProfileFragmentDirections.toOrdersFragment(userId))
+    override fun onOrderListClicked() {
+        router.navigate(ProfileFragmentDirections.toOrdersFragment(getUserId()))
     }
 
     override fun onAddressClicked() {

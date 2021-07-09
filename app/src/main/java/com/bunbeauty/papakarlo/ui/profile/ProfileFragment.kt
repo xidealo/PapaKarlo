@@ -42,11 +42,9 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     } else {
                         viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileTvBonusesValue.text = viewModel.getBonuses(
+                        viewDataBinding.fragmentProfileTvBonusesValue.text = viewModel.getBonusesString(
                             state.data?.bonusList!!
                         )
-                        viewModel.getAddress(state.data?.userId ?: "")
-                        viewModel.getLastOrder(state.data?.userId ?: "")
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
@@ -92,7 +90,6 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                             elementOrderTvTime.text = state.data.time
                             elementOrderChipStatus.text = state.data.orderStatus
                             elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
-                            elementOrderMvcMain.visible()
                             elementOrderMvcMain.setOnClickListener {
                                 viewModel.goToOrder(state.data.uuid)
                             }
@@ -114,7 +111,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
     private fun setOnClickListeners() {
         with(viewDataBinding) {
             fragmentProfileMcvOrders.setOnClickListener {
-                viewModel.onOrderListClicked(viewModel.getUserId())
+                viewModel.onOrderListClicked()
             }
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.goToLogin()
