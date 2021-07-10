@@ -88,13 +88,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingsViewModelImpl::class)
-    internal abstract fun provideSettingsViewModel(settingsViewModelImpl: SettingsViewModelImpl): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(LogoutViewModel::class)
-    internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
+    @ViewModelKey(SettingsViewModel::class)
+    internal abstract fun provideSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
 
     @Binds
     @IntoMap

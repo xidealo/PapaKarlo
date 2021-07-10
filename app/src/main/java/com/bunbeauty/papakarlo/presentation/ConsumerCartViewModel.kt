@@ -71,7 +71,6 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-
     fun onMenuClicked() {
         router.navigate(ConsumerCartFragmentDirections.backToMenuFragment())
     }

@@ -180,7 +180,9 @@
     <string name="action_show_map">Показать на карте</string>
 
     <!-- SETTINGS -->
-    <string name="title_settings_add_email">Добавить почту</string>
+    <string name="title_settings_add_email">Добавление почты</string>
+    <string name="title_settings_change_email">Редактирование почты</string>
+    <string name="action_settings_save">Сохранить</string>
 
     <!-- LOGOUT -->
     <string name="title_logout_logout">Выйти из профиля?</string>

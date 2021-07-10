@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.ui.profile
 
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
@@ -46,19 +44,13 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
     }
 
     private fun setOnClickListeners() {
-        /*       viewDataBinding.fragmentSettingsBtnSaveAddress.setOnClickListener {
-                   val user = SettingsFragmentArgs.fromBundle(requireArguments()).user
-                   if (viewDataBinding.fragmentSettingsEtEmail.text.toString() != user.email) {
-                       user.email = viewDataBinding.fragmentSettingsEtEmail.text.toString()
-                       viewModel.updateUser(user)
-                   }
-                   val inputMethodManager =
-                       requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                   inputMethodManager.hideSoftInputFromWindow(
-                       requireActivity().currentFocus?.windowToken,
-                       0
-                   )
-               }*/
+        viewDataBinding.fragmentSettingsMcvEmail.setOnClickListener {
+            viewModel.gotoChangeEmail(
+                SettingsFragmentArgs.fromBundle(
+                    requireArguments()
+                ).user.email
+            )
+        }
         viewDataBinding.fragmentSettingsMcvPhone.setOnClickListener {
             viewModel.logout()
         }
