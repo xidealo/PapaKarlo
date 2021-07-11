@@ -49,7 +49,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 }
                 else -> { }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         viewModel.selectedAddressTextState.onEach { state ->
             when (state) {
@@ -59,7 +59,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 else -> {
                 }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.getAddress()
 
         viewModel.userState.onEach { state ->
@@ -88,12 +88,12 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 }
                 else -> { }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.getUser()
 
         viewModel.deferredTextStateFlow.onEach { deferredText ->
             viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.subscribeOnDeferredText()
 
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
@@ -102,7 +102,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
 
         viewModel.orderStringStateFlow.onEach { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.subscribeOnOrderString()
 
         viewModel.isDeliveryState.onEach { isDelivery ->
@@ -114,7 +114,7 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
             }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
         viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)

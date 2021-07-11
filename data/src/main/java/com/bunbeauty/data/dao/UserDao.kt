@@ -10,4 +10,7 @@ interface UserDao : BaseDao<User> {
 
     @Query("SELECT * FROM User WHERE userId = :userId")
     fun getUserFlow(userId: String): Flow<User?>
+
+    @Query("SELECT * FROM User WHERE userId = :userId")
+    fun getUser(userId: String): User?
 }

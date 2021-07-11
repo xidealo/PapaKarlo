@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
+import android.text.InputType
 import android.text.method.DigitsKeyListener
 import android.text.method.KeyListener
 import android.text.method.PasswordTransformationMethod
@@ -29,7 +30,6 @@ class OneLineActionBottomSheet : BaseBottomSheetDialog<BottomSheetOneLineActionB
                 OneLineActionBottomSheetArgs.fromBundle(requireArguments()).oneLineActionModel.title
             bottomSheetOneLineActionBtnSave.text =
                 OneLineActionBottomSheetArgs.fromBundle(requireArguments()).oneLineActionModel.buttonText
-
             bottomSheetOneLineActionEtData.setText(
                 OneLineActionBottomSheetArgs.fromBundle(
                     requireArguments()
@@ -38,14 +38,41 @@ class OneLineActionBottomSheet : BaseBottomSheetDialog<BottomSheetOneLineActionB
 
             when (OneLineActionBottomSheetArgs.fromBundle(requireArguments()).oneLineActionModel.type) {
                 OneLineActionType.EMAIL -> {
-
+                    bottomSheetOneLineActionEtData.inputType =
+                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 }
                 OneLineActionType.BONUSES -> {
-                    bottomSheetOneLineActionEtData.keyListener = DigitsKeyListener.getInstance("0123456789")
+                    bottomSheetOneLineActionEtData.keyListener =
+                        DigitsKeyListener.getInstance("0123456789")
                 }
-                OneLineActionType.COMMENT -> { }
+                OneLineActionType.COMMENT -> {
+                }
             }
 
+            bottomSheetOneLineActionBtnSave.setOnClickListener {
+                when (OneLineActionBottomSheetArgs.fromBundle(requireArguments()).oneLineActionModel.type) {
+                    OneLineActionType.EMAIL -> {
+                        if (bottomSheetOneLineActionEtData.text.toString().isEmpty()) {
+                            bottomSheetOneLineActionEtData.error =
+                                resources.getString(R.string.error_one_line_action_email)
+                            bottomSheetOneLineActionEtData.requestFocus()
+                            return@setOnClickListener
+                        }
+                        viewModel.updateEmail(
+                            OneLineActionBottomSheetArgs.fromBundle(
+                                requireArguments()
+                            ).oneLineActionModel.data,
+                            bottomSheetOneLineActionEtData.text.toString()
+                        )
+                    }
+                    OneLineActionType.BONUSES -> {
+
+                    }
+                    OneLineActionType.COMMENT -> {
+
+                    }
+                }
+            }
         }
     }
 

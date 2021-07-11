@@ -41,7 +41,7 @@ class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
 
         viewModel.cafeListFlow.onEach { cafeList ->
             cafeAdapter.submitList(cafeList)
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         viewDataBinding.fragmentCafeListBtnCardNumber.setOnClickListener {
             copyToBuffer("card number", requireContext().getString(R.string.pay_data_card_number))

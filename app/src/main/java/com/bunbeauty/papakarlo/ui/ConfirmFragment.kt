@@ -45,7 +45,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
         with(viewModel) {
             timerStringState.onEach {
                 viewDataBinding.fragmentConfirmTvResend.text = it
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
             isFinishedTimerState.onEach { isFinished ->
                 if (isFinished) {
                     viewDataBinding.fragmentConfirmTvResend.gone()
@@ -57,7 +57,7 @@ class ConfirmFragment : BarsFragment<FragmentConfirmBinding>() {
                     viewDataBinding.fragmentConfirmTvResend.visible()
                     viewDataBinding.fragmentConfirmTvResendCode.gone()
                 }
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
             startResendTimer()
         }
 

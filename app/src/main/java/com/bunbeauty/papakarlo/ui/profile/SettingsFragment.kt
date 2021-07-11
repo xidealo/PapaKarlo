@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.profile
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -10,6 +11,7 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.SettingsViewModel
 import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import kotlinx.coroutines.flow.onEach
 
 class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
 
@@ -22,34 +24,35 @@ class SettingsFragment : BarsFragment<FragmentSettingsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setOnClickListeners()
-        viewDataBinding.fragmentSettingsTvPhoneValue.text =
-            SettingsFragmentArgs.fromBundle(requireArguments()).user.phone
 
-        if (SettingsFragmentArgs.fromBundle(
-                requireArguments()
-            ).user.email.isEmpty()
-        ) {
-            viewDataBinding.fragmentSettingsTvEmail.text =
-                iResourcesProvider.getString(R.string.title_settings_add_email)
-            viewDataBinding.fragmentSettingsIvAddEmail.visible()
-            viewDataBinding.fragmentSettingsIvEditEmail.gone()
-        } else {
-            viewDataBinding.fragmentSettingsTvEmail.text = SettingsFragmentArgs.fromBundle(
-                requireArguments()
-            ).user.email
-            viewDataBinding.fragmentSettingsIvAddEmail.gone()
-            viewDataBinding.fragmentSettingsIvEditEmail.visible()
-        }
+        viewModel.getUser(SettingsFragmentArgs.fromBundle(requireArguments()).userId)
+        viewModel.userState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    with(viewDataBinding){
+                        fragmentSettingsTvPhoneValue.text = state.data.phone
+                        if (state.data.email.isEmpty()) {
+                            fragmentSettingsTvEmail.text =
+                                iResourcesProvider.getString(R.string.title_settings_add_email)
+                            fragmentSettingsIvAddEmail.visible()
+                            fragmentSettingsIvEditEmail.gone()
+                        } else {
+                            fragmentSettingsTvEmail.text = state.data.email
+                            fragmentSettingsIvAddEmail.gone()
+                            fragmentSettingsIvEditEmail.visible()
+                        }
+                    }
+                }
+                else -> Unit
+            }
+        }.startedLaunch(lifecycle)
+
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setOnClickListeners() {
         viewDataBinding.fragmentSettingsMcvEmail.setOnClickListener {
-            viewModel.gotoChangeEmail(
-                SettingsFragmentArgs.fromBundle(
-                    requireArguments()
-                ).user.email
-            )
+            viewModel.gotoChangeEmail()
         }
         viewDataBinding.fragmentSettingsMcvPhone.setOnClickListener {
             viewModel.logout()

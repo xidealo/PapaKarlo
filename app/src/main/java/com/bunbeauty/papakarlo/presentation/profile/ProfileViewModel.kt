@@ -110,7 +110,10 @@ class ProfileViewModelImpl @Inject constructor(
 
     override fun goToSettings() {
         if (userState.value is State.Success) {
-            router.navigate(ProfileFragmentDirections.toSettingsFragment((userState.value as State.Success<User?>).data!!))
+            router.navigate(
+                ProfileFragmentDirections
+                    .toSettingsFragment((userState.value as State.Success<User?>).data!!.userId)
+            )
         }
     }
 }

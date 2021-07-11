@@ -10,10 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
@@ -23,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
@@ -67,12 +65,12 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.messageSharedFlow.onEach {
                 showMessage(it)
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
         }
         lifecycleScope.launchWhenStarted {
             viewModel.errorSharedFlow.onEach {
                 showError(it)
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
         }
     }
 
@@ -80,9 +78,19 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         liveData.observe(viewLifecycleOwner, observer::invoke)
     }
 
-    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope) {
-        lifecycleCoroutineScope.launchWhenStarted {
-            this@launchWhenStarted.collect()
+    fun <T> Flow<T>.startedLaunch(lifecycle: Lifecycle){
+        lifecycle.coroutineScope.launch {
+            this@startedLaunch
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect()
+        }
+    }
+
+    fun <T> Flow<T>.resumedLaunch(lifecycle: Lifecycle){
+        lifecycle.coroutineScope.launch {
+            this@resumedLaunch
+                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                .collect()
         }
     }
 

@@ -121,6 +121,6 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                 }
                 else -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
     }
 }

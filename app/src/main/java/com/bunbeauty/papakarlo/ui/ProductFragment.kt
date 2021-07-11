@@ -51,6 +51,6 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
                 }
                 else -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
     }
 }

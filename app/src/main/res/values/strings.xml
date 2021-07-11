@@ -191,6 +191,8 @@
 
     <!-- ORDERS -->
     <string name="msg_orders_empty">Нет заказов</string>
+    <!-- ONE LINE ACTON-->
+    <string name="error_one_line_action_email">Введите корректную почту</string>
 
     <!-- CONTENT DESCRIPTIONS -->
     <string name="description_vk">vk image</string>

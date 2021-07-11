@@ -57,7 +57,7 @@ class OrdersFragment : BarsFragment<FragmentOrdersBinding>() {
                 }
                 else -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         viewModel.getOrders(OrdersFragmentArgs.fromBundle(requireArguments()).userUuid)
         ordersAdapter.onItemClickListener = { order ->

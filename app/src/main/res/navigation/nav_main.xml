@@ -173,15 +173,15 @@
         android:name="com.bunbeauty.papakarlo.ui.profile.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings">
-        <argument
-            android:name="user"
-            app:argType="com.bunbeauty.domain.model.local.user.User" />
         <action
             android:id="@+id/to_oneLineActionBottomSheet"
             app:destination="@id/oneLineActionBottomSheet" />
         <action
             android:id="@+id/to_login_fragment"
             app:destination="@id/login_fragment" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </fragment>
 
     <dialog

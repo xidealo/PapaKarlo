@@ -68,7 +68,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                 }
                 is State.Error -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
     }
 
     private fun setupRecyclerView(productCode: ProductCode) {

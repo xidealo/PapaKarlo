@@ -95,4 +95,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProductViewModel::class)
     internal abstract fun provideProductViewModel(productViewModel: ProductViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OneLineActionViewModel::class)
+    internal abstract fun provideOneLineActionViewModel(oneLineActionViewModel: OneLineActionViewModel): ViewModel
 }

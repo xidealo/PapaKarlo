@@ -50,7 +50,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                 else -> {
                 }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         viewModel.getAddresses(isDelivery)
 

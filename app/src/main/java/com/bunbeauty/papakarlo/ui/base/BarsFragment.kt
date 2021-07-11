@@ -28,6 +28,6 @@ abstract class BarsFragment<T : ViewDataBinding> : BaseFragment<T>() {
         )
         viewModel.cartFlow.onEach { cartText ->
             (activity as? IToolbar)?.setCartText(cartText)
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
     }
 }

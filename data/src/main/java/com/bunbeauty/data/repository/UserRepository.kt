@@ -45,6 +45,14 @@ class UserRepository @Inject constructor(
         }
     }
 
+    override fun getUser(userId: String): User? {
+        return userDao.getUser(userId)
+    }
+
+    override fun getUserAsFlow(userId: String): Flow<User?> {
+        return userDao.getUserFlow(userId)
+    }
+
     override fun getUserAsFlowFromFirebase(userId: String): Flow<User?> {
         return apiRepo.getUser(userId).map { userFirebase ->
             if (userFirebase != null && userFirebase.phone.isNotEmpty())

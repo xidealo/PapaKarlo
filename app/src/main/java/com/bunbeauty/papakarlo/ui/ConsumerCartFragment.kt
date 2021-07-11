@@ -43,11 +43,11 @@ class ConsumerCartFragment : BarsFragment<FragmentConsumerCartBinding>() {
                     cartProductsAdapter.submitList(cartProductModelList)
                 }
                 viewDataBinding.fragmentConsumerCartPbLoading.gone()
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
 
             deliveryStringFlow.onEach { deliveryString ->
                 viewDataBinding.fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-            }.launchWhenStarted(lifecycleScope)
+            }.startedLaunch(lifecycle)
         }
         with(viewDataBinding) {
             fragmentConsumerCartRvResult.adapter = cartProductsAdapter

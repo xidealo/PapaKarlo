@@ -50,7 +50,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
                 else -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.hasAddressState.onEach { state ->
             when (state) {
                 is State.Success -> {
@@ -79,7 +79,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 else -> {
                 }
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
         viewModel.lastOrderState.onEach { state ->
             when (state) {
                 is State.Success -> {
@@ -101,7 +101,7 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                 }
                 else -> Unit
             }
-        }.launchWhenStarted(lifecycleScope)
+        }.startedLaunch(lifecycle)
 
         setOnClickListeners()
 
