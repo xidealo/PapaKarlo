@@ -5,23 +5,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.domain.model.local.cafe.Cafe
+import androidx.viewbinding.ViewBinding
+import com.bunbeauty.domain.model.adapter.CafeAdapterModel
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.presentation.CafeListViewModel
+import com.bunbeauty.papakarlo.ui.adapter.BaseViewHolder
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CafeDiffUtilCallback
 import javax.inject.Inject
 
-class CafeAdapter @Inject constructor(private val stringHelper: IStringHelper) :
-    ListAdapter<Cafe, CafeAdapter.CafeViewHolder>(CafeDiffUtilCallback()) {
+class CafeAdapter @Inject constructor() :
+    ListAdapter<CafeAdapterModel, BaseViewHolder<ViewBinding, CafeAdapterModel>>(
+        CafeDiffUtilCallback()
+    ) {
 
     lateinit var cafeListViewModel: CafeListViewModel
+    var onItemClickListener: ((CafeAdapterModel) -> Unit)? = null
 
-    override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
-        holder.binding?.cafe = getItem(position)
-        holder.binding?.cafeListViewModel = cafeListViewModel
-        holder.binding?.stringHelper = stringHelper
-        holder.setCafeClickListener(getItem(position))
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, CafeAdapterModel>,
+        position: Int
+    ) {
+        holder.onBind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {
@@ -31,13 +35,21 @@ class CafeAdapter @Inject constructor(private val stringHelper: IStringHelper) :
         return CafeViewHolder(binding.root)
     }
 
-    inner class CafeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = DataBindingUtil.bind<ElementCafeBinding>(itemView)
+    inner class CafeViewHolder(view: View) :
+        BaseViewHolder<ElementCafeBinding, CafeAdapterModel>(DataBindingUtil.bind(view)!!) {
 
-        fun setCafeClickListener(cafe: Cafe) {
-            binding?.elementCafeCvMain?.setOnClickListener {
-                cafeListViewModel.onCafeCardClick(cafe)
+        override fun onBind(item: CafeAdapterModel) {
+            super.onBind(item)
+            with(binding) {
+                elementCafeTvAddress.text = item.address
+                elementCafeTvWorkTime.text = item.workingHours
+                elementCafeTvTimeStatus.text = item.workingTimeMessage
+                elementCafeTvTimeStatus.setTextColor(item.workingTimeMessageColor)
+                elementCafeMcvMain.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
             }
         }
+
     }
 }

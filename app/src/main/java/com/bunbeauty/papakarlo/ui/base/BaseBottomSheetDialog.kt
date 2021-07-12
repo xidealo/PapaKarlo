@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.*
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -28,6 +29,9 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding> :
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var iResourcesProvider: IResourcesProvider
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

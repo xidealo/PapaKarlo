@@ -99,6 +99,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.livedataVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
 
     //Dagger 2
     implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
@@ -124,9 +125,6 @@ dependencies {
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
     //true time
     implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
-
-    //Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"

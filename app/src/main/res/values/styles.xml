@@ -19,10 +19,16 @@
 
     <!--use ElementMaterialCard instead of this-->
     <style name="DefaultMaterialCard">
-        <item name="background">@color/cardViewBackground</item>
+        <item name="cardBackgroundColor">@color/cardViewBackground</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="cardCornerRadius">@dimen/medium_radius</item>
+    </style>
+
+    <style name="DefaultMaterialCardWithoutRadius">
+        <item name="cardBackgroundColor">@color/cardViewBackground</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="ElementMaterialCard" parent="DefaultMaterialCard">
@@ -31,7 +37,6 @@
         <item name="android:layout_marginStart">@dimen/small_margin</item>
         <item name="android:layout_marginEnd">@dimen/small_margin</item>
     </style>
-
 
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
@@ -324,20 +329,6 @@
     <style name="MediumSecondaryBoldText" parent="SecondaryText">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <!--CAFE-->
-    <style name="MaterialCardContacts">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/cardViewBackground</item>
-    </style>
-
-    <style name="LinearLayoutContacts">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/large_padding</item>
     </style>
 
     <!--ORDER ELEMENT-->

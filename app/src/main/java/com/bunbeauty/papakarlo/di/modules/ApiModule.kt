@@ -4,6 +4,8 @@ import com.bunbeauty.data.repository.ApiRepository
 import com.bunbeauty.data.repository.DataStoreRepository
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.util.cafe.CafeUtil
+import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.domain.util.field_helper.FieldHelper
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.domain.util.network.INetworkHelper
@@ -58,4 +60,7 @@ interface ApiModule {
 
     @Binds
     fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
+
+    @Binds
+    fun bindCafeUtil(cafeUtil: CafeUtil): ICafeUtil
 }

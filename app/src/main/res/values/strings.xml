@@ -176,8 +176,8 @@
     <string name="msg_confirm_prone_resend_code">Отправить код повторно</string>
 
     <!-- CAFE OPTIONS -->
-    <string name="action_call">Позвонить</string>
-    <string name="action_show_map">Показать на карте</string>
+    <string name="title_cafe_options_call">Позвонить</string>
+    <string name="title_cafe_options_show_map">На карте:</string>
 
     <!-- SETTINGS -->
     <string name="title_settings_add_email">Добавление почты</string>

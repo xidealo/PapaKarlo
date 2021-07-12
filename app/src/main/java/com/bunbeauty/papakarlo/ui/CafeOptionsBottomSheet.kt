@@ -11,7 +11,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
-
 import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
 import javax.inject.Inject
@@ -31,15 +30,24 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cafe = fromBundle(requireArguments()).cafe
+        val cafe = fromBundle(requireArguments()).cafeAdapterModel
+        with(viewDataBinding) {
+            bottomSheetCafeOptionsMcvCall.setOnClickListener {
+                goToPhone(cafe.phone)
+            }
+            bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
+                goToAddress(cafe.coordinate)
+            }
+            bottomSheetCafeOptionsTvShowMap.text =
+                "${iResourcesProvider.getString(R.string.title_cafe_options_show_map)} ${
+                    cafe.address
+                }"
 
-        viewDataBinding.bottomSheetCafeOptionsBtnCall.setOnClickListener {
-            goToPhone(cafe.cafeEntity.phone)
+            bottomSheetCafeOptionsTvCall.text =
+                "${iResourcesProvider.getString(R.string.title_cafe_options_call)} ${
+                    cafe.phone
+                }"
         }
-        viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
-            goToAddress(cafe.cafeEntity.coordinate)
-        }
-        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.address)
     }
 
     private fun goToAddress(coordinate: Coordinate) {

@@ -7,4 +7,6 @@
     <color name="doneColor">#A0D451</color>
     <color name="deliveredColor">#48CFAD</color>
     <color name="canceledColor">#EC87C0</color>
+    <color name="light_green">#44AF49</color>
+    <color name="light_red">#FF6B60</color>
 </resources>

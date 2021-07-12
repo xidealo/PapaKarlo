@@ -22,9 +22,6 @@ class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
     override val viewModel: CafeListViewModel by viewModels { modelFactory }
 
     @Inject
-    lateinit var uriHelper: IUriHelper
-
-    @Inject
     lateinit var cafeAdapter: CafeAdapter
 
     override val isBottomBarVisible = true
@@ -37,20 +34,23 @@ class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         cafeAdapter.cafeListViewModel = viewModel
+        cafeAdapter.onItemClickListener = { cafeAdapterModel ->
+            viewModel.onCafeCardClick(cafeAdapterModel)
+        }
         viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
 
         viewModel.cafeListFlow.onEach { cafeList ->
             cafeAdapter.submitList(cafeList)
         }.startedLaunch(lifecycle)
 
-        viewDataBinding.fragmentCafeListBtnCardNumber.setOnClickListener {
-            copyToBuffer("card number", requireContext().getString(R.string.pay_data_card_number))
-            showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
-        }
-        viewDataBinding.fragmentCafeListBtnPhoneNumber.setOnClickListener {
-            copyToBuffer("phone number",  requireContext().getString(R.string.pay_data_phone_number))
-            showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
-        }
+      /*   viewDataBinding.fragmentCafeListBtnCardNumber.setOnClickListener {
+             copyToBuffer("card number", requireContext().getString(R.string.pay_data_card_number))
+             showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
+         }
+         viewDataBinding.fragmentCafeListBtnPhoneNumber.setOnClickListener {
+             copyToBuffer("phone number",  requireContext().getString(R.string.pay_data_phone_number))
+             showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
+         }*/
     }
 
     private fun copyToBuffer(label: String, data: String) {
