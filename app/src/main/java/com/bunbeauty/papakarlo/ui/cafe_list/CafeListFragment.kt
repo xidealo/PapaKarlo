@@ -42,20 +42,5 @@ class CafeListFragment : BarsFragment<FragmentCafeListBinding>() {
         viewModel.cafeListFlow.onEach { cafeList ->
             cafeAdapter.submitList(cafeList)
         }.startedLaunch(lifecycle)
-
-      /*   viewDataBinding.fragmentCafeListBtnCardNumber.setOnClickListener {
-             copyToBuffer("card number", requireContext().getString(R.string.pay_data_card_number))
-             showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
-         }
-         viewDataBinding.fragmentCafeListBtnPhoneNumber.setOnClickListener {
-             copyToBuffer("phone number",  requireContext().getString(R.string.pay_data_phone_number))
-             showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
-         }*/
-    }
-
-    private fun copyToBuffer(label: String, data: String) {
-        val clipboard = getSystemService(requireContext(), ClipboardManager::class.java)
-        val clip = ClipData.newPlainText(label, data)
-        clipboard?.setPrimaryClip(clip)
     }
 }

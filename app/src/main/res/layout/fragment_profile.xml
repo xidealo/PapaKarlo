@@ -129,13 +129,49 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_orders"
+            android:id="@+id/fragment_profile_mcv_payment"
             style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_address">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fragment_profile_tv_payment"
+                    style="@style/MainTitle"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/title_profile_payment"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_payment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/fragment_profile_iv_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:contentDescription="Description"
+                    android:src="@drawable/ic_chevron_right_solid"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_profile_mcv_orders"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_payment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -162,7 +198,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
         <include
@@ -179,10 +214,11 @@
             android:id="@+id/fragment_profile_mcv_review"
             style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
-            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintVertical_bias="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_i_last_order">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -283,7 +319,6 @@
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
-            android:visibility="gone"
             android:layout_height="0dp"
             app:constraint_referenced_ids="
             fragment_profile_mcv_address,
@@ -291,7 +326,8 @@
             fragment_profile_mcv_settings,
             fragment_profile_mcv_orders,
             fragment_profile_mcv_bonuses,
-            fragment_profile_mcv_review" />
+            fragment_profile_mcv_review,
+            fragment_profile_mcv_payment" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_no_profile"

@@ -47,10 +47,15 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
                             .networkPolicy(NetworkPolicy.NO_CACHE)
                             .memoryPolicy(MemoryPolicy.NO_CACHE)
                             .into(fragmentProductIvPhoto)
+
                     }
                 }
                 else -> Unit
             }
         }.startedLaunch(lifecycle)
+        viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
+            viewModel.addProductToCart(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
+        }
+
     }
 }

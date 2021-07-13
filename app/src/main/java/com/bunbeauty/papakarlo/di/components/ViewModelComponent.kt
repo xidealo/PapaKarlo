@@ -40,6 +40,7 @@ interface ViewModelComponent {
     fun inject(cafeOptionsBottomSheet: CafeOptionsBottomSheet)
     fun inject(orderDetailsFragment: OrderDetailsFragment)
     fun inject(oneLineActionBottomSheet: OneLineActionBottomSheet)
+    fun inject(paymentBottomSheet: PaymentBottomSheet)
 
     // dialogs
 }

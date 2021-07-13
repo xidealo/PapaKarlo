@@ -155,6 +155,7 @@
     <string name="title_profile_your_address">Ваши адерса</string>
     <string name="title_profile_create_address">Добавить адрес</string>
     <string name="title_profile_orders">История заказов</string>
+    <string name="title_profile_payment">Оплата</string>
     <string name="title_profile_bonuses">Бонусы</string>
     <string name="title_profile_reviews">Мы всегда рады вашим отзывам</string>
     <string name="title_profile_no_profile">В профиле будут отбражаться: история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
@@ -184,15 +185,13 @@
     <string name="title_settings_change_email">Редактирование почты</string>
     <string name="action_settings_save">Сохранить</string>
 
-    <!-- LOGOUT -->
-    <string name="title_logout_logout">Выйти из профиля?</string>
-    <string name="action_logout_logout">Выйти</string>
-    <string name="action_logout_cancel">Отмена</string>
-
     <!-- ORDERS -->
     <string name="msg_orders_empty">Нет заказов</string>
     <!-- ONE LINE ACTON-->
     <string name="error_one_line_action_email">Введите корректную почту</string>
+
+    <!-- PAYMENT -->
+    <string name="title_payment_payment">Оплата</string>
 
     <!-- CONTENT DESCRIPTIONS -->
     <string name="description_vk">vk image</string>

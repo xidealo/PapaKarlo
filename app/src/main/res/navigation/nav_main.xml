@@ -140,6 +140,9 @@
         <action
             android:id="@+id/to_order_derails_fragment"
             app:destination="@id/order_derails_fragment" />
+        <action
+            android:id="@+id/to_paymentBottomSheet"
+            app:destination="@id/paymentBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/login_fragment"
@@ -193,4 +196,10 @@
             android:name="oneLineActionModel"
             app:argType="com.bunbeauty.domain.model.OneLineActionModel" />
     </dialog>
+
+    <dialog
+        android:id="@+id/paymentBottomSheet"
+        tools:layout="@layout/bottom_sheet_payment"
+        android:name="com.bunbeauty.papakarlo.ui.PaymentBottomSheet"
+        android:label="PaymentBottomSheet" />
 </navigation>

@@ -42,9 +42,10 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     } else {
                         viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileTvBonusesValue.text = viewModel.getBonusesString(
-                            state.data?.bonusList!!
-                        )
+                        viewDataBinding.fragmentProfileTvBonusesValue.text =
+                            viewModel.getBonusesString(
+                                state.data?.bonusList!!
+                            )
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }
@@ -130,6 +131,9 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     Uri.parse(Constants.INSTAGRAM_LINK)
                 )
                 startActivity(browserIntent)
+            }
+            fragmentProfileMcvPayment.setOnClickListener {
+                viewModel.router.navigate(ProfileFragmentDirections.toPaymentBottomSheet())
             }
             fragmentProfileMcvGooglePlay.setOnClickListener {
                 val browserIntent = Intent(
