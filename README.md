@@ -1,7 +1,7 @@
 # PapaKarlo
 This application allows you to order food from a cafe
 
-## Download
+### Release
 You can download app from [Google Play](https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo)
 
 ### Stack
@@ -14,7 +14,5 @@ You can download app from [Google Play](https://play.google.com/store/apps/detai
 - Room
 - Picasso
 
-#### Screenshots
-![main_screen](https://play-lh.googleusercontent.com/nIh8B5UIBGbGinSlsNjrXqL5I6_7n0TCNAnV2euZoSA5GmCUbZwLmawF-JJxlNv7AQw=w1745-h861-rw)
-![product_screen](https://play-lh.googleusercontent.com/bNTQi_5Js7vYA-hPw02kUdcctdynlsHH0YXunlNCDw6ps1Zg84Ca1koeHlQHUZWaziw=w1745-h861-rw)
-![cart_product_screen](https://play-lh.googleusercontent.com/LjlqASdcnINuIlHxIIIBKpH6sIA30C0Fg4lmk3yPTIyOe2N_aePDgpYrg7S8-tU_8zAo=w1745-h861-rw)
+#### Screens
+![1-2-3](https://user-images.githubusercontent.com/36783631/125836146-e0b6aaad-ed01-40cc-9b80-0c3e64fa02d4.jpg)
