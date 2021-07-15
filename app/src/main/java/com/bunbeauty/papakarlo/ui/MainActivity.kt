@@ -72,11 +72,13 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         router.attach(this, R.id.activity_main_fcv_container)
         Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
-        checkUpdates()
+
+
         // Uploading menu products to FB
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
+    //google in update
     fun checkUpdates(){
         val appUpdateManager = AppUpdateManagerFactory.create(this)
 

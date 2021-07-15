@@ -85,8 +85,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                         }
                     }
                 }
-                else -> {
-                }
+                else -> { }
             }
         }.startedLaunch(viewLifecycleOwner)
         viewModel.lastOrderState.onEach { state ->
@@ -151,6 +150,5 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                 startActivity(browserIntent)
             }
         }
-
     }
 }

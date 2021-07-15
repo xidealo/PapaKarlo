@@ -42,13 +42,22 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
                         fragmentProductTvWeight.text =
                             viewModel.stringHelper.toStringWeight(state.data!!)
                         fragmentProductTvDescription.text = state.data?.description
-                        Picasso.get()
-                            .load(state.data?.photoLink)
-                            .fit()
-                            .placeholder(R.drawable.default_product)
-                            .networkPolicy(NetworkPolicy.NO_CACHE)
-                            .memoryPolicy(MemoryPolicy.NO_CACHE)
-                            .into(fragmentProductIvPhoto)
+                        if (ProductFragmentArgs.fromBundle(requireArguments()).photo == null) {
+                            Picasso.get()
+                                .load(state.data?.photoLink)
+                                .fit()
+                                .placeholder(R.drawable.default_product)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .into(fragmentProductIvPhoto)
+
+                        } else {
+                            fragmentProductIvPhoto.setImageBitmap(
+                                ProductFragmentArgs.fromBundle(
+                                    requireArguments()
+                                ).photo
+                            )
+                        }
 
                     }
                 }

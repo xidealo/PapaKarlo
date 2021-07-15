@@ -66,7 +66,8 @@ class ProductTabViewModelImpl @Inject constructor(
         router.navigate(
             toProductFragment(
                 menuProductAdapterModel.uuid,
-                menuProductAdapterModel.name
+                menuProductAdapterModel.name,
+                menuProductAdapterModel.photo.get()
             )
         )
     }
