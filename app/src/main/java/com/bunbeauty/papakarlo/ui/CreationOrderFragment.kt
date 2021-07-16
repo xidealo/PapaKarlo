@@ -22,6 +22,9 @@ import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -39,6 +42,10 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
     @Inject
     lateinit var iFieldHelper: IFieldHelper
 
+
+    private var reviewInfo: ReviewInfo? = null
+    private var reviewManager: ReviewManager? = null
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.hasAddressState.onEach { state ->
@@ -47,7 +54,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
                     viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.startedLaunch(lifecycle)
 
@@ -86,7 +94,8 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
                     viewDataBinding.fragmentCreationOrderSvMain.visible()
                     viewDataBinding.fragmentCreationOrderPbLoading.gone()
                 }
-                else -> { }
+                else -> {
+                }
             }
         }.startedLaunch(lifecycle)
         viewModel.getUser()
@@ -120,6 +129,19 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
         viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
 
         setOnClickListeners()
+
+        reviewManager = ReviewManagerFactory.create(requireContext())
+        val request = reviewManager?.requestReviewFlow()
+        request?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // We got the ReviewInfo object
+                reviewInfo = task.result
+            } else {
+                // There was some problem, log or handle the error code.
+                //@ReviewErrorCode val reviewErrorCode = (task.exception as TaskException).errorCode
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -208,6 +230,16 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding>() {
             viewModel.deferredMinutesStateFlow.value,
             viewDataBinding.fragmentCreationOrderEtBonuses.text.toString()
         )
+
+        if (reviewInfo != null)
+            reviewManager?.launchReviewFlow(requireActivity(), reviewInfo!!)
+                ?.addOnCompleteListener { _ ->
+                    val t = 0
+                    //show toast
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                }
     }
 
     private fun activateButton(button: MaterialButton) {

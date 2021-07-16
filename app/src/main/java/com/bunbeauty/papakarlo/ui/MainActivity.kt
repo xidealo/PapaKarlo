@@ -29,6 +29,8 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
 import javax.inject.Inject
 
 
@@ -70,7 +72,12 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         router.attach(this, R.id.activity_main_fcv_container)
         Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
+        checkUpdates()
+        // Uploading menu products to FB
+        // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
+    }
 
+    fun checkUpdates(){
         val appUpdateManager = AppUpdateManagerFactory.create(this)
 
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
@@ -107,9 +114,6 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         }.addOnFailureListener { e ->
             Log.e("Login Activity", "Failure appUpdateManager: $e")
         }
-
-        // Uploading menu products to FB
-        // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
     override fun setToolbarConfiguration(

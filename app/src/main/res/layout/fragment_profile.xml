@@ -42,42 +42,42 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-     <!--   <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_bonuses"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_settings">
+        <!--   <com.google.android.material.card.MaterialCardView
+               android:id="@+id/fragment_profile_mcv_bonuses"
+               style="@style/DefaultMaterialCard"
+               android:layout_margin="@dimen/small_margin"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_settings">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/fragment_profile_tv_bonuses"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_profile_bonuses"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                   <TextView
+                       android:id="@+id/fragment_profile_tv_bonuses"
+                       style="@style/MainTitle"
+                       android:layout_margin="@dimen/medium_margin"
+                       android:text="@string/title_profile_bonuses"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/fragment_profile_tv_bonuses_value"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:drawablePadding="@dimen/large_padding"
-                    android:textAlignment="textEnd"
-                    app:drawableTint="@color/mainTextColor"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_profile_tv_bonuses"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="0 ₽" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
--->
+                   <TextView
+                       android:id="@+id/fragment_profile_tv_bonuses_value"
+                       style="@style/MainText"
+                       android:layout_margin="@dimen/medium_margin"
+                       android:drawablePadding="@dimen/large_padding"
+                       android:textAlignment="textEnd"
+                       app:drawableTint="@color/mainTextColor"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toEndOf="@+id/fragment_profile_tv_bonuses"
+                       app:layout_constraintTop_toTopOf="parent"
+                       tools:text="0 ₽" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+           </com.google.android.material.card.MaterialCardView>
+   -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_address"
             style="@style/DefaultMaterialCard"
