@@ -34,18 +34,20 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
             when (state) {
                 is State.Loading -> {
                     viewDataBinding.fragmentProfilePbLoading.visible()
+                    viewDataBinding.fragmentProfileGroupHasProfile.gone()
+                    viewDataBinding.fragmentProfileGroupNoProfile.gone()
                 }
                 is State.Success -> {
                     if (state.data == null) {
-                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(true)
+                        viewDataBinding.fragmentProfileGroupHasProfile.gone()
+                        viewDataBinding.fragmentProfileGroupNoProfile.visible()
                     } else {
-                        viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
-                        viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                       /* viewDataBinding.fragmentProfileTvBonusesValue.text =
-                            viewModel.getBonusesString(
-                                state.data?.bonusList!!
-                            )*/
+                        viewDataBinding.fragmentProfileGroupHasProfile.visible()
+                        viewDataBinding.fragmentProfileGroupNoProfile.gone()
+                        /* viewDataBinding.fragmentProfileTvBonusesValue.text =
+                             viewModel.getBonusesString(
+                                 state.data?.bonusList!!
+                             )*/
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }

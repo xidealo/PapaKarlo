@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
@@ -56,6 +55,5 @@ class ProductFragment : BarsFragment<FragmentProductBinding>() {
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
         }
-
     }
 }

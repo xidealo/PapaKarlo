@@ -320,7 +320,6 @@
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:constraint_referenced_ids="
             fragment_profile_mcv_address,
             fragment_profile_i_last_order,
@@ -361,7 +360,6 @@
             android:id="@+id/fragment_profile_group_no_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:constraint_referenced_ids="
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,
