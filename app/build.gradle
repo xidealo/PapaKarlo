@@ -140,6 +140,8 @@ dependencies {
     implementation("com.alimuzaffar.lib:pinentryedittext:$rootProject.pinentryedittextVersion") {
         exclude group: 'androidx.appcompat', module: 'appcompat'
     }
+    //play:core
+    implementation "com.google.android.play:core:$rootProject.playCoreVersion"
 
 }
 

@@ -42,10 +42,10 @@ class ProfileFragment : BarsFragment<FragmentProfileBinding>() {
                     } else {
                         viewDataBinding.fragmentProfileGroupHasProfile.toggleVisibility(true)
                         viewDataBinding.fragmentProfileGroupNoProfile.toggleVisibility(false)
-                        viewDataBinding.fragmentProfileTvBonusesValue.text =
+                       /* viewDataBinding.fragmentProfileTvBonusesValue.text =
                             viewModel.getBonusesString(
                                 state.data?.bonusList!!
-                            )
+                            )*/
                     }
                     viewDataBinding.fragmentProfilePbLoading.gone()
                 }

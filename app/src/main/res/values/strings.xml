@@ -193,6 +193,10 @@
     <!-- PAYMENT -->
     <string name="title_payment_payment">Оплата</string>
 
+    <!-- MAIN ACTIVITY -->
+    <string name="msg_main_activity_downloaded">Обновление установлено</string>
+    <string name="action_main_activity_reload">Перезапустить</string>
+
     <!-- CONTENT DESCRIPTIONS -->
     <string name="description_vk">vk image</string>
     <string name="description_inst">inst image</string>

@@ -42,7 +42,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.card.MaterialCardView
+     <!--   <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_bonuses"
             style="@style/DefaultMaterialCard"
             android:layout_margin="@dimen/small_margin"
@@ -77,7 +77,7 @@
                     tools:text="0 ₽" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-
+-->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_profile_mcv_address"
             style="@style/DefaultMaterialCard"
@@ -85,7 +85,7 @@
             android:layout_marginTop="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_bonuses">
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_settings">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -315,7 +315,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
+        <!--fragment_profile_mcv_bonuses,-->
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
@@ -326,7 +326,6 @@
             fragment_profile_i_last_order,
             fragment_profile_mcv_settings,
             fragment_profile_mcv_orders,
-            fragment_profile_mcv_bonuses,
             fragment_profile_mcv_review,
             fragment_profile_mcv_payment" />
 
