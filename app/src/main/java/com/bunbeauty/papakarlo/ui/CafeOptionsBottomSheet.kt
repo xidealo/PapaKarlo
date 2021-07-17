@@ -1,25 +1,19 @@
 package com.bunbeauty.papakarlo.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.domain.model.local.cafe.Coordinate
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
-import javax.inject.Inject
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }
 
@@ -27,26 +21,21 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
         viewModelComponent.inject(this)
     }
 
-    @Inject
-    lateinit var stringHelper: IStringHelper
-
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val cafe = fromBundle(requireArguments()).cafeAdapterModel
-        with(viewDataBinding) {
-            bottomSheetCafeOptionsMcvCall.setOnClickListener {
-                goToPhone(cafe.phone)
+            with(viewDataBinding) {
+                val cafe =
+                    viewModel.getCafeOptionModel(fromBundle(requireArguments()).cafeAdapterModel)
+                bottomSheetCafeOptionsMcvCall.setOnClickListener {
+                    goToPhone(cafe.phone)
+                }
+                bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
+                    goToAddress(cafe.coordinate)
+                }
+                bottomSheetCafeOptionsTvShowMap.text = cafe.address
+                bottomSheetCafeOptionsTvCall.text = cafe.phoneWithText
             }
-            bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
-                goToAddress(cafe.coordinate)
-            }
-            bottomSheetCafeOptionsTvShowMap.text =
-                (resourcesProvider.getString(R.string.title_cafe_options_show_map) + cafe.address)
-
-            bottomSheetCafeOptionsTvCall.text =
-                (resourcesProvider.getString(R.string.title_cafe_options_call) + cafe.phone)
-        }
     }
 
     private fun goToAddress(coordinate: Coordinate) {

@@ -47,7 +47,7 @@
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
             android:name="cafeAdapterModel"
-            app:argType="com.bunbeauty.domain.model.adapter.CafeAdapterModel" />
+            app:argType="com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel" />
     </dialog>
     <fragment
         android:id="@+id/cart_fragment"
@@ -204,7 +204,7 @@
 
     <dialog
         android:id="@+id/paymentBottomSheet"
-        tools:layout="@layout/bottom_sheet_payment"
         android:name="com.bunbeauty.papakarlo.ui.PaymentBottomSheet"
-        android:label="PaymentBottomSheet" />
+        android:label="PaymentBottomSheet"
+        tools:layout="@layout/bottom_sheet_payment" />
 </navigation>

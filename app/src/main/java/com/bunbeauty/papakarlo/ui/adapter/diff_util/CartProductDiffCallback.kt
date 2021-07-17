@@ -1,8 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
-import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.presentation.view_model.base.adapter.CartProductAdapterModel
 
 class CartProductDiffCallback : DiffUtil.ItemCallback<CartProductAdapterModel>() {
 

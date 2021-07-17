@@ -24,9 +24,6 @@ import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar
 import com.example.shared.Greeting
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -74,12 +71,16 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         router.attach(this, R.id.activity_main_fcv_container)
         Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
 
+        checkUpdates()
+/*
         AppUpdater(this)
             .setDisplay(Display.DIALOG)
             .setCancelable(false)
             .setUpdateFrom(UpdateFrom.GITHUB)
             .setGitHubUserAndRepo("xidealo", "PapaKarlo")
             .start()
+*/
+
         // Uploading menu products to FB
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }

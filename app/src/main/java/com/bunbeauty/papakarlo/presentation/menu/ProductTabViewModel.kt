@@ -3,9 +3,9 @@ package com.bunbeauty.papakarlo.presentation.menu
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.mapper.adapter.MenuProductAdapterMapper
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
+import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.presentation.view_model.base.adapter.MenuProductAdapterModel
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
@@ -30,7 +30,6 @@ abstract class ProductTabViewModel(
 }
 
 class ProductTabViewModelImpl @Inject constructor(
-    private val mapper: MenuProductAdapterMapper,
     cartProductRepo: CartProductRepo,
     stringUtil: IStringHelper,
     productHelper: IProductHelper,
@@ -46,7 +45,7 @@ class ProductTabViewModelImpl @Inject constructor(
             } else {
                 if (productCode == ProductCode.ALL) {
                     productListState.value =
-                        menuProductList.map { mapper.from(it) }.toStateSuccess()
+                        menuProductList.map(::toItemModel).toStateSuccess()
                 } else {
                     val filteredMenuProductList = menuProductList.filter { menuProduct ->
                         menuProduct.productCode == productCode.name
@@ -55,7 +54,7 @@ class ProductTabViewModelImpl @Inject constructor(
                         productListState.value = State.Empty()
                     } else {
                         productListState.value =
-                            filteredMenuProductList.map { mapper.from(it) }.toStateSuccess()
+                            filteredMenuProductList.map(::toItemModel).toStateSuccess()
                     }
                 }
             }
@@ -69,6 +68,16 @@ class ProductTabViewModelImpl @Inject constructor(
                 menuProductAdapterModel.name,
                 menuProductAdapterModel.photo.get()
             )
+        )
+    }
+
+    private fun toItemModel(menuProduct: MenuProduct): MenuProductAdapterModel {
+        return MenuProductAdapterModel(
+            uuid = menuProduct.uuid,
+            name = menuProduct.name,
+            cost = productHelper.getMenuProductOldPriceString(menuProduct),
+            discountCost = productHelper.getMenuProductPriceString(menuProduct),
+            photoLink = menuProduct.photoLink
         )
     }
 }

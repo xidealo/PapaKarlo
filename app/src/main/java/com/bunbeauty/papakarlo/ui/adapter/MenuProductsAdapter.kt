@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.MenuProductAdapterModel
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback

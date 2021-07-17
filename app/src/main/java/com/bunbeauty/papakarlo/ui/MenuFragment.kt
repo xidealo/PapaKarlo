@@ -14,9 +14,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation.cart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
+import com.bunbeauty.domain.model.local.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper
@@ -10,6 +10,7 @@ import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections
+import com.bunbeauty.presentation.view_model.base.adapter.CartProductAdapterModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -22,16 +23,13 @@ class ConsumerCartViewModel @Inject constructor(
     private val cartProductRepo: CartProductRepo,
     private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val cartProductAdapterMapper: CartProductAdapterMapper
 ) : BaseViewModel() {
 
     val cartProductList = cartProductRepo.getCartProductListFlow()
         .map { productList ->
             productList.sortedBy { cartProduct ->
                 cartProduct.menuProduct.name
-            }.map { cartProduct ->
-                cartProductAdapterMapper.from(cartProduct)
-            }
+            }.map(::toItemModel)
         }
 
     val deliveryStringFlow by lazy {
@@ -74,4 +72,14 @@ class ConsumerCartViewModel @Inject constructor(
         router.navigate(ConsumerCartFragmentDirections.toCreationOrder())
     }
 
+    private fun toItemModel(cartProduct: CartProduct): CartProductAdapterModel {
+        return CartProductAdapterModel(
+            uuid = cartProduct.uuid,
+            name = cartProduct.menuProduct.name,
+            cost = productHelper.getCartProductPriceString(cartProduct),
+            discountCost = productHelper.getCartProductOldPriceString(cartProduct),
+            photoLink = cartProduct.menuProduct.photoLink,
+            count = cartProduct.count
+        )
+    }
 }

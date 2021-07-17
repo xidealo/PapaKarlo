@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.adapter
+package com.bunbeauty.presentation.view_model.base.adapter
 
 import com.bunbeauty.domain.model.local.BaseModel
 

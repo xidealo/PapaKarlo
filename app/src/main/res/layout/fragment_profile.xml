@@ -5,7 +5,6 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        android:background="@color/backgroundYellow"
         tools:context=".ui.profile.ProfileFragment">
 
         <com.google.android.material.card.MaterialCardView
@@ -238,9 +237,9 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
-                    android:elevation="0dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
+                    app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/fragment_profile_tv_review"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
@@ -263,7 +262,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
-                    android:elevation="0dp"
+                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -290,7 +289,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
-                    android:elevation="0dp"
+                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -361,6 +360,7 @@
             android:id="@+id/fragment_profile_group_no_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:constraint_referenced_ids="
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,

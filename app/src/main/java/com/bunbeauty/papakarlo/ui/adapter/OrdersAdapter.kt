@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.domain.model.adapter.OrderAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.OrderAdapterModel
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.OrderDiffCallback
 import javax.inject.Inject

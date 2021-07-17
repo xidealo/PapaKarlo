@@ -1,8 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.domain.model.adapter.CafeAdapterModel
-import com.bunbeauty.domain.model.local.cafe.Cafe
+import com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel
 
 class CafeDiffUtilCallback : DiffUtil.ItemCallback<CafeAdapterModel>() {
 

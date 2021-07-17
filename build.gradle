@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.5.20"
+    ext.kotlin_version = "1.5.21"
     repositories {
         google().content() {
             excludeGroup "Kotlin/Native"
@@ -85,7 +85,6 @@ ext {
     appcompatV7Version = "28.0.0"
     pinentryedittextVersion = "2.0.6"
     playCoreVersion = "1.10.0"
-    appUpdaterVersion = "2.7"
 
     // Test dependencies
     mockitoVerchion = "3.11.0"

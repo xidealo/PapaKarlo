@@ -4,10 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.mapper.adapter.OrderAdapterMapper
-import com.bunbeauty.domain.model.adapter.OrderAdapterModel
+import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.presentation.view_model.base.adapter.OrderAdapterModel
 import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.*
+import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
@@ -40,13 +41,12 @@ class ProfileViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
     private val userRepo: UserRepo,
-    private val iStringHelper: IStringHelper,
+    val stringHelper: IStringHelper,
     private val orderRepo: OrderRepo,
-    private val orderMapper: OrderAdapterMapper,
     cartProductRepo: CartProductRepo,
     productHelper: IProductHelper,
-    stringUtil: IStringHelper,
-) : ProfileViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val orderUtil: IOrderUtil
+) : ProfileViewModel(cartProductRepo, stringHelper, productHelper) {
 
     init {
         getUser(getUserId())
@@ -83,14 +83,14 @@ class ProfileViewModelImpl @Inject constructor(
         orderRepo.getOrdersWithCartProductsByUserId(userId).onEach { orderList ->
             if (orderList.isNotEmpty()) {
                 lastOrderState.value =
-                    orderMapper.from(orderList.maxByOrNull { it.orderEntity.time }!!)
+                    toItemModel(orderList.maxByOrNull { it.orderEntity.time }!!)
                         .toStateSuccess()
             }
         }.launchIn(viewModelScope)
     }
 
     override fun getBonusesString(bonusList: MutableList<Int>): String {
-        return iStringHelper.getCostString(bonusList.sum())
+        return stringHelper.getCostString(bonusList.sum())
     }
 
     override fun onOrderListClicked() {
@@ -120,5 +120,19 @@ class ProfileViewModelImpl @Inject constructor(
                     .toSettingsFragment((userState.value as State.Success<User?>).data!!.userId)
             )
         }
+    }
+
+    fun toItemModel(order: Order): OrderAdapterModel {
+        return OrderAdapterModel(
+            uuid = order.orderEntity.uuid,
+            orderStatus = stringHelper.toStringOrderStatus(order.orderEntity.orderStatus),
+            orderColor = orderUtil.getBackgroundColor(order.orderEntity.orderStatus),
+            code = order.orderEntity.code,
+            time = stringHelper.toStringTime(order.orderEntity),
+            deferredTime = if (order.orderEntity.deferredTime.isNotEmpty())
+                "Ко времени: ${order.orderEntity.deferredTime}"
+            else
+                ""
+        )
     }
 }
