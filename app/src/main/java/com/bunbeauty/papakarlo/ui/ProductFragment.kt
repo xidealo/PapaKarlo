@@ -1,45 +1,71 @@
 package com.bunbeauty.papakarlo.ui
 
-import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.common.extensions.invisible
+import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.EmptyViewModel
-import com.bunbeauty.papakarlo.ui.ProductFragmentArgs.fromBundle
-import javax.inject.Inject
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.flow.onEach
 
-class ProductFragment : BarsFragment<FragmentProductBinding, EmptyViewModel>() {
+class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
+
+    override val isCartVisible = true
+    override val isBottomBarVisible = true
+
+    override val viewModel: ProductViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
-    @Inject
-    lateinit var stringHelper: IStringHelper
-
-    @Inject
-    lateinit var productHelper: IProductHelper
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val menuProduct = fromBundle(requireArguments()).menuProduct
-        if (menuProduct.weight == 0)
-            viewDataBinding.fragmentProductTvWeight.invisible()
+        viewModel.getMenuProduct(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
+        viewModel.menuProductState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    with(viewDataBinding) {
+                        fragmentProductTvTitle.text = state.data?.name
+                        fragmentProductTvCost.text =
+                            viewModel.productHelper.getMenuProductPriceString(state.data!!)
+                        fragmentProductTvOldCost.text =
+                            viewModel.productHelper.getMenuProductOldPriceString(state.data!!)
+                        fragmentProductTvWeight.text =
+                            viewModel.stringHelper.toStringWeight(state.data!!)
+                        fragmentProductTvDescription.text = state.data?.description
+                        if (ProductFragmentArgs.fromBundle(requireArguments()).photo == null) {
+                            Picasso.get()
+                                .load(state.data?.photoLink)
+                                .fit()
+                                .placeholder(R.drawable.default_product)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .into(fragmentProductIvPhoto)
 
-        viewDataBinding.product = menuProduct
-        viewDataBinding.stringHelper = stringHelper
-        viewDataBinding.productHelper = productHelper
-        viewDataBinding.fragmentProductTvOldCost.paintFlags =
-            viewDataBinding.fragmentProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
+                        } else {
+                            fragmentProductIvPhoto.setImageBitmap(
+                                ProductFragmentArgs.fromBundle(
+                                    requireArguments()
+                                ).photo
+                            )
+                        }
+
+                    }
+                }
+                else -> Unit
+            }
+        }.startedLaunch(viewLifecycleOwner)
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
-            viewModel.addProductToCart(menuProduct)
-            showMessage("${menuProduct.name} был добавлен в корзину")
+            viewModel.addProductToCart(ProductFragmentArgs.fromBundle(requireArguments()).menuProductUuid)
         }
     }
 }

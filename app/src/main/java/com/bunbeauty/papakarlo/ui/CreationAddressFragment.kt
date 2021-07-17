@@ -2,16 +2,19 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.data.model.Address
+import androidx.fragment.app.viewModels
+import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.presentation.CreationAddressViewModel
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import javax.inject.Inject
 
-class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding, CreationAddressViewModel>() {
+class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
+
+    override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
@@ -24,7 +27,6 @@ class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding, Cre
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getStreets()
-
         viewDataBinding.viewModel = viewModel
         viewDataBinding.fragmentCreationAddressBtnCreationAddress.setOnClickListener {
             createAddress()
@@ -105,17 +107,15 @@ class CreationAddressFragment : BarsFragment<FragmentCreationAddressBinding, Cre
         }
         viewDataBinding.fragmentCreationAddressTilFloor.error = ""
 
-
         viewModel.onCreateAddressClicked(
-            Address(
-                street = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() },
-                house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
-                flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
-                entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),
-                intercom = viewDataBinding.fragmentCreationAddressEtIntercom.text.toString().trim(),
-                floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim(),
-            )
+            UserAddress().apply {
+                street = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() }
+                house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim()
+                flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim()
+                entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim()
+                intercom = viewDataBinding.fragmentCreationAddressEtIntercom.text.toString().trim()
+                floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim()
+            }
         )
-        showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
     }
 }

@@ -1,7 +1,8 @@
 package com.bunbeauty.papakarlo.presentation
 
-import com.bunbeauty.papakarlo.presentation.base.ToolbarViewModel
+import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import javax.inject.Inject
 
-class EmptyViewModel @Inject constructor(): ToolbarViewModel() {
+class EmptyViewModel @Inject constructor() : BaseViewModel() {
+
 }

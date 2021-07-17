@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.data.model.order.Order
+import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
+import com.bunbeauty.domain.model.adapter.OrderAdapterModel
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.OrdersViewModel
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.OrderDiffCallback
 import javax.inject.Inject
 
-class OrdersAdapter @Inject constructor(
-    private val stringHelper: IStringHelper
-) : BaseAdapter<OrdersAdapter.OrderViewHolder, Order>() {
+class OrdersAdapter @Inject constructor() :
+    ListAdapter<OrderAdapterModel, BaseViewHolder<ViewBinding, OrderAdapterModel>>(
+        OrderDiffCallback()
+    ) {
 
-    lateinit var ordersViewModel: OrdersViewModel
+    var onItemClickListener: ((OrderAdapterModel) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -25,18 +25,53 @@ class OrdersAdapter @Inject constructor(
         return OrderViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: OrderViewHolder, i: Int) {
-        holder.setListener(itemList[i])
-        holder.binding?.order = itemList[i]
-        holder.binding?.stringHelper = stringHelper
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, OrderAdapterModel>,
+        position: Int
+    ) {
+        holder.onBind(getItem(position))
     }
 
-    inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = DataBindingUtil.bind<ElementOrderBinding>(view)
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, OrderAdapterModel>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(getItem(position), payloads)
+        }
+    }
 
-        fun setListener(order: Order) {
-            binding?.elementOrderMcvOrder?.setOnClickListener {
-                ordersViewModel.onOrderClicked(order)
+    inner class OrderViewHolder(view: View) :
+        BaseViewHolder<ElementOrderBinding, OrderAdapterModel>(DataBindingUtil.bind(view)!!) {
+
+        override fun onBind(item: OrderAdapterModel) {
+            super.onBind(item)
+            with(binding) {
+                elementOrderTvCode.text = item.code
+                elementOrderTvDeferred.text = item.deferredTime
+                elementOrderTvTime.text = item.time
+                elementOrderChipStatus.text = item.orderStatus
+                elementOrderChipStatus.setChipBackgroundColorResource(item.orderColor)
+
+                elementOrderMvcMain.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
+            }
+        }
+
+        override fun onBind(item: OrderAdapterModel, payloads: List<Any>) {
+            super.onBind(item, payloads)
+            if (payloads.last() as Boolean) {
+                with(binding) {
+                    elementOrderChipStatus.text = item.orderStatus
+                    elementOrderChipStatus.setChipBackgroundColorResource(item.orderColor)
+                    elementOrderMvcMain.setOnClickListener {
+                        onItemClickListener?.invoke(item)
+                    }
+                }
             }
         }
     }

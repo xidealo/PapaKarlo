@@ -4,23 +4,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.data.model.cafe.Coordinate
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.BR
+import androidx.fragment.app.viewModels
+import com.bunbeauty.domain.model.local.cafe.Coordinate
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
-
-import com.bunbeauty.papakarlo.presentation.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
 import javax.inject.Inject
 
-class CafeOptionsBottomSheet :
-    BaseBottomSheetDialog<BottomSheetCafeOptionsBinding, CafeOptionsViewModel>() {
+class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
 
-    override var layoutId = R.layout.bottom_sheet_cafe_options
-    override var viewModelVariable = BR.viewModel
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
+
+    override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -32,15 +33,20 @@ class CafeOptionsBottomSheet :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cafe = fromBundle(requireArguments()).cafe
+        val cafe = fromBundle(requireArguments()).cafeAdapterModel
+        with(viewDataBinding) {
+            bottomSheetCafeOptionsMcvCall.setOnClickListener {
+                goToPhone(cafe.phone)
+            }
+            bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
+                goToAddress(cafe.coordinate)
+            }
+            bottomSheetCafeOptionsTvShowMap.text =
+                (resourcesProvider.getString(R.string.title_cafe_options_show_map) + cafe.address)
 
-        viewDataBinding.bottomSheetCafeOptionsBtnCall.setOnClickListener {
-            goToPhone(cafe.cafeEntity.phone)
+            bottomSheetCafeOptionsTvCall.text =
+                (resourcesProvider.getString(R.string.title_cafe_options_call) + cafe.phone)
         }
-        viewDataBinding.bottomSheetCafeOptionsBtnShowMap.setOnClickListener {
-            goToAddress(cafe.cafeEntity.coordinate)
-        }
-        viewDataBinding.bottomSheetCafeOptionsTvAddress.text = stringHelper.toString(cafe.address)
     }
 
     private fun goToAddress(coordinate: Coordinate) {

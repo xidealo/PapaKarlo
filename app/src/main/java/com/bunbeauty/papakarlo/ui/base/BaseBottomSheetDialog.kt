@@ -5,29 +5,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.getBinding
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.lang.reflect.ParameterizedType
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
-abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
-    BottomSheetDialogFragment() {
-
-    abstract var layoutId: Int
-    abstract var viewModelVariable: Int
-
-    private var _viewDataBinding: B? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
-    lateinit var viewModel: VM
+abstract class BaseBottomSheetDialog<B : ViewDataBinding> : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
+
+    abstract val viewModel: BaseViewModel
+
+    private var mutableViewDataBinding: B? = null
+    val viewDataBinding: B
+        get() = checkNotNull(mutableViewDataBinding)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,30 +48,30 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding, VM : BaseViewModel> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
-        _viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        mutableViewDataBinding = getBinding(inflater, container)
         return viewDataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.setVariable(viewModelVariable, viewModel)
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewModelClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
-
-
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewBindingClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _viewDataBinding = null
+    fun showMessage(message: String) {
+        val snack = dialog?.window?.decorView?.let {
+            Snackbar.make(
+                it, // important part
+                message,
+                Snackbar.LENGTH_SHORT
+            )
+                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+        }
+        snack?.view?.findViewById<TextView>(R.id.snackbar_text)?.textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
+        snack?.show()
     }
 }

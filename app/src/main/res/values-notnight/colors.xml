@@ -13,6 +13,7 @@
 
     <!-- TEXT -->
     <color name="mainTextColor">#000000</color>
+    <color name="secondaryTextColor">#A7A5A5</color>
     <color name="buttonTextColor">#FFFFFF</color>
     <color name="hintColor">#93969A</color>
     <color name="iconTintColor">#93969A</color>

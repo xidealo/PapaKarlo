@@ -1,26 +1,32 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
-import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.MenuProduct
+import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
+import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.ProductTabFragment
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.papakarlo.presentation.ProductTabViewModel
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import java.lang.ref.SoftReference
 import javax.inject.Inject
 
-class MenuProductsAdapter @Inject constructor(
-    private val context: Context,
-    private val productHelper: IProductHelper
-) : BaseAdapter<MenuProductsAdapter.MenuProductViewHolder, MenuProduct>() {
+class MenuProductsAdapter @Inject constructor() :
+    ListAdapter<MenuProductAdapterModel, BaseViewHolder<ViewBinding, MenuProductAdapterModel>>(
+        MenuProductDiffCallback()
+    ) {
 
-    lateinit var productTabViewModel: ProductTabViewModel
-    lateinit var productTabFragment: ProductTabFragment
+    var onItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
+    var btnItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -29,27 +35,60 @@ class MenuProductsAdapter @Inject constructor(
         return MenuProductViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: MenuProductViewHolder, i: Int) {
-        holder.setListener(itemList[i])
-        holder.binding?.context = context
-        holder.binding?.productHelper = productHelper
-        holder.binding?.menuProduct = itemList[i]
-        if (holder.binding?.elementMenuProductTvCostOld != null) {
-            holder.binding.elementMenuProductTvCostOld.paintFlags =
-                holder.binding.elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
-        }
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, MenuProductAdapterModel>,
+        position: Int
+    ) {
+        holder.onBind(getItem(position))
     }
 
-    inner class MenuProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = DataBindingUtil.bind<ElementMenuProductBinding>(view)
+    inner class MenuProductViewHolder(view: View) :
+        BaseViewHolder<ElementMenuProductBinding, MenuProductAdapterModel>(
+            DataBindingUtil.bind(view)!!
+        ) {
 
-        fun setListener(menuProduct: MenuProduct) {
-            binding?.elementMenuProductMcvMain?.setOnClickListener {
-                productTabViewModel.onProductClicked(menuProduct)
+        override fun onBind(item: MenuProductAdapterModel) {
+            super.onBind(item)
+            with(binding) {
+                elementMenuProductTvTitle.text = item.name
+                elementMenuProductTvCost.text = item.discountCost
+                elementMenuProductTvCostOld.text = item.cost
+
+                if(item.photo.get() == null){
+                    val target = object : Target {
+                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                            if (bitmap != null) {
+                                item.photo = SoftReference(bitmap)
+                                elementMenuProductIvPhoto.setImageBitmap(bitmap)
+                            }
+                        }
+
+                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
+
+                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                            elementMenuProductIvPhoto.setImageDrawable(placeHolderDrawable)
+                        }
+                    }
+                    elementMenuProductIvPhoto.tag = target
+                    Picasso.get()
+                        .load(item.photoLink)
+                        .placeholder(R.drawable.default_product)
+                        .networkPolicy(NetworkPolicy.NO_CACHE)
+                        .memoryPolicy(MemoryPolicy.NO_CACHE)
+                        .into(target)
+                }else{
+                    elementMenuProductIvPhoto.setImageBitmap(item.photo.get())
+                }
+                elementMenuProductTvCostOld.paintFlags =
+                    elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
+                elementMenuProductMcvMain.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
+                elementMenuProductBtnWant.setOnClickListener {
+                    btnItemClickListener?.invoke(item)
+                }
             }
-            binding?.elementMenuProductBtnWant?.setOnClickListener {
-                productTabViewModel.addProductToCart(menuProduct)
-            }
+
         }
     }
 }

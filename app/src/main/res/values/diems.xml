@@ -22,6 +22,7 @@
 
     <!-- IMAGES -->
     <dimen name="empty_cart_img_size">176dp</dimen>
+    <dimen name="empty_profile_size">176dp</dimen>
 
     <!-- MARGIN -->
     <dimen name="very_large_margin">40dp</dimen>
@@ -43,5 +44,11 @@
     <dimen name="large_radius">16dp</dimen>
     <dimen name="medium_radius">8dp</dimen>
     <dimen name="small_radius">4dp</dimen>
+
+    <!-- STROKE -->
+    <dimen name="button_stroke_width">2dp</dimen>
+
+    <!-- RECYCLER_VIEW -->
+    <dimen name="recycler_view_max_height">264dp</dimen>
 
 </resources>

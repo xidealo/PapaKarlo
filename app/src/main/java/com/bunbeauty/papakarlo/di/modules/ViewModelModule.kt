@@ -4,7 +4,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.*
+import com.bunbeauty.papakarlo.presentation.address.AddressesViewModelImpl
+import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
+import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
+import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
+import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
+import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
+import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModelImpl
+import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
+import com.bunbeauty.papakarlo.presentation.profile.*
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -22,6 +33,11 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(MenuViewModel::class)
+    internal abstract fun provideMenuViewModel(menuViewModel: MenuViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(MainViewModel::class)
     internal abstract fun provideMainViewModel(mainViewModel: MainViewModel): ViewModel
 
@@ -32,8 +48,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreationOrderViewModel::class)
-    internal abstract fun provideCreationOrderViewModel(creationOrderViewModel: CreationOrderViewModel): ViewModel
+    @ViewModelKey(CreationOrderViewModelImpl::class)
+    internal abstract fun provideCreationOrderViewModelImpl(creationOrderViewModelImpl: CreationOrderViewModelImpl): ViewModel
 
     @Binds
     @IntoMap
@@ -52,8 +68,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddressesViewModel::class)
-    internal abstract fun provideAddressesViewModel(addressesViewModel: AddressesViewModel): ViewModel
+    @ViewModelKey(AddressesViewModelImpl::class)
+    internal abstract fun provideAddressesViewModelImpl(addressesViewModelImpl: AddressesViewModelImpl): ViewModel
 
     @Binds
     @IntoMap
@@ -67,6 +83,36 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(OrderViewModel::class)
-    internal abstract fun provideOrderViewModel(orderViewModel: OrderViewModel): ViewModel
+    @ViewModelKey(OrderDetailsViewModel::class)
+    internal abstract fun provideOrderViewModel(orderDetailsViewModel: OrderDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    internal abstract fun provideProfileViewModel(profileViewModelImpl: ProfileViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    internal abstract fun provideLoginViewModel(loginViewModel: LoginViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConfirmViewModelImpl::class)
+    internal abstract fun provideConfirmViewModel(confirmViewModelImpl: ConfirmViewModelImpl): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SettingsViewModel::class)
+    internal abstract fun provideSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProductViewModel::class)
+    internal abstract fun provideProductViewModel(productViewModel: ProductViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OneLineActionViewModel::class)
+    internal abstract fun provideOneLineActionViewModel(oneLineActionViewModel: OneLineActionViewModel): ViewModel
 }

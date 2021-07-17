@@ -2,25 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="product"
-            type="com.bunbeauty.data.model.MenuProduct" />
-
-        <variable
-            name="stringHelper"
-            type="com.bunbeauty.domain.string_helper.IStringHelper" />
-
-        <variable
-            name="productHelper"
-            type="com.bunbeauty.domain.product.IProductHelper" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_product_cl_main"
@@ -32,14 +14,14 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/medium_margin" />
+            app:layout_constraintGuide_begin="@dimen/small_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/fragment_product_gl_right"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/medium_margin" />
+            app:layout_constraintGuide_end="@dimen/small_margin" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
@@ -59,11 +41,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/default_product"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:image="@{product.photoLink}" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_product_gl_inner_left"
@@ -83,8 +63,7 @@
                     android:id="@+id/fragment_product_tv_title"
                     style="@style/TitleFragmentProduct"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:text="@{product.name}"
-                    app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_tv_weight"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
                     app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
 
@@ -92,7 +71,6 @@
                     android:id="@+id/fragment_product_tv_cost"
                     style="@style/CostFragmentProduct"
                     android:layout_marginTop="@dimen/small_margin"
-                    android:text="@{productHelper.getMenuProductPriceString(product)}"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
                     app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
 
@@ -100,47 +78,44 @@
                     android:id="@+id/fragment_product_tv_old_cost"
                     style="@style/OldCostFragmentProduct"
                     android:layout_marginStart="@dimen/small_margin"
-                    android:text="@{productHelper.getMenuProductOldPriceString(product)}"
                     app:layout_constraintStart_toEndOf="@+id/fragment_product_tv_cost"
                     app:layout_constraintTop_toTopOf="@+id/fragment_product_tv_cost" />
 
                 <TextView
                     android:id="@+id/fragment_product_tv_weight"
-                    android:layout_marginTop="@dimen/small_margin"
                     style="@style/GramFragmentProduct"
-                    android:text="@{stringHelper.toStringWeight(product)}"
-                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_cost" />
-
-                <ImageView
-                    android:id="@+id/element_menu_product_iv_on_fire"
-                    style="@style/Icon"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:src="@drawable/ic_on_fire"
-                    app:layout_constraintEnd_toStartOf="@+id/element_menu_product_iv_in_oven"
-                    android:visibility="@{product.onFire ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_gl_inner_right"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_product_iv_photo" />
 
-                <ImageView
-                    android:id="@+id/element_menu_product_iv_in_oven"
-                    style="@style/Icon"
-                    app:layout_constraintTop_toTopOf="@+id/element_menu_product_iv_on_fire"
-                    android:src="@drawable/ic_in_oven"
-                    android:visibility="@{product.inOven ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
+                <!--           <ImageView
+                               android:id="@+id/element_menu_product_iv_on_fire"
+                               style="@style/Icon"
+                               android:layout_marginTop="@dimen/medium_margin"
+                               android:src="@drawable/ic_on_fire"
+                               android:visibility="invisible"
+                               app:layout_constraintEnd_toStartOf="@+id/element_menu_product_iv_in_oven"
+                               app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
+                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
 
+                           <ImageView
+                               android:id="@+id/element_menu_product_iv_in_oven"
+                               style="@style/Icon"
+                               android:visibility="invisible"
+                               android:src="@drawable/ic_in_oven"
+                               app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
+                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight"
+                               app:layout_constraintTop_toTopOf="@+id/element_menu_product_iv_on_fire" />
+           -->
                 <TextView
                     android:id="@+id/fragment_product_tv_description"
                     style="@style/MainText"
-                    android:layout_marginTop="@dimen/medium_margin"
-                    android:layout_marginBottom="@dimen/medium_margin"
-                    android:text="@{product.description}"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginBottom="@dimen/small_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/element_menu_product_iv_on_fire" />
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_old_cost" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

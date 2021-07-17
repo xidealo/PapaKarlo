@@ -2,14 +2,15 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.data.model.BaseDiffUtilModel
+import com.bunbeauty.domain.model.local.BaseModel
 
-abstract class BaseAdapter<T : RecyclerView.ViewHolder, E : BaseDiffUtilModel> : RecyclerView.Adapter<T>() {
+abstract class  BaseAdapter<T : RecyclerView.ViewHolder, E, K : DiffUtil.Callback>  : RecyclerView.Adapter<T>() {
 
-    protected val itemList: MutableList<E> = ArrayList()
+    val itemList: MutableList<E> = ArrayList()
+    var onItemClickListener: ((E) -> Unit)? = null
 
-    open fun setItemList(items: List<E>) {
-        val diffResult = DiffUtil.calculateDiff(MyDiffCallback(items, itemList))
+    open fun setItemList(items: List<E>, diffUtilCallback: K) {
+        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         itemList.clear()
         itemList.addAll(items)
         diffResult.dispatchUpdatesTo(this)

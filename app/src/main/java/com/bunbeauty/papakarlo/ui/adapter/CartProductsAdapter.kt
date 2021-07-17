@@ -5,23 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.data.model.CartProduct
+import androidx.recyclerview.widget.ListAdapter
+import androidx.viewbinding.ViewBinding
+import com.bunbeauty.domain.model.adapter.CartProductAdapterModel
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.ui.view.CountPicker
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
-class CartProductsAdapter @Inject constructor(
-    private val stringHelper: IStringHelper,
-    private val productHelper: IProductHelper
-) : BaseAdapter<CartProductsAdapter.CartProductViewHolder, CartProduct>() {
+class CartProductsAdapter @Inject constructor() :
+    ListAdapter<CartProductAdapterModel, BaseViewHolder<ViewBinding, CartProductAdapterModel>>(
+        CartProductDiffCallback()
+    ) {
 
-    lateinit var consumerCartViewModel: ConsumerCartViewModel
     var canBeChanged: Boolean = true
+    lateinit var consumerCartViewModel: ConsumerCartViewModel
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CartProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -30,37 +34,94 @@ class CartProductsAdapter @Inject constructor(
         return CartProductViewHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: CartProductViewHolder, i: Int) {
-        holder.binding?.cartProduct = itemList[i]
-        holder.binding?.stringHelper = stringHelper
-        holder.binding?.productHelper = productHelper
-        holder.binding?.elementCartProductCpCount?.toggleVisibility(canBeChanged)
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, CartProductAdapterModel>,
+        position: Int
+    ) {
+        holder.onBind(getItem(position))
+    }
 
-        if (canBeChanged) {
-            holder.setCountChangeListener(itemList[i])
-            if (holder.binding?.elementCartProductTvOldPrice != null) {
-                holder.binding.elementCartProductTvOldPrice.paintFlags =
-                    holder.binding.elementCartProductTvOldPrice.paintFlags or STRIKE_THRU_TEXT_FLAG
-            }
+    override fun onBindViewHolder(
+        holder: BaseViewHolder<ViewBinding, CartProductAdapterModel>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(getItem(position), payloads)
         }
     }
 
-    inner class CartProductViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = DataBindingUtil.bind<ElementCartProductBinding>(view)
+    inner class CartProductViewHolder(view: View) :
+        BaseViewHolder<ElementCartProductBinding, CartProductAdapterModel>(DataBindingUtil.bind(view)!!) {
 
-        fun setCountChangeListener(cartProduct: CartProduct) {
-            binding?.elementCartProductCpCount?.countChangeListener =
-                object : CountPicker.CountChangeListener {
-                    override fun onCountIncreased() {
-                        val updatedProduct = cartProduct.copy(count = cartProduct.count + 1)
-                        consumerCartViewModel.updateCartProduct(updatedProduct)
-                    }
+        override fun onBind(item: CartProductAdapterModel) {
+            super.onBind(item)
+            with(binding) {
+                elementCartProductTvTitle.text = item.name
+                elementCartProductTvCost.text = item.discountCost
+                elementCartProductTvOldCost.text = item.cost
+                elementCartProductCpCount.count = item.count
+                Picasso.get()
+                    .load(item.photoLink)
+                    .fit()
+                    .placeholder(R.drawable.default_product)
+                    .networkPolicy(NetworkPolicy.NO_CACHE)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .into(elementCartProductIvPhoto)
 
-                    override fun onCountDecreased() {
-                        val updatedProduct = cartProduct.copy(count = cartProduct.count - 1)
-                        consumerCartViewModel.updateCartProduct(updatedProduct)
-                    }
+                elementCartProductCpCount.toggleVisibility(canBeChanged)
+                if (item.discountCost.isNotEmpty()) {
+                    elementCartProductTvOldCost.paintFlags =
+                        elementCartProductTvOldCost.paintFlags or STRIKE_THRU_TEXT_FLAG
                 }
+
+                elementCartProductCpCount.countChangeListener =
+                    object : CountPicker.CountChangeListener {
+                        override fun onCountIncreased() {
+                            consumerCartViewModel.updateCartProduct(
+                                item.uuid,
+                                item.count + 1
+                            )
+                        }
+
+                        override fun onCountDecreased() {
+                            consumerCartViewModel.updateCartProduct(
+                                item.uuid,
+                                item.count - 1
+                            )
+                        }
+                    }
+            }
+        }
+
+        override fun onBind(item: CartProductAdapterModel, payloads: List<Any>) {
+            super.onBind(item, payloads)
+            if (payloads.last() as Boolean) {
+                with(binding) {
+                    elementCartProductTvCost.text = item.discountCost
+                    elementCartProductTvOldCost.text = item.cost
+                    elementCartProductCpCount.count = item.count
+
+                    elementCartProductCpCount.countChangeListener =
+                        object : CountPicker.CountChangeListener {
+                            override fun onCountIncreased() {
+                                consumerCartViewModel.updateCartProduct(
+                                    item.uuid,
+                                    item.count + 1
+                                )
+                            }
+
+                            override fun onCountDecreased() {
+                                consumerCartViewModel.updateCartProduct(
+                                    item.uuid,
+                                    item.count - 1
+                                )
+                            }
+                        }
+                }
+            }
         }
     }
 }

@@ -12,20 +12,44 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    signingConfigs {
+        release {
+            storeFile file("keystore.jks")
+            storePassword 'itisBB15092019'
+            keyAlias 'papakarloKey'
+            keyPassword 'Itispapakarlo08062004'
+        }
+    }
+
     defaultConfig {
         applicationId "com.bunbeuaty.papakarlo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.1.1"
+        versionCode 8
+        versionName "1.1.3.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "Admin_${variant.name}_${versionName}.apk"
+            }
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            buildConfigField 'String', 'FB_LINK', '"https://test-fooddelivery.firebaseio.com/"'
+        }
+
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'FB_LINK', '"https://fooddelivery-ce2ef-default-rtdb.firebaseio.com/"'
+            signingConfig signingConfigs.release
         }
     }
     kotlinOptions {
@@ -60,16 +84,12 @@ android {
     }
 }
 
-repositories {
-    maven { url 'https://jitpack.io' }
-    google()
-}
-
 dependencies {
     implementation project(":data")
     implementation project(":domain")
     implementation project(":common")
     implementation project(":presentation")
+    implementation project(":shared")
 
     implementation fileTree(dir: "libs", include: ["*.jar", "*.arr"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -103,6 +123,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.livedataVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
 
     //Dagger 2
     implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
@@ -117,8 +138,7 @@ dependencies {
     //Design
     implementation "com.google.android.material:material:$rootProject.materialDesignVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
-    implementation "com.miguelcatalan:materialsearchview:$rootProject.materialSerachVersion"
-    implementation "com.github.Triggertrap:SeekArc:$rootProject.seekArcVersion"
+    implementation "jp.wasabeef:recyclerview-animators:$rootProject.recyclerviewAnimatorsViewVersion"
 
     //Database
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
@@ -127,6 +147,8 @@ dependencies {
 
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
+    //true time
+    implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
     //picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
@@ -136,5 +158,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth'
+
+    //PinEntryEditText
+    implementation("com.alimuzaffar.lib:pinentryedittext:$rootProject.pinentryedittextVersion") {
+        exclude group: 'androidx.appcompat', module: 'appcompat'
+    }
+    //play:core
+    implementation "com.google.android.play:core:$rootProject.playCoreVersion"
+
+    //AppUpdater
+    implementation "com.github.javiersantos:AppUpdater:$rootProject.appUpdaterVersion"
 }
 

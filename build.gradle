@@ -1,16 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.31"
+    ext.kotlin_version = "1.5.20"
     repositories {
-        google()
-        jcenter()
+        google().content() {
+            excludeGroup "Kotlin/Native"
+        }
+        mavenCentral().content() {
+            excludeGroup "Kotlin/Native"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.5'
+        classpath 'com.google.gms:google-services:4.3.8'
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,7 +23,10 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }
 
@@ -33,37 +40,41 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 30
     compileSdkVersion = 30
-    buildToolsVersion = "30.0.0"
+    buildToolsVersion = "30.0.2"
     constraintLayoutVersion = "1.1.3"
 
     // App dependencies
     viewModelVersion = "2.3.0-beta01"
-    dagger2Version = "2.33"
-    corountinesVersion = "1.4.2"
+    dagger2Version = "2.35.1"
+    corountinesVersion = "1.5.0"
 
     convertorGsonVersion = "2.8.1"
     convertorScalarsVersion = "2.0.1"
     mPAndroidChartVersion = "v3.1.0"
-    roomDatabaseVersion = "2.2.6"
-    datastoreVersion = "1.0.0-alpha08"
+    roomDatabaseVersion = "2.3.0"
+    datastoreVersion = "1.0.0-rc01"
+    lifecycleVersion = "2.4.0-alpha02"
     extensionsVersion = "2.2.0"
     viewmodelVersion = "2.3.1"
     livedataVersion = "2.3.1"
-    activityVersion = "1.2.2"
-    fragmentVersion = "1.3.2"
+    activityVersion = "1.2.3"
+    fragmentVersion = "1.3.5"
     workManagerVersion = "2.5.0"
     bluetoothManagerVersion = "1.3.9"
     bluetoothVersion = "1.3.9"
-    jodaVersion = "2.10.6"
+    jodaVersion = "2.10.9"
+    trueTimeVersion = "3.4"
     picassoVersion = "2.71828"
-    coreKtxVersion = "1.3.2"
-    appcompatVersion = "1.2.0"
-    navigationVersion = "2.3.4"
+    coreKtxVersion = "1.6.0"
+    appcompatVersion = "1.3.0"
+    navigationVersion = "2.3.5"
     firebaseVersion = "26.7.0"
+    browserVersion = "1.3.0"
 
     //design
-    materialDesignVersion = "1.3.0"
-    recyclerViewVersion = "1.1.0"
+    materialDesignVersion = "1.4.0"
+    recyclerViewVersion = "1.2.1"
+    recyclerviewAnimatorsViewVersion = "4.0.2"
     materialSerachVersion = "1.4.0"
     drawVersion = "v0.1"
     seekArcVersion = "v1.1"
@@ -72,13 +83,16 @@ ext {
     scannerVersion = "1.4.2"
     legacySupportVersion = "1.0.0"
     appcompatV7Version = "28.0.0"
+    pinentryedittextVersion = "2.0.6"
+    playCoreVersion = "1.10.0"
+    appUpdaterVersion = "2.7"
 
     // Test dependencies
-    mockitoVerchion = "3.3.3"
+    mockitoVerchion = "3.11.0"
     junitVerchion = "4.13.2"
-    testJunitVerchion = "1.1.2"
-    espressoVerchion = "3.3.0"
+    testJunitVerchion = "1.1.3"
+    espressoVerchion = "3.4.0"
     mockVerchion = "1.10.6"
-    runnerVerchion = "1.3.0"
-    rulesVerchion = "1.3.0"
+    runnerVerchion = "1.4.0"
+    rulesVerchion = "1.4.0"
 }

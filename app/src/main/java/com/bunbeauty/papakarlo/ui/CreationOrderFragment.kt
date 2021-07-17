@@ -5,53 +5,116 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.common.extensions.gone
-import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.common.extensions.visible
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
+import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.visible
+import com.bunbeauty.domain.util.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.CreationOrderViewModel
-import com.bunbeauty.papakarlo.ui.base.BarsFragment
+import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManager
+import com.google.android.play.core.review.ReviewManagerFactory
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, CreationOrderViewModel>() {
+class CreationOrderFragment : BaseFragment<FragmentCreationOrderBinding>() {
 
-    @Inject
-    lateinit var stringHelper: IStringHelper
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
-
+    override val viewModel: CreationOrderViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
+
+    @Inject
+    lateinit var fieldHelper: IFieldHelper
+
+
+    private var reviewInfo: ReviewInfo? = null
+    private var reviewManager: ReviewManager? = null
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        subscribe(viewModel.hasAddressLiveData) {
-            viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(it)
-            viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!it)
-        }
-        viewDataBinding.viewModel = viewModel
+        viewModel.hasAddressState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    viewDataBinding.fragmentCreationOrderGroupHasAddress.toggleVisibility(state.data)
+                    viewDataBinding.fragmentCreationOrderGroupNoAddress.toggleVisibility(!state.data)
+                }
+                else -> {
+                }
+            }
+        }.startedLaunch(viewLifecycleOwner)
 
-        subscribe(viewModel.addressLiveData) { address ->
-            viewDataBinding.fragmentCreationOrderBtnAddressPick.text =
-                stringHelper.toString(address)
-        }
+        viewModel.selectedAddressTextState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    viewDataBinding.fragmentCreationOrderBtnAddressPick.text = state.data
+                }
+                else -> {
+                }
+            }
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.getAddress()
+
+        viewModel.userState.onEach { state ->
+            when (state) {
+                is State.Success -> {
+                    if (state.data != null) {
+                        viewDataBinding.fragmentCreationOrderEtPhone.setText(
+                            state.data?.phone ?: ""
+                        )
+                        viewDataBinding.fragmentCreationOrderEtEmail.setText(
+                            state.data?.email ?: ""
+                        )
+                        viewDataBinding.fragmentCreationOrderTvBonusesValue.text =
+                            state.data?.bonusList?.sum().toString()
+                    } else {
+                        viewDataBinding.fragmentCreationOrderEtPhone.setText(
+                            viewModel.getCachedPhone()
+                        )
+                        viewDataBinding.fragmentCreationOrderEtEmail.setText(
+                            viewModel.getCachedEmail()
+                        )
+                        viewDataBinding.fragmentCreationOrderMcvBonuses.gone()
+                    }
+                    viewDataBinding.fragmentCreationOrderSvMain.visible()
+                    viewDataBinding.fragmentCreationOrderPbLoading.gone()
+                }
+                else -> {
+                }
+            }
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.getUser()
+
+        viewModel.deferredTextStateFlow.onEach { deferredText ->
+            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.subscribeOnDeferredText()
+
         subscribe(viewModel.deliveryStringLiveData) { deliveryString ->
             viewDataBinding.fragmentCreationOrderTvDelivery.text = deliveryString
         }
-        subscribe(viewModel.orderStringLiveData) { orderString ->
+
+        viewModel.orderStringStateFlow.onEach { orderString ->
             viewDataBinding.fragmentCreationOrderBtnCreateOrder.text = orderString
-        }
-        subscribe(viewModel.isDeliveryLiveData) { isDelivery ->
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.subscribeOnOrderString()
+
+        viewModel.isDeliveryState.onEach { isDelivery ->
             if (isDelivery) {
                 activateButton(viewDataBinding.fragmentCreationOrderBtnDelivery)
                 inactivateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
@@ -60,8 +123,30 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
                 activateButton(viewDataBinding.fragmentCreationOrderBtnPickup)
             }
             viewDataBinding.fragmentCreationOrderTvDelivery.toggleVisibility(isDelivery)
+        }.startedLaunch(viewLifecycleOwner)
+
+        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentCreationOrderEtPhone)
+        viewDataBinding.fragmentCreationOrderEtPhone.addTextChangedListener(phoneTextWatcher)
+
+        setOnClickListeners()
+
+        reviewManager = ReviewManagerFactory.create(requireContext())
+        val request = reviewManager?.requestReviewFlow()
+        request?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // We got the ReviewInfo object
+                reviewInfo = task.result
+            } else {
+                // There was some problem, log or handle the error code.
+                //@ReviewErrorCode val reviewErrorCode = (task.exception as TaskException).errorCode
+            }
         }
 
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+
+    private fun setOnClickListeners() {
         viewDataBinding.fragmentCreationOrderBtnAddressPick.setOnClickListener {
             viewModel.onAddressClicked()
         }
@@ -72,32 +157,24 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             createOrder()
         }
         viewDataBinding.fragmentCreationOrderBtnDelivery.setOnClickListener {
-            viewModel.isDeliveryLiveData.value = true
+            viewModel.isDeliveryState.value = true
         }
         viewDataBinding.fragmentCreationOrderBtnPickup.setOnClickListener {
-            viewModel.isDeliveryLiveData.value = false
-        }
-        viewDataBinding.fragmentOrderEtPhone.setText(viewModel.phoneNumber)
-        viewDataBinding.fragmentOrderEtEmail.setText(viewModel.email)
-        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentOrderEtPhone)
-        viewDataBinding.fragmentOrderEtPhone.addTextChangedListener(phoneTextWatcher)
-        viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
-            showTimePicker()
+            viewModel.isDeliveryState.value = false
         }
         viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.setOnClickListener {
             showTimePicker()
         }
-        subscribe(viewModel.deferredTextLiveData) { deferredText ->
-            viewDataBinding.fragmentCreationOrderBtnSelectedDeferred.text = deferredText
+        viewDataBinding.fragmentCreationOrderBtnDeferred.setOnClickListener {
+            showTimePicker()
         }
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun showTimePicker() {
         val picker = MaterialTimePicker.Builder()
             .setTimeFormat(CLOCK_24H)
-            .setHour(viewModel.deferredHoursLiveData.value ?: 0)
-            .setMinute(viewModel.deferredMinutesLiveData.value ?: 0)
+            .setHour(viewModel.deferredHoursStateFlow.value ?: 0)
+            .setMinute(viewModel.deferredMinutesStateFlow.value ?: 0)
             .setTitleText(requireContext().getString(R.string.title_creation_order_deferred_time))
             .build()
         picker.show(parentFragmentManager, "TimePicker")
@@ -106,58 +183,63 @@ class CreationOrderFragment : BarsFragment<FragmentCreationOrderBinding, Creatio
             if (viewModel.isDeferredTimeCorrect(picker.hour, picker.minute)) {
                 viewDataBinding.fragmentCreationOrderGroupAddDeferred.gone()
                 viewDataBinding.fragmentCreationOrderGroupPickedDeferred.visible()
-                viewModel.deferredHoursLiveData.value = picker.hour
-                viewModel.deferredMinutesLiveData.value = picker.minute
-
+                viewModel.deferredHoursStateFlow.value = picker.hour
+                viewModel.deferredMinutesStateFlow.value = picker.minute
             } else {
-                showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
+                //showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
             }
         }
         picker.addOnNegativeButtonClickListener {
             viewDataBinding.fragmentCreationOrderGroupAddDeferred.visible()
             viewDataBinding.fragmentCreationOrderGroupPickedDeferred.gone()
-            viewModel.deferredHoursLiveData.value = null
-            viewModel.deferredMinutesLiveData.value = null
+            viewModel.deferredHoursStateFlow.value = null
+            viewModel.deferredMinutesStateFlow.value = null
         }
     }
 
     private fun createOrder() {
-        if (!viewModel.isNetworkConnected()) {
-            showError(requireContext().getString(R.string.error_creation_order_connect))
-            return
-        }
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtComment.text.toString(),
+        if (!fieldHelper.isCorrectFieldContent(
+                viewDataBinding.fragmentCreationOrderEtComment.text.toString(),
                 false,
                 100
             )
         ) {
-            viewDataBinding.fragmentOrderEtComment.error =
+            viewDataBinding.fragmentCreationOrderEtComment.error =
                 resources.getString(R.string.error_creation_order_comment)
-            viewDataBinding.fragmentOrderEtComment.requestFocus()
+            viewDataBinding.fragmentCreationOrderEtComment.requestFocus()
             return
         }
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentOrderEtPhone.text.toString(),
+        if (!fieldHelper.isCorrectFieldContent(
+                viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
                 true,
                 18,
                 18
             )
         ) {
-            viewDataBinding.fragmentOrderEtPhone.error =
+            viewDataBinding.fragmentCreationOrderEtPhone.error =
                 resources.getString(R.string.error_creation_order_phone)
-            viewDataBinding.fragmentOrderEtPhone.requestFocus()
+            viewDataBinding.fragmentCreationOrderEtPhone.requestFocus()
             return
         }
 
         viewModel.createOrder(
-            viewDataBinding.fragmentOrderEtComment.text.toString().trim(),
-            viewDataBinding.fragmentOrderEtPhone.text.toString(),
-            viewDataBinding.fragmentOrderEtEmail.text.toString().trim(),
-            viewModel.deferredHoursLiveData.value,
-            viewModel.deferredMinutesLiveData.value
+            viewDataBinding.fragmentCreationOrderEtComment.text.toString().trim(),
+            viewDataBinding.fragmentCreationOrderEtPhone.text.toString(),
+            viewDataBinding.fragmentCreationOrderEtEmail.text.toString().trim(),
+            viewModel.deferredHoursStateFlow.value,
+            viewModel.deferredMinutesStateFlow.value,
+            viewDataBinding.fragmentCreationOrderEtBonuses.text.toString()
         )
+
+        if (reviewInfo != null)
+            reviewManager?.launchReviewFlow(requireActivity(), reviewInfo!!)
+                ?.addOnCompleteListener { _ ->
+                    val t = 0
+                    //show toast
+                    // The flow has finished. The API does not indicate whether the user
+                    // reviewed or not, or even whether the review dialog was shown. Thus, no
+                    // matter the result, we continue our app flow.
+                }
     }
 
     private fun activateButton(button: MaterialButton) {

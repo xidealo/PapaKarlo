@@ -4,3 +4,4 @@ include ':domain'
 include ':data'
 include ':app'
 rootProject.name = "PapaKarlo"
+include ':shared'

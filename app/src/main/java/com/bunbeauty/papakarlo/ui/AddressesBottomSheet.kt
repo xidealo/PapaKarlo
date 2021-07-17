@@ -2,22 +2,24 @@ package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
 import android.view.View
-import com.bunbeauty.common.extensions.toggleVisibility
-import com.bunbeauty.papakarlo.BR
+import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
-import com.bunbeauty.papakarlo.presentation.AddressesViewModel
+import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class AddressesBottomSheet :
-    BaseBottomSheetDialog<BottomSheetAddressesBinding, AddressesViewModel>() {
+class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>() {
 
-    override var layoutId = R.layout.bottom_sheet_addresses
-    override var viewModelVariable = BR.viewModel
+    override val viewModel: AddressesViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -30,12 +32,26 @@ class AddressesBottomSheet :
         super.onViewCreated(view, savedInstanceState)
 
         val isDelivery = fromBundle(requireArguments()).isDelivery
-        addressesAdapter.addressesViewModel = viewModel
-
-        viewModel.isDelivery = isDelivery
-        viewModel.addressesLiveData.observe(viewLifecycleOwner) {
-            addressesAdapter.setItemList(it)
+        addressesAdapter.onItemClickListener = { address ->
+            viewModel.saveSelectedAddress(address.uuid, isDelivery)
         }
+
+        viewModel.addressListState.onEach { state ->
+            when (state) {
+                is State.Loading -> {
+                }
+                is State.Success -> {
+                    addressesAdapter.setItemList(
+                        state.data,
+                        MyDiffCallback(state.data, addressesAdapter.itemList)
+                    )
+                }
+                else -> {
+                }
+            }
+        }.startedLaunch(viewLifecycleOwner)
+
+        viewModel.getAddresses(isDelivery)
 
         if (isDelivery) {
             viewDataBinding.bottomSheetAddressTvAddress.text =
@@ -49,7 +65,7 @@ class AddressesBottomSheet :
         viewDataBinding.fragmentCreationOrderIvCreateAddress.toggleVisibility(isDelivery)
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
         viewDataBinding.bottomSheetAddressBtnCreateAddress.setOnClickListener {
-            viewModel.createAddressClick()
+            viewModel.onCreateAddressClicked()
         }
     }
 }

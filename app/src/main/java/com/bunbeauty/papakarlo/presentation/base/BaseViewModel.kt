@@ -1,62 +1,34 @@
 package com.bunbeauty.papakarlo.presentation.base
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
-import com.bunbeauty.data.model.CartProduct
-import com.bunbeauty.data.model.MenuProduct
-import com.bunbeauty.domain.IMessageShowable
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
-import com.bunbeauty.domain.repository.cart_product.CartProductRepo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel : ViewModel(), CoroutineScope {
-
-    override val coroutineContext: CoroutineContext = Job()
-
-    @Inject
-    lateinit var cartProductRepo: CartProductRepo
+abstract class BaseViewModel : ViewModel() {
 
     @Inject
     lateinit var router: Router
 
-    var messageShowable: WeakReference<IMessageShowable>? = null
+    private val mutableMessage: MutableSharedFlow<String> = MutableSharedFlow(replay = 0)
+    val message: SharedFlow<String> = mutableMessage.asSharedFlow()
 
-    val isCartEmptyLiveData = MutableLiveData(false)
+    private val mutableError: MutableSharedFlow<String> = MutableSharedFlow(replay = 0)
+    val error: SharedFlow<String> = mutableError.asSharedFlow()
 
-    val cartProductListLiveData by lazy {
-        map(cartProductRepo.getCartProductListLiveData()) { productList ->
-            isCartEmptyLiveData.value = productList.isEmpty()
-            productList
+    protected fun showMessage(message: String) {
+        viewModelScope.launch {
+            mutableMessage.emit(message)
         }
     }
 
-    fun addProductToCart(menuProduct: MenuProduct) = launch(Dispatchers.IO) {
-        val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
-            cartProduct.menuProduct == menuProduct
+    protected fun showError(error: String) {
+        viewModelScope.launch {
+            mutableError.emit(error)
         }
-
-        if (cartProduct == null) {
-            cartProductRepo.insert(CartProduct(menuProduct = menuProduct))
-        } else {
-            cartProduct.count++
-            cartProductRepo.update(cartProduct)
-        }
-        showMessage("Вы добавили ${menuProduct.name} в корзину")
-    }
-
-
-    fun showMessage(message: String) {
-        messageShowable?.get()?.showMessage(message)
-    }
-
-    fun showError(error: String) {
-        messageShowable?.get()?.showError(error)
     }
 }

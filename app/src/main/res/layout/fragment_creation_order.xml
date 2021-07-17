@@ -3,24 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.presentation.CreationOrderViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
         tools:context=".ui.CreationOrderFragment">
 
         <ScrollView
+            android:id="@+id/fragment_creation_order_sv_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scrollbars="none"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_creation_order_btn_create_order"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -68,8 +61,8 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_address"
-                    style="@style/MaterialCardCreationOrder"
-                    android:layout_marginTop="@dimen/medium_margin"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_delivery">
@@ -83,6 +76,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_address"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,7 +84,6 @@
                             android:id="@+id/fragment_creation_order_btn_address_pick"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            android:layout_margin="@dimen/small_margin"
                             android:fontFamily="@font/font_roboto_regular"
                             android:gravity="start"
                             android:text="@string/action_creation_address_address"
@@ -123,7 +116,6 @@
                             android:id="@+id/fragment_creation_order_btn_create_address"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/action_creation_address_address"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,10 +144,10 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_contacts"
-                    style="@style/MaterialCardCreationOrder"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address">
 
@@ -168,6 +160,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_contact"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,9 +175,8 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_phone"
+                                android:id="@+id/fragment_creation_order_et_phone"
                                 style="@style/MaterialInput"
-
                                 android:inputType="phone" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,7 +192,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_email"
+                                android:id="@+id/fragment_creation_order_et_email"
                                 style="@style/MaterialInput"
                                 android:inputType="textEmailAddress" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -209,7 +201,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_creation_order_mcv_extra_info"
-                    style="@style/MaterialCardCreationOrder"
+                    style="@style/DefaultMaterialCard"
                     android:layout_marginTop="@dimen/small_margin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_contacts">
@@ -223,6 +215,7 @@
                             style="@style/MainTitle"
                             android:layout_margin="@dimen/small_margin"
                             android:text="@string/title_creation_order_extra_extra_comment"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -239,7 +232,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_order_et_comment"
+                                android:id="@+id/fragment_creation_order_et_comment"
                                 style="@style/MaterialInput"
                                 android:inputType="textCapSentences" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -254,7 +247,6 @@
                             android:id="@+id/fragment_creation_order_btn_deferred"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            android:layout_margin="@dimen/small_margin"
                             android:text="@string/hint_creation_order_deferred"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -280,7 +272,6 @@
                             android:id="@+id/fragment_creation_order_btn_selected_deferred"
                             style="@style/OutLineButton"
                             android:layout_width="0dp"
-                            android:layout_margin="@dimen/small_margin"
                             android:fontFamily="@font/font_roboto_regular"
                             android:gravity="start"
                             android:text="@string/action_creation_address_address"
@@ -300,15 +291,77 @@
                             app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_selected_deferred" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/fragment_creation_order_mcv_bonuses"
+                    style="@style/DefaultMaterialCard"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_extra_info">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/fragment_creation_order_tv_bonuses"
+                            style="@style/MainTitle"
+                            android:layout_margin="@dimen/small_margin"
+                            android:text="@string/title_creation_order_extra_bonuses"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/fragment_creation_order_tv_bonuses_value"
+                            style="@style/MainText"
+                            android:layout_margin="@dimen/small_margin"
+                            android:drawablePadding="@dimen/large_padding"
+                            app:drawableLeftCompat="@drawable/ic_bonus"
+                            app:drawableTint="@color/mainTextColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_bonuses"
+                            tools:text="0 ₽" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/fragment_creation_order_til_bonuses"
+                            style="@style/MaterialInputLayout"
+                            android:layout_margin="@dimen/small_margin"
+                            android:layout_marginTop="@dimen/small_margin"
+                            android:hint="@string/hint_creation_order_extra_bonuses"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_bonuses_value">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fragment_creation_order_et_bonuses"
+                                style="@style/MaterialInput"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fragment_creation_order_btn_create_order"
+                    style="@style/MainButton"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_bonuses" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_creation_order_btn_create_order"
-            style="@style/MainButton"
+        <ProgressBar
+            android:id="@+id/fragment_creation_order_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

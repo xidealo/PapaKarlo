@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.ConfirmFragment">
+
+        <TextView
+            android:id="@+id/fragment_confirm_tv_information"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/title_confirm_information"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_tv_phone_information"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_confirm_tv_phone_information"
+            style="@style/MainText"
+            android:layout_margin="@dimen/small_margin"
+            android:gravity="center"
+            android:text="@string/title_confirm_prone_information"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_peet_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.alimuzaffar.lib.pin.PinEntryEditText
+            android:id="@+id/fragment_confirm_peet_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_margin"
+            android:cursorVisible="false"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColor="@color/mainTextColor"
+            android:textIsSelectable="false"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pinAnimationType="fromBottom"
+            app:pinLineStroke="2dp" />
+
+        <ProgressBar
+            android:id="@+id/fragment_confirm_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_confirm_tv_resend"
+            style="@style/HelpTextCenter"
+            android:text="@string/msg_confirm_prone_resend"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_peet_code" />
+
+        <TextView
+            android:id="@+id/fragment_confirm_tv_resend_code"
+            style="@style/HelpTextCenter"
+            android:text="@string/msg_confirm_prone_resend_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_peet_code" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

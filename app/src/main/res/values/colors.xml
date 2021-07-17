@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#ff6900</color>
-
     <color name="colorPrimaryDark">#000000</color>
-    <color name="errorColor">#B1021D</color>
+    <color name="colorPrimaryLight">#FFD2B0</color>
 
     <color name="black" tools:override="true">#000000</color>
     <color name="white" tools:override="true">#FFFFFF</color>
@@ -23,7 +22,11 @@
 
     <!-- TEXT -->
     <color name="mainTextColor" tools:override="true">#FFFFFF</color>
+    <color name="secondaryTextColor">#A7A5A5</color>
     <color name="buttonTextColor" >#FFFFFF</color>
     <color name="hintColor">#93969A</color>
     <color name="iconTintColor">#93969A</color>
+
+    <!-- SPECIAL -->
+    <color name="errorColor">#B1021D</color>
 </resources>

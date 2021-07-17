@@ -2,37 +2,46 @@ package com.bunbeauty.papakarlo.ui.base
 
 import android.content.Context
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import com.bunbeauty.domain.IMessageShowable
+import androidx.lifecycle.observe
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.getBinding
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import java.lang.ref.WeakReference
-import java.lang.reflect.ParameterizedType
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(),
-    IMessageShowable {
-
-    private var _viewDataBinding: B? = null
-    protected val viewDataBinding get() = _viewDataBinding!!
-    protected lateinit var viewModel: VM
+abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     @Inject
     lateinit var modelFactory: ViewModelProvider.Factory
+
+    abstract val viewModel: BaseViewModel
+
+    private var mutableViewDataBinding: B? = null
+    val viewDataBinding: B
+        get() = checkNotNull(mutableViewDataBinding)
+
+    open val isToolbarVisible = true
+    open val isLogoVisible = false
+    open val isCartVisible = false
+    open val isBottomBarVisible = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,64 +55,54 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
 
-    @Suppress("UNCHECKED_CAST")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(false)
-
-        viewModel = ViewModelProvider(this, modelFactory).get(getViewModelClass())
-        viewModel.messageShowable = WeakReference(this)
-
-        val viewBindingClass = getViewBindingClass()
-        val inflateMethod = viewBindingClass.getMethod(
-            "inflate",
-            LayoutInflater::class.java,
-            ViewGroup::class.java,
-            Boolean::class.java,
-        )
-        _viewDataBinding = inflateMethod.invoke(viewBindingClass, inflater, container, false) as B
-
+        mutableViewDataBinding = getBinding(inflater, container)
         return viewDataBinding.root
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewBindingClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<B>
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    @Suppress("UNCHECKED_CAST")
-    private fun getViewModelClass() =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[1] as Class<VM>
+        (activity as? IBottomNavigationBar)?.setupBottomNavigationBar(isBottomBarVisible)
+        (activity as? IToolbar)?.setToolbarConfiguration(
+            isToolbarVisible,
+            isLogoVisible,
+            isCartVisible
+        )
 
+        viewDataBinding.lifecycleOwner = this
+        viewDataBinding.executePendingBindings()
+
+        viewModel.message.onEach { message ->
+            showSnackbar(message, R.color.white, R.color.colorPrimary)
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.error.onEach { error ->
+            showSnackbar(error, R.color.white, R.color.errorColor)
+        }.startedLaunch(viewLifecycleOwner)
+    }
+
+    @Deprecated("use flow")
     protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
         liveData.observe(viewLifecycleOwner, observer::invoke)
     }
 
-    fun <T> Flow<T>.launchWhenStarted(lifecycleCoroutineScope: LifecycleCoroutineScope){
-        lifecycleCoroutineScope.launchWhenStarted {
-            this@launchWhenStarted.collect()
+    private fun showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
+        val snack = Snackbar.make(viewDataBinding.root, errorMessage, Snackbar.LENGTH_SHORT)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), backgroundColorId))
+            .setTextColor(ContextCompat.getColor(requireContext(), textColorId))
+            .setActionTextColor(ContextCompat.getColor(requireContext(), textColorId))
+        val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
+            gravity = Gravity.TOP
+            setMargins(16, 16, 16, 0)
         }
-    }
-
-    override fun showMessage(message: String) {
-        val snack = Snackbar.make(viewDataBinding.root, message, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
-            View.TEXT_ALIGNMENT_CENTER
-        snack.show()
-    }
-
-    override fun showError(error: String) {
-        val snack = Snackbar.make(viewDataBinding.root, error, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.errorColor))
-            .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-            .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        snack.view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
-            View.TEXT_ALIGNMENT_CENTER
-        snack.show()
+        with(snack) {
+            view.layoutParams = layoutParams
+            view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
+            show()
+        }
     }
 }

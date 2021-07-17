@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_menu"
         android:title="@string/title_bottom_navigation_menu_menu" />
     <item
-        android:id="@+id/orders_fragment"
-        android:icon="@drawable/ic_order"
-        android:title="@string/title_bottom_navigation_menu_orders" />
+        android:id="@+id/profile_fragment"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/title_bottom_navigation_profile" />
 </menu>

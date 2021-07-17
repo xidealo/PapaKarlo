@@ -1,51 +1,66 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.domain.repository.api.ApiRepository
-import com.bunbeauty.domain.repository.api.IApiRepository
-import com.bunbeauty.data.utils.DataStoreHelper
-import com.bunbeauty.data.utils.IDataStoreHelper
-import com.bunbeauty.domain.network.INetworkHelper
-import com.bunbeauty.domain.network.NetworkHelper
-import com.bunbeauty.domain.product.IProductHelper
-import com.bunbeauty.domain.product.ProductHelper
-import com.bunbeauty.domain.resources.IResourcesProvider
-import com.bunbeauty.domain.resources.ResourcesProvider
-import com.bunbeauty.domain.string_helper.IStringHelper
-import com.bunbeauty.domain.string_helper.StringHelper
-import com.bunbeauty.domain.uri.IUriHelper
-import com.bunbeauty.domain.uri.UriHelper
+import com.bunbeauty.data.repository.ApiRepository
+import com.bunbeauty.data.repository.DataStoreRepository
+import com.bunbeauty.domain.repo.ApiRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.util.cafe.CafeUtil
+import com.bunbeauty.domain.util.cafe.ICafeUtil
+import com.bunbeauty.domain.util.field_helper.FieldHelper
+import com.bunbeauty.domain.util.field_helper.IFieldHelper
+import com.bunbeauty.domain.util.network.INetworkHelper
+import com.bunbeauty.domain.util.network.NetworkHelper
+import com.bunbeauty.domain.util.order.IOrderUtil
+import com.bunbeauty.domain.util.order.OrderUtil
+import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.util.product.ProductHelper
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.domain.util.resources.ResourcesProvider
+import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.StringHelper
+import com.bunbeauty.domain.util.uri.IUriHelper
+import com.bunbeauty.domain.util.uri.UriHelper
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
 
 @Module
-abstract class ApiModule {
+interface ApiModule {
 
     //NETWORK
 
     @Binds
-    abstract fun bindApiRepository(apiRepository: ApiRepository): IApiRepository
+    fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
 
     // DATA_STORE
 
     @Singleton
     @Binds
-    abstract fun bindDataStoreHelper(dataStoreHelper: DataStoreHelper): IDataStoreHelper
+    fun bindDataStoreHelper(dataStoreRepository: DataStoreRepository): DataStoreRepo
 
     // HELPERS
 
     @Binds
-    abstract fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
+    fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
 
     @Binds
-    abstract fun bindUriHelper(uriHelper: UriHelper): IUriHelper
+    fun bindUriHelper(uriHelper: UriHelper): IUriHelper
 
     @Binds
-    abstract fun bindStringHelper(stringHelper: StringHelper): IStringHelper
+    fun bindStringHelper(stringHelper: StringHelper): IStringHelper
 
     @Binds
-    abstract fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
+    fun bindOrderUtil(orderUtil: OrderUtil): IOrderUtil
 
     @Binds
-    abstract fun bindProductHelper(productHelper: ProductHelper): IProductHelper
+    fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
+
+    @Binds
+    fun bindProductHelper(productHelper: ProductHelper): IProductHelper
+
+    @Binds
+    fun bindFieldHelper(fieldHelper: FieldHelper): IFieldHelper
+
+    @Binds
+    fun bindCafeUtil(cafeUtil: CafeUtil): ICafeUtil
 }

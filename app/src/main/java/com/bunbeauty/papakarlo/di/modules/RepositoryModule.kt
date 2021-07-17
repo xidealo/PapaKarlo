@@ -1,47 +1,57 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.domain.repository.address.AddressRepo
-import com.bunbeauty.domain.repository.address.AddressRepository
-import com.bunbeauty.domain.repository.cafe.CafeRepo
-import com.bunbeauty.domain.repository.cafe.CafeRepository
-import com.bunbeauty.domain.repository.cart_product.CartProductRepo
-import com.bunbeauty.domain.repository.cart_product.CartProductRepository
-import com.bunbeauty.domain.repository.delivery.DeliveryRepo
-import com.bunbeauty.domain.repository.delivery.DeliveryRepository
-import com.bunbeauty.domain.repository.district.DistrictRepo
-import com.bunbeauty.domain.repository.district.DistrictRepository
-import com.bunbeauty.domain.repository.menu_product.MenuProductRepo
-import com.bunbeauty.domain.repository.menu_product.MenuProductRepository
-import com.bunbeauty.domain.repository.order.OrderRepo
-import com.bunbeauty.domain.repository.order.OrderRepository
-import com.bunbeauty.domain.repository.street.StreetRepo
-import com.bunbeauty.domain.repository.street.StreetRepository
+import com.bunbeauty.domain.repo.CafeAddressRepo
+import com.bunbeauty.data.repository.CafeAddressRepository
+import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.data.repository.CafeRepository
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.data.repository.UserAddressRepository
+import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.data.repository.CartProductRepository
+import com.bunbeauty.domain.repo.DeliveryRepo
+import com.bunbeauty.data.repository.DeliveryRepository
+import com.bunbeauty.domain.repo.DistrictRepo
+import com.bunbeauty.data.repository.DistrictRepository
+import com.bunbeauty.domain.repo.MenuProductRepo
+import com.bunbeauty.data.repository.MenuProductRepository
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.data.repository.OrderRepository
+import com.bunbeauty.domain.repo.StreetRepo
+import com.bunbeauty.data.repository.StreetRepository
+import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.data.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 
 @Module
-abstract class RepositoryModule {
+interface RepositoryModule {
     @Binds
-    abstract fun bindCartProductRepo(cartProductRepository: CartProductRepository): CartProductRepo
+    fun bindCartProductRepo(cartProductRepository: CartProductRepository): CartProductRepo
 
     @Binds
-    abstract fun bindOrderRepo(orderRepository: OrderRepository): OrderRepo
+    fun bindOrderRepo(orderRepository: OrderRepository): OrderRepo
 
     @Binds
-    abstract fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
+    fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
 
     @Binds
-    abstract fun bindAddressRepo(addressRepository: AddressRepository): AddressRepo
+    fun bindCafeAddressRepo(cafeAddressRepository: CafeAddressRepository): CafeAddressRepo
 
     @Binds
-    abstract fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
+    fun bindUserAddressRepo(userAddressRepository: UserAddressRepository): UserAddressRepo
 
     @Binds
-    abstract fun bindDistrictRepo(districtRepository: DistrictRepository): DistrictRepo
+    fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
 
     @Binds
-    abstract fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+    fun bindDistrictRepo(districtRepository: DistrictRepository): DistrictRepo
 
     @Binds
-    abstract fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
+    fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+
+    @Binds
+    fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
+
+    @Binds
+    fun bindUserRepo(userRepository: UserRepository): UserRepo
 }

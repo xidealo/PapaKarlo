@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="notAcceptedColor">#AC92EC</color>
+    <color name="acceptedColor">#4FC1E9</color>
+    <color name="preparingColor">#5D9CEC</color>
+    <color name="sentOutColor">#FFCE54</color>
+    <color name="doneColor">#A0D451</color>
+    <color name="deliveredColor">#48CFAD</color>
+    <color name="canceledColor">#EC87C0</color>
+    <color name="light_green">#44AF49</color>
+    <color name="light_red">#FF6B60</color>
+</resources>
