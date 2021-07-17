@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringHelper
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -109,12 +109,14 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                             viewDataBinding.fragmentOrderDetailsTvDeliveryCostValue.gone()
                             viewDataBinding.fragmentOrderDetailsTvDeliveryCost.gone()
                         }
-                        viewDataBinding.fragmentOrderDetailsCvMain.visible()
+                        viewDataBinding.fragmentOrderDetailsClMain.visible()
+                        viewDataBinding.fragmentOrderDetailsClBottomCost.visible()
                         viewDataBinding.fragmentOrderDetailsPbLoading.gone()
                     }
                 }
                 is State.Loading -> {
-                    viewDataBinding.fragmentOrderDetailsCvMain.gone()
+                    viewDataBinding.fragmentOrderDetailsClMain.gone()
+                    viewDataBinding.fragmentOrderDetailsClBottomCost.gone()
                     viewDataBinding.fragmentOrderDetailsPbLoading.visible()
                 }
                 else -> Unit
