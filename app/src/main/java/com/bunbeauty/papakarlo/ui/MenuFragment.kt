@@ -14,6 +14,9 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.github.javiersantos.appupdater.AppUpdater
+import com.github.javiersantos.appupdater.enums.Display
+import com.github.javiersantos.appupdater.enums.UpdateFrom
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -34,6 +37,14 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        AppUpdater(requireContext())
+            .setDisplay(Display.DIALOG)
+            .setCancelable(false)
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .showAppUpdated(true)
+            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
+            .start()
 
         viewDataBinding.fragmentMenuTl.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
