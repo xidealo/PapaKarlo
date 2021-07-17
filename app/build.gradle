@@ -167,5 +167,7 @@ dependencies {
     //play:core
     implementation "com.google.android.play:core:$rootProject.playCoreVersion"
 
+    //AppUpdater
+    implementation "com.github.javiersantos:AppUpdater:$rootProject.appUpdaterVersion"
 }
 
