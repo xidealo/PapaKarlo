@@ -7,13 +7,14 @@ import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetAddressesBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
-import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
+import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
+import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -56,16 +57,16 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
         if (isDelivery) {
             viewDataBinding.bottomSheetAddressTvAddress.text =
                 requireContext().resources.getString(R.string.title_bottom_sheet_addresses_your_address)
+            viewDataBinding.bottomSheetAddressMcvTitle.setOnClickListener {
+                viewModel.onCreateAddressClicked()
+            }
+            viewDataBinding.bottomSheetAddressIvCreateAddress.visible()
+
         } else {
             viewDataBinding.bottomSheetAddressTvAddress.text =
                 requireContext().resources.getString(R.string.title_bottom_sheet_addresses_cafe_address)
+            viewDataBinding.bottomSheetAddressIvCreateAddress.gone()
         }
-
-        viewDataBinding.bottomSheetAddressBtnCreateAddress.toggleVisibility(isDelivery)
-        viewDataBinding.fragmentCreationOrderIvCreateAddress.toggleVisibility(isDelivery)
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
-        viewDataBinding.bottomSheetAddressBtnCreateAddress.setOnClickListener {
-            viewModel.onCreateAddressClicked()
-        }
     }
 }
