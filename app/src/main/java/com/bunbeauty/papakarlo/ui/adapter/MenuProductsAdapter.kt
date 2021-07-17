@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.graphics.Bitmap
+import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.domain.model.adapter.MenuProductAdapterModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
