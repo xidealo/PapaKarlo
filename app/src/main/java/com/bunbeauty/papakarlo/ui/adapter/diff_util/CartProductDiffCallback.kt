@@ -1,27 +1,27 @@
 package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.presentation.view_model.base.adapter.CartProductAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 
-class CartProductDiffCallback : DiffUtil.ItemCallback<CartProductAdapterModel>() {
+class CartProductDiffCallback : DiffUtil.ItemCallback<CartProductItem>() {
 
     override fun areItemsTheSame(
-        oldItem: CartProductAdapterModel,
-        newItem: CartProductAdapterModel
+        oldItem: CartProductItem,
+        newItem: CartProductItem
     ): Boolean {
         return oldItem.uuid == newItem.uuid
     }
 
     override fun areContentsTheSame(
-        oldItem: CartProductAdapterModel,
-        newItem: CartProductAdapterModel
+        oldItem: CartProductItem,
+        newItem: CartProductItem
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun getChangePayload(
-        oldItem: CartProductAdapterModel,
-        newItem: CartProductAdapterModel
+        oldItem: CartProductItem,
+        newItem: CartProductItem
     ): Any? {
         return if (oldItem.count != newItem.count)
             true

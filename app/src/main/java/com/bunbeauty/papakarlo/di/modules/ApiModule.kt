@@ -16,8 +16,8 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.product.ProductHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.resources.ResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.domain.util.string_helper.StringHelper
+import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.domain.util.string_helper.StringUtil
 import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.domain.util.uri.UriHelper
 import dagger.Binds
@@ -47,7 +47,7 @@ interface ApiModule {
     fun bindUriHelper(uriHelper: UriHelper): IUriHelper
 
     @Binds
-    fun bindStringHelper(stringHelper: StringHelper): IStringHelper
+    fun bindStringHelper(stringHelper: StringUtil): IStringUtil
 
     @Binds
     fun bindOrderUtil(orderUtil: OrderUtil): IOrderUtil

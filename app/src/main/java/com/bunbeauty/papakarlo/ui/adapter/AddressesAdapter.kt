@@ -7,12 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
-import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
 import javax.inject.Inject
 
 class AddressesAdapter @Inject constructor(
-    private val iStringHelper: IStringHelper
+    private val iStringUtil: IStringUtil
 ) : BaseAdapter<AddressesAdapter.AddressViewHolder, Address, MyDiffCallback>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AddressViewHolder {
@@ -24,7 +24,7 @@ class AddressesAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: AddressViewHolder, i: Int) {
         holder.binding?.address = itemList[i]
-        holder.binding?.iStringHelper = iStringHelper
+        holder.binding?.iStringHelper = iStringUtil
         holder.binding?.elementAddressMcvMain?.setOnClickListener{
             onItemClickListener?.invoke(itemList[i])
         }

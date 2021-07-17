@@ -24,7 +24,7 @@ class CartProductMapper @Inject constructor(
             "empty uuid",
             menuProduct = menuProductMapper.to(t.menuProduct),
             count = t.count,
-            orderId = t.orderId
+            orderUuid = t.orderId
         )
     }
 }

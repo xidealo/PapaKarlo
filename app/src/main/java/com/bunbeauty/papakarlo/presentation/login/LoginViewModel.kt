@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.presentation.login
 
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
 import com.bunbeauty.papakarlo.ui.LoginFragmentDirections
 import javax.inject.Inject
 

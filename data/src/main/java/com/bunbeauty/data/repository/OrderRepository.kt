@@ -30,7 +30,7 @@ class OrderRepository @Inject constructor(
             apiRepo.insert(orderMapper.from(order), order.cafeId)
         orderDao.insert(order.orderEntity)
         for (cardProduct in order.cartProducts) {
-            cardProduct.orderId = order.orderEntity.uuid
+            cardProduct.orderUuid = order.orderEntity.uuid
             cartProductRepo.update(cardProduct)
         }
         subscribeOnActiveOrder(UserOrder(cafeId = order.cafeId, orderId = order.orderEntity.uuid))
@@ -40,9 +40,9 @@ class OrderRepository @Inject constructor(
     suspend fun insertToLocal(order: Order) {
         if (orderDao.getOrderByUuid(order.orderEntity.uuid) == null) {
             for (cardProduct in order.cartProducts) {
-                cardProduct.orderId = order.orderEntity.uuid
+                cardProduct.orderUuid = order.orderEntity.uuid
                 cardProduct.uuid = UUID.randomUUID().toString()
-                cartProductRepo.insertToLocal(cardProduct)
+                cartProductRepo.insert(cardProduct)
             }
         }
         orderDao.insert(order.orderEntity)

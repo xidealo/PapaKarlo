@@ -5,32 +5,32 @@ import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
+import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeListViewModel @Inject constructor(
     private val cafeRepo: CafeRepo,
+    private val cafeUtil: ICafeUtil,
     cartProductRepo: CartProductRepo,
-    private val stringUtil: IStringHelper,
-    productHelper: IProductHelper,
-    private val cafeUtil: ICafeUtil
-) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
+    stringUtil: IStringUtil,
+    productHelper: IProductHelper
+) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
     val cafeListFlow by lazy {
         cafeRepo.cafeEntityListFlow.map { cafeList -> cafeList.map(::toItemModel) }
     }
 
-    fun onCafeCardClick(cafeAdapterModel: CafeAdapterModel) {
-        router.navigate(toCafeOptionsBottomSheet(cafeAdapterModel))
+    fun onCafeCardClick(cafeItem: CafeItem) {
+        router.navigate(toCafeOptionsBottomSheet(cafeItem))
     }
 
-    private fun toItemModel(cafe: Cafe): CafeAdapterModel {
-        return CafeAdapterModel(
+    private fun toItemModel(cafe: Cafe): CafeItem {
+        return CafeItem(
             uuid = cafe.cafeEntity.id,
             address = stringUtil.toString(cafe.address),
             workingHours = stringUtil.toStringWorkingHours(cafe.cafeEntity),

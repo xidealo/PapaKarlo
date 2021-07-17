@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +32,6 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import javax.inject.Inject
 
-
 class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
     lateinit var viewDataBinding: ActivityMainBinding
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
     lateinit var router: Router
 
     @Inject
-    lateinit var iResourcesProvider: IResourcesProvider
+    lateinit var resourcesProvider: IResourcesProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -73,12 +73,12 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         checkUpdates()
 /*
-        AppUpdater(this)
-            .setDisplay(Display.DIALOG)
-            .setCancelable(false)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
-            .start()
+//        AppUpdater(this)
+//            .setDisplay(Display.DIALOG)
+//            .setCancelable(false)
+//            .setUpdateFrom(UpdateFrom.GITHUB)
+//            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
+//            .start()
 */
 
         // Uploading menu products to FB
@@ -106,11 +106,11 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
             if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 Snackbar.make(
                     viewDataBinding.activityMainClMain,
-                    iResourcesProvider.getString(R.string.msg_main_activity_downloaded),
+                    resourcesProvider.getString(R.string.msg_main_activity_downloaded),
                     Snackbar.LENGTH_INDEFINITE
                 ).apply {
                     setAction(
-                        iResourcesProvider.getString(R.string.action_main_activity_reload),
+                        resourcesProvider.getString(R.string.action_main_activity_reload),
                     ) {
                         appUpdateManager.completeUpdate()
                         val intent = Intent(context, MainActivity::class.java)
@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         viewDataBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
         viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
         viewDataBinding.activityMainTvCart.toggleVisibility(isCartVisible)
+        viewDataBinding.activityMainIvCart.toggleVisibility(isCartVisible)
     }
 
     override fun setCartText(cartText: String) {
@@ -158,13 +159,16 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
             setOf(R.id.cafe_list_fragment, R.id.menu_fragment, R.id.profile_fragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        viewDataBinding.activityMainTvCart.setOnClickListener {
-            if (findNavController(R.id.activity_main_fcv_container).currentDestination?.id != R.id.cart_fragment) {
-                router.navigate(globalToCartFragment())
-            }
-        }
+        viewDataBinding.activityMainTvCart.setOnClickListener(::goToCart)
+        viewDataBinding.activityMainIvCart.setOnClickListener(::goToCart)
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()
+        }
+    }
+
+    private fun goToCart(view: View) {
+        if (findNavController(R.id.activity_main_fcv_container).currentDestination?.id != R.id.cart_fragment) {
+            router.navigate(globalToCartFragment())
         }
     }
 

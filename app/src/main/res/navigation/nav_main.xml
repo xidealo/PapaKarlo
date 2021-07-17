@@ -46,8 +46,8 @@
         android:label="CafeOptionsBottomSheet"
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
-            android:name="cafeAdapterModel"
-            app:argType="com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel" />
+            android:name="cafe"
+            app:argType="com.bunbeauty.presentation.view_model.base.adapter.CafeItem" />
     </dialog>
     <fragment
         android:id="@+id/cart_fragment"

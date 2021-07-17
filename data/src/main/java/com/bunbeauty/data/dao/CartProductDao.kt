@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CartProductDao : BaseDao<CartProduct> {
 
-    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL")
+    @Query("SELECT * FROM CartProduct WHERE orderUuid IS NULL")
     fun getCartProductListLiveData(): Flow<List<CartProduct>>
 
-    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL")
+    @Query("SELECT * FROM CartProduct WHERE orderUuid IS NULL")
     fun getCartProductList(): List<CartProduct>
 
-    @Query("SELECT * FROM CartProduct WHERE orderId IS NULL AND uuid = :cartProductUuid")
+    @Query("SELECT * FROM CartProduct WHERE orderUuid IS NULL AND uuid = :cartProductUuid")
     fun getCartProduct(cartProductUuid: String): CartProduct?
 }

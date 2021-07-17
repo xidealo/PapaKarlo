@@ -10,8 +10,8 @@ class DistrictRepository @Inject constructor(
     private val districtDao: DistrictDao
 ) : DistrictRepo {
 
-    override suspend fun insert(districtEntity: DistrictEntity): Long {
-        return districtDao.insert(districtEntity)
+    override suspend fun insert(districtEntity: DistrictEntity) {
+        districtDao.insert(districtEntity)
     }
 
     override suspend fun update(districtEntity: DistrictEntity) {

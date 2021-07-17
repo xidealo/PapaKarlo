@@ -5,8 +5,7 @@ import android.view.View
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import kotlinx.coroutines.flow.onEach
 
 /**
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
  */
 abstract class TopbarCartFragment<T : ViewDataBinding> : BaseFragment<T>() {
 
-    override val viewModel: TopbarCartViewModel by viewModels { modelFactory }
+    override val viewModel: CartViewModel by viewModels { modelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

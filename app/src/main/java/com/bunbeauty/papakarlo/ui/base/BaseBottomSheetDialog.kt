@@ -57,6 +57,8 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding> : BottomSheetDialogFra
 
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
+
+        viewModel.bundle = requireArguments()
     }
 
     fun showMessage(message: String) {

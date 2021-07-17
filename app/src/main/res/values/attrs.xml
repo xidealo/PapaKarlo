@@ -16,8 +16,9 @@
     </declare-styleable>
 
     <declare-styleable name="CountPicker">
-        <attr name="elementSize" format="dimension" />
-        <attr name="buttonColor" format="color" />
+        <attr name="pickerHeight" format="dimension" />
+        <attr name="pickerWidth" format="dimension" />
+        <attr name="pickerColor" format="color" />
         <attr name="buttonTextColor" format="color" />
         <attr name="count" format="integer" />
     </declare-styleable>

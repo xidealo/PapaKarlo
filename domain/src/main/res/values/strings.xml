@@ -13,5 +13,6 @@
 
     <!-- CART -->
     <string name="msg_cart_product_added">&#160;добавлен в корзину</string>
+    <string name="msg_cart_product_removed">&#160;убран из корзины</string>
 
 </resources>

@@ -35,11 +35,11 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
                 is State.Success -> {
                     with(viewDataBinding) {
                         fragmentProductTvTitle.text = state.data?.name
-                        fragmentProductTvCost.text =
-                            viewModel.productHelper.getMenuProductPriceString(state.data!!)
-                        fragmentProductTvOldCost.text =
-                            viewModel.productHelper.getMenuProductOldPriceString(state.data!!)
-                        fragmentProductTvWeight.text =
+//                        fragmentProductTvCost.text =
+//                            viewModel.productHelper.getMenuProductPriceString(state.data!!)
+//                        fragmentProductTvOldCost.text =
+//                            viewModel.productHelper.getMenuProductOldPriceString(state.data!!)
+//                        fragmentProductTvWeight.text =
                             viewModel.stringHelper.toStringWeight(state.data!!)
                         fragmentProductTvDescription.text = state.data?.description
                         if (ProductFragmentArgs.fromBundle(requireArguments()).photo == null) {

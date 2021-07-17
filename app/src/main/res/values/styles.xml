@@ -35,8 +35,8 @@
     <style name="ElementMaterialCard" parent="DefaultMaterialCard">
         <item name="android:layout_marginTop">@dimen/very_small_margin</item>
         <item name="android:layout_marginBottom">@dimen/very_small_margin</item>
-        <item name="android:layout_marginStart">@dimen/small_margin</item>
-        <item name="android:layout_marginEnd">@dimen/small_margin</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:layout_marginEnd">@dimen/medium_margin</item>
     </style>
 
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -68,7 +68,7 @@
         <item name="android:insetBottom">0dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">@dimen/medium_radius</item>
-        <item name="android:layout_margin">@dimen/small_margin</item>
+        <item name="android:layout_margin">@dimen/medium_margin</item>
     </style>
 
     <style name="SmallButton">
@@ -218,6 +218,10 @@
     </style>
 
     <!--TEXT-->
+    <!-- Naming: [Size*][Secondary][FontWeight*][Center]Text -->
+    <!-- Size* : Large, Medium, Small -->
+    <!-- FontWeight* : Regular, Bold -->
+    <!-- * - required -->
     <style name="BaseText">
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">0dp</item>
@@ -264,6 +268,12 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="SmallRegularCenterText" parent="BaseText">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+    </style>
+
     <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Small">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
@@ -302,6 +312,11 @@
     <style name="MediumSecondaryBoldText" parent="SecondaryText">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="MediumSecondaryRegularText" parent="SecondaryText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
     <!--ORDER ELEMENT-->

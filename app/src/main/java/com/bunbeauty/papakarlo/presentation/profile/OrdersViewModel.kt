@@ -4,10 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.presentation.view_model.base.adapter.OrderAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
 import kotlinx.coroutines.flow.*
@@ -15,13 +15,13 @@ import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
-    private val stringHelper: IStringHelper,
+    private val stringUtil: IStringUtil,
     private val orderUtil: IOrderUtil
 ) : BaseViewModel() {
 
-    private val _ordersState: MutableStateFlow<State<List<OrderAdapterModel?>>> =
+    private val _ordersState: MutableStateFlow<State<List<OrderItem?>>> =
         MutableStateFlow(State.Loading())
-    val ordersState: StateFlow<State<List<OrderAdapterModel?>>>
+    val ordersState: StateFlow<State<List<OrderItem?>>>
         get() = _ordersState.asStateFlow()
 
     fun getOrders(userId: String) {
@@ -50,17 +50,17 @@ class OrdersViewModel @Inject constructor(
     }
 
 
-    fun onOrderClicked(orderAdapterModel: OrderAdapterModel) {
-        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(orderAdapterModel.uuid))
+    fun onOrderClicked(orderItem: OrderItem) {
+        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(orderItem.uuid))
     }
 
-    private fun toItemModel(order: Order): OrderAdapterModel {
-        return OrderAdapterModel(
+    private fun toItemModel(order: Order): OrderItem {
+        return OrderItem(
             uuid = order.orderEntity.uuid,
-            orderStatus = stringHelper.toStringOrderStatus(order.orderEntity.orderStatus),
+            orderStatus = stringUtil.toStringOrderStatus(order.orderEntity.orderStatus),
             orderColor = orderUtil.getBackgroundColor(order.orderEntity.orderStatus),
             code = order.orderEntity.code,
-            time = stringHelper.toStringTime(order.orderEntity),
+            time = stringUtil.toStringTime(order.orderEntity),
             deferredTime = if (order.orderEntity.deferredTime.isNotEmpty())
                 "Ко времени: ${order.orderEntity.deferredTime}"
             else

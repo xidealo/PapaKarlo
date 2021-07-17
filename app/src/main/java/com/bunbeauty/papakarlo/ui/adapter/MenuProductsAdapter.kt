@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.presentation.view_model.base.adapter.MenuProductAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
@@ -21,12 +21,12 @@ import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
-    ListAdapter<MenuProductAdapterModel, BaseViewHolder<ViewBinding, MenuProductAdapterModel>>(
+    ListAdapter<MenuProductItem, BaseViewHolder<ViewBinding, MenuProductItem>>(
         MenuProductDiffCallback()
     ) {
 
-    var onItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
-    var btnItemClickListener: ((MenuProductAdapterModel) -> Unit)? = null
+    var onItemClickListener: ((MenuProductItem) -> Unit)? = null
+    var btnItemClickListener: ((MenuProductItem) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): MenuProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -36,18 +36,18 @@ class MenuProductsAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, MenuProductAdapterModel>,
+        holder: BaseViewHolder<ViewBinding, MenuProductItem>,
         position: Int
     ) {
         holder.onBind(getItem(position))
     }
 
     inner class MenuProductViewHolder(view: View) :
-        BaseViewHolder<ElementMenuProductBinding, MenuProductAdapterModel>(
+        BaseViewHolder<ElementMenuProductBinding, MenuProductItem>(
             DataBindingUtil.bind(view)!!
         ) {
 
-        override fun onBind(item: MenuProductAdapterModel) {
+        override fun onBind(item: MenuProductItem) {
             super.onBind(item)
             with(binding) {
                 elementMenuProductTvTitle.text = item.name

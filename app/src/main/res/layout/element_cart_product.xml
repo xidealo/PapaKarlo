@@ -2,15 +2,11 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cart_product_mcv_main"
-        style="@style/DefaultMaterialCard"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginTop="@dimen/very_small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:layout_marginBottom="@dimen/very_small_margin">
+        style="@style/ElementMaterialCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -20,43 +16,53 @@
                 android:id="@+id/element_cart_product_iv_photo"
                 android:layout_width="@dimen/image_element_width"
                 android:layout_height="@dimen/image_element_height"
+                android:src="@drawable/default_product"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/element_cart_product_tv_title"
-                style="@style/SmallTitle"
-                android:layout_marginStart="@dimen/very_small_margin"
-                android:layout_marginTop="@dimen/very_small_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/element_cart_product_tv_cost"
-                style="@style/SmallText"
-                android:layout_marginStart="@dimen/very_small_margin"
+                android:id="@+id/element_cart_product_tv_title"
+                style="@style/MediumBoldText"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Бэргер" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_old_cost"
-                style="@style/SmallText"
-                android:layout_marginStart="@dimen/small_margin"
-                app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_cost"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
+                style="@style/MediumSecondaryRegularText"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/small_margin"
+                app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title"
+                tools:text="100₽"/>
+
+            <TextView
+                android:id="@+id/element_cart_product_tv_new_cost"
+                style="@style/MediumRegularText"
+                app:flow_horizontalBias="0"
+                android:layout_marginStart="@dimen/very_small_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/small_margin"
+                app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_old_cost"
+                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title"
+                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
+                tools:text="90₽"/>
 
             <com.bunbeauty.papakarlo.ui.view.CountPicker
                 android:id="@+id/element_cart_product_cp_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
+                app:pickerColor="@color/colorPrimary"
                 app:buttonTextColor="@color/white"
-                app:buttonColor="@color/colorPrimary"
+                app:pickerWidth="@dimen/picker_width"
+                app:pickerHeight="@dimen/picker_height"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

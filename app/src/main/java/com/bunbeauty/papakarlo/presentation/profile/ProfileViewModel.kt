@@ -5,13 +5,13 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.presentation.view_model.base.adapter.OrderAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
+import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -21,12 +21,12 @@ import javax.inject.Inject
 
 abstract class ProfileViewModel(
     cartProductRepo: CartProductRepo,
-    stringUtil: IStringHelper,
+    stringUtil: IStringUtil,
     productHelper: IProductHelper,
-) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
+) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
     abstract val userState: StateFlow<State<User?>>
     abstract val hasAddressState: StateFlow<State<Boolean>>
-    abstract val lastOrderState: StateFlow<State<OrderAdapterModel>>
+    abstract val lastOrderState: StateFlow<State<OrderItem>>
 
     abstract fun getBonusesString(bonusList: MutableList<Int>): String
     abstract fun onOrderListClicked()
@@ -41,7 +41,7 @@ class ProfileViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo,
     private val userRepo: UserRepo,
-    val stringHelper: IStringHelper,
+    val stringHelper: IStringUtil,
     private val orderRepo: OrderRepo,
     cartProductRepo: CartProductRepo,
     productHelper: IProductHelper,
@@ -57,7 +57,7 @@ class ProfileViewModelImpl @Inject constructor(
     override val userState: MutableStateFlow<State<User?>> =
         MutableStateFlow(State.Loading())
 
-    override val lastOrderState: MutableStateFlow<State<OrderAdapterModel>> =
+    override val lastOrderState: MutableStateFlow<State<OrderItem>> =
         MutableStateFlow(State.Empty())
 
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
@@ -122,8 +122,8 @@ class ProfileViewModelImpl @Inject constructor(
         }
     }
 
-    fun toItemModel(order: Order): OrderAdapterModel {
-        return OrderAdapterModel(
+    fun toItemModel(order: Order): OrderItem {
+        return OrderItem(
             uuid = order.orderEntity.uuid,
             orderStatus = stringHelper.toStringOrderStatus(order.orderEntity.orderStatus),
             orderColor = orderUtil.getBackgroundColor(order.orderEntity.orderStatus),

@@ -2,11 +2,12 @@ package com.bunbeauty.presentation.view_model.base.adapter
 
 import com.bunbeauty.domain.model.local.BaseModel
 
-data class CartProductAdapterModel(
+data class CartProductItem(
     override var uuid: String,
     val name: String,
-    val cost: String,
-    val discountCost: String,
+    val newCost: String,
+    val oldCost: String?,
     val photoLink: String,
-    val count: Int
+    val count: Int,
+    val menuProductUuid: String
 ) : BaseModel

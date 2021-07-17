@@ -23,7 +23,7 @@
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
-            android:src="@drawable/ic_cart_empty"
+            android:src="@drawable/ic_empty_cart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
             android:id="@+id/fragment_consumer_cart_group_not_empty_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:constraint_referenced_ids="
             fragment_consumer_cart_tv_delivery_info,
             fragment_consumer_cart_rv_result,
@@ -58,17 +58,18 @@
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_delivery_info"
-            style="@style/HelpTextCenter"
-            android:layout_marginTop="@dimen/small_margin"
+            style="@style/SmallRegularCenterText"
+            android:layout_margin="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text ="Бесплатная доставка от 500 ₽"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_consumer_cart_rv_result"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginTop="@dimen/medium_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_crate_order"
             app:layout_constraintEnd_toEndOf="parent"

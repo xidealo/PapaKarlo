@@ -97,12 +97,16 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             .setActionTextColor(ContextCompat.getColor(requireContext(), textColorId))
         val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
             gravity = Gravity.TOP
-            setMargins(16, 16, 16, 0)
+            setMargins(getPixels(16), getPixels(72), getPixels(16), 0)
         }
-        with(snack) {
+        snack.run {
             view.layoutParams = layoutParams
             view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
             show()
         }
+    }
+
+    private fun getPixels(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
     }
 }

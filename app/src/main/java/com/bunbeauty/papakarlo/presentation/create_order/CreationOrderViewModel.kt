@@ -17,10 +17,9 @@ import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.network.INetworkHelper
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.CreationOrderFragmentDirections.toAddressesBottomSheet
@@ -67,7 +66,7 @@ abstract class CreationOrderViewModel : BaseViewModel() {
 class CreationOrderViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val networkHelper: INetworkHelper,
-    private val stringHelper: IStringHelper,
+    private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
     private val cartProductRepo: CartProductRepo,
@@ -113,7 +112,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                 hasAddressState.value = (address != null).toStateSuccess()
                 if (address != null) {
                     selectedAddressTextState.value =
-                        stringHelper.toString(address).toStateSuccess()
+                        stringUtil.toString(address).toStateSuccess()
                     selectedAddressState.value = address
                 } else {
                     selectedAddressTextState.value =
@@ -146,12 +145,12 @@ class CreationOrderViewModelImpl @Inject constructor(
             deferredHoursStateFlow
         }.flatMapLatest { deferredMinutesStateFlow }.onEach {
             deferredTextStateFlow.value = if (isDeliveryState.value) {
-                resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringHelper.toStringTime(
+                resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringUtil.toStringTime(
                     deferredHoursStateFlow.value,
                     deferredMinutesStateFlow.value
                 )
             } else {
-                resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringHelper.toStringTime(
+                resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringUtil.toStringTime(
                     deferredHoursStateFlow.value,
                     deferredMinutesStateFlow.value
                 )
@@ -161,7 +160,7 @@ class CreationOrderViewModelImpl @Inject constructor(
 
     override fun subscribeOnOrderString() {
         viewModelScope.launch(Dispatchers.Default) {
-            cartProductRepo.getCartProductListFlow().onEach { productList ->
+            cartProductRepo.cartProductList.onEach { productList ->
                 if (isDeliveryState.value) {
                     orderStringStateFlow.value =
                         resourcesProvider.getString(R.string.action_creation_order_checkout) +
@@ -180,7 +179,7 @@ class CreationOrderViewModelImpl @Inject constructor(
 
     override val deliveryStringLiveData by lazy {
         switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.getCartProductListFlow().asLiveData()) { productList ->
+            map(cartProductRepo.cartProductList.asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
                     productList,
                     delivery.forFree
@@ -189,9 +188,9 @@ class CreationOrderViewModelImpl @Inject constructor(
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {
                     resourcesProvider.getString(R.string.part_creation_order_delivery_cost) +
-                            stringHelper.getCostString(delivery.cost) +
+                            stringUtil.getCostString(delivery.cost) +
                             resourcesProvider.getString(R.string.part_creation_order_free_delivery_from) +
-                            stringHelper.getCostString(delivery.forFree)
+                            stringUtil.getCostString(delivery.forFree)
                 }
             }
         }
@@ -220,7 +219,7 @@ class CreationOrderViewModelImpl @Inject constructor(
             comment = comment,
             phone = phone,
             email = email,
-            deferredTime = stringHelper.toStringTime(deferredHours, deferredMinutes),
+            deferredTime = stringUtil.toStringTime(deferredHours, deferredMinutes),
             isDelivery = isDeliveryState.value,
             code = generateCode(),
             address = selectedAddressState.value!!,

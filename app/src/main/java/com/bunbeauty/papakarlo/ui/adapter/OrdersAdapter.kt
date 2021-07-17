@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.presentation.view_model.base.adapter.OrderAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.OrderDiffCallback
 import javax.inject.Inject
 
 class OrdersAdapter @Inject constructor() :
-    ListAdapter<OrderAdapterModel, BaseViewHolder<ViewBinding, OrderAdapterModel>>(
+    ListAdapter<OrderItem, BaseViewHolder<ViewBinding, OrderItem>>(
         OrderDiffCallback()
     ) {
 
-    var onItemClickListener: ((OrderAdapterModel) -> Unit)? = null
+    var onItemClickListener: ((OrderItem) -> Unit)? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -26,14 +26,14 @@ class OrdersAdapter @Inject constructor() :
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, OrderAdapterModel>,
+        holder: BaseViewHolder<ViewBinding, OrderItem>,
         position: Int
     ) {
         holder.onBind(getItem(position))
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, OrderAdapterModel>,
+        holder: BaseViewHolder<ViewBinding, OrderItem>,
         position: Int,
         payloads: MutableList<Any>
     ) {
@@ -45,9 +45,9 @@ class OrdersAdapter @Inject constructor() :
     }
 
     inner class OrderViewHolder(view: View) :
-        BaseViewHolder<ElementOrderBinding, OrderAdapterModel>(DataBindingUtil.bind(view)!!) {
+        BaseViewHolder<ElementOrderBinding, OrderItem>(DataBindingUtil.bind(view)!!) {
 
-        override fun onBind(item: OrderAdapterModel) {
+        override fun onBind(item: OrderItem) {
             super.onBind(item)
             with(binding) {
                 elementOrderTvCode.text = item.code
@@ -62,7 +62,7 @@ class OrdersAdapter @Inject constructor() :
             }
         }
 
-        override fun onBind(item: OrderAdapterModel, payloads: List<Any>) {
+        override fun onBind(item: OrderItem, payloads: List<Any>) {
             super.onBind(item, payloads)
             if (payloads.last() as Boolean) {
                 with(binding) {

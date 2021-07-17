@@ -18,12 +18,6 @@
     <dimen name="button_height">48dp</dimen>
     <dimen name="button_progress_bar_size">36dp</dimen>
 
-    <dimen name="timeline_height">296dp</dimen>
-
-    <!-- IMAGES -->
-    <dimen name="empty_cart_img_size">176dp</dimen>
-    <dimen name="empty_profile_size">176dp</dimen>
-
     <!-- MARGIN -->
     <dimen name="very_large_margin">40dp</dimen>
     <dimen name="large_margin">24dp</dimen>
@@ -39,6 +33,8 @@
     <!-- IMAGE -->
     <dimen name="image_element_width">108dp</dimen>
     <dimen name="image_element_height">72dp</dimen>
+    <dimen name="empty_cart_img_size">176dp</dimen>
+    <dimen name="empty_profile_size">176dp</dimen>
 
     <!-- RADIUS -->
     <dimen name="large_radius">16dp</dimen>
@@ -50,5 +46,9 @@
 
     <!-- RECYCLER_VIEW -->
     <dimen name="recycler_view_max_height">264dp</dimen>
+
+    <!--COUNT_PICKER -->
+    <dimen name="picker_width">28dp</dimen>
+    <dimen name="picker_height">28dp</dimen>
 
 </resources>

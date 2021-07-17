@@ -6,11 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.domain.model.local.cafe.Coordinate
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.ui.CafeOptionsBottomSheetArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBinding>() {
@@ -24,23 +22,20 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            with(viewDataBinding) {
-                val cafe =
-                    viewModel.getCafeOptionModel(fromBundle(requireArguments()).cafeAdapterModel)
-                bottomSheetCafeOptionsMcvCall.setOnClickListener {
-                    goToPhone(cafe.phone)
-                }
-                bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
-                    goToAddress(cafe.coordinate)
-                }
-                bottomSheetCafeOptionsTvShowMap.text = cafe.address
-                bottomSheetCafeOptionsTvCall.text = cafe.phoneWithText
+        with(viewDataBinding) {
+            bottomSheetCafeOptionsMcvCall.setOnClickListener {
+                goToPhone(viewModel.phone)
             }
+            bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
+                goToAddress(viewModel.latitude, viewModel.longitude)
+            }
+            bottomSheetCafeOptionsTvShowMap.text = viewModel.showOnMap
+            bottomSheetCafeOptionsTvCall.text = viewModel.callToCafe
+        }
     }
 
-    private fun goToAddress(coordinate: Coordinate) {
-        val uri =
-            Uri.parse("http://maps.google.com/maps?daddr=${coordinate.latitude},${coordinate.longitude}")
+    private fun goToAddress(latitude: Double, longitude: Double) {
+        val uri = Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }

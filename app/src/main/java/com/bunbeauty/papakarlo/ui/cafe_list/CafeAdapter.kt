@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.BaseViewHolder
@@ -14,15 +14,15 @@ import com.bunbeauty.papakarlo.ui.adapter.diff_util.CafeDiffUtilCallback
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :
-    ListAdapter<CafeAdapterModel, BaseViewHolder<ViewBinding, CafeAdapterModel>>(
+    ListAdapter<CafeItem, BaseViewHolder<ViewBinding, CafeItem>>(
         CafeDiffUtilCallback()
     ) {
 
     lateinit var cafeListViewModel: CafeListViewModel
-    var onItemClickListener: ((CafeAdapterModel) -> Unit)? = null
+    var onItemClickListener: ((CafeItem) -> Unit)? = null
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, CafeAdapterModel>,
+        holder: BaseViewHolder<ViewBinding, CafeItem>,
         position: Int
     ) {
         holder.onBind(getItem(position))
@@ -36,9 +36,9 @@ class CafeAdapter @Inject constructor() :
     }
 
     inner class CafeViewHolder(view: View) :
-        BaseViewHolder<ElementCafeBinding, CafeAdapterModel>(DataBindingUtil.bind(view)!!) {
+        BaseViewHolder<ElementCafeBinding, CafeItem>(DataBindingUtil.bind(view)!!) {
 
-        override fun onBind(item: CafeAdapterModel) {
+        override fun onBind(item: CafeItem) {
             super.onBind(item)
             with(binding) {
                 elementCafeTvAddress.text = item.address

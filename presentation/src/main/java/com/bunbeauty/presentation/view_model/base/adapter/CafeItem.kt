@@ -6,7 +6,7 @@ import com.bunbeauty.domain.model.local.cafe.Coordinate
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CafeAdapterModel(
+data class CafeItem(
     override var uuid: String,
     val address: String,
     val workingHours: String,

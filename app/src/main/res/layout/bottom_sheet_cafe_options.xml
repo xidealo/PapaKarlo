@@ -26,11 +26,11 @@
                     android:id="@+id/bottom_sheet_cafe_options_tv_call"
                     style="@style/MainText"
                     android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_cafe_options_call"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_cafe_options_iv_call"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Позвонить: +7 (900) 000-00-00" />
 
                 <ImageView
                     android:id="@+id/bottom_sheet_cafe_options_iv_call"
@@ -63,11 +63,11 @@
                     style="@style/MainText"
                     android:layout_width="0dp"
                     android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_cafe_options_show_map"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_cafe_options_iv_show_map"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="На карте: улица Чапаева, д 22А" />
 
                 <ImageView
                     android:id="@+id/bottom_sheet_cafe_options_iv_show_map"

@@ -17,7 +17,7 @@
 
         <variable
             name="iStringHelper"
-            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
+            type="com.bunbeauty.domain.util.string_helper.IStringUtil" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

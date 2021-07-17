@@ -8,14 +8,14 @@ import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
-import com.bunbeauty.papakarlo.ui.adapter.CartProductsAdapter
+import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -25,7 +25,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
 
     @Inject
-    lateinit var stringHelper: IStringHelper
+    lateinit var stringUtil: IStringUtil
 
     @Inject
     lateinit var orderUtil: IOrderUtil
@@ -34,7 +34,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     lateinit var productHelper: IProductHelper
 
     @Inject
-    lateinit var cartProductsAdapter: CartProductsAdapter
+    lateinit var cartProductAdapter: CartProductAdapter
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -51,31 +51,31 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                         viewDataBinding.fragmentOrderDetailsTvCode.text =
                             "Заказ ${state.data!!.orderEntity.code}"
                         viewDataBinding.fragmentOrderDetailsChipStatus.text =
-                            stringHelper.toStringOrderStatus(state.data!!.orderEntity.orderStatus)
+                            stringUtil.toStringOrderStatus(state.data!!.orderEntity.orderStatus)
                         viewDataBinding.fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(
                             orderUtil.getBackgroundColor(
                                 state.data!!.orderEntity.orderStatus
                             )
                         )
                         viewDataBinding.fragmentOrderDetailsTvTimeValue.text =
-                            stringHelper.toStringTime(state.data!!.orderEntity)
+                            stringUtil.toStringTime(state.data!!.orderEntity)
                         viewDataBinding.fragmentOrderDetailsTvPickupMethodValue.text =
-                            stringHelper.toStringIsDelivery(state.data!!.orderEntity)
+                            stringUtil.toStringIsDelivery(state.data!!.orderEntity)
                         viewDataBinding.fragmentOrderDetailsTvDeferredTimeValue.text =
                             state.data!!.orderEntity.deferredTime
                         viewDataBinding.fragmentOrderDetailsTvAddressValue.text =
-                            stringHelper.toString(state.data!!.orderEntity.address)
+                            stringUtil.toString(state.data!!.orderEntity.address)
                         viewDataBinding.fragmentOrderDetailsTvCommentValue.text =
                             state.data!!.orderEntity.comment
                         viewDataBinding.fragmentOrderDetailsTvDeliveryCostValue.text =
-                            stringHelper.getDeliveryString(
+                            stringUtil.getDeliveryString(
                                 orderUtil.getDeliveryCost(
                                     state.data!!,
                                     viewModel.delivery
                                 )
                             )
                         viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.text =
-                            stringHelper.getCostString(
+                            stringUtil.getCostString(
                                 orderUtil.getOldOrderCost(
                                     state.data!!,
                                     viewModel.delivery
@@ -85,17 +85,17 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                             viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
                         viewDataBinding.fragmentOrderDetailsTvOrderNewTotalCost.text =
-                            stringHelper.getCostString(
+                            stringUtil.getCostString(
                                 orderUtil.getNewOrderCost(
                                     state.data!!, viewModel.delivery
                                 )
                             )
-                        cartProductsAdapter.canBeChanged = false
+                        cartProductAdapter.canBeChanged = false
                         viewDataBinding.fragmentOrderDetailsRvProductList.adapter =
-                            cartProductsAdapter
+                            cartProductAdapter
                         val mappedCartProducts =
                             viewModel.getCartProductModel(state.data!!.cartProducts)
-                        cartProductsAdapter.submitList(mappedCartProducts)
+                        cartProductAdapter.submitList(mappedCartProducts)
 
                         if (state.data!!.orderEntity.deferredTime.isEmpty()) {
                             viewDataBinding.fragmentOrderDetailsTvDeferredTimeValue.gone()

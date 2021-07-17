@@ -7,7 +7,7 @@ import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.model.local.cafe.CafeEntity
 import com.bunbeauty.domain.model.local.order.OrderEntity
 
-interface IStringHelper {
+interface IStringUtil {
     fun toString(address: Address?): String
     fun toString(orderEntity: OrderEntity): String
     fun toStringIsDelivery(orderEntity: OrderEntity): String
@@ -20,6 +20,7 @@ interface IStringHelper {
     fun toStringWorkingHours(cafeEntity: CafeEntity): String
     fun toStringOrderStatus(orderStatus: OrderStatus): String
     fun getAddedToCartString(productName: String): String
+    fun getRemovedFromCartString(productName: String): String
     fun getDeliveryString(deliveryCost: Int): String
     fun getCostString(cost: Int?): String
 }

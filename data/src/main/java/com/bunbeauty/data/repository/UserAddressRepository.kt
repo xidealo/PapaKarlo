@@ -22,7 +22,9 @@ class UserAddressRepository @Inject constructor(
         return userAddress
     }
 
-    override suspend fun insert(userAddress: UserAddress) = userAddressDao.insert(userAddress)
+    override suspend fun insert(userAddress: UserAddress) {
+        userAddressDao.insert(userAddress)
+    }
 
     override suspend fun insert(userAddressMap: HashMap<String, AddressFirebase>, userUuid: String) {
         userAddressMap.forEach { (addressUuid, addressFirebase) ->

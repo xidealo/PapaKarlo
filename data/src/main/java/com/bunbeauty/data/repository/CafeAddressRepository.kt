@@ -11,7 +11,9 @@ class CafeAddressRepository @Inject constructor(
     private val cafeAddressDao: CafeAddressDao
 ) : CafeAddressRepo {
 
-    override suspend fun insert(cafeAddress: CafeAddress) = cafeAddressDao.insert(cafeAddress)
+    override suspend fun insert(cafeAddress: CafeAddress) {
+        cafeAddressDao.insert(cafeAddress)
+    }
 
     override suspend fun update(cafeAddress: CafeAddress) {
         cafeAddressDao.update(cafeAddress)

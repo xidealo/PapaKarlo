@@ -1,22 +1,37 @@
 package com.bunbeauty.papakarlo.presentation.cafe
 
+import com.bunbeauty.common.Constants.CAFE_ARG_KEY
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.presentation.view_model.base.adapter.CafeAdapterModel
-import com.bunbeauty.presentation.view_model.base.adapter.CafeOptionModel
+import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import javax.inject.Inject
 
 class CafeOptionsViewModel @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     BaseViewModel() {
 
-    fun getCafeOptionModel(cafeAdapterModel: CafeAdapterModel): CafeOptionModel {
-        return CafeOptionModel(
-            address = "${resourcesProvider.getString(R.string.title_cafe_options_show_map)} ${cafeAdapterModel.address}",
-            phone = cafeAdapterModel.phone,
-            phoneWithText = "${resourcesProvider.getString(R.string.title_cafe_options_call)} ${cafeAdapterModel.phone}",
-            coordinate = cafeAdapterModel.coordinate,
-        )
+    val cafe: CafeItem by lazy {
+        checkNotNull(getNavArg(CAFE_ARG_KEY))
+    }
+
+    val showOnMap: String by lazy {
+        resourcesProvider.getString(R.string.action_cafe_options_show_map) + cafe.address
+    }
+
+    val callToCafe: String by lazy {
+        resourcesProvider.getString(R.string.action_cafe_options_call) + cafe.phone
+    }
+
+    val phone: String by lazy {
+        cafe.phone
+    }
+
+    val latitude: Double by lazy {
+        cafe.coordinate.latitude
+    }
+
+    val longitude: Double by lazy {
+        cafe.coordinate.longitude
     }
 
 }

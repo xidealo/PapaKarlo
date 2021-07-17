@@ -10,8 +10,8 @@ class StreetRepository @Inject constructor(
     private val streetDao: StreetDao
 ) : StreetRepo {
 
-    override suspend fun insert(street: Street): Long {
-        return streetDao.insert(street)
+    override suspend fun insert(street: Street) {
+        streetDao.insert(street)
     }
 
     override fun getStreets(): Flow<List<Street>> {

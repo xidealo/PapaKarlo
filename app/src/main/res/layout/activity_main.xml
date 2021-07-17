@@ -24,8 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/logo_top"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:src="@drawable/logo_top" />
 
             <ImageView
                 android:id="@+id/activity_main_iv_cart"

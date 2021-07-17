@@ -5,11 +5,11 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.presentation.view_model.base.adapter.MenuProductAdapterModel
+import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
+import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,23 +19,23 @@ import javax.inject.Inject
 
 abstract class ProductTabViewModel(
     cartProductRepo: CartProductRepo,
-    stringUtil: IStringHelper,
+    stringUtil: IStringUtil,
     productHelper: IProductHelper,
-) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
+) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
-    abstract val productListState: StateFlow<State<List<MenuProductAdapterModel>>>
+    abstract val productListState: StateFlow<State<List<MenuProductItem>>>
 
     abstract fun getMenuProductList(productCode: ProductCode)
-    abstract fun onProductClicked(menuProductAdapterModel: MenuProductAdapterModel)
+    abstract fun onProductClicked(menuProductItem: MenuProductItem)
 }
 
 class ProductTabViewModelImpl @Inject constructor(
     cartProductRepo: CartProductRepo,
-    stringUtil: IStringHelper,
+    stringUtil: IStringUtil,
     productHelper: IProductHelper,
 ) : ProductTabViewModel(cartProductRepo, stringUtil, productHelper) {
 
-    override val productListState: MutableStateFlow<State<List<MenuProductAdapterModel>>> =
+    override val productListState: MutableStateFlow<State<List<MenuProductItem>>> =
         MutableStateFlow(State.Loading())
 
     override fun getMenuProductList(productCode: ProductCode) {
@@ -61,18 +61,18 @@ class ProductTabViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override fun onProductClicked(menuProductAdapterModel: MenuProductAdapterModel) {
+    override fun onProductClicked(menuProductItem: MenuProductItem) {
         router.navigate(
             toProductFragment(
-                menuProductAdapterModel.uuid,
-                menuProductAdapterModel.name,
-                menuProductAdapterModel.photo.get()
+                menuProductItem.uuid,
+                menuProductItem.name,
+                menuProductItem.photo.get()
             )
         )
     }
 
-    private fun toItemModel(menuProduct: MenuProduct): MenuProductAdapterModel {
-        return MenuProductAdapterModel(
+    private fun toItemModel(menuProduct: MenuProduct): MenuProductItem {
+        return MenuProductItem(
             uuid = menuProduct.uuid,
             name = menuProduct.name,
             cost = productHelper.getMenuProductOldPriceString(menuProduct),

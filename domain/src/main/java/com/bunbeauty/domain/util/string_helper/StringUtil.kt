@@ -12,8 +12,8 @@ import com.bunbeauty.domain.model.local.order.OrderEntity
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import javax.inject.Inject
 
-class StringHelper @Inject constructor(private val resourcesProvider: IResourcesProvider) :
-    IStringHelper {
+class StringUtil @Inject constructor(private val resourcesProvider: IResourcesProvider) :
+    IStringUtil {
 
     override fun toString(address: Address?): String {
         if (address == null) {
@@ -132,6 +132,10 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
 
     override fun getAddedToCartString(productName: String): String {
         return productName + resourcesProvider.getString(R.string.msg_cart_product_added)
+    }
+
+    override fun getRemovedFromCartString(productName: String): String {
+        return productName + resourcesProvider.getString(R.string.msg_cart_product_removed)
     }
 
     override fun getDeliveryString(deliveryCost: Int): String {

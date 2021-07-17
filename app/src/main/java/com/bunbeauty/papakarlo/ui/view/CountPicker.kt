@@ -2,41 +2,53 @@ package com.bunbeauty.papakarlo.ui.view
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Typeface
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity.CENTER
 import android.view.View
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
+
 
 class CountPicker @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attributeSet, defStyleAttr), Customizable {
+) : MaterialCardView(context, attributeSet, defStyleAttr), Customizable {
 
     var countChangeListener: CountChangeListener? = null
     var count = 0
-    set(value) {
-        field = value
-        countTextView.text = value.toString()
-    }
+        set(value) {
+            field = value
+            countTextView.text = value.toString()
+        }
 
-    private val elementSize = getDimensionPixel(
+    private val elementWidth = getDimensionPixel(
         context,
         attributeSet,
-        R.styleable.CountPicker_elementSize,
-        DEFAULT_BUTTON_SIZE
+        R.styleable.CountPicker_pickerWidth,
+        DEFAULT_PICKER_WIDTH
+    )
+
+    private val elementHeight = getDimensionPixel(
+        context,
+        attributeSet,
+        R.styleable.CountPicker_pickerHeight,
+        DEFAULT_PICKER_HEIGHT
     )
 
     private val buttonColor = getColor(
         context,
         attributeSet,
-        R.styleable.CountPicker_buttonColor,
-        DEFAULT_BUTTON_COLOR
+        R.styleable.CountPicker_pickerColor,
+        DEFAULT_PICKER_COLOR
     )
 
     private val buttonTextColor = getColor(
@@ -47,34 +59,45 @@ class CountPicker @JvmOverloads constructor(
     )
 
     private val plusButton = createButton("+", ::onPlus)
-    private val minusButton = createButton("-", ::onMinus)
+    private val minusButton = createButton("−", ::onMinus)
     private val countTextView = createTextView()
 
     init {
-        addView(minusButton)
-        addView(countTextView)
-        addView(plusButton)
-        isClickable = true
+        backgroundTintList = ColorStateList.valueOf(buttonColor)
+        //setBackgroundColor(buttonColor)
+        radius = getPixels(8)
 
-        gravity = CENTER
+        val linearLayout = LinearLayout(context).apply {
+            layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
+            addView(minusButton)
+            addView(countTextView)
+            addView(plusButton)
+        }
+        addView(linearLayout)
     }
 
-    private fun createButton(text: String, onClickListener: OnClickListener): MaterialButton {
-        val button = MaterialButton(context)
-
-        button.layoutParams = LayoutParams(elementSize, elementSize, 1f).apply {
-            z = 10f
+    private fun createButton(buttonText: String, onClickListener: OnClickListener): MaterialButton {
+        return MaterialButton(context).apply {
+            layoutParams = LayoutParams(elementWidth, elementHeight, 1).apply {
+                z = 0f
+                setPadding(0, 0, 0, 0)
+            }
+            stateListAnimator = null
+            insetTop = 0
+            insetBottom = 0
+            setTextColor(ColorStateList.valueOf(buttonTextColor))
+            text = getSpan(buttonText)
+            backgroundTintList = ColorStateList.valueOf(buttonColor)
+            cornerRadius = getPixels(8).toInt()
+            setOnClickListener(onClickListener)
         }
-        button.text = text
-        button.backgroundTintList = ColorStateList.valueOf(buttonColor)
-        button.setTextColor(buttonTextColor)
-
-        button.setOnClickListener(onClickListener)
-
-        return button
     }
 
     private fun onPlus(view: View) {
+        if (count >= 99) {
+            return
+        }
+
         count++
         countChangeListener?.onCountIncreased()
         countTextView.text = count.toString()
@@ -91,13 +114,27 @@ class CountPicker @JvmOverloads constructor(
     }
 
     private fun createTextView(): TextView {
-        val textView = TextView(context)
+        return TextView(context).apply {
+            setBackgroundColor(buttonColor)
+            layoutParams = LayoutParams(WRAP_CONTENT, elementHeight, 1)
+            gravity = CENTER
+            setTextColor(ColorStateList.valueOf(buttonTextColor))
+            text = getSpan(count.toString())
+        }
+    }
 
-        textView.layoutParams = LayoutParams(elementSize, elementSize, 1f)
-        textView.gravity = CENTER
-        textView.text = count.toString()
+    private fun getSpan(text: String): SpannableString {
+        val spanText = SpannableString(text)
+        spanText.setSpan(StyleSpan(Typeface.BOLD), 0, text.length, 0)
+        return spanText
+    }
 
-        return textView
+    private fun getPixels(dp: Int): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp.toFloat(),
+            context.resources.displayMetrics
+        )
     }
 
     interface CountChangeListener {
@@ -106,8 +143,9 @@ class CountPicker @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_BUTTON_SIZE = 39.5f
-        private const val DEFAULT_BUTTON_COLOR = R.color.white
+        private const val DEFAULT_PICKER_WIDTH = 96f
+        private const val DEFAULT_PICKER_HEIGHT = 42f
+        private const val DEFAULT_PICKER_COLOR = R.color.colorPrimary
         private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.white
     }
 

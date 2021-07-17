@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.extensions
 
+import android.graphics.Paint
 import android.view.View
+import android.widget.TextView
 
 fun View.invisible(): View {
     visibility = View.INVISIBLE
@@ -24,4 +26,8 @@ fun View.toggleVisibility(isVisible: Boolean): View {
         this.gone()
     }
     return this
+}
+
+fun TextView.strikeOutText() {
+    this.paintFlags = this.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 }
