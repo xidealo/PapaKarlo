@@ -37,15 +37,6 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        AppUpdater(requireContext())
-            .setDisplay(Display.DIALOG)
-            .setCancelable(false)
-            .setUpdateFrom(UpdateFrom.GITHUB)
-            .showAppUpdated(true)
-            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
-            .start()
-
         viewDataBinding.fragmentMenuTl.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {

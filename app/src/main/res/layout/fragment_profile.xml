@@ -5,6 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
+        android:background="@color/backgroundYellow"
         tools:context=".ui.profile.ProfileFragment">
 
         <com.google.android.material.card.MaterialCardView

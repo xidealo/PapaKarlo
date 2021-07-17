@@ -74,6 +74,12 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         router.attach(this, R.id.activity_main_fcv_container)
         Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
 
+        AppUpdater(this)
+            .setDisplay(Display.DIALOG)
+            .setCancelable(false)
+            .setUpdateFrom(UpdateFrom.GITHUB)
+            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
+            .start()
         // Uploading menu products to FB
         // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
