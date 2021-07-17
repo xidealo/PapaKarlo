@@ -25,6 +25,7 @@
                     android:layout_margin="@dimen/medium_margin"
                     android:text="@string/action_profile_settings"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_settings"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
