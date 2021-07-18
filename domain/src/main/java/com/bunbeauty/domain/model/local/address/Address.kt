@@ -14,6 +14,6 @@ open class Address(
     var house: String = "",
     var flat: String = "",
     var entrance: String = "",
-    var intercom: String = "",
+    var comment: String = "",
     var floor: String = "",
 ): BaseModel, Parcelable

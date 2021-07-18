@@ -14,7 +14,7 @@ class AddressMapper @Inject constructor() : Mapper<AddressFirebase, Address> {
             checkEmptyString(e.house),
             checkEmptyString(e.flat),
             checkEmptyString(e.entrance),
-            checkEmptyString(e.intercom),
+            checkEmptyString(e.comment),
             checkEmptyString(e.floor)
         )
     }
@@ -29,7 +29,7 @@ class AddressMapper @Inject constructor() : Mapper<AddressFirebase, Address> {
             house = t.house ?: ""
             flat = t.flat ?: ""
             entrance = t.entrance ?: ""
-            intercom = t.intercom ?: ""
+            comment = t.comment ?: ""
             floor = t.floor ?: ""
         }
     }

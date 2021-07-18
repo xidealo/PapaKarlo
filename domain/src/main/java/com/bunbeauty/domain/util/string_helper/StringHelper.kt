@@ -25,8 +25,8 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
                     "Дом: ${address.house}, " +
                     flatString(address) +
                     entranceString(address) +
-                    intercomString(address) +
-                    floorString(address),
+                    floorString(address) +
+                    commentString(address),
             ','
         )
     }
@@ -179,16 +179,16 @@ class StringHelper @Inject constructor(private val resourcesProvider: IResources
             ""
     }
 
-    fun intercomString(address: Address): String {
-        return if (address.intercom.isNotEmpty())
-            "Домофон: ${address.intercom}, "
+    fun commentString(address: Address): String {
+        return if (address.comment.isNotEmpty())
+            "Комментарий: ${address.comment}, "
         else
             ""
     }
 
     fun floorString(address: Address): String {
         return if (address.floor.isNotEmpty())
-            "Этаж: ${address.floor}"
+            "Этаж: ${address.floor}, "
         else
             ""
     }

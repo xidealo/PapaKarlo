@@ -36,7 +36,7 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
                 house = t.address.house ?: ""
                 flat = t.address.flat ?: ""
                 entrance = t.address.entrance ?: ""
-                intercom = t.address.intercom ?: ""
+                comment = t.address.comment ?: ""
                 floor = t.address.floor ?: ""
             },
             comment = t.comment ?: "",

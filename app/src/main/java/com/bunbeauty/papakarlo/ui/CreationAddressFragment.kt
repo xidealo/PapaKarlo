@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.domain.model.local.address.UserAddress
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import javax.inject.Inject
@@ -84,16 +84,16 @@ class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
         viewDataBinding.fragmentCreationAddressTilEntrance.error = ""
 
         if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtIntercom.text.toString(),
+                viewDataBinding.fragmentCreationAddressEtComment.text.toString(),
                 false,
-                5
+                100
             )
         ) {
-            viewDataBinding.fragmentCreationAddressTilIntercom.error = " "
-            viewDataBinding.fragmentCreationAddressEtIntercom.requestFocus()
+            viewDataBinding.fragmentCreationAddressTilComment.error = " "
+            viewDataBinding.fragmentCreationAddressEtComment.requestFocus()
             return
         }
-        viewDataBinding.fragmentCreationAddressTilIntercom.error = ""
+        viewDataBinding.fragmentCreationAddressTilComment.error = ""
 
         if (!viewModel.isCorrectFieldContent(
                 viewDataBinding.fragmentCreationAddressEtFloor.text.toString(),
@@ -113,7 +113,7 @@ class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
                 house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim()
                 flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim()
                 entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim()
-                intercom = viewDataBinding.fragmentCreationAddressEtIntercom.text.toString().trim()
+                comment = viewDataBinding.fragmentCreationAddressEtComment.text.toString().trim()
                 floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim()
             }
         )

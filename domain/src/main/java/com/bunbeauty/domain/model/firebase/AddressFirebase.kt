@@ -7,6 +7,6 @@ data class AddressFirebase(
     var house: String? = null,
     var flat: String? = null,
     var entrance: String? = null,
-    var intercom: String? = null,
+    var comment: String? = null,
     var floor: String? = null
 )

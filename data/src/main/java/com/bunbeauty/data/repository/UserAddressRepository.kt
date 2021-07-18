@@ -33,7 +33,7 @@ class UserAddressRepository @Inject constructor(
                 it.house = address.house
                 it.flat = address.flat
                 it.entrance = address.entrance
-                it.intercom = address.intercom
+                it.comment = address.comment
                 it.floor = address.floor
             } )
         }

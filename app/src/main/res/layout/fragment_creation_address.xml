@@ -103,7 +103,7 @@
                     android:hint="@string/hint_creation_address_entrance"
                     app:counterEnabled="true"
                     app:counterMaxLength="5"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_address_til_intercom"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_address_til_floor"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_house">
 
@@ -114,22 +114,21 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_address_til_intercom"
+                    android:id="@+id/fragment_creation_address_til_comment"
                     style="@style/MaterialInputLayout"
                     android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginEnd="@dimen/small_margin"
-                    android:hint="@string/hint_creation_address_intercom"
+                    android:hint="@string/hint_creation_address_comment"
                     app:counterEnabled="true"
-                    app:counterMaxLength="5"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_creation_address_til_floor"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_entrance"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_flat">
+                    app:counterMaxLength="100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_entrance">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_creation_address_et_intercom"
+                        android:id="@+id/fragment_creation_address_et_comment"
                         style="@style/MaterialInput"
-                        android:inputType="number" />
+                        android:inputType="textCapSentences" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -141,7 +140,7 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="5"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_intercom"
+                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_entrance"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_flat">
 
                     <com.google.android.material.textfield.TextInputEditText

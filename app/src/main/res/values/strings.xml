@@ -97,7 +97,7 @@
     <string name="hint_creation_address_house">Дом*</string>
     <string name="hint_creation_address_flat">Квартира</string>
     <string name="hint_creation_address_entrance">Подъезд</string>
-    <string name="hint_creation_address_intercom">Домофон</string>
+    <string name="hint_creation_address_comment">Комментарий для курьера</string>
     <string name="hint_creation_address_floor">Этаж</string>
     <string name="msg_creation_address_created_address">Адрес добавлен</string>
     <string name="action_creation_address_address">Добавить адрес</string>
