@@ -33,6 +33,9 @@ class ConsumerCartViewModel @Inject constructor(
     private val mutableDeliveryInfo: MutableStateFlow<String> = MutableStateFlow("")
     val deliveryInfo: StateFlow<String> = mutableDeliveryInfo.asStateFlow()
 
+    private val mutableOldTotalCost: MutableStateFlow<String> = MutableStateFlow("")
+    val oldTotalCost: StateFlow<String> = mutableOldTotalCost.asStateFlow()
+
     init {
         subscribeOnCartProducts()
         subscribeOnDelivery()
@@ -53,13 +56,15 @@ class ConsumerCartViewModel @Inject constructor(
             } else {
                 productList.map(::toItem).toStateSuccess()
             }
+            val oldTotalCost = productHelper.getOldTotalCost(productList)
+            mutableOldTotalCost.value = stringUtil.getCostString(oldTotalCost)
         }.launchIn(viewModelScope)
     }
 
     private fun subscribeOnDelivery() {
         dataStoreRepo.delivery.onEach { delivery ->
             mutableDeliveryInfo.value =
-                resourcesProvider.getString(R.string.part_consumer_cart_free_delivery_from) +
+                resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery_from) +
                         delivery.forFree
         }.launchIn(viewModelScope)
     }

@@ -56,7 +56,6 @@ class CartProductAdapter @Inject constructor() :
         override fun onBind(item: CartProductItem) {
             super.onBind(item)
 
-            Log.d("test", "onBind")
             binding.run {
                 elementCartProductTvTitle.text = item.name
                 elementCartProductTvOldCost.text = item.oldCost
@@ -77,13 +76,11 @@ class CartProductAdapter @Inject constructor() :
 
         override fun onBind(item: CartProductItem, payloads: List<Any>) {
             super.onBind(item, payloads)
-            Log.d("test", "onBind with payloads " + (payloads.last() as Boolean))
             if (payloads.last() as Boolean) {
                 binding.run {
                     elementCartProductTvOldCost.text = item.oldCost
                     elementCartProductTvNewCost.text = item.newCost
                     elementCartProductCpCount.count = item.count
-                    //elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
                 }
             }
         }
@@ -91,12 +88,10 @@ class CartProductAdapter @Inject constructor() :
         private fun getCountChangeListener(item: CartProductItem): CountPicker.CountChangeListener {
             return object: CountPicker.CountChangeListener {
                 override fun onCountIncreased() {
-                    Log.d("test", "testonCountIncreased")
                     countChangeListener?.onItemCountIncreased(item)
                 }
 
                 override fun onCountDecreased() {
-                    Log.d("test", "onCountDecreased")
                     countChangeListener?.onItemCountDecreased(item)
                 }
             }

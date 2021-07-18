@@ -115,8 +115,8 @@ class CustomSwitcher @JvmOverloads constructor(
         DEFAULT_RIGHT_BUTTON_TEXT
     )
 
-    val leftButton = createButton(leftButtonText, isLeft)
-    val rightButton = createButton(rightButtonText, !isLeft)
+    private val leftButton = createButton(leftButtonText, isLeft)
+    private val rightButton = createButton(rightButtonText, !isLeft)
 
     init {
         leftButton.setOnClickListener(::onButtonClick)
@@ -125,7 +125,6 @@ class CustomSwitcher @JvmOverloads constructor(
         val linearLayout = LinearLayout(context)
         linearLayout.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
         linearLayout.backgroundTintList = ColorStateList.valueOf(switcherColor)
-        Log.d("test", "backgroundColor $switcherColor")
         linearLayout.setPadding(switcherPadding, switcherPadding, switcherPadding, switcherPadding)
         linearLayout.addView(leftButton)
         linearLayout.addView(rightButton)

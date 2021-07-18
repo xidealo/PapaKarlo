@@ -13,7 +13,7 @@
             android:id="@+id/fragment_consumer_cart_group_empty_cart"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:constraint_referenced_ids="
             fragment_consumer_cart_iv_empty_cart,
             fragment_consumer_cart_tv_empty_cart,
@@ -24,16 +24,18 @@
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
             android:src="@drawable/ic_empty_cart"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_tv_empty_cart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_empty_cart"
-            style="@style/MainText"
-            android:gravity="center"
+            style="@style/MediumRegularCenterText"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/msg_consumer_cart_empty"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_iv_empty_cart" />
@@ -54,16 +56,16 @@
             app:constraint_referenced_ids="
             fragment_consumer_cart_tv_delivery_info,
             fragment_consumer_cart_rv_result,
-            fragment_consumer_cart_btn_crate_order" />
+            fragment_consumer_cart_cl_bottom" />
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_delivery_info"
-            style="@style/SmallRegularCenterText"
+            style="@style/MediumRegularCenterText"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text ="Бесплатная доставка от 500 ₽"/>
+            tools:text="Бесплатная доставка от 500 ₽" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_consumer_cart_rv_result"
@@ -71,20 +73,65 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/medium_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_crate_order"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_cl_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_delivery_info"
             tools:itemCount="2"
             tools:listitem="@layout/element_cart_product" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_consumer_cart_btn_crate_order"
-            style="@style/MainButton"
-            android:text="@string/action_consumer_cart_checkout"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+        <View
+            android:id="@+id/fragment_order_details_v_blur"
+            style="@style/BlurView"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_cl_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_consumer_cart_cl_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/cardViewBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/fragment_consumer_cart_tv_total"
+                style="@style/MediumBoldText"
+                android:layout_margin="@dimen/medium_margin"
+                android:text="@string/title_consumer_cart_total"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fragment_consumer_cart_tv_old_total_cost"
+                style="@style/MediumSecondaryBoldText"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/small_margin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/fragment_consumer_cart_tv_total"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_consumer_cart_tv_new_total_cost"
+                tools:text="100₽" />
+
+            <TextView
+                android:id="@+id/fragment_consumer_cart_tv_new_total_cost"
+                style="@style/MediumBoldText"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/medium_margin"
+                app:layout_constraintBaseline_toBaselineOf="@+id/fragment_consumer_cart_tv_total"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="90₽" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_consumer_cart_btn_crate_order"
+                style="@style/MainButton"
+                android:text="@string/action_consumer_cart_checkout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_consumer_cart_tv_total" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/fragment_consumer_cart_pb_loading"

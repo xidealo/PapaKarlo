@@ -56,8 +56,8 @@
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавьте товар из \"Меню\"</string>
     <string name="msg_consumer_cart_free_delivery">Доставка бесплатно</string>
-    <string name="part_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
-    <string name="part_consumer_cart_difference_before_free_delivery">\nДо бесплатной доставки не хватает&#160;</string>
+    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
+    <string name="title_consumer_cart_total">Итого</string>
 
     <!-- CREATION ORDER -->
     <string name="title_creation_order_address">Адрес</string>

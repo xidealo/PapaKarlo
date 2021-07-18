@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
@@ -9,6 +8,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
@@ -33,12 +33,10 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
         cartProductAdapter.countChangeListener =
             object : CartProductAdapter.ItemCountChangeListener {
                 override fun onItemCountIncreased(item: CartProductItem) {
-                    Log.d("test", "onItemCountIncreased " + item.uuid)
                     viewModel.addProductToCart(item.menuProductUuid)
                 }
 
                 override fun onItemCountDecreased(item: CartProductItem) {
-                    Log.d("test", "onItemCountDecreased " + item.uuid)
                     viewModel.removeProductFromCart(item.menuProductUuid)
                 }
             }
@@ -50,6 +48,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
             fragmentConsumerCartBtnCrateOrder.setOnClickListener {
                 viewModel.onCreateOrderClicked()
             }
+            fragmentConsumerCartTvOldTotalCost.strikeOutText()
             viewModel.cartProductListState.onEach { state ->
                 when (state) {
                     is State.Empty -> {
@@ -73,6 +72,12 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
             }.startedLaunch(viewLifecycleOwner)
             viewModel.deliveryInfo.onEach { deliveryString ->
                 fragmentConsumerCartTvDeliveryInfo.text = deliveryString
+            }.startedLaunch(viewLifecycleOwner)
+            viewModel.oldTotalCost.onEach { oldTotalCost ->
+                fragmentConsumerCartTvOldTotalCost.text = oldTotalCost
+            }.startedLaunch(viewLifecycleOwner)
+            viewModel.cartCost.onEach { cartCost ->
+                fragmentConsumerCartTvNewTotalCost.text = cartCost
             }.startedLaunch(viewLifecycleOwner)
         }
     }
