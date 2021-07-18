@@ -20,18 +20,17 @@ class PaymentBottomSheet : BaseBottomSheetDialog<BottomSheetPaymentBinding>() {
         viewModelComponent.inject(this)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(viewDataBinding) {
-            bottomSheetPaymentBtnCardNumber.setOnClickListener {
+            bottomSheetPaymentMcvCardNumber.setOnClickListener {
                 copyToBuffer(
                     "card number",
                     requireContext().getString(R.string.pay_data_card_number)
                 )
                 showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
             }
-            bottomSheetPaymentBtnPhoneNumber.setOnClickListener {
+            bottomSheetPaymentMcvPhoneNumber.setOnClickListener {
                 copyToBuffer(
                     "phone number",
                     requireContext().getString(R.string.pay_data_phone_number)

@@ -31,40 +31,82 @@
             app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_sheet_payment_btn_card_number"
-            style="@style/OutLineButton"
-            android:layout_width="0dp"
-            android:text="@string/pay_data_card_number"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottom_sheet_payment_mcv_card_number"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title">
 
-        <ImageView
-            android:id="@+id/bottom_sheet_payment_iv_copy_card_number"
-            style="@style/IconImageView"
-            android:src="@drawable/ic_copy"
-            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_payment_btn_card_number"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_btn_card_number"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_payment_btn_card_number" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_sheet_payment_btn_phone_number"
-            style="@style/OutLineButton"
-            android:layout_width="0dp"
-            android:text="@string/pay_data_phone_number"
+                <TextView
+                    android:id="@+id/bottom_sheet_payment_tv_card_number"
+                    style="@style/MainText"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/pay_data_card_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_payment_iv_copy_card_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bottom_sheet_payment_iv_copy_card_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:contentDescription="Description"
+                    android:src="@drawable/ic_copy"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottom_sheet_payment_mcv_phone_number"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/small_margin"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_payment_btn_card_number" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_mcv_card_number">
 
-        <ImageView
-            android:id="@+id/bottom_sheet_payment_iv_copy_phone_number"
-            style="@style/IconImageView"
-            android:src="@drawable/ic_copy"
-            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_payment_btn_phone_number"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_btn_phone_number"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_payment_btn_phone_number" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/bottom_sheet_payment_tv_phone_number"
+                    style="@style/MainText"
+                    android:layout_margin="@dimen/medium_margin"
+                    android:text="@string/pay_data_phone_number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_payment_iv_copy_phone_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bottom_sheet_payment_iv_copy_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/medium_margin"
+                    android:contentDescription="Description"
+                    android:src="@drawable/ic_copy"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
