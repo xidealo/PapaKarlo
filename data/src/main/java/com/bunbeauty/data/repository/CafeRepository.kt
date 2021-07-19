@@ -3,9 +3,11 @@ package com.bunbeauty.data.repository
 import com.bunbeauty.data.dao.CafeDao
 import com.bunbeauty.domain.model.local.cafe.Cafe
 import com.bunbeauty.domain.repo.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(
@@ -52,6 +54,7 @@ class CafeRepository @Inject constructor(
 
     override fun getCafeById(cafeId: String) = cafeDao.getCafeById(cafeId)
 
-    override suspend fun getCafeEntityByDistrict(districtId: String) =
+    override suspend fun getCafeEntityByDistrict(districtId: String) = withContext(Dispatchers.IO) {
         cafeDao.getCafeEntityByDistrict(districtId)
+    }
 }

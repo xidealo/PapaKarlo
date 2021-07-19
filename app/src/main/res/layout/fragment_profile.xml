@@ -235,13 +235,14 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_profile_mcv_vk"
-                    android:layout_width="40dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
                     app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_profile_mcv_instagram"
                     app:layout_constraintStart_toStartOf="@+id/fragment_profile_tv_review"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
 
@@ -260,13 +261,14 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_profile_mcv_instagram"
-                    android:layout_width="40dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
-                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
+                    app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/fragment_profile_mcv_google_play"
                     app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_vk"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
 
@@ -287,13 +289,14 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/fragment_profile_mcv_google_play"
-                    android:layout_width="40dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_margin="@dimen/small_margin"
-                    app:cardElevation="0dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="@dimen/large_radius"
+                    app:cardElevation="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_instagram"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
 
