@@ -12,7 +12,7 @@ import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreationOrder
+import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreateOrder
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun onCreateOrderClicked() {
-        router.navigate(toCreationOrder())
+        router.navigate(toCreateOrder())
     }
 
     private fun subscribeOnCartProducts() {

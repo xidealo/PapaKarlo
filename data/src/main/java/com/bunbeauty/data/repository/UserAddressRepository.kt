@@ -17,7 +17,7 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun insert(token: String, userAddress: UserAddress): UserAddress {
         userAddress.uuid =
-            apiRepo.insert(addressMapper.from(userAddress), userAddress.userId ?: "")
+            apiRepo.insert(addressMapper.to(userAddress), userAddress.userId ?: "")
         insert(userAddress)
         return userAddress
     }
@@ -28,7 +28,7 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun insert(userAddressMap: HashMap<String, AddressFirebase>, userUuid: String) {
         userAddressMap.forEach { (addressUuid, addressFirebase) ->
-            val address = addressMapper.to(addressFirebase).also { it.uuid = addressUuid }
+            val address = addressMapper.from(addressFirebase).also { it.uuid = addressUuid }
             insert(UserAddress(userId = userUuid).also {
                 it.uuid = address.uuid
                 it.street = address.street

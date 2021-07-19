@@ -165,7 +165,7 @@
     <!--PRODUCTS-->
 
     <style name="CostElementProduct">
-        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -209,7 +209,7 @@
 
     <!--CREATION ORDER-->
     <style name="TextCreationOrder">
-        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:textColor">@color/mainTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -258,12 +258,12 @@
     </style>
 
     <style name="HelpText" parent="BaseText">
-        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
     </style>
 
     <style name="HelpTextCenter" parent="HelpText">
-        <item name="android:textSize">@dimen/very_small_text_size</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
         <item name="android:textAlignment">center</item>
     </style>

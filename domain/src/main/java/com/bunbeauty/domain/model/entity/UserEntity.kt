@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.local.user
+package com.bunbeauty.domain.model.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,9 +8,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class User(
+data class UserEntity(
     @PrimaryKey
-    var userId: String = "",
+    var uuid: String = "",
     var phone: String = "",
     var email: String = "",
     @Ignore

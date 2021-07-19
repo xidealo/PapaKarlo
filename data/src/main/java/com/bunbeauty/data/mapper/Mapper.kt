@@ -1,10 +1,10 @@
-package com.bunbeauty.common
+package com.bunbeauty.data.mapper
 
-interface Mapper<T, E> {
+interface Mapper<FM, TM> {
 
-    fun from(e: E): T
+    fun from(model: FM): TM
 
-    fun to(t: T): E
+    fun to(model: TM): FM
 
     fun checkEmptyString(data: String): String? {
         if (data.isEmpty()) return null

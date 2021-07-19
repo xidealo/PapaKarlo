@@ -6,7 +6,7 @@ import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
@@ -24,7 +24,7 @@ abstract class ProfileViewModel(
     stringUtil: IStringUtil,
     productHelper: IProductHelper,
 ) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
-    abstract val userState: StateFlow<State<User?>>
+    abstract val userEntityState: StateFlow<State<UserEntity?>>
     abstract val hasAddressState: StateFlow<State<Boolean>>
     abstract val lastOrderState: StateFlow<State<OrderItem>>
 
@@ -54,7 +54,7 @@ class ProfileViewModelImpl @Inject constructor(
         getLastOrder(getUserId())
     }
 
-    override val userState: MutableStateFlow<State<User?>> =
+    override val userEntityState: MutableStateFlow<State<UserEntity?>> =
         MutableStateFlow(State.Loading())
 
     override val lastOrderState: MutableStateFlow<State<OrderItem>> =
@@ -66,12 +66,12 @@ class ProfileViewModelImpl @Inject constructor(
     private fun getUser(userId: String) {
         viewModelScope.launch(Dispatchers.Default) {
             userRepo.getUserWithBonuses(userId).onEach {
-                userState.value = it.toStateNullableSuccess()
+                userEntityState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
     }
 
-    private fun getUserId() = runBlocking { dataStoreRepo.userId.first() }
+    private fun getUserId() = runBlocking { dataStoreRepo.userUuid.first() }
 
     private fun getAddress(userId: String) {
         userAddressRepo.getUserAddressByUserId(userId).onEach {
@@ -114,10 +114,10 @@ class ProfileViewModelImpl @Inject constructor(
     }
 
     override fun goToSettings() {
-        if (userState.value is State.Success) {
+        if (userEntityState.value is State.Success) {
             router.navigate(
                 ProfileFragmentDirections
-                    .toSettingsFragment((userState.value as State.Success<User?>).data!!.userId)
+                    .toSettingsFragment((userEntityState.value as State.Success<UserEntity?>).data!!.uuid)
             )
         }
     }

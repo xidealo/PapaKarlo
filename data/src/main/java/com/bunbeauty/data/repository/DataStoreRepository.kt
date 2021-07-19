@@ -57,7 +57,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
-    override val userId: Flow<String> = context.userId.data.map {
+    override val userUuid: Flow<String> = context.userId.data.map {
         it[USER_ID_KEY] ?: DEFAULT_STRING
     }
 

@@ -1,41 +1,41 @@
 package com.bunbeauty.data.mapper.firebase
 
-import com.bunbeauty.common.Mapper
+import com.bunbeauty.data.mapper.Mapper
 import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.domain.model.firebase.MenuProductFirebase
 import javax.inject.Inject
 
 class MenuProductMapper @Inject constructor() : Mapper<MenuProductFirebase, MenuProduct> {
 
-    override fun from(e: MenuProduct): MenuProductFirebase {
-        return MenuProductFirebase(
-            name = e.name,
-            cost = e.cost,
-            discountCost = e.discountCost,
-            weight = e.weight,
-            description = e.description,
-            comboDescription = checkEmptyString(e.comboDescription),
-            photoLink = e.photoLink,
-            productCode = e.productCode,
-            barcode = e.barcode,
+    override fun from(model: MenuProductFirebase): MenuProduct {
+        return MenuProduct(
+            "empty uuid",
+            name = model.name,
+            cost = model.cost,
+            discountCost = model.discountCost,
+            weight = model.weight,
+            description = model.description,
+            comboDescription = model.comboDescription ?: "",
+            photoLink = model.photoLink,
+            productCode = model.productCode,
+            barcode = model.barcode,
         )
     }
 
     /**
      * Set uuid after convert
      */
-    override fun to(t: MenuProductFirebase): MenuProduct {
-        return MenuProduct(
-            "empty uuid",
-            name = t.name,
-            cost = t.cost,
-            discountCost = t.discountCost,
-            weight = t.weight,
-            description = t.description,
-            comboDescription = t.comboDescription ?: "",
-            photoLink = t.photoLink,
-            productCode = t.productCode,
-            barcode = t.barcode,
+    override fun to(model: MenuProduct): MenuProductFirebase {
+        return MenuProductFirebase(
+            name = model.name,
+            cost = model.cost,
+            discountCost = model.discountCost,
+            weight = model.weight,
+            description = model.description,
+            comboDescription = checkEmptyString(model.comboDescription),
+            photoLink = model.photoLink,
+            productCode = model.productCode,
+            barcode = model.barcode,
         )
     }
 }

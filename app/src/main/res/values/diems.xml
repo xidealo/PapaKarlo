@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TEXT -->
-    <dimen name="large_text_size">18sp</dimen>
-    <dimen name="medium_text_size">16sp</dimen>
-    <dimen name="small_text_size">14sp</dimen>
-    <dimen name="very_small_text_size">12sp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
+    <dimen name="medium_text_size">14sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
 
     <!-- INPUTS -->
     <dimen name="material_small_input_layout_width">314dp</dimen>
@@ -19,11 +18,10 @@
     <dimen name="button_progress_bar_size">36dp</dimen>
 
     <!-- MARGIN -->
-    <dimen name="very_large_margin">40dp</dimen>
-    <dimen name="large_margin">24dp</dimen>
-    <dimen name="medium_margin">16dp</dimen>
-    <dimen name="small_margin">8dp</dimen>
-    <dimen name="very_small_margin">4dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="very_small_margin">2dp</dimen>
 
     <!-- PADDING -->
     <dimen name="large_padding">16dp</dimen>
@@ -49,6 +47,9 @@
 
     <!--COUNT_PICKER -->
     <dimen name="picker_width">28dp</dimen>
-    <dimen name="picker_height">28dp</dimen>
+    <dimen name="picker_height">32dp</dimen>
+
+    <!--COUNT_PICKER -->
+    <dimen name="switcher_height">32dp</dimen>
 
 </resources>

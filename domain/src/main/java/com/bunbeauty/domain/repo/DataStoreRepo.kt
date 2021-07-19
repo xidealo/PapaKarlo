@@ -14,7 +14,7 @@ interface DataStoreRepo {
     val delivery: Flow<Delivery>
     suspend fun saveDelivery(delivery: Delivery)
 
-    val userId: Flow<String>
+    val userUuid: Flow<String>
     suspend fun saveUserId(userId: String)
 
     val phone: Flow<String>

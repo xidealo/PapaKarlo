@@ -1,11 +1,8 @@
 package com.bunbeauty.papakarlo.di.components
 
 import android.content.Context
-import com.bunbeauty.papakarlo.di.modules.ApiModule
-import com.bunbeauty.papakarlo.di.modules.AppModule
-import com.bunbeauty.papakarlo.di.modules.DataModule
-import com.bunbeauty.papakarlo.di.modules.RepositoryModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
+import com.bunbeauty.papakarlo.di.modules.*
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -16,6 +13,7 @@ import javax.inject.Singleton
         AppModule::class,
         ApiModule::class,
         DataModule::class,
+        MapperModule::class,
         RepositoryModule::class
     ]
 )

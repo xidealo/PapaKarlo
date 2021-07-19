@@ -2,61 +2,83 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.data.dao.UserDao
-import com.bunbeauty.data.mapper.firebase.UserMapper
+import com.bunbeauty.data.mapper.user.IUserEntityMapper
+import com.bunbeauty.data.mapper.user.IUserFirebaseMapper
+import com.bunbeauty.data.mapper.user.UserFirebaseMapper
+import com.bunbeauty.domain.model.data.User
 import com.bunbeauty.domain.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.UserRepo
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
     private val apiRepo: ApiRepo,
-    private val userMapper: UserMapper
+    private val userFirebaseMapper: IUserFirebaseMapper,
+    private val userEntityMapper: IUserEntityMapper
 ) : UserRepo {
 
-    override suspend fun insert(user: User) {
-        userDao.insert(user)
-        apiRepo.insert(userMapper.from(user), user.userId)
+    override fun getUser(userUuid: String): Flow<User?> {
+        return userDao.getUser(userUuid)
+            .flowOn(IO)
+            .map { userEntity ->
+                userEntity?.let {
+                    userEntityMapper.from(userEntity)
+                }
+            }
+            .flowOn(Default)
     }
 
-    override suspend fun insertToLocal(user: User) {
-        userDao.insert(user)
+
+
+
+
+    override suspend fun insert(userEntity: UserEntity) {
+        userDao.insert(userEntity)
+        apiRepo.insert(userFirebaseMapper.to(userEntity), userEntity.uuid)
+    }
+
+    override suspend fun insertToLocal(userEntity: UserEntity) {
+        userDao.insert(userEntity)
     }
 
     override suspend fun insert(userFirebase: UserFirebase, userId: String) {
-        insertToLocal(userMapper.to(userFirebase).also { it.userId = userId })
+        //insertToLocal(userFirebaseMapper.to(userFirebase).also { it.uuid = userId })
     }
 
-    override suspend fun update(user: User) {
-        userDao.update(user)
-        apiRepo.update(userMapper.from(user), user.userId)
+    override suspend fun update(userEntity: UserEntity) {
+        userDao.update(userEntity)
+        //apiRepo.update(userFirebaseMapper.from(userEntity), userEntity.uuid)
     }
 
-    override suspend fun insertToBonusList(user: User) {
-        apiRepo.insertToBonusList(userMapper.from(user), user.userId)
+    override suspend fun insertToBonusList(userEntity: UserEntity) {
+        //apiRepo.insertToBonusList(userFirebaseMapper.from(userEntity), userEntity.uuid)
     }
 
-    override fun getUserWithBonuses(userId: String): Flow<User?> {
+    override fun getUserWithBonuses(userId: String): Flow<UserEntity?> {
         return apiRepo.getUserBonusList(userId).flatMapLatest { bonusList ->
-            userDao.getUserFlow(userId).map {
-                it?.also { it.bonusList = bonusList.toMutableList() }
-            }
+            userDao.getUser(userId)
+//                .map {
+//                it?.also { it.bonusList = bonusList.toMutableList() }
+//            }
         }
     }
 
-    override fun getUser(userId: String): User? {
+//    override fun getUser(userId: String): User? {
+//        return userDao.getUser(userId)
+//    }
+
+    override fun getUserAsFlow(userId: String): Flow<UserEntity?> {
         return userDao.getUser(userId)
     }
 
-    override fun getUserAsFlow(userId: String): Flow<User?> {
-        return userDao.getUserFlow(userId)
-    }
-
-    override fun getUserAsFlowFromFirebase(userId: String): Flow<User?> {
+    override fun getUserAsFlowFromFirebase(userId: String): Flow<UserEntity?> {
         return apiRepo.getUser(userId).map { userFirebase ->
             if (userFirebase != null && userFirebase.phone.isNotEmpty())
-                userMapper.to(userFirebase).also { it.userId = userId }
+                userFirebaseMapper.from(userFirebase).also { it.uuid = userId }
             else
                 null
         }

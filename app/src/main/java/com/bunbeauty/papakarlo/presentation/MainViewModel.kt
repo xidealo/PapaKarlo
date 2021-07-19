@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(
 
     fun refreshUserInfo() {
         viewModelScope.launch(IO) {
-            val userId = dataStoreRepo.userId.first()
+            val userId = dataStoreRepo.userUuid.first()
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase != null) {
                     userRepo.insert(userFirebase, userId)

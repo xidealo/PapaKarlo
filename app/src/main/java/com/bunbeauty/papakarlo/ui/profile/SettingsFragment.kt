@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.SettingsViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -34,7 +33,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         setOnClickListeners()
 
         viewModel.getUser(SettingsFragmentArgs.fromBundle(requireArguments()).userId)
-        viewModel.userState.onEach { state ->
+        viewModel.userEntityState.onEach { state ->
             when (state) {
                 is State.Success -> {
                     with(viewDataBinding){

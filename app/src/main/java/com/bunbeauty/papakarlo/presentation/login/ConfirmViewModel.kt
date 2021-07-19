@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation.login
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
@@ -64,9 +64,7 @@ class ConfirmViewModelImpl @Inject constructor(
             dataStoreRepo.saveUserId(userId)
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase == null) {
-                    userRepo.insert(
-                        User(userId = userId, phone = phone, email = email)
-                    )
+                    userRepo.insert(UserEntity(uuid = userId, phone = phone, email = email))
                 } else {
                     userRepo.insert(userFirebase, userId)
                     addressRepo.insert(userFirebase.addresses, userId)

@@ -12,7 +12,7 @@ import com.bunbeauty.domain.model.local.address.CafeAddress
 import com.bunbeauty.domain.model.local.address.UserAddress
 import com.bunbeauty.domain.model.local.cafe.CafeEntity
 import com.bunbeauty.domain.model.local.order.OrderEntity
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.entity.UserEntity
 
 @Database(
     entities = [
@@ -24,7 +24,7 @@ import com.bunbeauty.domain.model.local.user.User
         CafeEntity::class,
         DistrictEntity::class,
         Street::class,
-        User::class
+        UserEntity::class
     ], version = 74
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)

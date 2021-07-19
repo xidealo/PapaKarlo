@@ -55,8 +55,8 @@
         android:label="@string/title_cart"
         tools:layout="@layout/fragment_consumer_cart">
         <action
-            android:id="@+id/to_creation_order"
-            app:destination="@id/creation_order" />
+            android:id="@+id/to_create_order"
+            app:destination="@id/create_order" />
         <action
             android:id="@+id/back_to_menu_fragment"
             app:destination="@id/menu_fragment"
@@ -64,10 +64,10 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/creation_order"
-        android:name="com.bunbeauty.papakarlo.ui.CreationOrderFragment"
+        android:id="@+id/create_order"
+        android:name="com.bunbeauty.papakarlo.ui.CreateOrderFragment"
         android:label="@string/title_creation_order"
-        tools:layout="@layout/fragment_creation_order">
+        tools:layout="@layout/fragment_create_order">
         <action
             android:id="@+id/back_to_menu_fragment"
             app:destination="@id/menu_fragment"

@@ -39,7 +39,7 @@ class CreationAddressViewModel @Inject constructor(
 
     fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
-            userAddress.userId = dataStoreRepo.userId.first()
+            userAddress.userId = dataStoreRepo.userUuid.first()
             val uuid = if (!userAddress.userId.isNullOrEmpty()) {
                 userAddressRepo.insert("token", userAddress).uuid
             } else {

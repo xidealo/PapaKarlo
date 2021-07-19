@@ -3,13 +3,10 @@ package com.bunbeauty.papakarlo.ui.view
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.Log
-import android.util.TypedValue.COMPLEX_UNIT_PX
-import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.widget.LinearLayout.LayoutParams
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -20,166 +17,163 @@ class CustomSwitcher @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attributeSet, defStyleAttr), Customizable {
 
-    var isLeft = true
-        set(value) {
-            field = value
-            _isLeftLiveData.value = value
-        }
-    private val _isLeftLiveData = MutableLiveData(isLeft)
-    val isLeftLiveData: LiveData<Boolean>
-        get() = _isLeftLiveData
+    var switchListener: SwitchListener? = null
 
-    /*private val backgroundWidth = getDimensionPixel(
+    var isLeft: Boolean = true
+        set(value) {
+            if (field != value) {
+                field = value
+                updateButtons(value)
+            }
+        }
+
+    private val backgroundColor = getColor(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_backgroundWidth,
-        DEFAULT_BACKGROUND_WIDTH
-    )
-    private val backgroundHeight = getDimensionPixel(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_backgroundHeight,
-        DEFAULT_BACKGROUND_HEIGHT
-    )*/
-    private val backgroundRadius = getDimensionPixel(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_backgroundRadius,
-        DEFAULT_BACKGROUND_RADIUS
-    )
-    private val switcherColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_switcherColor,
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_backgroundColor,
         DEFAULT_BACKGROUND_COLOR
     )
-    private val switcherPadding = getDimensionPixel(
+    private val buttonColor = getColor(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_switcherPadding,
-        DEFAULT_SWITCH_PADDING
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_buttonColor,
+        DEFAULT_BUTTON_COLOR
     )
-    private val buttonWidth = getDimensionPixel(
+    private val switcherMainTextColor = getColor(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_buttonWidth,
-        DEFAULT_BUTTON_WIDTH
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_switcherMainTextColor,
+        DEFAULT_BUTTON_TEXT_COLOR
     )
-    private val buttonHeight = getDimensionPixel(
+    private val switcherAlternativeTextColor = getColor(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_buttonHeight,
-        DEFAULT_BUTTON_HEIGHT
-    )
-    private val buttonRadius = getDimensionPixel(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_buttonRadius,
-        DEFAULT_BUTTON_RADIUS
-    )
-    private val buttonTextSize = getDimensionPixel(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_buttonTextSize,
-        DEFAULT_BUTTON_TEXT_SIZE
-    )
-    private val activeTextColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_activeTextColor,
-        DEFAULT_ACTIVE_TEXT_COLOR
-    )
-    private val inactiveTextColor = DEFAULT_INACTIVE_TEXT_COLOR
-        /*getColor(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_inactiveTextColor,
-        DEFAULT_INACTIVE_TEXT_COLOR
-    )*/
-    private val activeColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher_activeColor,
-        DEFAULT_ACTIVE_COLOR
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_switcherAlternativeTextColor,
+        DEFAULT_ALTERNATIVE_TEXT_COLOR
     )
     private val leftButtonText = getString(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_activeColor,
-        DEFAULT_LEFT_BUTTON_TEXT
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_leftButtonText,
+        DEFAULT_TEXT
     )
     private val rightButtonText = getString(
         context,
         attributeSet,
-        R.styleable.CustomSwitcher_activeColor,
-        DEFAULT_RIGHT_BUTTON_TEXT
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_rightButtonText,
+        DEFAULT_TEXT
+    )
+    private val switcherHeight = getDimensionPixel(
+        context,
+        attributeSet,
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_switcherHeight,
+        DEFAULT_BUTTON_HEIGHT
+    )
+    private val switcherButtonMargin = getDimensionPixel(
+        context,
+        attributeSet,
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_switcherButtonMargin,
+        DEFAULT_BUTTON_MARGIN
+    )
+    private val switcherButtonRadius = getDimensionPixel(
+        context,
+        attributeSet,
+        R.styleable.CustomSwitcher,
+        R.styleable.CustomSwitcher_switcherButtonRadius,
+        DEFAULT_BUTTON_RADIUS
     )
 
-    private val leftButton = createButton(leftButtonText, isLeft)
-    private val rightButton = createButton(rightButtonText, !isLeft)
+    private val leftButton = createButton(leftButtonText, true)
+    private val rightButton = createButton(rightButtonText, false)
 
     init {
-        leftButton.setOnClickListener(::onButtonClick)
-        rightButton.setOnClickListener(::onButtonClick)
+        backgroundTintList = ColorStateList.valueOf(backgroundColor)
 
-        val linearLayout = LinearLayout(context)
-        linearLayout.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        linearLayout.backgroundTintList = ColorStateList.valueOf(switcherColor)
-        linearLayout.setPadding(switcherPadding, switcherPadding, switcherPadding, switcherPadding)
-        linearLayout.addView(leftButton)
-        linearLayout.addView(rightButton)
-
-        radius = backgroundRadius.toFloat()
+        val linearLayout = LinearLayout(context).apply {
+            layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+            addView(leftButton)
+            addView(rightButton)
+        }
         addView(linearLayout)
     }
 
-    private fun createButton(text: String, isActive: Boolean): MaterialButton {
-        val button = MaterialButton(context)
-
-        button.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, buttonHeight, 1f)
-        button.cornerRadius = buttonRadius
-        button.text = text
-        val buttonColor = if (isActive) activeColor else switcherColor
-        button.backgroundTintList = ColorStateList.valueOf(buttonColor)
-        val buttonTextColor = if (isActive) activeTextColor else inactiveTextColor
-        button.setTextColor(buttonTextColor)
-        button.setTextSize(COMPLEX_UNIT_PX, buttonTextSize.toFloat())
-
-        return button
-    }
-
-    private fun onButtonClick(view: View) {
-        toggleButton(leftButton, isLeft)
-        toggleButton(rightButton, !isLeft)
-        isLeft = !isLeft
-    }
-
-    private fun toggleButton(button: MaterialButton, isActive: Boolean) {
-        if (isActive) {
-            button.backgroundTintList = ColorStateList.valueOf(activeColor)
-            button.setTextColor(activeTextColor)
-        } else {
-            button.backgroundTintList = ColorStateList.valueOf(switcherColor)
-            button.setTextColor(inactiveTextColor)
+    private fun createButton(buttonText: String, isLeftButton: Boolean): MaterialButton {
+        return MaterialButton(context).apply {
+            layoutParams = LayoutParams(MATCH_PARENT, switcherHeight, 1f).apply {
+                setPadding(0, 0, 0, 0)
+                setMargins(
+                    switcherButtonMargin,
+                    switcherButtonMargin,
+                    switcherButtonMargin,
+                    switcherButtonMargin
+                )
+            }
+            stateListAnimator = null
+            insetTop = 0
+            insetBottom = 0
+            val textColor = if (isLeftButton) {
+                switcherMainTextColor
+            } else {
+                switcherAlternativeTextColor
+            }
+            setTextColor(ColorStateList.valueOf(textColor))
+            text = buttonText
+            val backgroundColor = if (isLeftButton) {
+                buttonColor
+            } else {
+                backgroundColor
+            }
+            cornerRadius = switcherButtonRadius
+            backgroundTintList = ColorStateList.valueOf(backgroundColor)
+            setOnClickListener {
+                updateButtons(isLeftButton)
+                isLeft = isLeftButton
+                switchListener?.onSwitched(isLeftButton)
+            }
         }
     }
 
+    private fun updateButtons(isLeftButton: Boolean) {
+        if (isLeftButton) {
+            leftButton.makeActive()
+            rightButton.makeInactive()
+        } else {
+            leftButton.makeInactive()
+            rightButton.makeActive()
+        }
+    }
+
+    private fun MaterialButton.makeActive() {
+        backgroundTintList = ColorStateList.valueOf(buttonColor)
+        setTextColor(switcherMainTextColor)
+    }
+
+    private fun MaterialButton.makeInactive() {
+        backgroundTintList = ColorStateList.valueOf(backgroundColor)
+        setTextColor(switcherAlternativeTextColor)
+    }
+
+    interface SwitchListener {
+        fun onSwitched(isLeft: Boolean)
+    }
+
     companion object {
-        private const val DEFAULT_BACKGROUND_WIDTH = 240f
-        private const val DEFAULT_BACKGROUND_HEIGHT = 32f
-        private const val DEFAULT_BACKGROUND_RADIUS = 8f
-        private const val DEFAULT_BACKGROUND_COLOR = 0xFF0
-        private const val DEFAULT_SWITCH_PADDING = 4f
-        private const val DEFAULT_IS_LEFT = true
-        private const val DEFAULT_BUTTON_WIDTH =  0f//116f
-        private const val DEFAULT_BUTTON_HEIGHT = 0f//24f
+        private const val DEFAULT_BACKGROUND_COLOR = 0xFFB3BA
+        private const val DEFAULT_BUTTON_COLOR = 0xFFB3BA
+        private const val DEFAULT_BUTTON_TEXT_COLOR = 0xFFB3BA
+        private const val DEFAULT_ALTERNATIVE_TEXT_COLOR = 0xFFB3BA
+        private const val DEFAULT_TEXT = "-"
+        private const val DEFAULT_BUTTON_MARGIN = 0f
+        private const val DEFAULT_BUTTON_HEIGHT = 32f
         private const val DEFAULT_BUTTON_RADIUS = 4f
-        private const val DEFAULT_BUTTON_TEXT_SIZE = 16f
-        private const val DEFAULT_ACTIVE_TEXT_COLOR = 0xFFF
-        private const val DEFAULT_INACTIVE_TEXT_COLOR = 0x888
-        private const val DEFAULT_ACTIVE_COLOR = 0x000
-        private const val DEFAULT_LEFT_BUTTON_TEXT = "ON"
-        private const val DEFAULT_RIGHT_BUTTON_TEXT = "OFF"
     }
 
 }

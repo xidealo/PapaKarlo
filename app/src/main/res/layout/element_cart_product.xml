@@ -35,34 +35,40 @@
                 style="@style/MediumSecondaryRegularText"
                 android:layout_width="wrap_content"
                 android:layout_margin="@dimen/small_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title"
-                tools:text="100₽"/>
+                app:layout_constraintVertical_bias="0"
+                tools:text="100₽" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_new_cost"
                 style="@style/MediumRegularText"
-                app:flow_horizontalBias="0"
+                android:layout_width="wrap_content"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
-                app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_old_cost"
-                app:layout_constraintTop_toBottomOf="@id/element_cart_product_tv_title"
+                app:flow_horizontalBias="0"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
-                tools:text="90₽"/>
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_old_cost"
+                app:layout_constraintTop_toBottomOf="@+id/element_cart_product_tv_title"
+                app:layout_constraintVertical_bias="0"
+                tools:text="90₽" />
 
             <com.bunbeauty.papakarlo.ui.view.CountPicker
                 android:id="@+id/element_cart_product_cp_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/medium_margin"
-                app:pickerColor="@color/colorPrimary"
                 app:buttonTextColor="@color/white"
-                app:pickerWidth="@dimen/picker_width"
-                app:pickerHeight="@dimen/picker_height"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:pickerColor="@color/colorPrimary"
+                app:pickerHeight="@dimen/picker_height"
+                app:pickerWidth="@dimen/picker_width" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

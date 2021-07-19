@@ -60,6 +60,7 @@ class CartProductAdapter @Inject constructor() :
                 elementCartProductTvTitle.text = item.name
                 elementCartProductTvOldCost.text = item.oldCost
                 elementCartProductTvOldCost.strikeOutText()
+                elementCartProductTvOldCost.toggleVisibility(item.oldCost == null)
                 elementCartProductTvNewCost.text = item.newCost
                 elementCartProductCpCount.count = item.count
                 Picasso.get()

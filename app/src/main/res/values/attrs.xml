@@ -24,20 +24,14 @@
     </declare-styleable>
 
     <declare-styleable name="CustomSwitcher">
-        <!--<attr name="backgroundWidth" format="dimension" />
-        <attr name="backgroundHeight" format="dimension" />-->
-        <attr name="backgroundRadius" format="dimension" />
-        <attr name="switcherColor" format="color" />
-        <attr name="switcherPadding" format="dimension" />
-        <attr name="isLeft" format="boolean" />
-        <attr name="buttonWidth" format="dimension" />
-        <attr name="buttonHeight" format="dimension" />
-        <attr name="buttonRadius" format="dimension" />
-        <attr name="buttonTextSize" format="dimension" />
-        <attr name="activeTextColor" format="color" />
-        <attr name="inactiveTextColor" format="color" />
-        <attr name="activeColor" format="color" />
-        <attr name="rightButtonText" format="string" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="buttonColor" format="color" />
+        <attr name="switcherMainTextColor" format="color" />
+        <attr name="switcherAlternativeTextColor" format="color" />
         <attr name="leftButtonText" format="string" />
+        <attr name="rightButtonText" format="string" />
+        <attr name="switcherHeight" format="dimension" />
+        <attr name="switcherButtonMargin" format="dimension" />
+        <attr name="switcherButtonRadius" format="dimension" />
     </declare-styleable>
 </resources>

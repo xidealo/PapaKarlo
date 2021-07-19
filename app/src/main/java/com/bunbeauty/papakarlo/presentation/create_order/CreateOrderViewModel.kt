@@ -1,6 +1,5 @@
-package com.bunbeauty.papakarlo.presentation
+package com.bunbeauty.papakarlo.presentation.create_order
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
@@ -12,7 +11,7 @@ import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.model.local.order.OrderEntity
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.network.INetworkHelper
 import com.bunbeauty.domain.util.product.IProductHelper
@@ -22,7 +21,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
-import com.bunbeauty.papakarlo.ui.CreationOrderFragmentDirections.toAddressesBottomSheet
+import com.bunbeauty.papakarlo.ui.CreateOrderFragmentDirections.*
 import com.instacart.library.truetime.TrueTime
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -31,39 +30,39 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
-abstract class CreationOrderViewModel : BaseViewModel() {
-    abstract val hasAddressState: StateFlow<State<Boolean>>
-    abstract val selectedAddressTextState: StateFlow<State<String>>
-    abstract val userState: StateFlow<State<User?>>
+//abstract class CreateOrderViewModel : BaseViewModel() {
+//    abstract val hasAddressState: StateFlow<State<Boolean>>
+//    abstract val selectedAddressTextState: StateFlow<State<String>>
+//    abstract val userState: StateFlow<State<User?>>
+//
+//    abstract val isDeliveryState: MutableStateFlow<Boolean>
+//    abstract val deferredTextStateFlow: StateFlow<String>
+//    abstract val orderStringStateFlow: StateFlow<String>
+//    abstract val deferredHoursStateFlow: MutableStateFlow<Int?>
+//    abstract val deferredMinutesStateFlow: MutableStateFlow<Int?>
+//
+//    abstract val deliveryStringLiveData: LiveData<String>
+//
+//    abstract fun getAddress()
+//    abstract fun getUser()
+//    abstract fun getCachedPhone(): String
+//    abstract fun getCachedEmail(): String
+//    abstract fun subscribeOnDeferredText()
+//    abstract fun subscribeOnOrderString()
+//    abstract fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean
+//    abstract fun onAddressClicked()
+//    abstract fun onCreateAddressClicked()
+//    abstract fun createOrder(
+//        comment: String,
+//        phone: String,
+//        email: String,
+//        deferredHours: Int?,
+//        deferredMinutes: Int?,
+//        spentBonusesString: String
+//    )
+//}
 
-    abstract val isDeliveryState: MutableStateFlow<Boolean>
-    abstract val deferredTextStateFlow: StateFlow<String>
-    abstract val orderStringStateFlow: StateFlow<String>
-    abstract val deferredHoursStateFlow: MutableStateFlow<Int?>
-    abstract val deferredMinutesStateFlow: MutableStateFlow<Int?>
-
-    abstract val deliveryStringLiveData: LiveData<String>
-
-    abstract fun getAddress()
-    abstract fun getUser()
-    abstract fun getCachedPhone(): String
-    abstract fun getCachedEmail(): String
-    abstract fun subscribeOnDeferredText()
-    abstract fun subscribeOnOrderString()
-    abstract fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean
-    abstract fun onAddressClicked()
-    abstract fun onCreateAddressClicked()
-    abstract fun createOrder(
-        comment: String,
-        phone: String,
-        email: String,
-        deferredHours: Int?,
-        deferredMinutes: Int?,
-        spentBonusesString: String
-    )
-}
-
-class CreationOrderViewModelImpl @Inject constructor(
+class CreateOrderViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val networkHelper: INetworkHelper,
     private val stringUtil: IStringUtil,
@@ -75,30 +74,51 @@ class CreationOrderViewModelImpl @Inject constructor(
     private val userAddressRepo: UserAddressRepo,
     private val cafeRepo: CafeRepo,
     private val userRepo: UserRepo
-) : CreationOrderViewModel() {
+) : BaseViewModel() {
 
-    override val hasAddressState: MutableStateFlow<State<Boolean>> =
+    private val mutableIsDelivery: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isDelivery: StateFlow<Boolean> = mutableIsDelivery.asStateFlow()
+
+    private val mutablePhone: MutableStateFlow<String?> = MutableStateFlow(null)
+    val phone: StateFlow<String?> = mutablePhone.asStateFlow()
+
+    init {
+        subscribeOnProfile()
+    }
+
+    private fun subscribeOnProfile() {
+        dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            userRepo.getUser(userUuid).onEach { user ->
+                mutablePhone.value = user?.phone
+            }
+        }.launchIn(viewModelScope)
+    }
+
+
+    val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
 
-    override val selectedAddressTextState: MutableStateFlow<State<String>> =
+    val selectedAddressTextState: MutableStateFlow<State<String>> =
         MutableStateFlow(State.Loading())
 
-    override val userState: MutableStateFlow<State<User?>> =
+    val userEntityState: MutableStateFlow<State<UserEntity?>> =
         MutableStateFlow(State.Loading())
 
     private val selectedAddressState: MutableStateFlow<Address?> = MutableStateFlow(null)
+    val deferredTextStateFlow: MutableStateFlow<String> = MutableStateFlow("")
+    val orderStringStateFlow: MutableStateFlow<String> = MutableStateFlow("")
 
-    override val isDeliveryState: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    override val deferredTextStateFlow: MutableStateFlow<String> = MutableStateFlow("")
-    override val orderStringStateFlow: MutableStateFlow<String> = MutableStateFlow("")
+    val deferredHoursStateFlow = MutableStateFlow<Int?>(null)
+    val deferredMinutesStateFlow = MutableStateFlow<Int?>(null)
 
-    override val deferredHoursStateFlow = MutableStateFlow<Int?>(null)
-    override val deferredMinutesStateFlow = MutableStateFlow<Int?>(null)
+    fun setIsDelivery(isDelivery: Boolean) {
+        mutableIsDelivery.value = isDelivery
+    }
 
     @ExperimentalCoroutinesApi
-    override fun getAddress() {
+    fun getAddress() {
         viewModelScope.launch(Dispatchers.Default) {
-            isDeliveryState.flatMapLatest { isDelivery ->
+            isDelivery.flatMapLatest { isDelivery ->
                 if (isDelivery) {
                     dataStoreRepo.deliveryAddressId.flatMapLatest {
                         userAddressRepo.getUserAddressByUuid(it)
@@ -123,28 +143,28 @@ class CreationOrderViewModelImpl @Inject constructor(
         }
     }
 
-    override fun getUser() {
+    fun getUser() {
         viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(dataStoreRepo.userId.first()).onEach {
-                userState.value = it.toStateNullableSuccess()
+            userRepo.getUserWithBonuses(dataStoreRepo.userUuid.first()).onEach {
+                userEntityState.value = it.toStateNullableSuccess()
             }.launchIn(viewModelScope)
         }
     }
 
-    override fun getCachedEmail(): String {
+    fun getCachedEmail(): String {
         return runBlocking { dataStoreRepo.email.first() }
     }
 
-    override fun getCachedPhone(): String {
+    fun getCachedPhone(): String {
         return runBlocking { dataStoreRepo.phone.first() }
     }
 
     @ExperimentalCoroutinesApi
-    override fun subscribeOnDeferredText() {
-        isDeliveryState.flatMapLatest {
+    fun subscribeOnDeferredText() {
+        isDelivery.flatMapLatest {
             deferredHoursStateFlow
         }.flatMapLatest { deferredMinutesStateFlow }.onEach {
-            deferredTextStateFlow.value = if (isDeliveryState.value) {
+            deferredTextStateFlow.value = if (isDelivery.value) {
                 resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringUtil.toStringTime(
                     deferredHoursStateFlow.value,
                     deferredMinutesStateFlow.value
@@ -158,10 +178,10 @@ class CreationOrderViewModelImpl @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    override fun subscribeOnOrderString() {
+    fun subscribeOnOrderString() {
         viewModelScope.launch(Dispatchers.Default) {
             cartProductRepo.cartProductList.onEach { productList ->
-                if (isDeliveryState.value) {
+                if (isDelivery.value) {
                     orderStringStateFlow.value =
                         resourcesProvider.getString(R.string.action_creation_order_checkout) +
                                 productHelper.getFullPriceStringWithDelivery(
@@ -177,7 +197,7 @@ class CreationOrderViewModelImpl @Inject constructor(
         }
     }
 
-    override val deliveryStringLiveData by lazy {
+    val deliveryStringLiveData by lazy {
         switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
             map(cartProductRepo.cartProductList.asLiveData()) { productList ->
                 val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
@@ -196,14 +216,14 @@ class CreationOrderViewModelImpl @Inject constructor(
         }
     }
 
-    override fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
+    fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
         val limitMinutes = DateTime.now().minuteOfDay + HALF_HOUR
         val pickedMinutes = deferredHours * MINUTES_IN_HOURS + deferredMinutes
 
         return pickedMinutes > limitMinutes
     }
 
-    override fun createOrder(
+    fun createOrder(
         comment: String,
         phone: String,
         email: String,
@@ -220,7 +240,7 @@ class CreationOrderViewModelImpl @Inject constructor(
             phone = phone,
             email = email,
             deferredTime = stringUtil.toStringTime(deferredHours, deferredMinutes),
-            isDelivery = isDeliveryState.value,
+            isDelivery = isDelivery.value,
             code = generateCode(),
             address = selectedAddressState.value!!,
         )
@@ -239,8 +259,8 @@ class CreationOrderViewModelImpl @Inject constructor(
                 ).id,
                 timestamp = timestamp
             )
-            if (userState.value is State.Success) {
-                val user = (userState.value as State.Success<User?>).data
+            if (userEntityState.value is State.Success) {
+                val user = (userEntityState.value as State.Success<UserEntity?>).data
                 //with login
                 if (user != null) {
                     val spentBonuses = if (spentBonusesString.isEmpty()) {
@@ -257,7 +277,7 @@ class CreationOrderViewModelImpl @Inject constructor(
                     }
                     user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
                     order.orderEntity.bonus = spentBonuses
-                    order.orderEntity.userId = user.userId
+                    order.orderEntity.userId = user.uuid
                     userRepo.insertToBonusList(user)
                 } else {
                     dataStoreRepo.savePhone(phone)
@@ -286,11 +306,11 @@ class CreationOrderViewModelImpl @Inject constructor(
         return networkHelper.isNetworkConnected()
     }
 
-    override fun onAddressClicked() {
-        router.navigate(toAddressesBottomSheet(isDeliveryState.value))
+    fun onAddressClicked() {
+        router.navigate(toAddressesBottomSheet(isDelivery.value))
     }
 
-    override fun onCreateAddressClicked() {
+    fun onCreateAddressClicked() {
         router.navigate(toCreationAddressFragment())
     }
 

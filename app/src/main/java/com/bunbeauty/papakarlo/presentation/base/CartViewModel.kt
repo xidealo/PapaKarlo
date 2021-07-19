@@ -50,11 +50,11 @@ abstract class CartViewModel(
             }
             if (cartProduct == null) {
                 cartProductRepo.insert(CartProduct(menuProduct = menuProduct))
+                showMessage(stringUtil.getAddedToCartString(menuProduct.name))
             } else {
                 cartProduct.count++
                 cartProductRepo.update(cartProduct)
             }
-            //showMessage(stringUtil.getAddedToCartString(menuProduct.name))
         }
     }
 
@@ -69,8 +69,8 @@ abstract class CartViewModel(
                 cartProductRepo.update(cartProduct)
             } else {
                 cartProductRepo.delete(cartProduct)
+                showMessage(stringUtil.getRemovedFromCartString(menuProduct.name))
             }
-            //showMessage(stringUtil.getRemovedFromCartString(menuProduct.name))
         }
     }
 }

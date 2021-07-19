@@ -11,12 +11,13 @@ interface Customizable {
     fun getString(
         context: Context,
         attributeSet: AttributeSet?,
+        attributes: IntArray,
         attributeId: Int,
         defaultString: String
     ): String {
-        return if (attributeSet != null) {
+        val a = if (attributeSet != null) {
             val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.ProgressButton)
+                context.obtainStyledAttributes(attributeSet, attributes)
             val text = typedArray.getString(attributeId) ?: defaultString
             typedArray.recycle()
 
@@ -24,17 +25,20 @@ interface Customizable {
         } else {
             defaultString
         }
+
+        return a
     }
 
     fun getDimensionPixel(
         context: Context,
         attributeSet: AttributeSet?,
+        attributes: IntArray,
         attributeId: Int,
         defaultDip: Float
     ): Int {
         return if (attributeSet != null) {
             val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
+                context.obtainStyledAttributes(attributeSet, attributes)
             val dimensionPixel = typedArray.getLayoutDimension(
                 attributeId,
                 getPixels(defaultDip, context.resources)
@@ -50,11 +54,12 @@ interface Customizable {
     fun getInteger(
         context: Context,
         attributeSet: AttributeSet?,
+        attributes: IntArray,
         attributeId: Int,
         defaultInt: Int
     ): Int {
         return if (attributeSet != null) {
-            val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
+            val typedArray = context.obtainStyledAttributes(attributeSet, attributes)
             val integerValue = typedArray.getInteger(attributeId, defaultInt)
             typedArray.recycle()
 
@@ -67,12 +72,13 @@ interface Customizable {
     fun getColor(
         context: Context,
         attributeSet: AttributeSet?,
+        attributes: IntArray,
         attributeId: Int,
         defaultColor: Int
     ): Int {
         return if (attributeSet != null) {
             val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.CountPicker)
+                context.obtainStyledAttributes(attributeSet, attributes)
             val color = typedArray.getColor(attributeId, defaultColor)
             typedArray.recycle()
 
@@ -85,12 +91,13 @@ interface Customizable {
     fun getBoolean(
         context: Context,
         attributeSet: AttributeSet?,
+        attributes: IntArray,
         attributeId: Int,
         default: Boolean
     ): Boolean {
         return if (attributeSet != null) {
             val typedArray =
-                context.obtainStyledAttributes(attributeSet, R.styleable.ProgressButton)
+                context.obtainStyledAttributes(attributeSet, attributes)
             val boolean = typedArray.getBoolean(attributeId, default)
             typedArray.recycle()
 

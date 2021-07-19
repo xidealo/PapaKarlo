@@ -16,7 +16,6 @@ import com.bunbeauty.papakarlo.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-
 class CountPicker @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
@@ -33,6 +32,7 @@ class CountPicker @JvmOverloads constructor(
     private val elementWidth = getDimensionPixel(
         context,
         attributeSet,
+        R.styleable.CountPicker,
         R.styleable.CountPicker_pickerWidth,
         DEFAULT_PICKER_WIDTH
     )
@@ -40,6 +40,7 @@ class CountPicker @JvmOverloads constructor(
     private val elementHeight = getDimensionPixel(
         context,
         attributeSet,
+        R.styleable.CountPicker,
         R.styleable.CountPicker_pickerHeight,
         DEFAULT_PICKER_HEIGHT
     )
@@ -47,6 +48,7 @@ class CountPicker @JvmOverloads constructor(
     private val buttonColor = getColor(
         context,
         attributeSet,
+        R.styleable.CountPicker,
         R.styleable.CountPicker_pickerColor,
         DEFAULT_PICKER_COLOR
     )
@@ -54,6 +56,7 @@ class CountPicker @JvmOverloads constructor(
     private val buttonTextColor = getColor(
         context,
         attributeSet,
+        R.styleable.CountPicker,
         R.styleable.CountPicker_buttonTextColor,
         DEFAULT_BUTTON_TEXT_COLOR
     )

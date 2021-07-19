@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
@@ -36,7 +35,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.userState.onEach { state ->
+        viewModel.userEntityState.onEach { state ->
             when (state) {
                 is State.Loading -> {
                     viewDataBinding.fragmentProfilePbLoading.visible()

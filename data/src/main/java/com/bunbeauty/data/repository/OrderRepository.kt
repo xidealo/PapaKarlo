@@ -27,7 +27,7 @@ class OrderRepository @Inject constructor(
 
     override suspend fun insert(order: Order): String {
         order.orderEntity.uuid =
-            apiRepo.insert(orderMapper.from(order), order.cafeId)
+            apiRepo.insert(orderMapper.to(order), order.cafeId)
         orderDao.insert(order.orderEntity)
         for (cardProduct in order.cartProducts) {
             cardProduct.orderUuid = order.orderEntity.uuid
@@ -53,7 +53,7 @@ class OrderRepository @Inject constructor(
             apiRepo.getOrder(userOrder.cafeId, userOrder.orderId).onEach { order ->
                 if (order != null) {
                     insertToLocal(
-                        order = orderMapper.to(order)
+                        order = orderMapper.from(order)
                             .also { it.orderEntity.uuid = userOrder.orderId })
                     subscribeOnActiveOrder(userOrder)
                 }
@@ -76,7 +76,7 @@ class OrderRepository @Inject constructor(
         apiRepo.getOrderWithSubscribe(userOrder.cafeId, userOrder.orderId).onEach { order ->
             if (order != null)
                 insertToLocal(
-                    order = orderMapper.to(order)
+                    order = orderMapper.from(order)
                         .also { it.orderEntity.uuid = userOrder.orderId })
         }.launchIn(this)
     }

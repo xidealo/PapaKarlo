@@ -34,7 +34,7 @@ class AddressesViewModelImpl @Inject constructor(
 
     override fun getAddresses(isDelivery: Boolean) {
         val userId = runBlocking {
-            dataStoreRepo.userId.first()
+            dataStoreRepo.userUuid.first()
         }
         if (isDelivery) {
             userAddressRepo.getUserAddressByUserId(userId).onEach {
