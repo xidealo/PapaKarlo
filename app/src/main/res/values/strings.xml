@@ -175,6 +175,7 @@
     <string name="title_confirm_prone_information">Код был отправлен на номер</string>
     <string name="msg_confirm_prone_resend">Получить повторно код можно через:</string>
     <string name="msg_confirm_prone_resend_code">Отправить код повторно</string>
+    <string name="msg_confirm_prone_error_code">Неправильный код</string>
 
     <!-- CAFE OPTIONS -->
     <string name="action_cafe_options_call">Позвонить:&#160;</string>

@@ -24,6 +24,7 @@ import com.bunbeauty.papakarlo.extensions.getBinding
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -33,6 +34,8 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     lateinit var modelFactory: ViewModelProvider.Factory
 
     abstract val viewModel: BaseViewModel
+
+    protected val textInputMap = HashMap<String, TextInputLayout>()
 
     private var mutableViewDataBinding: B? = null
     val viewDataBinding: B
@@ -52,7 +55,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
                 .create(this)
         inject(viewModelComponent)
     }
-
+    
     abstract fun inject(viewModelComponent: ViewModelComponent)
 
     override fun onCreateView(
@@ -82,6 +85,14 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         }.startedLaunch(viewLifecycleOwner)
         viewModel.error.onEach { error ->
             showSnackbar(error, R.color.white, R.color.errorColor)
+        }.startedLaunch(viewLifecycleOwner)
+        viewModel.fieldError.onEach { fieldError ->
+            textInputMap.values.forEach { textInput ->
+                textInput.error = null
+                textInput.clearFocus()
+            }
+            textInputMap[fieldError.key]?.error = fieldError.message
+            textInputMap[fieldError.key]?.requestFocus()
         }.startedLaunch(viewLifecycleOwner)
     }
 

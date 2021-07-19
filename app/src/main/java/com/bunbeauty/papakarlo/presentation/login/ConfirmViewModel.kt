@@ -4,8 +4,8 @@ import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
@@ -25,6 +25,7 @@ abstract class ConfirmViewModel : BaseViewModel() {
     abstract val timerStringState: StateFlow<String>
     abstract val isFinishedTimerState: StateFlow<Boolean>
     abstract fun startResendTimer()
+    abstract fun showCodeError()
     abstract fun createUser(userId: String, phone: String, email: String)
     abstract fun getPhoneNumberDigits(phone: String): String
 }
@@ -63,7 +64,9 @@ class ConfirmViewModelImpl @Inject constructor(
             dataStoreRepo.saveUserId(userId)
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase == null) {
-                    userRepo.insert(User(userId = userId, phone = phone, email = email))
+                    userRepo.insert(
+                        User(userId = userId, phone = phone, email = email)
+                    )
                 } else {
                     userRepo.insert(userFirebase, userId)
                     addressRepo.insert(userFirebase.addresses, userId)
@@ -74,6 +77,10 @@ class ConfirmViewModelImpl @Inject constructor(
                 }
             }.launchIn(viewModelScope)
         }
+    }
+
+    override fun showCodeError() {
+        showError(resourcesProvider.getString(R.string.msg_confirm_prone_error_code))
     }
 
     override fun getPhoneNumberDigits(phone: String): String {

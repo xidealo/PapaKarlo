@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
+import com.bunbeauty.presentation.view_model.base.adapter.FieldError
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -24,6 +25,9 @@ abstract class BaseViewModel : ViewModel() {
     private val mutableError: MutableSharedFlow<String> = MutableSharedFlow(replay = 0)
     val error: SharedFlow<String> = mutableError.asSharedFlow()
 
+    private val mutableFieldError = MutableSharedFlow<FieldError>(0)
+    val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
+
     protected fun showMessage(message: String) {
         viewModelScope.launch {
             mutableMessage.emit(message)
@@ -33,6 +37,12 @@ abstract class BaseViewModel : ViewModel() {
     protected fun showError(error: String) {
         viewModelScope.launch {
             mutableError.emit(error)
+        }
+    }
+
+    fun sendFieldError(fieldKey: String, error: String) {
+        viewModelScope.launch {
+            mutableFieldError.emit(FieldError(fieldKey, error))
         }
     }
 

@@ -86,6 +86,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                             } else {
                                 if (task.exception is FirebaseAuthInvalidCredentialsException) {
                                     hideLoading()
+                                    viewModel.showCodeError()
                                 }
                             }
                         }
