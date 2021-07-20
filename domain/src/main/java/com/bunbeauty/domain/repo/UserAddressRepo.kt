@@ -10,5 +10,6 @@ interface UserAddressRepo {
     suspend fun insert(userAddressMap: HashMap<String, AddressFirebase>, userUuid: String)
 
     fun getUserAddressByUuid(uuid: String): Flow<UserAddress?>
-    fun getUserAddressByUserId(userId: String): Flow<List<UserAddress>>
+    fun getUserAddressListByUserUuid(userId: String): Flow<List<UserAddress>>
+    val unassignedUserAddressList: Flow<List<UserAddress>>
 }

@@ -6,12 +6,10 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.BONUSES_PERCENT
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.model.local.order.OrderEntity
-import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.network.INetworkHelper
 import com.bunbeauty.domain.util.product.IProductHelper
@@ -19,8 +17,6 @@ import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.CreateOrderFragmentDirections.*
 import com.instacart.library.truetime.TrueTime
 import kotlinx.coroutines.*
@@ -82,120 +78,122 @@ class CreateOrderViewModel @Inject constructor(
     private val mutablePhone: MutableStateFlow<String?> = MutableStateFlow(null)
     val phone: StateFlow<String?> = mutablePhone.asStateFlow()
 
+    private val mutableAddress: MutableStateFlow<String?> = MutableStateFlow(null)
+    val address: StateFlow<String?> = mutableAddress.asStateFlow()
+
+    private val actionDeliveryTime =
+        resourcesProvider.getString(R.string.action_create_order_delivery_time)
+    private val actionPickupTime =
+        resourcesProvider.getString(R.string.action_create_order_pickup_time)
+    private val mutableActionDeferredTime: MutableStateFlow<String> =
+        MutableStateFlow(actionDeliveryTime)
+    val actionDeferredTime: StateFlow<String> = mutableActionDeferredTime.asStateFlow()
+
+    private val hintDeliveryTime =
+        resourcesProvider.getString(R.string.hint_create_order_delivery_time)
+    private val hintPickupTime =
+        resourcesProvider.getString(R.string.hint_create_order_pickup_time)
+    private val mutableHintDeferredTime: MutableStateFlow<String> =
+        MutableStateFlow(hintDeliveryTime)
+    val hintDeferredTime: StateFlow<String> = mutableHintDeferredTime.asStateFlow()
+
+    private val mutableDeferredTime: MutableStateFlow<String?> = MutableStateFlow(null)
+    val deferredTime: StateFlow<String?> = mutableDeferredTime.asStateFlow()
+
     init {
-        subscribeOnProfile()
+        subscribeOnUser()
+        subscribeOnAddress()
+        subscribeOnDeferredTime()
     }
 
-    private fun subscribeOnProfile() {
+    private fun subscribeOnUser() {
         dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-            userRepo.getUser(userUuid).onEach { user ->
+            userRepo.getUserByUuid(userUuid).onEach { user ->
                 mutablePhone.value = user?.phone
             }
         }.launchIn(viewModelScope)
     }
 
+    private fun subscribeOnAddress() {
+        isDelivery.flatMapLatest { isDelivery ->
+            if (isDelivery) {
+                dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+                    if (userUuid == null) {
+                        userAddressRepo.unassignedUserAddressList.onEach { addressList ->
+                            if (addressList.isNotEmpty()) {
+                                mutableAddress.value = stringUtil.toString(addressList.first())
+                            }
+                        }
+                    } else {
+                        dataStoreRepo.userAddressUuid.flatMapLatest { userAddressUuid ->
+                            if (userAddressUuid == null) {
+                                userAddressRepo.getUserAddressListByUserUuid(userUuid)
+                                    .onEach { addressList ->
+                                        if (addressList.isNotEmpty()) {
+                                            mutableAddress.value =
+                                                stringUtil.toString(addressList.first())
+                                        }
+                                    }
+                            } else {
+                                userAddressRepo.getUserAddressByUuid(userAddressUuid)
+                                    .onEach { userAddress ->
+                                        if (userAddress != null) {
+                                            mutableAddress.value = stringUtil.toString(userAddress)
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                }
+            } else {
+                dataStoreRepo.cafeAddressUuid.flatMapLatest { cafeAddressUuid ->
+                    if (cafeAddressUuid == null) {
+                        cafeAddressRepo.getCafeAddresses().onEach { addressList ->
+                            if (addressList.isNotEmpty()) {
+                                mutableAddress.value = stringUtil.toString(addressList.first())
+                            } else {
+                                mutableAddress.value = ""
+                            }
+                        }
+                    } else {
+                        cafeAddressRepo.getCafeAddressByUuid(cafeAddressUuid)
+                            .onEach { cafeAddress ->
+                                mutableAddress.value = stringUtil.toString(cafeAddress)
+                            }
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
 
-    val hasAddressState: MutableStateFlow<State<Boolean>> =
-        MutableStateFlow(State.Loading())
+    fun subscribeOnDeferredTime() {
+        dataStoreRepo.deferredTime.onEach { deferredTime ->
+            mutableDeferredTime.value = deferredTime
+        }.launchIn(viewModelScope)
+    }
 
-    val selectedAddressTextState: MutableStateFlow<State<String>> =
-        MutableStateFlow(State.Loading())
+    fun setIsDelivery(isDelivery: Boolean) {
+        mutableIsDelivery.value = isDelivery
+        if (isDelivery) {
+            mutableActionDeferredTime.value = actionDeliveryTime
+            mutableHintDeferredTime.value = hintDeliveryTime
+        } else {
+            mutableActionDeferredTime.value = actionPickupTime
+            mutableHintDeferredTime.value = hintPickupTime
+        }
+    }
+
+
+
+
+
+
 
     val userEntityState: MutableStateFlow<State<UserEntity?>> =
         MutableStateFlow(State.Loading())
 
     private val selectedAddressState: MutableStateFlow<Address?> = MutableStateFlow(null)
-    val deferredTextStateFlow: MutableStateFlow<String> = MutableStateFlow("")
     val orderStringStateFlow: MutableStateFlow<String> = MutableStateFlow("")
-
-    val deferredHoursStateFlow = MutableStateFlow<Int?>(null)
-    val deferredMinutesStateFlow = MutableStateFlow<Int?>(null)
-
-    fun setIsDelivery(isDelivery: Boolean) {
-        mutableIsDelivery.value = isDelivery
-    }
-
-    @ExperimentalCoroutinesApi
-    fun getAddress() {
-        viewModelScope.launch(Dispatchers.Default) {
-            isDelivery.flatMapLatest { isDelivery ->
-                if (isDelivery) {
-                    dataStoreRepo.deliveryAddressId.flatMapLatest {
-                        userAddressRepo.getUserAddressByUuid(it)
-                    }
-                } else {
-                    dataStoreRepo.cafeAddressId.flatMapLatest {
-                        cafeAddressRepo.getCafeAddressByCafeId(it)
-                    }
-                }
-            }.onEach { address ->
-                hasAddressState.value = (address != null).toStateSuccess()
-                if (address != null) {
-                    selectedAddressTextState.value =
-                        stringUtil.toString(address).toStateSuccess()
-                    selectedAddressState.value = address
-                } else {
-                    selectedAddressTextState.value =
-                        resourcesProvider.getString(R.string.msg_creation_order_add_address)
-                            .toStateSuccess()
-                }
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    fun getUser() {
-        viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(dataStoreRepo.userUuid.first()).onEach {
-                userEntityState.value = it.toStateNullableSuccess()
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    fun getCachedEmail(): String {
-        return runBlocking { dataStoreRepo.email.first() }
-    }
-
-    fun getCachedPhone(): String {
-        return runBlocking { dataStoreRepo.phone.first() }
-    }
-
-    @ExperimentalCoroutinesApi
-    fun subscribeOnDeferredText() {
-        isDelivery.flatMapLatest {
-            deferredHoursStateFlow
-        }.flatMapLatest { deferredMinutesStateFlow }.onEach {
-            deferredTextStateFlow.value = if (isDelivery.value) {
-                resourcesProvider.getString(R.string.action_creation_order_delivery_time) + stringUtil.toStringTime(
-                    deferredHoursStateFlow.value,
-                    deferredMinutesStateFlow.value
-                )
-            } else {
-                resourcesProvider.getString(R.string.action_creation_order_pickup_time) + stringUtil.toStringTime(
-                    deferredHoursStateFlow.value,
-                    deferredMinutesStateFlow.value
-                )
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    fun subscribeOnOrderString() {
-        viewModelScope.launch(Dispatchers.Default) {
-            cartProductRepo.cartProductList.onEach { productList ->
-                if (isDelivery.value) {
-                    orderStringStateFlow.value =
-                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                                productHelper.getFullPriceStringWithDelivery(
-                                    productList,
-                                    dataStoreRepo.delivery.first()
-                                )
-                } else {
-                    orderStringStateFlow.value =
-                        resourcesProvider.getString(R.string.action_creation_order_checkout) +
-                                productHelper.getFullPriceString(productList)
-                }
-            }.launchIn(viewModelScope)
-        }
-    }
 
     val deliveryStringLiveData by lazy {
         switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
@@ -207,9 +205,9 @@ class CreateOrderViewModel @Inject constructor(
                 if (differenceString.isEmpty()) {
                     resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
                 } else {
-                    resourcesProvider.getString(R.string.part_creation_order_delivery_cost) +
+                    resourcesProvider.getString(R.string.part_create_order_delivery_cost) +
                             stringUtil.getCostString(delivery.cost) +
-                            resourcesProvider.getString(R.string.part_creation_order_free_delivery_from) +
+                            resourcesProvider.getString(R.string.part_create_order_free_delivery_from) +
                             stringUtil.getCostString(delivery.forFree)
                 }
             }
@@ -232,7 +230,7 @@ class CreateOrderViewModel @Inject constructor(
         spentBonusesString: String
     ) {
         if (selectedAddressState.value == null) {
-            showError(resourcesProvider.getString(R.string.error_creation_order_address))
+            showError(resourcesProvider.getString(R.string.error_create_order_address))
             return
         }
         val orderEntity = OrderEntity(
@@ -286,7 +284,7 @@ class CreateOrderViewModel @Inject constructor(
                 orderRepo.insert(order)
             }
             withContext(Main) {
-                showMessage(resourcesProvider.getString(R.string.msg_creation_order_order_code) + orderEntity.code)
+                showMessage(resourcesProvider.getString(R.string.msg_create_order_order_code) + orderEntity.code)
                 router.navigate(backToMenuFragment())
             }
         }
@@ -310,8 +308,16 @@ class CreateOrderViewModel @Inject constructor(
         router.navigate(toAddressesBottomSheet(isDelivery.value))
     }
 
-    fun onCreateAddressClicked() {
+    fun onAddAddressClicked() {
         router.navigate(toCreationAddressFragment())
+    }
+
+    fun onPhoneClicked() {
+        router.navigate(toLoginFragment())
+    }
+
+    fun onAddDeferredTimeClicked() {
+        router.navigate(toLoginFragment())
     }
 
     companion object {

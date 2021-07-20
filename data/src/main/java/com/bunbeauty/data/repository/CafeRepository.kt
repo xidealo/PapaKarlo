@@ -27,8 +27,8 @@ class CafeRepository @Inject constructor(
             for (cafe in cafeList.filter { it.cafeEntity.visible }) {
                 saveCafe(cafe)
             }
-            if (dataStoreRepo.cafeAddressId.first().isEmpty())
-                dataStoreRepo.saveCafeAddressId(cafeList.first().address?.uuid ?: "")
+            if (dataStoreRepo.cafeAddressUuid.first() == null)
+                dataStoreRepo.saveCafeAddressUuid(cafeList.first().address?.uuid ?: "")
         }
     }
 

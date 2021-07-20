@@ -39,6 +39,26 @@
         <item name="android:layout_marginEnd">@dimen/medium_margin</item>
     </style>
 
+    <style name="NavigationCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/medium_padding</item>
+        <item name="cardBackgroundColor">@color/cardViewBackground</item>
+        <item name="cardCornerRadius">@dimen/medium_radius</item>
+        <item name="iconColor">@color/black</item>
+    </style>
+
+    <style name="TextCard">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/medium_padding</item>
+        <item name="cardBackgroundColor">@color/cardViewBackground</item>
+        <item name="cardCornerRadius">@dimen/medium_radius</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="hintTextColor">@color/secondaryTextColor</item>
+        <item name="innerMargin">@dimen/very_small_margin</item>
+    </style>
+
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
@@ -313,6 +333,12 @@
     <style name="MediumBoldText" parent="BaseText">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="fontFamily">@font/font_roboto_bold</item>
+    </style>
+
+    <style name="MediumBoldCenterText" parent="BaseText">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="MediumSecondaryBoldText" parent="SecondaryText">

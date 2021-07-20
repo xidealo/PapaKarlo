@@ -11,6 +11,6 @@ interface CafeAddressRepo {
     fun getCafeAddresses(): Flow<List<CafeAddress>>
     fun getCafeAddressById(id: Long): Flow<CafeAddress?>
     fun getCafeAddressByUuid(uuid: String): Flow<CafeAddress?>
-    fun getCafeAddressByCafeId(cafeId: String): Flow<CafeAddress?>
+    fun getCafeAddressByCafeUuid(cafeId: String): Flow<CafeAddress?>
     fun getFirstAddress(): LiveData<CafeAddress?>
 }

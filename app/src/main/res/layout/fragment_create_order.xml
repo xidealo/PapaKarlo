@@ -8,7 +8,7 @@
         tools:context=".ui.CreateOrderFragment">
 
         <ScrollView
-            android:id="@+id/fragment_creation_order_sv_main"
+            android:id="@+id/fragment_create_order_sv_main"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scrollbars="none"
@@ -27,318 +27,82 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:elevation="0dp"
-                    app:cardCornerRadius="@dimen/medium_radius"
                     app:backgroundColor="@color/white"
                     app:buttonColor="@color/colorPrimary"
-                    app:switcherMainTextColor="@color/white"
+                    app:cardCornerRadius="@dimen/medium_radius"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:leftButtonText="@string/action_create_order_delivery"
+                    app:rightButtonText="@string/action_create_order_pickup"
                     app:switcherAlternativeTextColor="@color/secondaryTextColor"
-                    app:leftButtonText="@string/action_creation_order_delivery"
-                    app:rightButtonText="@string/action_creation_order_pickup"
-                    app:switcherHeight="@dimen/switcher_height"
                     app:switcherButtonMargin="@dimen/very_small_margin"
                     app:switcherButtonRadius="@dimen/medium_radius"
+                    app:switcherHeight="@dimen/switcher_height"
+                    app:switcherMainTextColor="@color/white" />
+
+                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                    android:id="@+id/fragment_create_order_nc_phone"
+                    style="@style/NavigationCard"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:icon="@drawable/ic_right_arrow"
+                    android:text="@string/action_create_order_phone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_cs_delivery" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_address"
-                    style="@style/DefaultMaterialCard"
+                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                    android:id="@+id/fragment_create_order_nc_add_address"
+                    style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
+                    android:icon="@drawable/ic_add"
+                    android:text="@string/action_create_order_address"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_cs_delivery">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_phone" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_address"
-                            style="@style/MainTitle"
-                            android:layout_margin="@dimen/small_margin"
-                            android:text="@string/title_creation_order_address"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/fragment_creation_order_btn_address_pick"
-                            style="@style/OutLineButton"
-                            android:layout_width="0dp"
-                            android:fontFamily="@font/font_roboto_regular"
-                            android:gravity="start"
-                            android:text="@string/action_creation_address_address"
-                            android:textAllCaps="false"
-                            android:textColor="@color/mainTextColor"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_address" />
-
-                        <ImageView
-                            android:id="@+id/fragment_creation_order_iv_select_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/medium_margin"
-                            android:contentDescription="Description"
-                            android:src="@drawable/ic_chevron_right_solid"
-                            app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_address_pick"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_address_pick"
-                            app:tint="@color/colorPrimary" />
-
-                        <androidx.constraintlayout.widget.Group
-                            android:id="@+id/fragment_creation_order_group_has_address"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:visibility="gone"
-                            app:constraint_referenced_ids="fragment_creation_order_btn_address_pick, fragment_creation_order_iv_select_address" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/fragment_creation_order_btn_create_address"
-                            style="@style/OutLineButton"
-                            android:layout_width="0dp"
-                            android:text="@string/action_creation_address_address"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_btn_address_pick" />
-
-                        <ImageView
-                            android:id="@+id/fragment_creation_order_iv_create_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/medium_margin"
-                            android:contentDescription="Description"
-                            android:src="@drawable/ic_add"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_create_address"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_create_address" />
-
-                        <androidx.constraintlayout.widget.Group
-                            android:id="@+id/fragment_creation_order_group_no_address"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:visibility="gone"
-                            app:constraint_referenced_ids="fragment_creation_order_btn_create_address, fragment_creation_order_iv_create_address" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_contacts"
-                    style="@style/DefaultMaterialCard"
-                    android:layout_marginTop="@dimen/small_margin"
+                <com.bunbeauty.papakarlo.ui.view.TextCard
+                    android:id="@+id/fragment_create_order_tc_address"
+                    style="@style/TextCard"
+                    android:hint="@string/hint_create_order_address"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_address">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_contact"
-                            style="@style/MainTitle"
-                            android:layout_margin="@dimen/small_margin"
-                            android:text="@string/title_creation_order_contact"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/fragment_creation_order_til_phone"
-                            style="@style/MaterialInputLayout"
-                            android:layout_margin="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/small_margin"
-                            android:hint="@string/title_creation_order_phone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_contact">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_creation_order_et_phone"
-                                style="@style/MaterialInput"
-                                android:inputType="phone" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/fragment_creation_order_til_email"
-                            style="@style/MaterialInputLayout"
-                            android:layout_margin="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/small_margin"
-                            android:hint="@string/title_creation_order_email"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_phone">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_creation_order_et_email"
-                                style="@style/MaterialInput"
-                                android:inputType="textEmailAddress" />
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_extra_info"
-                    style="@style/DefaultMaterialCard"
                     android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_mcv_contacts">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_address"
+                    tools:text="улица Чапаева, д 22А, кв 15" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_comment"
-                            style="@style/MainTitle"
-                            android:layout_margin="@dimen/small_margin"
-                            android:text="@string/title_creation_order_extra_extra_comment"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/fragment_creation_order_til_comment"
-                            style="@style/MaterialInputLayout"
-                            android:layout_margin="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/small_margin"
-                            android:hint="@string/hint_creation_order_extra_comment"
-                            app:counterEnabled="true"
-                            app:counterMaxLength="100"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_comment">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_creation_order_et_comment"
-                                style="@style/MaterialInput"
-                                android:inputType="textCapSentences" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <androidx.constraintlayout.widget.Group
-                            android:id="@+id/fragment_creation_order_group_add_deferred"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            app:constraint_referenced_ids="fragment_creation_order_btn_deferred, fragment_creation_order_iv_deferred" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/fragment_creation_order_btn_deferred"
-                            style="@style/OutLineButton"
-                            android:layout_width="0dp"
-                            android:text="@string/hint_creation_order_deferred"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
-
-                        <ImageView
-                            android:id="@+id/fragment_creation_order_iv_deferred"
-                            style="@style/IconImageView"
-                            android:src="@drawable/ic_clock"
-                            app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_deferred"
-                            app:layout_constraintEnd_toEndOf="@+id/fragment_creation_order_btn_deferred"
-                            app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_deferred" />
-
-                        <androidx.constraintlayout.widget.Group
-                            android:id="@+id/fragment_creation_order_group_picked_deferred"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:visibility="gone"
-                            app:constraint_referenced_ids="fragment_creation_order_btn_selected_deferred, fragment_creation_order_iv_selected_deferred" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/fragment_creation_order_btn_selected_deferred"
-                            style="@style/OutLineButton"
-                            android:layout_width="0dp"
-                            android:fontFamily="@font/font_roboto_regular"
-                            android:gravity="start"
-                            android:text="@string/action_creation_address_address"
-                            android:textAllCaps="false"
-                            android:textColor="@color/mainTextColor"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_til_comment" />
-
-                        <ImageView
-                            android:id="@+id/fragment_creation_order_iv_selected_deferred"
-                            style="@style/IconImageView"
-                            android:src="@drawable/ic_chevron_right_solid"
-                            app:layout_constraintBottom_toBottomOf="@+id/fragment_creation_order_btn_selected_deferred"
-                            app:layout_constraintEnd_toEndOf="@+id/fragment_creation_order_btn_selected_deferred"
-                            app:layout_constraintTop_toTopOf="@+id/fragment_creation_order_btn_selected_deferred" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_creation_order_mcv_bonuses"
-                    style="@style/DefaultMaterialCard"
+                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                    android:id="@+id/fragment_create_order_nc_add_deferred_time"
+                    style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
+                    android:icon="@drawable/ic_right_arrow"
+                    android:text="@string/action_create_order_delivery_time"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_extra_info">
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_address" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_bonuses"
-                            style="@style/MainTitle"
-                            android:layout_margin="@dimen/small_margin"
-                            android:text="@string/title_creation_order_extra_bonuses"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/fragment_creation_order_tv_bonuses_value"
-                            style="@style/MainText"
-                            android:layout_margin="@dimen/small_margin"
-                            android:drawablePadding="@dimen/large_padding"
-                            app:drawableLeftCompat="@drawable/ic_bonus"
-                            app:drawableTint="@color/mainTextColor"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/fragment_creation_order_tv_bonuses"
-                            tools:text="0 ₽" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/fragment_creation_order_til_bonuses"
-                            style="@style/MaterialInputLayout"
-                            android:layout_margin="@dimen/small_margin"
-                            android:layout_marginTop="@dimen/small_margin"
-                            android:hint="@string/hint_creation_order_extra_bonuses"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_tv_bonuses_value">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/fragment_creation_order_et_bonuses"
-                                style="@style/MaterialInput"
-                                android:inputType="number" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
+                <com.bunbeauty.papakarlo.ui.view.TextCard
+                    android:id="@+id/fragment_create_order_tc_deferred_time"
+                    style="@style/TextCard"
+                    android:hint="@string/hint_create_order_delivery_time"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/small_margin"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_deferred_time"
+                    tools:text="Как можно скорее" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/fragment_creation_order_btn_create_order"
+                    android:id="@+id/fragment_create_order_btn_create_order"
                     style="@style/MainButton"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_deferred_time"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_order_mcv_bonuses" />
+                    app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <ProgressBar
-            android:id="@+id/fragment_creation_order_pb_loading"
+            android:id="@+id/fragment_create_order_pb_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

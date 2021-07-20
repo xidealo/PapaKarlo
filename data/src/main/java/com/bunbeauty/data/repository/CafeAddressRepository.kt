@@ -27,7 +27,7 @@ class CafeAddressRepository @Inject constructor(
         return cafeAddressDao.getAddressById(id)
     }
 
-    override fun getCafeAddressByCafeId(cafeId: String): Flow<CafeAddress?> {
+    override fun getCafeAddressByCafeUuid(cafeId: String): Flow<CafeAddress?> {
         return cafeAddressDao.getAddressByCafeId(cafeId)
     }
 

@@ -79,6 +79,9 @@
         <action
             android:id="@+id/to_addresses_bottom_sheet"
             app:destination="@id/addresses_bottom_sheet" />
+        <action
+            android:id="@+id/to_login_fragment"
+            app:destination="@id/login_fragment" />
     </fragment>
     <fragment
         android:id="@+id/product_fragment"

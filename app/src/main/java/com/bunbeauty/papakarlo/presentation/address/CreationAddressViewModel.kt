@@ -39,15 +39,15 @@ class CreationAddressViewModel @Inject constructor(
 
     fun onCreateAddressClicked(userAddress: UserAddress) {
         viewModelScope.launch(Dispatchers.IO) {
-            userAddress.userId = dataStoreRepo.userUuid.first()
-            val uuid = if (!userAddress.userId.isNullOrEmpty()) {
+            userAddress.userUuid = dataStoreRepo.userUuid.first()
+            val uuid = if (!userAddress.userUuid.isNullOrEmpty()) {
                 userAddressRepo.insert("token", userAddress).uuid
             } else {
                 userAddress.uuid = UUID.randomUUID().toString()
                 userAddressRepo.insert(userAddress)
                 userAddress.uuid
             }
-            dataStoreRepo.saveDeliveryAddressId(uuid)
+            dataStoreRepo.saveUserAddressUuid(uuid)
             withContext(Dispatchers.Main) {
                 showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
                 router.navigateUp()

@@ -4,15 +4,15 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.domain.model.entity.UserEntity
+import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
-import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
+import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -63,30 +63,36 @@ class ProfileViewModelImpl @Inject constructor(
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
 
-    private fun getUser(userId: String) {
-        viewModelScope.launch(Dispatchers.Default) {
-            userRepo.getUserWithBonuses(userId).onEach {
-                userEntityState.value = it.toStateNullableSuccess()
-            }.launchIn(viewModelScope)
+    private fun getUser(userId: String?) {
+        if (userId != null) {
+            viewModelScope.launch(Dispatchers.Default) {
+                userRepo.getUserWithBonuses(userId).onEach {
+                    userEntityState.value = it.toStateNullableSuccess()
+                }.launchIn(viewModelScope)
+            }
         }
     }
 
     private fun getUserId() = runBlocking { dataStoreRepo.userUuid.first() }
 
-    private fun getAddress(userId: String) {
-        userAddressRepo.getUserAddressByUserId(userId).onEach {
-            hasAddressState.emit(it.isNotEmpty().toStateSuccess())
-        }.launchIn(viewModelScope)
+    private fun getAddress(userId: String?) {
+        if (userId != null) {
+            userAddressRepo.getUserAddressListByUserUuid(userId).onEach {
+                hasAddressState.emit(it.isNotEmpty().toStateSuccess())
+            }.launchIn(viewModelScope)
+        }
     }
 
-    private fun getLastOrder(userId: String) {
-        orderRepo.getOrdersWithCartProductsByUserId(userId).onEach { orderList ->
-            if (orderList.isNotEmpty()) {
-                lastOrderState.value =
-                    toItemModel(orderList.maxByOrNull { it.orderEntity.time }!!)
-                        .toStateSuccess()
-            }
-        }.launchIn(viewModelScope)
+    private fun getLastOrder(userId: String?) {
+        if (userId != null) {
+            orderRepo.getOrdersWithCartProductsByUserId(userId).onEach { orderList ->
+                if (orderList.isNotEmpty()) {
+                    lastOrderState.value =
+                        toItemModel(orderList.maxByOrNull { it.orderEntity.time }!!)
+                            .toStateSuccess()
+                }
+            }.launchIn(viewModelScope)
+        }
     }
 
     override fun getBonusesString(bonusList: MutableList<Int>): String {
@@ -94,30 +100,29 @@ class ProfileViewModelImpl @Inject constructor(
     }
 
     override fun onOrderListClicked() {
-        router.navigate(ProfileFragmentDirections.toOrdersFragment(getUserId()))
+        router.navigate(toOrdersFragment(getUserId() ?: ""))
     }
 
     override fun onAddressClicked() {
-        router.navigate(ProfileFragmentDirections.toAddressesBottomSheet(true))
+        router.navigate(toAddressesBottomSheet(true))
     }
 
     override fun onCreateAddressClicked() {
-        router.navigate(ProfileFragmentDirections.toCreationAddressFragment())
+        router.navigate(toCreationAddressFragment())
     }
 
     override fun goToLogin() {
-        router.navigate(ProfileFragmentDirections.toLoginFragment())
+        router.navigate(toLoginFragment())
     }
 
     override fun goToOrder(orderUuid: String) {
-        router.navigate(ProfileFragmentDirections.toOrderDerailsFragment(orderUuid))
+        router.navigate(toOrderDerailsFragment(orderUuid))
     }
 
     override fun goToSettings() {
         if (userEntityState.value is State.Success) {
             router.navigate(
-                ProfileFragmentDirections
-                    .toSettingsFragment((userEntityState.value as State.Success<UserEntity?>).data!!.uuid)
+                toSettingsFragment((userEntityState.value as State.Success<UserEntity?>).data!!.uuid)
             )
         }
     }

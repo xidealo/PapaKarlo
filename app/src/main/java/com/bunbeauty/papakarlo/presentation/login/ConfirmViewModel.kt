@@ -61,7 +61,7 @@ class ConfirmViewModelImpl @Inject constructor(
 
     override fun createUser(userId: String, phone: String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepo.saveUserId(userId)
+            dataStoreRepo.saveUserUuid(userId)
             userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
                 if (userFirebase == null) {
                     userRepo.insert(UserEntity(uuid = userId, phone = phone, email = email))

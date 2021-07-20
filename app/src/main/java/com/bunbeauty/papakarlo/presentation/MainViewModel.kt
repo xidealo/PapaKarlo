@@ -46,14 +46,16 @@ class MainViewModel @Inject constructor(
 
     fun refreshUserInfo() {
         viewModelScope.launch(IO) {
-            val userId = dataStoreRepo.userUuid.first()
-            userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
-                if (userFirebase != null) {
-                    userRepo.insert(userFirebase, userId)
-                    addressRepo.insert(userFirebase.addresses, userId)
-                    orderRepo.loadOrders(userFirebase.orders)
-                }
-            }.launchIn(viewModelScope)
+            val userUuid = dataStoreRepo.userUuid.first()
+            if (userUuid != null) {
+                userRepo.getUserFirebaseAsFlow(userUuid).onEach { userFirebase ->
+                    if (userFirebase != null) {
+                        userRepo.insert(userFirebase, userUuid)
+                        addressRepo.insert(userFirebase.addresses, userUuid)
+                        orderRepo.loadOrders(userFirebase.orders)
+                    }
+                }.launchIn(viewModelScope)
+            }
         }
     }
 

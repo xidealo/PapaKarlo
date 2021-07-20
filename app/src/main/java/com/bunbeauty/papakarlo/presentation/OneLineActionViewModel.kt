@@ -22,7 +22,7 @@ class OneLineActionViewModel @Inject constructor(
                 router.navigateUp()
             } else {
                 withContext(Dispatchers.Default) {
-                    val user = userRepo.getUser(dataStoreRepo.userUuid.first()) ?: return@withContext
+                    val user = userRepo.getUserByUuid(dataStoreRepo.userUuid.first()) ?: return@withContext
                     //user.email = email
                     //userRepo.update(user)
                 }

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui.view
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import com.bunbeauty.papakarlo.R
@@ -85,6 +86,23 @@ interface Customizable {
             color
         } else {
             defaultColor
+        }
+    }
+
+    fun getDrawable(
+        context: Context,
+        attributeSet: AttributeSet?,
+        attributes: IntArray,
+        attributeId: Int,
+    ): Drawable? {
+        return if (attributeSet != null) {
+            val typedArray = context.obtainStyledAttributes(attributeSet, attributes)
+            val drawable = typedArray.getDrawable(attributeId)
+            typedArray.recycle()
+
+            drawable
+        } else {
+            null
         }
     }
 

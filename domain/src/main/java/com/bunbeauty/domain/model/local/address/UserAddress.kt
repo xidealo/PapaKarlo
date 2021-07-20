@@ -20,5 +20,5 @@ onDelete = ForeignKey.CASCADE
 data class UserAddress(
     @PrimaryKey
     override var uuid: String = "",
-    var userId: String? = null,
+    var userUuid: String? = null,
 ) : Address(), Parcelable

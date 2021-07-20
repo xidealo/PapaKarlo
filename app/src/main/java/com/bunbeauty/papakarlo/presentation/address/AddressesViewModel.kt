@@ -37,9 +37,11 @@ class AddressesViewModelImpl @Inject constructor(
             dataStoreRepo.userUuid.first()
         }
         if (isDelivery) {
-            userAddressRepo.getUserAddressByUserId(userId).onEach {
-                addressListState.value = it.toStateSuccess()
-            }.launchIn(viewModelScope)
+            if (userId != null) {
+                userAddressRepo.getUserAddressListByUserUuid(userId).onEach {
+                    addressListState.value = it.toStateSuccess()
+                }.launchIn(viewModelScope)
+            }
         } else {
             cafeAddressRepo.getCafeAddresses().onEach {
                 addressListState.value = it.toStateSuccess()
@@ -50,9 +52,9 @@ class AddressesViewModelImpl @Inject constructor(
     override fun saveSelectedAddress(addressId: String, isDelivery: Boolean) {
         viewModelScope.launch {
             if (isDelivery) {
-                dataStoreRepo.saveDeliveryAddressId(addressId)
+                dataStoreRepo.saveUserAddressUuid(addressId)
             } else {
-                dataStoreRepo.saveCafeAddressId(addressId)
+                dataStoreRepo.saveCafeAddressUuid(addressId)
             }
             router.navigateUp()
         }

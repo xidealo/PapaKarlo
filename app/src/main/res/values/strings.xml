@@ -60,36 +60,44 @@
     <string name="title_consumer_cart_total">Итого</string>
 
     <!-- CREATION ORDER -->
-    <string name="title_creation_order_address">Адрес</string>
-    <string name="title_creation_order_extra_extra_comment">Дополнительная информация</string>
-    <string name="title_creation_order_extra_bonuses">Бонусы</string>
-    <string name="title_creation_order_contact">Контактная информация</string>
-    <string name="title_creation_order_phone">Телефон*</string>
-    <string name="title_creation_order_email">Email</string>
-    <string name="action_creation_order_delivery">Доставка</string>
-    <string name="action_creation_order_pickup">Самовывоз</string>
-    <string name="title_creation_order_deferred_time">Выберите время доставки</string>
-    <string name="action_creation_order_deferred">Отложенный заказ</string>
-    <string name="action_creation_order_order">Оформить заказ</string>
-    <string name="action_creation_order_address">Добавить адрес</string>
-    <string name="msg_creation_order_add_address">Добавьте адрес</string>
-    <string name="msg_creation_order_selected_address">Выбранный адрес:</string>
-    <string name="msg_creation_order_free">Бесплатная доставка от 500 ₽</string>
-    <string name="hint_creation_order_extra_comment">Комментарий</string>
-    <string name="hint_creation_order_extra_bonuses">Списать бонусы</string>
-    <string name="hint_creation_order_delivery_city">Доставка по городу Кимры</string>
-    <string name="hint_creation_order_deferred">Отложенный заказ</string>
-    <string name="error_creation_order_comment">Введите корректный комментарий</string>
-    <string name="error_creation_order_phone">Введите корректный номер телефона</string>
-    <string name="error_creation_order_connect">Нет подключения к интернету</string>
-    <string name="error_creation_order_address">Выберите адрес</string>
-    <string name="action_creation_order_delivery_time">Время доставки&#160;</string>
-    <string name="action_creation_order_pickup_time">Заберу заказ в&#160;</string>
-    <string name="action_creation_order_checkout">Оформить заказ на&#160;</string>
-    <string name="msg_creation_order_order_code">Код заказа&#160;</string>
-    <string name="error_creation_order_deferred">Выберите время минимум на 30 мин. больше текущего</string>
-    <string name="part_creation_order_delivery_cost">Стоимость доставки:&#160;</string>
-    <string name="part_creation_order_free_delivery_from">\nБесплатная доставка от&#160;</string>
+    <string name="title_create_order_address">Адрес</string>
+    <string name="title_create_order_extra_extra_comment">Дополнительная информация</string>
+    <string name="title_create_order_extra_bonuses">Бонусы</string>
+    <string name="title_create_order_contact">Контактная информация</string>
+    <string name="title_create_order_phone">Телефон*</string>
+    <string name="action_create_order_phone">Номер телефона</string>
+    <string name="action_create_order_address">Добавить адрес</string>
+    <string name="action_create_order_delivery_time">Время доставки</string>
+    <string name="action_create_order_pickup_time">Время самовывоза</string>
+    <string name="hint_create_order_address">Адрес</string>
+    <string name="hint_create_order_delivery_time">Время доставки</string>
+    <string name="hint_create_order_pickup_time">Время самовывоза</string>
+    <string name="title_create_order_email">Email</string>
+    <string name="action_create_order_delivery">Доставка</string>
+    <string name="action_create_order_pickup">Самовывоз</string>
+    <string name="title_create_order_deferred_time">Выберите время доставки</string>
+    <string name="action_create_order_deferred">Отложенный заказ</string>
+    <string name="action_create_order_order">Оформить заказ</string>
+    <string name="msg_create_order_add_address">Добавьте адрес</string>
+    <string name="msg_create_order_selected_address">Выбранный адрес:</string>
+    <string name="msg_create_order_free">Бесплатная доставка от 500 ₽</string>
+    <string name="hint_create_order_extra_comment">Комментарий</string>
+    <string name="hint_create_order_extra_bonuses">Списать бонусы</string>
+    <string name="hint_create_order_delivery_city">Доставка по городу Кимры</string>
+    <string name="hint_create_order_deferred">Отложенный заказ</string>
+    <string name="error_create_order_comment">Введите корректный комментарий</string>
+    <string name="error_create_order_phone">Введите корректный номер телефона</string>
+    <string name="error_create_order_connect">Нет подключения к интернету</string>
+    <string name="error_create_order_address">Выберите адрес</string>
+    <string name="action_create_order_checkout">Оформить заказ на&#160;</string>
+    <string name="msg_create_order_order_code">Код заказа&#160;</string>
+    <string name="error_create_order_deferred">Выберите время минимум на 30 мин. больше текущего</string>
+    <string name="part_create_order_delivery_cost">Стоимость доставки:&#160;</string>
+    <string name="part_create_order_free_delivery_from">\nБесплатная доставка от&#160;</string>
+
+    <!-- DEFERRED TIME -->
+    <string name="msg_deferred_time_asap">Как можно скорее</string>
+    <string name="action_deferred_time_select_time">Выбрать время</string>
 
     <!-- CREATION ADDRESS -->
     <string name="title_creation_address_address">Адрес</string>

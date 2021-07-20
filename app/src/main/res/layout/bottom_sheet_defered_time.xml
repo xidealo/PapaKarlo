@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/DefaultBottomSheet"
+        tools:context=".ui.DeferredTimeBottomSheet">
+
+        <TextView
+            android:id="@+id/bottom_sheet_deferred_time_tv_title"
+            style="@style/MediumBoldCenterText"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Время доставки" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottom_sheet_deferred_time_mcv_asap"
+            style="@style/DefaultMaterialCard"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_tv_title">
+
+            <TextView
+                style="@style/MediumRegularText"
+                android:layout_width="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:text="@string/msg_deferred_time_asap" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.bunbeauty.papakarlo.ui.view.NavigationCard
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:icon="@drawable/ic_right_arrow"
+            android:text="@string/action_deferred_time_select_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_mcv_asap" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

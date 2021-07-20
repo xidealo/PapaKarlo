@@ -4,7 +4,6 @@ import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.data.dao.UserDao
 import com.bunbeauty.data.mapper.user.IUserEntityMapper
 import com.bunbeauty.data.mapper.user.IUserFirebaseMapper
-import com.bunbeauty.data.mapper.user.UserFirebaseMapper
 import com.bunbeauty.domain.model.data.User
 import com.bunbeauty.domain.model.firebase.UserFirebase
 import com.bunbeauty.domain.model.entity.UserEntity
@@ -21,15 +20,19 @@ class UserRepository @Inject constructor(
     private val userEntityMapper: IUserEntityMapper
 ) : UserRepo {
 
-    override fun getUser(userUuid: String): Flow<User?> {
-        return userDao.getUser(userUuid)
-            .flowOn(IO)
-            .map { userEntity ->
-                userEntity?.let {
-                    userEntityMapper.from(userEntity)
+    override fun getUserByUuid(userUuid: String?): Flow<User?> {
+        return if (userUuid == null) {
+            flowOf(null)
+        } else {
+            userDao.getByUuid(userUuid)
+                .flowOn(IO)
+                .map { userEntity ->
+                    userEntity?.let {
+                        userEntityMapper.from(userEntity)
+                    }
                 }
-            }
-            .flowOn(Default)
+                .flowOn(Default)
+        }
     }
 
 
@@ -60,7 +63,7 @@ class UserRepository @Inject constructor(
 
     override fun getUserWithBonuses(userId: String): Flow<UserEntity?> {
         return apiRepo.getUserBonusList(userId).flatMapLatest { bonusList ->
-            userDao.getUser(userId)
+            userDao.getByUuid(userId)
 //                .map {
 //                it?.also { it.bonusList = bonusList.toMutableList() }
 //            }
@@ -72,7 +75,7 @@ class UserRepository @Inject constructor(
 //    }
 
     override fun getUserAsFlow(userId: String): Flow<UserEntity?> {
-        return userDao.getUser(userId)
+        return userDao.getByUuid(userId)
     }
 
     override fun getUserAsFlowFromFirebase(userId: String): Flow<UserEntity?> {

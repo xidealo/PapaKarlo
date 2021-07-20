@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
 
-    fun getUser(userUuid: String): Flow<User?>
+    fun getUserByUuid(userUuid: String?): Flow<User?>
 
 
     // OLD
