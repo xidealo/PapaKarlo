@@ -1,9 +1,10 @@
 package com.bunbeauty.domain.util.order
 
+import com.bunbeauty.domain.R
+import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.local.Delivery
 import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.domain.R
 import com.bunbeauty.domain.util.product.IProductHelper
 import javax.inject.Inject
 
@@ -59,4 +60,15 @@ class OrderUtil @Inject constructor(
         }
     }
 
+    override fun getActiveLineCount(status: OrderStatus): ActiveLines {
+        return when (status) {
+            OrderStatus.NOT_ACCEPTED -> ActiveLines.ZERO_LINE
+            OrderStatus.ACCEPTED -> ActiveLines.ONE_LINE
+            OrderStatus.PREPARING -> ActiveLines.TWO_LINE
+            OrderStatus.SENT_OUT -> ActiveLines.THREE_LINE
+            OrderStatus.DONE -> ActiveLines.THREE_LINE
+            OrderStatus.DELIVERED -> ActiveLines.FOUR_LINE
+            else -> ActiveLines.ZERO_LINE
+        }
+    }
 }

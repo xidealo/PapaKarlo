@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
-import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.domain.enums.ActiveLines
+import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
@@ -25,17 +25,10 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
 
     @Inject
-    lateinit var stringUtil: IStringUtil
-
-    @Inject
-    lateinit var orderUtil: IOrderUtil
-
-    @Inject
-    lateinit var productHelper: IProductHelper
-
-    @Inject
     lateinit var cartProductAdapter: CartProductAdapter
 
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -48,70 +41,59 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
             when (state) {
                 is State.Success -> {
                     if (state.data != null) {
-                        viewDataBinding.fragmentOrderDetailsTvCode.text =
-                            "Заказ ${state.data!!.orderEntity.code}"
-                        viewDataBinding.fragmentOrderDetailsChipStatus.text =
-                            stringUtil.toStringOrderStatus(state.data!!.orderEntity.orderStatus)
-                        viewDataBinding.fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(
-                            orderUtil.getBackgroundColor(
-                                state.data!!.orderEntity.orderStatus
+                        with(viewDataBinding) {
+                            fragmentOrderDetailsChipStatus.text =
+                                state.data!!.orderStatus
+                            fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(
+                                state.data!!.orderStatusBackground
                             )
-                        )
-                        viewDataBinding.fragmentOrderDetailsTvTimeValue.text =
-                            stringUtil.toStringTime(state.data!!.orderEntity)
-                        viewDataBinding.fragmentOrderDetailsTvPickupMethodValue.text =
-                            stringUtil.toStringIsDelivery(state.data!!.orderEntity)
-                        viewDataBinding.fragmentOrderDetailsTvDeferredTimeValue.text =
-                            state.data!!.orderEntity.deferredTime
-                        viewDataBinding.fragmentOrderDetailsTvAddressValue.text =
-                            stringUtil.toString(state.data!!.orderEntity.address)
-                        viewDataBinding.fragmentOrderDetailsTvCommentValue.text =
-                            state.data!!.orderEntity.comment
-                        viewDataBinding.fragmentOrderDetailsTvDeliveryCostValue.text =
-                            stringUtil.getDeliveryString(
-                                orderUtil.getDeliveryCost(
-                                    state.data!!,
-                                    viewModel.delivery
-                                )
-                            )
-                        viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.text =
-                            stringUtil.getCostString(
-                                orderUtil.getOldOrderCost(
-                                    state.data!!,
-                                    viewModel.delivery
-                                )
-                            )
-                        viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.paintFlags =
-                            viewDataBinding.fragmentOrderDetailsTvOrderOldTotalCost.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                            fragmentOrderDetailsTvTimeValue.text = state.data!!.time
 
-                        viewDataBinding.fragmentOrderDetailsTvOrderNewTotalCost.text =
-                            stringUtil.getCostString(
-                                orderUtil.getNewOrderCost(
-                                    state.data!!, viewModel.delivery
-                                )
-                            )
-                        cartProductAdapter.canBeChanged = false
-                        viewDataBinding.fragmentOrderDetailsRvProductList.adapter =
-                            cartProductAdapter
-                        val mappedCartProducts =
-                            viewModel.getCartProductModel(state.data!!.cartProducts)
-                        cartProductAdapter.submitList(mappedCartProducts)
+                            fragmentOrderDetailsTvPickupMethodValue.text =
+                                state.data!!.pickupMethod
+                            fragmentOrderDetailsTvDeferredTimeValue.text =
+                                state.data!!.deferredTime
 
-                        if (state.data!!.orderEntity.deferredTime.isEmpty()) {
-                            viewDataBinding.fragmentOrderDetailsTvDeferredTimeValue.gone()
-                            viewDataBinding.fragmentOrderDetailsTvDeferredTime.gone()
+                            fragmentOrderDetailsTvAddressValue.text =
+                                state.data!!.address
+
+                            fragmentOrderDetailsTvCommentValue.text =
+                                state.data!!.comment
+
+                            fragmentOrderDetailsTvDeliveryCostValue.text =
+                                state.data!!.deliveryCost
+
+                            fragmentOrderDetailsTvOrderOldTotalCost.text =
+                                state.data!!.oldTotalCost
+
+                            fragmentOrderDetailsTvOrderOldTotalCost.paintFlags =
+                                fragmentOrderDetailsTvOrderOldTotalCost.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+                            fragmentOrderDetailsTvOrderNewTotalCost.text =
+                                state.data!!.newTotalCost
+
+                            cartProductAdapter.canBeChanged = false
+                            fragmentOrderDetailsRvProductList.adapter =
+                                cartProductAdapter
+                            cartProductAdapter.submitList(state.data!!.cartProducts)
+
+                            if (state.data!!.deferredTime.isEmpty()) {
+                                fragmentOrderDetailsTvDeferredTimeValue.gone()
+                                fragmentOrderDetailsTvDeferredTime.gone()
+                            }
+                            if (state.data!!.comment.isEmpty()) {
+                                fragmentOrderDetailsTvCommentValue.gone()
+                                fragmentOrderDetailsTvComment.gone()
+                            }
+                            if (!state.data!!.isDelivery) {
+                                fragmentOrderDetailsTvDeliveryCostValue.gone()
+                                fragmentOrderDetailsTvDeliveryCost.gone()
+                            }
+                            fragmentOrderDetailsClMain.visible()
+                            fragmentOrderDetailsClBottomCost.visible()
+                            fragmentOrderDetailsPbLoading.gone()
+                            setActiveLines(state.data!!.orderStatusActiveLine)
                         }
-                        if (state.data!!.orderEntity.comment.isEmpty()) {
-                            viewDataBinding.fragmentOrderDetailsTvCommentValue.gone()
-                            viewDataBinding.fragmentOrderDetailsTvComment.gone()
-                        }
-                        if (!state.data!!.orderEntity.isDelivery) {
-                            viewDataBinding.fragmentOrderDetailsTvDeliveryCostValue.gone()
-                            viewDataBinding.fragmentOrderDetailsTvDeliveryCost.gone()
-                        }
-                        viewDataBinding.fragmentOrderDetailsClMain.visible()
-                        viewDataBinding.fragmentOrderDetailsClBottomCost.visible()
-                        viewDataBinding.fragmentOrderDetailsPbLoading.gone()
                     }
                 }
                 is State.Loading -> {
@@ -122,5 +104,63 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                 else -> Unit
             }
         }.startedLaunch(viewLifecycleOwner)
+    }
+
+
+    fun setActiveLines(activeLines: ActiveLines) {
+        with(viewDataBinding) {
+            when (activeLines) {
+                ActiveLines.ZERO_LINE -> {
+                    fragmentOrderDetailsMcvPreparing.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvAccepted.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvReady.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvDone.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                }
+                ActiveLines.ONE_LINE -> {
+                    fragmentOrderDetailsMcvAccepted.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvPreparing.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvReady.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvDone.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                }
+                ActiveLines.TWO_LINE -> {
+                    fragmentOrderDetailsMcvAccepted.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvPreparing.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvReady.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                    fragmentOrderDetailsMcvDone.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                }
+                ActiveLines.THREE_LINE -> {
+                    fragmentOrderDetailsMcvAccepted.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvPreparing.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvReady.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvDone.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.light_grey)
+                }
+                ActiveLines.FOUR_LINE -> {
+                    fragmentOrderDetailsMcvAccepted.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvPreparing.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvReady.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                    fragmentOrderDetailsMcvDone.backgroundTintList =
+                        resourcesProvider.getColorTint(R.color.colorPrimary)
+                }
+            }
+        }
     }
 }

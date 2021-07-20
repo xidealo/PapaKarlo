@@ -4,12 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -51,7 +51,7 @@ class OrdersViewModel @Inject constructor(
 
 
     fun onOrderClicked(orderItem: OrderItem) {
-        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(orderItem.uuid))
+        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(orderItem.uuid, orderItem.code))
     }
 
     private fun toItemModel(order: Order): OrderItem {

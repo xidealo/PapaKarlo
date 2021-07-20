@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
@@ -99,7 +98,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                             elementOrderChipStatus.text = state.data.orderStatus
                             elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
                             elementOrderMvcMain.setOnClickListener {
-                                viewModel.goToOrder(state.data.uuid)
+                                viewModel.goToOrder(state.data)
                             }
                         }
                     }
