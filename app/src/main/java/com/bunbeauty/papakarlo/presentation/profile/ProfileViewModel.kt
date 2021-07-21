@@ -9,7 +9,9 @@ import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
 import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
@@ -42,10 +44,11 @@ class ProfileViewModelImpl @Inject constructor(
     private val userAddressRepo: UserAddressRepo,
     private val userRepo: UserRepo,
     val stringHelper: IStringUtil,
-    private val orderRepo: OrderRepo,
     cartProductRepo: CartProductRepo,
     productHelper: IProductHelper,
-    private val orderUtil: IOrderUtil
+    private val orderRepo: OrderRepo,
+    private val orderUtil: IOrderUtil,
+    private val resourcesProvider: IResourcesProvider
 ) : ProfileViewModel(cartProductRepo, stringHelper, productHelper) {
 
     init {
@@ -127,7 +130,7 @@ class ProfileViewModelImpl @Inject constructor(
         }
     }
 
-    fun toItemModel(order: Order): OrderItem {
+    private fun toItemModel(order: Order): OrderItem {
         return OrderItem(
             uuid = order.orderEntity.uuid,
             orderStatus = stringHelper.toStringOrderStatus(order.orderEntity.orderStatus),
@@ -135,7 +138,7 @@ class ProfileViewModelImpl @Inject constructor(
             code = order.orderEntity.code,
             time = stringHelper.toStringTime(order.orderEntity),
             deferredTime = if (order.orderEntity.deferredTime.isNotEmpty())
-                "Ко времени: ${order.orderEntity.deferredTime}"
+                "${resourcesProvider.getString(R.string.action_profile_to_time)} ${order.orderEntity.deferredTime}"
             else
                 ""
         )

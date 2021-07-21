@@ -30,8 +30,6 @@ object Constants {
     const val FLOOR_ERROR_KEY = "floor error key"
 
 
-
-
     const val MINUTES_IN_HOUR = 60
     const val SECONDS_IN_MINUTE = 60
     const val MILLIS_IN_SECOND = 1000L
