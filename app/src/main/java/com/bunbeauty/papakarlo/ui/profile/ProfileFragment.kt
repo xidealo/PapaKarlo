@@ -98,7 +98,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                             elementOrderChipStatus.text = state.data.orderStatus
                             elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
                             elementOrderMvcMain.setOnClickListener {
-                                viewModel.goToOrder(state.data.uuid)
+                                viewModel.goToOrder(state.data)
                             }
                         }
                     }

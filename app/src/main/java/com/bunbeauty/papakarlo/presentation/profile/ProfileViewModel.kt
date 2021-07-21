@@ -6,11 +6,14 @@ import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.local.user.User
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections
+import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +37,7 @@ abstract class ProfileViewModel(
     abstract fun onCreateAddressClicked()
     abstract fun goToLogin()
     abstract fun goToSettings()
-    abstract fun goToOrder(orderUuid: String)
+    abstract fun goToOrder(orderItem: OrderItem)
 }
 
 class ProfileViewModelImpl @Inject constructor(
@@ -115,8 +118,13 @@ class ProfileViewModelImpl @Inject constructor(
         router.navigate(toLoginFragment())
     }
 
-    override fun goToOrder(orderUuid: String) {
-        router.navigate(toOrderDerailsFragment(orderUuid))
+    override fun goToOrder(orderItem: OrderItem) {
+        router.navigate(
+            ProfileFragmentDirections.toOrderDerailsFragment(
+                orderItem.uuid,
+                orderItem.code
+            )
+        )
     }
 
     override fun goToSettings() {

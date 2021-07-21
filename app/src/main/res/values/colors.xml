@@ -10,6 +10,7 @@
 
     <color name="light_green">#44AF49</color>
     <color name="light_red">#FF6B60</color>
+    <color name="light_grey">#C9C9C9</color>
 
     <!-- BACKGROUND -->
     <color name="backgroundPage">#242526</color>

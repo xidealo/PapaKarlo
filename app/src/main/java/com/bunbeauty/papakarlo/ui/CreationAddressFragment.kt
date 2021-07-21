@@ -3,9 +3,8 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.domain.model.local.address.UserAddress
+import com.bunbeauty.common.Constants
 import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
@@ -25,6 +24,14 @@ class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        textInputMap[Constants.STREET_ERROR_KEY] = viewDataBinding.fragmentCreationAddressTilStreet
+        textInputMap[Constants.HOUSE_ERROR_KEY] = viewDataBinding.fragmentCreationAddressTilHouse
+        textInputMap[Constants.FLAT_ERROR_KEY] = viewDataBinding.fragmentCreationAddressTilFlat
+        textInputMap[Constants.ENTRANCE_ERROR_KEY] =
+            viewDataBinding.fragmentCreationAddressTilEntrance
+        textInputMap[Constants.COMMENT_ERROR_KEY] =
+            viewDataBinding.fragmentCreationAddressTilComment
+        textInputMap[Constants.FLOOR_ERROR_KEY] = viewDataBinding.fragmentCreationAddressTilFloor
 
         viewModel.getStreets()
         viewDataBinding.viewModel = viewModel
@@ -34,88 +41,13 @@ class CreationAddressFragment : BaseFragment<FragmentCreationAddressBinding>() {
     }
 
     private fun createAddress() {
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtStreet.text.toString(),
-                true,
-                50
-            ) || viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() } == null
-        ) {
-            viewDataBinding.fragmentCreationAddressTilStreet.error =
-                resources.getString(R.string.error_creation_address_name)
-            viewDataBinding.fragmentCreationAddressEtStreet.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilStreet.error = ""
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtHouse.text.toString(),
-                true,
-                5
-            )
-        ) {
-            viewDataBinding.fragmentCreationAddressTilHouse.error = " "
-            viewDataBinding.fragmentCreationAddressEtHouse.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilHouse.error = ""
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtFlat.text.toString(),
-                false,
-                5
-            )
-        ) {
-            viewDataBinding.fragmentCreationAddressTilFlat.error = " "
-            viewDataBinding.fragmentCreationAddressEtFlat.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilFlat.error = ""
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtEntrance.text.toString(),
-                false,
-                5
-            )
-        ) {
-            viewDataBinding.fragmentCreationAddressTilEntrance.error = " "
-            viewDataBinding.fragmentCreationAddressEtEntrance.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilEntrance.error = ""
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtComment.text.toString(),
-                false,
-                100
-            )
-        ) {
-            viewDataBinding.fragmentCreationAddressTilComment.error = " "
-            viewDataBinding.fragmentCreationAddressEtComment.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilComment.error = ""
-
-        if (!viewModel.isCorrectFieldContent(
-                viewDataBinding.fragmentCreationAddressEtFloor.text.toString(),
-                false,
-                5
-            )
-        ) {
-            viewDataBinding.fragmentCreationAddressTilFloor.error = " "
-            viewDataBinding.fragmentCreationAddressEtFloor.requestFocus()
-            return
-        }
-        viewDataBinding.fragmentCreationAddressTilFloor.error = ""
-
         viewModel.onCreateAddressClicked(
-            UserAddress().apply {
-                street = viewModel.streets.find { it.name == viewDataBinding.fragmentCreationAddressEtStreet.text.toString() }
-                house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim()
-                flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim()
-                entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim()
-                comment = viewDataBinding.fragmentCreationAddressEtComment.text.toString().trim()
-                floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim()
-            }
+            street = viewDataBinding.fragmentCreationAddressEtStreet.text.toString(),
+            house = viewDataBinding.fragmentCreationAddressEtHouse.text.toString().trim(),
+            flat = viewDataBinding.fragmentCreationAddressEtFlat.text.toString().trim(),
+            entrance = viewDataBinding.fragmentCreationAddressEtEntrance.text.toString().trim(),
+            comment = viewDataBinding.fragmentCreationAddressEtComment.text.toString().trim(),
+            floor = viewDataBinding.fragmentCreationAddressEtFloor.text.toString().trim()
         )
     }
 }

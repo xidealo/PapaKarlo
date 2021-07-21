@@ -5,7 +5,7 @@
 
     <ScrollView
         style="@style/DefaultPage"
-        tools:context=".ui.cafe_list.CafeListFragment">
+        tools:context=".ui.CafeListFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/DefaultPage"

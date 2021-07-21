@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/cafe_list_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragment"
+        android:name="com.bunbeauty.papakarlo.ui.CafeListFragment"
         android:label="@string/title_cafe_list"
         tools:layout="@layout/fragment_cafe_list">
         <action
@@ -118,11 +118,15 @@
     </dialog>
     <fragment
         android:id="@+id/order_derails_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.OrderDetailsFragment"
-        android:label="@string/title_order_details"
+        android:name="com.bunbeauty.papakarlo.ui.profile.OrderDetailsFragment"
+        android:label="{orderCode}"
         tools:layout="@layout/fragment_order_details">
         <argument
             android:name="orderUuid"
+            app:argType="string" />
+
+        <argument
+            android:name="orderCode"
             app:argType="string" />
     </fragment>
     <fragment
