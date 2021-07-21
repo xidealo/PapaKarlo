@@ -1,16 +1,14 @@
-package com.bunbeauty.papakarlo.ui.cafe_list
+package com.bunbeauty.papakarlo.ui
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
+import com.bunbeauty.papakarlo.ui.adapter.CafeAdapter
+import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -30,8 +28,6 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        cafeAdapter.cafeListViewModel = viewModel
         cafeAdapter.onItemClickListener = { cafeAdapterModel ->
             viewModel.onCafeCardClick(cafeAdapterModel)
         }

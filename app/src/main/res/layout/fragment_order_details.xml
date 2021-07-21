@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.OrderDetailsFragment">
+    tools:context=".ui.profile.OrderDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout style="@style/DefaultPage">
 

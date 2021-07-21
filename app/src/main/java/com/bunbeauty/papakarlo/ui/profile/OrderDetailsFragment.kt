@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.profile
 
 import android.annotation.SuppressLint
 import android.graphics.Paint
@@ -36,7 +36,10 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getOrder(OrderDetailsFragmentArgs.fromBundle(requireArguments()).orderUuid)
+        viewModel.getOrder(
+            OrderDetailsFragmentArgs.fromBundle(
+                requireArguments()
+            ).orderUuid)
         viewModel.orderState.onEach { state ->
             when (state) {
                 is State.Success -> {

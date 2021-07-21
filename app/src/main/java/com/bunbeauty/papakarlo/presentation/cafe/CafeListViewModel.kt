@@ -7,7 +7,7 @@ import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
-import com.bunbeauty.papakarlo.ui.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
+import com.bunbeauty.papakarlo.ui.CafeListFragmentDirections
 import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
@@ -26,7 +26,7 @@ class CafeListViewModel @Inject constructor(
     }
 
     fun onCafeCardClick(cafeItem: CafeItem) {
-        router.navigate(toCafeOptionsBottomSheet(cafeItem))
+        router.navigate(CafeListFragmentDirections.toCafeOptionsBottomSheet(cafeItem))
     }
 
     private fun toItemModel(cafe: Cafe): CafeItem {

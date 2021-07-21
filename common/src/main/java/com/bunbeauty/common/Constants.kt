@@ -22,6 +22,12 @@ object Constants {
     // ERROR_KEY
 
     const val PHONE_ERROR_KEY = "phone error key"
+    const val STREET_ERROR_KEY = "street error key"
+    const val HOUSE_ERROR_KEY = "house error key"
+    const val FLAT_ERROR_KEY = "flat error key"
+    const val ENTRANCE_ERROR_KEY = "entrance error key"
+    const val COMMENT_ERROR_KEY = "comment error key"
+    const val FLOOR_ERROR_KEY = "floor error key"
 
 
 

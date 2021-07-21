@@ -47,8 +47,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                         MyDiffCallback(state.data, addressesAdapter.itemList)
                     )
                 }
-                else -> {
-                }
+                else -> Unit
             }
         }.startedLaunch(viewLifecycleOwner)
 

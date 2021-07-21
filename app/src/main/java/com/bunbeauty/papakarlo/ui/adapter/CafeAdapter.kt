@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.cafe_list
+package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,19 +6,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
-import com.bunbeauty.papakarlo.ui.adapter.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CafeDiffUtilCallback
+import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :
     ListAdapter<CafeItem, BaseViewHolder<ViewBinding, CafeItem>>(
         CafeDiffUtilCallback()
     ) {
-
-    lateinit var cafeListViewModel: CafeListViewModel
     var onItemClickListener: ((CafeItem) -> Unit)? = null
 
     override fun onBindViewHolder(
