@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.CafeListFragment
+import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
+import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.ui.profile.OrderDetailsFragment
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragment
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragment
@@ -42,6 +44,7 @@ interface ViewModelComponent {
     fun inject(orderDetailsFragment: OrderDetailsFragment)
     fun inject(oneLineActionBottomSheet: OneLineActionBottomSheet)
     fun inject(paymentBottomSheet: PaymentBottomSheet)
+    fun inject(deferredTimeBottomSheet: DeferredTimeBottomSheet)
 
     // dialogs
 }

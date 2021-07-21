@@ -1,13 +1,16 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.create_order
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.State
+import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
+import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
+import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
@@ -15,18 +18,13 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.view.CustomSwitcher
-import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
-import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -55,7 +53,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
             fragmentCreateOrderCsDelivery.switchListener =
                 object : CustomSwitcher.SwitchListener {
                     override fun onSwitched(isLeft: Boolean) {
-                        viewModel.setIsDelivery(isLeft)
+                        viewModel.onIsDeliveryChanged(isLeft)
                     }
                 }
             viewModel.isDelivery.onEach { isDelivery ->
@@ -112,9 +110,41 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
                 }
             }.startedLaunch(viewLifecycleOwner)
             fragmentCreateOrderNcAddDeferredTime.setOnClickListener {
-                viewModel.onAddDeferredTimeClicked()
+                viewModel.onDeferredTimeClicked()
+            }
+            fragmentCreateOrderTcDeferredTime.setOnClickListener {
+                viewModel.onDeferredTimeClicked()
+            }
+
+            viewModel.comment.onEach { comment ->
+                if (comment == null) {
+                    fragmentCreateOrderNcAddComment.visible()
+                    fragmentCreateOrderTcComment.gone()
+                } else {
+                    fragmentCreateOrderNcAddComment.gone()
+                    fragmentCreateOrderTcComment.visible()
+                    fragmentCreateOrderTcComment.cardText = comment
+                }
+            }.startedLaunch(viewLifecycleOwner)
+            fragmentCreateOrderNcAddComment.setOnClickListener {
+                viewModel.onAddCommentClicked()
+            }
+            fragmentCreateOrderTcComment.setOnClickListener{
+                viewModel.onEditCommentClicked()
             }
         }
+        setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
+            bundle.getString(SELECTED_DEFERRED_TIME_KEY)?.let { selectedDeferredTime ->
+                viewModel.onDeferredTimeSelected(selectedDeferredTime)
+            }
+        }
+        setFragmentResultListener(COMMENT_REQUEST_KEY) { _, bundle ->
+            bundle.getString(RESULT_COMMENT_KEY)?.let { comment ->
+                viewModel.onCommentChanged(comment)
+            }
+        }
+
+
         
         
         
@@ -139,33 +169,6 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
 //
 //
     }
-
-//    private fun showTimePicker() {
-//        val picker = MaterialTimePicker.Builder()
-//            .setTimeFormat(CLOCK_24H)
-//            .setHour(viewModel.deferredHoursStateFlow.value ?: 0)
-//            .setMinute(viewModel.deferredMinutesStateFlow.value ?: 0)
-//            .setTitleText(requireContext().getString(R.string.title_create_order_deferred_time))
-//            .build()
-//        picker.show(parentFragmentManager, "TimePicker")
-//
-//        picker.addOnPositiveButtonClickListener {
-//            if (viewModel.isDeferredTimeCorrect(picker.hour, picker.minute)) {
-//                fragmentCreateOrderGroupAddDeferred.gone()
-//                fragmentCreateOrderGroupPickedDeferred.visible()
-//                viewModel.deferredHoursStateFlow.value = picker.hour
-//                viewModel.deferredMinutesStateFlow.value = picker.minute
-//            } else {
-//                //showError(resourcesProvider.getString(R.string.error_creation_order_deferred))
-//            }
-//        }
-//        picker.addOnNegativeButtonClickListener {
-//            fragmentCreateOrderGroupAddDeferred.visible()
-//            fragmentCreateOrderGroupPickedDeferred.gone()
-//            viewModel.deferredHoursStateFlow.value = null
-//            viewModel.deferredMinutesStateFlow.value = null
-//        }
-//    }
 
     private fun activateButton(button: MaterialButton) {
         button.backgroundTintList =

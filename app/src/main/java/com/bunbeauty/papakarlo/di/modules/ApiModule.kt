@@ -6,6 +6,8 @@ import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.cafe.CafeUtil
 import com.bunbeauty.domain.util.cafe.ICafeUtil
+import com.bunbeauty.domain.util.date_time.DateTimeUtil
+import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.field_helper.FieldHelper
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.domain.util.network.INetworkHelper
@@ -63,4 +65,7 @@ interface ApiModule {
 
     @Binds
     fun bindCafeUtil(cafeUtil: CafeUtil): ICafeUtil
+
+    @Binds
+    fun bindDaterTimeUtil(dateTimeUtil: DateTimeUtil): IDateTimeUtil
 }

@@ -15,6 +15,28 @@ object Constants {
 
     const val CAFE_ARG_KEY = "cafe"
 
+    //
+
+    const val ASAP = "as soon as possible"
+    const val DIGITS = "0123456789"
+
+    // FRAGMENT RESULT KEY
+
+    const val DEFERRED_TIME_REQUEST_KEY = "deferred time request key"
+    const val SELECTED_DEFERRED_TIME_KEY = "selected deferred time key"
+
+    const val COMMENT_REQUEST_KEY = "comment request key"
+    const val RESULT_COMMENT_KEY = "result comment key"
+
+    const val EMAIL_REQUEST_KEY = "email request key"
+    const val RESULT_EMAIL_KEY = "result email key"
+
+    // DIVIDER
+
+    const val TIME_DIVIDER = ":"
+
+    // LINK
+
     const val VK_LINK = "https://vk.com/papakarlokimry"
     const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
     const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"

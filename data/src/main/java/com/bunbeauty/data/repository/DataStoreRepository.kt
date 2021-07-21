@@ -2,12 +2,17 @@ package com.bunbeauty.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.domain.model.local.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class DataStoreRepository @Inject constructor(private val context: Context) : DataStoreRepo {
@@ -29,8 +34,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveUserAddressUuid(addressId: String) {
-        context.userAddressDataStore.edit {
-            it[DELIVERY_ADDRESS_UUID_KEY] = addressId
+        withContext(IO) {
+            context.userAddressDataStore.edit {
+                it[DELIVERY_ADDRESS_UUID_KEY] = addressId
+            }
         }
     }
 
@@ -39,8 +46,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveCafeAddressUuid(addressId: String) {
-        context.cafeDataStore.edit {
-            it[CAFE_UUID_KEY] = addressId
+        withContext(IO) {
+            context.cafeDataStore.edit {
+                it[CAFE_UUID_KEY] = addressId
+            }
         }
     }
 
@@ -52,9 +61,11 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveDelivery(delivery: Delivery) {
-        context.deliveryDataStore.edit {
-            it[DELIVERY_COST_KEY] = delivery.cost
-            it[FOR_FREE_DELIVERY_KEY] = delivery.forFree
+        withContext(IO) {
+            context.deliveryDataStore.edit {
+                it[DELIVERY_COST_KEY] = delivery.cost
+                it[FOR_FREE_DELIVERY_KEY] = delivery.forFree
+            }
         }
     }
 
@@ -63,8 +74,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveUserUuid(userId: String) {
-        context.userUuidDataStore.edit {
-            it[USER_UUID_KEY] = userId
+        withContext(IO) {
+            context.userUuidDataStore.edit {
+                it[USER_UUID_KEY] = userId
+            }
         }
     }
 
@@ -73,8 +86,8 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun savePhone(phone: String) {
-        context.phone.edit {
-            it[PHONE_KEY] = phone
+        withContext(IO) {
+            context.phone.edit { it[PHONE_KEY] = phone }
         }
     }
 
@@ -83,8 +96,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveEmail(email: String) {
-        context.email.edit {
-            it[EMAIL_KEY] = email
+        withContext(IO) {
+            context.email.edit {
+                it[EMAIL_KEY] = email
+            }
         }
     }
 
@@ -93,8 +108,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     }
 
     override suspend fun saveDeferredTime(deferredTime: String) {
-        context.deferredTimeDataStore.edit {
-            it[DEFERRED_TIME_KEY] = deferredTime
+        withContext(IO) {
+            context.deferredTimeDataStore.edit {
+                it[DEFERRED_TIME_KEY] = deferredTime
+            }
         }
     }
 

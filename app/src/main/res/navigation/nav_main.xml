@@ -56,7 +56,7 @@
         tools:layout="@layout/fragment_consumer_cart">
         <action
             android:id="@+id/to_create_order"
-            app:destination="@id/create_order" />
+            app:destination="@id/create_order_fragment" />
         <action
             android:id="@+id/back_to_menu_fragment"
             app:destination="@id/menu_fragment"
@@ -64,8 +64,8 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/create_order"
-        android:name="com.bunbeauty.papakarlo.ui.CreateOrderFragment"
+        android:id="@+id/create_order_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment"
         android:label="@string/title_creation_order"
         tools:layout="@layout/fragment_create_order">
         <action
@@ -82,7 +82,22 @@
         <action
             android:id="@+id/to_login_fragment"
             app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/to_deferred_time_bottom_sheet"
+            app:destination="@id/deferred_time_bottom_sheet" />
+        <action
+            android:id="@+id/to_oneLineActionBottomSheet"
+            app:destination="@id/oneLineActionBottomSheet" />
     </fragment>
+    <dialog
+        android:id="@+id/deferred_time_bottom_sheet"
+        tools:layout="@layout/bottom_sheet_defered_time"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet"
+        android:label="DeferredTimeBottomSheet">
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </dialog>
     <fragment
         android:id="@+id/product_fragment"
         android:name="com.bunbeauty.papakarlo.ui.ProductFragment"

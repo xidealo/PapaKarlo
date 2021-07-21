@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,7 @@ class Router @Inject constructor() {
             hideKeyboard(activity?.get())
             activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
         } catch (exception: Exception) {
+            Log.d("test", "exception " + exception.message)
             exception.printStackTrace()
         }
     }

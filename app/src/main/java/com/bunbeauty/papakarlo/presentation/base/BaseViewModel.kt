@@ -40,10 +40,14 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    fun sendFieldError(fieldKey: String, error: String) {
+    protected fun sendFieldError(fieldKey: String, error: String) {
         viewModelScope.launch {
             mutableFieldError.emit(FieldError(fieldKey, error))
         }
+    }
+
+    fun goBack() {
+        router.navigateUp()
     }
 
     protected inline fun <reified T> getNavArg(key: String): T? {

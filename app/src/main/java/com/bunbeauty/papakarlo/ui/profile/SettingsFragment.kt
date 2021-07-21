@@ -57,10 +57,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     private fun setOnClickListeners() {
         viewDataBinding.fragmentSettingsMcvEmail.setOnClickListener {
-            viewModel.gotoChangeEmail()
+            viewModel.onAddEmailClicked()
         }
         viewDataBinding.fragmentSettingsMcvPhone.setOnClickListener {
-            viewModel.logout()
+            viewModel.onPhoneClicked()
         }
     }
 }

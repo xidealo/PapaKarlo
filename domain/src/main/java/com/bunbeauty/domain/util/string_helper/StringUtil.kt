@@ -1,5 +1,6 @@
 package com.bunbeauty.domain.util.string_helper
 
+import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.ProductCode
@@ -203,5 +204,9 @@ class StringUtil @Inject constructor(private val resourcesProvider: IResourcesPr
         } else {
             number.toString()
         }
+    }
+
+    override fun getTimeString(hour: Int, minute: Int): String {
+        return hour.toString() + TIME_DIVIDER + addFirstZero(minute)
     }
 }

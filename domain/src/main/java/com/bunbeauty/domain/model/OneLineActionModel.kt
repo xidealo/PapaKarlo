@@ -7,8 +7,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class OneLineActionModel(
     val title: String,
+    val infoText: String?,
+    val hint: String,
     val type: OneLineActionType,
-    val placeholder: String,
+    val inputText: String,
     val buttonText: String,
-    val data: String
+    val requestKey: String,
+    val resultKey: String,
 ) : Parcelable

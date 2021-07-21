@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
@@ -118,4 +119,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(OneLineActionViewModel::class)
     internal abstract fun provideOneLineActionViewModel(oneLineActionViewModel: OneLineActionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DeferredTimeViewModel::class)
+    internal abstract fun provideDeferredTimeViewModel(deferredTimeViewModel: DeferredTimeViewModel): ViewModel
 }

@@ -1,11 +1,17 @@
 package com.bunbeauty.papakarlo.presentation.create_order
 
+import android.util.Log
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Constants.ASAP
 import com.bunbeauty.common.Constants.BONUSES_PERCENT
+import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.common.State
+import com.bunbeauty.domain.enums.OneLineActionType
+import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.model.local.address.Address
 import com.bunbeauty.domain.model.local.order.Order
@@ -17,7 +23,7 @@ import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.CreateOrderFragmentDirections.*
+import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
 import com.instacart.library.truetime.TrueTime
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
@@ -25,38 +31,6 @@ import kotlinx.coroutines.flow.*
 import org.joda.time.DateTime
 import javax.inject.Inject
 import kotlin.math.roundToInt
-
-//abstract class CreateOrderViewModel : BaseViewModel() {
-//    abstract val hasAddressState: StateFlow<State<Boolean>>
-//    abstract val selectedAddressTextState: StateFlow<State<String>>
-//    abstract val userState: StateFlow<State<User?>>
-//
-//    abstract val isDeliveryState: MutableStateFlow<Boolean>
-//    abstract val deferredTextStateFlow: StateFlow<String>
-//    abstract val orderStringStateFlow: StateFlow<String>
-//    abstract val deferredHoursStateFlow: MutableStateFlow<Int?>
-//    abstract val deferredMinutesStateFlow: MutableStateFlow<Int?>
-//
-//    abstract val deliveryStringLiveData: LiveData<String>
-//
-//    abstract fun getAddress()
-//    abstract fun getUser()
-//    abstract fun getCachedPhone(): String
-//    abstract fun getCachedEmail(): String
-//    abstract fun subscribeOnDeferredText()
-//    abstract fun subscribeOnOrderString()
-//    abstract fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean
-//    abstract fun onAddressClicked()
-//    abstract fun onCreateAddressClicked()
-//    abstract fun createOrder(
-//        comment: String,
-//        phone: String,
-//        email: String,
-//        deferredHours: Int?,
-//        deferredMinutes: Int?,
-//        spentBonusesString: String
-//    )
-//}
 
 class CreateOrderViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
@@ -99,6 +73,9 @@ class CreateOrderViewModel @Inject constructor(
 
     private val mutableDeferredTime: MutableStateFlow<String?> = MutableStateFlow(null)
     val deferredTime: StateFlow<String?> = mutableDeferredTime.asStateFlow()
+
+    private val mutableComment: MutableStateFlow<String?> = MutableStateFlow(null)
+    val comment: StateFlow<String?> = mutableComment.asStateFlow()
 
     init {
         subscribeOnUser()
@@ -166,13 +143,13 @@ class CreateOrderViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun subscribeOnDeferredTime() {
+    private fun subscribeOnDeferredTime() {
         dataStoreRepo.deferredTime.onEach { deferredTime ->
-            mutableDeferredTime.value = deferredTime
+            mutableDeferredTime.value = mapDeferredTime(deferredTime)
         }.launchIn(viewModelScope)
     }
 
-    fun setIsDelivery(isDelivery: Boolean) {
+    fun onIsDeliveryChanged(isDelivery: Boolean) {
         mutableIsDelivery.value = isDelivery
         if (isDelivery) {
             mutableActionDeferredTime.value = actionDeliveryTime
@@ -183,43 +160,33 @@ class CreateOrderViewModel @Inject constructor(
         }
     }
 
-
-
-
-
-
-
-    val userEntityState: MutableStateFlow<State<UserEntity?>> =
-        MutableStateFlow(State.Loading())
-
-    private val selectedAddressState: MutableStateFlow<Address?> = MutableStateFlow(null)
-    val orderStringStateFlow: MutableStateFlow<String> = MutableStateFlow("")
-
-    val deliveryStringLiveData by lazy {
-        switchMap(dataStoreRepo.delivery.asLiveData()) { delivery ->
-            map(cartProductRepo.cartProductList.asLiveData()) { productList ->
-                val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
-                    productList,
-                    delivery.forFree
-                )
-                if (differenceString.isEmpty()) {
-                    resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
-                } else {
-                    resourcesProvider.getString(R.string.part_create_order_delivery_cost) +
-                            stringUtil.getCostString(delivery.cost) +
-                            resourcesProvider.getString(R.string.part_create_order_free_delivery_from) +
-                            stringUtil.getCostString(delivery.forFree)
-                }
-            }
+    fun onDeferredTimeSelected(deferredTime: String) {
+        mutableDeferredTime.value = mapDeferredTime(deferredTime)
+        viewModelScope.launch {
+            dataStoreRepo.saveDeferredTime(deferredTime)
         }
     }
 
-    fun isDeferredTimeCorrect(deferredHours: Int, deferredMinutes: Int): Boolean {
-        val limitMinutes = DateTime.now().minuteOfDay + HALF_HOUR
-        val pickedMinutes = deferredHours * MINUTES_IN_HOURS + deferredMinutes
-
-        return pickedMinutes > limitMinutes
+    fun onCommentChanged(newComment: String) {
+        if (newComment.isEmpty()) {
+            mutableComment.value = null
+        } else {
+            mutableComment.value = newComment
+        }
     }
+
+    private fun mapDeferredTime(deferredTime: String?): String? {
+        return if (deferredTime == ASAP) {
+            resourcesProvider.getString(R.string.msg_deferred_time_asap)
+        } else {
+            deferredTime
+        }
+    }
+
+
+
+
+
 
     fun createOrder(
         comment: String,
@@ -229,65 +196,65 @@ class CreateOrderViewModel @Inject constructor(
         deferredMinutes: Int?,
         spentBonusesString: String
     ) {
-        if (selectedAddressState.value == null) {
-            showError(resourcesProvider.getString(R.string.error_create_order_address))
-            return
-        }
-        val orderEntity = OrderEntity(
-            comment = comment,
-            phone = phone,
-            email = email,
-            deferredTime = stringUtil.toStringTime(deferredHours, deferredMinutes),
-            isDelivery = isDelivery.value,
-            code = generateCode(),
-            address = selectedAddressState.value!!,
-        )
-        //set try to get time?
-        val timestamp = try {
-            TrueTime.now().time
-        } catch (exception: Exception) {
-            DateTime.now().millis
-        }
-        viewModelScope.launch {
-            val order = Order(
-                orderEntity,
-                cartProductRepo.getCartProductList(),
-                cafeRepo.getCafeEntityByDistrict(
-                    orderEntity.address.street?.districtId ?: "ERROR CAFE"
-                ).id,
-                timestamp = timestamp
-            )
-            if (userEntityState.value is State.Success) {
-                val user = (userEntityState.value as State.Success<UserEntity?>).data
-                //with login
-                if (user != null) {
-                    val spentBonuses = if (spentBonusesString.isEmpty()) {
-                        0
-                    } else {
-                        spentBonusesString.toInt()
-                    }
-                    if (user.bonusList.sum() - spentBonuses < 0) {
-                        showError("Недостаточно бонусов")
-                        return@launch
-                    } else {
-                        if (spentBonuses != 0)
-                            user.bonusList.add(-spentBonuses)
-                    }
-                    user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
-                    order.orderEntity.bonus = spentBonuses
-                    order.orderEntity.userId = user.uuid
-                    userRepo.insertToBonusList(user)
-                } else {
-                    dataStoreRepo.savePhone(phone)
-                    dataStoreRepo.saveEmail(email)
-                }
-                orderRepo.insert(order)
-            }
-            withContext(Main) {
-                showMessage(resourcesProvider.getString(R.string.msg_create_order_order_code) + orderEntity.code)
-                router.navigate(backToMenuFragment())
-            }
-        }
+//        if (selectedAddressState.value == null) {
+//            showError(resourcesProvider.getString(R.string.error_create_order_address))
+//            return
+//        }
+//        val orderEntity = OrderEntity(
+//            comment = comment,
+//            phone = phone,
+//            email = email,
+//            deferredTime = stringUtil.toStringTime(deferredHours, deferredMinutes),
+//            isDelivery = isDelivery.value,
+//            code = generateCode(),
+//            address = selectedAddressState.value!!,
+//        )
+//        //set try to get time?
+//        val timestamp = try {
+//            TrueTime.now().time
+//        } catch (exception: Exception) {
+//            DateTime.now().millis
+//        }
+//        viewModelScope.launch {
+//            val order = Order(
+//                orderEntity,
+//                cartProductRepo.getCartProductList(),
+//                cafeRepo.getCafeEntityByDistrict(
+//                    orderEntity.address.street?.districtId ?: "ERROR CAFE"
+//                ).id,
+//                timestamp = timestamp
+//            )
+//            if (userEntityState.value is State.Success) {
+//                val user = (userEntityState.value as State.Success<UserEntity?>).data
+//                //with login
+//                if (user != null) {
+//                    val spentBonuses = if (spentBonusesString.isEmpty()) {
+//                        0
+//                    } else {
+//                        spentBonusesString.toInt()
+//                    }
+//                    if (user.bonusList.sum() - spentBonuses < 0) {
+//                        showError("Недостаточно бонусов")
+//                        return@launch
+//                    } else {
+//                        if (spentBonuses != 0)
+//                            user.bonusList.add(-spentBonuses)
+//                    }
+//                    user.bonusList.add((productHelper.getNewTotalCost(order.cartProducts) * BONUSES_PERCENT).roundToInt())
+//                    order.orderEntity.bonus = spentBonuses
+//                    order.orderEntity.userId = user.uuid
+//                    userRepo.insertToBonusList(user)
+//                } else {
+//                    dataStoreRepo.savePhone(phone)
+//                    dataStoreRepo.saveEmail(email)
+//                }
+//                orderRepo.insert(order)
+//            }
+//            withContext(Main) {
+//                showMessage(resourcesProvider.getString(R.string.msg_create_order_order_code) + orderEntity.code)
+//                router.navigate(backToMenuFragment())
+//            }
+//        }
     }
 
     private fun generateCode(): String {
@@ -298,10 +265,6 @@ class CreateOrderViewModel @Inject constructor(
         val codeNumber = (number / letters.length).toString()
 
         return codeLetter + codeNumber
-    }
-
-    fun isNetworkConnected(): Boolean {
-        return networkHelper.isNetworkConnected()
     }
 
     fun onAddressClicked() {
@@ -316,13 +279,39 @@ class CreateOrderViewModel @Inject constructor(
         router.navigate(toLoginFragment())
     }
 
-    fun onAddDeferredTimeClicked() {
-        router.navigate(toLoginFragment())
+    fun onDeferredTimeClicked() {
+        router.navigate(toDeferredTimeBottomSheet(actionDeferredTime.value))
+    }
+
+    fun onAddCommentClicked() {
+        val oneLineActionModel = OneLineActionModel(
+            title = resourcesProvider.getString(R.string.title_create_order_addition_comment),
+            infoText = null,
+            hint = resourcesProvider.getString(R.string.hint_create_order_comment),
+            type = OneLineActionType.COMMENT,
+            inputText = "",
+            buttonText = resourcesProvider.getString(R.string.action_create_order_save_comment),
+            requestKey = COMMENT_REQUEST_KEY,
+            resultKey = RESULT_COMMENT_KEY
+        )
+        router.navigate(toOneLineActionBottomSheet(oneLineActionModel))
+    }
+
+    fun onEditCommentClicked() {
+        val oneLineActionModel = OneLineActionModel(
+            title = resourcesProvider.getString(R.string.title_create_order_editing_comment),
+            infoText = null,
+            hint = resourcesProvider.getString(R.string.hint_create_order_comment),
+            type = OneLineActionType.COMMENT,
+            inputText = comment.value ?: "",
+            buttonText = resourcesProvider.getString(R.string.action_create_order_save_comment),
+            requestKey = COMMENT_REQUEST_KEY,
+            resultKey = RESULT_COMMENT_KEY
+        )
+        router.navigate(toOneLineActionBottomSheet(oneLineActionModel))
     }
 
     companion object {
         private const val CODE_NUMBER_COUNT = 100 // 0 - 99
-        private const val MINUTES_IN_HOURS = 60
-        private const val HALF_HOUR = 30
     }
 }

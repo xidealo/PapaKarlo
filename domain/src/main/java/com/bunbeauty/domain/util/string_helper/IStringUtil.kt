@@ -16,6 +16,7 @@ interface IStringUtil {
     fun toString(cartProducts: List<CartProduct>): String
     fun toStringWeight(menuProduct: MenuProduct): String
     fun toStringTime(orderEntity: OrderEntity): String
+    @Deprecated("")
     fun toStringTime(hours: Int?, minutes: Int?): String
     fun toStringWorkingHours(cafeEntity: CafeEntity): String
     fun toStringOrderStatus(orderStatus: OrderStatus): String
@@ -23,4 +24,5 @@ interface IStringUtil {
     fun getRemovedFromCartString(productName: String): String
     fun getDeliveryString(deliveryCost: Int): String
     fun getCostString(cost: Int?): String
+    fun getTimeString(hour: Int, minute: Int): String
 }
