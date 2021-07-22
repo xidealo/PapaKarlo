@@ -6,7 +6,9 @@ import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.local.order.Order
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
+import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
 import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
@@ -16,7 +18,8 @@ import javax.inject.Inject
 class OrdersViewModel @Inject constructor(
     private val orderRepo: OrderRepo,
     private val stringUtil: IStringUtil,
-    private val orderUtil: IOrderUtil
+    private val orderUtil: IOrderUtil,
+    private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {
 
     private val _ordersState: MutableStateFlow<State<List<OrderItem?>>> =
@@ -62,7 +65,7 @@ class OrdersViewModel @Inject constructor(
             code = order.orderEntity.code,
             time = stringUtil.toStringTime(order.orderEntity),
             deferredTime = if (order.orderEntity.deferredTime.isNotEmpty())
-                "Ко времени: ${order.orderEntity.deferredTime}"
+                "${resourcesProvider.getString(R.string.action_profile_to_time)} ${order.orderEntity.deferredTime}"
             else
                 ""
         )

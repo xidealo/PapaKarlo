@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
+import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -54,7 +54,7 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost
 
-                if(item.photo.get() == null){
+                if (item.photo.get() == null) {
                     val target = object : Target {
                         override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
                             if (bitmap != null) {
@@ -76,7 +76,7 @@ class MenuProductsAdapter @Inject constructor() :
                         .networkPolicy(NetworkPolicy.NO_CACHE)
                         .memoryPolicy(MemoryPolicy.NO_CACHE)
                         .into(target)
-                }else{
+                } else {
                     elementMenuProductIvPhoto.setImageBitmap(item.photo.get())
                 }
                 elementMenuProductTvCostOld.paintFlags =

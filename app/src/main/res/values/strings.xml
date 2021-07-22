@@ -168,6 +168,7 @@
     <string name="title_profile_no_profile">В профиле будут отбражаться: история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
     <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_login">Войти</string>
+    <string name="action_profile_to_time">Ко времени:</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>
