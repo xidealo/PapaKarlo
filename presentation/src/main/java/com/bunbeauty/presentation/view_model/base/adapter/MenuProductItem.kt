@@ -1,7 +1,7 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
 import android.graphics.Bitmap
-import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.domain.model.ui.BaseModel
 import java.lang.ref.SoftReference
 
 data class MenuProductItem(

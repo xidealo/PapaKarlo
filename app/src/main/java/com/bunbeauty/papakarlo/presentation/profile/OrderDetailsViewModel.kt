@@ -3,8 +3,8 @@ package com.bunbeauty.papakarlo.presentation.profile
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.domain.model.local.CartProduct
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.entity.order.Order
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil

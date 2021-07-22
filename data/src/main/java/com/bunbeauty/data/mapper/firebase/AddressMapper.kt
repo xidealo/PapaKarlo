@@ -2,8 +2,8 @@ package com.bunbeauty.data.mapper.firebase
 
 import com.bunbeauty.data.mapper.Mapper
 import com.bunbeauty.domain.model.firebase.AddressFirebase
-import com.bunbeauty.domain.model.local.Street
-import com.bunbeauty.domain.model.local.address.Address
+import com.bunbeauty.domain.model.ui.Street
+import com.bunbeauty.domain.model.ui.address.Address
 import javax.inject.Inject
 
 class AddressMapper @Inject constructor() : Mapper<AddressFirebase, Address> {

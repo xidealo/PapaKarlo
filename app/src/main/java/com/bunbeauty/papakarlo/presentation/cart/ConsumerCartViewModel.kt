@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.presentation.cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper

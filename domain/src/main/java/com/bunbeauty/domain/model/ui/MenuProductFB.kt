@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.local
+package com.bunbeauty.domain.model.ui
 
 import com.bunbeauty.domain.enums.ProductCode
 

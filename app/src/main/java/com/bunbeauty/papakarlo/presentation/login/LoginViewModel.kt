@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(
         ) {
             sendFieldError(
                 Constants.PHONE_ERROR_KEY,
-                resourcesProvider.getString(com.bunbeauty.papakarlo.R.string.error_create_order_phone)
+                resourcesProvider.getString(com.bunbeauty.papakarlo.R.string.error_login_phone)
             )
             return
         }

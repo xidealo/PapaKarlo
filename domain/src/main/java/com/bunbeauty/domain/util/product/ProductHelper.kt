@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.util.product
 
-import com.bunbeauty.domain.model.local.CartProduct
-import com.bunbeauty.domain.model.local.Delivery
-import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.ui.Delivery
+import com.bunbeauty.domain.model.ui.MenuProduct
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import javax.inject.Inject
 

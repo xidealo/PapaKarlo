@@ -13,7 +13,7 @@
 
         <variable
             name="address"
-            type="com.bunbeauty.domain.model.local.address.Address" />
+            type="com.bunbeauty.domain.model.ui.address.Address" />
 
         <variable
             name="iStringHelper"

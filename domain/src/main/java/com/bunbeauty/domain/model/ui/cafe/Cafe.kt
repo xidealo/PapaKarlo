@@ -1,11 +1,11 @@
-package com.bunbeauty.domain.model.local.cafe
+package com.bunbeauty.domain.model.ui.cafe
 
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.bunbeauty.domain.model.local.address.CafeAddress
-import com.bunbeauty.domain.model.local.District
-import com.bunbeauty.domain.model.local.DistrictEntity
+import com.bunbeauty.domain.model.ui.address.CafeAddress
+import com.bunbeauty.domain.model.ui.District
+import com.bunbeauty.domain.model.ui.DistrictEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -2,7 +2,7 @@ package com.bunbeauty.data.mapper.firebase
 
 import com.bunbeauty.data.mapper.Mapper
 import com.bunbeauty.domain.model.firebase.CartProductFirebase
-import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.ui.CartProduct
 import javax.inject.Inject
 
 class CartProductMapper @Inject constructor(

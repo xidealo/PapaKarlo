@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bunbeauty.domain.model.local.address.Address
+import com.bunbeauty.domain.model.ui.address.Address
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback

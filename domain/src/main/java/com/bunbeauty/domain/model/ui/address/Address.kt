@@ -1,9 +1,9 @@
-package com.bunbeauty.domain.model.local.address
+package com.bunbeauty.domain.model.ui.address
 
 import android.os.Parcelable
 import androidx.room.Embedded
-import com.bunbeauty.domain.model.local.BaseModel
-import com.bunbeauty.domain.model.local.Street
+import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.Street
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

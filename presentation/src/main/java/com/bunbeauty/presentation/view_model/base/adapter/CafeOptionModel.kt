@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
-import com.bunbeauty.domain.model.local.cafe.Coordinate
+import com.bunbeauty.domain.model.ui.cafe.Coordinate
 
 data class CafeOptionModel(
     val address: String,

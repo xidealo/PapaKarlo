@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.presentation.address
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.local.address.Address
+import com.bunbeauty.domain.model.ui.address.Address
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.CafeAddressRepo
 import com.bunbeauty.domain.repo.UserAddressRepo

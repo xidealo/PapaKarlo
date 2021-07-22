@@ -5,7 +5,7 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.entity.UserEntity
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.entity.order.Order
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper

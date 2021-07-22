@@ -3,8 +3,9 @@ package com.bunbeauty.domain.util.order
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.local.Delivery
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.ui.Delivery
+import com.bunbeauty.domain.model.entity.order.Order
 import com.bunbeauty.domain.util.product.IProductHelper
 import javax.inject.Inject
 
@@ -13,9 +14,17 @@ class OrderUtil @Inject constructor(
 ) : IOrderUtil {
 
     override fun getDeliveryCost(order: Order, delivery: Delivery): Int {
-        val orderCost = productHelper.getNewTotalCost(order.cartProducts)
+        return getDeliveryCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    }
 
-        return if (order.orderEntity.isDelivery && orderCost < delivery.forFree) {
+    override fun getDeliveryCost(
+        isDelivery: Boolean,
+        cartProducts: List<CartProduct>,
+        delivery: Delivery
+    ): Int {
+        val orderCost = productHelper.getNewTotalCost(cartProducts)
+
+        return if (isDelivery && orderCost < delivery.forFree) {
             delivery.cost
         } else {
             0
@@ -23,15 +32,31 @@ class OrderUtil @Inject constructor(
     }
 
     override fun getOldOrderCost(order: Order, delivery: Delivery): Int? {
-        val orderCost = productHelper.getOldTotalCost(order.cartProducts) ?: return null
-        val deliveryCost = getDeliveryCost(order, delivery)
+        return getOldOrderCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    }
+
+    override fun getOldOrderCost(
+        isDelivery: Boolean,
+        cartProducts: List<CartProduct>,
+        delivery: Delivery
+    ): Int? {
+        val orderCost = productHelper.getOldTotalCost(cartProducts) ?: return null
+        val deliveryCost = getDeliveryCost(isDelivery, cartProducts, delivery)
 
         return orderCost + deliveryCost
     }
 
     override fun getNewOrderCost(order: Order, delivery: Delivery): Int {
-        val orderCost = productHelper.getNewTotalCost(order.cartProducts)
-        val deliveryCost = getDeliveryCost(order, delivery)
+        return getNewOrderCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    }
+
+    override fun getNewOrderCost(
+        isDelivery: Boolean,
+        cartProducts: List<CartProduct>,
+        delivery: Delivery
+    ): Int {
+        val orderCost = productHelper.getNewTotalCost(cartProducts)
+        val deliveryCost = getDeliveryCost(isDelivery, cartProducts, delivery)
 
         return orderCost + deliveryCost
     }

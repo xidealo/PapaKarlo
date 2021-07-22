@@ -18,6 +18,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -58,6 +59,8 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
                 }
             viewModel.isDelivery.onEach { isDelivery ->
                 fragmentCreateOrderCsDelivery.isLeft = isDelivery
+                fragmentCreateOrderTvDelivery.toggleVisibility(isDelivery)
+                fragmentCreateOrderTvDeliveryValue.toggleVisibility(isDelivery)
             }.startedLaunch(viewLifecycleOwner)
 
             viewModel.phone.onEach { phone ->
@@ -93,6 +96,23 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
                 viewModel.onAddressClicked()
             }
 
+            viewModel.comment.onEach { comment ->
+                if (comment == null) {
+                    fragmentCreateOrderNcAddComment.visible()
+                    fragmentCreateOrderTcComment.gone()
+                } else {
+                    fragmentCreateOrderNcAddComment.gone()
+                    fragmentCreateOrderTcComment.visible()
+                    fragmentCreateOrderTcComment.cardText = comment
+                }
+            }.startedLaunch(viewLifecycleOwner)
+            fragmentCreateOrderNcAddComment.setOnClickListener {
+                viewModel.onAddCommentClicked()
+            }
+            fragmentCreateOrderTcComment.setOnClickListener {
+                viewModel.onEditCommentClicked()
+            }
+
             viewModel.actionDeferredTime.onEach { actionDeferredTime ->
                 fragmentCreateOrderNcAddDeferredTime.cardText = actionDeferredTime
             }.startedLaunch(viewLifecycleOwner)
@@ -116,21 +136,18 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
                 viewModel.onDeferredTimeClicked()
             }
 
-            viewModel.comment.onEach { comment ->
-                if (comment == null) {
-                    fragmentCreateOrderNcAddComment.visible()
-                    fragmentCreateOrderTcComment.gone()
-                } else {
-                    fragmentCreateOrderNcAddComment.gone()
-                    fragmentCreateOrderTcComment.visible()
-                    fragmentCreateOrderTcComment.cardText = comment
-                }
+            viewModel.totalCost.onEach { totalCost ->
+                fragmentCreateOrderTvTotalValue.text = totalCost
             }.startedLaunch(viewLifecycleOwner)
-            fragmentCreateOrderNcAddComment.setOnClickListener {
-                viewModel.onAddCommentClicked()
-            }
-            fragmentCreateOrderTcComment.setOnClickListener{
-                viewModel.onEditCommentClicked()
+            viewModel.deliveryCost.onEach { deliveryCost ->
+                fragmentCreateOrderTvDeliveryValue.text = deliveryCost
+            }.startedLaunch(viewLifecycleOwner)
+            viewModel.newAmountToPay.onEach { newAmountToPay ->
+                fragmentCreateOrderTvAmountToPayValue.text = newAmountToPay
+            }.startedLaunch(viewLifecycleOwner)
+
+            fragmentCreateOrderBtnCreateOrder.setOnClickListener {
+                viewModel.onCreateOrderClicked()
             }
         }
         setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
@@ -144,16 +161,6 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
             }
         }
 
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
 //        reviewManager = ReviewManagerFactory.create(requireContext())
 //        val request = reviewManager?.requestReviewFlow()

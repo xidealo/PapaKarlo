@@ -1,11 +1,11 @@
-package com.bunbeauty.domain.model.local
+package com.bunbeauty.domain.model.ui
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.ui.cafe.CafeEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

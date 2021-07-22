@@ -1,8 +1,8 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
 import android.os.Parcelable
-import com.bunbeauty.domain.model.local.BaseModel
-import com.bunbeauty.domain.model.local.cafe.Coordinate
+import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.cafe.Coordinate
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

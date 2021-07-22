@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.ui.MenuProduct
 import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper

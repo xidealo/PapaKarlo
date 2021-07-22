@@ -12,25 +12,21 @@ import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.domain.model.firebase.AddressFirebase
 import com.bunbeauty.domain.model.firebase.OrderFirebase
 import com.bunbeauty.domain.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.local.Delivery
-import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.domain.model.local.cafe.Cafe
-import com.bunbeauty.domain.model.local.order.UserOrder
+import com.bunbeauty.domain.model.ui.Delivery
+import com.bunbeauty.domain.model.ui.MenuProduct
+import com.bunbeauty.domain.model.ui.cafe.Cafe
+import com.bunbeauty.domain.model.ui.order.UserOrder
 import com.bunbeauty.domain.repo.ApiRepo
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) : ApiRepo {
 

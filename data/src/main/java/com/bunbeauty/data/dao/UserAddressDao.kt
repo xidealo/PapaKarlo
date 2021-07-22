@@ -2,7 +2,7 @@ package com.bunbeauty.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.bunbeauty.domain.model.local.address.UserAddress
+import com.bunbeauty.domain.model.ui.address.UserAddress
 import kotlinx.coroutines.flow.Flow
 
 @Dao

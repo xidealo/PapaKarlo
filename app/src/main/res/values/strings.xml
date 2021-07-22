@@ -73,25 +73,14 @@
     <string name="title_create_order_addition_comment">Добавление комментария</string>
     <string name="title_create_order_editing_comment">Редактирование комментария</string>
     <string name="action_create_order_save_comment">Сохранить</string>
-
-
-    <string name="title_create_order_email">Email</string>
-    <string name="action_create_order_deferred">Отложенный заказ</string>
-    <string name="action_create_order_order">Оформить заказ</string>
-    <string name="msg_create_order_add_address">Добавьте адрес</string>
-    <string name="msg_create_order_selected_address">Выбранный адрес:</string>
-    <string name="hint_create_order_extra_bonuses">Списать бонусы</string>
-    <string name="hint_create_order_delivery_city">Доставка по городу Кимры</string>
-    <string name="hint_create_order_deferred">Отложенный заказ</string>
-    <string name="error_create_order_comment">Введите корректный комментарий</string>
-    <string name="error_create_order_phone">Введите корректный номер телефона</string>
-    <string name="error_create_order_connect">Нет подключения к интернету</string>
-    <string name="error_create_order_address">Выберите адрес</string>
-    <string name="action_create_order_checkout">Оформить заказ на&#160;</string>
+    <string name="action_create_order_checkout">Оформить заказ</string>
+    <string name="error_create_order_phone">Не указан номер телефона</string>
+    <string name="error_create_order_address">Не указан адрес</string>
+    <string name="error_create_order_time">Не выбрано время</string>
     <string name="msg_create_order_order_code">Код заказа&#160;</string>
-    <string name="error_create_order_deferred">Выберите время минимум на 30 мин. больше текущего</string>
-    <string name="part_create_order_delivery_cost">Стоимость доставки:&#160;</string>
-    <string name="part_create_order_free_delivery_from">\nБесплатная доставка от&#160;</string>
+    <string name="msg_create_order_total_cost">Итого</string>
+    <string name="msg_create_order_delivery_cost">Доставка</string>
+    <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
 
     <!-- DEFERRED TIME -->
     <string name="msg_deferred_time_asap">Как можно скорее</string>

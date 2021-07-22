@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.cafe
 
-import com.bunbeauty.domain.model.local.cafe.Cafe
+import com.bunbeauty.domain.model.ui.cafe.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil

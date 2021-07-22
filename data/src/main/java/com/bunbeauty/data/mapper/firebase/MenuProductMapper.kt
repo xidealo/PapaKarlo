@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.firebase
 
 import com.bunbeauty.data.mapper.Mapper
-import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.ui.MenuProduct
 import com.bunbeauty.domain.model.firebase.MenuProductFirebase
 import javax.inject.Inject
 

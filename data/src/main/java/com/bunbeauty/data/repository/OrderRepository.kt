@@ -3,9 +3,10 @@ package com.bunbeauty.data.repository
 import com.bunbeauty.data.dao.OrderDao
 import com.bunbeauty.data.mapper.firebase.OrderMapper
 import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.entity.order.Order
+import com.bunbeauty.domain.model.ui.order.OrderUI
 import com.bunbeauty.domain.repo.ApiRepo
-import com.bunbeauty.domain.model.local.order.UserOrder
+import com.bunbeauty.domain.model.ui.order.UserOrder
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -79,6 +80,10 @@ class OrderRepository @Inject constructor(
                     order = orderMapper.from(order)
                         .also { it.orderEntity.uuid = userOrder.orderId })
         }.launchIn(this)
+    }
+
+    override suspend fun saveOrder(order: OrderUI) {
+        //TODO("Not yet implemented")
     }
 
 }

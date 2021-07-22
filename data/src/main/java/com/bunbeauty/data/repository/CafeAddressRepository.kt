@@ -2,7 +2,7 @@ package com.bunbeauty.data.repository
 
 import androidx.lifecycle.LiveData
 import com.bunbeauty.data.dao.CafeAddressDao
-import com.bunbeauty.domain.model.local.address.CafeAddress
+import com.bunbeauty.domain.model.ui.address.CafeAddress
 import com.bunbeauty.domain.repo.CafeAddressRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo
 
-import com.bunbeauty.domain.model.local.address.CafeAddress
+import com.bunbeauty.domain.model.ui.address.CafeAddress
 import org.junit.Test
 
 import org.junit.Assert.*

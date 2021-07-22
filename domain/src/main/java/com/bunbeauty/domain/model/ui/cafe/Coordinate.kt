@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.local.cafe
+package com.bunbeauty.domain.model.ui.cafe
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

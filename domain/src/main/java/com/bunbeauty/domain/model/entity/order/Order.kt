@@ -1,11 +1,11 @@
-package com.bunbeauty.domain.model.local.order
+package com.bunbeauty.domain.model.entity.order
 
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Ignore
 import androidx.room.Relation
-import com.bunbeauty.domain.model.local.BaseModel
-import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.CartProduct
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -28,4 +28,4 @@ data class Order(
     @Ignore
     override var uuid: String = "",
 
-) : BaseModel, Parcelable
+    ) : BaseModel, Parcelable

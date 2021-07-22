@@ -4,12 +4,12 @@ import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.local.CartProduct
-import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.domain.model.local.Time
-import com.bunbeauty.domain.model.local.address.Address
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
-import com.bunbeauty.domain.model.local.order.OrderEntity
+import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.ui.MenuProduct
+import com.bunbeauty.domain.model.ui.Time
+import com.bunbeauty.domain.model.ui.address.Address
+import com.bunbeauty.domain.model.ui.cafe.CafeEntity
+import com.bunbeauty.domain.model.entity.order.OrderEntity
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import javax.inject.Inject
 
@@ -58,9 +58,6 @@ class StringUtil @Inject constructor(private val resourcesProvider: IResourcesPr
 
         if (orderEntity.comment.isNotEmpty())
             orderString.append("Комментарий: ${orderEntity.comment}\n")
-
-        if (orderEntity.email.isNotEmpty())
-            orderString.append("Email: ${orderEntity.email}\n")
 
         orderString.append("Телефон: ${orderEntity.phone}")
 
@@ -208,5 +205,9 @@ class StringUtil @Inject constructor(private val resourcesProvider: IResourcesPr
 
     override fun getTimeString(hour: Int, minute: Int): String {
         return hour.toString() + TIME_DIVIDER + addFirstZero(minute)
+    }
+
+    override fun getCodeString(code: String): String {
+        return code
     }
 }

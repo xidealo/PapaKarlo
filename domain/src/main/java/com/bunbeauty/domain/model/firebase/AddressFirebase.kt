@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.model.firebase
 
-import com.bunbeauty.domain.model.local.Street
+import com.bunbeauty.domain.model.ui.Street
 
 data class AddressFirebase(
     var street: Street? = Street(),

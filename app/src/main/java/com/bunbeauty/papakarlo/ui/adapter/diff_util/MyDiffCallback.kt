@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.domain.model.ui.BaseModel
 
 @Deprecated("Use  DiffUtil.ItemCallback for new adapters (refactor old)")
 class MyDiffCallback(

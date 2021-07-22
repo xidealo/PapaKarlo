@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
-import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.domain.model.ui.BaseModel
 
 data class OrderItem(
     override var uuid: String,

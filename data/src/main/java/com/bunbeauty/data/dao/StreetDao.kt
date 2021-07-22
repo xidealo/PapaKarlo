@@ -3,7 +3,7 @@ package com.bunbeauty.data.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.bunbeauty.domain.model.local.Street
+import com.bunbeauty.domain.model.ui.Street
 import kotlinx.coroutines.flow.Flow
 
 @Dao

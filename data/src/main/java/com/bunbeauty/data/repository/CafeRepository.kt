@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.CafeDao
-import com.bunbeauty.domain.model.local.cafe.Cafe
+import com.bunbeauty.domain.model.ui.cafe.Cafe
 import com.bunbeauty.domain.repo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

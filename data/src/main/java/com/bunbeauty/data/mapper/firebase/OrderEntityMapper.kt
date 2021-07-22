@@ -2,8 +2,8 @@ package com.bunbeauty.data.mapper.firebase
 
 import com.bunbeauty.data.mapper.Mapper
 import com.bunbeauty.domain.model.firebase.OrderEntityFirebase
-import com.bunbeauty.domain.model.local.address.Address
-import com.bunbeauty.domain.model.local.order.OrderEntity
+import com.bunbeauty.domain.model.ui.address.Address
+import com.bunbeauty.domain.model.entity.order.OrderEntity
 import javax.inject.Inject
 
 class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMapper) :
@@ -26,10 +26,8 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
             orderStatus = model.orderStatus,
             isDelivery = model.isDelivery,
             code = model.code,
-            email = model.email ?: "",
             deferredTime = model.deferredTime ?: "",
-            bonus = model.bonus ?: 0,
-            userId = model.userId ?: ""
+            userUuid = model.userId ?: ""
         )
     }
 
@@ -38,17 +36,15 @@ class OrderEntityMapper @Inject constructor(private val addressMapper: AddressMa
      */
     override fun to(model: OrderEntity): OrderEntityFirebase {
         return OrderEntityFirebase(
-            addressMapper.to(model.address),
-            checkEmptyString(model.comment),
-            model.phone,
-            model.time,
-            model.orderStatus,
-            model.isDelivery,
-            model.code,
-            model.email,
-            checkEmptyString(model.deferredTime),
-            checkEmptyInt(model.bonus),
-            checkEmptyString(model.userId)
+           address = addressMapper.to(model.address),
+           comment = checkEmptyString(model.comment),
+           phone = model.phone,
+           time = model.time,
+           orderStatus = model.orderStatus,
+           isDelivery = model.isDelivery,
+           code = model.code,
+            deferredTime = checkEmptyString(model.deferredTime),
+           userId = checkEmptyString(model.userUuid)
         )
     }
 }

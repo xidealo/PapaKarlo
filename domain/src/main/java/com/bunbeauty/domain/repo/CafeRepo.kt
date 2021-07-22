@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.repo
 
 import androidx.lifecycle.LiveData
-import com.bunbeauty.domain.model.local.cafe.Cafe
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.ui.cafe.Cafe
+import com.bunbeauty.domain.model.ui.cafe.CafeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface CafeRepo {

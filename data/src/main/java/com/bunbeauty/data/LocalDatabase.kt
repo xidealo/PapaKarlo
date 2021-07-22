@@ -4,14 +4,14 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.bunbeauty.data.dao.*
-import com.bunbeauty.domain.model.local.CartProduct
-import com.bunbeauty.domain.model.local.DistrictEntity
-import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.domain.model.local.Street
-import com.bunbeauty.domain.model.local.address.CafeAddress
-import com.bunbeauty.domain.model.local.address.UserAddress
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
-import com.bunbeauty.domain.model.local.order.OrderEntity
+import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.ui.DistrictEntity
+import com.bunbeauty.domain.model.ui.MenuProduct
+import com.bunbeauty.domain.model.ui.Street
+import com.bunbeauty.domain.model.ui.address.CafeAddress
+import com.bunbeauty.domain.model.ui.address.UserAddress
+import com.bunbeauty.domain.model.ui.cafe.CafeEntity
+import com.bunbeauty.domain.model.entity.order.OrderEntity
 import com.bunbeauty.domain.model.entity.UserEntity
 
 @Database(
@@ -25,7 +25,7 @@ import com.bunbeauty.domain.model.entity.UserEntity
         DistrictEntity::class,
         Street::class,
         UserEntity::class
-    ], version = 76
+    ], version = 77
 )
 @TypeConverters(ProductCodeConverter::class, OrderStatusConverter::class)
 abstract class LocalDatabase : RoomDatabase() {

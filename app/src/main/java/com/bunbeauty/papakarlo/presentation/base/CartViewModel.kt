@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation.base
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper

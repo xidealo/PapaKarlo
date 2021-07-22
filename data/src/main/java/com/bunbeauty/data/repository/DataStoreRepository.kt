@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.bunbeauty.domain.model.local.Delivery
+import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow

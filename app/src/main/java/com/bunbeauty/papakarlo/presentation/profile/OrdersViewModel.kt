@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.presentation.profile
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.entity.order.Order
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.resources.IResourcesProvider

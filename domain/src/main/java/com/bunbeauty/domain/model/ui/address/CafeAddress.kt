@@ -1,9 +1,8 @@
-package com.bunbeauty.domain.model.local.address
+package com.bunbeauty.domain.model.ui.address
 
 import android.os.Parcelable
 import androidx.room.*
-import com.bunbeauty.domain.model.local.address.Address
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.ui.cafe.CafeEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.local
+package com.bunbeauty.domain.model.ui
 
 data class Delivery(
     val cost: Int = 0,

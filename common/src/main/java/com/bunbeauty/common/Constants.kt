@@ -19,6 +19,7 @@ object Constants {
 
     const val ASAP = "as soon as possible"
     const val DIGITS = "0123456789"
+    const val CODE_NUMBER_COUNT = 100
 
     // FRAGMENT RESULT KEY
 
@@ -34,6 +35,7 @@ object Constants {
     // DIVIDER
 
     const val TIME_DIVIDER = ":"
+    const val CODE_DIVIDER = "-"
 
     // LINK
 

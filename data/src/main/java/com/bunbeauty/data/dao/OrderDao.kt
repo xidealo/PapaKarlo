@@ -2,8 +2,8 @@ package com.bunbeauty.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.bunbeauty.domain.model.local.order.OrderEntity
-import com.bunbeauty.domain.model.local.order.Order
+import com.bunbeauty.domain.model.entity.order.OrderEntity
+import com.bunbeauty.domain.model.entity.order.Order
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -13,7 +13,7 @@ interface OrderDao : BaseDao<OrderEntity> {
     fun getOrders(): Flow<List<Order>>
 
 
-    @Query("SELECT * FROM OrderEntity where userId = :userId")
+    @Query("SELECT * FROM OrderEntity where userUuid = :userId")
     fun getOrdersByUserId(userId: String): Flow<List<Order>>
 
     @Query("SELECT * FROM OrderEntity where uuid = :orderUuid")
