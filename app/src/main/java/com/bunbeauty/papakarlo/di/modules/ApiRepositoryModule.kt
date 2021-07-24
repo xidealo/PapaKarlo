@@ -44,4 +44,8 @@ interface ApiRepositoryModule {
     @Binds
     @Api
     fun bindUserRepository(userRepository: UserRepository): UserRepo
+
+    @Binds
+    @Api
+    fun bindCityRepository(cityRepository: CityRepository): CityRepo
 }

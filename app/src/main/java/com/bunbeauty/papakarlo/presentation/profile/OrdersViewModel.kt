@@ -9,7 +9,7 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
+import com.bunbeauty.papakarlo.ui.fragment.profile.OrdersFragmentDirections
 import com.bunbeauty.presentation.item.OrderItem
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil

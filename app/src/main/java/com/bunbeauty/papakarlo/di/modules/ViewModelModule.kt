@@ -6,6 +6,7 @@ import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.OneLineActionViewModel
+import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
 import com.bunbeauty.papakarlo.presentation.address.AddressesViewModelImpl
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
@@ -127,4 +128,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DeferredTimeViewModel::class)
     internal abstract fun provideDeferredTimeViewModel(deferredTimeViewModel: DeferredTimeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectCityViewModel::class)
+    internal abstract fun provideSelectCityViewModel(selectCityViewModel: SelectCityViewModel): ViewModel
 }

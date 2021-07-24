@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/layout/element_address.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.5354166666666667" />
+        <entry key="app/src/main/res/layout/element_city.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/element_order.xml" value="0.5920925747348119" />
         <entry key="app/src/main/res/layout/element_order_product.xml" value="0.5" />
@@ -33,6 +34,7 @@
         <entry key="app/src/main/res/layout/fragment_product.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3854166666666667" />
+        <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.19270833333333334" />
       </map>

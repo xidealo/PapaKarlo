@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.profile.ProfileFragment">
+        tools:context=".ui.fragment.profile.ProfileFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/fragment_order_details_gl_left"

@@ -3,9 +3,10 @@ package com.bunbeauty.papakarlo.di.components
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.*
+import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.ui.profile.*
+import com.bunbeauty.papakarlo.ui.fragment.profile.*
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -33,6 +34,7 @@ interface ViewModelComponent {
     fun inject(confirmFragment: ConfirmFragment)
     fun inject(loginFragment: LoginFragment)
     fun inject(settingsFragment: SettingsFragment)
+    fun inject(selectCityFragment: SelectCityFragment)
 
     //bottom sheet
     fun inject(addressesBottomSheet: AddressesBottomSheet)

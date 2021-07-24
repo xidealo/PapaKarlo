@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.profile.PaymentBottomSheet">
+        tools:context=".ui.fragment.profile.PaymentBottomSheet">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_sheet_payment_gl_left"

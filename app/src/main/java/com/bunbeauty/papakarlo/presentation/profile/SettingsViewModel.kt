@@ -12,8 +12,8 @@ import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toLoginFragment
-import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toOneLineActionBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.SettingsFragmentDirections.toLoginFragment
+import com.bunbeauty.papakarlo.ui.fragment.profile.SettingsFragmentDirections.toOneLineActionBottomSheet
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

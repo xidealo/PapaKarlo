@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
-        tools:context=".ui.profile.SettingsFragment">
+        tools:context=".ui.fragment.profile.SettingsFragment">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/fragment_settings_gl_left"

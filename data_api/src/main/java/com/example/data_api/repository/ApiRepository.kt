@@ -26,6 +26,10 @@ class ApiRepository @Inject constructor(
         return getDataList(path = "/cafe/all", CafeServer.serializer())
     }
 
+    override suspend fun getCityList(): ApiResult<List<CityServer>> {
+        return getDataList(path = "/city/all", CityServer.serializer())
+    }
+
     override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<List<CafeServer>> {
         return getDataList(
             path = "/cafe",

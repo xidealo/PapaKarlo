@@ -95,4 +95,8 @@ class ApiDataModule {
     @Provides
     fun provideStreetDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getStreetDao()
 
+    @Singleton
+    @Provides
+    fun provideCityDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getCityDao()
+
 }

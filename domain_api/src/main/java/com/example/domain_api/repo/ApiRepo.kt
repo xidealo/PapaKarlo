@@ -7,6 +7,7 @@ interface ApiRepo {
 
     suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>>
     suspend fun getCafeList(): ApiResult<List<CafeServer>>
+    suspend fun getCityList(): ApiResult<List<CityServer>>
     suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<List<CafeServer>>
     suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<List<StreetServer>>
 

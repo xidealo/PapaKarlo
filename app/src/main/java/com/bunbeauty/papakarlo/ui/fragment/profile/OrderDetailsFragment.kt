@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.profile
+package com.bunbeauty.papakarlo.ui.fragment.profile
 
 import android.annotation.SuppressLint
 import android.os.Bundle

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class CafeServer(
+data class CafeServer(
     @SerialName("uuid")
     val uuid: String,
 

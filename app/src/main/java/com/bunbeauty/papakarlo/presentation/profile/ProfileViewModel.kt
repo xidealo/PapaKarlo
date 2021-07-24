@@ -8,7 +8,7 @@ import com.bunbeauty.domain.model.User
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
-import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
+import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.item.OrderItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

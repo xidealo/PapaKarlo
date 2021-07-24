@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DefaultMaterialCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/medium_margin"
+    android:layout_marginTop="@dimen/very_small_margin"
+    android:layout_marginEnd="@dimen/medium_margin"
+    android:layout_marginBottom="@dimen/very_small_margin"
+    app:contentPadding="@dimen/medium_padding">
+
+    <TextView
+        android:id="@+id/element_city_tv_name"
+        style="@style/MediumRegularCenterText"
+        android:layout_width="match_parent"
+        tools:text="Дубна" />
+</com.google.android.material.card.MaterialCardView>

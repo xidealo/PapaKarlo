@@ -5,21 +5,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.profile.FeedbackBottomSheet">
+        tools:context=".ui.fragment.profile.FeedbackBottomSheet">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_sheet_feedback_gl_left"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/small_margin" />
+            app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_sheet_feedback_gl_right"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/small_margin" />
+            app:layout_constraintGuide_end="@dimen/medium_margin" />
 
         <TextView
             android:id="@+id/bottom_sheet_feedback_tv_title"

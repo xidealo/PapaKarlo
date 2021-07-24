@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.profile
+package com.bunbeauty.papakarlo.ui.fragment.profile
 
 import android.os.Bundle
 import android.view.View
