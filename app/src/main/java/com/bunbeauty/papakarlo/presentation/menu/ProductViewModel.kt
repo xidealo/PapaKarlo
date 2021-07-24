@@ -5,6 +5,7 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
 import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
@@ -16,6 +17,7 @@ class ProductViewModel @Inject constructor(
     cartProductRepo: CartProductRepo,
     stringUtil: IStringUtil,
     productHelper: IProductHelper,
+    private val menuProductRepo: MenuProductRepo
 ) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
     private val _menuProductState: MutableStateFlow<State<MenuProduct?>> =
@@ -30,5 +32,9 @@ class ProductViewModel @Inject constructor(
             else
                 _menuProductState.value = State.Empty()
         }.launchIn(viewModelScope)
+    }
+
+    fun addProductToCart(menuProductUuid: String) {
+        addProductToCart(menuProductUuid, menuProductRepo)
     }
 }

@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
-import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModelImpl
+import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.presentation.profile.*
 import dagger.Binds
@@ -28,8 +28,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProductTabViewModelImpl::class)
-    internal abstract fun provideProductTabViewModel(productTabViewModelImpl: ProductTabViewModelImpl): ViewModel
+    @ViewModelKey(ProductTabViewModel::class)
+    internal abstract fun provideProductTabViewModel(productTabViewModel: ProductTabViewModel): ViewModel
 
     @Binds
     @IntoMap

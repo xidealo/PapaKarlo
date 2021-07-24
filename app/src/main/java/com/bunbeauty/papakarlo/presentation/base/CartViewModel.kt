@@ -9,7 +9,6 @@ import com.bunbeauty.domain.util.string_helper.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
-import javax.inject.Inject
 
 /**
  * Base class for each viewModel which has top bar cart or can add product to cart
@@ -19,9 +18,6 @@ abstract class CartViewModel(
     protected val stringUtil: IStringUtil,
     protected val productHelper: IProductHelper,
 ) : BaseViewModel() {
-
-    @Inject
-    lateinit var menuProductRepo: MenuProductRepo
 
     private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
     val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
@@ -42,7 +38,7 @@ abstract class CartViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun addProductToCart(menuProductUuid: String) {
+    fun addProductToCart(menuProductUuid: String, menuProductRepo: MenuProductRepo) {
         viewModelScope.launch {
             val menuProduct = menuProductRepo.getMenuProduct(menuProductUuid) ?: return@launch
             val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
@@ -58,7 +54,7 @@ abstract class CartViewModel(
         }
     }
 
-    fun removeProductFromCart(menuProductUuid: String) {
+    fun removeProductFromCart(menuProductUuid: String, menuProductRepo: MenuProductRepo) {
         viewModelScope.launch {
             val menuProduct = menuProductRepo.getMenuProduct(menuProductUuid) ?: return@launch
             val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
