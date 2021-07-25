@@ -8,10 +8,14 @@
         <entry key="app/src/main/res/drawable/background_bottom_sheet.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/background_circle.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_google_play.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_inst.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_vk.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />
+        <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/element_address.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />

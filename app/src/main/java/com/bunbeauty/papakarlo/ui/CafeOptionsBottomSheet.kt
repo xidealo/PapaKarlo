@@ -6,6 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.Constants.COORDINATES_DIVIDER
+import com.bunbeauty.common.Constants.MAPS_LINK
+import com.bunbeauty.common.Constants.PHONE_LINK
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.delegates.argument
@@ -32,23 +35,19 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
             bottomSheetCafeOptionsNcCall.cardText = cafeOption.callToCafe
             bottomSheetCafeOptionsNcShowMap.cardText = cafeOption.showOnMap
             bottomSheetCafeOptionsNcCall.setOnClickListener {
-                goToPhone(cafeOption.phone)
+                val uri = Uri.parse(PHONE_LINK + cafeOption.phone)
+                goByUri(uri)
             }
             bottomSheetCafeOptionsNcShowMap.setOnClickListener {
-                goToAddress(cafeOption.latitude, cafeOption.longitude)
+                val uri =
+                    Uri.parse(MAPS_LINK + cafeOption.latitude + COORDINATES_DIVIDER + cafeOption.longitude)
+                goByUri(uri)
             }
         }
     }
 
-    private fun goToAddress(latitude: Double, longitude: Double) {
-        val uri = Uri.parse("http://maps.google.com/maps?daddr=$latitude,$longitude")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        startActivity(intent)
-    }
-
-    private fun goToPhone(phone: String) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:$phone")
+    private fun goByUri(uri: Uri) {
+        val intent = Intent(Intent.ACTION_DIAL, uri)
         startActivity(intent)
     }
 }

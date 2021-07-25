@@ -172,7 +172,13 @@
     <string name="error_one_line_action_email">Введите корректную почту</string>
 
     <!-- PAYMENT -->
-    <string name="title_payment_payment">Оплата</string>
+    <string name="title_payment">Оплата</string>
+
+    <!-- FEEDBACK -->
+    <string name="title_feedback">Отзывы о приложении</string>
+    <string name="action_feedback_vk">Вконтакте</string>
+    <string name="action_feedback_instagram">Instagram</string>
+    <string name="action_feedback_play_market">Play Маркет</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="msg_main_activity_downloaded">Обновление установлено</string>

@@ -66,7 +66,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                 viewModel.onPaymentClicked()
             }
             fragmentProfileNcFeedback.setOnClickListener {
-                // go to feedback
+                viewModel.onFeedbackClicked()
             }
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.onLoginClicked()

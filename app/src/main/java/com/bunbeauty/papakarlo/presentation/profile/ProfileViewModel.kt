@@ -55,7 +55,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onFeedbackClicked() {
-
+        router.navigate(toFeedbackBottomSheet())
     }
 
     fun onLoginClicked() {

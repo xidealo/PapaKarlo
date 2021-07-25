@@ -41,6 +41,5 @@ interface ViewModelComponent {
     fun inject(oneLineActionBottomSheet: OneLineActionBottomSheet)
     fun inject(paymentBottomSheet: PaymentBottomSheet)
     fun inject(deferredTimeBottomSheet: DeferredTimeBottomSheet)
-
-    // dialogs
+    fun inject(feedbackBottomSheet: FeedbackBottomSheet)
 }

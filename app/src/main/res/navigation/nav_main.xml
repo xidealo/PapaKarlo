@@ -170,6 +170,9 @@
         <action
             android:id="@+id/to_paymentBottomSheet"
             app:destination="@id/paymentBottomSheet" />
+        <action
+            android:id="@+id/to_feedbackBottomSheet"
+            app:destination="@id/feedbackBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/login_fragment"
@@ -226,4 +229,10 @@
         android:name="com.bunbeauty.papakarlo.ui.profile.PaymentBottomSheet"
         android:label="PaymentBottomSheet"
         tools:layout="@layout/bottom_sheet_payment" />
+
+    <dialog
+        android:id="@+id/feedbackBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.profile.FeedbackBottomSheet"
+        android:label="FeedbackBottomSheet"
+        tools:layout="@layout/bottom_sheet_feedback"></dialog>
 </navigation>

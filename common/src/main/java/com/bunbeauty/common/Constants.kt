@@ -55,13 +55,16 @@ object Constants {
     const val TIME_DIVIDER = ":"
     const val CODE_DIVIDER = "-"
     const val WORKING_HOURS_DIVIDER = " - "
+    const val COORDINATES_DIVIDER = ","
 
     // LINK
 
     const val VK_LINK = "https://vk.com/papakarlokimry"
     const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
-    const val GOOGLE_PLAY_LINK =
+    const val PLAY_MARKET_LINK =
         "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
+    const val MAPS_LINK = "http://maps.google.com/maps?daddr="
+    const val PHONE_LINK = "tel:"
 
     // ERROR_KEY
 

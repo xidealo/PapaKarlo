@@ -25,7 +25,7 @@
             android:id="@+id/bottom_sheet_payment_tv_title"
             style="@style/MediumBoldCenterText"
             android:layout_marginTop="@dimen/medium_margin"
-            android:text="@string/title_payment_payment"
+            android:text="@string/title_payment"
             app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
             app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
