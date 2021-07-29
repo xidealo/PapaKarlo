@@ -4,23 +4,20 @@ import com.bunbeauty.common.Constants
 import com.bunbeauty.common.Constants.ADDRESSES
 import com.bunbeauty.common.Constants.COMPANY
 import com.bunbeauty.common.Constants.DELIVERY
+import com.bunbeauty.common.Constants.L_ORDERS
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
 import com.bunbeauty.common.Constants.ORDERS
 import com.bunbeauty.common.Constants.USERS
-import com.bunbeauty.common.Constants.l_ORDERS
 import com.bunbeauty.data.BuildConfig
-import com.bunbeauty.domain.model.firebase.AddressFirebase
-import com.bunbeauty.domain.model.firebase.OrderFirebase
+import com.bunbeauty.domain.model.firebase.CafeAddressFirebase
 import com.bunbeauty.domain.model.firebase.UserFirebase
+import com.bunbeauty.domain.model.firebase.order.OrderFirebase
 import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.model.ui.MenuProduct
 import com.bunbeauty.domain.model.ui.cafe.Cafe
 import com.bunbeauty.domain.model.ui.order.UserOrder
 import com.bunbeauty.domain.repo.ApiRepo
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -30,50 +27,29 @@ import javax.inject.Inject
 
 class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) : ApiRepo {
 
-    override fun insert(orderFirebase: OrderFirebase, cafeId: String): String {
-        val orderUuid = this.firebaseDatabase.getReference(ORDERS)
+    override fun postOrder(orderFirebase: OrderFirebase, cafeUuid: String): String {
+        val ordersReference = firebaseDatabase.getReference(ORDERS)
             .child(BuildConfig.APP_ID)
-            .push()
-            .key!!
+            .child(cafeUuid)
+        val orderUuid = getNewKey(ordersReference)
 
-        val orderReference = this.firebaseDatabase
-            .getReference(ORDERS)
-            .child(BuildConfig.APP_ID)
-            .child(cafeId)
-            .child(orderUuid)
-        orderReference.setValue(orderFirebase)
-        if (orderFirebase.orderEntity.userId != null) {
-            addOrderToUser(orderFirebase, cafeId, orderUuid)
+        ordersReference.child(orderUuid).setValue(orderFirebase)
+        orderFirebase.orderEntity.userUuid?.let { userUuid ->
+            postUserOrder(userUuid, cafeUuid, orderUuid)
         }
         return orderUuid
     }
 
-    private fun addOrderToUser(orderFirebase: OrderFirebase, cafeId: String, orderUuid: String) {
-        val getOrderUserReference = this.firebaseDatabase
-            .getReference(COMPANY)
+    private fun postUserOrder(userUuid: String, cafeUuid: String, orderUuid: String) {
+        val userOrdersReference = firebaseDatabase.getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
-            .child(orderFirebase.orderEntity.userId!!)
-            .child(l_ORDERS)
+            .child(userUuid)
+            .child(L_ORDERS)
+        val userOrderUuid = getNewKey(userOrdersReference)
 
-        val orderToUserReference = this.firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(USERS)
-            .child(orderFirebase.orderEntity.userId!!)
-            .child(l_ORDERS)
-        getOrderUserReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userOrderList = mutableListOf<UserOrder>()
-                snapshot.children.forEach {
-                    userOrderList.add(it.getValue(UserOrder::class.java) ?: UserOrder("", ""))
-                }
-                userOrderList.add(UserOrder(cafeId, orderUuid))
-                orderToUserReference.setValue(userOrderList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
+        val userOrder = UserOrder(cafeUuid = cafeUuid, orderUuid = orderUuid)
+        userOrdersReference.child(userOrderUuid).setValue(userOrder)
     }
 
     override fun insert(userFirebase: UserFirebase, userId: String) {
@@ -117,7 +93,7 @@ class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
         userReference.updateChildren(items)
     }
 
-    override fun insert(addressFirebase: AddressFirebase, userId: String): String {
+    override fun insert(addressFirebase: CafeAddressFirebase, userId: String): String {
         val addressUuid = firebaseDatabase.getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
@@ -294,5 +270,9 @@ class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
             orderReference.addValueEventListener(valueEventListener)
             awaitClose { orderReference.removeEventListener(valueEventListener) }
         }
+
+    fun getNewKey(reference: DatabaseReference): String {
+        return reference.push().key!!
+    }
 
 }
