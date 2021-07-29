@@ -7,12 +7,21 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.bunbeauty.common.Constants.NAV_TAG
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Singleton
-class Router @Inject constructor() {
+class Router @Inject constructor() : CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Job()
 
     private var activity: WeakReference<AppCompatActivity>? = null
 
@@ -25,23 +34,27 @@ class Router @Inject constructor() {
     }
 
     fun navigateUp() {
-        if (navHostId == null) return
-
-        activity?.let { activity ->
-            hideKeyboard(activity.get())
-            activity.get()?.findNavController(navHostId!!)?.navigateUp()
+        navHostId?.let { navHostId ->
+            launch(Main) {
+                activity?.get()?.findNavController(navHostId)?.navigateUp()
+                Log.d(NAV_TAG, "navigateUp")
+                //hideKeyboard(activity.get())
+            }
         }
     }
 
     fun navigate(navDirections: NavDirections) {
-        val navHostId = navHostId ?: return
-
         try {
-            hideKeyboard(activity?.get())
-            activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
+            navHostId?.let { navHostId ->
+                launch(Main) {
+                    activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
+                    Log.d(NAV_TAG, "navigate $navDirections")
+                    //hideKeyboard(activity?.get())
+                }
+            }
         } catch (exception: Exception) {
-            Log.d("test", "exception " + exception.message)
             exception.printStackTrace()
+            Log.d(NAV_TAG, "exception " + exception.message)
         }
     }
 
