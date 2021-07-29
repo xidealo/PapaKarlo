@@ -143,7 +143,7 @@ class ProfileViewModelImpl @Inject constructor(
             orderColor = orderUtil.getBackgroundColor(order.orderEntity.orderStatus),
             code = order.orderEntity.code,
             time = stringHelper.toStringTime(order.orderEntity),
-            deferredTime = if (order.orderEntity.deferredTime.isNotEmpty())
+            deferredTime = if (order.orderEntity.deferredTime?.isNotEmpty() == true)
                 "${resourcesProvider.getString(R.string.action_profile_to_time)} ${order.orderEntity.deferredTime}"
             else
                 ""

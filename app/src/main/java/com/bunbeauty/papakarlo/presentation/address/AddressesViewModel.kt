@@ -56,7 +56,7 @@ class AddressesViewModelImpl @Inject constructor(
             } else {
                 dataStoreRepo.saveCafeAddressUuid(addressId)
             }
-            router.navigateUp()
+            goBack()
         }
     }
 

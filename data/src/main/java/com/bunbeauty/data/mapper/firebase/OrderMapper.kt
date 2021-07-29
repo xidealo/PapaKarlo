@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.firebase
 
 import com.bunbeauty.data.mapper.Mapper
-import com.bunbeauty.domain.model.firebase.OrderFirebase
+import com.bunbeauty.domain.model.firebase.order.OrderFirebase
 import com.bunbeauty.domain.model.entity.order.Order
 import javax.inject.Inject
 
@@ -14,7 +14,6 @@ class OrderMapper @Inject constructor(
         return Order(
             orderEntity = orderEntityMapper.from(model.orderEntity),
             cartProducts = model.cartProducts.map { cartProductMapper.from(it) },
-            timestamp = model.timestamp,
             uuid = "empty uuid",
         )
     }
@@ -25,8 +24,7 @@ class OrderMapper @Inject constructor(
     override fun to(model: Order): OrderFirebase {
         return OrderFirebase(
             orderEntityMapper.to(model.orderEntity),
-            model.cartProducts.map { cartProductMapper.to(it) },
-            model.timestamp,
+            model.cartProducts.map { cartProductMapper.to(it) }
         )
     }
 }

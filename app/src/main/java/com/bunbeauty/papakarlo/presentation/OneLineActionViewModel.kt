@@ -18,16 +18,14 @@ class OneLineActionViewModel @Inject constructor(
     fun updateEmail(previousEmail: String, email: String) {
         viewModelScope.launch(Dispatchers.Main) {
             if (previousEmail == email) {
-
-                router.navigateUp()
+                goBack()
             } else {
                 withContext(Dispatchers.Default) {
                     val user = userRepo.getUserByUuid(dataStoreRepo.userUuid.first()) ?: return@withContext
                     //user.email = email
                     //userRepo.update(user)
                 }
-
-                router.navigateUp()
+                goBack()
             }
         }
     }

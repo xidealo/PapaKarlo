@@ -67,9 +67,9 @@ class OrderDetailsViewModel @Inject constructor(
             orderStatusActiveLine = orderUtil.getActiveLineCount(order.orderEntity.orderStatus),
             time = stringUtil.toStringTime(order.orderEntity),
             pickupMethod = stringUtil.toStringIsDelivery(order.orderEntity),
-            deferredTime = order.orderEntity.deferredTime,
-            address = stringUtil.toString(order.orderEntity.address),
-            comment = order.orderEntity.comment,
+            deferredTime = order.orderEntity.deferredTime ?: "",
+            address = order.orderEntity.userAddressUuid ?: "",
+            comment = order.orderEntity.comment ?: "",
             deliveryCost = stringUtil.getDeliveryString(
                 orderUtil.getDeliveryCost(
                     order,

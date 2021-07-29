@@ -14,7 +14,7 @@ class CartProductMapper @Inject constructor(
             "empty uuid",
             menuProduct = menuProductMapper.from(model.menuProduct),
             count = model.count,
-            orderUuid = model.orderId
+            orderUuid = ""
         )
     }
 
@@ -23,8 +23,8 @@ class CartProductMapper @Inject constructor(
      */
     override fun to(model: CartProduct): CartProductFirebase {
         return CartProductFirebase(
-            menuProductMapper.to(model.menuProduct),
-            model.count
+            count = model.count,
+            menuProduct = menuProductMapper.to(model.menuProduct)
         )
     }
 }

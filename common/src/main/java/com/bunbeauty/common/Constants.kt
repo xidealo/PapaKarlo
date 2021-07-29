@@ -3,7 +3,7 @@ package com.bunbeauty.common
 object Constants {
     const val PRODUCT_CODE: String = "product code"
     const val ORDERS = "ORDERS"
-    const val l_ORDERS = "orders"
+    const val L_ORDERS = "orders"
     const val USERS = "USERS"
     const val ADDRESSES = "addresses"
     const val COMPANY = "COMPANY"
@@ -20,6 +20,11 @@ object Constants {
     const val ASAP = "as soon as possible"
     const val DIGITS = "0123456789"
     const val CODE_NUMBER_COUNT = 100
+
+    // TAG
+
+    const val NAV_TAG = "Nav"
+
 
     // FRAGMENT RESULT KEY
 

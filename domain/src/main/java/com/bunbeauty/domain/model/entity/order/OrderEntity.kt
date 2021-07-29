@@ -15,24 +15,14 @@ import org.joda.time.DateTime
 data class OrderEntity(
     @PrimaryKey
     override var uuid: String = "",
-
     var isDelivery: Boolean = true,
-
     var userUuid: String = "",
-
     var phone: String = "",
-
-    @Embedded(prefix = "address_")
-    var address: Address = Address(),
-
-    var comment: String = "",
-
-    var deferredTime: String = "",
-
+    var userAddressUuid: String? = null,
+    var cafeUuid: String? = null,
+    var comment: String? = null,
+    var deferredTime: String? = null,
     var time: Long = DateTime.now().millis,
-
     var code: String = "",
-
     var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED
-
 ) : BaseModel, Parcelable

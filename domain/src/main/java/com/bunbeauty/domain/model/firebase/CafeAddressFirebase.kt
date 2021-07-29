@@ -2,7 +2,7 @@ package com.bunbeauty.domain.model.firebase
 
 import com.bunbeauty.domain.model.ui.Street
 
-data class AddressFirebase(
+data class CafeAddressFirebase(
     var street: Street? = Street(),
     var house: String? = null,
     var flat: String? = null,

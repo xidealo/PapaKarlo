@@ -32,38 +32,6 @@ class StringUtil @Inject constructor(private val resourcesProvider: IResourcesPr
         )
     }
 
-    override fun toString(cartProducts: List<CartProduct>): String {
-        var structure = ""
-
-        for (cartProduct in cartProducts)
-            structure += "${cartProduct.menuProduct.name} ${cartProduct.count}шт.; "
-
-        return checkLastSymbol(
-            "В заказе: \n${structure}",
-            ';'
-        )
-    }
-
-
-    override fun toString(orderEntity: OrderEntity): String {
-        val orderString = StringBuilder()
-
-        if (orderEntity.isDelivery)
-            orderString.append("Доставка\n")
-        else
-            orderString.append("Самовывоз\n")
-
-        if (orderEntity.deferredTime.isNotEmpty())
-            orderString.append("Время доставки: ${orderEntity.deferredTime}\n")
-
-        if (orderEntity.comment.isNotEmpty())
-            orderString.append("Комментарий: ${orderEntity.comment}\n")
-
-        orderString.append("Телефон: ${orderEntity.phone}")
-
-        return orderString.toString()
-    }
-
     override fun toStringIsDelivery(orderEntity: OrderEntity): String {
         return if (orderEntity.isDelivery)
             "Доставка"
@@ -72,17 +40,11 @@ class StringUtil @Inject constructor(private val resourcesProvider: IResourcesPr
     }
 
     override fun toStringDeferred(orderEntity: OrderEntity): String {
-        return if (orderEntity.deferredTime.isEmpty())
-            "-"
-        else
-            orderEntity.deferredTime
+        return orderEntity.deferredTime ?: "-"
     }
 
     override fun toStringComment(orderEntity: OrderEntity): String {
-        return if (orderEntity.comment.isEmpty())
-            "-"
-        else
-            orderEntity.comment
+        return orderEntity.comment ?: "-"
     }
 
     override fun toStringWeight(menuProduct: MenuProduct): String {

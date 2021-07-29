@@ -147,7 +147,7 @@ class CreationAddressViewModel @Inject constructor(
             dataStoreRepo.saveUserAddressUuid(uuid)
             withContext(Dispatchers.Main) {
                 showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
-                router.navigateUp()
+                goBack()
             }
         }
     }

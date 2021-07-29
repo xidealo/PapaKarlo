@@ -7,5 +7,5 @@ data class UserFirebase(
     var email: String = "",
     var bonusList: MutableList<Int> = arrayListOf(),
     var orders: ArrayList<UserOrder> = arrayListOf(),
-    var addresses: HashMap<String, AddressFirebase> = hashMapOf()
+    var addresses: HashMap<String, CafeAddressFirebase> = hashMapOf()
 )

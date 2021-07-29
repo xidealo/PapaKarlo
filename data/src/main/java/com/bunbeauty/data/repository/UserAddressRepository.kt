@@ -2,7 +2,7 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.UserAddressDao
 import com.bunbeauty.data.mapper.firebase.AddressMapper
-import com.bunbeauty.domain.model.firebase.AddressFirebase
+import com.bunbeauty.domain.model.firebase.CafeAddressFirebase
 import com.bunbeauty.domain.model.ui.address.UserAddress
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
@@ -27,7 +27,7 @@ class UserAddressRepository @Inject constructor(
     }
 
     override suspend fun insert(
-        userAddressMap: HashMap<String, AddressFirebase>,
+        userAddressMap: HashMap<String, CafeAddressFirebase>,
         userUuid: String
     ) {
         userAddressMap.forEach { (addressUuid, addressFirebase) ->

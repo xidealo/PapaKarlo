@@ -9,11 +9,9 @@ import com.bunbeauty.domain.model.entity.order.OrderEntity
 
 interface IStringUtil {
     fun toString(address: Address?): String
-    fun toString(orderEntity: OrderEntity): String
     fun toStringIsDelivery(orderEntity: OrderEntity): String
     fun toStringDeferred(orderEntity: OrderEntity): String
     fun toStringComment(orderEntity: OrderEntity): String
-    fun toString(cartProducts: List<CartProduct>): String
     fun toStringWeight(menuProduct: MenuProduct): String
     fun toStringTime(orderEntity: OrderEntity): String
     @Deprecated("")
