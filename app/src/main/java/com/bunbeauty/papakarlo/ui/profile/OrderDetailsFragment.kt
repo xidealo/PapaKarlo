@@ -166,4 +166,9 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
             }
         }
     }
+    override fun onDestroyView() {
+        viewDataBinding.fragmentOrderDetailsRvProductList.adapter = null
+
+        super.onDestroyView()
+    }
 }

@@ -120,4 +120,10 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     private fun getPixels(dp: Int): Int {
         return (dp * resources.displayMetrics.density).toInt()
     }
+
+    override fun onDestroyView() {
+        mutableViewDataBinding = null
+
+        super.onDestroyView()
+    }
 }

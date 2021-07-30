@@ -60,7 +60,8 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
             ProductCode.values().asList().map {
                 ProductTabFragment.newInstance(it)
             },
-            requireActivity()
+            childFragmentManager,
+            viewLifecycleOwner.lifecycle
         )
         val tabNameList = arrayListOf(
             resources.getString(R.string.title_menu_all),
@@ -93,5 +94,11 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
             tab.setIcon(tabIconList[i])
             tab.text = tabNameList[i]
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        viewDataBinding.fragmentMenuVp.adapter = null
+
+        super.onDestroyView()
     }
 }

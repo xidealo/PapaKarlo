@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -34,7 +33,11 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
-    lateinit var viewDataBinding: ActivityMainBinding
+
+    private var mutableViewDataBinding: ActivityMainBinding? = null
+    val viewDataBinding: ActivityMainBinding
+        get() = checkNotNull(mutableViewDataBinding)
+
     lateinit var viewModel: MainViewModel
 
     @Inject
@@ -55,15 +58,10 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
             .create(this)
             .inject(this)
 
-        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.executePendingBindings()
+        mutableViewDataBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewDataBinding.root)
 
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
-        viewModel.refreshCafeList()
-        viewModel.refreshMenuProducts()
-        viewModel.refreshDeliveryInfo()
-        viewModel.refreshUserInfo()
 
         setupToolbar()
         setupBottomNavigationBar()
@@ -146,6 +144,8 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
     override fun onDestroy() {
         router.detach()
+        mutableViewDataBinding = null
+        //mutableNavController = null
 
         super.onDestroy()
     }

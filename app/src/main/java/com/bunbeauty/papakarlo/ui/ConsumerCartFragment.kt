@@ -81,4 +81,10 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
             }.startedLaunch(viewLifecycleOwner)
         }
     }
+
+    override fun onDestroyView() {
+        viewDataBinding.fragmentConsumerCartRvResult.adapter = null
+
+        super.onDestroyView()
+    }
 }

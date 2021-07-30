@@ -9,9 +9,8 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
-import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
-import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.papakarlo.ui.adapter.OrdersAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -62,5 +61,10 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
         ordersAdapter.onItemClickListener = { order ->
             viewModel.onOrderClicked(order)
         }
+    }
+    override fun onDestroyView() {
+        viewDataBinding.fragmentOrdersRvResult.adapter = null
+
+        super.onDestroyView()
     }
 }

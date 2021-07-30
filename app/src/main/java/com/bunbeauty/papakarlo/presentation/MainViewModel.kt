@@ -1,13 +1,7 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.repo.DeliveryRepo
-import com.bunbeauty.domain.repo.MenuProductRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.repo.*
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.first
@@ -25,6 +19,14 @@ class MainViewModel @Inject constructor(
     private val menuProductRepo: MenuProductRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : BaseViewModel() {
+
+
+    init {
+        refreshCafeList()
+        refreshMenuProducts()
+        refreshDeliveryInfo()
+        refreshUserInfo()
+    }
 
     fun refreshCafeList() {
         viewModelScope.launch(IO) {
@@ -46,11 +48,10 @@ class MainViewModel @Inject constructor(
 
     fun refreshUserInfo() {
         viewModelScope.launch(IO) {
-            val userId = dataStoreRepo.userId.first()
-            userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
+            userRepo.getUserFirebaseAsFlow(dataStoreRepo.userId.first()).onEach { userFirebase ->
                 if (userFirebase != null) {
-                    userRepo.insert(userFirebase, userId)
-                    addressRepo.insert(userFirebase.addresses, userId)
+                    userRepo.insert(userFirebase, dataStoreRepo.userId.first())
+                    addressRepo.insert(userFirebase.addresses, dataStoreRepo.userId.first())
                     orderRepo.loadOrders(userFirebase.orders)
                 }
             }.launchIn(viewModelScope)
