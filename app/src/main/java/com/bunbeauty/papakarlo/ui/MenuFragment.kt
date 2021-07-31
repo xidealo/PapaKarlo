@@ -7,7 +7,6 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.viewModels
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,12 +15,8 @@ import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import javax.inject.Inject
 
 class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val isLogoVisible = true
     override val isCartVisible = true
@@ -36,6 +31,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewDataBinding.fragmentMenuTl.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -52,7 +48,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
                 fun setIconColor(tab: TabLayout.Tab?, @ColorRes colorId: Int) {
                     tab?.icon?.colorFilter =
                         BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                            resourcesProvider.getColor(colorId),
+                            viewModel.resourcesProvider.getColor(colorId),
                             BlendModeCompat.SRC_ATOP
                         )
                 }
@@ -100,9 +96,9 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
     }
 
     override fun onDestroyView() {
-        viewDataBinding.fragmentMenuVp.adapter = null
         mediator?.detach()
         mediator = null
+        viewDataBinding.fragmentMenuVp.adapter = null
         super.onDestroyView()
     }
 }

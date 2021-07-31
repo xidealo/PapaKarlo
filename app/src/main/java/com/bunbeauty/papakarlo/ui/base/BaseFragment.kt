@@ -122,8 +122,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     }
 
     override fun onDestroyView() {
-        mutableViewDataBinding = null
-
         super.onDestroyView()
+        mutableViewDataBinding = null
     }
 }
