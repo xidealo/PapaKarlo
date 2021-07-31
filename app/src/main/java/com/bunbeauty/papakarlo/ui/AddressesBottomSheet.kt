@@ -68,4 +68,10 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
         }
         viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
     }
+
+    override fun onDestroyView() {
+        viewDataBinding.bottomSheetAddressRvResult.adapter = null
+
+        super.onDestroyView()
+    }
 }

@@ -37,4 +37,10 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
             cafeAdapter.submitList(cafeList)
         }.startedLaunch(viewLifecycleOwner)
     }
+
+    override fun onDestroyView() {
+        viewDataBinding.fragmentCafeListRvCafeList.adapter = null
+
+        super.onDestroyView()
+    }
 }
