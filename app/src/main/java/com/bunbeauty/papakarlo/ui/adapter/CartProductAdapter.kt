@@ -2,12 +2,12 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import coil.load
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
 import com.bunbeauty.papakarlo.ui.custom.CountPicker
@@ -15,23 +15,18 @@ import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
-    ListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(CartProductDiffCallback()) {
+    BaseListAdapter<CartProductItem, ElementCartProductBinding, CartProductAdapter.CartProductViewHolder>(
+        CartProductDiffCallback()
+    ) {
 
-    var canBeChanged: Boolean = true
     var countChangeListener: ItemCountChangeListener? = null
+    var canBeChanged: Boolean = true
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CartProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ElementCartProductBinding.inflate(inflater, viewGroup, false)
 
         return CartProductViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(
-        holder: CartProductAdapter.CartProductViewHolder,
-        position: Int
-    ) {
-        holder.onBind(getItem(position))
     }
 
     override fun onBindViewHolder(
@@ -53,13 +48,13 @@ class CartProductAdapter @Inject constructor() :
             super.onBind(item)
 
             binding.run {
-                elementCartProductTvTitle.text = item.name
+                elementCartProductTvName.text = item.name
                 elementCartProductTvOldCost.text = item.oldCost
                 elementCartProductTvOldCost.strikeOutText()
-                elementCartProductTvOldCost.toggleVisibility(item.oldCost == null)
+                elementCartProductTvOldCost.toggleVisibility(item.oldCost != null)
                 elementCartProductTvNewCost.text = item.newCost
                 elementCartProductCpCount.count = item.count
-                elementCartProductIvPhoto.load(item.photoLink){
+                elementCartProductIvPhoto.load(item.photoLink) {
                     placeholder(R.drawable.default_product)
                 }
 
@@ -80,7 +75,7 @@ class CartProductAdapter @Inject constructor() :
         }
 
         private fun getCountChangeListener(item: CartProductItem): CountPicker.CountChangeListener {
-            return object: CountPicker.CountChangeListener {
+            return object : CountPicker.CountChangeListener {
                 override fun onCountIncreased() {
                     countChangeListener?.onItemCountIncreased(item)
                 }
