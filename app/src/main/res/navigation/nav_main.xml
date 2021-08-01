@@ -207,7 +207,7 @@
             android:id="@+id/to_login_fragment"
             app:destination="@id/login_fragment" />
         <argument
-            android:name="userId"
+            android:name="userUuid"
             app:argType="string" />
     </fragment>
 

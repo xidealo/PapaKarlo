@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.User
@@ -24,19 +24,13 @@ class SettingsViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private var userEmail: String? = null
-    private val userEntityStateData: MutableStateFlow<State<User>> =
-        MutableStateFlow(State.Loading())
-    val userEntityState: StateFlow<State<User>> = userEntityStateData.asStateFlow()
+    private val mutableUserState: MutableStateFlow<State<User>> = MutableStateFlow(State.Loading())
+    val userState: StateFlow<State<User>> = mutableUserState.asStateFlow()
 
     fun getUser(userUuid: String) {
         userRepo.observeUserByUuid(userUuid).onEach { user ->
-            if (user == null) {
-                userEntityStateData.value = State.Empty()
-                return@onEach
-            }
-
-            userEmail = user.email
-            userEntityStateData.value = user.toStateSuccess()
+            userEmail = user?.email
+            mutableUserState.value = user.toSuccessOrEmpty()
         }.launchIn(viewModelScope)
     }
 
@@ -56,7 +50,7 @@ class SettingsViewModel @Inject constructor(
 
     fun onEditEmailClicked() {
         val oneLineActionModel = OneLineActionModel(
-            title = resourcesProvider.getString(R.string.title_settings_change_email),
+            title = resourcesProvider.getString(R.string.title_settings_edit_email),
             infoText = null,
             hint = resourcesProvider.getString(R.string.hint_settings_email),
             type = OneLineActionType.EMAIL,

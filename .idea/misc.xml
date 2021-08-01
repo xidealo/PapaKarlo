@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/layout/fragment_product.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3854166666666667" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.19270833333333334" />
       </map>
     </option>
