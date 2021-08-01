@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
-import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import com.bunbeauty.domain.model.local.BaseModel
 import java.lang.ref.SoftReference
 
@@ -10,5 +10,5 @@ data class MenuProductItem(
     val cost: String,
     val discountCost: String,
     val photoLink: String,
-    var photo: SoftReference<Bitmap?> = SoftReference(null)
+    var photoNotWeak: SoftReference<Drawable?> = SoftReference(null)
 ) : BaseModel

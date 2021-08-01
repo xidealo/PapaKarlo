@@ -60,7 +60,6 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                         },
                         1
                     )
-
                     viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
                 }
                 is State.Empty -> {

@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import coil.load
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
@@ -10,9 +11,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.flow.onEach
 
 class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
@@ -43,14 +41,9 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
                             viewModel.stringHelper.toStringWeight(state.data!!)
                         fragmentProductTvDescription.text = state.data?.description
                         if (ProductFragmentArgs.fromBundle(requireArguments()).photo == null) {
-                            Picasso.get()
-                                .load(state.data?.photoLink)
-                                .fit()
-                                .placeholder(R.drawable.default_product)
-                                .networkPolicy(NetworkPolicy.NO_CACHE)
-                                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                                .into(fragmentProductIvPhoto)
-
+                            fragmentProductIvPhoto.load(state.data?.photoLink){
+                                placeholder(R.drawable.default_product)
+                            }
                         } else {
                             fragmentProductIvPhoto.setImageBitmap(
                                 ProductFragmentArgs.fromBundle(
