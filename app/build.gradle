@@ -152,8 +152,8 @@ dependencies {
     //true time
     implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
-    //picasso
-    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    //coil
+    implementation("io.coil-kt:coil:$rootProject.coilVersion")
 
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")

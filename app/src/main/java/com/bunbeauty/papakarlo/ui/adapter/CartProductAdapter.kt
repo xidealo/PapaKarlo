@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import coil.load
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
@@ -10,9 +11,6 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
 import com.bunbeauty.papakarlo.ui.view.CountPicker
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
@@ -62,13 +60,10 @@ class CartProductAdapter @Inject constructor() :
                 elementCartProductTvOldCost.toggleVisibility(item.oldCost == null)
                 elementCartProductTvNewCost.text = item.newCost
                 elementCartProductCpCount.count = item.count
-                Picasso.get()
-                    .load(item.photoLink)
-                    .fit()
-                    .placeholder(R.drawable.default_product)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .into(elementCartProductIvPhoto)
+                elementCartProductIvPhoto.load(item.photoLink){
+                    placeholder(R.drawable.default_product)
+                }
+
                 elementCartProductCpCount.toggleVisibility(canBeChanged)
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
             }

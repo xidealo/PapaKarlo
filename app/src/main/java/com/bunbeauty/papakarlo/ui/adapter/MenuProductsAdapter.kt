@@ -1,22 +1,18 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
-import android.graphics.Bitmap
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
 import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import java.lang.ref.SoftReference
 import javax.inject.Inject
 
@@ -54,31 +50,22 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost
 
-                if (item.photo.get() == null) {
-                    val target = object : Target {
-                        override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                            if (bitmap != null) {
-                                item.photo = SoftReference(bitmap)
-                                elementMenuProductIvPhoto.setImageBitmap(bitmap)
-                            }
-                        }
+                if (item.photoNotWeak.get() == null) {
+                    val imageLoader = elementMenuProductIvPhoto.context.imageLoader
 
-                        override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {}
-
-                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                            elementMenuProductIvPhoto.setImageDrawable(placeHolderDrawable)
+                    val request = ImageRequest.Builder(elementMenuProductIvPhoto.context)
+                        .data(item.photoLink)
+                        .target { drawable ->
+                            item.photoNotWeak = SoftReference(drawable)
+                            elementMenuProductIvPhoto.setImageDrawable(drawable)
                         }
-                    }
-                    elementMenuProductIvPhoto.tag = target
-                    Picasso.get()
-                        .load(item.photoLink)
                         .placeholder(R.drawable.default_product)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .into(target)
+                        .build()
+                    imageLoader.enqueue(request)
                 } else {
-                    elementMenuProductIvPhoto.setImageBitmap(item.photo.get())
+                    elementMenuProductIvPhoto.setImageDrawable(item.photoNotWeak.get())
                 }
+
                 elementMenuProductTvCostOld.paintFlags =
                     elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG
                 elementMenuProductMcvMain.setOnClickListener {

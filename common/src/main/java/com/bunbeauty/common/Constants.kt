@@ -58,6 +58,9 @@ object Constants {
     const val COMMENT_ERROR_KEY = "comment error key"
     const val FLOOR_ERROR_KEY = "floor error key"
 
+    // ARGS_KEY
+
+    const val MENU_PRODUCT_UUID_ARGS_KEY = "menuProductUuid"
 
     const val MINUTES_IN_HOUR = 60
     const val SECONDS_IN_MINUTE = 60
