@@ -27,6 +27,8 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
     override val isCartVisible = true
     override val isBottomBarVisible = true
 
+    private var mediator: TabLayoutMediator? = null
+
     override val viewModel: MenuViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -87,18 +89,20 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
             R.drawable.ic_bakery,
             R.drawable.ic_oven,
         )
-        TabLayoutMediator(
+        mediator = TabLayoutMediator(
             viewDataBinding.fragmentMenuTl,
             viewDataBinding.fragmentMenuVp
         ) { tab, i ->
             tab.setIcon(tabIconList[i])
             tab.text = tabNameList[i]
-        }.attach()
+        }
+        mediator?.attach()
     }
 
     override fun onDestroyView() {
         viewDataBinding.fragmentMenuVp.adapter = null
-
+        mediator?.detach()
+        mediator = null
         super.onDestroyView()
     }
 }

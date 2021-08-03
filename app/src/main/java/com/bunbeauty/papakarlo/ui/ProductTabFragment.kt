@@ -60,7 +60,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
                         },
                         1
                     )
-                    viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
+                    //viewDataBinding.fragmentProductsRvResult.smoothScrollToPosition(0)
                 }
                 is State.Empty -> {
                     viewDataBinding.fragmentProductsTvEmpty.visible()
@@ -98,6 +98,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
 
     override fun onDestroyView() {
         viewDataBinding.fragmentProductsRvResult.adapter = null
+        viewDataBinding.fragmentProductsRvResult.itemAnimator = null
 
         super.onDestroyView()
     }

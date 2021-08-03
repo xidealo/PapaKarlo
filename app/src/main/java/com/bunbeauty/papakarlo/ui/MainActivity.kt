@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         router.attach(this, R.id.activity_main_fcv_container)
         Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
 
-        checkUpdates()
+        //checkUpdates()
 /*
 //        AppUpdater(this)
 //            .setDisplay(Display.DIALOG)
@@ -145,14 +144,13 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
     override fun onDestroy() {
         router.detach()
         mutableViewDataBinding = null
-        //mutableNavController = null
 
         super.onDestroy()
     }
 
     private fun setupToolbar() {
         val navController =
-            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).findNavController()
+            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
 
         setSupportActionBar(viewDataBinding.activityMainTbToolbar)
         val appBarConfiguration = AppBarConfiguration(
@@ -174,10 +172,10 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
     private fun setupBottomNavigationBar() {
         val navController =
-            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).findNavController()
+            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
 
         viewDataBinding.activityMainBnvBottomNavigation.setupWithNavController(navController)
-        viewDataBinding.activityMainBnvBottomNavigation.setOnNavigationItemReselectedListener {}
+        //viewDataBinding.activityMainBnvBottomNavigation.setOnNavigationItemReselectedListener {}
     }
 
     companion object {
