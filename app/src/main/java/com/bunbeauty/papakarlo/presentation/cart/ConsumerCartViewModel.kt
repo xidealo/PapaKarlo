@@ -6,6 +6,7 @@ import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.domain.util.string_helper.IStringUtil
@@ -23,6 +24,7 @@ class ConsumerCartViewModel @Inject constructor(
     cartProductRepo: CartProductRepo,
     stringUtil: IStringUtil,
     productHelper: IProductHelper,
+    private val menuProductRepo: MenuProductRepo
 ) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
     private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
@@ -84,5 +86,13 @@ class ConsumerCartViewModel @Inject constructor(
             count = cartProduct.count,
             menuProductUuid = cartProduct.menuProduct.uuid
         )
+    }
+
+    fun addProductToCart(menuProductUuid: String) {
+        addProductToCart(menuProductUuid, menuProductRepo)
+    }
+
+    fun removeProductFromCart(menuProductUuid: String) {
+        removeProductFromCart(menuProductUuid, menuProductRepo)
     }
 }

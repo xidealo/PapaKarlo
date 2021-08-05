@@ -50,21 +50,17 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvCost.text = item.discountCost
                 elementMenuProductTvCostOld.text = item.cost
 
-                if (item.photoNotWeak.get() == null) {
-                    val imageLoader = elementMenuProductIvPhoto.context.imageLoader
+                val imageLoader = elementMenuProductIvPhoto.context.imageLoader
 
-                    val request = ImageRequest.Builder(elementMenuProductIvPhoto.context)
-                        .data(item.photoLink)
-                        .target { drawable ->
-                            item.photoNotWeak = SoftReference(drawable)
-                            elementMenuProductIvPhoto.setImageDrawable(drawable)
-                        }
-                        .placeholder(R.drawable.default_product)
-                        .build()
-                    imageLoader.enqueue(request)
-                } else {
-                    elementMenuProductIvPhoto.setImageDrawable(item.photoNotWeak.get())
-                }
+                val request = ImageRequest.Builder(elementMenuProductIvPhoto.context)
+                    .data(item.photoLink)
+                    .target { drawable ->
+                        item.photoNotWeak = SoftReference(drawable)
+                        elementMenuProductIvPhoto.setImageDrawable(drawable)
+                    }
+                    .placeholder(R.drawable.default_product)
+                    .build()
+                imageLoader.enqueue(request)
 
                 elementMenuProductTvCostOld.paintFlags =
                     elementMenuProductTvCostOld.paintFlags or STRIKE_THRU_TEXT_FLAG

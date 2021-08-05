@@ -7,62 +7,52 @@ import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.domain.model.local.MenuProduct
 import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-abstract class ProductTabViewModel(
+class ProductTabViewModel @Inject constructor(
     cartProductRepo: CartProductRepo,
     stringUtil: IStringUtil,
     productHelper: IProductHelper,
-) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val menuProductRepo: MenuProductRepo
+) :  CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
-    abstract val productListState: StateFlow<State<List<MenuProductItem>>>
+    private val mutableProductListState: MutableStateFlow<State<List<MenuProductItem>>> = MutableStateFlow(State.Loading())
+    val productListState: StateFlow<State<List<MenuProductItem>>>
+        get() = mutableProductListState.asStateFlow()
 
-    abstract fun getMenuProductList(productCode: ProductCode)
-    abstract fun onProductClicked(menuProductItem: MenuProductItem)
-}
-
-class ProductTabViewModelImpl @Inject constructor(
-    cartProductRepo: CartProductRepo,
-    stringUtil: IStringUtil,
-    productHelper: IProductHelper
-) : ProductTabViewModel(cartProductRepo, stringUtil, productHelper) {
-
-    override val productListState: MutableStateFlow<State<List<MenuProductItem>>> =
-        MutableStateFlow(State.Loading())
-
-    override fun getMenuProductList(productCode: ProductCode) {
+    fun getMenuProductList(productCode: ProductCode) {
         menuProductRepo.getMenuProductListAsFlow().onEach { menuProductList ->
             if (menuProductList.isEmpty()) {
-                productListState.value = State.Loading()
+                mutableProductListState.value = State.Loading()
             } else {
                 if (productCode == ProductCode.ALL) {
-                    productListState.value =
-                        menuProductList.map(::toItemModel).toStateSuccess()
+                    mutableProductListState.value =
+                        menuProductList.map {
+                            toItemModel(it)
+                        }.toStateSuccess()
                 } else {
                     val filteredMenuProductList = menuProductList.filter { menuProduct ->
                         menuProduct.productCode == productCode.name
                     }
                     if (filteredMenuProductList.isEmpty()) {
-                        productListState.value = State.Empty()
+                        mutableProductListState.value = State.Empty()
                     } else {
-                        productListState.value =
-                            filteredMenuProductList.map(::toItemModel).toStateSuccess()
+                        mutableProductListState.value =
+                            filteredMenuProductList.map { toItemModel(it) }.toStateSuccess()
                     }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    override fun onProductClicked(menuProductItem: MenuProductItem) {
+    fun onProductClicked(menuProductItem: MenuProductItem) {
         router.navigate(
             toProductFragment(
                 menuProductItem.uuid,
@@ -70,6 +60,10 @@ class ProductTabViewModelImpl @Inject constructor(
                 menuProductItem.photoNotWeak.get()?.toBitmap()
             )
         )
+    }
+
+    fun addProductToCart(menuProductUuid: String) {
+        addProductToCart(menuProductUuid, menuProductRepo)
     }
 
     private fun toItemModel(menuProduct: MenuProduct): MenuProductItem {
