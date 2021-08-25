@@ -5,7 +5,7 @@ import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DeliveryRepo
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.papakarlo.di.Api
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.launch
