@@ -2,23 +2,14 @@ package com.bunbeauty.papakarlo.presentation.login
 
 import android.os.CountDownTimer
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.entity.UserEntity
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.ConfirmFragmentDirections.backToProfileFragment
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 abstract class ConfirmViewModel : BaseViewModel() {
@@ -26,15 +17,13 @@ abstract class ConfirmViewModel : BaseViewModel() {
     abstract val isFinishedTimerState: StateFlow<Boolean>
     abstract fun startResendTimer()
     abstract fun showCodeError()
-    abstract fun createUser(userId: String, phone: String, email: String)
+    abstract fun refreshUser(phone: String)
     abstract fun getPhoneNumberDigits(phone: String): String
 }
 
 class ConfirmViewModelImpl @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val userRepo: UserRepo,
-    private val addressRepo: UserAddressRepo,
-    private val orderRepo: OrderRepo,
     private val resourcesProvider: IResourcesProvider
 ) : ConfirmViewModel() {
 
@@ -53,27 +42,19 @@ class ConfirmViewModelImpl @Inject constructor(
             override fun onFinish() {
                 isFinishedTimerState.value = true
             }
+
             override fun onTick(millisUntilFinished: Long) {
                 timerStringState.value = "$label ${(millisUntilFinished / 1000)}"
             }
         }.start()
     }
 
-    override fun createUser(userId: String, phone: String, email: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepo.saveUserUuid(userId)
-            userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
-                if (userFirebase == null) {
-                    userRepo.insert(UserEntity(uuid = userId, phone = phone, email = email))
-                } else {
-                    userRepo.insert(userFirebase, userId)
-                    addressRepo.insert(userFirebase.addresses, userId)
-                    orderRepo.loadOrders(userFirebase.orders)
-                }
-                withContext(Main) {
-                    router.navigate(backToProfileFragment())
-                }
-            }.launchIn(viewModelScope)
+    override fun refreshUser(phone: String) {
+        viewModelScope.launch {
+            dataStoreRepo.clearUserAddressUuid()
+            userRepo.refreshUser()
+            goBack()
+            goBack()
         }
     }
 

@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.model.firebase.order
 
-import com.bunbeauty.domain.model.firebase.CartProductFirebase
+import com.bunbeauty.domain.model.firebase.OrderProductFirebase
 
 class OrderFirebase(
     var orderEntity: OrderEntityFirebase = OrderEntityFirebase(),
-    var cartProducts: List<CartProductFirebase> = emptyList()
+    var cartProducts: List<OrderProductFirebase> = emptyList()
 )

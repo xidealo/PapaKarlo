@@ -7,7 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
 import com.bunbeauty.domain.enums.ActiveLines
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.bunbeauty.common.Constants.NAV_TAG
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
@@ -38,23 +39,20 @@ class Router @Inject constructor() : CoroutineScope {
             launch(Main) {
                 activity?.get()?.findNavController(navHostId)?.navigateUp()
                 Log.d(NAV_TAG, "navigateUp")
-                //hideKeyboard(activity.get())
             }
         }
     }
 
     fun navigate(navDirections: NavDirections) {
-        try {
-            navHostId?.let { navHostId ->
-                launch(Main) {
-                    activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
-                    Log.d(NAV_TAG, "navigate $navDirections")
-                    //hideKeyboard(activity?.get())
-                }
+        navHostId?.let { navHostId ->
+            val handler = CoroutineExceptionHandler { _, exception ->
+                exception.printStackTrace()
+                Log.d(NAV_TAG, "exception " + exception.message)
             }
-        } catch (exception: Exception) {
-            exception.printStackTrace()
-            Log.d(NAV_TAG, "exception " + exception.message)
+            launch(Main + handler) {
+                activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
+                Log.d(NAV_TAG, "navigate $navDirections")
+            }
         }
     }
 

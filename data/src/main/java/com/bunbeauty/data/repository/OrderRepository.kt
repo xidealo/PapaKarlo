@@ -1,84 +1,70 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.OrderDao
-import com.bunbeauty.data.mapper.order.IOrderMapper
-import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.model.entity.order.Order
-import com.bunbeauty.domain.model.ui.order.OrderUI
+import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.mapper.IOrderMapper
+import com.bunbeauty.domain.model.entity.order.OrderStatusEntity
+import com.bunbeauty.domain.model.entity.order.OrderWithProducts
+import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
+import com.bunbeauty.domain.model.ui.OrderUI
 import com.bunbeauty.domain.repo.ApiRepo
-import com.bunbeauty.domain.model.ui.order.UserOrder
+import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import java.util.*
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class OrderRepository @Inject constructor(
     private val apiRepo: ApiRepo,
     private val orderDao: OrderDao,
-    private val cartProductRepo: CartProductRepo,
     private val orderMapper: IOrderMapper,
-) : OrderRepo, CoroutineScope {
+    private val cafeRepo: CafeRepo,
+    private val authUtil: IAuthUtil,
+) : OrderRepo {
 
-    override val coroutineContext: CoroutineContext = Job()
-
-    override suspend fun insert(order: Order): String {
-//        val firebaseOrder = orderMapper.toFirebaseModel(order)
-//        order.orderEntity.uuid =
-//            apiRepo.insert(orderMapper.to(order), order.cafeId)
-//        orderDao.insert(order.orderEntity)
-//        for (cardProduct in order.cartProducts) {
-//            cardProduct.orderUuid = order.orderEntity.uuid
-//            cartProductRepo.update(cardProduct)
-//        }
-//        subscribeOnActiveOrder(UserOrder(cafeId = order.cafeId, orderId = order.orderEntity.uuid))
-        return order.orderEntity.uuid
-    }
-
-    suspend fun insertToLocal(order: Order) {
-        if (orderDao.getOrderByUuid(order.orderEntity.uuid) == null) {
-            for (cardProduct in order.cartProducts) {
-                cardProduct.orderUuid = order.orderEntity.uuid
-                cardProduct.uuid = UUID.randomUUID().toString()
-                cartProductRepo.insert(cardProduct)
+    override suspend fun refreshOrders(
+        userOrderFirebaseList: List<UserOrderFirebase>,
+        userUuid: String
+    ) {
+        withContext(IO) {
+            apiRepo.removeOrderObservers()
+            userOrderFirebaseList.forEach { userOrderFirebase ->
+                apiRepo.getOrder(userOrderFirebase).onEach { orderFirebase ->
+                    if (orderFirebase != null) {
+                        val orderWithCartProducts =
+                            orderMapper.toEntityModel(orderFirebase, userOrderFirebase, userUuid)
+                        saveOrder(orderWithCartProducts)
+                        observeActiveOrder(
+                            orderWithCartProducts.order.orderStatus,
+                            userOrderFirebase
+                        )
+                    }
+                }.launchIn(this)
             }
         }
-        orderDao.insert(order.orderEntity)
     }
 
-    override suspend fun loadOrders(userOrderList: List<UserOrder>) {
-//        userOrderList.forEach { userOrder ->
-//            apiRepo.getOrder(userOrder.cafeId, userOrder.orderId).onEach { order ->
-//                if (order != null) {
-//                    insertToLocal(
-//                        order = orderMapper.from(order)
-//                            .also { it.orderEntity.uuid = userOrder.orderId })
-//                    subscribeOnActiveOrder(userOrder)
-//                }
-//            }.launchIn(this)
-//        }
+    override fun observeOrderList(): Flow<List<OrderUI>>? {
+        return authUtil.userUuid?.let { userUuid ->
+            orderDao.observeOrderListByUserUuid(userUuid).mapOrders()
+        }
     }
 
-    override fun getOrdersWithCartProducts(): Flow<List<Order>> = orderDao.getOrders()
-    override fun getOrdersWithCartProductsWithEmptyUserId(): Flow<List<Order>> {
-        return orderDao.getOrdersByUserId("")
-    }
-    override fun getOrdersWithCartProductsByUserId(userId: String): Flow<List<Order>> {
-        return orderDao.getOrdersByUserId(userId)
-    }
-    override fun getOrderWithCartProducts(orderUuid: String): Flow<Order?> {
-        return orderDao.getOrderFlowByUuid(orderUuid)
+    override fun observeOrderByUuid(orderUuid: String): Flow<OrderUI?> {
+        return orderDao.observeOrderByUuid(orderUuid).map { orderWithCartProducts ->
+            orderWithCartProducts?.let {
+                val cafeEntity = cafeRepo.getCafeEntityByUuid(orderWithCartProducts.order.cafeUuid)
+                orderMapper.toUIModel(orderWithCartProducts, cafeEntity)
+            }
+        }.flowOn(IO)
     }
 
-    private fun subscribeOnActiveOrder(userOrder: UserOrder) {
-//        apiRepo.getOrderWithSubscribe(userOrder.cafeId, userOrder.orderId).onEach { order ->
-//            if (order != null)
-//                insertToLocal(
-//                    order = orderMapper.from(order)
-//                        .also { it.orderEntity.uuid = userOrder.orderId })
-//        }.launchIn(this)
+    override fun observeLastOrder(): Flow<OrderUI?> {
+        return orderDao.observeLastOrder().mapOrder()
     }
 
     override suspend fun saveOrder(order: OrderUI) {
@@ -87,6 +73,51 @@ class OrderRepository @Inject constructor(
         order.uuid = orderUuid
         val orderEntity = orderMapper.toEntityModel(order)
         orderDao.insert(orderEntity)
+    }
+
+    private suspend fun saveOrder(orderWithProducts: OrderWithProducts) {
+        orderDao.insert(orderWithProducts)
+    }
+
+    private suspend fun observeActiveOrder(
+        orderStatus: OrderStatus,
+        userOrderFirebase: UserOrderFirebase
+    ) {
+        if (orderStatus != OrderStatus.CANCELED || orderStatus != OrderStatus.DELIVERED) {
+            withContext(IO) {
+                apiRepo.observeOrder(userOrderFirebase).onEach { updatedOrderFirebase ->
+                    if (updatedOrderFirebase != null) {
+                        val orderStatusEntity = OrderStatusEntity(
+                            uuid = userOrderFirebase.orderUuid,
+                            orderStatus = updatedOrderFirebase.orderEntity.orderStatus
+                        )
+                        orderDao.updateOrderStatus(orderStatusEntity)
+                    }
+                }.launchIn(this)
+            }
+        }
+    }
+
+    // EXTENSIONS
+
+    private fun Flow<OrderWithProducts?>.mapOrder(): Flow<OrderUI?> {
+        return this.flowOn(IO)
+            .map { orderWithProducts ->
+                orderWithProducts?.let {
+                    val cafeEntity = cafeRepo.getCafeEntityByUuid(orderWithProducts.order.cafeUuid)
+                    orderMapper.toUIModel(orderWithProducts, cafeEntity)
+                }
+            }.flowOn(Default)
+    }
+
+    private fun Flow<List<OrderWithProducts>>.mapOrders(): Flow<List<OrderUI>> {
+        return this.flowOn(IO)
+            .map { orderList ->
+                orderList.map { orderWithProducts ->
+                    val cafeEntity = cafeRepo.getCafeEntityByUuid(orderWithProducts.order.cafeUuid)
+                    orderMapper.toUIModel(orderWithProducts, cafeEntity)
+                }
+            }.flowOn(Default)
     }
 
 }

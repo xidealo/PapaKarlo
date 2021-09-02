@@ -88,7 +88,6 @@
     <string name="title_deferred_time_select_time">Выберите время</string>
 
     <!-- CREATION ADDRESS -->
-    <string name="title_creation_address_address">Адрес</string>
     <string name="hint_creation_address_street">Улица*</string>
     <string name="hint_creation_address_house">Дом*</string>
     <string name="hint_creation_address_flat">Квартира</string>
@@ -97,9 +96,8 @@
     <string name="hint_creation_address_floor">Этаж</string>
     <string name="msg_creation_address_created_address">Адрес добавлен</string>
     <string name="action_creation_address_address">Добавить адрес</string>
-    <string name="error_creation_address_name">Некорректное название</string>
-    <string name="error_creation_address_number">Некорректный номер</string>
-    <string name="error_creation_address_code">Некорректный код</string>
+    <string name="error_creation_address_street">Выберите название улицы из списка</string>
+    <string name="error_creation_address_house">Укажите номер дома</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>
@@ -169,7 +167,7 @@
 
     <!-- CONFIRM  -->
     <string name="title_confirm_information">Введите код подтверждения ✉</string>
-    <string name="title_confirm_prone_information">Код был отправлен на номер</string>
+    <string name="title_confirm_prone_information">Код был отправлен на номер&#160;</string>
     <string name="msg_confirm_prone_resend">Получить повторно код можно через:</string>
     <string name="msg_confirm_prone_resend_code">Отправить код повторно</string>
     <string name="msg_confirm_prone_error_code">Неправильный код</string>

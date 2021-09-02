@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -38,7 +38,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 is State.Success -> {
                     with(viewDataBinding){
                         fragmentSettingsTvPhoneValue.text = state.data.phone
-                        if (state.data.email.isEmpty()) {
+                        if (state.data.email.isNullOrEmpty()) {
                             fragmentSettingsTvEmail.text =
                                 resourcesProvider.getString(R.string.title_settings_add_email)
                             fragmentSettingsIvAddEmail.visible()

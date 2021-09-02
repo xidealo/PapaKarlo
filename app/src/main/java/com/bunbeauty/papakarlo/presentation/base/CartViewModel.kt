@@ -1,14 +1,11 @@
 package com.bunbeauty.papakarlo.presentation.base
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 
 /**
  * Base class for each viewModel which has top bar cart or can add product to cart
@@ -30,7 +27,7 @@ abstract class CartViewModel(
     }
 
     private fun subscribeOnCartProductList() {
-        cartProductRepo.cartProductList.onEach { cartProductList ->
+        cartProductRepo.observeCartProductList().onEach { cartProductList ->
             val cartProductCount = productHelper.getTotalCount(cartProductList)
             mutableCartProductCount.value = cartProductCount.toString()
             val cartCost = productHelper.getNewTotalCost(cartProductList)
@@ -38,34 +35,28 @@ abstract class CartViewModel(
         }.launchIn(viewModelScope)
     }
 
-    fun addProductToCart(menuProductUuid: String, menuProductRepo: MenuProductRepo) {
+    fun addProductToCart(menuProductUuid: String) {
         viewModelScope.launch {
-            val menuProduct = menuProductRepo.getMenuProduct(menuProductUuid) ?: return@launch
-            val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
-                cartProduct.menuProduct == menuProduct
-            }
+            val cartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
             if (cartProduct == null) {
-                cartProductRepo.insert(CartProduct(menuProduct = menuProduct))
-                showMessage(stringUtil.getAddedToCartString(menuProduct.name))
+                val savedCartProduct = cartProductRepo.saveAsCartProduct(menuProductUuid)
+                if (savedCartProduct != null) {
+                    showMessage(stringUtil.getAddedToCartString(savedCartProduct.menuProduct.name))
+                }
             } else {
-                cartProduct.count++
-                cartProductRepo.update(cartProduct)
+                cartProductRepo.updateCount(cartProduct.uuid, cartProduct.count + 1)
             }
         }
     }
 
-    fun removeProductFromCart(menuProductUuid: String, menuProductRepo: MenuProductRepo) {
+    fun removeProductFromCart(menuProductUuid: String) {
         viewModelScope.launch {
-            val menuProduct = menuProductRepo.getMenuProduct(menuProductUuid) ?: return@launch
-            val cartProduct = cartProductRepo.getCartProductList().find { cartProduct ->
-                cartProduct.menuProduct == menuProduct
-            } ?: return@launch
+            val cartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) ?: return@launch
             if (cartProduct.count > 1) {
-                cartProduct.count--
-                cartProductRepo.update(cartProduct)
+                cartProductRepo.updateCount(cartProduct.uuid, cartProduct.count - 1)
             } else {
-                cartProductRepo.delete(cartProduct)
-                showMessage(stringUtil.getRemovedFromCartString(menuProduct.name))
+                cartProductRepo.deleteCartProduct(cartProduct)
+                showMessage(stringUtil.getRemovedFromCartString(cartProduct.menuProduct.name))
             }
         }
     }

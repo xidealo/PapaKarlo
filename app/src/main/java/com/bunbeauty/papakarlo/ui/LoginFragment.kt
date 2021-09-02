@@ -17,19 +17,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewModelComponent.inject(this)
     }
 
-    override val isCartVisible = false
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val phoneTextWatcher = PhoneTextWatcher(viewDataBinding.fragmentLoginEtPhone)
-        viewDataBinding.fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
-        textInputMap[Constants.PHONE_ERROR_KEY] = viewDataBinding.fragmentLoginTilPhone
-        viewDataBinding.fragmentLoginBtnLogin.setOnClickListener {
-            viewModel.goToConfirm(
-                viewDataBinding.fragmentLoginEtPhone.text.toString(),
-                ""
-            )
-        }
         super.onViewCreated(view, savedInstanceState)
+
+        viewDataBinding.run {
+            val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
+            fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
+            fragmentLoginBtnLogin.setOnClickListener {
+                viewModel.goToConfirm(fragmentLoginEtPhone.text.toString())
+            }
+        }
     }
 
 }

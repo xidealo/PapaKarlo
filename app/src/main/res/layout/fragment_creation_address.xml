@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultPage"
@@ -23,32 +13,38 @@
             style="@style/MaterialCardCreationAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_margin="@dimen/medium_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.CreationAddressFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/large_padding">
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/fragment_creation_address_tv_title"
-                    style="@style/TitleCreationAddress"
-                    android:text="@string/title_creation_address_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/fragment_creation_address_gl_left"
+                    app:layout_constraintGuide_begin="@dimen/medium_margin"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/fragment_creation_address_gl_right"
+                    app:layout_constraintGuide_end="@dimen/medium_margin"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_creation_address_til_street"
                     style="@style/MaterialInputLayout"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:hint="@string/hint_creation_address_street"
                     app:endIconMode="dropdown_menu"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_tv_title">
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_creation_address_gl_right"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_creation_address_gl_left"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/fragment_creation_address_et_street"
@@ -56,8 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textCapSentences"
-                        android:padding="@dimen/large_padding"
-                        bind:setAdapter="@{viewModel.streetNamesFiled}" />
+                        android:padding="@dimen/large_padding" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -66,10 +61,9 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginEnd="@dimen/small_margin"
                     android:hint="@string/hint_creation_address_house"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="5"
+                    android:maxLength="5"
                     app:layout_constraintEnd_toStartOf="@+id/fragment_creation_address_til_flat"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_creation_address_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_street">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -83,9 +77,8 @@
                     style="@style/MaterialInputLayout"
                     android:layout_marginTop="@dimen/small_margin"
                     android:hint="@string/hint_creation_address_flat"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="5"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_creation_address_gl_right"
                     app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_house"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_street">
 
@@ -101,10 +94,9 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginEnd="@dimen/small_margin"
                     android:hint="@string/hint_creation_address_entrance"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="5"
+                    android:maxLength="5"
                     app:layout_constraintEnd_toStartOf="@+id/fragment_creation_address_til_floor"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_creation_address_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_house">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -114,39 +106,38 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_creation_address_til_floor"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:hint="@string/hint_creation_address_floor"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_creation_address_gl_right"
+                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_entrance"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_house">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_creation_address_et_floor"
+                        style="@style/MaterialInput"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_creation_address_til_comment"
                     style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_marginEnd="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
                     android:hint="@string/hint_creation_address_comment"
-                    app:counterEnabled="true"
                     app:counterMaxLength="100"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:counterEnabled="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_creation_address_gl_right"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_creation_address_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_entrance">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_creation_address_et_comment"
                         style="@style/MaterialInput"
                         android:inputType="textCapSentences" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/fragment_creation_address_til_floor"
-                    style="@style/MaterialInputLayout"
-                    android:layout_width="0dp"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:hint="@string/hint_creation_address_floor"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_creation_address_til_entrance"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_creation_address_til_flat">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_creation_address_et_floor"
-                        style="@style/MaterialInput"
-                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

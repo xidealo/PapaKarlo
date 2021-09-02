@@ -9,27 +9,23 @@
         style="@style/DefaultPage"
         tools:context=".ui.ProductFragment">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_product_gl_left"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/small_margin" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_product_gl_right"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/small_margin" />
+        <ProgressBar
+            android:id="@+id/fragment_product_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_product_cv_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
+            android:layout_margin="@dimen/medium_margin"
             app:cardCornerRadius="@dimen/medium_radius"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_product_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_product_gl_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,7 +39,8 @@
                     android:adjustViewBounds="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/default_product" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_product_gl_inner_left"
@@ -60,62 +57,53 @@
                     app:layout_constraintGuide_end="@dimen/medium_margin" />
 
                 <TextView
-                    android:id="@+id/fragment_product_tv_title"
+                    android:id="@+id/fragment_product_tv_name"
                     style="@style/TitleFragmentProduct"
                     android:layout_marginTop="@dimen/medium_margin"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_tv_weight"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_tv_size"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo" />
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_iv_photo"
+                    tools:text="Название" />
 
                 <TextView
-                    android:id="@+id/fragment_product_tv_cost"
+                    android:id="@+id/fragment_product_tv_old_price"
+                    style="@style/OldCostFragmentProduct"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_product_tv_new_price"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_name"
+                    tools:text="100 ₽" />
+
+                <TextView
+                    android:id="@+id/fragment_product_tv_new_price"
                     style="@style/CostFragmentProduct"
                     android:layout_marginTop="@dimen/small_margin"
-                    app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_title" />
+                    app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
+                    app:layout_constraintStart_toEndOf="@+id/fragment_product_tv_old_price"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_name"
+                    tools:text="99 ₽" />
 
                 <TextView
-                    android:id="@+id/fragment_product_tv_old_cost"
-                    style="@style/OldCostFragmentProduct"
-                    android:layout_marginStart="@dimen/small_margin"
-                    app:layout_constraintStart_toEndOf="@+id/fragment_product_tv_cost"
-                    app:layout_constraintTop_toTopOf="@+id/fragment_product_tv_cost" />
-
-                <TextView
-                    android:id="@+id/fragment_product_tv_weight"
+                    android:id="@+id/fragment_product_tv_size"
                     style="@style/GramFragmentProduct"
                     android:layout_marginTop="@dimen/medium_margin"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/fragment_product_tv_name"
                     app:layout_constraintEnd_toStartOf="@+id/fragment_product_gl_inner_right"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_product_iv_photo" />
+                    tools:text="100 г" />
 
-                <!--           <ImageView
-                               android:id="@+id/element_menu_product_iv_on_fire"
-                               style="@style/Icon"
-                               android:layout_marginTop="@dimen/medium_margin"
-                               android:src="@drawable/ic_on_fire"
-                               android:visibility="invisible"
-                               app:layout_constraintEnd_toStartOf="@+id/element_menu_product_iv_in_oven"
-                               app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight" />
-
-                           <ImageView
-                               android:id="@+id/element_menu_product_iv_in_oven"
-                               style="@style/Icon"
-                               android:visibility="invisible"
-                               android:src="@drawable/ic_in_oven"
-                               app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
-                               app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_weight"
-                               app:layout_constraintTop_toTopOf="@+id/element_menu_product_iv_on_fire" />
-           -->
                 <TextView
                     android:id="@+id/fragment_product_tv_description"
                     style="@style/MainText"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:layout_marginBottom="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_inner_right"
                     app:layout_constraintStart_toStartOf="@id/fragment_product_gl_inner_left"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_old_cost" />
+                    app:layout_constraintTop_toBottomOf="@id/fragment_product_tv_new_price"
+                    tools:text="Описание" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -126,8 +114,8 @@
             style="@style/MainButton"
             android:text="@string/action_product_want"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/fragment_product_gl_right"
-            app:layout_constraintStart_toStartOf="@id/fragment_product_gl_left" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

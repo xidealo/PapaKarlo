@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation.create_order
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow

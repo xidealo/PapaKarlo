@@ -6,10 +6,9 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.bunbeauty.common.Constants.ASAP
 import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetDeferedTimeBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

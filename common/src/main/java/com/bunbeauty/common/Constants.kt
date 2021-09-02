@@ -5,6 +5,7 @@ object Constants {
     const val ORDERS = "ORDERS"
     const val L_ORDERS = "orders"
     const val USERS = "USERS"
+    const val EMAIL = "email"
     const val ADDRESSES = "addresses"
     const val COMPANY = "COMPANY"
     const val CAFES = "cafes"
@@ -21,9 +22,14 @@ object Constants {
     const val DIGITS = "0123456789"
     const val CODE_NUMBER_COUNT = 100
 
+    // LIMITS
+
+    const val PHONE_LENGTH = 18
+
     // TAG
 
     const val NAV_TAG = "Nav"
+    const val CREATE_ORDER_TAG = "CreateOrder"
 
 
     // FRAGMENT RESULT KEY
@@ -41,6 +47,7 @@ object Constants {
 
     const val TIME_DIVIDER = ":"
     const val CODE_DIVIDER = "-"
+    const val WORKING_HOURS_DIVIDER = " - "
 
     // LINK
 
@@ -55,8 +62,8 @@ object Constants {
     const val HOUSE_ERROR_KEY = "house error key"
     const val FLAT_ERROR_KEY = "flat error key"
     const val ENTRANCE_ERROR_KEY = "entrance error key"
-    const val COMMENT_ERROR_KEY = "comment error key"
     const val FLOOR_ERROR_KEY = "floor error key"
+    const val COMMENT_ERROR_KEY = "comment error key"
 
     // ARGS_KEY
 

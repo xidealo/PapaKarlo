@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation.cafe
 
 import com.bunbeauty.common.Constants.CAFE_ARG_KEY
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
@@ -27,11 +27,11 @@ class CafeOptionsViewModel @Inject constructor(private val resourcesProvider: IR
     }
 
     val latitude: Double by lazy {
-        cafe.coordinate.latitude
+        cafe.latitude
     }
 
     val longitude: Double by lazy {
-        cafe.coordinate.longitude
+        cafe.longitude
     }
 
 }

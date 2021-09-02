@@ -2,9 +2,9 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.BaseItem
 
-abstract class BaseViewHolder<out V : ViewBinding, I : BaseModel>(
+abstract class BaseViewHolder<out V : ViewBinding, I : BaseItem>(
     val binding: V
 ) : RecyclerView.ViewHolder(binding.root) {
 

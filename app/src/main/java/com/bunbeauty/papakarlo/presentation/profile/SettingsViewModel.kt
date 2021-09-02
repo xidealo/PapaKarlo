@@ -7,12 +7,14 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.entity.UserEntity
+import com.bunbeauty.domain.model.entity.user.UserEntity
+import com.bunbeauty.domain.model.ui.User
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.*
+import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toLoginFragment
+import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toOneLineActionBottomSheet
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -21,20 +23,20 @@ class SettingsViewModel @Inject constructor(
     private val userRepo: UserRepo
 ) : BaseViewModel() {
 
-    private val userEntityStateData: MutableStateFlow<State<UserEntity>> =
+    private var userEmail: String? = null
+    private val userEntityStateData: MutableStateFlow<State<User>> =
         MutableStateFlow(State.Loading())
-    val userEntityState: StateFlow<State<UserEntity>>
-        get() = userEntityStateData.asStateFlow()
+    val userEntityState: StateFlow<State<User>> = userEntityStateData.asStateFlow()
 
-    fun getUser(userId: String) {
-        userRepo.getUserAsFlow(userId).onEach { user ->
+    fun getUser(userUuid: String) {
+        userRepo.observeUserByUuid(userUuid).onEach { user ->
             if (user == null) {
                 userEntityStateData.value = State.Empty()
                 return@onEach
             }
 
+            userEmail = user.email
             userEntityStateData.value = user.toStateSuccess()
-
         }.launchIn(viewModelScope)
     }
 
@@ -58,7 +60,7 @@ class SettingsViewModel @Inject constructor(
             infoText = null,
             hint = resourcesProvider.getString(R.string.hint_settings_email),
             type = OneLineActionType.EMAIL,
-            inputText = (userEntityState.value as State.Success<UserEntity>).data.email,
+            inputText = userEmail ?: "",
             buttonText = resourcesProvider.getString(R.string.action_settings_save),
             requestKey = EMAIL_REQUEST_KEY,
             resultKey = RESULT_EMAIL_KEY,

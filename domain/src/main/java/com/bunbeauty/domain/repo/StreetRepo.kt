@@ -4,6 +4,5 @@ import com.bunbeauty.domain.model.ui.Street
 import kotlinx.coroutines.flow.Flow
 
 interface StreetRepo {
-    suspend fun insert(street: Street)
-    fun getStreets(): Flow<List<Street>>
+    suspend fun getStreets(): List<Street>
 }

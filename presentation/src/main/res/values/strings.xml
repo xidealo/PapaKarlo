@@ -1,0 +1,11 @@
+<resources>
+
+    <!--COMMON-->
+    <string name="msg_comma">,&#160;</string>
+
+    <!--ADDRESS-->
+    <string name="msg_address_house_short">д.&#160;</string>
+    <string name="msg_address_flat_short">кв.&#160;</string>
+    <string name="msg_address_entrance_short">&#160;подъезд</string>
+    <string name="msg_address_floor_short">&#160;этаж</string>
+</resources>

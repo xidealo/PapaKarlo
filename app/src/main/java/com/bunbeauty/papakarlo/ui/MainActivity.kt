@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.NavMainDirections.globalToCartFragment
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
@@ -31,7 +31,6 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
-
 
     private var mutableViewDataBinding: ActivityMainBinding? = null
     val viewDataBinding: ActivityMainBinding
@@ -66,7 +65,6 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         setupBottomNavigationBar()
 
         router.attach(this, R.id.activity_main_fcv_container)
-        Log.d("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
 
         //checkUpdates()
 /*
@@ -175,7 +173,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
             (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
 
         viewDataBinding.activityMainBnvBottomNavigation.setupWithNavController(navController)
-        //viewDataBinding.activityMainBnvBottomNavigation.setOnNavigationItemReselectedListener {}
+        viewDataBinding.activityMainBnvBottomNavigation.setOnItemReselectedListener {}
     }
 
     companion object {

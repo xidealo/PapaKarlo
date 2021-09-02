@@ -1,52 +1,55 @@
 package com.bunbeauty.papakarlo.presentation.create_order
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.ASAP
-import com.bunbeauty.common.Constants.CODE_DIVIDER
-import com.bunbeauty.common.Constants.CODE_NUMBER_COUNT
 import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.common.Constants.CREATE_ORDER_TAG
 import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.mapper.ICartProductMapper
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.model.ui.address.CafeAddress
+import com.bunbeauty.domain.model.ui.OrderUI
 import com.bunbeauty.domain.model.ui.address.UserAddress
-import com.bunbeauty.domain.model.ui.order.OrderUI
+import com.bunbeauty.domain.model.ui.product.CartProduct
 import com.bunbeauty.domain.repo.*
+import com.bunbeauty.domain.util.code.ICodeGenerator
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
-import com.bunbeauty.domain.util.network.INetworkHelper
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreateOrderViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
-    private val networkHelper: INetworkHelper,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
     private val cartProductRepo: CartProductRepo,
     private val orderRepo: OrderRepo,
-    private val cafeAddressRepo: CafeAddressRepo,
     private val userAddressRepo: UserAddressRepo,
     private val cafeRepo: CafeRepo,
+    private val codeGenerator: ICodeGenerator,
     private val orderUtil: IOrderUtil,
+    private val authUtil: IAuthUtil,
     private val userRepo: UserRepo,
     private val dateTimeUtils: IDateTimeUtil,
+    private val cartProductMapper: ICartProductMapper
 ) : BaseViewModel() {
 
     private val mutableIsDelivery: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val isDelivery: StateFlow<Boolean> = mutableIsDelivery.asStateFlow()
 
-    private var userUuid: String? = null
+    private var userUuidValue: String? = null
     private val mutablePhone: MutableStateFlow<String?> = MutableStateFlow(null)
     val phone: StateFlow<String?> = mutablePhone.asStateFlow()
 
@@ -74,6 +77,7 @@ class CreateOrderViewModel @Inject constructor(
         MutableStateFlow(hintDeliveryTime)
     val hintDeferredTime: StateFlow<String> = mutableHintDeferredTime.asStateFlow()
 
+    private var deferredTimeValue: String? = null
     private val mutableDeferredTime: MutableStateFlow<String?> = MutableStateFlow(null)
     val deferredTime: StateFlow<String?> = mutableDeferredTime.asStateFlow()
 
@@ -88,100 +92,9 @@ class CreateOrderViewModel @Inject constructor(
     val newAmountToPay: StateFlow<String> = mutableNewAmountToPay.asStateFlow()
 
     init {
-        subscribeOnUser()
         subscribeOnAddress()
         subscribeOnDeferredTime()
         subscribeOnCartProduct()
-    }
-
-    private fun subscribeOnUser() {
-        dataStoreRepo.userUuid.flatMapLatest { uuid ->
-            userRepo.getUserByUuid(uuid).onEach { user ->
-                mutablePhone.value = user?.phone
-                userUuid = user?.uuid
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun subscribeOnAddress() {
-        isDelivery.flatMapLatest { isDelivery ->
-            if (isDelivery) {
-                dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-                    if (userUuid == null) {
-                        userAddressRepo.unassignedUserAddressList.onEach { addressList ->
-                            if (addressList.isNotEmpty()) {
-                                userAddress = addressList.first()
-                                mutableAddress.value = stringUtil.toString(addressList.first())
-                            }
-                        }
-                    } else {
-                        dataStoreRepo.userAddressUuid.flatMapLatest { userAddressUuid ->
-                            if (userAddressUuid == null) {
-                                userAddressRepo.getUserAddressListByUserUuid(userUuid)
-                                    .onEach { addressList ->
-                                        if (addressList.isNotEmpty()) {
-                                            userAddress = addressList.first()
-                                            mutableAddress.value =
-                                                stringUtil.toString(addressList.first())
-                                        }
-                                    }
-                            } else {
-                                userAddressRepo.getUserAddressByUuid(userAddressUuid)
-                                    .onEach { address ->
-                                        if (address != null) {
-                                            userAddress = address
-                                            mutableAddress.value = stringUtil.toString(address)
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
-            } else {
-                dataStoreRepo.cafeAddressUuid.flatMapLatest { cafeAddressUuid ->
-                    if (cafeAddressUuid == null) {
-                        cafeAddressRepo.getCafeAddresses().onEach { addressList ->
-                            if (addressList.isNotEmpty()) {
-                                cafeAddress = addressList.first()
-                                mutableAddress.value = stringUtil.toString()
-                            } else {
-                                mutableAddress.value = ""
-                            }
-                        }
-                    } else {
-                        cafeAddressRepo.getCafeAddressByUuid(cafeAddressUuid)
-                            .onEach { address ->
-                                cafeAddress = address
-                                mutableAddress.value = stringUtil.toString(address)
-                            }
-                    }
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun subscribeOnDeferredTime() {
-        dataStoreRepo.deferredTime.onEach { deferredTime ->
-            mutableDeferredTime.value = mapDeferredTime(deferredTime)
-        }.launchIn(viewModelScope)
-    }
-
-    private fun subscribeOnCartProduct() {
-        cartProductRepo.cartProductList.flatMapLatest { productList ->
-            cartProductList.clear()
-            cartProductList.addAll(productList)
-            val totalCost = productHelper.getNewTotalCost(productList)
-            mutableTotalCost.value = stringUtil.getCostString(totalCost)
-
-            mutableIsDelivery.onEach { isDelivery ->
-                val delivery = dataStoreRepo.delivery.first()
-                val deliveryCost = orderUtil.getDeliveryCost(isDelivery, productList, delivery)
-                mutableDeliveryCost.value = stringUtil.getCostString(deliveryCost)
-
-                val amountToPay = orderUtil.getNewOrderCost(isDelivery, productList, delivery)
-                mutableNewAmountToPay.value = stringUtil.getCostString(amountToPay)
-            }
-        }.launchIn(viewModelScope)
     }
 
     fun onIsDeliveryChanged(isDelivery: Boolean) {
@@ -196,6 +109,7 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     fun onDeferredTimeSelected(deferredTime: String) {
+        deferredTimeValue = deferredTime
         mutableDeferredTime.value = mapDeferredTime(deferredTime)
         viewModelScope.launch {
             dataStoreRepo.saveDeferredTime(deferredTime)
@@ -216,43 +130,162 @@ class CreateOrderViewModel @Inject constructor(
             return
         }
 
-        if (mutableAddress.value.isNullOrEmpty()) {
+        val isDelivery = mutableIsDelivery.value
+        if ((isDelivery && (userAddress == null)) || (!isDelivery && (cafeAddress == null))) {
             showError(resourcesProvider.getString(R.string.error_create_order_address))
             return
         }
 
-        if (mutableDeferredTime.value == null) {
+        if (deferredTimeValue == null) {
             showError(resourcesProvider.getString(R.string.error_create_order_time))
             return
         }
 
-        val isDelivery = mutableIsDelivery.value
-        val deferredTime = if (mutableDeferredTime.value == ASAP) {
-            null
-        } else {
-            mutableDeferredTime.value
-        }
-        val currentMillis = dateTimeUtils.currentTimeMillis
-        val code = generateCode(currentMillis)
-        val order = OrderUI(
-            isDelivery = isDelivery,
-            userUuid = checkNotNull(userUuid),
-            phone = checkNotNull(mutablePhone.value),
-            userAddress = userAddress,
-            cafeAddress = cafeAddress,
-            comment = mutableComment.value,
-            deferredTime = deferredTime,
-            time = currentMillis,
-            code = code,
-            orderStatus = OrderStatus.NOT_ACCEPTED,
-            cartProducts = cartProductList,
-            cafeUuid = getCafeUuid(isDelivery)
-        )
         viewModelScope.launch {
+            val deferredTime = if (deferredTimeValue == ASAP) {
+                null
+            } else {
+                mutableDeferredTime.value
+            }
+            val currentMillis = dateTimeUtils.currentTimeMillis
+            val letters = resourcesProvider.getString(R.string.code_letters)
+            val code = codeGenerator.generateCode(currentMillis, letters)
+            val orderProductList = cartProductList.map(cartProductMapper::toOrderProduct)
+            val cafeUuid = if (isDelivery) {
+                cafeRepo.getCafeByStreetUuid(userAddress!!.streetUuid).uuid
+            } else {
+                cafeAddress!!.cafeUuid
+            }
+            val order = OrderUI(
+                isDelivery = isDelivery,
+                userUuid = checkNotNull(userUuidValue),
+                phone = checkNotNull(mutablePhone.value),
+                userAddress = userAddress,
+                cafeAddress = cafeAddress,
+                comment = mutableComment.value,
+                deferredTime = deferredTime,
+                time = currentMillis,
+                code = code,
+                orderStatus = OrderStatus.NOT_ACCEPTED,
+                orderProductList = orderProductList,
+                cafeUuid = cafeUuid
+            )
+            cartProductRepo.deleteCartProductList(cartProductList)
             orderRepo.saveOrder(order)
+
             showMessage(stringUtil.getCodeString(code))
             goBack()
         }
+    }
+
+    fun setUser() {
+        viewModelScope.launch {
+            val userUuid = authUtil.userUuid
+            if (authUtil.isAuthorize && userUuid != null) {
+                val user = userRepo.getUserByUuid(userUuid)
+                mutablePhone.value = user?.phone
+                userUuidValue = user?.uuid
+            }
+        }
+    }
+
+    private fun subscribeOnAddress() {
+        isDelivery.flatMapLatest { isDelivery ->
+            if (isDelivery) {
+                dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+                    Log.d(
+                        CREATE_ORDER_TAG,
+                        "CreateOrderViewModel -> subscribeOnAddress; userUuid = $userUuid"
+                    )
+                    if (userUuid == null) {
+                        userAddressRepo.observeUnassignedUserAddressList().onEach { addressList ->
+                            if (addressList.isNotEmpty()) {
+                                userAddress = addressList.first()
+                                mutableAddress.value =
+                                    stringUtil.getUserAddressString(addressList.first())
+                            }
+                        }
+                    } else {
+                        dataStoreRepo.userAddressUuid.flatMapLatest { userAddressUuid ->
+                            Log.d(
+                                CREATE_ORDER_TAG,
+                                "CreateOrderViewModel -> subscribeOnAddress; userAddressUuid = $userAddressUuid"
+                            )
+                            if (userAddressUuid == null) {
+                                userAddressRepo.observeUserAddressListByUserUuid(userUuid)
+                                    .onEach { addressList ->
+                                        if (addressList.isNotEmpty()) {
+                                            userAddress = addressList.first()
+                                            mutableAddress.value =
+                                                stringUtil.getUserAddressString(addressList.first())
+                                        } else {
+                                            userAddress = null
+                                            mutableAddress.value = null
+                                        }
+                                        Log.d(
+                                            CREATE_ORDER_TAG,
+                                            "CreateOrderViewModel -> subscribeOnAddress; addressList = " +
+                                                    addressList.size
+                                        )
+                                    }
+                            } else {
+                                userAddressRepo.observeUserAddressByUuid(userAddressUuid)
+                                    .onEach { address ->
+                                        userAddress = address
+                                        mutableAddress.value =
+                                            stringUtil.getUserAddressString(address)
+                                    }
+                            }
+                        }
+                    }
+                }
+            } else {
+                dataStoreRepo.cafeAddressUuid.flatMapLatest { cafeAddressUuid ->
+                    if (cafeAddressUuid == null) {
+                        cafeRepo.observeCafeAddressList().onEach { addressList ->
+                            if (addressList.isNotEmpty()) {
+                                cafeAddress = addressList.first()
+                                mutableAddress.value =
+                                    stringUtil.getCafeAddressString(addressList.first())
+                            } else {
+                                cafeAddress = null
+                                mutableAddress.value = ""
+                            }
+                        }
+                    } else {
+                        cafeRepo.observeCafeAddressByUuid(cafeAddressUuid).onEach { address ->
+                            cafeAddress = address
+                            mutableAddress.value = stringUtil.getCafeAddressString(address)
+                        }
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun subscribeOnDeferredTime() {
+        dataStoreRepo.deferredTime.onEach { deferredTime ->
+            deferredTimeValue = deferredTime
+            mutableDeferredTime.value = mapDeferredTime(deferredTime)
+        }.launchIn(viewModelScope)
+    }
+
+    private fun subscribeOnCartProduct() {
+        cartProductRepo.observeCartProductList().flatMapLatest { productList ->
+            cartProductList.clear()
+            cartProductList.addAll(productList)
+            val totalCost = productHelper.getNewTotalCost(productList)
+            mutableTotalCost.value = stringUtil.getCostString(totalCost)
+
+            mutableIsDelivery.onEach { isDelivery ->
+                val delivery = dataStoreRepo.delivery.first()
+                val deliveryCost = orderUtil.getDeliveryCost(isDelivery, productList, delivery)
+                mutableDeliveryCost.value = stringUtil.getCostString(deliveryCost)
+
+                val amountToPay = orderUtil.getNewOrderCost(isDelivery, productList, delivery)
+                mutableNewAmountToPay.value = stringUtil.getCostString(amountToPay)
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun mapDeferredTime(deferredTime: String?): String? {
@@ -261,26 +294,6 @@ class CreateOrderViewModel @Inject constructor(
         } else {
             deferredTime
         }
-    }
-
-    private fun generateCode(currentMillis: Long): String {
-        val currentSeconds = currentMillis / 1000
-        val letters = resourcesProvider.getString(R.string.code_letters)
-        val number = (currentSeconds % (letters.length * CODE_NUMBER_COUNT)).toInt()
-        val codeLetter = letters[number % letters.length].toString()
-        val codeNumber = (number / letters.length)
-        val codeNumberString = if (codeNumber < 10) {
-            "0$codeNumber"
-        } else {
-            codeNumber.toString()
-        }
-
-        return codeLetter + CODE_DIVIDER + codeNumberString
-    }
-
-    private fun getCafeUuid(isDelivery: Boolean): String {
-        //TODO implement
-        return ""
     }
 
     fun onAddressClicked() {

@@ -14,9 +14,7 @@ import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
-    ListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(
-        CartProductDiffCallback()
-    ) {
+    ListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(CartProductDiffCallback()) {
 
     var canBeChanged: Boolean = true
     var countChangeListener: ItemCountChangeListener? = null

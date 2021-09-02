@@ -11,15 +11,13 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MenuProductDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
 import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class MenuProductsAdapter @Inject constructor() :
-    ListAdapter<MenuProductItem, BaseViewHolder<ViewBinding, MenuProductItem>>(
-        MenuProductDiffCallback()
-    ) {
+    ListAdapter<MenuProductItem, BaseViewHolder<ViewBinding, MenuProductItem>>(DefaultDiffCallback()) {
 
     var onItemClickListener: ((MenuProductItem) -> Unit)? = null
     var btnItemClickListener: ((MenuProductItem) -> Unit)? = null

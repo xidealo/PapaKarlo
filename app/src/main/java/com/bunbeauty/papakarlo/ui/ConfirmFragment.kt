@@ -5,6 +5,9 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
@@ -16,20 +19,28 @@ import com.bunbeauty.papakarlo.ui.ConfirmFragmentArgs.fromBundle
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthCredential
 import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: ConfirmViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
 
+    private val args: ConfirmFragmentArgs by navArgs()
     private var phoneVerificationId: String? = null
-    override val isCartVisible = false
-    private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
+    private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,40 +67,30 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                     viewDataBinding.fragmentConfirmTvResendCode.gone()
                 }
             }.startedLaunch(viewLifecycleOwner)
-            startResendTimer()
         }
 
-        with(viewDataBinding) {
+        viewDataBinding.run {
             fragmentConfirmTvResendCode.setOnClickListener {
-                viewModel.startResendTimer()
                 resendVerificationCode(viewModel.getPhoneNumberDigits(fromBundle(requireArguments()).phone))
             }
             fragmentConfirmTvPhoneInformation.text =
-                "${viewDataBinding.fragmentConfirmTvPhoneInformation.text}\n${
-                    fromBundle(requireArguments()).phone
-                }"
+                resourcesProvider.getString(R.string.title_confirm_prone_information) + args.phone
             fragmentConfirmPeetCode.setOnPinEnteredListener { code ->
                 showLoading()
                 phoneVerificationId?.apply {
                     val credential =
                         PhoneAuthProvider.getCredential(phoneVerificationId!!, code.toString())
                     val firebase = FirebaseAuth.getInstance()
-                    firebase.signInWithCredential(credential)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val userId = firebase.currentUser?.uid
-                                viewModel.createUser(
-                                    userId ?: "",
-                                    fromBundle(requireArguments()).phone,
-                                    fromBundle(requireArguments()).email
-                                )
-                            } else {
-                                if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                                    hideLoading()
-                                    viewModel.showCodeError()
-                                }
+                    firebase.signInWithCredential(credential).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            viewModel.refreshUser(args.phone)
+                        } else {
+                            if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                                hideLoading()
+                                viewModel.showCodeError()
                             }
                         }
+                    }
                 }
             }
         }
@@ -108,13 +109,15 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
     }
 
     private fun resendVerificationCode(phoneNumber: String) {
-        PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-            .setPhoneNumber("+$phoneNumber")
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(requireActivity())
-            .setCallbacks(verificationCallbacks)
-            .setForceResendingToken(resendToken)
-            .build()
+        resendToken?.let { resendToken ->
+            PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+                .setPhoneNumber("+$phoneNumber")
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(requireActivity())
+                .setCallbacks(verificationCallbacks)
+                .setForceResendingToken(resendToken)
+                .build()
+        }
     }
 
     private val verificationCallbacks =
@@ -138,6 +141,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 phoneVerificationId = verificationId
                 resendToken = token
                 hideLoading()
+                viewModel.startResendTimer()
             }
         }
 

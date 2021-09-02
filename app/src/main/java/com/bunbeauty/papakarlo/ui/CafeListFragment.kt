@@ -29,12 +29,12 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cafeAdapter.onItemClickListener = { cafeAdapterModel ->
-            viewModel.onCafeCardClick(cafeAdapterModel)
+            viewModel.onCafeCardClicked(cafeAdapterModel)
         }
         viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
 
-        viewModel.cafeListFlow.onEach { cafeList ->
-            cafeAdapter.submitList(cafeList)
+        viewModel.cafeItemList.onEach { cafeItemList ->
+            cafeAdapter.submitList(cafeItemList)
         }.startedLaunch(viewLifecycleOwner)
     }
 

@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
-import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.BaseItem
 
 data class CartProductItem(
     override var uuid: String,
@@ -10,4 +10,4 @@ data class CartProductItem(
     val photoLink: String,
     val count: Int,
     val menuProductUuid: String
-) : BaseModel
+) : BaseItem()

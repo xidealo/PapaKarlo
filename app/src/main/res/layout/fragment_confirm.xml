@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/fragment_confirm_tv_information"
             style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
+            android:layout_margin="@dimen/medium_margin"
             android:gravity="center"
             android:text="@string/title_confirm_information"
             app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_tv_phone_information"
@@ -20,12 +20,11 @@
 
         <TextView
             android:id="@+id/fragment_confirm_tv_phone_information"
-            style="@style/MainText"
-            android:layout_margin="@dimen/small_margin"
-            android:gravity="center"
-            android:text="@string/title_confirm_prone_information"
+            style="@style/MediumRegularCenterText"
+            android:layout_margin="@dimen/medium_margin"
             app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_peet_code"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Код был отправлен на номер +7 (999) 999-99-99"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.alimuzaffar.lib.pin.PinEntryEditText

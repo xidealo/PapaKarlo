@@ -1,23 +1,24 @@
 package com.bunbeauty.papakarlo.presentation.address
 
-import androidx.databinding.ObservableField
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants
+import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
+import com.bunbeauty.common.Constants.STREET_ERROR_KEY
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.ui.Street
 import com.bunbeauty.domain.model.ui.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
@@ -25,130 +26,67 @@ class CreationAddressViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val streetRepo: StreetRepo,
     private val resourcesProvider: IResourcesProvider,
+    private val authUtil: IAuthUtil,
     private val fieldHelper: IFieldHelper
 ) : BaseViewModel() {
 
-    var streets = listOf<Street>()
-    var streetNamesFiled = ObservableField<List<String>>()
+    private var streetList: List<Street> = emptyList()
+    private val mutableStreetNameList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
 
-    fun getStreets() {
+    init {
+        getStreets()
+    }
+
+    private fun getStreets() {
         viewModelScope.launch {
-            streetRepo.getStreets().collect { streetsFlow ->
-                streetNamesFiled.set(streetsFlow.map { it.name })
-                streets = streetsFlow
-            }
+            streetList = streetRepo.getStreets()
+            mutableStreetNameList.value = streetList.map { street -> street.name }
         }
     }
 
     fun onCreateAddressClicked(
-        street: String,
+        streetName: String,
         house: String,
         flat: String,
         entrance: String,
         comment: String,
         floor: String
     ) {
-        if (!fieldHelper.isCorrectFieldContent(
-                street,
-                true,
-                50
-            ) || streets.find { it.name == street } == null
-        ) {
+        val selectedStreet = streetList.find { street -> street.name == streetName }
+        if (!fieldHelper.isCorrectFieldContent(streetName, true, 50) || selectedStreet == null) {
             sendFieldError(
-                Constants.STREET_ERROR_KEY,
-                resourcesProvider.getString(R.string.error_creation_address_name)
+                STREET_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_creation_address_street)
             )
             return
         }
 
-        if (!fieldHelper.isCorrectFieldContent(
-                house,
-                true,
-                5
-            )
-        ) {
+        if (!fieldHelper.isCorrectFieldContent(house, true, 5)) {
             sendFieldError(
-                Constants.HOUSE_ERROR_KEY,
-                " "
+                HOUSE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_creation_address_house)
             )
             return
         }
 
-        if (!fieldHelper.isCorrectFieldContent(
-                flat,
-                false,
-                5
+        viewModelScope.launch {
+            val userUuid = authUtil.userUuid
+            val userAddress = UserAddress(
+                street = selectedStreet.name,
+                house = house,
+                flat = flat,
+                entrance = entrance,
+                floor = floor,
+                comment = comment,
+                streetUuid = selectedStreet.uuid,
+                userUuid = userUuid,
             )
-        ) {
-            sendFieldError(
-                Constants.FLAT_ERROR_KEY,
-                " "
-            )
-            return
-        }
+            userAddressRepo.saveUserAddress(userAddress)
+            dataStoreRepo.saveUserAddressUuid(userAddress.uuid)
 
-        if (!fieldHelper.isCorrectFieldContent(
-                entrance,
-                false,
-                5
-            )
-        ) {
-            sendFieldError(
-                Constants.ENTRANCE_ERROR_KEY,
-                " "
-            )
-            return
-        }
-
-        if (!fieldHelper.isCorrectFieldContent(
-                comment,
-                false,
-                100
-            )
-        ) {
-            sendFieldError(
-                Constants.COMMENT_ERROR_KEY,
-                " "
-            )
-            return
-        }
-
-        if (!fieldHelper.isCorrectFieldContent(
-                floor,
-                false,
-                5
-            )
-        ) {
-            sendFieldError(
-                Constants.FLOOR_ERROR_KEY,
-                " "
-            )
-            return
-        }
-
-        val userAddress = UserAddress().apply {
-            this.street = streets.find { it.name == street }
-            this.house = house
-            this.flat = flat
-            this.entrance = entrance
-            this.comment = comment
-            this.floor = floor
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            userAddress.userUuid = dataStoreRepo.userUuid.first()
-            val uuid = if (!userAddress.userUuid.isNullOrEmpty()) {
-                userAddressRepo.insert("token", userAddress).uuid
-            } else {
-                userAddress.uuid = UUID.randomUUID().toString()
-                userAddressRepo.insert(userAddress)
-                userAddress.uuid
-            }
-            dataStoreRepo.saveUserAddressUuid(uuid)
-            withContext(Dispatchers.Main) {
-                showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
-                goBack()
-            }
+            showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
+            goBack()
         }
     }
 }

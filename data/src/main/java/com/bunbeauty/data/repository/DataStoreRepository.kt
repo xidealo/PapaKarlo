@@ -2,6 +2,7 @@ package com.bunbeauty.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -23,12 +24,6 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.deferredTimeDataStore: DataStore<Preferences> by preferencesDataStore(name = DEFERRED_TIME_DATA_STORE)
 
-    /**
-     * if user didnt login
-     */
-    private val Context.phone: DataStore<Preferences> by preferencesDataStore(name = PHONE_DATA_STORE)
-    private val Context.email: DataStore<Preferences> by preferencesDataStore(name = EMAIL_DATA_STORE)
-
     override val userAddressUuid: Flow<String?> = context.userAddressDataStore.data.map {
         it[DELIVERY_ADDRESS_UUID_KEY]
     }
@@ -37,6 +32,14 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         withContext(IO) {
             context.userAddressDataStore.edit {
                 it[DELIVERY_ADDRESS_UUID_KEY] = addressId
+            }
+        }
+    }
+
+    override suspend fun clearUserAddressUuid() {
+        withContext(IO) {
+            context.userAddressDataStore.edit { dataStore ->
+                dataStore.clear()
             }
         }
     }
@@ -81,28 +84,6 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
-    override val phone: Flow<String> = context.phone.data.map {
-        it[PHONE_KEY] ?: DEFAULT_STRING
-    }
-
-    override suspend fun savePhone(phone: String) {
-        withContext(IO) {
-            context.phone.edit { it[PHONE_KEY] = phone }
-        }
-    }
-
-    override val email: Flow<String> = context.email.data.map {
-        it[EMAIL_KEY] ?: DEFAULT_STRING
-    }
-
-    override suspend fun saveEmail(email: String) {
-        withContext(IO) {
-            context.email.edit {
-                it[EMAIL_KEY] = email
-            }
-        }
-    }
-
     override val deferredTime: Flow<String?> = context.deferredTimeDataStore.data.map {
         it[DEFERRED_TIME_KEY]
     }
@@ -134,9 +115,6 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val USER_UUID_DATA_STORE = "user id data store"
         private const val DEFERRED_TIME_DATA_STORE = "deferred time data store"
 
-        private const val PHONE_DATA_STORE = "phone data store"
-        private const val EMAIL_DATA_STORE = "email data store"
-
         private const val DELIVERY_ADDRESS_UUID = "delivery address uuid"
         private const val CAFE_UUID = "cafe uuid"
         private const val DELIVERY_COST = "delivery cost"
@@ -144,16 +122,11 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val USER_UUID = "user uuid"
         private const val DEFERRED_TIME = "deferred time"
 
-        private const val PHONE = "phone"
-        private const val EMAIL = "email"
-
         private val DELIVERY_ADDRESS_UUID_KEY = stringPreferencesKey(DELIVERY_ADDRESS_UUID)
         private val CAFE_UUID_KEY = stringPreferencesKey(CAFE_UUID)
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
-        private val PHONE_KEY = stringPreferencesKey(PHONE)
-        private val EMAIL_KEY = stringPreferencesKey(EMAIL)
         private val DEFERRED_TIME_KEY = stringPreferencesKey(DEFERRED_TIME)
 
         private const val DEFAULT_LONG = 0L

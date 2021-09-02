@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.presentation.menu
 
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import javax.inject.Inject
 

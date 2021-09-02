@@ -1,19 +1,18 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.entity.order.Order
-import com.bunbeauty.domain.model.ui.order.OrderUI
-import com.bunbeauty.domain.model.ui.order.UserOrder
+import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
-    suspend fun insert(order: Order): String
-    suspend fun loadOrders(userOrderList: List<UserOrder>)
-    fun getOrdersWithCartProducts(): Flow<List<Order>>
-    fun getOrdersWithCartProductsWithEmptyUserId(): Flow<List<Order>>
-    fun getOrdersWithCartProductsByUserId(userId: String): Flow<List<Order>>
-    fun getOrderWithCartProducts(orderUuid: String): Flow<Order?>
+
+    suspend fun refreshOrders(userOrderFirebaseList: List<UserOrderFirebase>, userUuid: String)
+
+    fun observeOrderList(): Flow<List<OrderUI>>?
+
+    fun observeOrderByUuid(orderUuid: String): Flow<OrderUI?>
+
+    fun observeLastOrder(): Flow<OrderUI?>
 
     suspend fun saveOrder(order: OrderUI)
-
-    //suspend fun deleteAll(orderList: List<OrderWithCartProducts>)
 }

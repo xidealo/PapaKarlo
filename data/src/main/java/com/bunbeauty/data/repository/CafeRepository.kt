@@ -1,60 +1,71 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.CafeDao
-import com.bunbeauty.domain.model.ui.cafe.Cafe
-import com.bunbeauty.domain.repo.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
+import com.bunbeauty.domain.mapper.ICafeMapper
+import com.bunbeauty.domain.model.entity.cafe.CafeEntity
+import com.bunbeauty.domain.model.ui.Cafe
+import com.bunbeauty.domain.model.ui.address.CafeAddress
+import com.bunbeauty.domain.repo.ApiRepo
+import com.bunbeauty.domain.repo.CafeRepo
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(
-    private val apiRepo: ApiRepo,
     private val cafeDao: CafeDao,
-    private val cafeAddressRepo: CafeAddressRepo,
-    private val districtRepo: DistrictRepo,
-    private val streetRepo: StreetRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val apiRepo: ApiRepo,
+    private val cafeMapper: ICafeMapper,
 ) : CafeRepo {
 
-    override val cafeEntityListFlow: Flow<List<Cafe>> = cafeDao.getCafeListFlow()
-
     override suspend fun refreshCafeList() {
-        cafeDao.deleteAll()
-        apiRepo.getCafeList().collect { cafeList ->
-            for (cafe in cafeList.filter { it.cafeEntity.visible }) {
-                saveCafe(cafe)
-            }
-            if (dataStoreRepo.cafeAddressUuid.first() == null)
-                dataStoreRepo.saveCafeAddressUuid(cafeList.first().address?.uuid ?: "")
+        val cafeWithDistrictsList = apiRepo.getCafeList()
+            .flowOn(IO)
+            .map { cafeFirebaseList ->
+                cafeFirebaseList.map(cafeMapper::toEntityModel)
+            }.flowOn(Default)
+            .first()
+        cafeDao.refreshCafeList(cafeWithDistrictsList)
+    }
+
+    override suspend fun getCafeEntityByUuid(cafeUuid: String): CafeEntity {
+        return cafeDao.getCafeByUuid(cafeUuid)
+    }
+
+    override suspend fun getCafeByUuid(cafeUuid: String): Cafe {
+        return cafeMapper.toUIModel(cafeDao.getCafeByUuid(cafeUuid))
+    }
+
+    override suspend fun getCafeByStreetUuid(streetUuid: String): Cafe {
+        return withContext(IO) {
+            cafeMapper.toUIModel(cafeDao.getCafeByStreetUuid(streetUuid))
         }
     }
 
-    private suspend fun saveCafe(cafe: Cafe) {
-        cafeDao.insert(cafe.cafeEntity)
-
-        cafe.address?.let { address ->
-            address.cafeId = cafe.cafeEntity.id
-            address.uuid = cafe.cafeEntity.id
-            cafeAddressRepo.insert(address)
-        }
-
-        for (district in cafe.districts) {
-            district.districtEntity.cafeId = cafe.cafeEntity.id
-            districtRepo.insert(district.districtEntity)
-
-            for (street in district.streets) {
-                street.districtId = district.districtEntity.id
-                streetRepo.insert(street)
-            }
-        }
+    override fun observeCafeList(): Flow<List<Cafe>> {
+        return cafeDao.observeCafeList()
+            .flowOn(IO)
+            .map { cafeEntityList ->
+                cafeEntityList.map(cafeMapper::toUIModel)
+            }.flowOn(Default)
     }
 
-    override fun getCafeById(cafeId: String) = cafeDao.getCafeById(cafeId)
+    override fun observeCafeAddressList(): Flow<List<CafeAddress>> {
+        return cafeDao.observeCafeList()
+            .flowOn(IO)
+            .map { cafeEntityList ->
+                cafeEntityList.map { cafeEntity ->
+                    cafeMapper.toUIModel(cafeEntity).cafeAddress
+                }
+            }.flowOn(Default)
+    }
 
-    override suspend fun getCafeEntityByDistrict(districtId: String) = withContext(Dispatchers.IO) {
-        cafeDao.getCafeEntityByDistrict(districtId)
+    override fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress> {
+        return cafeDao.observeCafeByUuid(cafeUuid)
+            .flowOn(IO)
+            .map { cafeEntity ->
+                cafeMapper.toUIModel(cafeEntity).cafeAddress
+            }.flowOn(Default)
     }
 }

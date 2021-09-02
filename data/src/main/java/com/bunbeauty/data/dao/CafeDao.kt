@@ -1,30 +1,68 @@
 package com.bunbeauty.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.bunbeauty.domain.model.ui.cafe.Cafe
-import com.bunbeauty.domain.model.ui.cafe.CafeEntity
+import androidx.room.OnConflictStrategy.REPLACE
+import com.bunbeauty.domain.model.entity.address.DistrictEntity
+import com.bunbeauty.domain.model.entity.address.StreetEntity
+import com.bunbeauty.domain.model.entity.cafe.CafeEntity
+import com.bunbeauty.domain.model.entity.cafe.CafeWithDistricts
+import com.bunbeauty.domain.model.ui.District
+import com.bunbeauty.domain.model.ui.Street
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CafeDao : BaseDao<CafeEntity> {
+abstract class CafeDao : BaseDao<CafeEntity> {
 
-    @Query("SELECT * FROM CafeEntity")
-    fun getCafeListFlow(): Flow<List<Cafe>>
-
-    @Query("SELECT * FROM CafeEntity")
-    fun getCafeList(): List<Cafe>
-
-    @Query("SELECT * FROM CafeEntity WHERE id = :id")
-    fun getCafeEntityById(id: String): CafeEntity?
-
-    @Query("SELECT * FROM CafeEntity WHERE id = :id")
-    fun getCafeById(id: String): LiveData<Cafe>
-
-    @Query("SELECT CafeEntity.* FROM CafeEntity, DistrictEntity WHERE DistrictEntity.id = :districtId AND CafeEntity.id = DistrictEntity.cafeId")
-    fun getCafeEntityByDistrict(districtId: String): CafeEntity
+    // INSERT
 
     @Transaction
+    open suspend fun refreshCafeList(cafeWithDistrictsList: List<CafeWithDistricts>) {
+        deleteAllCafes()
+        deleteAllDistricts()
+        deleteAllStreets()
+
+        cafeWithDistrictsList.forEach { cafeWithDistricts ->
+            insert(cafeWithDistricts.cafeEntity)
+            cafeWithDistricts.districtWithStreetsList.forEach { districtWithStreets ->
+                insertDistrict(districtWithStreets.district)
+                insertAllStreets(districtWithStreets.streets)
+            }
+        }
+    }
+
+    @Insert(onConflict = REPLACE)
+    abstract suspend fun insertAllStreets(streetList: List<StreetEntity>)
+
+    @Insert(onConflict = REPLACE)
+    abstract suspend fun insertDistrict(district: DistrictEntity)
+
+    // OBSERVE
+
+    @Query("SELECT * FROM CafeEntity")
+    abstract fun observeCafeList(): Flow<List<CafeEntity>>
+
+    @Query("SELECT * FROM CafeEntity WHERE uuid = :uuid")
+    abstract fun observeCafeByUuid(uuid: String): Flow<CafeEntity>
+
+    // GET
+
+    @Query("SELECT * FROM CafeEntity WHERE uuid = :uuid")
+    abstract suspend fun getCafeByUuid(uuid: String): CafeEntity
+
+    @Query("SELECT CafeEntity.* FROM CafeEntity " +
+            "JOIN DistrictEntity ON CafeEntity.uuid = DistrictEntity.cafeUuid " +
+            "JOIN StreetEntity ON DistrictEntity.uuid = StreetEntity.districtUuid " +
+            "WHERE StreetEntity.uuid = :streetUuid")
+    abstract suspend fun getCafeByStreetUuid(streetUuid: String): CafeEntity
+
+    // DELETE
+
     @Query("DELETE FROM CafeEntity")
-    fun deleteAll()
+    abstract suspend fun deleteAllCafes()
+
+    @Query("DELETE FROM DistrictEntity")
+    abstract suspend fun deleteAllDistricts()
+
+    @Query("DELETE FROM StreetEntity")
+    abstract suspend fun deleteAllStreets()
 }

@@ -7,6 +7,7 @@ interface DataStoreRepo {
 
     val userAddressUuid: Flow<String?>
     suspend fun saveUserAddressUuid(addressId: String)
+    suspend fun clearUserAddressUuid()
 
     val cafeAddressUuid: Flow<String?>
     suspend fun saveCafeAddressUuid(addressId: String)
@@ -16,12 +17,6 @@ interface DataStoreRepo {
 
     val userUuid: Flow<String?>
     suspend fun saveUserUuid(userId: String)
-
-    val phone: Flow<String>
-    suspend fun savePhone(phone: String)
-
-    val email: Flow<String>
-    suspend fun saveEmail(email: String)
 
     val deferredTime: Flow<String?>
     suspend fun saveDeferredTime(deferredTime: String)

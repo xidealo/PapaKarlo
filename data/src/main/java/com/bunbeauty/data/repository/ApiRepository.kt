@@ -1,31 +1,38 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.common.Constants
 import com.bunbeauty.common.Constants.ADDRESSES
+import com.bunbeauty.common.Constants.CAFES
 import com.bunbeauty.common.Constants.COMPANY
 import com.bunbeauty.common.Constants.DELIVERY
+import com.bunbeauty.common.Constants.EMAIL
 import com.bunbeauty.common.Constants.L_ORDERS
 import com.bunbeauty.common.Constants.MENU_PRODUCTS
 import com.bunbeauty.common.Constants.ORDERS
 import com.bunbeauty.common.Constants.USERS
 import com.bunbeauty.data.BuildConfig
-import com.bunbeauty.domain.model.firebase.CafeAddressFirebase
+import com.bunbeauty.data.extensions.getSnapshot
+import com.bunbeauty.data.extensions.getValue
+import com.bunbeauty.data.extensions.getValueList
 import com.bunbeauty.domain.model.firebase.UserFirebase
+import com.bunbeauty.domain.model.firebase.address.UserAddressFirebase
+import com.bunbeauty.domain.model.firebase.cafe.CafeFirebase
 import com.bunbeauty.domain.model.firebase.order.OrderFirebase
+import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
 import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.ui.MenuProduct
-import com.bunbeauty.domain.model.ui.cafe.Cafe
-import com.bunbeauty.domain.model.ui.order.UserOrder
+import com.bunbeauty.domain.model.entity.product.MenuProductEntity
+import com.bunbeauty.domain.model.firebase.MenuProductFirebase
 import com.bunbeauty.domain.repo.ApiRepo
 import com.google.firebase.database.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDatabase) : ApiRepo {
+
+    val orderObserverMap: MutableMap<DatabaseReference, ValueEventListener> = mutableMapOf()
 
     override fun postOrder(orderFirebase: OrderFirebase, cafeUuid: String): String {
         val ordersReference = firebaseDatabase.getReference(ORDERS)
@@ -48,162 +55,124 @@ class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
             .child(L_ORDERS)
         val userOrderUuid = getNewKey(userOrdersReference)
 
-        val userOrder = UserOrder(cafeUuid = cafeUuid, orderUuid = orderUuid)
+        val userOrder = UserOrderFirebase(cafeUuid = cafeUuid, orderUuid = orderUuid)
         userOrdersReference.child(userOrderUuid).setValue(userOrder)
     }
 
-    override fun insert(userFirebase: UserFirebase, userId: String) {
+    override fun postUser(userUuid: String, userFirebase: UserFirebase) {
         val userReference = firebaseDatabase
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
-            .child(userId)
-
-        val items = HashMap<String, Any>()
-        items["phone"] = userFirebase.phone
-
-        if (userFirebase.email.isNotEmpty())
-            items["email"] = userFirebase.email
-        userReference.updateChildren(items)
+            .child(userUuid)
+        userReference.setValue(userFirebase)
     }
 
-    override fun update(userFirebase: UserFirebase, userId: String) {
-        val userReference = firebaseDatabase
-            .getReference(COMPANY)
+    override fun postUserAddress(userAddress: UserAddressFirebase, userUuid: String): String {
+        val addressesReference = firebaseDatabase.getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
-            .child(userId)
-
-        val items = HashMap<String, Any>()
-        items["phone"] = userFirebase.phone
-        if (userFirebase.email.isNotEmpty())
-            items["email"] = userFirebase.email
-        userReference.updateChildren(items)
-    }
-
-    override fun insertToBonusList(userFirebase: UserFirebase, userId: String) {
-        val userReference = firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(USERS)
-            .child(userId)
-
-        val items = HashMap<String, Any>()
-        items["bonusList"] = userFirebase.bonusList
-        userReference.updateChildren(items)
-    }
-
-    override fun insert(addressFirebase: CafeAddressFirebase, userId: String): String {
-        val addressUuid = firebaseDatabase.getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(USERS)
-            .child(userId)
-            .push()
-            .key!!
-
-        val addressReference = firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(USERS)
-            .child(userId)
+            .child(userUuid)
             .child(ADDRESSES)
-            .child(addressUuid)
-        addressReference.setValue(addressFirebase)
+        val addressUuid = getNewKey(addressesReference)
+        addressesReference.child(addressUuid).setValue(userAddress)
 
         return addressUuid
     }
 
-    @ExperimentalCoroutinesApi
-    override fun getCafeList(): Flow<List<Cafe>> = callbackFlow {
-        val cafeReference = this@ApiRepository.firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(Constants.CAFES)
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val cafeList = snapshot.children.map { cafeSnapshot ->
-                    cafeSnapshot.getValue(Cafe::class.java)!!
-                }
-                trySend(cafeList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }
-        cafeReference.addListenerForSingleValueEvent(valueEventListener)
-
-        awaitClose { cafeReference.removeEventListener(valueEventListener) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override fun getMenuProductList(): Flow<List<MenuProduct>> = callbackFlow {
-        val menuProductsReference = this@ApiRepository.firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(MENU_PRODUCTS)
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val menuProductList = snapshot.children.map { menuProductSnapshot ->
-                    menuProductSnapshot.getValue(MenuProduct::class.java)!!
-                        .also { it.uuid = menuProductSnapshot.key!! }
-                }
-                trySend(menuProductList)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }
-        menuProductsReference.addListenerForSingleValueEvent(valueEventListener)
-
-        awaitClose { menuProductsReference.removeEventListener(valueEventListener) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override fun getDelivery(): Flow<Delivery> = callbackFlow {
-        val deliveryReference = this@ApiRepository.firebaseDatabase
-            .getReference(COMPANY)
-            .child(BuildConfig.APP_ID)
-            .child(DELIVERY)
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                launch {
-                    trySend(snapshot.getValue(Delivery::class.java)!!)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }
-        deliveryReference.addListenerForSingleValueEvent(valueEventListener)
-        awaitClose { deliveryReference.removeEventListener(valueEventListener) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override fun getUser(userId: String): Flow<UserFirebase?> = callbackFlow {
-        val userReference = this@ApiRepository.firebaseDatabase
+    override fun updateUserEmail(userUuid: String, userEmail: String) {
+        val userReference = firebaseDatabase
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(USERS)
-            .child(userId)
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                launch {
-                    trySend(snapshot.getValue(UserFirebase::class.java))
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        }
-        userReference.addListenerForSingleValueEvent(valueEventListener)
-        awaitClose { userReference.removeEventListener(valueEventListener) }
+            .child(userUuid)
+            .child(EMAIL)
+        userReference.setValue(userEmail)
     }
 
     @ExperimentalCoroutinesApi
-    override fun getUserBonusList(userId: String): Flow<List<Int>> = callbackFlow {
+    override fun getCafeList(): Flow<List<CafeFirebase>> {
+        val childSnapshot = firebaseDatabase
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(CAFES)
+        return childSnapshot.getValueList()
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getMenuProductList(): Flow<List<MenuProductFirebase>> {
+        val menuProductsReference = firebaseDatabase
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(MENU_PRODUCTS)
+        return menuProductsReference.getValueList()
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getDelivery(): Flow<Delivery?> {
+        val deliveryReference = firebaseDatabase
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(DELIVERY)
+        return deliveryReference.getValue<Delivery>()
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getUser(userUuid: String): Flow<UserFirebase?> {
+        val userReference = firebaseDatabase
+            .getReference(COMPANY)
+            .child(BuildConfig.APP_ID)
+            .child(USERS)
+            .child(userUuid)
+        return userReference.getValue<UserFirebase>()
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun getOrder(userOrderFirebase: UserOrderFirebase): Flow<OrderFirebase?> {
+        val orderReference = firebaseDatabase
+            .getReference(ORDERS)
+            .child(BuildConfig.APP_ID)
+            .child(userOrderFirebase.cafeUuid)
+            .child(userOrderFirebase.orderUuid)
+        return orderReference.getValue<OrderFirebase>()
+    }
+
+    override fun removeOrderObservers() {
+        orderObserverMap.entries.forEach { mapEntry ->
+            mapEntry.key.removeEventListener(mapEntry.value)
+        }
+        orderObserverMap.clear()
+    }
+
+    @ExperimentalCoroutinesApi
+    override fun observeOrder(userOrderFirebase: UserOrderFirebase): Flow<OrderFirebase?> =
+        callbackFlow {
+            val orderReference = firebaseDatabase
+                .getReference(ORDERS)
+                .child(BuildConfig.APP_ID)
+                .child(userOrderFirebase.cafeUuid)
+                .child(userOrderFirebase.orderUuid)
+            val listener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    trySend(snapshot.getValue(OrderFirebase::class.java))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    close(error.toException())
+                }
+            }
+            orderObserverMap[orderReference] = listener
+            orderReference.addValueEventListener(listener)
+            awaitClose { orderReference.removeEventListener(listener) }
+        }
+
+    fun getNewKey(reference: DatabaseReference): String {
+        return reference.push().key!!
+    }
+
+    /*@Deprecated("Bonuses deprecated")
+    @ExperimentalCoroutinesApi
+    fun getUserBonusList(userId: String): Flow<List<Int>> = callbackFlow {
         val bonusReference = this@ApiRepository.firebaseDatabase
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
@@ -224,55 +193,6 @@ class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
         }
         bonusReference.addValueEventListener(valueEventListener)
         awaitClose { bonusReference.removeEventListener(valueEventListener) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override fun getOrder(cafeId: String, orderId: String): Flow<OrderFirebase?> = callbackFlow {
-        val orderReference = this@ApiRepository.firebaseDatabase
-            .getReference(ORDERS)
-            .child(BuildConfig.APP_ID)
-            .child(cafeId)
-            .child(orderId)
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                launch {
-                    trySend(snapshot.getValue(OrderFirebase::class.java))
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }
-        orderReference.addListenerForSingleValueEvent(valueEventListener)
-        awaitClose { orderReference.removeEventListener(valueEventListener) }
-    }
-
-    @ExperimentalCoroutinesApi
-    override fun getOrderWithSubscribe(cafeId: String, orderId: String): Flow<OrderFirebase?> =
-        callbackFlow {
-            val orderReference = this@ApiRepository.firebaseDatabase
-                .getReference(ORDERS)
-                .child(BuildConfig.APP_ID)
-                .child(cafeId)
-                .child(orderId)
-
-            val valueEventListener = object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    launch {
-                        trySend(snapshot.getValue(OrderFirebase::class.java))
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                }
-            }
-            orderReference.addValueEventListener(valueEventListener)
-            awaitClose { orderReference.removeEventListener(valueEventListener) }
-        }
-
-    fun getNewKey(reference: DatabaseReference): String {
-        return reference.push().key!!
-    }
+    }*/
 
 }

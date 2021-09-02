@@ -1,44 +1,18 @@
 package com.bunbeauty.domain.util.product
 
-import com.bunbeauty.domain.model.ui.CartProduct
-import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.ui.MenuProduct
+import com.bunbeauty.domain.model.ui.product.MenuProduct
+import com.bunbeauty.domain.model.ui.product.ProductPosition
 
 interface IProductHelper {
 
-    fun getFullPriceString(cartProductList: List<CartProduct>): String
-    fun getNewTotalCost(cartProductList: List<CartProduct>): Int
-    fun getOldTotalCost(cartProductList: List<CartProduct>): Int?
+    fun <T: ProductPosition> getNewTotalCost(productList: List<T>): Int
+    fun <T: ProductPosition> getOldTotalCost(productList: List<T>): Int?
 
-    fun getCartProductNewCost(cartProduct: CartProduct): Int
-    fun getCartProductOldCost(cartProduct: CartProduct): Int?
+    fun getCartProductNewCost(product: ProductPosition): Int
+    fun getCartProductOldCost(product: ProductPosition): Int?
 
     fun getMenuProductNewPrice(menuProduct: MenuProduct): Int
+    fun getMenuProductOldPrice(menuProduct: MenuProduct): Int?
 
-    fun getTotalCount(cartProductList: List<CartProduct>): Int
-
-    @Deprecated("use method which returns Int")
-    fun getFullPriceStringWithDelivery(
-        cartProductList: List<CartProduct>,
-        delivery: Delivery
-    ): String
-
-    @Deprecated("use method which returns Int")
-    fun getDifferenceBeforeFreeDeliveryString(
-        cartProductList: List<CartProduct>,
-        priceForFreeDelivery: Int
-    ): String
-
-    @Deprecated("use method which returns Int")
-    fun getCartProductPriceString(cartProduct: CartProduct): String
-
-    @Deprecated("use method which returns Int")
-    fun getCartProductOldPriceString(cartProduct: CartProduct): String
-
-    @Deprecated("use method which returns Int")
-    fun getMenuProductPriceString(menuProduct: MenuProduct): String
-
-    @Deprecated("use method which returns Int")
-    fun getMenuProductOldPriceString(menuProduct: MenuProduct): String
-
+    fun <T: ProductPosition> getTotalCount(productList: List<T>): Int
 }

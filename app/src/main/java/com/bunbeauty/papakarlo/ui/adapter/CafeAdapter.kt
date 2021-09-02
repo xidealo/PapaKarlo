@@ -5,22 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.CafeDiffUtilCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :
-    ListAdapter<CafeItem, BaseViewHolder<ViewBinding, CafeItem>>(
-        CafeDiffUtilCallback()
-    ) {
+    ListAdapter<CafeItem, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
+
     var onItemClickListener: ((CafeItem) -> Unit)? = null
 
-    override fun onBindViewHolder(
-        holder: BaseViewHolder<ViewBinding, CafeItem>,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
         holder.onBind(getItem(position))
     }
 
@@ -36,7 +31,7 @@ class CafeAdapter @Inject constructor() :
 
         override fun onBind(item: CafeItem) {
             super.onBind(item)
-            with(binding) {
+            binding.run {
                 elementCafeTvAddress.text = item.address
                 elementCafeTvWorkTime.text = item.workingHours
                 elementCafeTvTimeStatus.text = item.workingTimeMessage

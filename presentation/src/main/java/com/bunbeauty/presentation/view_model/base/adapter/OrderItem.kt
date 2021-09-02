@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
-import com.bunbeauty.domain.model.ui.BaseModel
+import com.bunbeauty.domain.model.ui.BaseItem
 
 data class OrderItem(
     override var uuid: String,
@@ -9,4 +9,4 @@ data class OrderItem(
     val code: String,
     val time: String,
     var deferredTime: String
-) : BaseModel
+) : BaseItem()

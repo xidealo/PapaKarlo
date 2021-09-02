@@ -12,8 +12,7 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetArgs.fromBundle
-import com.bunbeauty.papakarlo.ui.adapter.AddressesAdapter
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.MyDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.AddressAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -27,13 +26,13 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
     }
 
     @Inject
-    lateinit var addressesAdapter: AddressesAdapter
+    lateinit var addressAdapter: AddressAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val isDelivery = fromBundle(requireArguments()).isDelivery
-        addressesAdapter.onItemClickListener = { address ->
+        addressAdapter.setOnItemClickListener { address ->
             viewModel.saveSelectedAddress(address.uuid, isDelivery)
         }
 
@@ -42,10 +41,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                 is State.Loading -> {
                 }
                 is State.Success -> {
-                    addressesAdapter.setItemList(
-                        state.data,
-                        MyDiffCallback(state.data, addressesAdapter.itemList)
-                    )
+                    addressAdapter.submitList(state.data)
                 }
                 else -> Unit
             }
@@ -66,7 +62,7 @@ class AddressesBottomSheet : BaseBottomSheetDialog<BottomSheetAddressesBinding>(
                 requireContext().resources.getString(R.string.title_bottom_sheet_addresses_cafe_address)
             viewDataBinding.bottomSheetAddressIvCreateAddress.gone()
         }
-        viewDataBinding.bottomSheetAddressRvResult.adapter = addressesAdapter
+        viewDataBinding.bottomSheetAddressRvResult.adapter = addressAdapter
     }
 
     override fun onDestroyView() {

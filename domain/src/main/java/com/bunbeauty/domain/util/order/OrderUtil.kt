@@ -3,26 +3,25 @@ package com.bunbeauty.domain.util.order
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.ui.CartProduct
 import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.entity.order.Order
+import com.bunbeauty.domain.model.ui.product.OrderProduct
+import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.product.ProductPosition
 import com.bunbeauty.domain.util.product.IProductHelper
 import javax.inject.Inject
 
-class OrderUtil @Inject constructor(
-    private val productHelper: IProductHelper
-) : IOrderUtil {
+class OrderUtil @Inject constructor(private val productHelper: IProductHelper) : IOrderUtil {
 
-    override fun getDeliveryCost(order: Order, delivery: Delivery): Int {
-        return getDeliveryCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    override fun getDeliveryCost(order: OrderUI, delivery: Delivery): Int {
+        return getDeliveryCost(order.isDelivery, order.orderProductList, delivery)
     }
 
-    override fun getDeliveryCost(
+    override fun <T: ProductPosition> getDeliveryCost(
         isDelivery: Boolean,
-        cartProducts: List<CartProduct>,
+        orderProductList: List<T>,
         delivery: Delivery
     ): Int {
-        val orderCost = productHelper.getNewTotalCost(cartProducts)
+        val orderCost = productHelper.getNewTotalCost(orderProductList)
 
         return if (isDelivery && orderCost < delivery.forFree) {
             delivery.cost
@@ -31,43 +30,43 @@ class OrderUtil @Inject constructor(
         }
     }
 
-    override fun getOldOrderCost(order: Order, delivery: Delivery): Int? {
-        return getOldOrderCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    override fun getOldOrderCost(order: OrderUI, delivery: Delivery): Int? {
+        return getOldOrderCost(order.isDelivery, order.orderProductList, delivery)
     }
 
     override fun getOldOrderCost(
         isDelivery: Boolean,
-        cartProducts: List<CartProduct>,
+        orderProductList: List<OrderProduct>,
         delivery: Delivery
     ): Int? {
-        val orderCost = productHelper.getOldTotalCost(cartProducts) ?: return null
-        val deliveryCost = getDeliveryCost(isDelivery, cartProducts, delivery)
+        val orderCost = productHelper.getOldTotalCost(orderProductList) ?: return null
+        val deliveryCost = getDeliveryCost(isDelivery, orderProductList, delivery)
 
         return orderCost + deliveryCost
     }
 
-    override fun getNewOrderCost(order: Order, delivery: Delivery): Int {
-        return getNewOrderCost(order.orderEntity.isDelivery, order.cartProducts, delivery)
+    override fun getNewOrderCost(order: OrderUI, delivery: Delivery): Int {
+        return getNewOrderCost(order.isDelivery, order.orderProductList, delivery)
     }
 
-    override fun getNewOrderCost(
+    override fun <T: ProductPosition> getNewOrderCost(
         isDelivery: Boolean,
-        cartProducts: List<CartProduct>,
+        orderProductList: List<T>,
         delivery: Delivery
     ): Int {
-        val orderCost = productHelper.getNewTotalCost(cartProducts)
-        val deliveryCost = getDeliveryCost(isDelivery, cartProducts, delivery)
+        val orderCost = productHelper.getNewTotalCost(orderProductList)
+        val deliveryCost = getDeliveryCost(isDelivery, orderProductList, delivery)
 
         return orderCost + deliveryCost
     }
 
-    override fun getProceeds(orderList: List<Order>, delivery: Delivery): Int {
-        return orderList.sumBy { order ->
+    override fun getProceeds(orderList: List<OrderUI>, delivery: Delivery): Int {
+        return orderList.sumOf { order ->
             getNewOrderCost(order, delivery)
         }
     }
 
-    override fun getAverageCheck(orderList: List<Order>, delivery: Delivery): Int {
+    override fun getAverageCheck(orderList: List<OrderUI>, delivery: Delivery): Int {
         val proceeds = getProceeds(orderList, delivery)
 
         return proceeds / orderList.size

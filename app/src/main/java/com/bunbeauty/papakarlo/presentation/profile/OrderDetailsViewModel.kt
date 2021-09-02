@@ -3,14 +3,14 @@ package com.bunbeauty.papakarlo.presentation.profile
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.domain.model.ui.CartProduct
-import com.bunbeauty.domain.model.entity.order.Order
+import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.product.OrderProduct
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import com.bunbeauty.presentation.view_model.base.adapter.OrderDetailsItem
 import kotlinx.coroutines.flow.*
@@ -25,71 +25,56 @@ class OrderDetailsViewModel @Inject constructor(
     private val orderUtil: IOrderUtil,
 ) : BaseViewModel() {
 
-    private val _orderState: MutableStateFlow<State<OrderDetailsItem?>> =
+    private val mutableOrderState: MutableStateFlow<State<OrderDetailsItem?>> =
         MutableStateFlow(State.Loading())
-    val orderState: StateFlow<State<OrderDetailsItem?>>
-        get() = _orderState.asStateFlow()
+    val orderState: StateFlow<State<OrderDetailsItem?>> = mutableOrderState.asStateFlow()
 
     fun getOrder(orderUuid: String) {
-        orderRepo.getOrderWithCartProducts(orderUuid).onEach { order ->
-            if (order != null)
-                _orderState.value = toItem(order).toStateNullableSuccess()
-            else
-                _orderState.value = State.Empty()
+        orderRepo.observeOrderByUuid(orderUuid).onEach { order ->
+            if (order == null) {
+                mutableOrderState.value = State.Empty()
+            } else {
+                mutableOrderState.value = toItem(order).toStateNullableSuccess()
+            }
         }.launchIn(viewModelScope)
     }
 
-    private fun toItem(cartProduct: CartProduct): CartProductItem {
-        val newCost = productHelper.getCartProductNewCost(cartProduct)
-        val oldCost = productHelper.getCartProductOldCost(cartProduct)
+    private fun toItem(orderProduct: OrderProduct): CartProductItem {
+        val newCost = productHelper.getCartProductNewCost(orderProduct)
+        val oldCost = productHelper.getCartProductOldCost(orderProduct)
         val newCostString = stringUtil.getCostString(newCost)
         val oldCostString = stringUtil.getCostString(oldCost)
 
         return CartProductItem(
-            uuid = cartProduct.uuid,
-            name = cartProduct.menuProduct.name,
+            uuid = orderProduct.uuid,
+            name = orderProduct.menuProduct.name,
             newCost = newCostString,
             oldCost = oldCostString,
-            photoLink = cartProduct.menuProduct.photoLink,
-            count = cartProduct.count,
-            menuProductUuid = cartProduct.menuProduct.uuid
+            photoLink = orderProduct.menuProduct.photoLink,
+            count = orderProduct.count,
+            menuProductUuid = orderProduct.menuProduct.uuid
         )
     }
 
-    private fun toItem(order: Order): OrderDetailsItem {
+    private fun toItem(order: OrderUI): OrderDetailsItem {
         val delivery = runBlocking {
             dataStoreRepo.delivery.first()
         }
         return OrderDetailsItem(
-            code = order.orderEntity.code,
-            orderStatus = stringUtil.toStringOrderStatus(order.orderEntity.orderStatus),
-            orderStatusBackground = orderUtil.getBackgroundColor(order.orderEntity.orderStatus),
-            orderStatusActiveLine = orderUtil.getActiveLineCount(order.orderEntity.orderStatus),
-            time = stringUtil.toStringTime(order.orderEntity),
-            pickupMethod = stringUtil.toStringIsDelivery(order.orderEntity),
-            deferredTime = order.orderEntity.deferredTime ?: "",
-            address = order.orderEntity.userAddressUuid ?: "",
-            comment = order.orderEntity.comment ?: "",
-            deliveryCost = stringUtil.getDeliveryString(
-                orderUtil.getDeliveryCost(
-                    order,
-                    delivery
-                )
-            ),
-            oldTotalCost = stringUtil.getCostString(
-                orderUtil.getOldOrderCost(
-                    order,
-                    delivery
-                )
-            ),
-            newTotalCost = stringUtil.getCostString(
-                orderUtil.getNewOrderCost(
-                    order,
-                    delivery
-                )
-            ),
-            cartProducts = order.cartProducts.map(::toItem),
-            isDelivery = order.orderEntity.isDelivery,
+            code = order.code,
+            orderStatus = stringUtil.toStringOrderStatus(order.orderStatus),
+            orderStatusBackground = orderUtil.getBackgroundColor(order.orderStatus),
+            orderStatusActiveLine = orderUtil.getActiveLineCount(order.orderStatus),
+            time = stringUtil.toStringTime(order.time),
+            pickupMethod = stringUtil.toStringIsDelivery(order.isDelivery),
+            deferredTime = order.deferredTime ?: "",
+            address = stringUtil.getUserAddressString(order.userAddress),
+            comment = order.comment ?: "",
+            deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(order, delivery)),
+            oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(order, delivery)),
+            newTotalCost = stringUtil.getCostString(orderUtil.getNewOrderCost(order, delivery)),
+            cartProducts = order.orderProductList.map(::toItem),
+            isDelivery = order.isDelivery,
         )
     }
 }

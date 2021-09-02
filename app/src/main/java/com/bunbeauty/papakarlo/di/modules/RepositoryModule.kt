@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.domain.repo.CafeAddressRepo
-import com.bunbeauty.data.repository.CafeAddressRepository
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.data.repository.CafeRepository
 import com.bunbeauty.domain.repo.UserAddressRepo
@@ -33,9 +31,6 @@ interface RepositoryModule {
 
     @Binds
     fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
-
-    @Binds
-    fun bindCafeAddressRepo(cafeAddressRepository: CafeAddressRepository): CafeAddressRepo
 
     @Binds
     fun bindUserAddressRepo(userAddressRepository: UserAddressRepository): UserAddressRepo

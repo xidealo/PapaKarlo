@@ -1,7 +1,6 @@
 package com.bunbeauty.domain.model.firebase.order
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.firebase.CafeAddressFirebase
 import com.bunbeauty.domain.model.firebase.address.UserAddressFirebase
 import org.joda.time.DateTime
 

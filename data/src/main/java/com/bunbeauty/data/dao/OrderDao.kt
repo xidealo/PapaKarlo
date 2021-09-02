@@ -1,24 +1,44 @@
 package com.bunbeauty.data.dao
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.*
 import com.bunbeauty.domain.model.entity.order.OrderEntity
-import com.bunbeauty.domain.model.entity.order.Order
+import com.bunbeauty.domain.model.entity.order.OrderStatusEntity
+import com.bunbeauty.domain.model.entity.order.OrderWithProducts
+import com.bunbeauty.domain.model.entity.product.OrderProductEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface OrderDao : BaseDao<OrderEntity> {
 
-    @Query("SELECT * FROM OrderEntity")
-    fun getOrders(): Flow<List<Order>>
+    // INSERT
 
+    @Transaction
+    suspend fun insert(orderWithProducts: OrderWithProducts) {
+        insert(orderWithProducts.order)
+        insertOrderProductsList(orderWithProducts.orderProductList)
+    }
 
-    @Query("SELECT * FROM OrderEntity where userUuid = :userId")
-    fun getOrdersByUserId(userId: String): Flow<List<Order>>
+    @Insert
+    suspend fun insertOrderProductsList(orderProductList: List<OrderProductEntity>)
 
-    @Query("SELECT * FROM OrderEntity where uuid = :orderUuid")
-    fun getOrderFlowByUuid(orderUuid: String): Flow<Order?>
+    // OBSERVE
+
+    @Query("SELECT * FROM OrderEntity WHERE userUuid = :userUuid")
+    fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderWithProducts>>
+
+    @Query("SELECT * FROM OrderEntity WHERE userUuid = :uuid")
+    fun observeOrderByUuid(uuid: String): Flow<OrderWithProducts?>
+
+    @Query("SELECT * FROM OrderEntity WHERE time = (SELECT MAX(time) FROM OrderEntity)")
+    fun observeLastOrder(): Flow<OrderWithProducts?>
+
+    // GET
 
     @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")
-    fun getOrderByUuid(uuid: String): Order?
+    suspend fun getOrderByUuid(uuid: String): OrderWithProducts?
+
+    // UPDATE
+
+    @Update(entity = OrderEntity::class)
+    suspend fun updateOrderStatus(orderStatusEntity: OrderStatusEntity)
 }

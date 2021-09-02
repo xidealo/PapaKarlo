@@ -7,7 +7,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.Constants
 import com.bunbeauty.common.State
-import com.bunbeauty.domain.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,6 +15,7 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -35,35 +35,32 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.userEntityState.onEach { state ->
-            when (state) {
-                is State.Loading -> {
-                    viewDataBinding.fragmentProfilePbLoading.visible()
-                    viewDataBinding.fragmentProfileGroupHasProfile.gone()
-                    viewDataBinding.fragmentProfileGroupNoProfile.gone()
-                }
-                is State.Success -> {
-                    if (state.data == null) {
-                        viewDataBinding.fragmentProfileGroupHasProfile.gone()
-                        viewDataBinding.fragmentProfileGroupNoProfile.visible()
-                    } else {
-                        viewDataBinding.fragmentProfileGroupHasProfile.visible()
-                        viewDataBinding.fragmentProfileGroupNoProfile.gone()
-                        /* viewDataBinding.fragmentProfileTvBonusesValue.text =
-                             viewModel.getBonusesString(
-                                 state.data?.bonusList!!
-                             )*/
+        viewModel.userState.onEach { state ->
+            viewDataBinding.run {
+                when (state) {
+                    is State.Loading -> {
+                        fragmentProfilePbLoading.visible()
+                        fragmentProfileGroupHasProfile.gone()
+                        fragmentProfileGroupNoProfile.gone()
                     }
-                    viewDataBinding.fragmentProfilePbLoading.gone()
+                    is State.Success -> {
+                        fragmentProfileGroupHasProfile.visible()
+                        fragmentProfileGroupNoProfile.gone()
+                        fragmentProfilePbLoading.gone()
+                    }
+                    is State.Empty -> {
+                        fragmentProfileGroupHasProfile.gone()
+                        fragmentProfileGroupNoProfile.visible()
+                    }
+                    else -> Unit
                 }
-                else -> Unit
             }
         }.startedLaunch(viewLifecycleOwner)
         viewModel.hasAddressState.onEach { state ->
-            when (state) {
-                is State.Success -> {
-                    if (state.data) {
-                        with(viewDataBinding) {
+            viewDataBinding.run {
+                when (state) {
+                    is State.Success -> {
+                        if (state.data) {
                             fragmentProfileMcvAddress.setOnClickListener {
                                 viewModel.onAddressClicked()
                             }
@@ -71,9 +68,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                                 resourcesProvider.getString(R.string.title_profile_your_address)
                             fragmentProfileIvCreateAddress.gone()
                             fragmentProfileIvSelectAddress.visible()
-                        }
-                    } else {
-                        with(viewDataBinding) {
+                        } else {
                             fragmentProfileMcvAddress.setOnClickListener {
                                 viewModel.onCreateAddressClicked()
                             }
@@ -83,8 +78,8 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                             fragmentProfileIvSelectAddress.gone()
                         }
                     }
+                    else -> Unit
                 }
-                else -> { }
             }
         }.startedLaunch(viewLifecycleOwner)
         viewModel.lastOrderState.onEach { state ->

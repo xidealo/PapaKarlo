@@ -1,15 +1,16 @@
 package com.bunbeauty.papakarlo.presentation.menu
 
+import android.util.Log
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.local.MenuProduct
+import com.bunbeauty.domain.model.ui.product.MenuProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
@@ -28,14 +29,13 @@ class ProductTabViewModel @Inject constructor(
         get() = mutableProductListState.asStateFlow()
 
     fun getMenuProductList(productCode: ProductCode) {
-        menuProductRepo.getMenuProductListAsFlow().onEach { menuProductList ->
+        menuProductRepo.observeMenuProductList().onEach { menuProductList ->
             if (menuProductList.isEmpty()) {
                 mutableProductListState.value = State.Loading()
             } else {
                 if (productCode == ProductCode.ALL) {
-                    mutableProductListState.value =
-                        menuProductList.map {
-                            toItemModel(it)
+                    mutableProductListState.value = menuProductList.map { menuProduct ->
+                            toItemModel(menuProduct)
                         }.toStateSuccess()
                 } else {
                     val filteredMenuProductList = menuProductList.filter { menuProduct ->
@@ -44,8 +44,9 @@ class ProductTabViewModel @Inject constructor(
                     if (filteredMenuProductList.isEmpty()) {
                         mutableProductListState.value = State.Empty()
                     } else {
-                        mutableProductListState.value =
-                            filteredMenuProductList.map { toItemModel(it) }.toStateSuccess()
+                        mutableProductListState.value = filteredMenuProductList.map { menuProduct ->
+                            toItemModel(menuProduct)
+                        }.toStateSuccess()
                     }
                 }
             }
@@ -62,16 +63,14 @@ class ProductTabViewModel @Inject constructor(
         )
     }
 
-    fun addProductToCart(menuProductUuid: String) {
-        addProductToCart(menuProductUuid, menuProductRepo)
-    }
-
     private fun toItemModel(menuProduct: MenuProduct): MenuProductItem {
+        val oldPrice = productHelper.getMenuProductOldPrice(menuProduct)
+        val newPrice = productHelper.getMenuProductNewPrice(menuProduct)
         return MenuProductItem(
             uuid = menuProduct.uuid,
             name = menuProduct.name,
-            cost = productHelper.getMenuProductOldPriceString(menuProduct),
-            discountCost = productHelper.getMenuProductPriceString(menuProduct),
+            cost = stringUtil.getCostString(oldPrice),
+            discountCost = stringUtil.getCostString(newPrice),
             photoLink = menuProduct.photoLink,
         )
     }

@@ -1,28 +1,42 @@
 package com.bunbeauty.domain.model.entity.order
 
-import android.os.Parcelable
-import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.ui.BaseModel
-import com.bunbeauty.domain.model.ui.address.Address
-import kotlinx.parcelize.Parcelize
-import org.joda.time.DateTime
+import com.bunbeauty.domain.model.entity.cafe.CafeEntity
+import com.bunbeauty.domain.model.entity.user.UserEntity
 
-@Parcelize
-@Entity
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = CafeEntity::class,
+        parentColumns = ["uuid"],
+        childColumns = ["cafeUuid"],
+        onDelete = ForeignKey.CASCADE
+    ), ForeignKey(
+        entity = UserEntity::class,
+        parentColumns = ["uuid"],
+        childColumns = ["userUuid"],
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 data class OrderEntity(
     @PrimaryKey
-    override var uuid: String = "",
-    var isDelivery: Boolean = true,
-    var userUuid: String = "",
-    var phone: String = "",
-    var userAddressUuid: String? = null,
-    var cafeUuid: String? = null,
-    var comment: String? = null,
-    var deferredTime: String? = null,
-    var time: Long = DateTime.now().millis,
-    var code: String = "",
-    var orderStatus: OrderStatus = OrderStatus.NOT_ACCEPTED
-) : BaseModel, Parcelable
+    val uuid: String,
+    val isDelivery: Boolean,
+    val phone: String,
+    val comment: String?,
+    val deferredTime: String?,
+    val time: Long,
+    val code: String,
+    val orderStatus: OrderStatus,
+    val cafeUuid: String,
+    val userUuid: String,
+
+    val userAddressStreet: String?,
+    val userAddressHouse: String?,
+    val userAddressFlat: String?,
+    val userAddressEntrance: String?,
+    val userAddressFloor: String?,
+    val userAddressComment: String?,
+)

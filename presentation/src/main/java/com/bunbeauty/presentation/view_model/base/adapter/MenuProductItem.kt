@@ -1,7 +1,7 @@
 package com.bunbeauty.presentation.view_model.base.adapter
 
 import android.graphics.drawable.Drawable
-import com.bunbeauty.domain.model.local.BaseModel
+import com.bunbeauty.domain.model.ui.BaseItem
 import java.lang.ref.SoftReference
 
 data class MenuProductItem(
@@ -11,4 +11,4 @@ data class MenuProductItem(
     val discountCost: String,
     val photoLink: String,
     var photoNotWeak: SoftReference<Drawable?> = SoftReference(null)
-) : BaseModel
+) : BaseItem()

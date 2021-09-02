@@ -12,7 +12,7 @@ import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -50,6 +50,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.setUser()
         viewDataBinding.run {
             fragmentCreateOrderCsDelivery.switchListener =
                 object : CustomSwitcher.SwitchListener {

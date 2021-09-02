@@ -2,26 +2,30 @@ package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.data.repository.ApiRepository
 import com.bunbeauty.data.repository.DataStoreRepository
+import com.bunbeauty.domain.auth.AuthUtil
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.cafe.CafeUtil
 import com.bunbeauty.domain.util.cafe.ICafeUtil
+import com.bunbeauty.domain.util.code.CodeGenerator
+import com.bunbeauty.domain.util.code.ICodeGenerator
 import com.bunbeauty.domain.util.date_time.DateTimeUtil
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.field_helper.FieldHelper
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
-import com.bunbeauty.domain.util.network.INetworkHelper
-import com.bunbeauty.domain.util.network.NetworkHelper
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.order.OrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.domain.util.product.ProductHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.resources.ResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringUtil
-import com.bunbeauty.domain.util.string_helper.StringUtil
 import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.domain.util.uri.UriHelper
+import com.bunbeauty.presentation.util.network.INetworkHelper
+import com.bunbeauty.presentation.util.network.NetworkHelper
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.resources.ResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
+import com.bunbeauty.presentation.util.string.StringUtil
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -68,4 +72,10 @@ interface ApiModule {
 
     @Binds
     fun bindDaterTimeUtil(dateTimeUtil: DateTimeUtil): IDateTimeUtil
+
+    @Binds
+    fun bindAuthUtil(authUtil: AuthUtil): IAuthUtil
+
+    @Binds
+    fun bindCodeGenerator(codeGenerator: CodeGenerator): ICodeGenerator
 }

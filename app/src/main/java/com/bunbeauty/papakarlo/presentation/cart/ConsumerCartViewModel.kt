@@ -3,13 +3,14 @@ package com.bunbeauty.papakarlo.presentation.cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.ui.CartProduct
+import com.bunbeauty.domain.model.entity.product.CartProductEntity
+import com.bunbeauty.domain.model.ui.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringUtil
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
@@ -23,8 +24,7 @@ class ConsumerCartViewModel @Inject constructor(
     private val resourcesProvider: IResourcesProvider,
     cartProductRepo: CartProductRepo,
     stringUtil: IStringUtil,
-    productHelper: IProductHelper,
-    private val menuProductRepo: MenuProductRepo
+    productHelper: IProductHelper
 ) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
 
     private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
@@ -52,7 +52,7 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     private fun subscribeOnCartProducts() {
-        cartProductRepo.cartProductList.onEach { productList ->
+        cartProductRepo.observeCartProductList().onEach { productList ->
             mutableCartProductListState.value = if (productList.isEmpty()) {
                 State.Empty()
             } else {
@@ -86,13 +86,5 @@ class ConsumerCartViewModel @Inject constructor(
             count = cartProduct.count,
             menuProductUuid = cartProduct.menuProduct.uuid
         )
-    }
-
-    fun addProductToCart(menuProductUuid: String) {
-        addProductToCart(menuProductUuid, menuProductRepo)
-    }
-
-    fun removeProductFromCart(menuProductUuid: String) {
-        removeProductFromCart(menuProductUuid, menuProductRepo)
     }
 }

@@ -57,7 +57,6 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
             }
         }.startedLaunch(viewLifecycleOwner)
 
-        viewModel.getOrders(OrdersFragmentArgs.fromBundle(requireArguments()).userUuid)
         ordersAdapter.onItemClickListener = { order ->
             viewModel.onOrderClicked(order)
         }

@@ -174,7 +174,7 @@
     <fragment
         android:id="@+id/login_fragment"
         android:name="com.bunbeauty.papakarlo.ui.LoginFragment"
-        android:label="@string/title_login"
+        android:label=""
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/to_confirmFragment"
@@ -183,13 +183,10 @@
     <fragment
         android:id="@+id/confirm_fragment"
         android:name="com.bunbeauty.papakarlo.ui.ConfirmFragment"
-        android:label="@string/title_confirm"
+        android:label=""
         tools:layout="@layout/fragment_confirm">
         <argument
             android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="email"
             app:argType="string" />
         <action
             android:id="@+id/back_to_profile_fragment"

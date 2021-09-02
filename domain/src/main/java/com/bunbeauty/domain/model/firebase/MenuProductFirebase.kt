@@ -5,10 +5,10 @@ data class MenuProductFirebase(
     var cost: Int = 0,
     val discountCost: Int? = null,
     var weight: Int? = null,
-    var description: String? = null,
+    var description: String = "",
     val comboDescription: String? = null,
     var photoLink: String = "",
     var productCode: String = "",
-    var barcode: Int = 0,
+    var barcode: Int? = null,
     var visible: Boolean = false,
 )
