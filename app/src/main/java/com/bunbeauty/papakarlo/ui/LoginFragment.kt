@@ -3,12 +3,11 @@ package com.bunbeauty.papakarlo.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.Constants
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.view.PhoneTextWatcher
+import com.bunbeauty.papakarlo.ui.custom.PhoneTextWatcher
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 

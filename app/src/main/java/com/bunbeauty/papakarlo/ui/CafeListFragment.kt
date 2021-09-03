@@ -9,6 +9,7 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CafeAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -16,6 +17,9 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
 
     @Inject
     lateinit var cafeAdapter: CafeAdapter
+
+    @Inject
+    lateinit var marginItemDecoration: MarginItemDecoration
 
     override val isCartVisible = true
     override val isBottomBarVisible = true
@@ -28,11 +32,12 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cafeAdapter.onItemClickListener = { cafeAdapterModel ->
-            viewModel.onCafeCardClicked(cafeAdapterModel)
+
+        viewDataBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemDecoration)
+        cafeAdapter.setOnItemClickListener { cafeItem ->
+            viewModel.onCafeCardClicked(cafeItem)
         }
         viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
-
         viewModel.cafeItemList.onEach { cafeItemList ->
             cafeAdapter.submitList(cafeItemList)
         }.startedLaunch(viewLifecycleOwner)

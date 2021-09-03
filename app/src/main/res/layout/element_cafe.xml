@@ -6,8 +6,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cafe_mcv_main"
-        style="@style/DefaultMaterialCard"
-        android:layout_margin="@dimen/small_margin">
+        style="@style/DefaultMaterialCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

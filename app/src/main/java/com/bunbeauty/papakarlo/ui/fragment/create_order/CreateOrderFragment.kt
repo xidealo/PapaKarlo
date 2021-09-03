@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.view.CustomSwitcher
+import com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
 import com.google.android.material.button.MaterialButton
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager

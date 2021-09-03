@@ -35,7 +35,7 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_end="@dimen/medium_margin" />
 
-                <com.bunbeauty.papakarlo.ui.view.CustomSwitcher
+                <com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
                     android:id="@+id/fragment_create_order_cs_delivery"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     app:switcherHeight="@dimen/switcher_height"
                     app:switcherMainTextColor="@color/white" />
 
-                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_phone"
                     style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -65,7 +65,7 @@
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_cs_delivery" />
 
-                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_add_address"
                     style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -75,7 +75,7 @@
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_phone" />
 
-                <com.bunbeauty.papakarlo.ui.view.TextCard
+                <com.bunbeauty.papakarlo.ui.custom.TextCard
                     android:id="@+id/fragment_create_order_tc_address"
                     style="@style/TextCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -85,7 +85,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_address"
                     tools:text="улица Чапаева, д 22А, кв 15" />
 
-                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_add_comment"
                     style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -95,7 +95,7 @@
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_address" />
 
-                <com.bunbeauty.papakarlo.ui.view.TextCard
+                <com.bunbeauty.papakarlo.ui.custom.TextCard
                     android:id="@+id/fragment_create_order_tc_comment"
                     style="@style/TextCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -105,7 +105,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_comment"
                     tools:text="Не забудьте привезти еду" />
 
-                <com.bunbeauty.papakarlo.ui.view.NavigationCard
+                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_add_deferred_time"
                     style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
@@ -115,7 +115,7 @@
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_comment" />
 
-                <com.bunbeauty.papakarlo.ui.view.TextCard
+                <com.bunbeauty.papakarlo.ui.custom.TextCard
                     android:id="@+id/fragment_create_order_tc_deferred_time"
                     style="@style/TextCard"
                     android:layout_marginTop="@dimen/small_margin"

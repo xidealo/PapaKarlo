@@ -5,12 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
-import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.view_model.base.adapter.AddressItem
-import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import javax.inject.Inject
 
 class AddressAdapter @Inject constructor() :

@@ -6,7 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.domain.model.ui.Cafe
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
+import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
@@ -15,6 +17,8 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
 
     override val viewModel: CafeOptionsViewModel by viewModels { modelFactory }
 
+    private val cafe: Cafe by argument()
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -22,15 +26,17 @@ class CafeOptionsBottomSheet : BaseBottomSheetDialog<BottomSheetCafeOptionsBindi
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(viewDataBinding) {
-            bottomSheetCafeOptionsMcvCall.setOnClickListener {
-                goToPhone(viewModel.phone)
+
+        val cafeOption = viewModel.getCafeOptions(cafe)
+        viewDataBinding.run {
+            bottomSheetCafeOptionsNcCall.cardText = cafeOption.callToCafe
+            bottomSheetCafeOptionsNcShowMap.cardText = cafeOption.showOnMap
+            bottomSheetCafeOptionsNcCall.setOnClickListener {
+                goToPhone(cafeOption.phone)
             }
-            bottomSheetCafeOptionsMcvShowMap.setOnClickListener {
-                goToAddress(viewModel.latitude, viewModel.longitude)
+            bottomSheetCafeOptionsNcShowMap.setOnClickListener {
+                goToAddress(cafeOption.latitude, cafeOption.longitude)
             }
-            bottomSheetCafeOptionsTvShowMap.text = viewModel.showOnMap
-            bottomSheetCafeOptionsTvCall.text = viewModel.callToCafe
         }
     }
 

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.view
+package com.bunbeauty.papakarlo.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet

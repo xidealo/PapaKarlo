@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.adapter
+package com.bunbeauty.papakarlo.ui.adapter.base
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding

@@ -22,11 +22,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class ProfileViewModel(
-    cartProductRepo: CartProductRepo,
-    stringUtil: IStringUtil,
-    productHelper: IProductHelper,
-) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
+abstract class ProfileViewModel : CartViewModel() {
     abstract val userState: StateFlow<State<User>>
     abstract val hasAddressState: StateFlow<State<Boolean>>
     abstract val lastOrderState: StateFlow<State<OrderItem>>
@@ -45,12 +41,10 @@ class ProfileViewModelImpl @Inject constructor(
     private val userRepo: UserRepo,
     private val stringHelper: IStringUtil,
     private val authUtil: IAuthUtil,
-    cartProductRepo: CartProductRepo,
-    productHelper: IProductHelper,
     private val orderRepo: OrderRepo,
     private val orderUtil: IOrderUtil,
     private val resourcesProvider: IResourcesProvider
-) : ProfileViewModel(cartProductRepo, stringHelper, productHelper) {
+) : ProfileViewModel() {
 
     init {
         subscribeOnUser()

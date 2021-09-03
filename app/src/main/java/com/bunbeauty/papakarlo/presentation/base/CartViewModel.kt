@@ -6,15 +6,12 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Base class for each viewModel which has top bar cart or can add product to cart
  */
-abstract class CartViewModel(
-    protected val cartProductRepo: CartProductRepo,
-    protected val stringUtil: IStringUtil,
-    protected val productHelper: IProductHelper,
-) : BaseViewModel() {
+open class CartViewModel : BaseViewModel() {
 
     private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
     val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
@@ -22,11 +19,17 @@ abstract class CartViewModel(
     private val mutableCartProductCount: MutableStateFlow<String> = MutableStateFlow("")
     val cartProductCount: StateFlow<String> = mutableCartProductCount.asStateFlow()
 
-    init {
-        subscribeOnCartProductList()
+    private lateinit var cartProductRepo: CartProductRepo
+    private lateinit var stringUtil: IStringUtil
+
+    @Inject
+    fun inject(cartProductRepo: CartProductRepo, stringUtil: IStringUtil) {
+        this.cartProductRepo = cartProductRepo
+        this.stringUtil = stringUtil
     }
 
-    private fun subscribeOnCartProductList() {
+    @Inject
+    fun subscribeOnCartProductList(productHelper: IProductHelper) {
         cartProductRepo.observeCartProductList().onEach { cartProductList ->
             val cartProductCount = productHelper.getTotalCount(cartProductList)
             mutableCartProductCount.value = cartProductCount.toString()

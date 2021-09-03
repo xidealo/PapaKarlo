@@ -4,20 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :
-    ListAdapter<CafeItem, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
-
-    var onItemClickListener: ((CafeItem) -> Unit)? = null
-
-    override fun onBindViewHolder(holder: CafeViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-    }
+    BaseListAdapter<CafeItem, ElementCafeBinding, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -37,7 +32,7 @@ class CafeAdapter @Inject constructor() :
                 elementCafeTvTimeStatus.text = item.workingTimeMessage
                 elementCafeTvTimeStatus.setTextColor(item.workingTimeMessageColor)
                 elementCafeMcvMain.setOnClickListener {
-                    onItemClickListener?.invoke(item)
+                    onItemClicked(item)
                 }
             }
         }

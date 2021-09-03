@@ -15,24 +15,28 @@ import javax.inject.Inject
 
 class CafeListViewModel @Inject constructor(
     private val cafeUtil: ICafeUtil,
-    stringUtil: IStringUtil,
-    cartProductRepo: CartProductRepo,
-    productHelper: IProductHelper
-) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val stringUtil: IStringUtil
+) : CartViewModel() {
 
+    private var cafeList: List<Cafe> = emptyList()
     private val mutableCafeItemList: MutableStateFlow<List<CafeItem>> =
         MutableStateFlow(emptyList())
     val cafeItemList: StateFlow<List<CafeItem>> = mutableCafeItemList.asStateFlow()
 
     @Inject
     fun subscribeOnCafeList(cafeRepo: CafeRepo) {
-        cafeRepo.observeCafeList().onEach { cafeList ->
-            mutableCafeItemList.value = cafeList.map(::toItemModel)
+        cafeRepo.observeCafeList().onEach { observedCafeList ->
+            cafeList = observedCafeList
+            mutableCafeItemList.value = observedCafeList.map(::toItemModel)
         }.launchIn(viewModelScope)
     }
 
     fun onCafeCardClicked(cafeItem: CafeItem) {
-        router.navigate(toCafeOptionsBottomSheet(cafeItem))
+        cafeList.find { cafe ->
+            cafe.uuid == cafeItem.uuid
+        }?.let { cafe ->
+            router.navigate(toCafeOptionsBottomSheet(cafe))
+        }
     }
 
     private fun toItemModel(cafe: Cafe): CafeItem {
@@ -41,10 +45,7 @@ class CafeListViewModel @Inject constructor(
             address = stringUtil.getCafeAddressString(cafe.cafeAddress),
             workingHours = stringUtil.getWorkingHoursString(cafe),
             workingTimeMessage = stringUtil.getIsClosedMessage(cafe),
-            workingTimeMessageColor = cafeUtil.getIsClosedColor(cafe),
-            phone = cafe.phone,
-            latitude = cafe.latitude,
-            longitude = cafe.longitude,
+            workingTimeMessageColor = cafeUtil.getIsClosedColor(cafe)
         )
     }
 }

@@ -16,10 +16,9 @@ import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
     private val menuProductRepo: MenuProductRepo,
-    cartProductRepo: CartProductRepo,
-    stringUtil: IStringUtil,
-    productHelper: IProductHelper,
-) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val  stringUtil: IStringUtil,
+    private val  productHelper: IProductHelper,
+) : CartViewModel() {
 
     private val mutableMenuProduct: MutableStateFlow<MenuProductUI?> = MutableStateFlow(null)
     val menuProduct: StateFlow<MenuProductUI?> = mutableMenuProduct.asStateFlow()

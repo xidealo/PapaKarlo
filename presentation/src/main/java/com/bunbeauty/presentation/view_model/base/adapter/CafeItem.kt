@@ -10,8 +10,5 @@ data class CafeItem(
     val address: String,
     val workingHours: String,
     val workingTimeMessage: String,
-    val workingTimeMessageColor: Int,
-    val phone: String,
-    val latitude: Double,
-    val longitude: Double
+    val workingTimeMessageColor: Int
 ) : Parcelable, BaseItem()

@@ -33,7 +33,7 @@
                 android:text="@string/msg_deferred_time_asap" />
         </com.google.android.material.card.MaterialCardView>
 
-        <com.bunbeauty.papakarlo.ui.view.NavigationCard
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_deferred_time_nc_select_time"
             style="@style/NavigationCard"
             android:layout_marginStart="@dimen/medium_margin"

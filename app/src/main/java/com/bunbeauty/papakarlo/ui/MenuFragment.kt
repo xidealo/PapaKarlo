@@ -10,13 +10,18 @@ import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import javax.inject.Inject
 
 class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     override val isLogoVisible = true
     override val isCartVisible = true
@@ -24,7 +29,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
 
     private var mediator: TabLayoutMediator? = null
 
-    override val viewModel: MenuViewModel by viewModels { modelFactory }
+    override val viewModel: CartViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
@@ -48,7 +53,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
                 fun setIconColor(tab: TabLayout.Tab?, @ColorRes colorId: Int) {
                     tab?.icon?.colorFilter =
                         BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                            viewModel.resourcesProvider.getColor(colorId),
+                            resourcesProvider.getColor(colorId),
                             BlendModeCompat.SRC_ATOP
                         )
                 }

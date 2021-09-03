@@ -3,18 +3,16 @@ package com.bunbeauty.papakarlo.presentation.cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.entity.product.CartProductEntity
 import com.bunbeauty.domain.model.ui.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreateOrder
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -22,10 +20,10 @@ import javax.inject.Inject
 class ConsumerCartViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
-    cartProductRepo: CartProductRepo,
-    stringUtil: IStringUtil,
-    productHelper: IProductHelper
-) : CartViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val cartProductRepo: CartProductRepo,
+    private val stringUtil: IStringUtil,
+    private val productHelper: IProductHelper
+) : CartViewModel() {
 
     private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
         MutableStateFlow(State.Loading())

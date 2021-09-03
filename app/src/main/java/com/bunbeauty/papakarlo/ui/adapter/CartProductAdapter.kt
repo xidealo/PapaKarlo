@@ -8,8 +8,9 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
-import com.bunbeauty.papakarlo.ui.view.CountPicker
+import com.bunbeauty.papakarlo.ui.custom.CountPicker
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
 import javax.inject.Inject
 
