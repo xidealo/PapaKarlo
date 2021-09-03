@@ -8,6 +8,7 @@ import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
 import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.model.entity.product.MenuProductEntity
 import com.bunbeauty.domain.model.firebase.MenuProductFirebase
+import com.bunbeauty.domain.model.ktor.CafeServer
 import kotlinx.coroutines.flow.Flow
 
 interface ApiRepo {
@@ -18,6 +19,7 @@ interface ApiRepo {
     fun updateUserEmail(userUuid: String, userEmail: String)
 
     fun getCafeList(): Flow<List<CafeFirebase>>
+    fun getCafeServerList(): Flow<List<CafeServer>>
     fun getMenuProductList(): Flow<List<MenuProductFirebase>>
     fun getDelivery(): Flow<Delivery?>
     fun getUser(userUuid: String): Flow<UserFirebase?>

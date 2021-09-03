@@ -2,6 +2,7 @@ package com.bunbeauty.domain.model.entity.cafe
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
 @Entity
 data class CafeEntity(

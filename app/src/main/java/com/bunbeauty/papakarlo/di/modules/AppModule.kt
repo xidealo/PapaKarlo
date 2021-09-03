@@ -9,9 +9,11 @@ import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import dagger.Module
 import dagger.Provides
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonBuilder
 
 @Module(subcomponents = [ViewModelComponent::class])
-class  AppModule {
+class AppModule {
 
     @Provides
     fun provideLinearLayoutManager(context: Context) = LinearLayoutManager(context)
@@ -23,5 +25,12 @@ class  AppModule {
     fun provideImageLoader(context: Context): ImageLoader = context.imageLoader
 
     @Provides
-    fun provideImageRequestBuilder(context: Context): ImageRequest.Builder = ImageRequest.Builder(context)
+    fun provideImageRequestBuilder(context: Context): ImageRequest.Builder =
+        ImageRequest.Builder(context)
+
+    @Provides
+    fun provideJson(): Json = Json {
+        isLenient = false
+    }
+
 }

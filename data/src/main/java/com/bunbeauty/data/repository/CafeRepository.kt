@@ -20,13 +20,15 @@ class CafeRepository @Inject constructor(
 ) : CafeRepo {
 
     override suspend fun refreshCafeList() {
-        val cafeWithDistrictsList = apiRepo.getCafeList()
+        val t = apiRepo.getCafeServerList().first()
+        print(t)
+ /*       val cafeWithDistrictsList = apiRepo.getCafeList()
             .flowOn(IO)
             .map { cafeFirebaseList ->
                 cafeFirebaseList.map(cafeMapper::toEntityModel)
             }.flowOn(Default)
             .first()
-        cafeDao.refreshCafeList(cafeWithDistrictsList)
+        cafeDao.refreshCafeList(cafeWithDistrictsList)*/
     }
 
     override suspend fun getCafeEntityByUuid(cafeUuid: String): CafeEntity {

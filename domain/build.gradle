@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -61,4 +62,7 @@ dependencies {
     //FB
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    //ktor
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
 }
