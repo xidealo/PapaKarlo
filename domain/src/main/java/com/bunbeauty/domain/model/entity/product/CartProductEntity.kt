@@ -8,8 +8,7 @@ import com.bunbeauty.domain.model.entity.order.OrderEntity
     foreignKeys = [ForeignKey(
         entity = MenuProductEntity::class,
         parentColumns = ["uuid"],
-        childColumns = ["menuProductUuid"],
-        onDelete = ForeignKey.CASCADE
+        childColumns = ["menuProductUuid"]
     )]
 )
 data class CartProductEntity(

@@ -127,12 +127,16 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
     ) {
         viewDataBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
         viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
-        viewDataBinding.activityMainTvCart.toggleVisibility(isCartVisible)
+        viewDataBinding.activityMainClCart.toggleVisibility(isCartVisible)
         viewDataBinding.activityMainIvCart.toggleVisibility(isCartVisible)
     }
 
     override fun setCartText(cartText: String) {
         viewDataBinding.activityMainTvCart.text = cartText
+    }
+
+    override fun setCartProductCount(cartProductCount: String) {
+        viewDataBinding.activityMainTvCartCount.text = cartProductCount
     }
 
     override fun setupBottomNavigationBar(isVisible: Boolean) {

@@ -18,7 +18,7 @@ interface ApiRepo {
     fun updateUserEmail(userUuid: String, userEmail: String)
 
     fun getCafeList(): Flow<List<CafeFirebase>>
-    fun getMenuProductList(): Flow<List<MenuProductFirebase>>
+    fun getMenuProductMap(): Flow<Map<String, MenuProductFirebase>>
     fun getDelivery(): Flow<Delivery?>
     fun getUser(userUuid: String): Flow<UserFirebase?>
     fun getOrder(userOrderFirebase: UserOrderFirebase): Flow<OrderFirebase?>

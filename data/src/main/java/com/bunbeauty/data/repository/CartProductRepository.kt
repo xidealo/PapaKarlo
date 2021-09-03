@@ -63,7 +63,9 @@ class CartProductRepository @Inject constructor(
     private fun Flow<List<CartProductWithMenuProduct>>.mapCartProducts(): Flow<List<CartProduct>> {
         return this.flowOn(IO)
             .map { productList ->
-                productList.map(cartProductMapper::toUIModel)
+                productList.filter { cartProduct ->
+                    cartProduct.menuProductEntity.visible
+                }.map(cartProductMapper::toUIModel)
                     .sortedBy { cartProduct ->
                         cartProduct.menuProduct.name
                     }

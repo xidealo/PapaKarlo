@@ -25,7 +25,7 @@ class OrderProductMapper @Inject constructor(
     ): OrderProductEntity {
         return OrderProductEntity(
             uuid = UUID.randomUUID().toString(),
-            menuProduct = menuProductMapper.toEntityModel(orderProduct.menuProduct),
+            menuProduct = menuProductMapper.toEntityModel("", orderProduct.menuProduct),
             count = orderProduct.count,
             orderUuid = orderUuid,
         )

@@ -7,6 +7,6 @@ import com.bunbeauty.domain.model.ui.product.MenuProduct
 interface IMenuProductMapper {
 
     fun toFirebaseModel(menuProduct: MenuProduct): MenuProductFirebase
-    fun toEntityModel(menuProduct: MenuProductFirebase): MenuProductEntity
+    fun toEntityModel(uuid: String, menuProduct: MenuProductFirebase): MenuProductEntity
     fun toUIModel(menuProduct: MenuProductEntity): MenuProduct
 }

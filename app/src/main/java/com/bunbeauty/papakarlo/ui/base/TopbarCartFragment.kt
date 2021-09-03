@@ -21,5 +21,9 @@ abstract class TopbarCartFragment<T : ViewDataBinding> : BaseFragment<T>() {
         viewModel.cartCost.onEach { cartCost ->
             (activity as? IToolbar)?.setCartText(cartCost)
         }.startedLaunch(viewLifecycleOwner)
+
+        viewModel.cartProductCount.onEach { cartProductCount ->
+            (activity as? IToolbar)?.setCartProductCount(cartProductCount)
+        }.startedLaunch(viewLifecycleOwner)
     }
 }

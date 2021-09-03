@@ -20,14 +20,22 @@ class MenuProductRepository @Inject constructor(
 ) : MenuProductRepo {
 
     override suspend fun refreshMenuProducts() {
-        val menuProductList = apiRepo.getMenuProductList()
+        val menuProductList = apiRepo.getMenuProductMap()
             .flowOn(IO)
-            .map { menuProductList ->
-                menuProductList.map(menuProductMapper::toEntityModel)
+            .map { menuProductMap ->
+                menuProductMap.map { (uuid, menuProduct) ->
+                    menuProductMapper.toEntityModel(uuid, menuProduct)
+                }
             }.flowOn(Default)
             .first()
-
-        menuProductDao.refreshMenuProductList(menuProductList)
+        menuProductList.forEach { menuProduct ->
+            val localMenuProduct = menuProductDao.getMenuProductByUuid(menuProduct.uuid)
+            if (localMenuProduct == null) {
+                menuProductDao.insert(menuProduct)
+            } else {
+                menuProductDao.update(menuProduct)
+            }
+        }
     }
 
     override fun observeMenuProductList(): Flow<List<MenuProduct>> {

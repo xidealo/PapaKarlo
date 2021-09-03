@@ -26,23 +26,47 @@
                 android:layout_gravity="center"
                 android:src="@drawable/logo_top" />
 
-            <ImageView
-                android:id="@+id/activity_main_iv_cart"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/activity_main_cl_cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:src="@drawable/ic_cart"
-                app:tint="@color/mainTextColor" />
+                android:layout_marginEnd="@dimen/medium_margin">
 
-            <TextView
-                android:id="@+id/activity_main_tv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/very_small_margin"
-                android:drawablePadding="@dimen/large_padding"
-                tools:text="100₽" />
+                <TextView
+                    android:id="@+id/activity_main_tv_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/very_small_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/activity_main_iv_cart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="100₽" />
+
+                <ImageView
+                    android:id="@+id/activity_main_iv_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cart"
+                    android:layout_margin="@dimen/cart_count_margin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/activity_main_tv_cart_count"
+                    app:layout_constraintTop_toTopOf="@+id/activity_main_tv_cart_count"
+                    app:tint="@color/mainTextColor" />
+
+                <TextView
+                    android:id="@+id/activity_main_tv_cart_count"
+                    android:layout_width="@dimen/cart_count_size"
+                    android:layout_height="@dimen/cart_count_size"
+                    android:background="@drawable/background_circle"
+                    android:gravity="center"
+                    android:padding="@dimen/cart_count_padding"
+                    android:textColor="@color/buttonTextColor"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="99" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.fragment.app.FragmentContainerView

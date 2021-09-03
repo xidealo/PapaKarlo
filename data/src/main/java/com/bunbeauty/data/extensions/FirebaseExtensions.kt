@@ -43,6 +43,21 @@ inline fun <reified T> DatabaseReference.getValueList(): Flow<List<T>> {
 }
 
 @ExperimentalCoroutinesApi
+inline fun <reified T> DatabaseReference.getValueMap(): Flow<Map<String, T>> {
+    return getSnapshot().map { snapshot ->
+        snapshot.children.mapNotNull { childSnapshot ->
+            val value = childSnapshot.getValue(T::class.java)
+            val key= childSnapshot.key
+            if (value != null && key != null) {
+                key to value
+            } else {
+                null
+            }
+        }.toMap()
+    }
+}
+
+@ExperimentalCoroutinesApi
 fun DatabaseReference.observeSnapshot(): Flow<DataSnapshot> = callbackFlow {
     val listener = object : ValueEventListener {
 

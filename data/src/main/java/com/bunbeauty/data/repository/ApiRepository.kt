@@ -13,6 +13,7 @@ import com.bunbeauty.data.BuildConfig
 import com.bunbeauty.data.extensions.getSnapshot
 import com.bunbeauty.data.extensions.getValue
 import com.bunbeauty.data.extensions.getValueList
+import com.bunbeauty.data.extensions.getValueMap
 import com.bunbeauty.domain.model.firebase.UserFirebase
 import com.bunbeauty.domain.model.firebase.address.UserAddressFirebase
 import com.bunbeauty.domain.model.firebase.cafe.CafeFirebase
@@ -100,12 +101,12 @@ class ApiRepository @Inject constructor(private val firebaseDatabase: FirebaseDa
     }
 
     @ExperimentalCoroutinesApi
-    override fun getMenuProductList(): Flow<List<MenuProductFirebase>> {
+    override fun getMenuProductMap(): Flow<Map<String, MenuProductFirebase>> {
         val menuProductsReference = firebaseDatabase
             .getReference(COMPANY)
             .child(BuildConfig.APP_ID)
             .child(MENU_PRODUCTS)
-        return menuProductsReference.getValueList()
+        return menuProductsReference.getValueMap()
     }
 
     @ExperimentalCoroutinesApi

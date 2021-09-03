@@ -32,6 +32,7 @@ open class CartViewModel : BaseViewModel() {
     fun subscribeOnCartProductList(productHelper: IProductHelper) {
         cartProductRepo.observeCartProductList().onEach { cartProductList ->
             val cartProductCount = productHelper.getTotalCount(cartProductList)
+
             mutableCartProductCount.value = cartProductCount.toString()
             val cartCost = productHelper.getNewTotalCost(cartProductList)
             mutableCartCost.value = stringUtil.getCostString(cartCost)

@@ -24,9 +24,9 @@ class MenuProductMapper @Inject constructor() : IMenuProductMapper {
         )
     }
 
-    override fun toEntityModel(menuProduct: MenuProductFirebase): MenuProductEntity {
+    override fun toEntityModel(uuid: String, menuProduct: MenuProductFirebase): MenuProductEntity {
         return MenuProductEntity(
-            uuid = UUID.randomUUID().toString(),
+            uuid = uuid,
             name = menuProduct.name,
             cost = menuProduct.cost,
             discountCost = menuProduct.discountCost,

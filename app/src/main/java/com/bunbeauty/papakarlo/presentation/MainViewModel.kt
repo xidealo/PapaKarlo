@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.presentation
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DeliveryRepo

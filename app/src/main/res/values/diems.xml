@@ -52,4 +52,9 @@
     <!--COUNT_PICKER -->
     <dimen name="switcher_height">32dp</dimen>
 
+    <!--CART COUNT -->
+    <dimen name="cart_count_padding">2dp</dimen>
+    <dimen name="cart_count_size">24dp</dimen>
+    <dimen name="cart_count_margin">12dp</dimen>
+
 </resources>

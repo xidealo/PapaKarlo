@@ -8,4 +8,5 @@ interface IToolbar {
     )
 
     fun setCartText(cartText: String)
+    fun setCartProductCount(cartProductCount: String)
 }
