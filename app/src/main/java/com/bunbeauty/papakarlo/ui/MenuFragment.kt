@@ -26,10 +26,10 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
     override val isLogoVisible = true
     override val isCartVisible = true
     override val isBottomBarVisible = true
+    override val viewModel: CartViewModel by viewModels { modelFactory }
 
     private var mediator: TabLayoutMediator? = null
 
-    override val viewModel: CartViewModel by viewModels { modelFactory }
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }

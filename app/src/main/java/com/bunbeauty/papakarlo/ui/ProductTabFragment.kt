@@ -7,6 +7,7 @@ import com.bunbeauty.common.Constants.PRODUCT_CODE
 import com.bunbeauty.common.State
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
+import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
@@ -14,7 +15,7 @@ import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.onEach
@@ -27,9 +28,14 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter
 
+    @Inject
+    lateinit var marginItemDecoration: MarginItemDecoration
+
     override val isLogoVisible = true
     override val isCartVisible = true
     override val isBottomBarVisible = true
+
+    private val productCode: ProductCode by argument()
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -39,8 +45,8 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     @FlowPreview
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val productCode = requireArguments().getParcelable<ProductCode>(PRODUCT_CODE)!!
-        setupRecyclerView(productCode)
+
+        setupRecyclerView()
         viewModel.getMenuProductList(productCode)
         viewModel.productListState.onEach { state ->
             when (state) {
@@ -72,28 +78,28 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
         }.startedLaunch(viewLifecycleOwner)
     }
 
-    private fun setupRecyclerView(productCode: ProductCode) {
+    private fun setupRecyclerView() {
+        viewDataBinding.fragmentProductsRvResult.addItemDecoration(marginItemDecoration)
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
 
-        if (productCode == ProductCode.ALL)
-            viewDataBinding.fragmentProductsRvResult.itemAnimator = SlideInLeftAnimator()
+//        if (productCode == ProductCode.ALL)
+//            viewDataBinding.fragmentProductsRvResult.itemAnimator = SlideInLeftAnimator()
 
-        menuProductsAdapter.onItemClickListener = { menuProductAdapterModel ->
-            viewModel.onProductClicked(menuProductAdapterModel)
+        menuProductsAdapter.setOnItemClickListener { menuProductItem ->
+            viewModel.onProductClicked(menuProductItem)
         }
-        menuProductsAdapter.btnItemClickListener = { menuProductAdapterModel ->
-            viewModel.addProductToCart(menuProductAdapterModel.uuid)
+        menuProductsAdapter.setOnButtonClickListener { menuProductItem ->
+            viewModel.addProductToCart(menuProductItem.uuid)
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(productCode: ProductCode) =
-            ProductTabFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(PRODUCT_CODE, productCode)
-                }
+        fun newInstance(productCode: ProductCode) = ProductTabFragment().apply {
+            arguments = Bundle().apply {
+                putParcelable(PRODUCT_CODE, productCode)
             }
+        }
     }
 
     override fun onDestroyView() {

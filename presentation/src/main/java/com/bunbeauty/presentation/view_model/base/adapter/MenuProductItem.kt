@@ -7,8 +7,8 @@ import java.lang.ref.SoftReference
 data class MenuProductItem(
     override var uuid: String,
     val name: String,
-    val cost: String,
-    val discountCost: String,
+    val newPrice: String,
+    val oldPrice: String?,
     val photoLink: String,
     var photoNotWeak: SoftReference<Drawable?> = SoftReference(null)
 ) : BaseItem()

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_menu_product_mcv_main"
-        style="@style/DefaultMaterialCard"
-        android:layout_marginStart="@dimen/small_margin"
-        android:layout_marginTop="@dimen/very_small_margin"
-        android:layout_marginEnd="@dimen/small_margin"
-        android:layout_marginBottom="@dimen/very_small_margin">
+        style="@style/DefaultMaterialCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,49 +19,36 @@
                 android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/default_product" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
                 style="@style/SmallTitle"
-                android:layout_marginTop="@dimen/very_small_margin"
                 android:layout_marginStart="@dimen/very_small_margin"
+                android:layout_marginTop="@dimen/very_small_margin"
                 android:layout_marginEnd="@dimen/very_small_margin"
                 app:layout_constraintEnd_toStartOf="@+id/element_menu_product_btn_want"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Бургер" />
 
             <TextView
-                android:id="@+id/element_menu_product_tv_cost"
-                style="@style/SmallText"
-                android:layout_marginStart="@dimen/very_small_margin"
-                app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
-                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
-
-            <TextView
-                android:id="@+id/element_menu_product_tv_cost_old"
+                android:id="@+id/element_menu_product_tv_old_price"
                 style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:textColor="@color/grey"
-                app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_cost"
-                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
+                app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"
+                tools:text="100 ₽" />
 
-   <!--         <ImageView
-                android:id="@+id/element_menu_product_iv_on_fire"
-                style="@style/Icon"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_on_fire"
+            <TextView
+                android:id="@+id/element_menu_product_tv_new_price"
+                style="@style/SmallText"
                 android:layout_marginStart="@dimen/very_small_margin"
-                app:layout_constraintStart_toEndOf="@+id/element_menu_product_tv_cost_old"
-                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />
-
-            <ImageView
-                android:id="@+id/element_menu_product_iv_in_oven"
-                style="@style/Icon"
-                android:src="@drawable/ic_in_oven"
-                android:layout_marginStart="@dimen/very_small_margin"
-                app:layout_constraintStart_toEndOf="@+id/element_menu_product_iv_on_fire"
-                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title" />-->
+                app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_old_price"
+                app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"
+                tools:text="99 ₽" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/element_menu_product_btn_want"

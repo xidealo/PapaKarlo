@@ -1,7 +1,7 @@
 package com.bunbeauty.common
 
 object Constants {
-    const val PRODUCT_CODE: String = "product code"
+    const val PRODUCT_CODE: String = "productCode"
     const val ORDERS = "ORDERS"
     const val L_ORDERS = "orders"
     const val USERS = "USERS"

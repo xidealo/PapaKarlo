@@ -33,7 +33,7 @@ class ProductTabViewModel @Inject constructor(
             } else {
                 if (productCode == ProductCode.ALL) {
                     mutableProductListState.value = menuProductList.map { menuProduct ->
-                        toItemModel(menuProduct)
+                        menuProduct.toItem()
                     }.toStateSuccess()
                 } else {
                     val filteredMenuProductList = menuProductList.filter { menuProduct ->
@@ -43,7 +43,7 @@ class ProductTabViewModel @Inject constructor(
                         mutableProductListState.value = State.Empty()
                     } else {
                         mutableProductListState.value = filteredMenuProductList.map { menuProduct ->
-                            toItemModel(menuProduct)
+                            menuProduct.toItem()
                         }.toStateSuccess()
                     }
                 }
@@ -61,15 +61,17 @@ class ProductTabViewModel @Inject constructor(
         )
     }
 
-    private fun toItemModel(menuProduct: MenuProduct): MenuProductItem {
-        val oldPrice = productHelper.getMenuProductOldPrice(menuProduct)
-        val newPrice = productHelper.getMenuProductNewPrice(menuProduct)
+    private fun MenuProduct.toItem(): MenuProductItem {
+        val oldPrice = discountCost?.let {
+            productHelper.getMenuProductOldPrice(this)
+        }
+        val newPrice = productHelper.getMenuProductNewPrice(this)
         return MenuProductItem(
-            uuid = menuProduct.uuid,
-            name = menuProduct.name,
-            cost = stringUtil.getCostString(oldPrice),
-            discountCost = stringUtil.getCostString(newPrice),
-            photoLink = menuProduct.photoLink,
+            uuid = uuid,
+            name = name,
+            newPrice = stringUtil.getCostString(newPrice),
+            oldPrice = stringUtil.getCostString(oldPrice),
+            photoLink = photoLink,
         )
     }
 }
