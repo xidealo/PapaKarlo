@@ -11,7 +11,7 @@ import com.bunbeauty.domain.model.entity.order.OrderWithProducts
 import com.bunbeauty.domain.model.firebase.order.OrderEntityFirebase
 import com.bunbeauty.domain.model.firebase.order.OrderFirebase
 import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.model.ui.address.UserAddress
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class OrderMapper @Inject constructor(
     private val cafeMapper: ICafeMapper
 ) : IOrderMapper {
 
-    override fun toFirebaseModel(order: OrderUI): OrderFirebase {
+    override fun toFirebaseModel(order: Order): OrderFirebase {
         val userAddressFirebase = order.userAddress?.let { userAddress ->
             userAddressMapper.toFirebaseModel(userAddress)
         }
@@ -44,7 +44,7 @@ class OrderMapper @Inject constructor(
         )
     }
 
-    override fun toEntityModel(order: OrderUI): OrderEntity {
+    override fun toEntityModel(order: Order): OrderEntity {
         return OrderEntity(
             uuid = order.uuid,
             isDelivery = order.isDelivery,
@@ -95,7 +95,7 @@ class OrderMapper @Inject constructor(
         )
     }
 
-    override fun toUIModel(order: OrderWithProducts, cafe: CafeEntity): OrderUI {
+    override fun toUIModel(order: OrderWithProducts, cafe: CafeEntity): Order {
         val userAddressStreet = order.order.userAddressStreet
         val userAddressHouse = order.order.userAddressHouse
         val userAddress = if (userAddressStreet != null && userAddressHouse != null) {
@@ -113,7 +113,7 @@ class OrderMapper @Inject constructor(
             null
         }
 
-        return OrderUI(
+        return Order(
             uuid = order.order.uuid,
             isDelivery = order.order.isDelivery,
             userUuid = order.order.userUuid,

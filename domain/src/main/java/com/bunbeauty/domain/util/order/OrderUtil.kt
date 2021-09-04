@@ -5,14 +5,14 @@ import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.model.ui.product.OrderProduct
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.model.ui.product.ProductPosition
 import com.bunbeauty.domain.util.product.IProductHelper
 import javax.inject.Inject
 
 class OrderUtil @Inject constructor(private val productHelper: IProductHelper) : IOrderUtil {
 
-    override fun getDeliveryCost(order: OrderUI, delivery: Delivery): Int {
+    override fun getDeliveryCost(order: Order, delivery: Delivery): Int {
         return getDeliveryCost(order.isDelivery, order.orderProductList, delivery)
     }
 
@@ -30,7 +30,7 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
         }
     }
 
-    override fun getOldOrderCost(order: OrderUI, delivery: Delivery): Int? {
+    override fun getOldOrderCost(order: Order, delivery: Delivery): Int? {
         return getOldOrderCost(order.isDelivery, order.orderProductList, delivery)
     }
 
@@ -45,7 +45,7 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
         return orderCost + deliveryCost
     }
 
-    override fun getNewOrderCost(order: OrderUI, delivery: Delivery): Int {
+    override fun getNewOrderCost(order: Order, delivery: Delivery): Int {
         return getNewOrderCost(order.isDelivery, order.orderProductList, delivery)
     }
 
@@ -60,13 +60,13 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
         return orderCost + deliveryCost
     }
 
-    override fun getProceeds(orderList: List<OrderUI>, delivery: Delivery): Int {
+    override fun getProceeds(orderList: List<Order>, delivery: Delivery): Int {
         return orderList.sumOf { order ->
             getNewOrderCost(order, delivery)
         }
     }
 
-    override fun getAverageCheck(orderList: List<OrderUI>, delivery: Delivery): Int {
+    override fun getAverageCheck(orderList: List<Order>, delivery: Delivery): Int {
         val proceeds = getProceeds(orderList, delivery)
 
         return proceeds / orderList.size
@@ -93,6 +93,18 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
             OrderStatus.DONE -> ActiveLines.THREE_LINE
             OrderStatus.DELIVERED -> ActiveLines.FOUR_LINE
             else -> ActiveLines.ZERO_LINE
+        }
+    }
+
+    override fun getOrderStepCount(status: OrderStatus): Int {
+        return when (status) {
+            OrderStatus.NOT_ACCEPTED -> 0
+            OrderStatus.ACCEPTED -> 1
+            OrderStatus.PREPARING -> 2
+            OrderStatus.SENT_OUT -> 3
+            OrderStatus.DONE -> 3
+            OrderStatus.DELIVERED -> 4
+            OrderStatus.CANCELED -> 0
         }
     }
 }

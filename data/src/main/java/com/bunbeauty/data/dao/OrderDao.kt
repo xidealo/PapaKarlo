@@ -26,7 +26,7 @@ interface OrderDao : BaseDao<OrderEntity> {
     @Query("SELECT * FROM OrderEntity WHERE userUuid = :userUuid")
     fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderWithProducts>>
 
-    @Query("SELECT * FROM OrderEntity WHERE userUuid = :uuid")
+    @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")
     fun observeOrderByUuid(uuid: String): Flow<OrderWithProducts?>
 
     @Query("SELECT * FROM OrderEntity WHERE time = (SELECT MAX(time) FROM OrderEntity)")

@@ -4,11 +4,10 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.model.ui.User
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
@@ -123,7 +122,7 @@ class ProfileViewModelImpl @Inject constructor(
         }
     }
 
-    private fun toItemModel(order: OrderUI): OrderItem {
+    private fun toItemModel(order: Order): OrderItem {
         return OrderItem(
             uuid = order.uuid,
             orderStatus = stringHelper.toStringOrderStatus(order.orderStatus),

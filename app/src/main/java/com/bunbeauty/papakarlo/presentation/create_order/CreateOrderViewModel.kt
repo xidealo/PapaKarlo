@@ -12,7 +12,7 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.mapper.ICartProductMapper
 import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.ui.address.CafeAddress
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.model.ui.address.UserAddress
 import com.bunbeauty.domain.model.ui.product.CartProduct
 import com.bunbeauty.domain.repo.*
@@ -156,7 +156,7 @@ class CreateOrderViewModel @Inject constructor(
             } else {
                 cafeAddress!!.cafeUuid
             }
-            val order = OrderUI(
+            val order = Order(
                 isDelivery = isDelivery,
                 userUuid = checkNotNull(userUuidValue),
                 phone = checkNotNull(mutablePhone.value),

@@ -50,4 +50,10 @@
         <attr name="hintTextColor" format="color" />
         <attr name="innerMargin" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="ProcessScaleView">
+        <attr name="activeColor" format="color" />
+        <attr name="inactiveColor" format="color" />
+        <attr name="stepCount" format="integer" />
+    </declare-styleable>
 </resources>

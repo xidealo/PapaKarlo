@@ -8,7 +8,7 @@ import com.bunbeauty.domain.model.ui.product.OrderProduct
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class OrderUI(
+class Order(
     var uuid: String = "",
     val isDelivery: Boolean,
     val userUuid: String,

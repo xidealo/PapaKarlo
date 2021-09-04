@@ -2,11 +2,11 @@ package com.bunbeauty.presentation.view_model.base.adapter
 
 import com.bunbeauty.domain.enums.ActiveLines
 
-data class OrderDetailsItem(
+data class OrderUI(
     val code: String,
-    val orderStatus: String,
+    val stepCount: Int,
+    val status: String,
     val orderStatusBackground: Int,
-    val orderStatusActiveLine: ActiveLines,
     val time: String,
     val pickupMethod: String,
     val deferredTime: String,

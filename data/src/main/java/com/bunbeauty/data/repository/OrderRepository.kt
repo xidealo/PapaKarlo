@@ -1,5 +1,6 @@
 package com.bunbeauty.data.repository
 
+import android.util.Log
 import com.bunbeauty.data.dao.OrderDao
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OrderStatus
@@ -7,10 +8,9 @@ import com.bunbeauty.domain.mapper.IOrderMapper
 import com.bunbeauty.domain.model.entity.order.OrderStatusEntity
 import com.bunbeauty.domain.model.entity.order.OrderWithProducts
 import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
@@ -48,13 +48,13 @@ class OrderRepository @Inject constructor(
         }
     }
 
-    override fun observeOrderList(): Flow<List<OrderUI>>? {
+    override fun observeOrderList(): Flow<List<Order>>? {
         return authUtil.userUuid?.let { userUuid ->
             orderDao.observeOrderListByUserUuid(userUuid).mapOrders()
         }
     }
 
-    override fun observeOrderByUuid(orderUuid: String): Flow<OrderUI?> {
+    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderDao.observeOrderByUuid(orderUuid).map { orderWithCartProducts ->
             orderWithCartProducts?.let {
                 val cafeEntity = cafeRepo.getCafeEntityByUuid(orderWithCartProducts.order.cafeUuid)
@@ -63,11 +63,11 @@ class OrderRepository @Inject constructor(
         }.flowOn(IO)
     }
 
-    override fun observeLastOrder(): Flow<OrderUI?> {
+    override fun observeLastOrder(): Flow<Order?> {
         return orderDao.observeLastOrder().mapOrder()
     }
 
-    override suspend fun saveOrder(order: OrderUI) {
+    override suspend fun saveOrder(order: Order) {
         val orderFirebase = orderMapper.toFirebaseModel(order)
         val orderUuid = apiRepo.postOrder(orderFirebase, order.cafeUuid)
         order.uuid = orderUuid
@@ -100,7 +100,7 @@ class OrderRepository @Inject constructor(
 
     // EXTENSIONS
 
-    private fun Flow<OrderWithProducts?>.mapOrder(): Flow<OrderUI?> {
+    private fun Flow<OrderWithProducts?>.mapOrder(): Flow<Order?> {
         return this.flowOn(IO)
             .map { orderWithProducts ->
                 orderWithProducts?.let {
@@ -110,7 +110,7 @@ class OrderRepository @Inject constructor(
             }.flowOn(Default)
     }
 
-    private fun Flow<List<OrderWithProducts>>.mapOrders(): Flow<List<OrderUI>> {
+    private fun Flow<List<OrderWithProducts>>.mapOrders(): Flow<List<Order>> {
         return this.flowOn(IO)
             .map { orderList ->
                 orderList.map { orderWithProducts ->

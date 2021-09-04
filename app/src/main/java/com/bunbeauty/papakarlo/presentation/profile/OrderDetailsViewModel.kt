@@ -2,8 +2,9 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.domain.model.ui.OrderUI
+import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.domain.model.ui.Delivery
+import com.bunbeauty.domain.model.ui.Order
 import com.bunbeauty.domain.model.ui.product.OrderProduct
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
@@ -12,9 +13,8 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
-import com.bunbeauty.presentation.view_model.base.adapter.OrderDetailsItem
+import com.bunbeauty.presentation.view_model.base.adapter.OrderUI
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class OrderDetailsViewModel @Inject constructor(
@@ -25,56 +25,56 @@ class OrderDetailsViewModel @Inject constructor(
     private val orderUtil: IOrderUtil,
 ) : BaseViewModel() {
 
-    private val mutableOrderState: MutableStateFlow<State<OrderDetailsItem?>> =
+    private val mutableOrderState: MutableStateFlow<State<OrderUI>> =
         MutableStateFlow(State.Loading())
-    val orderState: StateFlow<State<OrderDetailsItem?>> = mutableOrderState.asStateFlow()
+    val orderState: StateFlow<State<OrderUI>> = mutableOrderState.asStateFlow()
 
     fun getOrder(orderUuid: String) {
         orderRepo.observeOrderByUuid(orderUuid).onEach { order ->
             if (order == null) {
                 mutableOrderState.value = State.Empty()
             } else {
-                mutableOrderState.value = toItem(order).toStateNullableSuccess()
+                val delivery = dataStoreRepo.delivery.first()
+                mutableOrderState.value = order.toUI(delivery).toStateSuccess()
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun toItem(orderProduct: OrderProduct): CartProductItem {
-        val newCost = productHelper.getCartProductNewCost(orderProduct)
-        val oldCost = productHelper.getCartProductOldCost(orderProduct)
+    private fun Order.toUI(delivery: Delivery): OrderUI {
+        return OrderUI(
+            code = code,
+            stepCount = orderUtil.getOrderStepCount(orderStatus),
+            status = stringUtil.toStringOrderStatus(orderStatus),
+            orderStatusBackground = orderUtil.getBackgroundColor(orderStatus),
+            time = stringUtil.toStringTime(time),
+            pickupMethod = stringUtil.toStringIsDelivery(isDelivery),
+            deferredTime = deferredTime ?: "",
+            address = stringUtil.getUserAddressString(userAddress),
+            comment = comment ?: "",
+            deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(this, delivery)),
+            oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(this, delivery)),
+            newTotalCost = stringUtil.getCostString(orderUtil.getNewOrderCost(this, delivery)),
+            cartProducts = orderProductList.map { orderProduct ->
+                orderProduct.toItem()
+            },
+            isDelivery = isDelivery,
+        )
+    }
+
+    private fun OrderProduct.toItem(): CartProductItem {
+        val newCost = productHelper.getCartProductNewCost(this)
+        val oldCost = productHelper.getCartProductOldCost(this)
         val newCostString = stringUtil.getCostString(newCost)
         val oldCostString = stringUtil.getCostString(oldCost)
 
         return CartProductItem(
-            uuid = orderProduct.uuid,
-            name = orderProduct.menuProduct.name,
+            uuid = uuid,
+            name = menuProduct.name,
             newCost = newCostString,
             oldCost = oldCostString,
-            photoLink = orderProduct.menuProduct.photoLink,
-            count = orderProduct.count,
-            menuProductUuid = orderProduct.menuProduct.uuid
-        )
-    }
-
-    private fun toItem(order: OrderUI): OrderDetailsItem {
-        val delivery = runBlocking {
-            dataStoreRepo.delivery.first()
-        }
-        return OrderDetailsItem(
-            code = order.code,
-            orderStatus = stringUtil.toStringOrderStatus(order.orderStatus),
-            orderStatusBackground = orderUtil.getBackgroundColor(order.orderStatus),
-            orderStatusActiveLine = orderUtil.getActiveLineCount(order.orderStatus),
-            time = stringUtil.toStringTime(order.time),
-            pickupMethod = stringUtil.toStringIsDelivery(order.isDelivery),
-            deferredTime = order.deferredTime ?: "",
-            address = stringUtil.getUserAddressString(order.userAddress),
-            comment = order.comment ?: "",
-            deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(order, delivery)),
-            oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(order, delivery)),
-            newTotalCost = stringUtil.getCostString(orderUtil.getNewOrderCost(order, delivery)),
-            cartProducts = order.orderProductList.map(::toItem),
-            isDelivery = order.isDelivery,
+            photoLink = menuProduct.photoLink,
+            count = count,
+            menuProductUuid = menuProduct.uuid
         )
     }
 }
