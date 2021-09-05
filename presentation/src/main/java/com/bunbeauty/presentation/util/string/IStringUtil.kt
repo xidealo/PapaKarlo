@@ -21,4 +21,5 @@ interface IStringUtil {
     fun getCodeString(code: String): String
     fun getIsClosedMessage(cafe: Cafe): String
     fun getSizeString(weight: Int?): String
+    fun getCountString(count: Int): String
 }

@@ -1,4 +1,4 @@
-package com.bunbeauty.presentation.view_model.base.adapter
+package com.bunbeauty.presentation.item
 
 import android.graphics.drawable.Drawable
 import com.bunbeauty.domain.model.ui.BaseItem

@@ -11,9 +11,9 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.presentation.item.OrderProductItem
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
-import com.bunbeauty.presentation.view_model.base.adapter.OrderUI
+import com.bunbeauty.presentation.model.OrderUI
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -54,27 +54,27 @@ class OrderDetailsViewModel @Inject constructor(
             deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(this, delivery)),
             oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(this, delivery)),
             newTotalCost = stringUtil.getCostString(orderUtil.getNewOrderCost(this, delivery)),
-            cartProducts = orderProductList.map { orderProduct ->
+            orderProductList = orderProductList.map { orderProduct ->
                 orderProduct.toItem()
             },
             isDelivery = isDelivery,
         )
     }
 
-    private fun OrderProduct.toItem(): CartProductItem {
+    private fun OrderProduct.toItem(): OrderProductItem {
         val newCost = productHelper.getCartProductNewCost(this)
         val oldCost = productHelper.getCartProductOldCost(this)
         val newCostString = stringUtil.getCostString(newCost)
         val oldCostString = stringUtil.getCostString(oldCost)
+        val countString = stringUtil.getCountString(count)
 
-        return CartProductItem(
+        return OrderProductItem(
             uuid = uuid,
             name = menuProduct.name,
             newCost = newCostString,
             oldCost = oldCostString,
             photoLink = menuProduct.photoLink,
-            count = count,
-            menuProductUuid = menuProduct.uuid
+            count = countString
         )
     }
 }

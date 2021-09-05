@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragm
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreateOrder
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
+import com.bunbeauty.presentation.item.CartProductItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -25,10 +25,10 @@ class ConsumerCartViewModel @Inject constructor(
     private val productHelper: IProductHelper
 ) : CartViewModel() {
 
-    private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
+    private val mutableOrderProductListState: MutableStateFlow<State<List<CartProductItem>>> =
         MutableStateFlow(State.Loading())
-    val cartProductListState: StateFlow<State<List<CartProductItem>>> =
-        mutableCartProductListState.asStateFlow()
+    val orderProductListState: StateFlow<State<List<CartProductItem>>> =
+        mutableOrderProductListState.asStateFlow()
 
     private val mutableDeliveryInfo: MutableStateFlow<String> = MutableStateFlow("")
     val deliveryInfo: StateFlow<String> = mutableDeliveryInfo.asStateFlow()
@@ -51,7 +51,7 @@ class ConsumerCartViewModel @Inject constructor(
 
     private fun subscribeOnCartProducts() {
         cartProductRepo.observeCartProductList().onEach { productList ->
-            mutableCartProductListState.value = if (productList.isEmpty()) {
+            mutableOrderProductListState.value = if (productList.isEmpty()) {
                 State.Empty()
             } else {
                 productList.map(::toItem).toStateSuccess()
@@ -65,7 +65,7 @@ class ConsumerCartViewModel @Inject constructor(
         dataStoreRepo.delivery.onEach { delivery ->
             mutableDeliveryInfo.value =
                 resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery_from) +
-                        delivery.forFree
+                        stringUtil.getCostString(delivery.forFree)
         }.launchIn(viewModelScope)
     }
 

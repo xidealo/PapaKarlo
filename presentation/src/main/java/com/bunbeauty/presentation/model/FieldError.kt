@@ -1,3 +1,3 @@
-package com.bunbeauty.presentation.view_model.base.adapter
+package com.bunbeauty.presentation.model
 
 data class FieldError(val key: String, val message: String)

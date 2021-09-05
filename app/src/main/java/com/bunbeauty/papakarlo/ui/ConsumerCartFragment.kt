@@ -13,7 +13,8 @@ import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
+import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.presentation.item.CartProductItem
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -21,6 +22,9 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
 
     @Inject
     lateinit var cartProductAdapter: CartProductAdapter
+
+    @Inject
+    lateinit var marginItemDecoration: MarginItemDecoration
 
     override val viewModel: ConsumerCartViewModel by viewModels { modelFactory }
 
@@ -41,6 +45,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
                 }
             }
         viewDataBinding.run {
+            fragmentConsumerCartRvResult.addItemDecoration(marginItemDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter
             fragmentConsumerCartBtnMenu.setOnClickListener {
                 viewModel.onMenuClicked()
@@ -49,7 +54,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
                 viewModel.onCreateOrderClicked()
             }
             fragmentConsumerCartTvOldTotalCost.strikeOutText()
-            viewModel.cartProductListState.onEach { state ->
+            viewModel.orderProductListState.onEach { state ->
                 when (state) {
                     is State.Empty -> {
                         fragmentConsumerCartGroupEmptyCart.visible()

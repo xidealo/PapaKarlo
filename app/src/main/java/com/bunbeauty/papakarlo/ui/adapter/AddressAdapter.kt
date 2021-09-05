@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
-import com.bunbeauty.presentation.view_model.base.adapter.AddressItem
+import com.bunbeauty.presentation.item.AddressItem
 import javax.inject.Inject
 
 class AddressAdapter @Inject constructor() :

@@ -1,6 +1,6 @@
-package com.bunbeauty.presentation.view_model.base.adapter
+package com.bunbeauty.presentation.model
 
-import com.bunbeauty.domain.enums.ActiveLines
+import com.bunbeauty.presentation.item.OrderProductItem
 
 data class OrderUI(
     val code: String,
@@ -15,6 +15,6 @@ data class OrderUI(
     val deliveryCost: String,
     val oldTotalCost: String,
     val newTotalCost: String,
-    val cartProducts: List<CartProductItem>,
+    val orderProductList: List<OrderProductItem>,
     val isDelivery: Boolean
 )

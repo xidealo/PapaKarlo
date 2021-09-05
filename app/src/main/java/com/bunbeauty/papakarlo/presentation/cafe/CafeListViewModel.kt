@@ -3,13 +3,11 @@ package com.bunbeauty.papakarlo.presentation.cafe
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.ui.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil
-import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
+import com.bunbeauty.presentation.item.CafeItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

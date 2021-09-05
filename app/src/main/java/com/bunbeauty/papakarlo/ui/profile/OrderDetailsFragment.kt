@@ -13,8 +13,9 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
-import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
+import com.bunbeauty.papakarlo.ui.adapter.OrderProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -22,10 +23,13 @@ import javax.inject.Inject
 class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
 
     @Inject
-    lateinit var cartProductAdapter: CartProductAdapter
+    lateinit var orderProductAdapter: OrderProductAdapter
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
+
+    @Inject
+    lateinit var marginItemDecoration: MarginItemDecoration
 
     override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
 
@@ -58,9 +62,9 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                         fragmentOrderDetailsTvOrderOldTotalCost.text = order.oldTotalCost
                         fragmentOrderDetailsTvOrderOldTotalCost.strikeOutText()
                         fragmentOrderDetailsTvOrderNewTotalCost.text = order.newTotalCost
-                        cartProductAdapter.canBeChanged = false
-                        fragmentOrderDetailsRvProductList.adapter = cartProductAdapter
-                        cartProductAdapter.submitList(order.cartProducts)
+                        fragmentOrderDetailsRvProductList.addItemDecoration(marginItemDecoration)
+                        fragmentOrderDetailsRvProductList.adapter = orderProductAdapter
+                        orderProductAdapter.submitList(order.orderProductList)
 
                         if (order.deferredTime.isEmpty()) {
                             fragmentOrderDetailsTvDeferredTimeValue.gone()

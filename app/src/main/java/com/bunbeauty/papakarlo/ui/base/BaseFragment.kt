@@ -97,11 +97,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         }.startedLaunch(viewLifecycleOwner)
     }
 
-    @Deprecated("use flow")
-    protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
-        liveData.observe(viewLifecycleOwner, observer::invoke)
-    }
-
     private fun showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
         val snack = Snackbar.make(viewDataBinding.root, errorMessage, Snackbar.LENGTH_SHORT)
             .setBackgroundTint(ContextCompat.getColor(requireContext(), backgroundColorId))

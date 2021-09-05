@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
-import com.bunbeauty.presentation.view_model.base.adapter.CafeItem
+import com.bunbeauty.presentation.item.CafeItem
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :

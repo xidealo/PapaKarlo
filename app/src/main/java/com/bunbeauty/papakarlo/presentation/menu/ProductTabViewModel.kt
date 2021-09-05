@@ -11,7 +11,7 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
+import com.bunbeauty.presentation.item.MenuProductItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

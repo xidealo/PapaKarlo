@@ -5,7 +5,7 @@ import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
-import com.bunbeauty.presentation.view_model.base.adapter.FieldError
+import com.bunbeauty.presentation.model.FieldError
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

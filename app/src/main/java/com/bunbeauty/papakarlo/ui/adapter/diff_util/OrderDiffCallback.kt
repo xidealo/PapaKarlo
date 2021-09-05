@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
-import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
+import com.bunbeauty.presentation.item.OrderItem
 
 class OrderDiffCallback : DefaultDiffCallback<OrderItem>() {
 

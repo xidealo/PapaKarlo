@@ -168,4 +168,8 @@ class StringUtil @Inject constructor(
             "$weight г"
         }
     }
+
+    override fun getCountString(count: Int): String {
+        return "x $count"
+    }
 }

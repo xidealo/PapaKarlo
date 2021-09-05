@@ -17,8 +17,8 @@ class MarginItemDecoration @Inject constructor(private val resourcesProvider: IR
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val smallMargin = resourcesProvider.getDimension(R.dimen.small_margin)
-        val mediumMargin = resourcesProvider.getDimension(R.dimen.medium_margin)
+        val smallMargin = resourcesProvider.getDimensionPixelOffset(R.dimen.small_margin)
+        val mediumMargin = resourcesProvider.getDimensionPixelOffset(R.dimen.medium_margin)
         outRect.run {
             if (isFistItem(view, parent)) {
                 top = mediumMargin

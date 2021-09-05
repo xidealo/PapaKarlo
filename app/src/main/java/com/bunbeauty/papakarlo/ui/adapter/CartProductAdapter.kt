@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
 import com.bunbeauty.papakarlo.ui.custom.CountPicker
-import com.bunbeauty.presentation.view_model.base.adapter.CartProductItem
+import com.bunbeauty.presentation.item.CartProductItem
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
@@ -20,25 +20,12 @@ class CartProductAdapter @Inject constructor() :
     ) {
 
     var countChangeListener: ItemCountChangeListener? = null
-    var canBeChanged: Boolean = true
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CartProductViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ElementCartProductBinding.inflate(inflater, viewGroup, false)
 
         return CartProductViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(
-        holder: CartProductAdapter.CartProductViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
-    ) {
-        if (payloads.isNullOrEmpty()) {
-            super.onBindViewHolder(holder, position, payloads)
-        } else {
-            holder.onBind(getItem(position), payloads)
-        }
     }
 
     inner class CartProductViewHolder(binding: ElementCartProductBinding) :
@@ -57,14 +44,13 @@ class CartProductAdapter @Inject constructor() :
                 elementCartProductIvPhoto.load(item.photoLink) {
                     placeholder(R.drawable.default_product)
                 }
-
-                elementCartProductCpCount.toggleVisibility(canBeChanged)
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
             }
         }
 
         override fun onBind(item: CartProductItem, payloads: List<Any>) {
             super.onBind(item, payloads)
+
             if (payloads.last() as Boolean) {
                 binding.run {
                     elementCartProductTvOldCost.text = item.oldCost

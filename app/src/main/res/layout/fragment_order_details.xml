@@ -184,7 +184,6 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fragment_order_details_rv_product_list"
                     android:layout_width="0dp"
@@ -195,7 +194,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_mcv_order_details"
                     tools:itemCount="3"
-                    tools:listitem="@layout/element_cart_product" />
+                    tools:listitem="@layout/element_order_product" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 

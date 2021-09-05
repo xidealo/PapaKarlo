@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
-import com.bunbeauty.presentation.view_model.base.adapter.MenuProductItem
+import com.bunbeauty.presentation.item.MenuProductItem
 import java.lang.ref.SoftReference
 import javax.inject.Inject
 

@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
+import com.bunbeauty.presentation.item.OrderItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn

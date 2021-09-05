@@ -12,7 +12,7 @@ import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
-import com.bunbeauty.presentation.view_model.base.adapter.OrderItem
+import com.bunbeauty.presentation.item.OrderItem
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

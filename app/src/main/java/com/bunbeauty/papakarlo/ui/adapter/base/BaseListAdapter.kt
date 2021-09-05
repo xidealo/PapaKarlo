@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.domain.model.ui.BaseItem
+import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 
 abstract class BaseListAdapter<I : BaseItem, V : ViewBinding, VH : BaseViewHolder<V, I>>(
     diffCallback: DiffUtil.ItemCallback<I>
@@ -23,5 +24,16 @@ abstract class BaseListAdapter<I : BaseItem, V : ViewBinding, VH : BaseViewHolde
         holder.onBind(getItem(position))
     }
 
+    override fun onBindViewHolder(
+        holder: VH,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isNullOrEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.onBind(getItem(position), payloads)
+        }
+    }
 
 }
