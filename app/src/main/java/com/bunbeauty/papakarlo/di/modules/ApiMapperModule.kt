@@ -16,4 +16,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindCafeMapper(cafeMapper: CafeMapper): ICafeMapper
+
+    @Binds
+    fun bindProfileMapper(userMapper: UserMapper): IUserMapper
 }

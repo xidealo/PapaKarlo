@@ -47,7 +47,6 @@ class ApiRepository @Inject constructor(
         return getData(path = "/profile", UserServer.serializer(), hashMapOf(Pair("uuid", uuid)))
     }
 
-
     suspend fun <T> getDataList(
         path: String,
         serializer: KSerializer<T>,

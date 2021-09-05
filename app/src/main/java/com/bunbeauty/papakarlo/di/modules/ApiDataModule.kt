@@ -83,4 +83,8 @@ class ApiDataModule {
     @Provides
     fun provideCafeDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getCafeDao()
 
+    @Singleton
+    @Provides
+    fun provideUserDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getUserDao()
+
 }

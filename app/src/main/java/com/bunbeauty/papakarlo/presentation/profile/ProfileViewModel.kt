@@ -13,6 +13,7 @@ import com.example.domain_firebase.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
@@ -40,20 +41,14 @@ abstract class ProfileViewModel : CartViewModel() {
 }
 
 class ProfileViewModelImpl @Inject constructor(
-    @Firebase private val userAddressRepo: UserAddressRepo,
-    @Firebase private val userRepo: UserRepo,
-    @Firebase private val orderRepo: OrderRepo,
+    @Api private val userAddressRepo: UserAddressRepo,
+    @Api private val userRepo: UserRepo,
+    @Api private val orderRepo: OrderRepo,
     private val stringHelper: IStringUtil,
     private val authUtil: IAuthUtil,
     private val orderUtil: IOrderUtil,
     private val resourcesProvider: IResourcesProvider
 ) : ProfileViewModel() {
-
-    init {
-        subscribeOnUser()
-        getAddress(authUtil.userUuid)
-        subscribeOnLastOrder()
-    }
 
     private var user: User? = null
     override val userState: MutableStateFlow<State<User>> = MutableStateFlow(State.Loading())
@@ -63,6 +58,12 @@ class ProfileViewModelImpl @Inject constructor(
 
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
+
+    init {
+        subscribeOnUser()
+        getAddress(authUtil.userUuid)
+        subscribeOnLastOrder()
+    }
 
     private fun subscribeOnUser() {
         val userUuid = authUtil.userUuid
@@ -87,11 +88,11 @@ class ProfileViewModelImpl @Inject constructor(
     }
 
     private fun subscribeOnLastOrder() {
-            orderRepo.observeLastOrder().onEach { order ->
-                if (order != null) {
-                    lastOrderState.value = toItemModel(order).toStateSuccess()
-                }
-            }.launchIn(viewModelScope)
+        orderRepo.observeLastOrder().onEach { order ->
+            if (order != null) {
+                lastOrderState.value = toItemModel(order).toStateSuccess()
+            }
+        }.launchIn(viewModelScope)
     }
 
     override fun getBonusesString(bonusList: MutableList<Int>): String {
