@@ -8,7 +8,6 @@ import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -20,6 +19,10 @@ class MenuProductRepository @Inject constructor(
 ) : MenuProductRepo {
 
     override suspend fun refreshMenuProducts() {
+        menuProductDao.refreshMenuProductList(
+            apiRepo.getMenuProductList()
+                .map(menuProductMapper::toEntityModel)
+        )
         val menuProductList = apiRepo.getMenuProductMap()
             .flowOn(IO)
             .map { menuProductMap ->

@@ -9,13 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MenuProductDao : BaseDao<MenuProductEntity> {
 
-//    @Transaction
-//    suspend fun refreshMenuProductList(menuProductList: List<MenuProductEntity>) {
-//        val localMenuProduct =
-//
-//        deleteAll()
-//        insertAll(menuProductList)
-//    }
+    @Transaction
+    suspend fun refreshMenuProductList(menuProductList: List<MenuProductEntity>) {
+        insertAll(menuProductList)
+    }
 
     // OBSERVE
 

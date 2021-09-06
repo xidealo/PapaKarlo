@@ -6,6 +6,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlinx-serialization'
 }
 
 android {
@@ -122,7 +123,6 @@ dependencies {
     //Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.extensionsVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.livedataVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
@@ -168,5 +168,10 @@ dependencies {
     }
     //play:core
     implementation "com.google.android.play:core:$rootProject.playCoreVersion"
+    //ktor
+    implementation "io.ktor:ktor-client-android:$rootProject.ktorVersion"
+    implementation "io.ktor:ktor-client-serialization:$rootProject.ktorVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
+    implementation "io.ktor:ktor-client-logging-jvm:$rootProject.ktorVersion"
 }
 

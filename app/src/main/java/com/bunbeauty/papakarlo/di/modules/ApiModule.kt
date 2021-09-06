@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.data.repository.ApiRepository
+import com.bunbeauty.data.repository.ApiRepositoryKtor
 import com.bunbeauty.data.repository.DataStoreRepository
 import com.bunbeauty.domain.auth.AuthUtil
 import com.bunbeauty.domain.auth.IAuthUtil
@@ -36,7 +36,7 @@ interface ApiModule {
     //NETWORK
 
     @Binds
-    fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
+    fun bindApiRepository(apiRepositoryKtor: ApiRepositoryKtor): ApiRepo
 
     // DATA_STORE
 

@@ -22,7 +22,7 @@ class PapaKarloApplication : Application(), CoroutineScope {
         launch(Dispatchers.IO) {
             try {
                 TrueTime.build().initialize()
-            }catch (exception:Exception){
+            } catch (exception: Exception) {
                 //try reconnect
             }
         }
