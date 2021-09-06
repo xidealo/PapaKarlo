@@ -29,4 +29,6 @@ class CafeServer(
     @SerialName("visible")
     val visible: Boolean,
 
-    )
+    @SerialName("city")
+    val city: String,
+)

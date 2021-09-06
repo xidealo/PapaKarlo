@@ -1,12 +1,12 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.domain.model.firebase.MenuProductFirebase
 import com.bunbeauty.domain.model.firebase.UserFirebase
 import com.bunbeauty.domain.model.firebase.address.UserAddressFirebase
-import com.bunbeauty.domain.model.firebase.cafe.CafeFirebase
 import com.bunbeauty.domain.model.firebase.order.OrderFirebase
 import com.bunbeauty.domain.model.firebase.order.UserOrderFirebase
 import com.bunbeauty.domain.model.ktor.CafeServer
+import com.bunbeauty.domain.model.ktor.DeliveryServer
+import com.bunbeauty.domain.model.ktor.MenuProductServer
 import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.repo.ApiRepo
 import io.ktor.client.*
@@ -14,6 +14,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -24,7 +25,6 @@ class ApiRepositoryKtor @Inject constructor(
 ) : ApiRepo {
 
     override fun postOrder(orderFirebase: OrderFirebase, cafeUuid: String): String {
-
         return ""
     }
 
@@ -40,46 +40,24 @@ class ApiRepositoryKtor @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getCafeList(): Flow<List<CafeFirebase>> {
-        return flow {
-            val request = client.get<HttpStatement> {
-                url {
-                    path("/cafe/all/")
-                }
-            }
-            val t = request.execute().readText()
-            print(t)
-            emit(listOf(CafeFirebase()))
-        }
+    override suspend fun getCafeServerList(): List<CafeServer> {
+        return getDataList(path = "/cafe/all/", CafeServer.serializer())
     }
 
-    override fun getCafeServerList(): Flow<List<CafeServer>> {
-        return flow {
-            val request = client.get<HttpStatement> {
-                url {
-                    path("/cafe/all/")
-                }
-            }
-
-            emit(
-                json.decodeFromString(
-                    ListSerializer(CafeServer.serializer()),
-                    request.execute().readText()
-                )
-            )
-        }
+    override suspend fun getCafeServerByCityList(city: String): List<CafeServer> {
+        return getDataList(
+            path = "/cafe",
+            CafeServer.serializer(),
+            hashMapOf(Pair("city", city))
+        )
     }
 
-    override fun getMenuProductList(): Flow<List<MenuProductFirebase>> {
-        return flow {
-
-        }
+    override suspend fun getMenuProductList(): List<MenuProductServer> {
+        return getDataList(path = "/menuProduct/all/", MenuProductServer.serializer())
     }
 
-    override fun getDelivery(): Flow<Delivery?> {
-        return flow {
-
-        }
+    override suspend fun getDelivery(): DeliveryServer {
+        return getData(path = "/delivery/", DeliveryServer.serializer())
     }
 
     override fun getUser(userUuid: String): Flow<UserFirebase?> {
@@ -102,6 +80,42 @@ class ApiRepositoryKtor @Inject constructor(
 
     override fun removeOrderObservers() {
         //
+    }
+
+    suspend fun <T> getDataList(
+        path: String,
+        serializer: KSerializer<T>,
+        parameters: HashMap<String, String> = hashMapOf()
+    ): List<T> {
+        return json.decodeFromString(
+            ListSerializer(serializer),
+            client.get<HttpStatement> {
+                url {
+                    path(path)
+                }
+                parameters.forEach { parameterMap ->
+                    parameter(parameterMap.key, parameterMap.value)
+                }
+            }.execute().readText()
+        )
+    }
+
+    suspend fun <T> getData(
+        path: String,
+        serializer: KSerializer<T>,
+        parameters: HashMap<String, String> = hashMapOf()
+    ): T {
+        return json.decodeFromString(
+            serializer,
+            client.get<HttpStatement> {
+                url {
+                    path(path)
+                }
+                parameters.forEach { parameterMap ->
+                    parameter(parameterMap.key, parameterMap.value)
+                }
+            }.execute().readText()
+        )
     }
 
 }

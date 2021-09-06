@@ -1,5 +1,6 @@
 package com.bunbeauty.data.repository
 
+import com.bunbeauty.domain.model.ui.Delivery
 import com.bunbeauty.domain.repo.ApiRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.DeliveryRepo
@@ -14,11 +15,10 @@ class DeliveryRepository @Inject constructor(
 ) : DeliveryRepo {
 
     override suspend fun refreshDelivery() {
-        apiRepo.getDelivery()
-            .flowOn(IO)
-            .first()
-            ?.let { delivery ->
-                dataStoreRepo.saveDelivery(delivery)
+        apiRepo.getDelivery().let { delivery ->
+                dataStoreRepo.saveDelivery(
+                    Delivery(delivery.cost, delivery.forFree)
+                )
             }
     }
 }

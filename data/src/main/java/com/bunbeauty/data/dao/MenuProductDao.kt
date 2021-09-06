@@ -11,7 +11,6 @@ interface MenuProductDao : BaseDao<MenuProductEntity> {
 
     @Transaction
     suspend fun refreshMenuProductList(menuProductList: List<MenuProductEntity>) {
-        deleteAll()
         insertAll(menuProductList)
     }
 

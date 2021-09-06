@@ -6,7 +6,7 @@ import com.bunbeauty.domain.model.entity.address.DistrictEntity
 import com.bunbeauty.domain.model.entity.cafe.CafeEntity
 import com.bunbeauty.domain.model.entity.cafe.CafeWithDistricts
 import com.bunbeauty.domain.model.entity.cafe.DistrictWithStreets
-import com.bunbeauty.domain.model.firebase.cafe.CafeFirebase
+import com.bunbeauty.domain.model.ktor.CafeServer
 import com.bunbeauty.domain.model.ui.Cafe
 import com.bunbeauty.domain.model.ui.address.CafeAddress
 import javax.inject.Inject
@@ -31,9 +31,9 @@ class CafeMapper @Inject constructor(
         )
     }
 
-    override fun toEntityModel(cafeFirebase: CafeFirebase): CafeWithDistricts {
+  /*  override fun toEntityModel(cafeServer: CafeServer): CafeWithDistricts {
         return CafeWithDistricts(
-            cafeEntity = CafeEntity(
+           *//* cafeEntity = CafeEntity(
                 uuid = cafeFirebase.uuid,
                 fromTime = cafeFirebase.cafeEntity.fromTime,
                 toTime = cafeFirebase.cafeEntity.toTime,
@@ -60,9 +60,9 @@ class CafeMapper @Inject constructor(
                         )
                     }
                 )
-            }
+            }*//*
         )
-    }
+    }*/
 
     override fun toCafeAddress(cafeEntity: CafeEntity): CafeAddress {
         return CafeAddress(

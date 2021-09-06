@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
     ) {
         viewModelScope.launch {
             cafeRepo.refreshCafeList()
-            //menuProductRepo.refreshMenuProducts()
-            //deliveryRepo.refreshDelivery()
-            //userRepo.refreshUser()
+            menuProductRepo.refreshMenuProducts()
+            deliveryRepo.refreshDelivery()
+            userRepo.refreshUser()
         }
     }
 }
