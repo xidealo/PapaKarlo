@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
@@ -10,7 +9,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.databinding.FragmentCreationAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach

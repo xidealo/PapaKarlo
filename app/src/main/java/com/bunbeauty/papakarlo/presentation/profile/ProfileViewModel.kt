@@ -4,12 +4,16 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.ui.Order
-import com.bunbeauty.domain.model.ui.User
-import com.bunbeauty.domain.repo.*
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.User
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.UserRepo
+import com.example.domain_firebase.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -36,11 +40,11 @@ abstract class ProfileViewModel : CartViewModel() {
 }
 
 class ProfileViewModelImpl @Inject constructor(
-    private val userAddressRepo: UserAddressRepo,
-    private val userRepo: UserRepo,
+    @Firebase private val userAddressRepo: UserAddressRepo,
+    @Firebase private val userRepo: UserRepo,
+    @Firebase private val orderRepo: OrderRepo,
     private val stringHelper: IStringUtil,
     private val authUtil: IAuthUtil,
-    private val orderRepo: OrderRepo,
     private val orderUtil: IOrderUtil,
     private val resourcesProvider: IResourcesProvider
 ) : ProfileViewModel() {

@@ -1,7 +1,7 @@
 package com.bunbeauty.presentation.item
 
 import android.graphics.drawable.Drawable
-import com.bunbeauty.domain.model.ui.BaseItem
+import com.bunbeauty.domain.model.BaseItem
 import java.lang.ref.SoftReference
 
 data class MenuProductItem(

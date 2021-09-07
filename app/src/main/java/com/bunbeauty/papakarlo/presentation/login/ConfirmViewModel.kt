@@ -6,6 +6,7 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +23,8 @@ abstract class ConfirmViewModel : BaseViewModel() {
 }
 
 class ConfirmViewModelImpl @Inject constructor(
+    @Firebase private val userRepo: UserRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val userRepo: UserRepo,
     private val resourcesProvider: IResourcesProvider
 ) : ConfirmViewModel() {
 

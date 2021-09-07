@@ -2,10 +2,10 @@ package com.bunbeauty.domain.util.order
 
 import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.ui.product.OrderProduct
-import com.bunbeauty.domain.model.ui.Order
-import com.bunbeauty.domain.model.ui.product.ProductPosition
+import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.product.OrderProduct
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.product.ProductPosition
 
 interface IOrderUtil {
 

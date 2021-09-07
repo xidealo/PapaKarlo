@@ -3,10 +3,10 @@ package com.bunbeauty.domain.util.order
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.ui.product.OrderProduct
-import com.bunbeauty.domain.model.ui.Order
-import com.bunbeauty.domain.model.ui.product.ProductPosition
+import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.product.OrderProduct
+import com.bunbeauty.domain.model.product.ProductPosition
 import com.bunbeauty.domain.util.product.IProductHelper
 import javax.inject.Inject
 
@@ -16,7 +16,7 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
         return getDeliveryCost(order.isDelivery, order.orderProductList, delivery)
     }
 
-    override fun <T: ProductPosition> getDeliveryCost(
+    override fun <T : ProductPosition> getDeliveryCost(
         isDelivery: Boolean,
         orderProductList: List<T>,
         delivery: Delivery
@@ -49,7 +49,7 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
         return getNewOrderCost(order.isDelivery, order.orderProductList, delivery)
     }
 
-    override fun <T: ProductPosition> getNewOrderCost(
+    override fun <T : ProductPosition> getNewOrderCost(
         isDelivery: Boolean,
         orderProductList: List<T>,
         delivery: Delivery

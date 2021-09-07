@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 30
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -56,6 +56,7 @@ dependencies {
 
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
+
     //True time
     implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
@@ -63,6 +64,4 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-auth-ktx'
 
-    //ktor
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
-}
+ }

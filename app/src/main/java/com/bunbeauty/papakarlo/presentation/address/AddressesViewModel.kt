@@ -3,11 +3,12 @@ package com.bunbeauty.papakarlo.presentation.address
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.ui.address.CafeAddress
-import com.bunbeauty.domain.model.ui.address.UserAddress
+import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.AddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -27,8 +28,8 @@ abstract class AddressesViewModel : BaseViewModel() {
 }
 
 class AddressesViewModelImpl @Inject constructor(
-    private val cafeRepo: CafeRepo,
-    private val userAddressRepo: UserAddressRepo,
+    @Firebase private val cafeRepo: CafeRepo,
+    @Firebase private val userAddressRepo: UserAddressRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
 ) : AddressesViewModel() {

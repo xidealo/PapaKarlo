@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.ui.User
+import com.bunbeauty.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {

@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.cafe
 
-import com.bunbeauty.domain.model.ui.Cafe
+import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.model.CafeOptionUI

@@ -3,11 +3,12 @@ package com.bunbeauty.papakarlo.presentation.cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.ui.product.CartProduct
+import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
 import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreateOrder
@@ -18,9 +19,9 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ConsumerCartViewModel @Inject constructor(
-    private val dataStoreRepo: DataStoreRepo,
+    @Firebase private val cartProductRepo: CartProductRepo,
     private val resourcesProvider: IResourcesProvider,
-    private val cartProductRepo: CartProductRepo,
+    private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper
 ) : CartViewModel() {

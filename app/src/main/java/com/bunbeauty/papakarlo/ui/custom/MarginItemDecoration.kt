@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.ui.custom
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.R

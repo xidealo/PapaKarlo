@@ -3,8 +3,7 @@ package com.bunbeauty.papakarlo.ui.adapter.base
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.domain.model.ui.BaseItem
-import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
+import com.bunbeauty.domain.model.BaseItem
 
 abstract class BaseListAdapter<I : BaseItem, V : ViewBinding, VH : BaseViewHolder<V, I>>(
     diffCallback: DiffUtil.ItemCallback<I>

@@ -1,10 +1,11 @@
 package com.bunbeauty.papakarlo.presentation.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.ui.product.MenuProduct
-import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.papakarlo.di.Api
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.model.MenuProductUI
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
-    private val menuProductRepo: MenuProductRepo,
+    @Api private val menuProductRepo: MenuProductRepo,
     private val  stringUtil: IStringUtil,
     private val  productHelper: IProductHelper,
 ) : CartViewModel() {
@@ -25,7 +26,7 @@ class ProductViewModel @Inject constructor(
 
     fun getMenuProduct(menuProductUuid: String) {
         viewModelScope.launch {
-            mutableMenuProduct.value = menuProductRepo.getMenuProduct(menuProductUuid)?.toUI()
+            mutableMenuProduct.value = menuProductRepo.getMenuProductByUuid(menuProductUuid)?.toUI()
         }
     }
 

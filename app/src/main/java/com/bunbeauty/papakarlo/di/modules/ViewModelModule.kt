@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bunbeauty.papakarlo.di.ViewModelKey
+import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.OneLineActionViewModel

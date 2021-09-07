@@ -3,13 +3,14 @@ package com.bunbeauty.papakarlo.presentation.profile
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.model.ui.Delivery
-import com.bunbeauty.domain.model.ui.Order
-import com.bunbeauty.domain.model.ui.product.OrderProduct
+import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.item.OrderProductItem
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class OrderDetailsViewModel @Inject constructor(
-    private val orderRepo: OrderRepo,
+    @Firebase private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,

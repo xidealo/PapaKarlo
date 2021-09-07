@@ -1,9 +1,9 @@
 package com.bunbeauty.presentation.util.string
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.ui.Cafe
-import com.bunbeauty.domain.model.ui.address.CafeAddress
-import com.bunbeauty.domain.model.ui.address.UserAddress
+import com.bunbeauty.domain.model.Cafe
+import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.UserAddress
 
 interface IStringUtil {
     fun toStringIsDelivery(isDelivery: Boolean): String

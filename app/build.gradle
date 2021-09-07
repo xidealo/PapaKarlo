@@ -86,10 +86,14 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
     implementation project(":domain")
+    implementation project(":domain_api")
+    implementation project(":domain_firebase")
+    implementation project(':data_firebase')
+    implementation project(":data_api")
     implementation project(":common")
     implementation project(":presentation")
+    implementation project(":data")
     implementation project(":shared")
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
@@ -142,14 +146,15 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
     implementation "jp.wasabeef:recyclerview-animators:$rootProject.recyclerviewAnimatorsViewVersion"
 
-    //Database
+    //Room
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
 
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
-    //true time
+
+    //True time
     implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
 
     //coil

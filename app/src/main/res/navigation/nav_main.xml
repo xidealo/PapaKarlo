@@ -47,7 +47,7 @@
         tools:layout="@layout/bottom_sheet_cafe_options">
         <argument
             android:name="cafe"
-            app:argType="com.bunbeauty.domain.model.ui.Cafe" />
+            app:argType="com.bunbeauty.domain.model.Cafe" />
     </dialog>
     <fragment
         android:id="@+id/cart_fragment"

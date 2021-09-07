@@ -1,6 +1,6 @@
 package com.bunbeauty.presentation.item
 
-import com.bunbeauty.domain.model.ui.BaseItem
+import com.bunbeauty.domain.model.BaseItem
 
 data class AddressItem(
     override var uuid: String,

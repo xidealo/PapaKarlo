@@ -1,0 +1,114 @@
+package com.bunbeauty.data_firebase.repository
+
+import com.bunbeauty.data_firebase.dao.OrderDao
+import com.bunbeauty.data_firebase.dao.UserAddressDao
+import com.bunbeauty.data_firebase.dao.UserDao
+import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.enums.OrderStatus
+import com.example.domain_firebase.model.entity.user.UserEntity
+import com.bunbeauty.domain.model.User
+import com.example.domain_firebase.repo.FirebaseRepo
+import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.UserRepo
+import com.example.domain_firebase.mapper.IOrderMapper
+import com.example.domain_firebase.mapper.IUserMapper
+import com.example.domain_firebase.model.entity.address.UserAddressEntity
+import com.example.domain_firebase.model.entity.order.OrderStatusEntity
+import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
+
+class UserRepository @Inject constructor(
+    private val userDao: UserDao,
+    private val orderDao: OrderDao,
+    private val userAddressDao: UserAddressDao,
+    private val firebaseRepo: FirebaseRepo,
+    private val authUtil: IAuthUtil,
+    private val userMapper: IUserMapper,
+    private val orderMapper: IOrderMapper
+) : UserRepo {
+
+    override suspend fun refreshUser() {
+        val userPhone = authUtil.userPhone
+        val userUuid = authUtil.userUuid
+        if (authUtil.isAuthorize && userPhone != null && userUuid != null) {
+            val userFirebase = firebaseRepo.getUser(userUuid).flowOn(IO).first()
+            if (userFirebase == null) {
+                val newUserFirebase =
+                    com.example.domain_firebase.model.firebase.UserFirebase(phone = userPhone)
+                firebaseRepo.postUser(userUuid, newUserFirebase)
+                val newUserEntity =
+                    UserEntity(uuid = userUuid, phone = userPhone, email = null)
+                userDao.insert(newUserEntity)
+            } else {
+                val userWithAddresses = userMapper.toEntityModel(userFirebase, userUuid)
+                userDao.insert(userWithAddresses.user)
+                refreshUserAddresses(userWithAddresses.userAddressList)
+                refreshOrders(userFirebase.orders.values.toList(), userUuid)
+            }
+        }
+    }
+
+    private suspend fun refreshOrders(userOrderFirebaseList: List<UserOrderFirebase>, userUuid: String) {
+        firebaseRepo.removeOrderObservers()
+        userOrderFirebaseList.forEach { userOrderFirebase ->
+            firebaseRepo.getOrder(userOrderFirebase).collect { orderFirebase ->
+                if (orderFirebase != null) {
+                    val orderWithCartProducts =
+                        orderMapper.toEntityModel(orderFirebase, userOrderFirebase, userUuid)
+
+                    orderDao.insert(orderWithCartProducts)
+                    observeActiveOrder(
+                        orderWithCartProducts.order.orderStatus,
+                        userOrderFirebase
+                    )
+                }
+            }
+        }
+    }
+
+    private suspend fun observeActiveOrder(
+        orderStatus: OrderStatus,
+        userOrderFirebase: UserOrderFirebase
+    ) {
+        if (orderStatus != OrderStatus.CANCELED || orderStatus != OrderStatus.DELIVERED) {
+            withContext(IO) {
+                firebaseRepo.observeOrder(userOrderFirebase).onEach { updatedOrderFirebase ->
+                    if (updatedOrderFirebase != null) {
+                        val orderStatusEntity = OrderStatusEntity(
+                            uuid = userOrderFirebase.orderUuid,
+                            orderStatus = updatedOrderFirebase.orderEntity.orderStatus
+                        )
+                        orderDao.updateOrderStatus(orderStatusEntity)
+                    }
+                }.launchIn(this)
+            }
+        }
+    }
+
+    private suspend fun refreshUserAddresses(userAddressList: List<UserAddressEntity>) {
+        userAddressDao.deleteAll()
+        userAddressDao.insertAll(userAddressList)
+    }
+
+    override suspend fun getUserByUuid(userUuid: String): User? {
+        return userDao.getByUuid(userUuid)?.let { userEntity ->
+            userMapper.toUIModel(userEntity)
+        }
+    }
+
+    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+        return userDao.observeByUuid(userUuid)
+            .flowOn(IO)
+            .mapNotNull { userEntity ->
+                userEntity?.let {
+                    userMapper.toUIModel(userEntity)
+                }
+            }
+            .flowOn(Default)
+    }
+}

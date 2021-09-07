@@ -1,19 +1,22 @@
 package com.bunbeauty.papakarlo.presentation.cafe
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.model.ui.Cafe
+import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.item.CafeItem
+import com.bunbeauty.presentation.util.resources.ResourcesProvider
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class CafeListViewModel @Inject constructor(
     private val cafeUtil: ICafeUtil,
-    private val stringUtil: IStringUtil
+    private val stringUtil: IStringUtil,
+    private val resourcesProvider: ResourcesProvider
 ) : CartViewModel() {
 
     private var cafeList: List<Cafe> = emptyList()
@@ -22,7 +25,7 @@ class CafeListViewModel @Inject constructor(
     val cafeItemList: StateFlow<List<CafeItem>> = mutableCafeItemList.asStateFlow()
 
     @Inject
-    fun subscribeOnCafeList(cafeRepo: CafeRepo) {
+    fun subscribeOnCafeList(@Firebase cafeRepo: CafeRepo) {
         cafeRepo.observeCafeList().onEach { observedCafeList ->
             cafeList = observedCafeList
             mutableCafeItemList.value = observedCafeList.map(::toItemModel)
@@ -43,7 +46,7 @@ class CafeListViewModel @Inject constructor(
             address = stringUtil.getCafeAddressString(cafe.cafeAddress),
             workingHours = stringUtil.getWorkingHoursString(cafe),
             workingTimeMessage = stringUtil.getIsClosedMessage(cafe),
-            workingTimeMessageColor = cafeUtil.getIsClosedColor(cafe)
+            workingTimeMessageColor =  resourcesProvider.getColor(cafeUtil.getIsClosedColorId(cafe))
         )
     }
 }

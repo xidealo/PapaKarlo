@@ -10,11 +10,14 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
+        ApiDataModule::class,
+        ApiMapperModule::class,
+        ApiRepositoryModule::class,
         AppModule::class,
-        ApiModule::class,
-        DataModule::class,
-        MapperModule::class,
-        RepositoryModule::class
+        FirebaseDataModule::class,
+        FirebaseMapperModule::class,
+        FirebaseRepositoryModule::class,
+        UtilModule::class,
     ]
 )
 interface AppComponent {

@@ -22,7 +22,6 @@ import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar
-import com.example.shared.Greeting
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType

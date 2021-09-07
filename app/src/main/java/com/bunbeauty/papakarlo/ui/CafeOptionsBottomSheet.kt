@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.domain.model.ui.Cafe
+import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent

@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.ui.adapter.diff_util
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import com.bunbeauty.domain.model.ui.BaseItem
+import com.bunbeauty.domain.model.BaseItem
 
 open class DefaultDiffCallback<T : BaseItem> : DiffUtil.ItemCallback<T>() {
 

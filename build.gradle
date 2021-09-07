@@ -52,6 +52,7 @@ ext {
     livedataVersion = "2.3.1"
 
     roomDatabaseVersion = "2.3.0"
+    roomCompilerVersion = "1.1.1"
     datastoreVersion = "1.0.0"
     lifecycleVersion = "2.4.0-alpha03"
     extensionsVersion = "2.2.0"

@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.util.product
 
-import com.bunbeauty.domain.model.ui.product.MenuProduct
-import com.bunbeauty.domain.model.ui.product.ProductPosition
+import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.domain.model.product.ProductPosition
 
 interface IProductHelper {
 

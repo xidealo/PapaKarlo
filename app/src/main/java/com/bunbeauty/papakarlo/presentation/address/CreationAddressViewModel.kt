@@ -1,18 +1,17 @@
 package com.bunbeauty.papakarlo.presentation.address
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Constants
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.ui.Street
-import com.bunbeauty.domain.model.ui.address.UserAddress
+import com.bunbeauty.domain.model.Street
+import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +21,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    private val userAddressRepo: UserAddressRepo,
+    @Firebase private val userAddressRepo: UserAddressRepo,
+    @Firebase private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val streetRepo: StreetRepo,
     private val resourcesProvider: IResourcesProvider,
     private val authUtil: IAuthUtil,
     private val fieldHelper: IFieldHelper

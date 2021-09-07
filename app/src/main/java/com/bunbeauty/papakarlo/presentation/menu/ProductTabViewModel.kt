@@ -5,9 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.enums.ProductCode
-import com.bunbeauty.domain.model.ui.product.MenuProduct
+import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
+import com.bunbeauty.papakarlo.di.Api
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -16,9 +18,9 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ProductTabViewModel @Inject constructor(
+    @Api private val menuProductRepo: MenuProductRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
-    private val menuProductRepo: MenuProductRepo
 ) : CartViewModel() {
 
     private val mutableProductListState: MutableStateFlow<State<List<MenuProductItem>>> =

@@ -9,41 +9,41 @@ import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.mapper.ICartProductMapper
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.ui.address.CafeAddress
-import com.bunbeauty.domain.model.ui.Order
-import com.bunbeauty.domain.model.ui.address.UserAddress
-import com.bunbeauty.domain.model.ui.product.CartProduct
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.code.ICodeGenerator
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreateOrderViewModel @Inject constructor(
+    @Firebase private val cartProductRepo: CartProductRepo,
+    @Firebase private val userAddressRepo: UserAddressRepo,
+    @Firebase private val cafeRepo: CafeRepo,
+    @Firebase private val userRepo: UserRepo,
+    @Firebase private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val cartProductRepo: CartProductRepo,
-    private val orderRepo: OrderRepo,
-    private val userAddressRepo: UserAddressRepo,
-    private val cafeRepo: CafeRepo,
     private val codeGenerator: ICodeGenerator,
     private val orderUtil: IOrderUtil,
     private val authUtil: IAuthUtil,
-    private val userRepo: UserRepo,
     private val dateTimeUtils: IDateTimeUtil,
-    private val cartProductMapper: ICartProductMapper
+    private val cartProductMapper: com.example.domain_firebase.mapper.ICartProductMapper
 ) : BaseViewModel() {
 
     private val mutableIsDelivery: MutableStateFlow<Boolean> = MutableStateFlow(true)
