@@ -2,15 +2,18 @@ package com.example.data_api
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import com.example.data_api.dao.CartProductDao
 import com.example.data_api.dao.MenuProductDao
+import com.example.domain_api.model.entity.CartProductEntity
 import com.example.domain_api.model.entity.MenuProductEntity
 
 @Database(
     entities = [
         MenuProductEntity::class,
-    ], version = 1
+        CartProductEntity::class,
+    ], version = 2
 )
 abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getMenuProductDao(): MenuProductDao
+    abstract fun getCartProductDao(): CartProductDao
 }

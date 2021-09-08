@@ -10,4 +10,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindMenuProductMapper(menuProductMapper: MenuProductMapper): IMenuProductMapper
+
+    @Binds
+    fun bindCartProductMapper(cartProductMapper: CartProductMapper): ICartProductMapper
 }

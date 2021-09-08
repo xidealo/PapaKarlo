@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.presentation.base
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.papakarlo.di.annotation.Firebase
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 open class CartViewModel : BaseViewModel() {
 
     @Inject
-    @Firebase
+    @Api
     lateinit var baseCartProductRepo: CartProductRepo
 
     @Inject
@@ -47,16 +47,17 @@ open class CartViewModel : BaseViewModel() {
                     showMessage(baseStringUtil.getAddedToCartString(savedCartProduct.menuProduct.name))
                 }
             } else {
-                baseCartProductRepo.updateCount(cartProduct.uuid, cartProduct.count + 1)
+                baseCartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count + 1)
             }
         }
     }
 
     fun removeProductFromCart(menuProductUuid: String) {
         viewModelScope.launch {
-            val cartProduct = baseCartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) ?: return@launch
+            val cartProduct = baseCartProductRepo.getCartProductByMenuProductUuid(menuProductUuid)
+                ?: return@launch
             if (cartProduct.count > 1) {
-                baseCartProductRepo.updateCount(cartProduct.uuid, cartProduct.count - 1)
+                baseCartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count - 1)
             } else {
                 baseCartProductRepo.deleteCartProduct(cartProduct)
                 showMessage(baseStringUtil.getRemovedFromCartString(cartProduct.menuProduct.name))

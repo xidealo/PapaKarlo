@@ -47,7 +47,7 @@ class CartProductRepository @Inject constructor(
         }
     }
 
-    override suspend fun updateCount(cartProductUuid: String, count: Int) {
+    override suspend fun updateCartProductCount(cartProductUuid: String, count: Int) {
         val cartProductCountEntity = CartProductCountEntity(cartProductUuid, count)
         cartProductDao.updateCount(cartProductCountEntity)
     }

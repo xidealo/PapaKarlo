@@ -74,5 +74,10 @@ class ApiDataModule {
     fun provideMenuProductDao(apiLocalDatabase: ApiLocalDatabase) =
         apiLocalDatabase.getMenuProductDao()
 
+    @Singleton
+    @Provides
+    fun provideCartProductDao(apiLocalDatabase: ApiLocalDatabase) =
+        apiLocalDatabase.getCartProductDao()
+
 
 }

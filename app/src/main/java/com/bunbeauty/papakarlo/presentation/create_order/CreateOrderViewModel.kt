@@ -20,6 +20,7 @@ import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreateOrderViewModel @Inject constructor(
-    @Firebase private val cartProductRepo: CartProductRepo,
+    @Api private val cartProductRepo: CartProductRepo,
     @Firebase private val userAddressRepo: UserAddressRepo,
     @Firebase private val cafeRepo: CafeRepo,
     @Firebase private val userRepo: UserRepo,
