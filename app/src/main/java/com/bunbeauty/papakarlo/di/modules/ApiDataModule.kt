@@ -79,5 +79,8 @@ class ApiDataModule {
     fun provideCartProductDao(apiLocalDatabase: ApiLocalDatabase) =
         apiLocalDatabase.getCartProductDao()
 
+    @Singleton
+    @Provides
+    fun provideCafeDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getCafeDao()
 
 }

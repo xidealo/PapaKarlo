@@ -49,20 +49,24 @@ class CafeRepository @Inject constructor(
     }
 
     override fun observeCafeAddressList(): Flow<List<CafeAddress>> {
-        return cafeDao.observeCafeList()
+        return flow {
+
+        }
+        /*cafeDao.observeCafeList()
             .flowOn(IO)
             .map { cafeEntityList ->
                 cafeEntityList.map { cafeEntity ->
                     cafeMapper.toUIModel(cafeEntity).cafeAddress
                 }
-            }.flowOn(Default)
+            }.flowOn(Default)*/
     }
 
     override fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress> {
-        return cafeDao.observeCafeByUuid(cafeUuid)
+        return flow {  }
+    /*cafeDao.observeCafeByUuid(cafeUuid)
             .flowOn(IO)
             .map { cafeEntity ->
                 cafeMapper.toUIModel(cafeEntity).cafeAddress
-            }.flowOn(Default)
+            }.flowOn(Default)*/
     }
 }

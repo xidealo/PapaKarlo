@@ -22,12 +22,13 @@ class CafeMapper @Inject constructor(
             fromTime = cafeEntity.fromTime,
             toTime = cafeEntity.toTime,
             phone = cafeEntity.phone,
-            cafeAddress = toCafeAddress(cafeEntity),
+            address = toCafeAddress(cafeEntity),
 
             latitude = cafeEntity.latitude,
             longitude = cafeEntity.longitude,
 
             visible = cafeEntity.visible,
+            city = cafeEntity.city
         )
     }
 
@@ -64,13 +65,7 @@ class CafeMapper @Inject constructor(
         )
     }
 
-    override fun toCafeAddress(cafeEntity: CafeEntity): CafeAddress {
-        return CafeAddress(
-            city = cafeEntity.city,
-            street = cafeEntity.street,
-            house = cafeEntity.house,
-            comment = cafeEntity.comment,
-            cafeUuid = cafeEntity.uuid,
-        )
+    override fun toCafeAddress(cafeEntity: CafeEntity): String {
+        return "${cafeEntity.city} ${cafeEntity.street} ${cafeEntity.house} ${cafeEntity.comment} ${cafeEntity.uuid}"
     }
 }

@@ -21,5 +21,9 @@ interface DataStoreRepo {
     val deferredTime: Flow<String?>
     suspend fun saveDeferredTime(deferredTime: String)
 
+    val selectedCity: Flow<String?>
+    suspend fun saveSelectedCity(city: String)
+    suspend fun getSelectedCity(): String?
+
     suspend fun clearData()
 }

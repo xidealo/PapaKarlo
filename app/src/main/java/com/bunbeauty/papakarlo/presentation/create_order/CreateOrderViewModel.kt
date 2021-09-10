@@ -33,7 +33,7 @@ import javax.inject.Inject
 class CreateOrderViewModel @Inject constructor(
     @Api private val cartProductRepo: CartProductRepo,
     @Firebase private val userAddressRepo: UserAddressRepo,
-    @Firebase private val cafeRepo: CafeRepo,
+    @Api private val cafeRepo: CafeRepo,
     @Firebase private val userRepo: UserRepo,
     @Firebase private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
@@ -55,7 +55,7 @@ class CreateOrderViewModel @Inject constructor(
     val phone: StateFlow<String?> = mutablePhone.asStateFlow()
 
     private var userAddress: UserAddress? = null
-    private var cafeAddress: CafeAddress? = null
+    private var cafeAddress: String? = null
     private val mutableAddress: MutableStateFlow<String?> = MutableStateFlow(null)
     val address: StateFlow<String?> = mutableAddress.asStateFlow()
 
@@ -155,7 +155,7 @@ class CreateOrderViewModel @Inject constructor(
             val cafeUuid = if (isDelivery) {
                 cafeRepo.getCafeByStreetUuid(userAddress!!.streetUuid).uuid
             } else {
-                cafeAddress!!.cafeUuid
+                //cafeAddress!!.cafeUuid
             }
             val order = Order(
                 isDelivery = isDelivery,
@@ -169,7 +169,7 @@ class CreateOrderViewModel @Inject constructor(
                 code = code,
                 orderStatus = OrderStatus.NOT_ACCEPTED,
                 orderProductList = orderProductList,
-                cafeUuid = cafeUuid
+                cafeUuid = ""
             )
             cartProductRepo.deleteCartProductList(cartProductList)
             orderRepo.saveOrder(order)
@@ -245,7 +245,7 @@ class CreateOrderViewModel @Inject constructor(
                     if (cafeAddressUuid == null) {
                         cafeRepo.observeCafeAddressList().onEach { addressList ->
                             if (addressList.isNotEmpty()) {
-                                cafeAddress = addressList.first()
+                                //cafeAddress = addressList.first()
                                 mutableAddress.value =
                                     stringUtil.getCafeAddressString(addressList.first())
                             } else {
@@ -255,7 +255,7 @@ class CreateOrderViewModel @Inject constructor(
                         }
                     } else {
                         cafeRepo.observeCafeAddressByUuid(cafeAddressUuid).onEach { address ->
-                            cafeAddress = address
+                            //cafeAddress = address
                             mutableAddress.value = stringUtil.getCafeAddressString(address)
                         }
                     }

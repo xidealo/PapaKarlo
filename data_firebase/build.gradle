@@ -68,9 +68,6 @@ dependencies {
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
 
-    //DataStore
-    implementation "androidx.datastore:datastore-preferences:$rootProject.datastoreVersion"
-
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-analytics-ktx'

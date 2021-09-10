@@ -15,10 +15,10 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     @Inject
     fun refreshData(
-        @Firebase cafeRepo: CafeRepo,
+        @Api cafeRepo: CafeRepo,
         @Api menuProductRepo: MenuProductRepo,
-        @Firebase deliveryRepo: DeliveryRepo,
-        @Firebase userRepo: UserRepo
+        @Api deliveryRepo: DeliveryRepo,
+        @Api userRepo: UserRepo
     ) {
         viewModelScope.launch {
             cafeRepo.refreshCafeList()

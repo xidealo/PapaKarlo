@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.data_firebase.repository.DataStoreRepository
+import com.bunbeauty.data.DataStoreRepository
 import com.bunbeauty.domain.auth.AuthUtil
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.repo.DataStoreRepo

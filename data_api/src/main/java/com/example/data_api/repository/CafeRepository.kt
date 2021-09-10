@@ -3,13 +3,25 @@ package com.example.data_api.repository
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
+import com.example.data_api.dao.CafeDao
+import com.example.data_api.mapper.CafeMapper
+import com.example.domain_api.mapper.ICafeMapper
+import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class CafeRepository @Inject constructor(): CafeRepo {
+class CafeRepository @Inject constructor(
+    private val apiRepo: ApiRepo,
+    private val dataStoreRepo: DataStoreRepo,
+    private val cafeDao: CafeDao,
+    private val cafeMapper: ICafeMapper
+) : CafeRepo {
 
     override suspend fun refreshCafeList() {
-        //TODO("Not yet implemented")
+        apiRepo.getCafeServerByCityList(dataStoreRepo.getSelectedCity() ?: "kimry").forEach {
+            cafeDao.insert(cafeMapper.toEntityModel(it))
+        }
     }
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe {

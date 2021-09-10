@@ -14,7 +14,7 @@ class Order(
     val userUuid: String,
     val phone: String,
     val userAddress: UserAddress?,
-    val cafeAddress: CafeAddress?,
+    val cafeAddress: String?,
     var comment: String?,
     val deferredTime: String?,
     val time: Long,

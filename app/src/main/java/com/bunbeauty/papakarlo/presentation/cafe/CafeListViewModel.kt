@@ -43,7 +43,7 @@ class CafeListViewModel @Inject constructor(
     private fun toItemModel(cafe: Cafe): CafeItem {
         return CafeItem(
             uuid = cafe.uuid,
-            address = stringUtil.getCafeAddressString(cafe.cafeAddress),
+            address = cafe.address,
             workingHours = stringUtil.getWorkingHoursString(cafe),
             workingTimeMessage = stringUtil.getIsClosedMessage(cafe),
             workingTimeMessageColor =  resourcesProvider.getColor(cafeUtil.getIsClosedColorId(cafe))

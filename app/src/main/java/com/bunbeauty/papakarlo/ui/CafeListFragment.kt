@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CafeAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
@@ -40,7 +39,7 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
         viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
         viewModel.cafeItemList.onEach { cafeItemList ->
             cafeAdapter.submitList(cafeItemList)
-        }.startedLaunch(viewLifecycleOwner)
+        }.startedLaunch()
     }
 
     override fun onDestroyView() {

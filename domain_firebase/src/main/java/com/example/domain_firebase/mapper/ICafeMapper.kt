@@ -10,5 +10,5 @@ interface ICafeMapper {
 
     fun toUIModel(cafeEntity: CafeEntity): Cafe
     fun toEntityModel(cafeFirebase: CafeFirebase): CafeWithDistricts
-    fun toCafeAddress(cafeEntity: CafeEntity): CafeAddress
+    fun toCafeAddress(cafeEntity: CafeEntity): String
 }

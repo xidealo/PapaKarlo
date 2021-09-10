@@ -1,4 +1,4 @@
-package com.bunbeauty.data_firebase.repository
+package com.bunbeauty.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -11,6 +11,7 @@ import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.deferredTimeDataStore: DataStore<Preferences> by preferencesDataStore(name = DEFERRED_TIME_DATA_STORE)
+    private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
 
     override val userAddressUuid: Flow<String?> = context.userAddressDataStore.data.map {
         it[DELIVERY_ADDRESS_UUID_KEY]
@@ -95,6 +97,24 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
+    override val selectedCity: Flow<String?> = context.selectedCityDataStore.data.map {
+        it[SELECTED_CITY_KEY]
+    }
+
+    override suspend fun saveSelectedCity(city: String) {
+        withContext(IO) {
+            context.selectedCityDataStore.edit {
+                it[SELECTED_CITY_KEY] = city
+            }
+        }
+    }
+
+    override suspend fun getSelectedCity(): String? {
+        return context.selectedCityDataStore.data.map {
+            it[SELECTED_CITY_KEY]
+        }.first()
+    }
+
     override suspend fun clearData() {
         context.userAddressDataStore.edit {
             it.clear()
@@ -113,6 +133,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val DELIVERY_DATA_STORE = "delivery data store"
         private const val USER_UUID_DATA_STORE = "user id data store"
         private const val DEFERRED_TIME_DATA_STORE = "deferred time data store"
+        private const val SELECTED_CITY_DATA_STORE = "selected city data store"
 
         private const val DELIVERY_ADDRESS_UUID = "delivery address uuid"
         private const val CAFE_UUID = "cafe uuid"
@@ -120,6 +141,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private const val USER_UUID = "user uuid"
         private const val DEFERRED_TIME = "deferred time"
+        private const val SELECTED_CITY = "selected city"
 
         private val DELIVERY_ADDRESS_UUID_KEY = stringPreferencesKey(DELIVERY_ADDRESS_UUID)
         private val CAFE_UUID_KEY = stringPreferencesKey(CAFE_UUID)
@@ -127,6 +149,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
         private val DEFERRED_TIME_KEY = stringPreferencesKey(DEFERRED_TIME)
+        private val SELECTED_CITY_KEY = stringPreferencesKey(SELECTED_CITY)
 
         private const val DEFAULT_LONG = 0L
         private const val DEFAULT_STRING = ""

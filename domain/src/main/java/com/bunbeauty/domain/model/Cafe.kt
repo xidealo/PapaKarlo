@@ -11,10 +11,11 @@ data class Cafe(
     val fromTime: String,
     val toTime: String,
     val phone: String,
-    val cafeAddress: CafeAddress,
+    val address: String,
 
     val latitude: Double,
     val longitude: Double,
 
-    val visible: Boolean
+    val visible: Boolean,
+    val city: String
 ) : Parcelable
