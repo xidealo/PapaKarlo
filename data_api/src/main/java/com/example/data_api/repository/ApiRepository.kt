@@ -23,11 +23,11 @@ class ApiRepository @Inject constructor(
     private val json: Json
 ) : ApiRepo {
 
-    override suspend fun getCafeServerList(): List<CafeServer> {
+    override suspend fun getCafeServerList(): ApiResult<List<CafeServer>> {
         return getDataList(path = "/cafe/all/", CafeServer.serializer())
     }
 
-    override suspend fun getCafeServerByCityList(city: String): List<CafeServer> {
+    override suspend fun getCafeServerByCityList(city: String): ApiResult<List<CafeServer>> {
         return getDataList(
             path = "/cafe",
             CafeServer.serializer(),
@@ -35,7 +35,7 @@ class ApiRepository @Inject constructor(
         )
     }
 
-    override suspend fun getMenuProductList(): List<MenuProductServer> {
+    override suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>> {
         return getDataList(path = "/menuProduct/all/", MenuProductServer.serializer())
     }
 
@@ -52,18 +52,26 @@ class ApiRepository @Inject constructor(
         path: String,
         serializer: KSerializer<T>,
         parameters: HashMap<String, String> = hashMapOf()
-    ): List<T> {
-        return json.decodeFromString(
-            ListSerializer(serializer),
-            client.get<HttpStatement> {
-                url {
-                    path(path)
-                }
-                parameters.forEach { parameterMap ->
-                    parameter(parameterMap.key, parameterMap.value)
-                }
-            }.execute().readText()
-        )
+    ): ApiResult<List<T>> {
+        return try {
+            ApiResult.Success(
+                json.decodeFromString(
+                    ListSerializer(serializer),
+                    client.get<HttpStatement> {
+                        url {
+                            path(path)
+                        }
+                        parameters.forEach { parameterMap ->
+                            parameter(parameterMap.key, parameterMap.value)
+                        }
+                    }.execute().readText()
+                )
+            )
+        } catch (ex: ClientRequestException) {
+            ApiResult.Error(ApiError(ex.response.status.value, ex.message ?: "no message text"))
+        } finally {
+            ApiResult.Error(ApiError(404, "No catch error"))
+        }
     }
 
     suspend fun <T : Any> getData(
@@ -87,9 +95,8 @@ class ApiRepository @Inject constructor(
             )
         } catch (ex: ClientRequestException) {
             ApiResult.Error(ApiError(ex.response.status.value, ex.message ?: "no message text"))
-        }
-        finally {
-            ApiResult.Error(ApiError(404,"No catch error"))
+        } finally {
+            ApiResult.Error(ApiError(404, "No catch error"))
         }
     }
 

@@ -8,9 +8,9 @@ import com.example.domain_api.model.server.UserServer
 
 interface ApiRepo {
 
-    suspend fun getCafeServerList(): List<CafeServer>
-    suspend fun getCafeServerByCityList(city: String): List<CafeServer>
-    suspend fun getMenuProductList(): List<MenuProductServer>
+    suspend fun getCafeServerList(): ApiResult<List<CafeServer>>
+    suspend fun getCafeServerByCityList(city: String): ApiResult<List<CafeServer>>
+    suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>>
     suspend fun getDelivery(): ApiResult<DeliveryServer>
     suspend fun getUserByUuid(uuid: String): ApiResult<UserServer>
 }

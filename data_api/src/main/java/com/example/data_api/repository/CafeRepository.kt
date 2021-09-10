@@ -1,5 +1,6 @@
 package com.example.data_api.repository
 
+import com.bunbeauty.common.ApiResult
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.repo.CafeRepo
@@ -19,8 +20,16 @@ class CafeRepository @Inject constructor(
 ) : CafeRepo {
 
     override suspend fun refreshCafeList() {
-        apiRepo.getCafeServerByCityList(dataStoreRepo.getSelectedCity() ?: "kimry").forEach {
-            cafeDao.insert(cafeMapper.toEntityModel(it))
+        when (val result =
+            apiRepo.getCafeServerByCityList(dataStoreRepo.getSelectedCity() ?: "kimry")) {
+            is ApiResult.Success -> {
+                if (result.data != null)
+                    cafeDao.insertAll(result.data!!.map { cafeMapper.toEntityModel(it)})
+            }
+
+            is ApiResult.Error -> {
+
+            }
         }
     }
 

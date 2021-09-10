@@ -1,5 +1,6 @@
 package com.example.data_api.repository
 
+import com.bunbeauty.common.ApiResult
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.example.data_api.dao.MenuProductDao
@@ -12,13 +13,20 @@ import javax.inject.Inject
 class MenuProductRepository @Inject constructor(
     private val apiRepository: ApiRepo,
     private val menuProductDao: MenuProductDao,
-    private val menuProductMapper: IMenuProductMapper,
+    private val menuProductMapper: IMenuProductMapper
 ) : MenuProductRepo {
 
     override suspend fun refreshMenuProducts() {
-        val menuProductList =
-            apiRepository.getMenuProductList().map(menuProductMapper::toEntityModel)
-        menuProductDao.insertAll(menuProductList)
+        when (val result = apiRepository.getMenuProductList()) {
+            is ApiResult.Success -> {
+                if (result.data != null)
+                    menuProductDao.insertAll(result.data!!.map(menuProductMapper::toEntityModel))
+            }
+
+            is ApiResult.Error -> {
+
+            }
+        }
     }
 
     override fun observeMenuProductList(): Flow<List<MenuProduct>> {
