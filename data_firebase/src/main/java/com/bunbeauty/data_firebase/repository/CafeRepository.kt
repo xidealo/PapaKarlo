@@ -30,10 +30,6 @@ class CafeRepository @Inject constructor(
         cafeDao.refreshCafeList(cafeWithDistrictsList)
     }
 
-    override suspend fun getCafeByUuid(cafeUuid: String): Cafe {
-        return cafeMapper.toUIModel(cafeDao.getCafeByUuid(cafeUuid))
-    }
-
     override suspend fun getCafeByStreetUuid(streetUuid: String): Cafe {
         return withContext(IO) {
             cafeMapper.toUIModel(cafeDao.getCafeByStreetUuid(streetUuid))

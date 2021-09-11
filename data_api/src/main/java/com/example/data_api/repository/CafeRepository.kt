@@ -9,7 +9,10 @@ import com.example.data_api.dao.CafeDao
 import com.example.data_api.mapper.CafeMapper
 import com.example.domain_api.mapper.ICafeMapper
 import com.example.domain_api.repo.ApiRepo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(
@@ -27,16 +30,8 @@ class CafeRepository @Inject constructor(
                     cafeDao.insertAll(result.data!!.map { cafeMapper.toEntityModel(it)})
             }
 
-            is ApiResult.Error -> {
-
-            }
+            is ApiResult.Error -> { }
         }
-    }
-
-    override suspend fun getCafeByUuid(cafeUuid: String): Cafe {
-        //TODO("Not yet implemented")
-
-        return Any() as Cafe
     }
 
     override suspend fun getCafeByStreetUuid(streetUuid: String): Cafe {
@@ -46,9 +41,11 @@ class CafeRepository @Inject constructor(
     }
 
     override fun observeCafeList(): Flow<List<Cafe>> {
-        //TODO("Not yet implemented")
-
-        return Any() as Flow<List<Cafe>>
+        return cafeDao.observeCafeList()
+            .flowOn(Dispatchers.IO)
+            .map { cafeEntityList ->
+                cafeEntityList.map(cafeMapper::toModel)
+            }.flowOn(Dispatchers.Default)
     }
 
     override fun observeCafeAddressList(): Flow<List<CafeAddress>> {

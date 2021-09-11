@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.CafeListFragmentDirections.toCafeOptionsBottomSheet
@@ -25,7 +26,7 @@ class CafeListViewModel @Inject constructor(
     val cafeItemList: StateFlow<List<CafeItem>> = mutableCafeItemList.asStateFlow()
 
     @Inject
-    fun subscribeOnCafeList(@Firebase cafeRepo: CafeRepo) {
+    fun subscribeOnCafeList(@Api cafeRepo: CafeRepo) {
         cafeRepo.observeCafeList().onEach { observedCafeList ->
             cafeList = observedCafeList
             mutableCafeItemList.value = observedCafeList.map(::toItemModel)

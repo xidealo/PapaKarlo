@@ -39,5 +39,4 @@ class CafeMapper @Inject constructor() : ICafeMapper {
             city = cafe.city,
         )
     }
-
 }
