@@ -6,7 +6,6 @@ import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.example.data_api.dao.CafeDao
-import com.example.data_api.mapper.CafeMapper
 import com.example.domain_api.mapper.ICafeMapper
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.Dispatchers
@@ -23,14 +22,17 @@ class CafeRepository @Inject constructor(
 ) : CafeRepo {
 
     override suspend fun refreshCafeList() {
-        when (val result =
-            apiRepo.getCafeServerByCityList(dataStoreRepo.getSelectedCity() ?: "kimry")) {
-            is ApiResult.Success -> {
-                if (result.data != null)
-                    cafeDao.insertAll(result.data!!.map { cafeMapper.toEntityModel(it)})
-            }
+        val selectedCity = dataStoreRepo.getSelectedCity()
+        if (selectedCity != null) {
+            when (val result = apiRepo.getCafeListByCity(selectedCity)) {
+                is ApiResult.Success -> {
+                    if (result.data != null)
+                        cafeDao.insertAll(result.data!!.map { cafeMapper.toEntityModel(it) })
+                }
 
-            is ApiResult.Error -> { }
+                is ApiResult.Error -> {
+                }
+            }
         }
     }
 

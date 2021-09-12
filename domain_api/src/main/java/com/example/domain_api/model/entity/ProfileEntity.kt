@@ -1,11 +1,10 @@
 package com.example.domain_api.model.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity
-data class CartProductCount(
-    @PrimaryKey
+data class ProfileEntity(
     val uuid: String,
-    val count: Int
+    val phone: String,
+    val email: String
 )

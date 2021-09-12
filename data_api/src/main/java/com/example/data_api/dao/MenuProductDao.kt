@@ -3,7 +3,7 @@ package com.example.data_api.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.bunbeauty.data.BaseDao
-import com.example.domain_api.model.entity.MenuProductEntity
+import com.example.domain_api.model.entity.product.MenuProductEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

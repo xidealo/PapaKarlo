@@ -72,6 +72,7 @@ class CreationAddressViewModel @Inject constructor(
         viewModelScope.launch {
             val userUuid = authUtil.userUuid
             val userAddress = UserAddress(
+                uuid = "",
                 street = selectedStreet.name,
                 house = house,
                 flat = flat,

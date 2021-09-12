@@ -3,18 +3,13 @@ package com.bunbeauty.data_firebase.repository
 import com.bunbeauty.data_firebase.dao.CafeDao
 import com.bunbeauty.data_firebase.dao.OrderDao
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.enums.OrderStatus
-import com.example.domain_firebase.model.entity.order.OrderStatusEntity
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
-import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
 import com.bunbeauty.domain.model.Order
 import com.example.domain_firebase.repo.FirebaseRepo
-import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(

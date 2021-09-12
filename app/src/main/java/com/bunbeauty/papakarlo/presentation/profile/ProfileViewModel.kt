@@ -9,12 +9,10 @@ import com.bunbeauty.domain.model.User
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.UserRepo
-import com.example.domain_firebase.repo.*
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Api
-import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -53,18 +51,18 @@ class ProfileViewModelImpl @Inject constructor(
     private var user: User? = null
     override val userState: MutableStateFlow<State<User>> = MutableStateFlow(State.Loading())
 
-    override val lastOrderState: MutableStateFlow<State<OrderItem>> =
-        MutableStateFlow(State.Empty())
-
     override val hasAddressState: MutableStateFlow<State<Boolean>> =
         MutableStateFlow(State.Loading())
+
+    override val lastOrderState: MutableStateFlow<State<OrderItem>> =
+        MutableStateFlow(State.Empty())
 
     init {
         subscribeOnUser()
         getAddress(authUtil.userUuid)
         subscribeOnLastOrder()
     }
-
+    
     private fun subscribeOnUser() {
         val userUuid = authUtil.userUuid
         if (userUuid == null) {

@@ -2,26 +2,34 @@ package com.example.domain_api.model.server
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.*
 
 @Serializable
-data class AddressServer(
+data class UserAddressServer(
+
     @SerialName("uuid")
-    val uuid: String = UUID.randomUUID().toString(),
+    val uuid: String,
+
     @SerialName("street")
     val street: String,
+
     @SerialName("house")
     val house: String,
+
     @SerialName("flat")
-    val flat: String?,
+    val flat: String,
+
     @SerialName("entrance")
-    val entrance: String?,
+    val entrance: String,
+
     @SerialName("floor")
-    val floor: String?,
+    val floor: String,
+
     @SerialName("comment")
-    val comment: String?,
+    val comment: String,
+
+    @SerialName("profileUuid")
+    val userUuid: String,
+
     @SerialName("streetUuid")
     val streetUuid: String,
-    @SerialName("userUuid")
-    val userUuid: String?,
 )

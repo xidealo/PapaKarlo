@@ -3,8 +3,8 @@ package com.example.data_api.mapper
 import com.bunbeauty.domain.model.product.CartProduct
 import com.example.domain_api.mapper.ICartProductMapper
 import com.example.domain_api.mapper.IMenuProductMapper
-import com.example.domain_api.model.entity.CartProductEntity
-import com.example.domain_api.model.entity.CartProductWithMenuProduct
+import com.example.domain_api.model.entity.product.CartProductEntity
+import com.example.domain_api.model.entity.product.CartProductWithMenuProduct
 import javax.inject.Inject
 
 class CartProductMapper @Inject constructor(

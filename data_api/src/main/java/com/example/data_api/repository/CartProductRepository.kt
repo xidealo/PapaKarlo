@@ -4,9 +4,9 @@ import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.example.data_api.dao.CartProductDao
 import com.example.domain_api.mapper.ICartProductMapper
-import com.example.domain_api.model.entity.CartProductCount
-import com.example.domain_api.model.entity.CartProductEntity
-import com.example.domain_api.model.entity.CartProductWithMenuProduct
+import com.example.domain_api.model.entity.product.CartProductCount
+import com.example.domain_api.model.entity.product.CartProductEntity
+import com.example.domain_api.model.entity.product.CartProductWithMenuProduct
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow

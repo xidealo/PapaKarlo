@@ -1,8 +1,8 @@
 package com.example.domain_api.mapper
 
 import com.bunbeauty.domain.model.product.CartProduct
-import com.example.domain_api.model.entity.CartProductEntity
-import com.example.domain_api.model.entity.CartProductWithMenuProduct
+import com.example.domain_api.model.entity.product.CartProductEntity
+import com.example.domain_api.model.entity.product.CartProductWithMenuProduct
 
 interface ICartProductMapper {
 

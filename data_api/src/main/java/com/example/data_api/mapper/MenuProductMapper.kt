@@ -2,7 +2,7 @@ package com.example.data_api.mapper
 
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.example.domain_api.mapper.IMenuProductMapper
-import com.example.domain_api.model.entity.MenuProductEntity
+import com.example.domain_api.model.entity.product.MenuProductEntity
 import com.example.domain_api.model.server.MenuProductServer
 import javax.inject.Inject
 

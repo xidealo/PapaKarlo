@@ -2,7 +2,6 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
-import com.bunbeauty.domain.model.User
 import com.example.domain_api.model.server.CafeServer
 import com.example.domain_api.model.server.DeliveryServer
 import com.example.domain_api.model.server.MenuProductServer
@@ -13,7 +12,6 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -23,28 +21,32 @@ class ApiRepository @Inject constructor(
     private val json: Json
 ) : ApiRepo {
 
-    override suspend fun getCafeServerList(): ApiResult<List<CafeServer>> {
+    override suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>> {
+        return getDataList(path = "/menuProduct/all/", serializer = MenuProductServer.serializer())
+    }
+
+    override suspend fun getCafeList(): ApiResult<List<CafeServer>> {
         return getDataList(path = "/cafe/all/", CafeServer.serializer())
     }
 
-    override suspend fun getCafeServerByCityList(city: String): ApiResult<List<CafeServer>> {
+    override suspend fun getCafeListByCity(city: String): ApiResult<List<CafeServer>> {
         return getDataList(
             path = "/cafe",
-            CafeServer.serializer(),
-            hashMapOf(Pair("city", city))
+            serializer = CafeServer.serializer(),
+            parameters = hashMapOf("city" to city)
         )
     }
 
-    override suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>> {
-        return getDataList(path = "/menuProduct/all/", MenuProductServer.serializer())
+    override suspend fun getDelivery():  ApiResult<DeliveryServer> {
+        return getData(path = "/delivery/", serializer = DeliveryServer.serializer())
     }
 
-    override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(path = "/delivery/", DeliveryServer.serializer())
-    }
-
-    override suspend fun getUserByUuid(uuid: String): ApiResult<UserServer> {
-        return getData(path = "/profile", UserServer.serializer(), hashMapOf(Pair("uuid", uuid)))
+    override suspend fun getUserByUuid(userUuid: String): ApiResult<UserServer> {
+        return getData(
+            path = "/profile",
+            serializer = UserServer.serializer(),
+            parameters = hashMapOf("uuid" to userUuid)
+        )
     }
 
     suspend fun <T> getDataList(
@@ -53,7 +55,7 @@ class ApiRepository @Inject constructor(
         parameters: HashMap<String, String> = hashMapOf()
     ): ApiResult<List<T>> {
         return try {
-            ApiResult.Success(
+             ApiResult.Success(
                 json.decodeFromString(
                     ListSerializer(serializer),
                     client.get<HttpStatement> {
@@ -66,10 +68,10 @@ class ApiRepository @Inject constructor(
                     }.execute().readText()
                 )
             )
-        } catch (ex: ClientRequestException) {
-            ApiResult.Error(ApiError(ex.response.status.value, ex.message ?: "no message text"))
-        } finally {
-            ApiResult.Error(ApiError(404, "No catch error"))
+        } catch (exception: ClientRequestException) {
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+        } catch (exception: Exception) {
+            ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
     }
 
@@ -92,10 +94,10 @@ class ApiRepository @Inject constructor(
                     }.execute().readText()
                 )
             )
-        } catch (ex: ClientRequestException) {
-            ApiResult.Error(ApiError(ex.response.status.value, ex.message ?: "no message text"))
-        } finally {
-            ApiResult.Error(ApiError(404, "No catch error"))
+        } catch (exception: ClientRequestException) {
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+        }  catch (exception: Exception) {
+            ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
     }
 

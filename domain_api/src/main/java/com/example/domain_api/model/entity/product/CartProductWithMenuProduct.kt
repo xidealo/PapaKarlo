@@ -1,4 +1,4 @@
-package com.example.domain_api.model.entity
+package com.example.domain_api.model.entity.product
 
 import androidx.room.Embedded
 import androidx.room.Relation

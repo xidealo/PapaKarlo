@@ -15,33 +15,33 @@ interface ApiRepositoryModule {
 
     @Binds
     @Api
-    fun bindCartProductRepo(cartProductRepository: CartProductRepository): CartProductRepo
+    fun bindCartProductRepository(cartProductRepository: CartProductRepository): CartProductRepo
 
     @Binds
     @Api
-    fun bindOrderRepo(orderRepository: OrderRepository): OrderRepo
+    fun bindOrderRepository(orderRepository: OrderRepository): OrderRepo
 
     @Binds
     @Api
-    fun bindMenuProductRepo(menuProductRepository: MenuProductRepository): MenuProductRepo
+    fun bindMenuProductRepository(menuProductRepository: MenuProductRepository): MenuProductRepo
 
     @Binds
     @Api
-    fun bindUserAddressRepo(userAddressRepository: UserAddressRepository): UserAddressRepo
+    fun bindUserAddressRepository(userAddressRepository: UserAddressRepository): UserAddressRepo
 
     @Binds
     @Api
-    fun bindCafeRepo(cafeRepository: CafeRepository): CafeRepo
+    fun bindCafeRepository(cafeRepository: CafeRepository): CafeRepo
 
     @Binds
     @Api
-    fun bindStreetRepo(streetRepository: StreetRepository): StreetRepo
+    fun bindStreetRepository(streetRepository: StreetRepository): StreetRepo
 
     @Binds
     @Api
-    fun bindDeliveryRepo(deliveryRepository: DeliveryRepository): DeliveryRepo
+    fun bindDeliveryRepository(deliveryRepository: DeliveryRepository): DeliveryRepo
 
     @Binds
     @Api
-    fun bindUserRepo(userRepository: UserRepository): UserRepo
+    fun bindUserRepository(userRepository: UserRepository): UserRepo
 }

@@ -19,4 +19,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindProfileMapper(userMapper: UserMapper): IUserMapper
+
+    @Binds
+    fun bindUserAddressMapper(userAddressMapper: UserAddressMapper): IUserAddressMapper
 }

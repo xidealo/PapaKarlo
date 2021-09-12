@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Update
 import com.bunbeauty.data.BaseDao
-import com.example.domain_api.model.entity.CartProductCount
-import com.example.domain_api.model.entity.CartProductEntity
-import com.example.domain_api.model.entity.CartProductWithMenuProduct
+import com.example.domain_api.model.entity.product.CartProductCount
+import com.example.domain_api.model.entity.product.CartProductEntity
+import com.example.domain_api.model.entity.product.CartProductWithMenuProduct
 import kotlinx.coroutines.flow.Flow
 
 @Dao

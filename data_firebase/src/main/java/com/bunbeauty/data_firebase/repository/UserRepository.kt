@@ -8,8 +8,6 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.example.domain_firebase.model.entity.user.UserEntity
 import com.bunbeauty.domain.model.User
 import com.example.domain_firebase.repo.FirebaseRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IUserMapper
@@ -95,8 +93,8 @@ class UserRepository @Inject constructor(
         userAddressDao.insertAll(userAddressList)
     }
 
-    override suspend fun getUserByUuid(userUuid: String): User? {
-        return userDao.getByUuid(userUuid)?.let { userEntity ->
+    override suspend fun getUserByUuid(profileUuid: String): User? {
+        return userDao.getByUuid(profileUuid)?.let { userEntity ->
             userMapper.toUIModel(userEntity)
         }
     }

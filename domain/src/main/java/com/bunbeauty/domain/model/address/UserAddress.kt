@@ -6,7 +6,7 @@ import java.util.*
 
 @Parcelize
 data class UserAddress(
-    val uuid: String = UUID.randomUUID().toString(),
+    val uuid: String,
     val street: String,
     val house: String,
     val flat: String?,

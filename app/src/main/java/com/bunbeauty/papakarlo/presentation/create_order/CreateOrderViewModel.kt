@@ -11,7 +11,6 @@ import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.Order
-import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.*

@@ -1,6 +1,5 @@
 package com.example.domain_api.model.server
 
-import android.location.Address
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -13,5 +12,5 @@ data class UserServer(
     @SerialName("email")
     val email: String?,
     @SerialName("addressList")
-    val addressList: List<AddressServer>
+    val addressList: List<UserAddressServer>
 )

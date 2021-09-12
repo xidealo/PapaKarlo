@@ -1,18 +1,18 @@
 package com.bunbeauty.data_firebase.mapper
 
+import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_firebase.mapper.ICafeMapper
+import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IOrderProductMapper
 import com.example.domain_firebase.mapper.IUserAddressMapper
-import com.bunbeauty.domain.enums.OrderStatus
-import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.model.entity.cafe.CafeEntity
 import com.example.domain_firebase.model.entity.order.OrderEntity
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
 import com.example.domain_firebase.model.firebase.order.OrderEntityFirebase
 import com.example.domain_firebase.model.firebase.order.OrderFirebase
 import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
-import com.bunbeauty.domain.model.Order
-import com.bunbeauty.domain.model.address.UserAddress
 import javax.inject.Inject
 
 class OrderMapper @Inject constructor(
@@ -100,6 +100,7 @@ class OrderMapper @Inject constructor(
         val userAddressHouse = order.order.userAddressHouse
         val userAddress = if (userAddressStreet != null && userAddressHouse != null) {
             UserAddress(
+                uuid = "",
                 street = userAddressStreet,
                 house = userAddressHouse,
                 flat = order.order.userAddressFlat,
@@ -107,7 +108,7 @@ class OrderMapper @Inject constructor(
                 floor = order.order.userAddressFloor,
                 comment = order.order.userAddressComment,
                 streetUuid = "",
-                userUuid = order.order.userAddressComment,
+                userUuid = order.order.userAddressComment
             )
         } else {
             null
@@ -125,7 +126,7 @@ class OrderMapper @Inject constructor(
             time = order.order.time,
             code = order.order.code,
             orderStatus = order.order.orderStatus,
-            orderProductList =  order.orderProductList.map(orderProductMapper::toUIModel),
+            orderProductList = order.orderProductList.map(orderProductMapper::toUIModel),
             cafeUuid = order.order.cafeUuid,
         )
     }

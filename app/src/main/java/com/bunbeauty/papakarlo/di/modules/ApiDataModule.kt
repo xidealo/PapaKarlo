@@ -87,4 +87,8 @@ class ApiDataModule {
     @Provides
     fun provideUserDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getUserDao()
 
+    @Singleton
+    @Provides
+    fun provideUserAddressDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getUserAddressDao()
+
 }

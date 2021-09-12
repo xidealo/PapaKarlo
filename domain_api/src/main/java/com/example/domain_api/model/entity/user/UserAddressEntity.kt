@@ -1,10 +1,10 @@
-package com.example.domain_api.model.entity
+package com.example.domain_api.model.entity.user
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class AddressEntity(
+data class UserAddressEntity(
     @PrimaryKey
     val uuid: String,
     val street: String,
