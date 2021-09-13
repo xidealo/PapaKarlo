@@ -7,7 +7,7 @@ interface UserRepo {
 
     suspend fun refreshUser()
 
-    suspend fun getUserByUuid(profileUuid: String): User?
+    suspend fun getUserByUuid(userUuid: String): User?
 
     fun observeUserByUuid(userUuid: String): Flow<User?>
 }

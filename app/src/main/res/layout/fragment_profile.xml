@@ -7,330 +7,91 @@
         style="@style/DefaultPage"
         tools:context=".ui.profile.ProfileFragment">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_settings"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_order_details_gl_left"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_settings"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/action_profile_settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_settings"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!--   <com.google.android.material.card.MaterialCardView
-               android:id="@+id/fragment_profile_mcv_bonuses"
-               style="@style/DefaultMaterialCard"
-               android:layout_margin="@dimen/small_margin"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_settings">
-
-               <androidx.constraintlayout.widget.ConstraintLayout
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content">
-
-                   <TextView
-                       android:id="@+id/fragment_profile_tv_bonuses"
-                       style="@style/MainTitle"
-                       android:layout_margin="@dimen/medium_margin"
-                       android:text="@string/title_profile_bonuses"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintTop_toTopOf="parent" />
-
-                   <TextView
-                       android:id="@+id/fragment_profile_tv_bonuses_value"
-                       style="@style/MainText"
-                       android:layout_margin="@dimen/medium_margin"
-                       android:drawablePadding="@dimen/large_padding"
-                       android:textAlignment="textEnd"
-                       app:drawableTint="@color/mainTextColor"
-                       app:layout_constraintBottom_toBottomOf="parent"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       app:layout_constraintStart_toEndOf="@+id/fragment_profile_tv_bonuses"
-                       app:layout_constraintTop_toTopOf="parent"
-                       tools:text="0 ₽" />
-               </androidx.constraintlayout.widget.ConstraintLayout>
-           </com.google.android.material.card.MaterialCardView>
-   -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_address"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            android:layout_marginTop="@dimen/medium_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_mcv_settings">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_address"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/medium_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_select_address"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_select_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_right_arrow"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_create_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_add"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/mainTextColor" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_payment"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            android:layout_marginTop="@dimen/medium_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_address">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_payment"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_profile_payment"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_payment"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_payment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_right_arrow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_orders"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_payment">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/fragment_profile_tv_orders"
-                    style="@style/MainTitle"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_profile_orders"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fragment_profile_iv_select_orders"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_select_orders"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_right_arrow"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_order_details_gl_right"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/medium_margin" />
 
         <include
-            android:id="@+id/fragment_profile_i_last_order"
+            android:id="@+id/fragment_profile_item_last_order"
             layout="@layout/element_order"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_mcv_orders" />
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_profile_mcv_review"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_i_last_order"
-            app:layout_constraintVertical_bias="1">
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/fragment_profile_nc_settings"
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:icon="@drawable/ic_settings"
+            android:text="@string/action_profile_settings"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_item_last_order" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/fragment_profile_nc_addresses"
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_settings"
+            tools:icon="@drawable/ic_add"
+            tools:text="Добавить адрес" />
 
-                <TextView
-                    android:id="@+id/fragment_profile_tv_review"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/title_profile_reviews"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/fragment_profile_nc_orders"
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/small_margin"
+            android:icon="@drawable/ic_right_arrow"
+            android:text="@string/action_profile_orders"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_addresses" />
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_profile_mcv_vk"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/small_margin"
-                    app:cardBackgroundColor="@color/colorPrimary"
-                    app:cardCornerRadius="@dimen/large_radius"
-                    app:cardElevation="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/fragment_profile_mcv_instagram"
-                    app:layout_constraintStart_toStartOf="@+id/fragment_profile_tv_review"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/fragment_profile_nc_payment"
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/small_margin"
+            android:icon="@drawable/ic_right_arrow"
+            android:text="@string/action_profile_payment"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_orders" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/fragment_profile_nc_feedback"
+            style="@style/NavigationCard"
+            android:layout_marginTop="@dimen/small_margin"
+            android:icon="@drawable/ic_right_arrow"
+            android:text="@string/action_profile_feedback"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_payment" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/description_vk"
-                            android:src="@drawable/ic_vk" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_profile_mcv_instagram"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/small_margin"
-                    app:cardBackgroundColor="@color/colorPrimary"
-                    app:cardCornerRadius="@dimen/large_radius"
-                    app:cardElevation="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/fragment_profile_mcv_google_play"
-                    app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_vk"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/fragment_profile_iv_instagram"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/small_margin"
-                            android:contentDescription="@string/description_inst"
-                            android:src="@drawable/ic_inst" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/fragment_profile_mcv_google_play"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="@dimen/small_margin"
-                    app:cardBackgroundColor="@color/colorPrimary"
-                    app:cardCornerRadius="@dimen/large_radius"
-                    app:cardElevation="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/fragment_profile_mcv_instagram"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_profile_tv_review">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/fragment_profile_iv_google_play"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/small_margin"
-                            android:background="@color/colorPrimary"
-                            android:contentDescription="@string/description_google_play"
-                            android:src="@drawable/ic_google_play" />
-
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-        <!--fragment_profile_mcv_bonuses,-->
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_has_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:constraint_referenced_ids="
-            fragment_profile_mcv_address,
-            fragment_profile_i_last_order,
-            fragment_profile_mcv_settings,
-            fragment_profile_mcv_orders,
-            fragment_profile_mcv_review,
-            fragment_profile_mcv_payment" />
+            fragment_profile_item_last_order,
+            fragment_profile_nc_settings,
+            fragment_profile_nc_addresses,
+            fragment_profile_nc_orders,
+            fragment_profile_nc_payment,
+            fragment_profile_nc_feedback" />
 
         <TextView
             android:id="@+id/fragment_profile_tv_no_profile"
@@ -364,7 +125,6 @@
             android:id="@+id/fragment_profile_group_no_profile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="gone"
             app:constraint_referenced_ids="
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,

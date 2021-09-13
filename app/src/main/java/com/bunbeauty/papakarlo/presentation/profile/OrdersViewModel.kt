@@ -7,13 +7,12 @@ import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.bunbeauty.presentation.util.string.IStringUtil
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
 import com.bunbeauty.presentation.item.OrderItem
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -52,7 +51,7 @@ class OrdersViewModel @Inject constructor(
             code = order.code,
             time = stringUtil.toStringTime(order.time),
             deferredTime = if (order.deferredTime?.isNotEmpty() == true)
-                "${resourcesProvider.getString(R.string.action_profile_to_time)} ${order.deferredTime}"
+                order.deferredTime.toString()
             else
                 ""
         )

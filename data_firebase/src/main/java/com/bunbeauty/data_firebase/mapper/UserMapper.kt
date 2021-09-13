@@ -1,11 +1,11 @@
 package com.bunbeauty.data_firebase.mapper
 
+import com.bunbeauty.domain.model.User
 import com.example.domain_firebase.mapper.IUserAddressMapper
 import com.example.domain_firebase.mapper.IUserMapper
 import com.example.domain_firebase.model.entity.user.UserEntity
 import com.example.domain_firebase.model.entity.user.UserWithAddresses
 import com.example.domain_firebase.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.User
 import javax.inject.Inject
 
 class UserMapper @Inject constructor(private val userAddressMapper: IUserAddressMapper) :
@@ -33,6 +33,7 @@ class UserMapper @Inject constructor(private val userAddressMapper: IUserAddress
             uuid = user.uuid,
             phone = user.phone,
             email = user.email,
+            addressList = emptyList()
         )
     }
 }

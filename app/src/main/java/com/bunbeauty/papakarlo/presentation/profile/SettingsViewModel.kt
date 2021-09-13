@@ -10,7 +10,7 @@ import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.User
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Firebase
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toLoginFragment
 import com.bunbeauty.papakarlo.ui.profile.SettingsFragmentDirections.toOneLineActionBottomSheet
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    @Firebase private val userRepo: UserRepo,
+    @Api private val userRepo: UserRepo,
     private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
 

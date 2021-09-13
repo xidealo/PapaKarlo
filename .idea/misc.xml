@@ -7,6 +7,8 @@
         <entry key="..\:/Users/xIdealo/Desktop/android/papakarlo/PapaKarlo/app/src/main/res/layout/fragment_menu.xml" value="0.3229166666666667" />
         <entry key="app/src/main/res/drawable/background_bottom_sheet.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/background_circle.xml" value="0.338" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />
@@ -14,6 +16,7 @@
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.5354166666666667" />
+        <entry key="app/src/main/res/layout/element_order.xml" value="0.5920925747348119" />
         <entry key="app/src/main/res/layout/element_order_product.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_cafe_list.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.5250255362614913" />
@@ -23,6 +26,7 @@
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.463718820861678" />
         <entry key="app/src/main/res/layout/fragment_product.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.5354166666666667" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3854166666666667" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.19270833333333334" />
       </map>
     </option>

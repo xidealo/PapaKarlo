@@ -22,11 +22,11 @@ class ApiRepository @Inject constructor(
 ) : ApiRepo {
 
     override suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>> {
-        return getDataList(path = "/menuProduct/all/", serializer = MenuProductServer.serializer())
+        return getDataList(path = "/menuProduct/all", serializer = MenuProductServer.serializer())
     }
 
     override suspend fun getCafeList(): ApiResult<List<CafeServer>> {
-        return getDataList(path = "/cafe/all/", CafeServer.serializer())
+        return getDataList(path = "/cafe/all", CafeServer.serializer())
     }
 
     override suspend fun getCafeListByCity(city: String): ApiResult<List<CafeServer>> {
@@ -38,7 +38,7 @@ class ApiRepository @Inject constructor(
     }
 
     override suspend fun getDelivery():  ApiResult<DeliveryServer> {
-        return getData(path = "/delivery/", serializer = DeliveryServer.serializer())
+        return getData(path = "/delivery", serializer = DeliveryServer.serializer())
     }
 
     override suspend fun getUserByUuid(userUuid: String): ApiResult<UserServer> {
@@ -49,13 +49,21 @@ class ApiRepository @Inject constructor(
         )
     }
 
+    override suspend fun postUser(user: UserServer): ApiResult<UserServer> {
+        return postData(
+            path = "/profile",
+            body = user,
+            serializer = UserServer.serializer()
+        )
+    }
+
     suspend fun <T> getDataList(
         path: String,
         serializer: KSerializer<T>,
         parameters: HashMap<String, String> = hashMapOf()
     ): ApiResult<List<T>> {
         return try {
-             ApiResult.Success(
+            ApiResult.Success(
                 json.decodeFromString(
                     ListSerializer(serializer),
                     client.get<HttpStatement> {
@@ -96,7 +104,36 @@ class ApiRepository @Inject constructor(
             )
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
-        }  catch (exception: Exception) {
+        } catch (exception: Exception) {
+            ApiResult.Error(ApiError(0, exception.message ?: "-"))
+        }
+    }
+
+    suspend fun <T : Any> postData(
+        path: String,
+        body: T,
+        serializer: KSerializer<T>,
+        parameters: HashMap<String, String> = hashMapOf()
+    ): ApiResult<T> {
+        return try {
+            ApiResult.Success(
+                json.decodeFromString(
+                    serializer,
+                    client.post<HttpStatement>(
+                        body = body
+                    ) {
+                        url {
+                            path(path)
+                        }
+                        parameters.forEach { parameterMap ->
+                            parameter(parameterMap.key, parameterMap.value)
+                        }
+                    }.execute().readText()
+                )
+            )
+        } catch (exception: ClientRequestException) {
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+        } catch (exception: Exception) {
             ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
     }

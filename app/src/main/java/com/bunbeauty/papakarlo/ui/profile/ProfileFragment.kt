@@ -1,18 +1,13 @@
 package com.bunbeauty.papakarlo.ui.profile
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.Constants
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.visible
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
@@ -35,113 +30,46 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.userState.onEach { state ->
-            viewDataBinding.run {
-                when (state) {
-                    is State.Loading -> {
-                        fragmentProfilePbLoading.visible()
-                        fragmentProfileGroupHasProfile.gone()
-                        fragmentProfileGroupNoProfile.gone()
-                    }
-                    is State.Success -> {
-                        fragmentProfileGroupHasProfile.visible()
-                        fragmentProfileGroupNoProfile.gone()
-                        fragmentProfilePbLoading.gone()
-                    }
-                    is State.Empty -> {
-                        fragmentProfileGroupHasProfile.gone()
-                        fragmentProfileGroupNoProfile.visible()
-                    }
-                    else -> Unit
-                }
-            }
-        }.startedLaunch(viewLifecycleOwner)
-        viewModel.hasAddressState.onEach { state ->
-            viewDataBinding.run {
-                when (state) {
-                    is State.Success -> {
-                        if (state.data) {
-                            fragmentProfileMcvAddress.setOnClickListener {
-                                viewModel.onAddressClicked()
-                            }
-                            fragmentProfileTvAddress.text =
-                                resourcesProvider.getString(R.string.title_profile_your_address)
-                            fragmentProfileIvCreateAddress.gone()
-                            fragmentProfileIvSelectAddress.visible()
-                        } else {
-                            fragmentProfileMcvAddress.setOnClickListener {
-                                viewModel.onCreateAddressClicked()
-                            }
-                            fragmentProfileTvAddress.text =
-                                resourcesProvider.getString(R.string.title_profile_create_address)
-                            fragmentProfileIvCreateAddress.visible()
-                            fragmentProfileIvSelectAddress.gone()
-                        }
-                    }
-                    else -> Unit
-                }
-            }
-        }.startedLaunch(viewLifecycleOwner)
-        viewModel.lastOrderState.onEach { state ->
-            when (state) {
-                is State.Success -> {
-                    with(viewDataBinding) {
-                        with(fragmentProfileILastOrder) {
-                            elementOrderTvCode.text = state.data.code
-                            elementOrderTvDeferred.text = state.data.deferredTime
-                            elementOrderTvTime.text = state.data.time
-                            elementOrderChipStatus.text = state.data.orderStatus
-                            elementOrderChipStatus.setChipBackgroundColorResource(state.data.orderColor)
-                            elementOrderMvcMain.setOnClickListener {
-                                viewModel.goToOrder(state.data)
-                            }
-                        }
-                    }
-                }
-                is State.Empty -> {
-                    viewDataBinding.fragmentProfileILastOrder.elementOrderMvcMain.gone()
-                }
-                else -> Unit
-            }
-        }.startedLaunch(viewLifecycleOwner)
-
-        setOnClickListeners()
-
         super.onViewCreated(view, savedInstanceState)
-    }
 
-    private fun setOnClickListeners() {
-        with(viewDataBinding) {
-            fragmentProfileMcvOrders.setOnClickListener {
+        viewDataBinding.run {
+            viewModel.userState.onEach { state ->
+                fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
+                fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
+                fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)
+
+                if (state is State.Success) {
+                    if (state.data.addressList.isEmpty()) {
+                        fragmentProfileNcAddresses.cardText =
+                            resourcesProvider.getString(R.string.action_profile_create_address)
+                        fragmentProfileNcAddresses.icon =
+                            resourcesProvider.getDrawable(R.drawable.ic_add)
+                    } else {
+                        fragmentProfileNcAddresses.cardText =
+                            resourcesProvider.getString(R.string.action_profile_your_addresses)
+                        fragmentProfileNcAddresses.icon =
+                            resourcesProvider.getDrawable(R.drawable.ic_right_arrow)
+                    }
+                }
+            }.startedLaunch()
+
+            fragmentProfileNcSettings.setOnClickListener {
+                viewModel.goToSettings()
+            }
+            fragmentProfileNcAddresses.setOnClickListener {
+                viewModel.onAddressClicked()
+            }
+            fragmentProfileNcOrders.setOnClickListener {
                 viewModel.onOrderListClicked()
+            }
+            fragmentProfileNcPayment.setOnClickListener {
+                // go to payment
+            }
+            fragmentProfileNcFeedback.setOnClickListener {
+                // go to feedback
             }
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.goToLogin()
-            }
-            fragmentProfileMcvSettings.setOnClickListener {
-                viewModel.goToSettings()
-            }
-            fragmentProfileMcvVk.setOnClickListener {
-                val browserIntent =
-                    Intent(Intent.ACTION_VIEW, Uri.parse(Constants.VK_LINK))
-                startActivity(browserIntent)
-            }
-            fragmentProfileMcvInstagram.setOnClickListener {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(Constants.INSTAGRAM_LINK)
-                )
-                startActivity(browserIntent)
-            }
-            fragmentProfileMcvPayment.setOnClickListener {
-                viewModel.router.navigate(ProfileFragmentDirections.toPaymentBottomSheet())
-            }
-            fragmentProfileMcvGooglePlay.setOnClickListener {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(Constants.GOOGLE_PLAY_LINK)
-                )
-                startActivity(browserIntent)
             }
         }
     }

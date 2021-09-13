@@ -1,64 +1,68 @@
 package com.example.data_api.repository
 
-import com.bunbeauty.common.ApiResult
+import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.domain.auth.AuthUtil
 import com.bunbeauty.domain.model.User
 import com.bunbeauty.domain.repo.UserRepo
-import com.example.domain_api.repo.ApiRepo
+import com.example.data_api.dao.UserAddressDao
 import com.example.data_api.dao.UserDao
+import com.example.data_api.handleResult
 import com.example.domain_api.mapper.IUserMapper
+import com.example.domain_api.model.server.UserServer
+import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val apiRepo: ApiRepo,
     private val authUtil: AuthUtil,
     private val userMapper: IUserMapper,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val userAddressDao: UserAddressDao
 ) : UserRepo {
 
-    override suspend fun getUserByUuid(profileUuid: String): User? {
-        val userPhone = authUtil.userPhone
+    override suspend fun refreshUser() {
         val userUuid = authUtil.userUuid
-
+        val userPhone = authUtil.userPhone
         if (authUtil.isAuthorize && userPhone != null && userUuid != null) {
-            when (val userResult = apiRepo.getUserByUuid(userUuid)) {
-
-                is ApiResult.Success -> {
-                    if(userResult.data == null) return null
-
-                    val userWithAddresses = userMapper.toEntityModel(userResult.data!!, userUuid)
-                    userDao.insert(userWithAddresses.user)
-                    //refreshUserAddresses(userWithAddresses.userAddressList)
-                    //refreshOrders(userFirebase.orders.values.toList(), userUuid
-                    return null
-                }
-
-                is ApiResult.Error -> {
-                    return null
-                    /*     val newUserFirebase =
-          com.example.domain_firebase.model.firebase.UserFirebase(phone = userPhone)
-      apiRepo.postUser(userUuid, newUserFirebase)
-      val newUserEntity =
-          UserEntity(uuid = userUuid, phone = userPhone, email = null)
-      userDao.insert(newUserEntity)*/
+            apiRepo.getUserByUuid(userUuid).handleResult(USER_TAG) { user ->
+                if (user == null) {
+                    val newUser = UserServer(
+                        uuid = userUuid,
+                        phone = userPhone,
+                        email = null,
+                        addressList = emptyList()
+                    )
+                    apiRepo.postUser(newUser).handleResult(USER_TAG) { postedUser ->
+                        saveUser(postedUser)
+                    }
+                } else {
+                    saveUser(user)
                 }
             }
         }
-
-        return null
     }
 
-    override suspend fun refreshUser() {
-        // TODO("Not yet implemented")
+    override suspend fun getUserByUuid(userUuid: String): User? {
+        return userDao.getUserByUuid(userUuid)?.let { user ->
+            userMapper.toModel(user)
+        }
     }
 
     override fun observeUserByUuid(userUuid: String): Flow<User?> {
-        // TODO("Not yet implemented")
+        return userDao.observeUserByUuid(userUuid).map { user ->
+            user?.let {
+                userMapper.toModel(user)
+            }
+        }
+    }
 
-        return flow {
-            emit(null)
+    suspend fun saveUser(user: UserServer?) {
+        if (user != null) {
+            val userWithAddresses = userMapper.toEntityModel(user)
+            userDao.insert(userWithAddresses.user)
+            userAddressDao.insertAll(userWithAddresses.userAddressList)
         }
     }
 }

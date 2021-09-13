@@ -146,16 +146,15 @@
     <string name="action_order_details_no">Нет</string>
 
     <!-- PROFILE  -->
-    <string name="title_profile_your_address">Ваши адерса</string>
-    <string name="title_profile_create_address">Добавить адрес</string>
-    <string name="title_profile_orders">История заказов</string>
-    <string name="title_profile_payment">Оплата</string>
-    <string name="title_profile_bonuses">Бонусы</string>
-    <string name="title_profile_reviews">Мы всегда рады вашим отзывам</string>
-    <string name="title_profile_no_profile">В профиле будут отбражаться: история ваших заказов, бонусны, сохраненные адреса и контактная информация</string>
     <string name="action_profile_settings">Настройки</string>
+    <string name="action_profile_bonuses">Бонусы</string>
+    <string name="action_profile_create_address">Добавить адрес</string>
+    <string name="action_profile_your_addresses">Ваши адерса</string>
+    <string name="action_profile_orders">История заказов</string>
+    <string name="action_profile_payment">Оплата</string>
+    <string name="action_profile_feedback">Отзывы о приложении</string>
+    <string name="title_profile_no_profile">В профиле будут отбражаться бонусны, адреса и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
-    <string name="action_profile_to_time">Ко времени:</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>

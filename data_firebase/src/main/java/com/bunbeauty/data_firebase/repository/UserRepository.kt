@@ -5,15 +5,15 @@ import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.data_firebase.dao.UserDao
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OrderStatus
-import com.example.domain_firebase.model.entity.user.UserEntity
 import com.bunbeauty.domain.model.User
-import com.example.domain_firebase.repo.FirebaseRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IUserMapper
 import com.example.domain_firebase.model.entity.address.UserAddressEntity
 import com.example.domain_firebase.model.entity.order.OrderStatusEntity
+import com.example.domain_firebase.model.entity.user.UserEntity
 import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
+import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
@@ -93,8 +93,8 @@ class UserRepository @Inject constructor(
         userAddressDao.insertAll(userAddressList)
     }
 
-    override suspend fun getUserByUuid(profileUuid: String): User? {
-        return userDao.getByUuid(profileUuid)?.let { userEntity ->
+    override suspend fun getUserByUuid(userUuid: String): User? {
+        return userDao.getByUuid(userUuid)?.let { userEntity ->
             userMapper.toUIModel(userEntity)
         }
     }

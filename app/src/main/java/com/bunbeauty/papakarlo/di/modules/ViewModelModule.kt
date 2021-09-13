@@ -19,7 +19,10 @@ import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
-import com.bunbeauty.papakarlo.presentation.profile.*
+import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
+import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
+import com.bunbeauty.papakarlo.presentation.profile.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -93,7 +96,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    internal abstract fun provideProfileViewModel(profileViewModelImpl: ProfileViewModelImpl): ViewModel
+    internal abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
 
     @Binds
     @IntoMap
