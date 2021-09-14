@@ -152,7 +152,7 @@ class CreateOrderViewModel @Inject constructor(
             val code = codeGenerator.generateCode(currentMillis, letters)
             val orderProductList = cartProductList.map(cartProductMapper::toOrderProduct)
             val cafeUuid = if (isDelivery) {
-                cafeRepo.getCafeByStreetUuid(userAddress!!.streetUuid).uuid
+                //cafeRepo.getCafeByStreetUuid(userAddress!!.streetUuid).uuid
             } else {
                 //cafeAddress!!.cafeUuid
             }

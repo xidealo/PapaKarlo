@@ -1,6 +1,7 @@
 package com.example.data_api.mapper
 
 import com.bunbeauty.domain.model.Cafe
+import com.bunbeauty.domain.model.address.CafeAddress
 import com.example.domain_api.mapper.ICafeMapper
 import com.example.domain_api.model.entity.CafeEntity
 import com.example.domain_api.model.server.CafeServer
@@ -18,7 +19,7 @@ class CafeMapper @Inject constructor() : ICafeMapper {
             latitude = cafe.latitude,
             longitude = cafe.longitude,
             visible = cafe.visible,
-            city = cafe.city,
+            cityUuid = cafe.city,
         )
     }
 
@@ -32,7 +33,14 @@ class CafeMapper @Inject constructor() : ICafeMapper {
             latitude = cafe.latitude,
             longitude = cafe.longitude,
             visible = cafe.visible,
-            city = cafe.city,
+            city = cafe.cityUuid,
+        )
+    }
+
+    override fun toCafeAddress(cafe: CafeEntity): CafeAddress {
+        return CafeAddress(
+            address = cafe.address,
+            cafeUuid = cafe.uuid,
         )
     }
 }

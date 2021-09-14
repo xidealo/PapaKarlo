@@ -5,9 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CafeAddress(
-    val city: String,
-    val street: String,
-    val house: String,
-    val comment: String?,
+    val address: String,
     val cafeUuid: String,
 ) : Parcelable

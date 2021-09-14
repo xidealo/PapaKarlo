@@ -22,4 +22,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindUserAddressMapper(userAddressMapper: UserAddressMapper): IUserAddressMapper
+
+    @Binds
+    fun bindStreetMapper(streetMapper: StreetMapper): IStreetMapper
 }

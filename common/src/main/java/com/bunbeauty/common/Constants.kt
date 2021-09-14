@@ -53,17 +53,18 @@ object Constants {
 
     const val VK_LINK = "https://vk.com/papakarlokimry"
     const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
-    const val GOOGLE_PLAY_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
+    const val GOOGLE_PLAY_LINK =
+        "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
 
     // ERROR_KEY
 
     const val PHONE_ERROR_KEY = "phone error key"
     const val STREET_ERROR_KEY = "street error key"
     const val HOUSE_ERROR_KEY = "house error key"
-    const val FLAT_ERROR_KEY = "flat error key"
-    const val ENTRANCE_ERROR_KEY = "entrance error key"
-    const val FLOOR_ERROR_KEY = "floor error key"
-    const val COMMENT_ERROR_KEY = "comment error key"
+//    const val FLAT_ERROR_KEY = "flat error key"
+//    const val ENTRANCE_ERROR_KEY = "entrance error key"
+//    const val FLOOR_ERROR_KEY = "floor error key"
+//    const val COMMENT_ERROR_KEY = "comment error key"
 
     // ARGS_KEY
 

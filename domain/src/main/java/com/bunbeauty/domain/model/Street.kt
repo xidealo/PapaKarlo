@@ -6,6 +6,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Street(
     var uuid: String,
-    var name: String,
-    var districtUuid: String
+    var name: String
 ) : Parcelable

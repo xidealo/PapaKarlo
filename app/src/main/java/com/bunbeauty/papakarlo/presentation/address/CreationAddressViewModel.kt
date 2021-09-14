@@ -11,6 +11,7 @@ import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.util.field_helper.IFieldHelper
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    @Firebase private val userAddressRepo: UserAddressRepo,
+    @Api private val userAddressRepo: UserAddressRepo,
     @Firebase private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
@@ -30,7 +31,8 @@ class CreationAddressViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private var streetList: List<Street> = emptyList()
-    private val mutableStreetNameList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    private val mutableStreetNameList: MutableStateFlow<List<String>> =
+        MutableStateFlow(emptyList())
     val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
 
     init {
@@ -40,7 +42,9 @@ class CreationAddressViewModel @Inject constructor(
     private fun getStreets() {
         viewModelScope.launch {
             streetList = streetRepo.getStreets()
-            mutableStreetNameList.value = streetList.map { street -> street.name }
+            mutableStreetNameList.value = streetList.map { street ->
+                street.name
+            }
         }
     }
 
@@ -56,7 +60,7 @@ class CreationAddressViewModel @Inject constructor(
         if (!fieldHelper.isCorrectFieldContent(streetName, true, 50) || selectedStreet == null) {
             sendFieldError(
                 STREET_ERROR_KEY,
-                resourcesProvider.getString(R.string.error_creation_address_street)
+                resourcesProvider.getString(R.string.error_create_address_street)
             )
             return
         }
@@ -64,7 +68,7 @@ class CreationAddressViewModel @Inject constructor(
         if (!fieldHelper.isCorrectFieldContent(house, true, 5)) {
             sendFieldError(
                 HOUSE_ERROR_KEY,
-                resourcesProvider.getString(R.string.error_creation_address_house)
+                resourcesProvider.getString(R.string.error_create_address_house)
             )
             return
         }
@@ -72,7 +76,6 @@ class CreationAddressViewModel @Inject constructor(
         viewModelScope.launch {
             val userUuid = authUtil.userUuid
             val userAddress = UserAddress(
-                uuid = "",
                 street = selectedStreet.name,
                 house = house,
                 flat = flat,
@@ -82,10 +85,10 @@ class CreationAddressViewModel @Inject constructor(
                 streetUuid = selectedStreet.uuid,
                 userUuid = userUuid,
             )
-            userAddressRepo.saveUserAddress(userAddress)
-            dataStoreRepo.saveUserAddressUuid(userAddress.uuid)
+            val savedUserAddress = userAddressRepo.saveUserAddress(userAddress)
+            dataStoreRepo.saveUserAddressUuid(savedUserAddress.uuid)
 
-            showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
+            showMessage(resourcesProvider.getString(R.string.msg_create_address_created))
             goBack()
         }
     }

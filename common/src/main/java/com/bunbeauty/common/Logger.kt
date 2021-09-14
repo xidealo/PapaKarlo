@@ -6,6 +6,8 @@ object Logger {
 
     const val TEST_TAG = "testTag"
     const val USER_TAG = "userTag"
+    const val USER_ADDRESS_TAG = "userAddressTag"
+    const val STREET_TAG = "streetTag"
 
     fun logD(tag: String, message: Any) {
         Log.d(tag, message.toString())

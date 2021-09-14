@@ -19,7 +19,7 @@ class UserMapper @Inject constructor(
                 phone = user.phone,
                 email = user.email,
             ),
-            userAddressList = user.addressList.map(userAddressMapper::toEntity)
+            userAddressList = user.addressList.map(userAddressMapper::toEntityModel)
         )
     }
 

@@ -7,8 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface CafeRepo {
 
     suspend fun refreshCafeList()
-    suspend fun getCafeByStreetUuid(streetUuid: String): Cafe
     fun observeCafeList(): Flow<List<Cafe>>
     fun observeCafeAddressList(): Flow<List<CafeAddress>>
-    fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress>
+    fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress?>
 }

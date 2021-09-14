@@ -1,11 +1,10 @@
 package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.UserAddressDao
-import com.example.domain_firebase.model.entity.address.UserAddressEntity
 import com.bunbeauty.domain.model.address.UserAddress
-import com.example.domain_firebase.repo.FirebaseRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
+import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
@@ -19,7 +18,7 @@ class UserAddressRepository @Inject constructor(
     private val userAddressMapper: com.example.domain_firebase.mapper.IUserAddressMapper,
 ) : UserAddressRepo {
 
-    override suspend fun saveUserAddress(userAddress: UserAddress) {
+    override suspend fun saveUserAddress(userAddress: UserAddress): UserAddress {
         val userUuid = userAddress.userUuid
         if (userUuid == null) {
             val userAddressEntity = userAddressMapper.toEntityModel(userAddress)
@@ -33,6 +32,8 @@ class UserAddressRepository @Inject constructor(
             val userAddressEntity = userAddressMapper.toEntityModel(userAddressWithUuid)
             userAddressDao.insert(userAddressEntity)
         }
+
+        return userAddress
     }
 
     override suspend fun assignToUser(userUuid: String) {
@@ -53,8 +54,8 @@ class UserAddressRepository @Inject constructor(
         }
     }
 
-    override fun observeUserAddressByUuid(uuid: String): Flow<UserAddress?> {
-        return userAddressDao.observeByUuid(uuid)
+    override fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?> {
+        return userAddressDao.observeByUuid(userAddressUuid)
             .flowOn(IO)
             .mapNotNull { userAddressWithStreet ->
                 userAddressWithStreet?.let { address ->

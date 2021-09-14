@@ -16,16 +16,16 @@ data class UserAddressServer(
     val house: String,
 
     @SerialName("flat")
-    val flat: String,
+    val flat: String?,
 
     @SerialName("entrance")
-    val entrance: String,
+    val entrance: String?,
 
     @SerialName("floor")
-    val floor: String,
+    val floor: String?,
 
     @SerialName("comment")
-    val comment: String,
+    val comment: String?,
 
     @SerialName("profileUuid")
     val userUuid: String,

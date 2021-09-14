@@ -11,7 +11,7 @@ import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -97,22 +97,22 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
-    override val selectedCity: Flow<String?> = context.selectedCityDataStore.data.map {
-        it[SELECTED_CITY_KEY]
+    override val selectedCityUuid: Flow<String?> = context.selectedCityDataStore.data.map {
+        it[SELECTED_CITY_UUID_KEY]
     }
 
-    override suspend fun saveSelectedCity(city: String) {
+    override suspend fun saveSelectedCityUuid(cityUuid: String) {
         withContext(IO) {
             context.selectedCityDataStore.edit {
-                it[SELECTED_CITY_KEY] = city
+                it[SELECTED_CITY_UUID_KEY] = cityUuid
             }
         }
     }
 
-    override suspend fun getSelectedCity(): String? {
+    override suspend fun getSelectedCityUuid(): String? {
         return context.selectedCityDataStore.data.map {
-            it[SELECTED_CITY_KEY]
-        }.first()
+            it[SELECTED_CITY_UUID_KEY]
+        }.firstOrNull()
     }
 
     override suspend fun clearData() {
@@ -141,7 +141,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private const val USER_UUID = "user uuid"
         private const val DEFERRED_TIME = "deferred time"
-        private const val SELECTED_CITY = "selected city"
+        private const val SELECTED_CITY_UUID = "selected city uuid"
 
         private val DELIVERY_ADDRESS_UUID_KEY = stringPreferencesKey(DELIVERY_ADDRESS_UUID)
         private val CAFE_UUID_KEY = stringPreferencesKey(CAFE_UUID)
@@ -149,7 +149,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
         private val DEFERRED_TIME_KEY = stringPreferencesKey(DEFERRED_TIME)
-        private val SELECTED_CITY_KEY = stringPreferencesKey(SELECTED_CITY)
+        private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
 
         private const val DEFAULT_LONG = 0L
         private const val DEFAULT_STRING = ""

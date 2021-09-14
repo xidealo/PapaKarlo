@@ -46,15 +46,7 @@ class StringUtil @Inject constructor(
     }
 
     override fun getCafeAddressString(cafeAddress: CafeAddress?): String {
-        return if (cafeAddress == null) {
-            return ""
-        } else {
-            val comma = resourcesProvider.getString(R.string.msg_comma)
-            val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
-            cafeAddress.street +
-                    getStringPart(comma, houseShort, cafeAddress.house) +
-                    getStringPart(comma, "", cafeAddress.comment)
-        }
+        return cafeAddress?.address ?: ""
     }
 
     override fun getUserAddressString(userAddress: UserAddress?): String {

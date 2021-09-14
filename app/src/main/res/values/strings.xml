@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PapaKarlo</string>
+
     <!--
     title — заголовки;
     hint — подсказки в edittext;
@@ -7,33 +8,15 @@
     error — сообщения об ошибках;
     action — кнопки или какие-то действия.
     description — описание для iv
-    title_registration_pass
     -->
 
-    <string name="part_ruble">&#160;₽</string>
-
-    <!-- TITLES -->
-    <string name="title_main">Главная</string>
-    <string name="title_menu">Меню</string>
-    <string name="title_cafe_list">Рестораны</string>
-    <string name="title_orders">Ваши заказы</string>
-    <string name="title_profile">Профиль</string>
-    <string name="title_login">Регистрация</string>
-    <string name="title_confirm">Подтверждение номера</string>
-    <string name="title_settings">Настройки</string>
-    <string name="title_cart">Корзина</string>
-    <string name="title_creation_order">Оформление заказа</string>
-    <string name="title_creation_address">Добавление адреса</string>
-    <string name="title_product">Продукт</string>
+    <string name="msg_ruble">&#160;₽</string>
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
-    <string name="hint_product_title">Title</string>
-    <string name="hint_product_cost">Cost</string>
-    <string name="hint_product_gram">Gram</string>
-    <string name="hint_product_description">Description</string>
 
     <!-- MENU -->
+    <string name="title_menu">Меню</string>
     <string name="title_menu_all">Все</string>
     <string name="title_menu_combo">Комбо</string>
     <string name="title_menu_pizza">Пицца</string>
@@ -47,10 +30,8 @@
     <string name="action_menu_want">Хочу!</string>
     <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
 
-    <!-- TOP BAR -->
-    <string name="title_top_bar_title">Заголовок</string>
-
     <!-- CONSUMER CART -->
+    <string name="title_cart">Корзина</string>
     <string name="action_consumer_cart_checkout">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавьте товар из \"Меню\"</string>
@@ -58,7 +39,8 @@
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
 
-    <!-- CREATION ORDER -->
+    <!-- CREATE ORDER -->
+    <string name="title_create_order">Оформление заказа</string>
     <string name="action_create_order_delivery">Доставка</string>
     <string name="action_create_order_pickup">Самовывоз</string>
     <string name="action_create_order_phone">Номер телефона</string>
@@ -87,17 +69,18 @@
     <string name="action_deferred_time_select_time">Выбрать время</string>
     <string name="title_deferred_time_select_time">Выберите время</string>
 
-    <!-- CREATION ADDRESS -->
-    <string name="hint_creation_address_street">Улица*</string>
-    <string name="hint_creation_address_house">Дом*</string>
-    <string name="hint_creation_address_flat">Квартира</string>
-    <string name="hint_creation_address_entrance">Подъезд</string>
-    <string name="hint_creation_address_comment">Комментарий для курьера</string>
-    <string name="hint_creation_address_floor">Этаж</string>
-    <string name="msg_creation_address_created_address">Адрес добавлен</string>
-    <string name="action_creation_address_address">Добавить адрес</string>
-    <string name="error_creation_address_street">Выберите название улицы из списка</string>
-    <string name="error_creation_address_house">Укажите номер дома</string>
+    <!-- CREATE ADDRESS -->
+    <string name="title_create_address">Добавление адресa</string>
+    <string name="hint_create_address_street">Улица*</string>
+    <string name="hint_create_address_house">Дом*</string>
+    <string name="hint_create_address_flat">Квартира</string>
+    <string name="hint_create_address_entrance">Подъезд</string>
+    <string name="hint_create_address_floor">Этаж</string>
+    <string name="hint_create_address_comment">Комментарий для курьера</string>
+    <string name="msg_create_address_created">Адрес добавлен</string>
+    <string name="error_create_address_street">Выберите название улицы из списка</string>
+    <string name="error_create_address_house">Укажите номер дома</string>
+    <string name="action_create_address_save">Сохранить</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>
@@ -110,6 +93,7 @@
     <string name="msg_contacts_work_time_divider">&#160;-&#160;</string>
 
     <!-- CAFE LIST -->
+    <string name="title_cafe_list">Рестораны</string>
     <string name="action_cafe_list_copy_card_number">Номер карты</string>
     <string name="action_cafe_list_copy_phone_number">Номер телефона</string>
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
@@ -146,6 +130,7 @@
     <string name="action_order_details_no">Нет</string>
 
     <!-- PROFILE  -->
+    <string name="title_profile">Профиль</string>
     <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_bonuses">Бонусы</string>
     <string name="action_profile_create_address">Добавить адрес</string>
@@ -176,13 +161,16 @@
     <string name="action_cafe_options_show_map">На карте:&#160;</string>
 
     <!-- SETTINGS -->
+    <string name="title_settings">Настройки</string>
     <string name="title_settings_add_email">Добавление почты</string>
     <string name="title_settings_change_email">Редактирование почты</string>
     <string name="hint_settings_email">Почта</string>
     <string name="action_settings_save">Сохранить</string>
 
     <!-- ORDERS -->
+    <string name="title_orders">История заказов</string>
     <string name="msg_orders_empty">Нет заказов</string>
+
     <!-- ONE LINE ACTON-->
     <string name="error_one_line_action_email">Введите корректную почту</string>
 

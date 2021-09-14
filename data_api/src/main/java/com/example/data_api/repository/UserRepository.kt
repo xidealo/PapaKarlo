@@ -7,11 +7,11 @@ import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserAddressDao
 import com.example.data_api.dao.UserDao
 import com.example.data_api.handleResult
+import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.server.UserServer
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -51,11 +51,7 @@ class UserRepository @Inject constructor(
     }
 
     override fun observeUserByUuid(userUuid: String): Flow<User?> {
-        return userDao.observeUserByUuid(userUuid).map { user ->
-            user?.let {
-                userMapper.toModel(user)
-            }
-        }
+        return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toModel)
     }
 
     suspend fun saveUser(user: UserServer?) {

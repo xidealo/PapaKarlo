@@ -66,7 +66,7 @@
     <fragment
         android:id="@+id/create_order_fragment"
         android:name="com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment"
-        android:label="@string/title_creation_order"
+        android:label="@string/title_create_order"
         tools:layout="@layout/fragment_create_order">
         <action
             android:id="@+id/back_to_menu_fragment"
@@ -75,7 +75,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/to_creation_address_fragment"
-            app:destination="@id/creation_address_fragment" />
+            app:destination="@id/create_address_fragment" />
         <action
             android:id="@+id/to_addresses_bottom_sheet"
             app:destination="@id/addresses_bottom_sheet" />
@@ -115,10 +115,10 @@
             app:nullable="true" />
     </fragment>
     <fragment
-        android:id="@+id/creation_address_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.CreationAddressFragment"
-        android:label="@string/title_creation_address"
-        tools:layout="@layout/fragment_creation_address" />
+        android:id="@+id/create_address_fragment"
+        android:name="com.bunbeauty.papakarlo.ui.CreateAddressFragment"
+        android:label="@string/title_create_address"
+        tools:layout="@layout/fragment_create_address" />
     <dialog
         android:id="@+id/addresses_bottom_sheet"
         android:name="com.bunbeauty.papakarlo.ui.AddressesBottomSheet"
@@ -129,7 +129,7 @@
             app:argType="boolean" />
         <action
             android:id="@+id/to_creation_address_fragment"
-            app:destination="@id/creation_address_fragment" />
+            app:destination="@id/create_address_fragment" />
     </dialog>
     <fragment
         android:id="@+id/order_derails_fragment"
@@ -157,7 +157,7 @@
             app:destination="@id/addresses_bottom_sheet" />
         <action
             android:id="@+id/to_creation_address_fragment"
-            app:destination="@id/creation_address_fragment" />
+            app:destination="@id/create_address_fragment" />
         <action
             android:id="@+id/to_loginFragment"
             app:destination="@id/login_fragment" />

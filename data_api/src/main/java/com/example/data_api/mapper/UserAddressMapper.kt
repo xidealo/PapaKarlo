@@ -22,7 +22,7 @@ class UserAddressMapper @Inject constructor() : IUserAddressMapper {
         )
     }
 
-    override fun toEntity(userAddress: UserAddressServer): UserAddressEntity {
+    override fun toEntityModel(userAddress: UserAddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = userAddress.uuid,
             street = userAddress.street,
@@ -33,6 +33,51 @@ class UserAddressMapper @Inject constructor() : IUserAddressMapper {
             comment = userAddress.comment,
             streetUuid = userAddress.streetUuid,
             userUuid = userAddress.userUuid,
+        )
+    }
+
+    override fun toEntityModel(userAddress: UserAddress): UserAddressEntity {
+        return UserAddressEntity(
+            uuid = userAddress.uuid,
+            street = userAddress.street,
+            house = userAddress.house,
+            flat = userAddress.flat,
+            entrance = userAddress.entrance,
+            floor = userAddress.floor,
+            comment = userAddress.comment,
+            streetUuid = userAddress.streetUuid,
+            userUuid = userAddress.userUuid,
+        )
+    }
+
+    override fun toServerModel(userAddress: UserAddress, userUuid: String): UserAddressServer {
+        return UserAddressServer(
+            uuid = userAddress.uuid,
+            street = userAddress.street,
+            house = userAddress.house,
+            flat = userAddress.flat,
+            entrance = userAddress.entrance,
+            floor = userAddress.floor,
+            comment = userAddress.comment,
+            streetUuid = userAddress.streetUuid,
+            userUuid = userAddress.userUuid ?: userUuid,
+        )
+    }
+
+    override fun toServerModel(
+        userAddress: UserAddressEntity,
+        userUuid: String
+    ): UserAddressServer {
+        return UserAddressServer(
+            uuid = userAddress.uuid,
+            street = userAddress.street,
+            house = userAddress.house,
+            flat = userAddress.flat,
+            entrance = userAddress.entrance,
+            floor = userAddress.floor,
+            comment = userAddress.comment,
+            streetUuid = userAddress.streetUuid,
+            userUuid = userAddress.userUuid ?: userUuid,
         )
     }
 }

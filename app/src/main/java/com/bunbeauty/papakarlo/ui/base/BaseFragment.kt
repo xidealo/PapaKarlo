@@ -14,14 +14,16 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.clearErrorFocus
 import com.bunbeauty.papakarlo.extensions.getBinding
 import com.bunbeauty.papakarlo.extensions.setErrorFocus
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -85,16 +87,16 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
         viewModel.message.onEach { message ->
             showSnackbar(message, R.color.white, R.color.colorPrimary)
-        }.startedLaunch(viewLifecycleOwner)
+        }.startedLaunch()
         viewModel.error.onEach { error ->
             showSnackbar(error, R.color.white, R.color.errorColor)
-        }.startedLaunch(viewLifecycleOwner)
+        }.startedLaunch()
         viewModel.fieldError.onEach { fieldError ->
             textInputMap.values.forEach { textInput ->
                 textInput.clearErrorFocus()
             }
             textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
-        }.startedLaunch(viewLifecycleOwner)
+        }.startedLaunch()
     }
 
     private fun showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
@@ -122,7 +124,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         mutableViewDataBinding = null
     }
 
-    fun <T> Flow<T>.startedLaunch() {
+    protected fun <T> Flow<T>.startedLaunch() {
         viewLifecycleOwner.lifecycleScope.launch {
             this@startedLaunch
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)

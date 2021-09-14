@@ -2,11 +2,10 @@ package com.bunbeauty.domain.model.address
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 @Parcelize
 data class UserAddress(
-    val uuid: String,
+    val uuid: String = "",
     val street: String,
     val house: String,
     val flat: String?,

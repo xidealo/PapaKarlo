@@ -2,10 +2,7 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
-import com.example.domain_api.model.server.CafeServer
-import com.example.domain_api.model.server.DeliveryServer
-import com.example.domain_api.model.server.MenuProductServer
-import com.example.domain_api.model.server.UserServer
+import com.example.domain_api.model.server.*
 import com.example.domain_api.repo.ApiRepo
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -29,15 +26,23 @@ class ApiRepository @Inject constructor(
         return getDataList(path = "/cafe/all", CafeServer.serializer())
     }
 
-    override suspend fun getCafeListByCity(city: String): ApiResult<List<CafeServer>> {
+    override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<List<CafeServer>> {
         return getDataList(
             path = "/cafe",
             serializer = CafeServer.serializer(),
-            parameters = hashMapOf("city" to city)
+            parameters = hashMapOf("cityUuid" to cityUuid)
         )
     }
 
-    override suspend fun getDelivery():  ApiResult<DeliveryServer> {
+    override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<List<StreetServer>> {
+        return getDataList(
+            path = "/street",
+            serializer = StreetServer.serializer(),
+            parameters = hashMapOf("cityUuid" to cityUuid)
+        )
+    }
+
+    override suspend fun getDelivery(): ApiResult<DeliveryServer> {
         return getData(path = "/delivery", serializer = DeliveryServer.serializer())
     }
 
@@ -54,6 +59,14 @@ class ApiRepository @Inject constructor(
             path = "/profile",
             body = user,
             serializer = UserServer.serializer()
+        )
+    }
+
+    override suspend fun postUserAddress(userAddress: UserAddressServer): ApiResult<UserAddressServer> {
+        return postData(
+            path = "/address",
+            body = userAddress,
+            serializer = UserAddressServer.serializer()
         )
     }
 

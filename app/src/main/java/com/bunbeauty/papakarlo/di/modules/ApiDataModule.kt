@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.di.modules
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.bunbeauty.data_firebase.FirebaseLocalDatabase
 import com.example.data_api.ApiLocalDatabase
 import dagger.Module
 import dagger.Provides
@@ -89,6 +88,11 @@ class ApiDataModule {
 
     @Singleton
     @Provides
-    fun provideUserAddressDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getUserAddressDao()
+    fun provideUserAddressDao(apiLocalDatabase: ApiLocalDatabase) =
+        apiLocalDatabase.getUserAddressDao()
+
+    @Singleton
+    @Provides
+    fun provideStreetDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getStreetDao()
 
 }

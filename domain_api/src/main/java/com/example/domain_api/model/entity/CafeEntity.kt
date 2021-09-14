@@ -2,8 +2,7 @@ package com.example.domain_api.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+
 @Entity
 class CafeEntity(
     @PrimaryKey
@@ -23,5 +22,5 @@ class CafeEntity(
 
     val visible: Boolean,
 
-    val city: String,
+    val cityUuid: String,
 )
