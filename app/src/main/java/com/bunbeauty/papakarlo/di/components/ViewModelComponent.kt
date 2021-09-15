@@ -5,10 +5,7 @@ import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.*
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.ui.profile.OrderDetailsFragment
-import com.bunbeauty.papakarlo.ui.profile.OrdersFragment
-import com.bunbeauty.papakarlo.ui.profile.ProfileFragment
-import com.bunbeauty.papakarlo.ui.profile.SettingsFragment
+import com.bunbeauty.papakarlo.ui.profile.*
 import dagger.BindsInstance
 import dagger.Subcomponent
 

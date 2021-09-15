@@ -5,17 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.getBinding
+import com.bunbeauty.papakarlo.extensions.showSnackbar
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 abstract class BaseBottomSheetDialog<B : ViewDataBinding> : BottomSheetDialogFragment() {
@@ -59,21 +60,16 @@ abstract class BaseBottomSheetDialog<B : ViewDataBinding> : BottomSheetDialogFra
         viewDataBinding.executePendingBindings()
 
         viewModel.bundle = requireArguments()
+
+        viewModel.message.onEach { message ->
+            viewDataBinding.root.showSnackbar(message, R.color.white, R.color.colorPrimary)
+        }.startedLaunch()
+        viewModel.error.onEach { error ->
+            viewDataBinding.root.showSnackbar(error, R.color.white, R.color.errorColor)
+        }.startedLaunch()
     }
 
-    fun showMessage(message: String) {
-        val snack = dialog?.window?.decorView?.let {
-            Snackbar.make(
-                it, // important part
-                message,
-                Snackbar.LENGTH_SHORT
-            )
-                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
-                .setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                .setActionTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        }
-        snack?.view?.findViewById<TextView>(R.id.snackbar_text)?.textAlignment =
-            View.TEXT_ALIGNMENT_CENTER
-        snack?.show()
+    protected fun Flow<*>.startedLaunch() {
+        startedLaunch(viewLifecycleOwner)
     }
 }

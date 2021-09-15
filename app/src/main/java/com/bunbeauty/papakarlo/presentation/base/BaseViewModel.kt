@@ -28,13 +28,13 @@ abstract class BaseViewModel : ViewModel() {
     private val mutableFieldError = MutableSharedFlow<FieldError>(0)
     val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
 
-    protected fun showMessage(message: String) {
+    fun showMessage(message: String) {
         viewModelScope.launch {
             mutableMessage.emit(message)
         }
     }
 
-    protected fun showError(error: String) {
+    fun showError(error: String) {
         viewModelScope.launch {
             mutableError.emit(error)
         }

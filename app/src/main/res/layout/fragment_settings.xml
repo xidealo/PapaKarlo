@@ -25,7 +25,7 @@
             android:id="@+id/fragment_settings_nc_phone"
             style="@style/NavigationCard"
             android:layout_marginTop="@dimen/medium_margin"
-            android:icon="@drawable/ic_right_arrow"
+            android:icon="@drawable/ic_logout"
             app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
             app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
             app:layout_constraintTop_toTopOf="parent"

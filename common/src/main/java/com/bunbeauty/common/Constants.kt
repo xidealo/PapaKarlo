@@ -31,6 +31,13 @@ object Constants {
     const val NAV_TAG = "Nav"
     const val CREATE_ORDER_TAG = "CreateOrder"
 
+    // PAYMENT
+
+    const val CARD_NUMBER_LABEL = "cart number"
+    const val CARD_NUMBER = "4279 3800 2260 1191"
+    const val PHONE_NUMBER_LABEL = "phone number"
+    const val PHONE_NUMBER = "+7 (903) 801-55-52"
+
 
     // FRAGMENT RESULT KEY
 

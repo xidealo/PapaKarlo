@@ -100,10 +100,6 @@
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="title_cafe_list_payment">Оплата</string>
 
-    <!-- PAY DATA-->
-    <string name="pay_data_card_number">4279 3800 2260 1191</string>
-    <string name="pay_data_phone_number">+79038015552</string>
-
     <!-- BOTTOM SHEET ADDRESSES -->
     <string name="title_bottom_sheet_addresses_your_address">Ваши адреса</string>
     <string name="title_bottom_sheet_addresses_cafe_address">Адреса ресторанов</string>

@@ -48,6 +48,10 @@
         <item name="iconColor">@color/black</item>
     </style>
 
+    <style name="NavigationCardWithoutShadow" parent="NavigationCard">
+        <item name="cardElevation">0dp</item>
+    </style>
+
     <style name="TextCard">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

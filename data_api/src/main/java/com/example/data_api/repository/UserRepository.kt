@@ -32,7 +32,8 @@ class UserRepository @Inject constructor(
                         uuid = userUuid,
                         phone = userPhone,
                         email = null,
-                        addressList = emptyList()
+                        addressList = emptyList(),
+                        orderList = emptyList(),
                     )
                     apiRepo.postUser(newUser).handleResult(USER_TAG) { postedUser ->
                         saveUser(postedUser)

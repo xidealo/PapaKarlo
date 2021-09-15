@@ -223,7 +223,7 @@
 
     <dialog
         android:id="@+id/paymentBottomSheet"
-        android:name="com.bunbeauty.papakarlo.ui.PaymentBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.profile.PaymentBottomSheet"
         android:label="PaymentBottomSheet"
         tools:layout="@layout/bottom_sheet_payment" />
 </navigation>

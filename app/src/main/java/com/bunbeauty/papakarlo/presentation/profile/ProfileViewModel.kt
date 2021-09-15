@@ -26,9 +26,13 @@ class ProfileViewModel @Inject constructor(
         subscribeOnUser()
     }
 
-    fun onOrderListClicked() {
-        authUtil.userUuid?.let { userUuid ->
-            router.navigate(toOrdersFragment(userUuid))
+    fun onLastOrderClicked(orderItem: OrderItem) {
+        router.navigate(toOrderDerailsFragment(orderItem.uuid, orderItem.code))
+    }
+
+    fun onSettingsClicked() {
+        user?.uuid?.let { userUuid ->
+            router.navigate(toSettingsFragment(userUuid))
         }
     }
 
@@ -40,18 +44,22 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun goToLogin() {
-        router.navigate(toLoginFragment())
-    }
-
-    fun goToOrder(orderItem: OrderItem) {
-        router.navigate(toOrderDerailsFragment(orderItem.uuid, orderItem.code))
-    }
-
-    fun goToSettings() {
-        user?.uuid?.let { userUuid ->
-            router.navigate(toSettingsFragment(userUuid))
+    fun onOrderListClicked() {
+        authUtil.userUuid?.let { userUuid ->
+            router.navigate(toOrdersFragment(userUuid))
         }
+    }
+
+    fun onPaymentClicked() {
+        router.navigate(toPaymentBottomSheet())
+    }
+
+    fun onFeedbackClicked() {
+
+    }
+
+    fun onLoginClicked() {
+        router.navigate(toLoginFragment())
     }
 
     private fun subscribeOnUser() {

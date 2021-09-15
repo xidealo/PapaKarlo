@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.profile
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -6,15 +6,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.Constants.CARD_NUMBER
+import com.bunbeauty.common.Constants.CARD_NUMBER_LABEL
+import com.bunbeauty.common.Constants.PHONE_NUMBER
+import com.bunbeauty.common.Constants.PHONE_NUMBER_LABEL
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetPaymentBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.presentation.MainViewModel
+import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheetDialog
 
 class PaymentBottomSheet : BaseBottomSheetDialog<BottomSheetPaymentBinding>() {
 
-    override val viewModel: MainViewModel by viewModels { modelFactory }
+    override val viewModel: EmptyViewModel by viewModels { modelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -22,20 +26,17 @@ class PaymentBottomSheet : BaseBottomSheetDialog<BottomSheetPaymentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(viewDataBinding) {
-            bottomSheetPaymentMcvCardNumber.setOnClickListener {
-                copyToBuffer(
-                    "card number",
-                    requireContext().getString(R.string.pay_data_card_number)
-                )
-                showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
+
+        viewDataBinding.run {
+            bottomSheetPaymentNcCardNumber.cardText = CARD_NUMBER
+            bottomSheetPaymentNcCardNumber.setOnClickListener {
+                copyToBuffer(CARD_NUMBER_LABEL, CARD_NUMBER)
+                viewModel.showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
             }
-            bottomSheetPaymentMcvPhoneNumber.setOnClickListener {
-                copyToBuffer(
-                    "phone number",
-                    requireContext().getString(R.string.pay_data_phone_number)
-                )
-                showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
+            bottomSheetPaymentNcPhoneNumber.cardText = PHONE_NUMBER
+            bottomSheetPaymentNcPhoneNumber.setOnClickListener {
+                copyToBuffer(PHONE_NUMBER_LABEL, PHONE_NUMBER)
+                viewModel.showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
             }
         }
     }

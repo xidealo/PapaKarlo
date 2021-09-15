@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.PaymentBottomSheet">
+        tools:context=".ui.profile.PaymentBottomSheet">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_sheet_payment_gl_left"
@@ -23,90 +23,33 @@
 
         <TextView
             android:id="@+id/bottom_sheet_payment_tv_title"
-            style="@style/MainTitle"
+            style="@style/MediumBoldCenterText"
             android:layout_marginTop="@dimen/medium_margin"
-            android:gravity="center"
             android:text="@string/title_payment_payment"
             app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
             app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottom_sheet_payment_mcv_card_number"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title">
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/bottom_sheet_payment_nc_card_number"
+            style="@style/NavigationCardWithoutShadow"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:icon="@drawable/ic_copy"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title"
+            tools:text="4279 3800 2260 1191" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/bottom_sheet_payment_tv_card_number"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/pay_data_card_number"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_payment_iv_copy_card_number"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/bottom_sheet_payment_iv_copy_card_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_copy"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bottom_sheet_payment_mcv_phone_number"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:cardElevation="0dp"
+        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+            android:id="@+id/bottom_sheet_payment_nc_phone_number"
+            style="@style/NavigationCardWithoutShadow"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/medium_margin"
+            android:icon="@drawable/ic_copy"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_mcv_card_number">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/bottom_sheet_payment_tv_phone_number"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:text="@string/pay_data_phone_number"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_payment_iv_copy_phone_number"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/bottom_sheet_payment_iv_copy_phone_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_copy"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_nc_card_number"
+            tools:text="+7 (903) 801-55-52" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

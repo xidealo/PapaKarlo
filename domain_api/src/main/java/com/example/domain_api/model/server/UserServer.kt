@@ -7,10 +7,16 @@ import kotlinx.serialization.Serializable
 data class UserServer(
     @SerialName("uuid")
     val uuid: String,
+
     @SerialName("phone")
     val phone: String,
+
     @SerialName("email")
     val email: String?,
+
     @SerialName("addressList")
-    val addressList: List<UserAddressServer>
+    val addressList: List<UserAddressServer>,
+
+    @SerialName("userOrderList")
+    val orderList: List<OrderServer>
 )

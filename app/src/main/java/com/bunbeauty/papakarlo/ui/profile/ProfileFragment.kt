@@ -54,7 +54,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
             }.startedLaunch()
 
             fragmentProfileNcSettings.setOnClickListener {
-                viewModel.goToSettings()
+                viewModel.onSettingsClicked()
             }
             fragmentProfileNcAddresses.setOnClickListener {
                 viewModel.onAddressClicked()
@@ -63,13 +63,13 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                 viewModel.onOrderListClicked()
             }
             fragmentProfileNcPayment.setOnClickListener {
-                // go to payment
+                viewModel.onPaymentClicked()
             }
             fragmentProfileNcFeedback.setOnClickListener {
                 // go to feedback
             }
             fragmentProfileBtnLogin.setOnClickListener {
-                viewModel.goToLogin()
+                viewModel.onLoginClicked()
             }
         }
     }
