@@ -19,7 +19,7 @@ class MenuProductRepository @Inject constructor(
     private val firebaseRepo: FirebaseRepo
 ) : MenuProductRepo {
 
-    override suspend fun refreshMenuProducts() {
+    override suspend fun refreshMenuProductList() {
         val menuProductList = firebaseRepo.getMenuProductMap()
             .flowOn(IO)
             .map { menuProductMap ->

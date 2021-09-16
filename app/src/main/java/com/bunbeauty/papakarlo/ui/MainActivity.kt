@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.NavMainDirections.globalToCartFragment
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
@@ -22,6 +21,7 @@ import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -32,10 +32,11 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
     private var mutableViewDataBinding: ActivityMainBinding? = null
-    val viewDataBinding: ActivityMainBinding
-        get() = checkNotNull(mutableViewDataBinding)
+    val viewDataBinding: ActivityMainBinding by lazy {
+        checkNotNull(mutableViewDataBinding)
+    }
 
-    lateinit var viewModel: MainViewModel
+    private var viewModel: MainViewModel? = null
 
     @Inject
     lateinit var modelFactory: ViewModelFactory
@@ -64,19 +65,6 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         setupBottomNavigationBar()
 
         router.attach(this, R.id.activity_main_fcv_container)
-
-        //checkUpdates()
-/*
-//        AppUpdater(this)
-//            .setDisplay(Display.DIALOG)
-//            .setCancelable(false)
-//            .setUpdateFrom(UpdateFrom.GITHUB)
-//            .setGitHubUserAndRepo("xidealo", "PapaKarlo")
-//            .start()
-*/
-
-        // Uploading menu products to FB
-        // viewModel.saveMenu(resources.getStringArray(R.array.menu_arr).asList())
     }
 
     //google in update

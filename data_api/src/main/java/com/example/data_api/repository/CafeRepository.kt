@@ -1,11 +1,12 @@
 package com.example.data_api.repository
 
-import com.bunbeauty.common.ApiResult
+import com.bunbeauty.common.Logger.CAFE_TAG
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.example.data_api.dao.CafeDao
+import com.example.data_api.handleResult
 import com.example.data_api.mapFlow
 import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.ICafeMapper
@@ -22,15 +23,11 @@ class CafeRepository @Inject constructor(
 ) : CafeRepo {
 
     override suspend fun refreshCafeList() {
-        val selectedCity = dataStoreRepo.getSelectedCityUuid()
-        if (selectedCity != null) {
-            when (val result = apiRepo.getCafeListByCityUuid(selectedCity)) {
-                is ApiResult.Success -> {
-                    if (result.data != null)
-                        cafeDao.insertAll(result.data!!.map { cafeMapper.toEntityModel(it) })
-                }
-
-                is ApiResult.Error -> {
+        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
+        if (selectedCityUuid != null) {
+            apiRepo.getCafeListByCityUuid(selectedCityUuid).handleResult(CAFE_TAG) { cafeList ->
+                if (cafeList != null) {
+                    cafeDao.insertAll(cafeList.map(cafeMapper::toEntityModel))
                 }
             }
         }

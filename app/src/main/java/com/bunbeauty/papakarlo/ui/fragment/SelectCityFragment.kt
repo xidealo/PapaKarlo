@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -24,15 +25,14 @@ class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.checkIsCitySelected()
-        viewModel.cityList.onEach { cityList ->
-            val isLoading = cityList == null
-            viewDataBinding.fragmentSelectCityPbLoading.toggleVisibility(isLoading)
-            viewDataBinding.fragmentSelectCityLlCityList.toggleVisibility(!isLoading)
-            viewDataBinding.fragmentSelectCityTvTitle.toggleVisibility(!isLoading)
+        viewModel.cityListState.onEach { cityListState ->
+            viewDataBinding.fragmentSelectCityPbLoading.toggleVisibility(cityListState !is State.Success)
+            viewDataBinding.fragmentSelectCityLlCityList.toggleVisibility(cityListState is State.Success)
+            viewDataBinding.fragmentSelectCityTvTitle.toggleVisibility(cityListState is State.Success)
 
-            if (cityList != null) {
+            if (cityListState is State.Success) {
                 viewDataBinding.fragmentSelectCityLlCityList.removeAllViews()
-                cityList.forEach { city ->
+                cityListState.data.forEach { city ->
                     ElementCityBinding.inflate(
                         layoutInflater,
                         viewDataBinding.fragmentSelectCityLlCityList,

@@ -16,7 +16,7 @@ class MenuProductRepository @Inject constructor(
     private val menuProductMapper: IMenuProductMapper
 ) : MenuProductRepo {
 
-    override suspend fun refreshMenuProducts() {
+    override suspend fun refreshMenuProductList() {
         when (val result = apiRepository.getMenuProductList()) {
             is ApiResult.Success -> {
                 if (result.data != null)

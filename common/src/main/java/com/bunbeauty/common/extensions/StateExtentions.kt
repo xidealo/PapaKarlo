@@ -10,7 +10,11 @@ fun <T : Any> T?.toSuccessOrEmpty(): State<T> {
     return if (this == null) {
         State.Empty()
     } else {
-        State.Success(this)
+        if (this is List<*> && isEmpty()) {
+            State.Empty()
+        } else {
+            State.Success(this)
+        }
     }
 }
 

@@ -14,7 +14,7 @@ class StreetRepository @Inject constructor(
         return streetDao.getStreetList().map(streetMapper::toUIModel)
     }
 
-    override suspend fun refreshStreets() {
+    override suspend fun refreshStreetList() {
         //TODO
     }
 }

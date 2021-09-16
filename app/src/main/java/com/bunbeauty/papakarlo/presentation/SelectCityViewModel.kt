@@ -1,9 +1,13 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.State
+import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.model.City
+import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragmentDirections.toMenuFragment
@@ -14,11 +18,14 @@ import javax.inject.Inject
 
 class SelectCityViewModel @Inject constructor(
     @Api private val cityRepo: CityRepo,
+    @Api private val cafeRepo: CafeRepo,
+    @Api private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
 ) : BaseViewModel() {
 
-    private val mutableCityList: MutableStateFlow<List<City>?> = MutableStateFlow(null)
-    val cityList: StateFlow<List<City>?> = mutableCityList.asStateFlow()
+    private val mutableCityListState: MutableStateFlow<State<List<City>>> =
+        MutableStateFlow(State.Loading())
+    val cityListState: StateFlow<State<List<City>>> = mutableCityListState.asStateFlow()
 
     init {
         subscribeOnCityList()
@@ -34,21 +41,28 @@ class SelectCityViewModel @Inject constructor(
     }
 
     fun onCitySelected(city: City) {
+        mutableCityListState.value = State.Loading()
         viewModelScope.launch {
             dataStoreRepo.saveSelectedCityUuid(city.uuid)
+            cafeRepo.refreshCafeList()
+            streetRepo.refreshStreetList()
             router.navigate(toMenuFragment())
         }
     }
 
     private fun subscribeOnCityList() {
         cityRepo.observeCityList().onEach { cityList ->
-            if (cityList.isNotEmpty()) {
-                mutableCityList.value = cityList
-            }
+            mutableCityListState.value = cityList.toSuccessOrEmpty()
         }.launchIn(viewModelScope)
+
+        // TODO for test
         viewModelScope.launch {
-            delay(2000)
-            mutableCityList.value = listOf(City("1", "Кимры"), City("2", "Дубна"))
+            delay(2500)
+            mutableCityListState.value = listOf(
+                City("1", "Москва"),
+                City("2", "Дубна"),
+                City("2", "Кимры")
+            ).toSuccessOrEmpty()
         }
     }
 }

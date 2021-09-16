@@ -17,7 +17,7 @@ class StreetRepository @Inject constructor(
     private val streetMapper: IStreetMapper,
 ) : StreetRepo {
 
-    override suspend fun refreshStreets() {
+    override suspend fun refreshStreetList() {
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
         if (selectedCityUuid != null) {
             apiRepo.getStreetListByCityUuid(selectedCityUuid)
