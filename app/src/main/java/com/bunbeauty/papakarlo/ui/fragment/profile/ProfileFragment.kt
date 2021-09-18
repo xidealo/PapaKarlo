@@ -39,7 +39,9 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                 fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)
 
                 if (state is State.Success) {
-                    if (state.data.addressList.isEmpty()) {
+                    val profile = state.data
+
+                    if (profile.addressList.isEmpty()) {
                         fragmentProfileNcAddresses.cardText =
                             resourcesProvider.getString(R.string.action_profile_create_address)
                         fragmentProfileNcAddresses.icon =
@@ -50,6 +52,9 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                         fragmentProfileNcAddresses.icon =
                             resourcesProvider.getDrawable(R.drawable.ic_right_arrow)
                     }
+
+                    fragmentProfileItemLastOrder.root
+                        .toggleVisibility(profile.addressList.isNotEmpty())
                 }
             }.startedLaunch()
 

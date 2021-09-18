@@ -20,30 +20,39 @@ class ApiRepository @Inject constructor(
 
     // GET
 
-    override suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>> {
-        return getDataList(path = "/menuProduct/all", serializer = MenuProductServer.serializer())
+    override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
+        return getData(
+            path = "/menuProduct",
+            serializer = ListServer.serializer(MenuProductServer.serializer())
+        )
     }
 
-    override suspend fun getCafeList(): ApiResult<List<CafeServer>> {
-        return getDataList(path = "/cafe/all", CafeServer.serializer())
-    }
-
-    override suspend fun getCityList(): ApiResult<List<CityServer>> {
-        return getDataList(path = "/city", CityServer.serializer())
-    }
-
-    override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<List<CafeServer>> {
-        return getDataList(
+    override suspend fun getCafeList(): ApiResult<ListServer<CafeServer>> {
+        return getData(
             path = "/cafe",
-            serializer = CafeServer.serializer(),
+            serializer = ListServer.serializer(CafeServer.serializer())
+        )
+    }
+
+    override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
+        return getData(
+            path = "/city",
+            serializer = ListServer.serializer(CityServer.serializer())
+        )
+    }
+
+    override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> {
+        return getData(
+            path = "/cafe",
+            serializer = ListServer.serializer(CafeServer.serializer()),
             parameters = hashMapOf("cityUuid" to cityUuid)
         )
     }
 
-    override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<List<StreetServer>> {
-        return getDataList(
+    override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> {
+        return getData(
             path = "/street",
-            serializer = StreetServer.serializer(),
+            serializer = ListServer.serializer(StreetServer.serializer()),
             parameters = hashMapOf("cityUuid" to cityUuid)
         )
     }

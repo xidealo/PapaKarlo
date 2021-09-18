@@ -63,7 +63,7 @@ object Constants {
     const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
     const val PLAY_MARKET_LINK =
         "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
-    const val MAPS_LINK = "http://maps.google.com/maps?daddr="
+    const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
 
     // ERROR_KEY

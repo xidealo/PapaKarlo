@@ -13,8 +13,8 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.di.annotation.Firebase
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.item.OrderProductItem
-import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.model.OrderUI
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ class OrderDetailsViewModel @Inject constructor(
             time = stringUtil.toStringTime(time),
             pickupMethod = stringUtil.toStringIsDelivery(isDelivery),
             deferredTime = deferredTime ?: "",
-            address = stringUtil.getUserAddressString(userAddress),
+            address = address,
             comment = comment ?: "",
             deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(this, delivery)),
             oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(this, delivery)),

@@ -1,9 +1,10 @@
 package com.example.data_api.repository
 
-import com.bunbeauty.common.ApiResult
+import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import com.example.data_api.dao.MenuProductDao
+import com.example.data_api.handleListResult
 import com.example.domain_api.mapper.IMenuProductMapper
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
@@ -17,14 +18,9 @@ class MenuProductRepository @Inject constructor(
 ) : MenuProductRepo {
 
     override suspend fun refreshMenuProductList() {
-        when (val result = apiRepository.getMenuProductList()) {
-            is ApiResult.Success -> {
-                if (result.data != null)
-                    menuProductDao.insertAll(result.data!!.map(menuProductMapper::toEntityModel))
-            }
-
-            is ApiResult.Error -> {
-
+        apiRepository.getMenuProductList().handleListResult(MENU_PRODUCT_TAG) { menuProductList ->
+            if (menuProductList != null) {
+                menuProductDao.insertAll(menuProductList.map(menuProductMapper::toEntityModel))
             }
         }
     }

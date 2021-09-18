@@ -10,6 +10,7 @@ import com.example.domain_firebase.mapper.IUserAddressMapper
 import com.example.domain_firebase.model.entity.cafe.CafeEntity
 import com.example.domain_firebase.model.entity.order.OrderEntity
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
+import com.example.domain_firebase.model.firebase.address.UserAddressFirebase
 import com.example.domain_firebase.model.firebase.order.OrderEntityFirebase
 import com.example.domain_firebase.model.firebase.order.OrderFirebase
 import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
@@ -22,9 +23,7 @@ class OrderMapper @Inject constructor(
 ) : IOrderMapper {
 
     override fun toFirebaseModel(order: Order): OrderFirebase {
-        val userAddressFirebase = order.userAddress?.let { userAddress ->
-            userAddressMapper.toFirebaseModel(userAddress)
-        }
+        val userAddressFirebase = UserAddressFirebase()
 
         return OrderFirebase(
             orderEntity = OrderEntityFirebase(
@@ -56,12 +55,12 @@ class OrderMapper @Inject constructor(
             time = order.time,
             code = order.code,
             orderStatus = order.orderStatus,
-            userAddressStreet = order.userAddress?.street,
-            userAddressHouse = order.userAddress?.house,
-            userAddressFlat = order.userAddress?.flat,
-            userAddressEntrance = order.userAddress?.entrance,
-            userAddressFloor = order.userAddress?.floor,
-            userAddressComment = order.userAddress?.comment
+            userAddressStreet = order.address,
+            userAddressHouse = null,
+            userAddressFlat = null,
+            userAddressEntrance = null,
+            userAddressFloor = null,
+            userAddressComment = null,
         )
     }
 
@@ -119,8 +118,7 @@ class OrderMapper @Inject constructor(
             isDelivery = order.order.isDelivery,
             userUuid = order.order.userUuid,
             phone = order.order.phone,
-            userAddress = userAddress,
-            cafeAddress = cafeMapper.toCafeAddress(cafe),
+            address = userAddress.toString(),
             comment = order.order.comment,
             deferredTime = order.order.deferredTime,
             time = order.order.time,

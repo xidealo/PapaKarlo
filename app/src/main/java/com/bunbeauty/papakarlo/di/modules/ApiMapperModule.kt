@@ -28,4 +28,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindCityMapper(cityMapper: CityMapper): ICityMapper
+
+    @Binds
+    fun bindOrderMapper(orderMapper: OrderMapper): IOrderMapper
 }

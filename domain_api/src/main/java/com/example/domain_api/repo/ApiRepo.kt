@@ -5,11 +5,11 @@ import com.example.domain_api.model.server.*
 
 interface ApiRepo {
 
-    suspend fun getMenuProductList(): ApiResult<List<MenuProductServer>>
-    suspend fun getCafeList(): ApiResult<List<CafeServer>>
-    suspend fun getCityList(): ApiResult<List<CityServer>>
-    suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<List<CafeServer>>
-    suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<List<StreetServer>>
+    suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>>
+    suspend fun getCafeList(): ApiResult<ListServer<CafeServer>>
+    suspend fun getCityList(): ApiResult<ListServer<CityServer>>
+    suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>>
+    suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>>
 
     suspend fun getDelivery(): ApiResult<DeliveryServer>
     suspend fun getUserByUuid(userUuid: String): ApiResult<UserServer>

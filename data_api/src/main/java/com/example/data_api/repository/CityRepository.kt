@@ -4,7 +4,7 @@ import com.bunbeauty.common.Logger.CITY_TAG
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.repo.CityRepo
 import com.example.data_api.dao.CityDao
-import com.example.data_api.handleResult
+import com.example.data_api.handleListResult
 import com.example.data_api.mapFlow
 import com.example.data_api.mapListFlow
 import com.example.domain_api.mapper.ICityMapper
@@ -19,8 +19,8 @@ class CityRepository @Inject constructor(
 ) : CityRepo {
 
     override suspend fun refreshCityList() {
-        apiRepo.getCityList().handleResult(CITY_TAG) { cityList ->
-            cityList?.let {
+        apiRepo.getCityList().handleListResult(CITY_TAG) { cityList ->
+            if (cityList != null) {
                 val cityEntityList = cityList.map(cityMapper::toEntityModel)
                 cityDao.insertAll(cityEntityList)
             }

@@ -8,6 +8,7 @@ import com.example.domain_api.model.entity.CityEntity
 import com.example.domain_api.model.entity.StreetEntity
 import com.example.domain_api.model.entity.product.CartProductEntity
 import com.example.domain_api.model.entity.product.MenuProductEntity
+import com.example.domain_api.model.entity.user.OrderEntity
 import com.example.domain_api.model.entity.user.UserAddressEntity
 import com.example.domain_api.model.entity.user.UserEntity
 
@@ -15,12 +16,13 @@ import com.example.domain_api.model.entity.user.UserEntity
     entities = [
         MenuProductEntity::class,
         CartProductEntity::class,
+        CityEntity::class,
         CafeEntity::class,
         StreetEntity::class,
         UserEntity::class,
         UserAddressEntity::class,
-        CityEntity::class,
-    ], version = 4
+        OrderEntity::class,
+    ], version = 5
 )
 abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getMenuProductDao(): MenuProductDao

@@ -151,17 +151,11 @@ class CreateOrderViewModel @Inject constructor(
             val letters = resourcesProvider.getString(R.string.code_letters)
             val code = codeGenerator.generateCode(currentMillis, letters)
             val orderProductList = cartProductList.map(cartProductMapper::toOrderProduct)
-            val cafeUuid = if (isDelivery) {
-                //cafeRepo.getCafeByStreetUuid(userAddress!!.streetUuid).uuid
-            } else {
-                //cafeAddress!!.cafeUuid
-            }
             val order = Order(
                 isDelivery = isDelivery,
                 userUuid = checkNotNull(userUuidValue),
                 phone = checkNotNull(mutablePhone.value),
-                userAddress = userAddress,
-                cafeAddress = cafeAddress,
+                address = (userAddress ?: cafeAddress).toString(),
                 comment = mutableComment.value,
                 deferredTime = deferredTime,
                 time = currentMillis,

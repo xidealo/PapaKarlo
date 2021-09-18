@@ -7,20 +7,12 @@ import androidx.room.PrimaryKey
 class CafeEntity(
     @PrimaryKey
     val uuid: String,
-
     val address: String,
-
     val fromTime: String,
-
     val toTime: String,
-
     val phone: String,
-
     val latitude: Double,
-
     val longitude: Double,
-
-    val visible: Boolean,
-
     val cityUuid: String,
+    val visible: Boolean,
 )

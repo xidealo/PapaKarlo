@@ -33,7 +33,8 @@ class UserMapper @Inject constructor(private val userAddressMapper: IUserAddress
             uuid = user.uuid,
             phone = user.phone,
             email = user.email,
-            addressList = emptyList()
+            addressList = emptyList(),
+            orderList = emptyList(),
         )
     }
 }

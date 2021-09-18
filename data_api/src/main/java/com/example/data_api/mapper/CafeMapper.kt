@@ -18,8 +18,8 @@ class CafeMapper @Inject constructor() : ICafeMapper {
             phone = cafe.phone,
             latitude = cafe.latitude,
             longitude = cafe.longitude,
+            cityUuid = cafe.cityUuid,
             visible = cafe.visible,
-            cityUuid = cafe.city,
         )
     }
 
@@ -32,8 +32,7 @@ class CafeMapper @Inject constructor() : ICafeMapper {
             phone = cafe.phone,
             latitude = cafe.latitude,
             longitude = cafe.longitude,
-            visible = cafe.visible,
-            city = cafe.cityUuid,
+            cityUuid = cafe.cityUuid,
         )
     }
 

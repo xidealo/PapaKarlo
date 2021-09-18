@@ -4,6 +4,7 @@ import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
+import com.example.domain_api.model.server.ListServer
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,23 @@ suspend fun <T> ApiResult<T>.handleResult(
         is ApiResult.Success -> {
             logD(tag, "ApiResult.Success $data")
             onSuccess(data)
+        }
+        is ApiResult.Error -> {
+            logE(tag, "ApiResult.Error $apiError")
+            onError?.invoke(apiError)
+        }
+    }
+}
+
+suspend fun <T> ApiResult<ListServer<T>>.handleListResult(
+    tag: String,
+    onError: (suspend (ApiError) -> Unit)? = null,
+    onSuccess: (suspend (List<T>?) -> Unit)
+) {
+    when (this) {
+        is ApiResult.Success -> {
+            logD(tag, "ApiResult.Success $data")
+            onSuccess(data?.results)
         }
         is ApiResult.Error -> {
             logE(tag, "ApiResult.Error $apiError")

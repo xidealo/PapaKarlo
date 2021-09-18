@@ -1,7 +1,6 @@
 package com.bunbeauty.data_firebase.mapper
 
 import com.bunbeauty.domain.model.Cafe
-import com.bunbeauty.domain.model.address.CafeAddress
 import com.example.domain_firebase.mapper.ICafeMapper
 import com.example.domain_firebase.mapper.IStreetMapper
 import com.example.domain_firebase.model.entity.address.DistrictEntity
@@ -27,8 +26,7 @@ class CafeMapper @Inject constructor(
             latitude = cafeEntity.latitude,
             longitude = cafeEntity.longitude,
 
-            visible = cafeEntity.visible,
-            city = cafeEntity.city
+            cityUuid = cafeEntity.city
         )
     }
 

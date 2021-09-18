@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CafeServer(
+
     @SerialName("uuid")
     val uuid: String,
 
@@ -26,9 +27,9 @@ data class CafeServer(
     @SerialName("longitude")
     val longitude: Double,
 
+    @SerialName("cityUuid")
+    val cityUuid: String,
+
     @SerialName("visible")
     val visible: Boolean,
-
-    @SerialName("city")
-    val city: String,
 )
