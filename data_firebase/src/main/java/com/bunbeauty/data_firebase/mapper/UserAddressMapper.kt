@@ -1,5 +1,6 @@
 package com.bunbeauty.data_firebase.mapper
 
+import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_firebase.mapper.IUserAddressMapper
 import com.example.domain_firebase.model.entity.address.UserAddressEntity
@@ -13,8 +14,8 @@ class UserAddressMapper @Inject constructor() : IUserAddressMapper {
     override fun toFirebaseModel(userAddress: UserAddress): UserAddressFirebase {
         return UserAddressFirebase(
             street = StreetFirebase(
-                id = userAddress.streetUuid,
-                name = userAddress.street
+                id = userAddress.street.uuid,
+                name = userAddress.street.name
             ),
             house = userAddress.house,
             flat = userAddress.flat,
@@ -46,7 +47,7 @@ class UserAddressMapper @Inject constructor() : IUserAddressMapper {
             entrance = userAddress.entrance,
             floor = userAddress.floor,
             comment = userAddress.comment,
-            streetUuid = userAddress.streetUuid,
+            streetUuid = userAddress.street.uuid,
             userUuid = userAddress.userUuid,
         )
     }
@@ -71,13 +72,16 @@ class UserAddressMapper @Inject constructor() : IUserAddressMapper {
     override fun toUIModel(userAddressWithStreet: UserAddressWithStreet): UserAddress {
         return UserAddress(
             uuid = userAddressWithStreet.userAddress.uuid,
-            street = userAddressWithStreet.street.name,
+            street = Street(
+                uuid = userAddressWithStreet.userAddress.streetUuid,
+                name = userAddressWithStreet.street.name,
+                cityUuid = ""
+            ),
             house = userAddressWithStreet.userAddress.house,
             flat = userAddressWithStreet.userAddress.flat,
             entrance = userAddressWithStreet.userAddress.entrance,
             floor = userAddressWithStreet.userAddress.floor,
             comment = userAddressWithStreet.userAddress.comment,
-            streetUuid = userAddressWithStreet.userAddress.streetUuid,
             userUuid = userAddressWithStreet.userAddress.userUuid,
         )
     }

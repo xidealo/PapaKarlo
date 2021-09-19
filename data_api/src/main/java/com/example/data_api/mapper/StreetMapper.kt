@@ -16,10 +16,35 @@ class StreetMapper @Inject constructor() : IStreetMapper {
         )
     }
 
+    override fun toEntityModel(street: Street): StreetEntity {
+        return StreetEntity(
+            uuid = street.uuid,
+            name = street.name,
+            cityUuid = street.cityUuid
+        )
+    }
+
     override fun toModel(street: StreetEntity): Street {
         return Street(
             uuid = street.uuid,
-            name = street.name
+            name = street.name,
+            cityUuid = street.cityUuid
+        )
+    }
+
+    override fun toServerModel(street: Street): StreetServer {
+        return StreetServer(
+            uuid = street.uuid,
+            name = street.name,
+            cityUuid = street.cityUuid
+        )
+    }
+
+    override fun toServerModel(street: StreetEntity): StreetServer {
+        return StreetServer(
+            uuid = street.uuid,
+            name = street.name,
+            cityUuid = street.cityUuid
         )
     }
 }

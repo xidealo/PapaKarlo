@@ -9,7 +9,7 @@ import com.example.data_api.dao.UserDao
 import com.example.data_api.handleResult
 import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IUserMapper
-import com.example.domain_api.model.server.UserServer
+import com.example.domain_api.model.server.ProfileServer
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -28,7 +28,7 @@ class UserRepository @Inject constructor(
         if (authUtil.isAuthorize && userPhone != null && userUuid != null) {
             apiRepo.getUserByUuid(userUuid).handleResult(USER_TAG) { user ->
                 if (user == null) {
-                    val newUser = UserServer(
+                    val newUser = ProfileServer(
                         uuid = userUuid,
                         phone = userPhone,
                         email = null,
@@ -64,9 +64,9 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun saveUser(user: UserServer?) {
-        if (user != null) {
-            val userWithAddresses = userMapper.toEntityModel(user)
+    suspend fun saveUser(profile: ProfileServer?) {
+        if (profile != null) {
+            val userWithAddresses = userMapper.toEntityModel(profile)
             userDao.insert(userWithAddresses.user)
             userAddressDao.insertAll(userWithAddresses.userAddressList)
         }

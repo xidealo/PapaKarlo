@@ -10,7 +10,7 @@ data class UserAddressServer(
     val uuid: String,
 
     @SerialName("street")
-    val street: String,
+    val street: StreetServer,
 
     @SerialName("house")
     val house: String,
@@ -29,7 +29,4 @@ data class UserAddressServer(
 
     @SerialName("profileUuid")
     val userUuid: String,
-
-    @SerialName("streetUuid")
-    val streetUuid: String,
 )

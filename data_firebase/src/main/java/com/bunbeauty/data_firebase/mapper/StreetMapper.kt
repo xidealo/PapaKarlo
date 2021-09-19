@@ -11,7 +11,8 @@ class StreetMapper @Inject constructor() : IStreetMapper {
     override fun toUIModel(streetEntity: StreetEntity): Street {
         return Street(
             uuid = streetEntity.uuid,
-            name = streetEntity.name
+            name = streetEntity.name,
+            cityUuid = streetEntity.districtUuid,
         )
     }
 

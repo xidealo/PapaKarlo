@@ -22,12 +22,11 @@ class UserAddressRepository @Inject constructor(
 
     override suspend fun saveUserAddress(userAddress: UserAddress): UserAddress {
         val userAddressWithUuid = userAddress.copy(uuid = UUID.randomUUID().toString())
-        val userUuid = userAddressWithUuid.userUuid
-        if (userUuid == null) {
+        if (userAddressWithUuid.userUuid == null) {
             val userAddressEntity = userAddressMapper.toEntityModel(userAddressWithUuid)
             userAddressDao.insert(userAddressEntity)
         } else {
-            val userAddressServer = userAddressMapper.toServerModel(userAddressWithUuid, userUuid)
+            val userAddressServer = userAddressMapper.toServerModel(userAddressWithUuid)
             postUserAddress(userAddressServer)
         }
 
@@ -37,7 +36,8 @@ class UserAddressRepository @Inject constructor(
     override suspend fun assignToUser(userUuid: String) {
         val unassignedUserAddressList = userAddressDao.getUnassignedUserAddressList()
         unassignedUserAddressList.forEach { userAddressEntity ->
-            val userAddressServer = userAddressMapper.toServerModel(userAddressEntity, userUuid)
+            val assignedUserAddress = userAddressEntity.copy(userUuid = userUuid)
+            val userAddressServer = userAddressMapper.toServerModel(assignedUserAddress)
             postUserAddress(userAddressServer)
         }
     }

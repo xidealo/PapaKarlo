@@ -12,7 +12,7 @@ class OrderMapper @Inject constructor() : IOrderMapper {
     override fun toEntityModel(order: OrderServer): OrderEntity {
         return OrderEntity(
             uuid = order.uuid,
-            status = OrderStatus.valueOf(order.status),
+            status = OrderStatus.valueOf(order.orderStatus),
             isDelivery = order.isDelivery,
             time = order.time,
             code = order.code,

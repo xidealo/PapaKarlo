@@ -9,6 +9,6 @@ interface IUserAddressMapper {
     fun toModel(userAddress: UserAddressEntity): UserAddress
     fun toEntityModel(userAddress: UserAddressServer): UserAddressEntity
     fun toEntityModel(userAddress: UserAddress): UserAddressEntity
-    fun toServerModel(userAddress: UserAddress, userUuid: String): UserAddressServer
-    fun toServerModel(userAddress: UserAddressEntity, userUuid: String): UserAddressServer
+    fun toServerModel(userAddress: UserAddress): UserAddressServer
+    fun toServerModel(userAddress: UserAddressEntity): UserAddressServer
 }

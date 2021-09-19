@@ -1,5 +1,6 @@
 package com.bunbeauty.presentation.util.string
 
+import com.bunbeauty.common.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.common.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.domain.enums.OrderStatus
@@ -53,17 +54,16 @@ class StringUtil @Inject constructor(
         return if (userAddress == null) {
             ""
         } else {
-            val comma = resourcesProvider.getString(R.string.msg_comma)
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
             val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
             val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
-            userAddress.street +
-                    getStringPart(comma, houseShort, userAddress.house) +
-                    getStringPart(comma, flatShort, userAddress.flat) +
-                    getInvertedStringPart(comma, userAddress.entrance, entranceShort) +
-                    getInvertedStringPart(comma, userAddress.floor, floorShort) +
-                    getStringPart(comma, "", userAddress.comment)
+            userAddress.street.name + ADDRESS_DIVIDER +
+                    getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
+                    getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
+                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
+                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
+                    getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
         }
     }
 

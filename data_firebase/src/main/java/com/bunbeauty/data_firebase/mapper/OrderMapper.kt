@@ -2,6 +2,7 @@ package com.bunbeauty.data_firebase.mapper
 
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_firebase.mapper.ICafeMapper
 import com.example.domain_firebase.mapper.IOrderMapper
@@ -100,13 +101,16 @@ class OrderMapper @Inject constructor(
         val userAddress = if (userAddressStreet != null && userAddressHouse != null) {
             UserAddress(
                 uuid = "",
-                street = userAddressStreet,
+                street = Street(
+                    uuid = "",
+                    name = "",
+                    cityUuid = "",
+                ),
                 house = userAddressHouse,
                 flat = order.order.userAddressFlat,
                 entrance = order.order.userAddressEntrance,
                 floor = order.order.userAddressFloor,
                 comment = order.order.userAddressComment,
-                streetUuid = "",
                 userUuid = order.order.userAddressComment
             )
         } else {

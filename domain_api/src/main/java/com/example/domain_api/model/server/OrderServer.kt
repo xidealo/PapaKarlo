@@ -10,8 +10,8 @@ data class OrderServer(
     @SerialName("uuid")
     val uuid: String,
 
-    @SerialName("status")
-    val status: String,
+    @SerialName("orderStatus")
+    val orderStatus: String,
 
     @SerialName("isDelivery")
     val isDelivery: Boolean,
@@ -25,6 +25,6 @@ data class OrderServer(
     @SerialName("address")
     val address: String,
 
-    @SerialName("userUuid")
+    @SerialName("profileUuid")
     val userUuid: String
 )

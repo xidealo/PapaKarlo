@@ -15,6 +15,7 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
@@ -56,6 +57,12 @@ class ApiDataModule {
             host = "food-delivery-api-bunbeauty.herokuapp.com"
             header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
+    }
+
+    @Provides
+    fun provideJson(): Json = Json {
+        isLenient = false
+        ignoreUnknownKeys = true
     }
 
     @Singleton

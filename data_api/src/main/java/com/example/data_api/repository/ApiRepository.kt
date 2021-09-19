@@ -61,21 +61,21 @@ class ApiRepository @Inject constructor(
         return getData(path = "/delivery", serializer = DeliveryServer.serializer())
     }
 
-    override suspend fun getUserByUuid(userUuid: String): ApiResult<UserServer> {
+    override suspend fun getUserByUuid(userUuid: String): ApiResult<ProfileServer> {
         return getData(
             path = "/profile",
-            serializer = UserServer.serializer(),
+            serializer = ProfileServer.serializer(),
             parameters = hashMapOf("uuid" to userUuid)
         )
     }
 
     // POST
 
-    override suspend fun postUser(user: UserServer): ApiResult<UserServer> {
+    override suspend fun postUser(profile: ProfileServer): ApiResult<ProfileServer> {
         return postData(
             path = "/profile",
-            body = user,
-            serializer = UserServer.serializer()
+            body = profile,
+            serializer = ProfileServer.serializer()
         )
     }
 
@@ -92,11 +92,11 @@ class ApiRepository @Inject constructor(
     override suspend fun patchUserEmail(
         userUuid: String,
         userEmailServer: UserEmailServer
-    ): ApiResult<UserServer> {
+    ): ApiResult<ProfileServer> {
         return patchData(
             path = "/profile",
             body = userEmailServer,
-            serializer = UserServer.serializer(),
+            serializer = ProfileServer.serializer(),
             parameters = hashMapOf("uuid" to userUuid)
         )
     }

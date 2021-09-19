@@ -6,8 +6,8 @@ import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.entity.user.ProfileEntity
 import com.example.domain_api.model.entity.user.UserEntity
+import com.example.domain_api.model.server.ProfileServer
 import com.example.domain_api.model.server.UserEmailServer
-import com.example.domain_api.model.server.UserServer
 import javax.inject.Inject
 
 class UserMapper @Inject constructor(
@@ -15,15 +15,15 @@ class UserMapper @Inject constructor(
     private val orderMapper: IOrderMapper,
 ) : IUserMapper {
 
-    override fun toEntityModel(user: UserServer): ProfileEntity {
+    override fun toEntityModel(profile: ProfileServer): ProfileEntity {
         return ProfileEntity(
             user = UserEntity(
-                uuid = user.uuid,
-                phone = user.phone,
-                email = user.email,
+                uuid = profile.uuid,
+                phone = profile.phone,
+                email = profile.email,
             ),
-            userAddressList = user.addressList.map(userAddressMapper::toEntityModel),
-            orderList = user.orderList.map(orderMapper::toEntityModel)
+            userAddressList = profile.addressList.map(userAddressMapper::toEntityModel),
+            orderList = profile.orderList.map(orderMapper::toEntityModel)
         )
     }
 
