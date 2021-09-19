@@ -174,10 +174,11 @@ dependencies {
     //play:core
     implementation "com.google.android.play:core:$rootProject.playCoreVersion"
     //ktor
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
     implementation "io.ktor:ktor-client-android:$rootProject.ktorVersion"
     implementation "io.ktor:ktor-client-serialization:$rootProject.ktorVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
     implementation "io.ktor:ktor-client-logging-jvm:$rootProject.ktorVersion"
+    implementation "io.ktor:ktor-client-websockets:$rootProject.ktorVersion"
 
     //FB
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")

@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.5.21"
+    ext.kotlin_version = "1.5.31"
     repositories {
         google().content() {
             excludeGroup "Kotlin/Native"
@@ -54,7 +54,7 @@ ext {
     roomDatabaseVersion = "2.3.0"
     roomCompilerVersion = "1.1.1"
     datastoreVersion = "1.0.0"
-    lifecycleVersion = "2.4.0-alpha03"
+    lifecycleVersion = "2.4.0-beta01"
     extensionsVersion = "2.2.0"
     viewmodelVersion = "2.3.1"
     activityVersion = "1.3.1"
@@ -67,7 +67,7 @@ ext {
     appcompatVersion = "1.3.1"
     navigationVersion = "2.3.5"
     firebaseVersion = "26.7.0"
-    ktorVersion = "1.5.0"
+    ktorVersion = "1.6.4"
     jsonVersion = "1.0.1"
 
     //design
@@ -75,12 +75,12 @@ ext {
     recyclerViewVersion = "1.2.1"
     recyclerviewAnimatorsViewVersion = "4.0.2"
     designVersion = "28.0.0"
-    constraintlayoutVersion = "2.1.0"
+    constraintlayoutVersion = "2.1.1"
     scannerVersion = "1.4.2"
     legacySupportVersion = "1.0.0"
     appcompatV7Version = "28.0.0"
     pinentryedittextVersion = "2.0.6"
-    playCoreVersion = "1.10.0"
+    playCoreVersion = "1.10.2"
 
     // Test dependencies
     mockitoVerchion = "3.11.0"
