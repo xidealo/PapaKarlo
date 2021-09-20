@@ -3,6 +3,7 @@ package com.example.data_api.repository
 import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.example.data_api.dao.UserAddressDao
 import com.example.data_api.handleResult
@@ -12,11 +13,13 @@ import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.model.server.UserAddressServer
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import java.util.*
 import javax.inject.Inject
 
 class UserAddressRepository @Inject constructor(
     private val apiRepo: ApiRepo,
+    private val dataStoreRepo: DataStoreRepo,
     private val authUtil: IAuthUtil,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper
@@ -60,8 +63,9 @@ class UserAddressRepository @Inject constructor(
 
     override fun observeUserAddressList(): Flow<List<UserAddress>> {
         val userUuid = authUtil.userUuid ?: ""
-        return userAddressDao.observeUserAddressListByUserUuid(userUuid)
-            .mapListFlow(userAddressMapper::toModel)
+        return dataStoreRepo.selectedCityUuid.flatMapLatest { cityUuid ->
+            userAddressDao.observeUserAddressListByUserUuidAndCityUuid(userUuid, cityUuid ?: "")
+        }.mapListFlow(userAddressMapper::toModel)
     }
 
     override fun observeUnassignedUserAddressList(): Flow<List<UserAddress>> {

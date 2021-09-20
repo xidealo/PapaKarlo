@@ -101,8 +101,8 @@
     <string name="title_cafe_list_payment">Оплата</string>
 
     <!-- BOTTOM SHEET ADDRESSES -->
-    <string name="title_bottom_sheet_addresses_your_address">Ваши адреса</string>
-    <string name="title_bottom_sheet_addresses_cafe_address">Адреса ресторанов</string>
+    <string name="title_user_addresses">Ваши адреса</string>
+    <string name="title_cafe_addresses">Адреса ресторанов</string>
 
     <!-- ORDER DETAILS -->
     <string name="msg_order_details_order">Заказ&#160;</string>

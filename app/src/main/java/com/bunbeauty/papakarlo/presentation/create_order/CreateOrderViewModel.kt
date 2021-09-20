@@ -291,7 +291,7 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     fun onAddressClicked() {
-        router.navigate(toAddressesBottomSheet(isDelivery.value))
+        //router.navigate(toAddressesBottomSheet(isDelivery.value))
     }
 
     fun onAddAddressClicked() {

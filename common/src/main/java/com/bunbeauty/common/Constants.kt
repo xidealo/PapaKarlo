@@ -50,13 +50,19 @@ object Constants {
     const val EMAIL_REQUEST_KEY = "email request key"
     const val RESULT_EMAIL_KEY = "result email key"
 
+    const val USER_ADDRESS_REQUEST_KEY = "user address request key"
+    const val RESULT_USER_ADDRESS_KEY = "result user address key"
+
+    const val CAFE_ADDRESS_REQUEST_KEY = "cafe address request key"
+    const val RESULT_CAFE_ADDRESS_KEY = "result cafe address key"
+
     // DIVIDER
 
     const val TIME_DIVIDER = ":"
     const val CODE_DIVIDER = "-"
     const val WORKING_HOURS_DIVIDER = " - "
     const val COORDINATES_DIVIDER = ","
-    const val ADDRESS_DIVIDER = ","
+    const val ADDRESS_DIVIDER = ", "
 
     // LINK
 

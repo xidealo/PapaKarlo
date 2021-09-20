@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.AddressesBottomSheet">
+        tools:context=".ui.fragment.address.UserAddressesBottomSheet">
 
         <TextView
-            android:id="@+id/bottom_sheet_address_tv_title"
+            android:id="@+id/bottom_sheet_cafe_addresses__tv_title"
             style="@style/MediumBoldCenterText"
-            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_address_iv_create_address"
-            app:layout_constraintEnd_toStartOf="@+id/bottom_sheet_address_iv_create_address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_address_iv_create_address"
-            tools:text="Ваши адреса" />
-
-        <ImageView
-            android:id="@+id/bottom_sheet_address_iv_create_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_margin"
-            android:src="@drawable/ic_add"
+            android:text="@string/title_cafe_addresses"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bottom_sheet_address_rv_result"
+            android:id="@+id/bottom_sheet_cafe_addresses__rv_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_address_iv_create_address"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_cafe_addresses__tv_title"
             tools:itemCount="2"
             tools:listitem="@layout/element_address" />
 

@@ -6,8 +6,8 @@ import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
-import com.bunbeauty.papakarlo.presentation.address.AddressesViewModel
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
+import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
@@ -76,8 +76,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddressesViewModel::class)
-    internal abstract fun provideAddressesViewModelImpl(addressesViewModel: AddressesViewModel): ViewModel
+    @ViewModelKey(UserAddressesViewModel::class)
+    internal abstract fun provideAddressesViewModelImpl(userAddressesViewModel: UserAddressesViewModel): ViewModel
 
     @Binds
     @IntoMap

@@ -16,8 +16,14 @@ interface UserAddressDao : BaseDao<UserAddressEntity> {
 
     // OBSERVE
 
-    @Query("SELECT * FROM UserAddressEntity WHERE userUuid = :userUuid")
-    fun observeUserAddressListByUserUuid(userUuid: String): Flow<List<UserAddressEntity>>
+    @Query(
+        "SELECT * FROM UserAddressEntity " +
+                "WHERE userUuid = :userUuid AND street_cityUuid = :cityUuid"
+    )
+    fun observeUserAddressListByUserUuidAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<List<UserAddressEntity>>
 
     @Query("SELECT * FROM UserAddressEntity WHERE uuid = :uuid")
     fun observeUserAddressByUuid(uuid: String): Flow<UserAddressEntity?>

@@ -41,7 +41,7 @@ class ProfileViewModel @Inject constructor(
         if (profile?.addressList.isNullOrEmpty()) {
             router.navigate(toCreationAddressFragment())
         } else {
-            router.navigate(toAddressesBottomSheet(true))
+            router.navigate(toUserAddressesBottomSheet(false))
         }
     }
 

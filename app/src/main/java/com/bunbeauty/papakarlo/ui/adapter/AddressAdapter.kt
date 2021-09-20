@@ -39,8 +39,10 @@ class AddressAdapter @Inject constructor() :
 
             binding.run {
                 elementAddressTvAddress.text = item.address
-                elementAddressMcvMain.setOnClickListener {
-                    onItemClickListener?.invoke(item)
+                onItemClickListener?.let { listener ->
+                    elementAddressMcvMain.setOnClickListener {
+                        listener(item)
+                    }
                 }
             }
         }

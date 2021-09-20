@@ -89,9 +89,6 @@
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/create_address_fragment" />
         <action
-            android:id="@+id/to_addresses_bottom_sheet"
-            app:destination="@id/addresses_bottom_sheet" />
-        <action
             android:id="@+id/to_login_fragment"
             app:destination="@id/login_fragment" />
         <action
@@ -100,12 +97,15 @@
         <action
             android:id="@+id/to_oneLineActionBottomSheet"
             app:destination="@id/oneLineActionBottomSheet" />
+        <action
+            android:id="@+id/to_userAddressesBottomSheet"
+            app:destination="@id/userAddressesBottomSheet" />
     </fragment>
     <dialog
         android:id="@+id/deferred_time_bottom_sheet"
-        tools:layout="@layout/bottom_sheet_defered_time"
         android:name="com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet"
-        android:label="DeferredTimeBottomSheet">
+        android:label="DeferredTimeBottomSheet"
+        tools:layout="@layout/bottom_sheet_defered_time">
         <argument
             android:name="title"
             app:argType="string" />
@@ -126,23 +126,13 @@
             app:argType="android.graphics.Bitmap"
             app:nullable="true" />
     </fragment>
+
     <fragment
         android:id="@+id/create_address_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.CreateAddressFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.address.CreateAddressFragment"
         android:label="@string/title_create_address"
         tools:layout="@layout/fragment_create_address" />
-    <dialog
-        android:id="@+id/addresses_bottom_sheet"
-        android:name="com.bunbeauty.papakarlo.ui.AddressesBottomSheet"
-        android:label="bottom_sheet_addresses"
-        tools:layout="@layout/bottom_sheet_addresses">
-        <argument
-            android:name="isDelivery"
-            app:argType="boolean" />
-        <action
-            android:id="@+id/to_creation_address_fragment"
-            app:destination="@id/create_address_fragment" />
-    </dialog>
+
     <fragment
         android:id="@+id/order_derails_fragment"
         android:name="com.bunbeauty.papakarlo.ui.fragment.profile.OrderDetailsFragment"
@@ -165,9 +155,6 @@
             android:id="@+id/to_orders_fragment"
             app:destination="@id/orders_fragment" />
         <action
-            android:id="@+id/to_addresses_bottom_sheet"
-            app:destination="@id/addresses_bottom_sheet" />
-        <action
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/create_address_fragment" />
         <action
@@ -185,6 +172,9 @@
         <action
             android:id="@+id/to_feedbackBottomSheet"
             app:destination="@id/feedbackBottomSheet" />
+        <action
+            android:id="@+id/to_userAddressesBottomSheet"
+            app:destination="@id/userAddressesBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/login_fragment"
@@ -256,4 +246,22 @@
         android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet"
         android:label="CitySelectionBottomSheet"
         tools:layout="@layout/bottom_sheet_city_selection" />
+
+    <dialog
+        android:id="@+id/userAddressesBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheet"
+        android:label="UserAddressesBottomSheet"
+        tools:layout="@layout/bottom_sheet_user_addresses">
+        <argument
+            android:name="isClickable"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/to_creation_address_fragment"
+            app:destination="@id/create_address_fragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/cafeAddressesBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.address.CafeAddressesBottomSheet"
+        android:label="CafeAddressesBottomSheet"
+        tools:layout="@layout/bottom_sheet_cafe_addresses" />
 </navigation>
