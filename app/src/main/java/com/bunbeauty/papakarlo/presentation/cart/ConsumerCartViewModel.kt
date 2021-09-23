@@ -71,8 +71,8 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     private fun toItem(cartProduct: CartProduct): CartProductItem {
-        val newCost = productHelper.getCartProductNewCost(cartProduct)
-        val oldCost = productHelper.getCartProductOldCost(cartProduct)
+        val newCost = productHelper.getProductPositionNewCost(cartProduct)
+        val oldCost = productHelper.getProductPositionOldCost(cartProduct)
         val newCostString = stringUtil.getCostString(newCost)
         val oldCostString = stringUtil.getCostString(oldCost)
 

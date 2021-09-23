@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OrderProduct(
-    override val uuid: String,
+    val uuid: String,
     override val count: Int,
-    override val menuProduct: MenuProduct
+    override val menuProduct: OrderMenuProduct,
 ) : ProductPosition(), Parcelable

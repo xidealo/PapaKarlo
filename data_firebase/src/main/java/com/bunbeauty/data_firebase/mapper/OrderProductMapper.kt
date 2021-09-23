@@ -34,7 +34,7 @@ class OrderProductMapper @Inject constructor(
     override fun toUIModel(cartProduct: OrderProductEntity): OrderProduct {
         return OrderProduct(
             uuid = cartProduct.uuid,
-            menuProduct = menuProductMapper.toUIModel(cartProduct.menuProduct),
+            menuProduct = menuProductMapper.toOrderMenuProduct(cartProduct.menuProduct),
             count = cartProduct.count
         )
     }

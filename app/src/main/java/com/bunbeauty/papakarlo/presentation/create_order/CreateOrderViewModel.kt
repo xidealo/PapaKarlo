@@ -154,15 +154,14 @@ class CreateOrderViewModel @Inject constructor(
             val order = Order(
                 isDelivery = isDelivery,
                 userUuid = checkNotNull(userUuidValue),
-                phone = checkNotNull(mutablePhone.value),
                 address = (userAddress ?: cafeAddress).toString(),
                 comment = mutableComment.value,
-                deferredTime = deferredTime,
+                deferredTime = null,
                 time = currentMillis,
                 code = code,
                 orderStatus = OrderStatus.NOT_ACCEPTED,
                 orderProductList = orderProductList,
-                cafeUuid = ""
+                addressUuid = null
             )
             cartProductRepo.deleteCartProductList(cartProductList)
             orderRepo.saveOrder(order)

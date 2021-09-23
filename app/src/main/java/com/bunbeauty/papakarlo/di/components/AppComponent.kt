@@ -18,6 +18,7 @@ import javax.inject.Singleton
         FirebaseMapperModule::class,
         FirebaseRepositoryModule::class,
         UtilModule::class,
+        UIMapperModule::class,
     ]
 )
 interface AppComponent {

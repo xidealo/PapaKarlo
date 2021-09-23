@@ -5,7 +5,7 @@ import com.example.domain_api.model.entity.user.ProfileEntity
 import com.example.domain_api.model.server.ProfileServer
 import com.example.domain_api.model.server.UserEmailServer
 
-interface IUserMapper {
+interface IProfileMapper {
     fun toEntityModel(profile: ProfileServer): ProfileEntity
     fun toModel(user: ProfileEntity): Profile
     fun toUserEmailServer(profile: Profile): UserEmailServer

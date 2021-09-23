@@ -20,8 +20,12 @@ class ResourcesProvider @Inject constructor(private val context: Context) : IRes
         return ContextCompat.getColor(context, colorId)
     }
 
-    override fun getColorTint(colorId: Int): ColorStateList {
-        return ColorStateList.valueOf(ContextCompat.getColor(context, colorId))
+    override fun getColorStateListById(colorId: Int): ColorStateList {
+        return ColorStateList.valueOf(getColor(colorId))
+    }
+
+    override fun getColorStateListByColor(color: Int): ColorStateList {
+        return ColorStateList.valueOf(color)
     }
 
     override fun getDimensionPixelOffset(dimensionId: Int): Int {

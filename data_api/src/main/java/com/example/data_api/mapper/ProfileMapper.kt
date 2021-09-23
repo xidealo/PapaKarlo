@@ -2,18 +2,18 @@ package com.example.data_api.mapper
 
 import com.bunbeauty.domain.model.Profile
 import com.example.domain_api.mapper.IOrderMapper
+import com.example.domain_api.mapper.IProfileMapper
 import com.example.domain_api.mapper.IUserAddressMapper
-import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.entity.user.ProfileEntity
 import com.example.domain_api.model.entity.user.UserEntity
 import com.example.domain_api.model.server.ProfileServer
 import com.example.domain_api.model.server.UserEmailServer
 import javax.inject.Inject
 
-class UserMapper @Inject constructor(
+class ProfileMapper @Inject constructor(
     private val userAddressMapper: IUserAddressMapper,
     private val orderMapper: IOrderMapper,
-) : IUserMapper {
+) : IProfileMapper {
 
     override fun toEntityModel(profile: ProfileServer): ProfileEntity {
         return ProfileEntity(

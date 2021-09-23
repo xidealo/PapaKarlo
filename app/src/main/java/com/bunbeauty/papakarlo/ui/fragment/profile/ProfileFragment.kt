@@ -32,32 +32,14 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupLastOrder()
+        setupAddresses()
         viewDataBinding.run {
             viewModel.profileState.onEach { state ->
                 fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
                 fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
                 fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)
-
-                if (state is State.Success) {
-                    val profile = state.data
-
-                    if (profile.addressList.isEmpty()) {
-                        fragmentProfileNcAddresses.cardText =
-                            resourcesProvider.getString(R.string.action_profile_create_address)
-                        fragmentProfileNcAddresses.icon =
-                            resourcesProvider.getDrawable(R.drawable.ic_add)
-                    } else {
-                        fragmentProfileNcAddresses.cardText =
-                            resourcesProvider.getString(R.string.action_profile_your_addresses)
-                        fragmentProfileNcAddresses.icon =
-                            resourcesProvider.getDrawable(R.drawable.ic_right_arrow)
-                    }
-
-                    fragmentProfileItemLastOrder.root
-                        .toggleVisibility(profile.addressList.isNotEmpty())
-                }
             }.startedLaunch()
-
             fragmentProfileNcSettings.setOnClickListener {
                 viewModel.onSettingsClicked()
             }
@@ -77,5 +59,36 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
                 viewModel.onLoginClicked()
             }
         }
+    }
+
+    private fun setupLastOrder() {
+        viewModel.lastOrder.onEach { orderItem ->
+            viewDataBinding.fragmentProfileItemLastOrder.run {
+                root.toggleVisibility(orderItem != null)
+                if (orderItem != null) {
+                    elementOrderTvCode.text = orderItem.code
+                    elementOrderChipStatus.text = orderItem.orderStatus
+                    elementOrderChipStatus.setChipBackgroundColorResource(orderItem.orderColorResource)
+                    elementOrderTvTime.text = orderItem.dateTime
+                    elementOrderMvcMain.setOnClickListener {
+                        viewModel.onLastOrderClicked()
+                    }
+                }
+            }
+        }.startedLaunch()
+    }
+
+    private fun setupAddresses() {
+        viewModel.hasAddresses.onEach { hasAddresses ->
+            viewDataBinding.fragmentProfileNcAddresses.run {
+                if (hasAddresses) {
+                    cardText = resourcesProvider.getString(R.string.action_profile_your_addresses)
+                    icon = resourcesProvider.getDrawable(R.drawable.ic_right_arrow)
+                } else {
+                    cardText = resourcesProvider.getString(R.string.action_profile_create_address)
+                    icon = resourcesProvider.getDrawable(R.drawable.ic_add)
+                }
+            }
+        }.startedLaunch()
     }
 }

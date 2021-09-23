@@ -106,4 +106,8 @@ class ApiDataModule {
     @Provides
     fun provideCityDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getCityDao()
 
+    @Singleton
+    @Provides
+    fun provideOrderDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getOrderDao()
+
 }

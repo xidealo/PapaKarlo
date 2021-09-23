@@ -1,6 +1,7 @@
 package com.bunbeauty.data_firebase.mapper
 
 import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.product.OrderMenuProduct
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.example.domain_firebase.mapper.ICartProductMapper
 import com.example.domain_firebase.mapper.IMenuProductMapper
@@ -31,7 +32,15 @@ class CartProductMapper @Inject constructor(private val menuProductMapper: IMenu
         return OrderProduct(
             uuid = cartProduct.uuid,
             count = cartProduct.count,
-            menuProduct = cartProduct.menuProduct,
+            menuProduct = OrderMenuProduct(
+                name = cartProduct.menuProduct.name,
+                cost = cartProduct.menuProduct.cost,
+                discountCost = cartProduct.menuProduct.discountCost,
+                weight = cartProduct.menuProduct.weight,
+                description = cartProduct.menuProduct.description,
+                comboDescription = cartProduct.menuProduct.comboDescription,
+                photoLink = cartProduct.menuProduct.photoLink
+            ),
         )
     }
 

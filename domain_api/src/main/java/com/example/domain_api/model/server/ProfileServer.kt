@@ -1,5 +1,6 @@
 package com.example.domain_api.model.server
 
+import com.example.domain_api.model.server.order.OrderServer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

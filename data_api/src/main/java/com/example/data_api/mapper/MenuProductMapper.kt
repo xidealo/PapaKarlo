@@ -18,7 +18,7 @@ class MenuProductMapper @Inject constructor() : IMenuProductMapper {
             description = menuProduct.description,
             comboDescription = menuProduct.comboDescription,
             photoLink = menuProduct.photoLink,
-            productCode = menuProduct.productCode,
+            productCode = menuProduct.productCodes.firstOrNull()?.name ?: "",
             barcode = menuProduct.barcode,
             visible = menuProduct.visible,
         )

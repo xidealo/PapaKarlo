@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MenuProductServer(
+
     @SerialName("uuid")
     val uuid: String,
 
@@ -29,11 +30,11 @@ data class MenuProductServer(
     @SerialName("photoLink")
     val photoLink: String,
 
-    @SerialName("productCode")
-    val productCode: String,
-
     @SerialName("barcode")
     val barcode: Int?,
+
+    @SerialName("productCodes")
+    val productCodes: List<ProductCodeServer>,
 
     @SerialName("visible")
     val visible: Boolean

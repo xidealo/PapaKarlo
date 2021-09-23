@@ -11,8 +11,8 @@ import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.MenuFragmentDirections.toProductFragment
-import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.item.MenuProductItem
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -64,9 +64,9 @@ class ProductTabViewModel @Inject constructor(
 
     private fun MenuProduct.toItem(): MenuProductItem {
         val oldPrice = discountCost?.let {
-            productHelper.getMenuProductOldPrice(this)
+            productHelper.getProductOldPrice(this)
         }
-        val newPrice = productHelper.getMenuProductNewPrice(this)
+        val newPrice = productHelper.getProductNewPrice(this)
         return MenuProductItem(
             uuid = uuid,
             name = name,

@@ -3,25 +3,18 @@ package com.bunbeauty.papakarlo.presentation.profile
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.papakarlo.di.annotation.Firebase
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.OrdersFragmentDirections
 import com.bunbeauty.presentation.item.OrderItem
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.bunbeauty.presentation.util.string.IStringUtil
+import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(
-    @Firebase private val orderRepo: OrderRepo,
-    private val stringUtil: IStringUtil,
-    private val authUtil: IAuthUtil,
-    private val orderUtil: IOrderUtil,
-    private val resourcesProvider: IResourcesProvider
+    @Api private val orderRepo: OrderRepo,
+    private val orderUIMapper: IOrderUIMapper,
 ) : BaseViewModel() {
 
     init {
@@ -33,28 +26,13 @@ class OrdersViewModel @Inject constructor(
     val ordersState: StateFlow<State<List<OrderItem>>> = mutableOrdersState.asStateFlow()
 
     private fun subscribeOnOrders() {
-        val orderListFlow = orderRepo.observeOrderList() ?: return
-        orderListFlow.onEach { orderList ->
+        orderRepo.observeOrderList().onEach { orderList ->
             if (orderList.isEmpty()) {
                 mutableOrdersState.value = State.Empty()
             } else {
-                mutableOrdersState.value = orderList.map(::toItemModel).toStateSuccess()
+                mutableOrdersState.value = orderList.map(orderUIMapper::toItem).toStateSuccess()
             }
         }.launchIn(viewModelScope)
-    }
-
-    private fun toItemModel(order: Order): OrderItem {
-        return OrderItem(
-            uuid = order.uuid,
-            orderStatus = stringUtil.toStringOrderStatus(order.orderStatus),
-            orderColor = orderUtil.getBackgroundColor(order.orderStatus),
-            code = order.code,
-            time = stringUtil.toStringTime(order.time),
-            deferredTime = if (order.deferredTime?.isNotEmpty() == true)
-                order.deferredTime.toString()
-            else
-                ""
-        )
     }
 
     fun onOrderClicked(orderItem: OrderItem) {

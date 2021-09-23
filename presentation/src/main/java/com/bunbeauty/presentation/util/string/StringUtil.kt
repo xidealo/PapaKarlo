@@ -41,7 +41,7 @@ class StringUtil @Inject constructor(
             PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
             SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
             DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
-            DONE -> resourcesProvider.getString(R.string.msg_status_ready)
+            DONE -> resourcesProvider.getString(R.string.msg_status_done)
             CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
         }
     }
@@ -163,5 +163,17 @@ class StringUtil @Inject constructor(
 
     override fun getCountString(count: Int): String {
         return "x $count"
+    }
+
+    override fun getOrderStatusString(orderStatus: OrderStatus): String {
+        return when (orderStatus) {
+            NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
+            ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
+            PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
+            SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
+            DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
+            DONE -> resourcesProvider.getString(R.string.msg_status_done)
+            CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
+        }
     }
 }

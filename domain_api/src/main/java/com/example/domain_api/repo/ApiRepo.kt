@@ -2,6 +2,8 @@ package com.example.domain_api.repo
 
 import com.bunbeauty.common.ApiResult
 import com.example.domain_api.model.server.*
+import com.example.domain_api.model.server.order.OrderPostServer
+import com.example.domain_api.model.server.order.OrderServer
 
 interface ApiRepo {
 
@@ -12,10 +14,11 @@ interface ApiRepo {
     suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>>
 
     suspend fun getDelivery(): ApiResult<DeliveryServer>
-    suspend fun getUserByUuid(userUuid: String): ApiResult<ProfileServer>
+    suspend fun getProfileByUuid(userUuid: String): ApiResult<ProfileServer>
 
-    suspend fun postUser(profile: ProfileServer): ApiResult<ProfileServer>
+    suspend fun postProfile(profile: ProfileServer): ApiResult<ProfileServer>
     suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<UserAddressServer>
+    suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer>
 
     suspend fun patchUserEmail(
         userUuid: String,

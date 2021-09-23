@@ -9,14 +9,13 @@ import kotlinx.parcelize.Parcelize
 class Order(
     var uuid: String = "",
     val isDelivery: Boolean,
-    val userUuid: String,
-    val phone: String,
     val address: String,
     var comment: String?,
-    val deferredTime: String?,
+    val deferredTime: Long?,
     val time: Long,
     val code: String,
     val orderStatus: OrderStatus,
     val orderProductList: List<OrderProduct>,
-    val cafeUuid: String
+    val userUuid: String,
+    val addressUuid: String?,
 ) : Parcelable

@@ -7,6 +7,7 @@ interface IResourcesProvider {
     fun getString(stringId: Int): String
     fun getDrawable(drawableId: Int): Drawable?
     fun getColor(colorId: Int): Int
-    fun getColorTint(colorId: Int): ColorStateList
+    fun getColorStateListById(colorId: Int): ColorStateList
+    fun getColorStateListByColor(color: Int): ColorStateList
     fun getDimensionPixelOffset(dimensionId: Int): Int
 }

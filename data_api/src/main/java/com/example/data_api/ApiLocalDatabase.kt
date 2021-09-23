@@ -8,9 +8,10 @@ import com.example.domain_api.model.entity.CityEntity
 import com.example.domain_api.model.entity.StreetEntity
 import com.example.domain_api.model.entity.product.CartProductEntity
 import com.example.domain_api.model.entity.product.MenuProductEntity
-import com.example.domain_api.model.entity.user.OrderEntity
 import com.example.domain_api.model.entity.user.UserAddressEntity
 import com.example.domain_api.model.entity.user.UserEntity
+import com.example.domain_api.model.entity.user.order.OrderEntity
+import com.example.domain_api.model.entity.user.order.OrderProductEntity
 
 @Database(
     entities = [
@@ -22,7 +23,8 @@ import com.example.domain_api.model.entity.user.UserEntity
         UserEntity::class,
         UserAddressEntity::class,
         OrderEntity::class,
-    ], version = 5
+        OrderProductEntity::class,
+    ], version = 6
 )
 abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getMenuProductDao(): MenuProductDao
@@ -32,4 +34,5 @@ abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getUserDao(): UserDao
     abstract fun getUserAddressDao(): UserAddressDao
     abstract fun getCityDao(): CityDao
+    abstract fun getOrderDao(): OrderDao
 }

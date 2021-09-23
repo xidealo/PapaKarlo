@@ -8,6 +8,7 @@ object Logger {
     const val TEST_TAG = "testTag"
     const val USER_TAG = "userTag"
     const val USER_ADDRESS_TAG = "userAddressTag"
+    const val ORDER_TAG = "orderTag"
     const val STREET_TAG = "streetTag"
     const val CITY_TAG = "cityTag"
     const val CAFE_TAG = "cafeTag"

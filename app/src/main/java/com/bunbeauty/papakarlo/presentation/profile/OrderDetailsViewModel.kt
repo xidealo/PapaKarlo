@@ -49,7 +49,7 @@ class OrderDetailsViewModel @Inject constructor(
             orderStatusBackground = orderUtil.getBackgroundColor(orderStatus),
             time = stringUtil.toStringTime(time),
             pickupMethod = stringUtil.toStringIsDelivery(isDelivery),
-            deferredTime = deferredTime ?: "",
+            deferredTime = deferredTime?.toString() ?: "",
             address = address,
             comment = comment ?: "",
             deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(this, delivery)),
@@ -63,8 +63,8 @@ class OrderDetailsViewModel @Inject constructor(
     }
 
     private fun OrderProduct.toItem(): OrderProductItem {
-        val newCost = productHelper.getCartProductNewCost(this)
-        val oldCost = productHelper.getCartProductOldCost(this)
+        val newCost = productHelper.getProductPositionNewCost(this)
+        val oldCost = productHelper.getProductPositionOldCost(this)
         val newCostString = stringUtil.getCostString(newCost)
         val oldCostString = stringUtil.getCostString(oldCost)
         val countString = stringUtil.getCountString(count)

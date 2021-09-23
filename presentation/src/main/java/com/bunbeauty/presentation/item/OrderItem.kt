@@ -5,8 +5,7 @@ import com.bunbeauty.domain.model.BaseItem
 data class OrderItem(
     override var uuid: String,
     val orderStatus: String,
-    val orderColor: Int,
+    val orderColorResource: Int,
     val code: String,
-    val time: String,
-    var deferredTime: String
+    val dateTime: String
 ) : BaseItem()

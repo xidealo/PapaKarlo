@@ -22,4 +22,5 @@ interface IStringUtil {
     fun getIsClosedMessage(cafe: Cafe): String
     fun getSizeString(weight: Int?): String
     fun getCountString(count: Int): String
+    fun getOrderStatusString(orderStatus: OrderStatus): String
 }

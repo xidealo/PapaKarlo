@@ -3,6 +3,8 @@ package com.example.data_api.repository
 import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
 import com.example.domain_api.model.server.*
+import com.example.domain_api.model.server.order.OrderPostServer
+import com.example.domain_api.model.server.order.OrderServer
 import com.example.domain_api.repo.ApiRepo
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -62,7 +64,7 @@ class ApiRepository @Inject constructor(
         return getData(path = "delivery", serializer = DeliveryServer.serializer())
     }
 
-    override suspend fun getUserByUuid(userUuid: String): ApiResult<ProfileServer> {
+    override suspend fun getProfileByUuid(userUuid: String): ApiResult<ProfileServer> {
         return getData(
             path = "profile",
             serializer = ProfileServer.serializer(),
@@ -72,7 +74,7 @@ class ApiRepository @Inject constructor(
 
     // POST
 
-    override suspend fun postUser(profile: ProfileServer): ApiResult<ProfileServer> {
+    override suspend fun postProfile(profile: ProfileServer): ApiResult<ProfileServer> {
         return postData(
             path = "profile",
             postBody = profile,
@@ -85,6 +87,14 @@ class ApiRepository @Inject constructor(
             path = "address",
             postBody = userAddress,
             serializer = UserAddressServer.serializer()
+        )
+    }
+
+    override suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer> {
+        return postData(
+            path = "user_order",
+            postBody = order,
+            serializer = OrderServer.serializer()
         )
     }
 

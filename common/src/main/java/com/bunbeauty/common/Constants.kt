@@ -56,6 +56,10 @@ object Constants {
     const val CAFE_ADDRESS_REQUEST_KEY = "cafe address request key"
     const val RESULT_CAFE_ADDRESS_KEY = "result cafe address key"
 
+    // PATTERNS
+
+    const val HH_MM_PATTERN = "HH:mm"
+
     // DIVIDER
 
     const val TIME_DIVIDER = ":"

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
 
-    fun observeOrderList(): Flow<List<Order>>?
+    fun observeOrderList(): Flow<List<Order>>
 
     fun observeOrderByUuid(orderUuid: String): Flow<Order?>
 

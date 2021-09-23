@@ -1,5 +1,6 @@
 package com.bunbeauty.domain.util.date_time
 
+import com.bunbeauty.common.Constants.HH_MM_PATTERN
 import com.bunbeauty.common.Constants.MINUTES_IN_HOUR
 import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.instacart.library.truetime.TrueTime
@@ -28,5 +29,9 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
         val minutes = hoursMinutes[0] * MINUTES_IN_HOUR + hoursMinutes[1]
         val nowMinutes = currentTimeHour * MINUTES_IN_HOUR + currentTimeMinute
         return minutes - nowMinutes
+    }
+
+    override fun getTimeHHMM(millis: Long): String {
+        return DateTime(millis).toString(HH_MM_PATTERN)
     }
 }

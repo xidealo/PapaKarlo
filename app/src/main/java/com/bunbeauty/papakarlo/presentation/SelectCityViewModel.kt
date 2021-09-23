@@ -34,6 +34,8 @@ class SelectCityViewModel @Inject constructor(
         viewModelScope.launch {
             val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
             if (selectedCityUuid != null) {
+                cafeRepo.refreshCafeList()
+                streetRepo.refreshStreetList()
                 router.navigate(toMenuFragment())
             } else {
                 mutableIsLoading.value = false

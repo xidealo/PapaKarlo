@@ -86,7 +86,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:constraint_referenced_ids="
-            fragment_profile_item_last_order,
             fragment_profile_nc_settings,
             fragment_profile_nc_addresses,
             fragment_profile_nc_orders,

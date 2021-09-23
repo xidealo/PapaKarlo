@@ -29,10 +29,9 @@ class OrderMapper @Inject constructor(
         return OrderFirebase(
             orderEntity = OrderEntityFirebase(
                 isDelivery = order.isDelivery,
-                phone = order.phone,
                 address = userAddressFirebase,
                 comment = order.comment,
-                deferredTime = order.deferredTime,
+                deferredTime = order.deferredTime.toString(),
                 spentBonuses = 0,
                 accruedBonuses = 0,
                 orderStatus = OrderStatus.NOT_ACCEPTED,
@@ -48,11 +47,11 @@ class OrderMapper @Inject constructor(
         return OrderEntity(
             uuid = order.uuid,
             isDelivery = order.isDelivery,
+            phone = "",
+            cafeUuid = "",
             userUuid = order.userUuid,
-            phone = order.phone,
-            cafeUuid = order.cafeUuid,
             comment = order.comment,
-            deferredTime = order.deferredTime,
+            deferredTime = order.deferredTime.toString(),
             time = order.time,
             code = order.code,
             orderStatus = order.orderStatus,
@@ -121,15 +120,14 @@ class OrderMapper @Inject constructor(
             uuid = order.order.uuid,
             isDelivery = order.order.isDelivery,
             userUuid = order.order.userUuid,
-            phone = order.order.phone,
             address = userAddress.toString(),
             comment = order.order.comment,
-            deferredTime = order.order.deferredTime,
+            deferredTime = null,
             time = order.order.time,
             code = order.order.code,
             orderStatus = order.order.orderStatus,
             orderProductList = order.orderProductList.map(orderProductMapper::toUIModel),
-            cafeUuid = order.order.cafeUuid,
+            addressUuid = null
         )
     }
 

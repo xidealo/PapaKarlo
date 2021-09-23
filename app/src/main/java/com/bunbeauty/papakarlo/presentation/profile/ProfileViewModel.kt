@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.UserRepo
@@ -10,38 +10,48 @@ import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.item.OrderItem
+import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     @Api private val userRepo: UserRepo,
-    private val authUtil: IAuthUtil
+    private val authUtil: IAuthUtil,
+    private val orderUIMapper: IOrderUIMapper,
 ) : CartViewModel() {
 
-    private var profile: Profile? = null
+    private var profileUuid: String? = null
     private val mutableProfileState: MutableStateFlow<State<Profile>> =
         MutableStateFlow(State.Loading())
     val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
+
+    private val mutableLastOrder: MutableStateFlow<OrderItem?> = MutableStateFlow(null)
+    val lastOrder: StateFlow<OrderItem?> = mutableLastOrder.asStateFlow()
+
+    private val mutableHasAddresses: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val hasAddresses: StateFlow<Boolean> = mutableHasAddresses.asStateFlow()
 
     init {
         subscribeOnUser()
     }
 
-    fun onLastOrderClicked(orderItem: OrderItem) {
-        router.navigate(toOrderDerailsFragment(orderItem.uuid, orderItem.code))
+    fun onLastOrderClicked() {
+        mutableLastOrder.value?.let { orderItem ->
+            router.navigate(toOrderDerailsFragment(orderItem.uuid, orderItem.code))
+        }
     }
 
     fun onSettingsClicked() {
-        profile?.uuid?.let { userUuid ->
+        profileUuid?.let { userUuid ->
             router.navigate(toSettingsFragment(userUuid))
         }
     }
 
     fun onAddressClicked() {
-        if (profile?.addressList.isNullOrEmpty()) {
-            router.navigate(toCreationAddressFragment())
-        } else {
+        if (mutableHasAddresses.value) {
             router.navigate(toUserAddressesBottomSheet(false))
+        } else {
+            router.navigate(toCreationAddressFragment())
         }
     }
 
@@ -69,8 +79,14 @@ class ProfileViewModel @Inject constructor(
             mutableProfileState.value = State.Empty()
         } else {
             userRepo.observeUserByUuid(userUuid).onEach { observedUser ->
-                profile = observedUser
-                mutableProfileState.value = observedUser?.toStateSuccess() ?: State.Empty()
+                profileUuid = observedUser?.uuid
+                mutableProfileState.value = observedUser.toSuccessOrEmpty()
+
+                mutableLastOrder.value = observedUser?.orderList?.maxByOrNull { order ->
+                    order.time
+                }?.let(orderUIMapper::toItem)
+
+                mutableHasAddresses.value = !observedUser?.addressList.isNullOrEmpty()
             }.launchIn(viewModelScope)
         }
     }

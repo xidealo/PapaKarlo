@@ -18,7 +18,7 @@ interface ApiMapperModule {
     fun bindCafeMapper(cafeMapper: CafeMapper): ICafeMapper
 
     @Binds
-    fun bindProfileMapper(userMapper: UserMapper): IUserMapper
+    fun bindProfileMapper(userMapper: ProfileMapper): IProfileMapper
 
     @Binds
     fun bindUserAddressMapper(userAddressMapper: UserAddressMapper): IUserAddressMapper
@@ -31,4 +31,7 @@ interface ApiMapperModule {
 
     @Binds
     fun bindOrderMapper(orderMapper: OrderMapper): IOrderMapper
+
+    @Binds
+    fun bindOrderProductMapper(orderProductMapper: OrderProductMapper): IOrderProductMapper
 }
