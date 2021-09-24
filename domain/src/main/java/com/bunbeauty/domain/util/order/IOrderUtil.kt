@@ -1,10 +1,9 @@
 package com.bunbeauty.domain.util.order
 
-import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.model.product.ProductPosition
 
 interface IOrderUtil {
@@ -33,6 +32,5 @@ interface IOrderUtil {
     fun getProceeds(orderList: List<Order>, delivery: Delivery): Int
     fun getAverageCheck(orderList: List<Order>, delivery: Delivery): Int
     fun getBackgroundColor(status: OrderStatus): Int
-    fun getActiveLineCount(status: OrderStatus): ActiveLines
     fun getOrderStepCount(status: OrderStatus): Int
 }

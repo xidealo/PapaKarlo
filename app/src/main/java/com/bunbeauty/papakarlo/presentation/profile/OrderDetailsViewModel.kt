@@ -2,15 +2,16 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.papakarlo.di.annotation.Firebase
+import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.item.OrderProductItem
 import com.bunbeauty.presentation.model.OrderUI
@@ -19,11 +20,12 @@ import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class OrderDetailsViewModel @Inject constructor(
-    @Firebase private val orderRepo: OrderRepo,
+    @Api private val orderRepo: OrderRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
     private val orderUtil: IOrderUtil,
+    private val dateTimeUtil: IDateTimeUtil
 ) : BaseViewModel() {
 
     private val mutableOrderState: MutableStateFlow<State<OrderUI>> =
@@ -32,32 +34,36 @@ class OrderDetailsViewModel @Inject constructor(
 
     fun getOrder(orderUuid: String) {
         orderRepo.observeOrderByUuid(orderUuid).onEach { order ->
-            if (order == null) {
-                mutableOrderState.value = State.Empty()
-            } else {
-                val delivery = dataStoreRepo.delivery.first()
-                mutableOrderState.value = order.toUI(delivery).toStateSuccess()
-            }
+            val delivery = dataStoreRepo.getDelivery()
+            mutableOrderState.value = order?.toUI(delivery).toSuccessOrEmpty()
         }.launchIn(viewModelScope)
     }
 
     private fun Order.toUI(delivery: Delivery): OrderUI {
+        val deferredTime = deferredTime?.let { time ->
+            dateTimeUtil.getTimeHHMM(time)
+        }
+        val deliveryCost = stringUtil.getDeliveryCostString(
+            orderUtil.getDeliveryCost(this, delivery)
+        )
+        val orderProductList = orderProductList.map { orderProduct ->
+            orderProduct.toItem()
+        }
+
         return OrderUI(
             code = code,
             stepCount = orderUtil.getOrderStepCount(orderStatus),
-            status = stringUtil.toStringOrderStatus(orderStatus),
+            status = stringUtil.getOrderStatusString(orderStatus),
             orderStatusBackground = orderUtil.getBackgroundColor(orderStatus),
-            time = stringUtil.toStringTime(time),
-            pickupMethod = stringUtil.toStringIsDelivery(isDelivery),
-            deferredTime = deferredTime?.toString() ?: "",
+            dateTime = dateTimeUtil.getTimeDDMMMMHHMM(time),
+            pickupMethod = stringUtil.getPickupMethodString(isDelivery),
+            deferredTime = deferredTime,
             address = address,
-            comment = comment ?: "",
-            deliveryCost = stringUtil.getDeliveryString(orderUtil.getDeliveryCost(this, delivery)),
+            comment = comment,
+            deliveryCost = deliveryCost,
             oldTotalCost = stringUtil.getCostString(orderUtil.getOldOrderCost(this, delivery)),
             newTotalCost = stringUtil.getCostString(orderUtil.getNewOrderCost(this, delivery)),
-            orderProductList = orderProductList.map { orderProduct ->
-                orderProduct.toItem()
-            },
+            orderProductList = orderProductList,
             isDelivery = isDelivery,
         )
     }

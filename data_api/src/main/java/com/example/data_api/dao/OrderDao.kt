@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OrderDao : BaseDao<OrderEntity> {
 
-    @Query("SELECT * FROM OrderEntity WHERE userUuid = :userUuid")
+    @Query("SELECT * FROM OrderEntity WHERE userUuid = :userUuid ORDER BY time DESC")
     fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderWithProducts>>
 
     @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")

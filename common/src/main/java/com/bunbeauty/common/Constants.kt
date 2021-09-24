@@ -58,6 +58,7 @@ object Constants {
 
     // PATTERNS
 
+    const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
     const val HH_MM_PATTERN = "HH:mm"
 
     // DIVIDER

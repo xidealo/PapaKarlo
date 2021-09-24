@@ -9,7 +9,11 @@ import com.bunbeauty.papakarlo.ui.fragment.address.CreateAddressFragment
 import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.ui.fragment.profile.*
+import com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.PaymentBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment
+import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrderDetailsFragment
+import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragment
 import dagger.BindsInstance

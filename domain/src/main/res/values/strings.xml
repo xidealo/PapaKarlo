@@ -1,5 +1,7 @@
 <resources>
+
     <string name="part_ruble">&#160;₽</string>
+
     <!-- ORDER STATUS-->
     <string name="msg_status_not_accepted">Обрабатывается</string>
     <string name="msg_status_accepted">Принят</string>
@@ -10,6 +12,10 @@
     <string name="msg_status_canceled">Отменен</string>
 
     <string name="msg_order_details_delivery_free">Бесплатно</string>
+
+    <!-- IS DELIVERY -->
+    <string name="msg_delivery">Доставка</string>
+    <string name="msg_pickup">Самовывоз</string>
 
     <!-- CART -->
     <string name="msg_cart_product_added">&#160;добавлен в корзину</string>

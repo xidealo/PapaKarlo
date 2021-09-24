@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.util.order
 
 import com.bunbeauty.domain.R
-import com.bunbeauty.domain.enums.ActiveLines
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.enums.OrderStatus.*
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.model.product.OrderProduct
@@ -74,37 +74,25 @@ class OrderUtil @Inject constructor(private val productHelper: IProductHelper) :
 
     override fun getBackgroundColor(status: OrderStatus): Int {
         return when (status) {
-            OrderStatus.NOT_ACCEPTED -> R.color.notAcceptedColor
-            OrderStatus.ACCEPTED -> R.color.acceptedColor
-            OrderStatus.PREPARING -> R.color.preparingColor
-            OrderStatus.SENT_OUT -> R.color.sentOutColor
-            OrderStatus.DONE -> R.color.doneColor
-            OrderStatus.DELIVERED -> R.color.deliveredColor
-            else -> R.color.notAcceptedColor
-        }
-    }
-
-    override fun getActiveLineCount(status: OrderStatus): ActiveLines {
-        return when (status) {
-            OrderStatus.NOT_ACCEPTED -> ActiveLines.ZERO_LINE
-            OrderStatus.ACCEPTED -> ActiveLines.ONE_LINE
-            OrderStatus.PREPARING -> ActiveLines.TWO_LINE
-            OrderStatus.SENT_OUT -> ActiveLines.THREE_LINE
-            OrderStatus.DONE -> ActiveLines.THREE_LINE
-            OrderStatus.DELIVERED -> ActiveLines.FOUR_LINE
-            else -> ActiveLines.ZERO_LINE
+            NOT_ACCEPTED -> R.color.acceptedColor
+            ACCEPTED -> R.color.acceptedColor
+            PREPARING -> R.color.preparingColor
+            SENT_OUT -> R.color.sentOutColor
+            DONE -> R.color.doneColor
+            DELIVERED -> R.color.deliveredColor
+            CANCELED -> R.color.canceledColor
         }
     }
 
     override fun getOrderStepCount(status: OrderStatus): Int {
         return when (status) {
-            OrderStatus.NOT_ACCEPTED -> 0
-            OrderStatus.ACCEPTED -> 1
-            OrderStatus.PREPARING -> 2
-            OrderStatus.SENT_OUT -> 3
-            OrderStatus.DONE -> 3
-            OrderStatus.DELIVERED -> 4
-            OrderStatus.CANCELED -> 0
+            NOT_ACCEPTED -> 1
+            ACCEPTED -> 1
+            PREPARING -> 2
+            SENT_OUT -> 3
+            DONE -> 3
+            DELIVERED -> 4
+            CANCELED -> 0
         }
     }
 }

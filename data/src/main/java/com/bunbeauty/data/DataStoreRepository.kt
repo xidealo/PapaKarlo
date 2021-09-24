@@ -11,6 +11,7 @@ import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -62,6 +63,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
             it[DELIVERY_COST_KEY] ?: DEFAULT_DELIVERY_COST,
             it[FOR_FREE_DELIVERY_KEY] ?: DEFAULT_FOR_FREE_DELIVERY
         )
+    }
+
+    override suspend fun getDelivery(): Delivery {
+        return delivery.first()
     }
 
     override suspend fun saveDelivery(delivery: Delivery) {

@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/orders_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.OrdersFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragment"
         android:label="@string/title_orders"
         tools:layout="@layout/fragment_orders">
         <action
@@ -135,7 +135,7 @@
 
     <fragment
         android:id="@+id/order_derails_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.OrderDetailsFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.order.OrderDetailsFragment"
         android:label="{orderCode}"
         tools:layout="@layout/fragment_order_details">
         <argument

@@ -7,5 +7,6 @@ interface IDateTimeUtil {
     val currentTimeMinute: Int
 
     fun getMinutesFromNowToTime(time: String): Int
+    fun getTimeDDMMMMHHMM(millis: Long): String
     fun getTimeHHMM(millis: Long): String
 }

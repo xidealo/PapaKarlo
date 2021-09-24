@@ -19,30 +19,11 @@ class StringUtil @Inject constructor(
     private val dateTimeUtil: IDateTimeUtil
 ) : IStringUtil {
 
-    override fun toStringIsDelivery(isDelivery: Boolean): String {
-        return if (isDelivery)
-            "Доставка"
-        else
-            "Самовывоз"
-    }
-
     override fun getCostString(cost: Int?): String {
         return if (cost == null) {
             ""
         } else {
             cost.toString() + resourcesProvider.getString(R.string.part_ruble)
-        }
-    }
-
-    override fun toStringOrderStatus(orderStatus: OrderStatus): String {
-        return when (orderStatus) {
-            NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
-            ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
-            PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
-            SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
-            DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
-            DONE -> resourcesProvider.getString(R.string.msg_status_done)
-            CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
         }
     }
 
@@ -79,7 +60,7 @@ class StringUtil @Inject constructor(
         return productName + resourcesProvider.getString(R.string.msg_cart_product_removed)
     }
 
-    override fun getDeliveryString(deliveryCost: Int): String {
+    override fun getDeliveryCostString(deliveryCost: Int): String {
         return if (deliveryCost == 0) {
             resourcesProvider.getString(R.string.msg_order_details_delivery_free)
         } else {
@@ -174,6 +155,14 @@ class StringUtil @Inject constructor(
             DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
             DONE -> resourcesProvider.getString(R.string.msg_status_done)
             CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
+        }
+    }
+
+    override fun getPickupMethodString(isDelivery: Boolean): String {
+        return if (isDelivery) {
+            resourcesProvider.getString(R.string.msg_delivery)
+        } else {
+            resourcesProvider.getString(R.string.msg_pickup)
         }
     }
 }

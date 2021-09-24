@@ -13,6 +13,7 @@ interface DataStoreRepo {
     suspend fun saveCafeAddressUuid(addressId: String)
 
     val delivery: Flow<Delivery>
+    suspend fun getDelivery(): Delivery
     suspend fun saveDelivery(delivery: Delivery)
 
     val userUuid: Flow<String?>

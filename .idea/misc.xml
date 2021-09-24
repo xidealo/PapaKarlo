@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.5783132530120482" />
         <entry key="app/src/main/res/layout/fragment_creation_address.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.5250255362614913" />
-        <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.463718820861678" />
+        <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_product.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3854166666666667" />
