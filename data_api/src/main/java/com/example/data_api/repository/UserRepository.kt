@@ -1,5 +1,6 @@
 package com.example.data_api.repository
 
+import com.bunbeauty.common.Constants.NOT_FOUND_WITH_UUID
 import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Profile
@@ -8,7 +9,8 @@ import com.example.data_api.dao.UserDao
 import com.example.data_api.handleResult
 import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IProfileMapper
-import com.example.domain_api.model.server.ProfileServer
+import com.example.domain_api.model.server.profile.get.ProfileServer
+import com.example.domain_api.model.server.profile.post.ProfilePostServer
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,21 +26,19 @@ class UserRepository @Inject constructor(
         val userUuid = authUtil.userUuid
         val userPhone = authUtil.userPhone
         if (authUtil.isAuthorize && userPhone != null && userUuid != null) {
-            apiRepo.getProfileByUuid(userUuid).handleResult(USER_TAG) { profile ->
-                if (profile == null) {
-                    val newUser = ProfileServer(
+            apiRepo.getProfileByUuid(userUuid).handleResult(USER_TAG, { apiError ->
+                if (apiError.code == NOT_FOUND_WITH_UUID) {
+                    val newUser = ProfilePostServer(
                         uuid = userUuid,
                         phone = userPhone,
-                        email = null,
-                        addressList = emptyList(),
-                        orderList = emptyList(),
+                        email = "",
                     )
                     apiRepo.postProfile(newUser).handleResult(USER_TAG) { postedProfile ->
                         saveProfileLocally(postedProfile)
                     }
-                } else {
-                    saveProfileLocally(profile)
                 }
+            }) { profile ->
+                saveProfileLocally(profile)
             }
         }
     }
@@ -55,7 +55,7 @@ class UserRepository @Inject constructor(
 
     override suspend fun updateUserEmail(profile: Profile) {
         val userEmailServer = profileMapper.toUserEmailServer(profile)
-        apiRepo.patchUserEmail(profile.uuid, userEmailServer)
+        apiRepo.patchProfileEmail(profile.uuid, userEmailServer)
             .handleResult(USER_TAG) { patchedUser ->
                 patchedUser?.let {
                     userDao.update(profileMapper.toEntityModel(patchedUser).user)

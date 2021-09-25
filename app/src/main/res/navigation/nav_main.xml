@@ -211,9 +211,6 @@
         <action
             android:id="@+id/to_login_fragment"
             app:destination="@id/login_fragment" />
-        <argument
-            android:name="userUuid"
-            app:argType="string" />
         <action
             android:id="@+id/to_citySelectionBottomSheet"
             app:destination="@id/citySelectionBottomSheet" />

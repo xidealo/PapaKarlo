@@ -44,11 +44,11 @@ class ConfirmViewModel @Inject constructor(
                     refreshUser()
                 }
                 is AuthResult.AuthError -> {
+                    mutableIsLoading.value = false
                     showError(resourcesProvider.getString(R.string.msg_confirm_error_code))
                     logD(AUTH_TAG, authResult.errorMessage)
                 }
             }
-            mutableIsLoading.value = false
         }.launchIn(viewModelScope)
     }
 
@@ -60,6 +60,7 @@ class ConfirmViewModel @Inject constructor(
         goBack()
     }
 
+    // Remove ' ', '(', ')', '-' symbols from "+X (XXX) XXX-XX-XX" phone format
     fun formatPhone(phone: String): String {
         return phone.replace(Regex("[\\s()-]"), "")
     }

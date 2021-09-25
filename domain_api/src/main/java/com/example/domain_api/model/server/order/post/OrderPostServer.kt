@@ -1,4 +1,4 @@
-package com.example.domain_api.model.server.order
+package com.example.domain_api.model.server.order.post
 
 import kotlinx.serialization.SerialName
 

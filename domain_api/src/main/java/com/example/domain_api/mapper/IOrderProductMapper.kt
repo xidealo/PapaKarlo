@@ -2,8 +2,8 @@ package com.example.domain_api.mapper
 
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.example.domain_api.model.entity.user.order.OrderProductEntity
-import com.example.domain_api.model.server.order.OrderProductPostServer
-import com.example.domain_api.model.server.order.OrderProductServer
+import com.example.domain_api.model.server.order.get.OrderProductServer
+import com.example.domain_api.model.server.order.post.OrderProductPostServer
 
 interface IOrderProductMapper {
 

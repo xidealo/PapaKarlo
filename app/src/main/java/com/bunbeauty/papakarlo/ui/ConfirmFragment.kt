@@ -64,12 +64,15 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 fragmentConfirmTvResendSecondsInfo.text = resendSecondsInfo
             }.startedLaunch()
             viewModel.isTimerRun.onEach { isTimerRun ->
-                fragmentConfirmTvResendSecondsInfo.toggleVisibility(isTimerRun)
-                fragmentConfirmTvResendCode.toggleVisibility(!isTimerRun)
+                fragmentConfirmTvResendSecondsInfo.toggleVisibility(isTimerRun && !viewModel.isLoading.value)
+                fragmentConfirmTvResendCode.toggleVisibility(!isTimerRun && !viewModel.isLoading.value)
             }.startedLaunch()
             viewModel.isLoading.onEach { isLoading ->
+                fragmentConfirmEtCode.setText("")
                 viewDataBinding.fragmentConfirmPbLoading.toggleVisibility(isLoading)
                 viewDataBinding.fragmentConfirmEtCode.toggleVisibilityInvisibility(!isLoading)
+                fragmentConfirmTvResendSecondsInfo.toggleVisibility(viewModel.isTimerRun.value && !isLoading)
+                fragmentConfirmTvResendCode.toggleVisibility(!viewModel.isTimerRun.value && !isLoading)
             }.startedLaunch()
         }
     }

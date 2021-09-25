@@ -5,6 +5,7 @@ import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toSuccessOrEmpty
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.model.OneLineActionModel
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     @Api private val userRepo: UserRepo,
     @Api private val cityRepo: CityRepo,
+    private val authUtil: IAuthUtil,
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
@@ -38,13 +40,7 @@ class SettingsViewModel @Inject constructor(
 
     init {
         subscribeOnSelectedCity()
-    }
-
-    fun getUser(userUuid: String) {
-        userRepo.observeUserByUuid(userUuid).onEach { user ->
-            profileValue = user
-            mutableProfileState.value = user.toSuccessOrEmpty()
-        }.launchIn(viewModelScope)
+        subscribeOnProfile()
     }
 
     fun onEmailClicked() {
@@ -89,6 +85,15 @@ class SettingsViewModel @Inject constructor(
         dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
             cityRepo.observeCityByUuid(selectedCityUuid ?: "").onEach { city ->
                 mutableCity.value = city
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun subscribeOnProfile() {
+        authUtil.observeUserUuid().flatMapLatest { userUuid ->
+            userRepo.observeUserByUuid(userUuid ?: "").onEach { user ->
+                profileValue = user
+                mutableProfileState.value = user.toSuccessOrEmpty()
             }
         }.launchIn(viewModelScope)
     }

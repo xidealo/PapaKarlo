@@ -40,7 +40,7 @@ class UserRepository @Inject constructor(
                     com.example.domain_firebase.model.firebase.UserFirebase(phone = userPhone)
                 firebaseRepo.postUser(userUuid, newUserFirebase)
                 val newUserEntity =
-                    UserEntity(uuid = userUuid, phone = userPhone, email = null)
+                    UserEntity(uuid = userUuid, phone = userPhone, email = "")
                 userDao.insert(newUserEntity)
             } else {
                 val userWithAddresses = userMapper.toEntityModel(userFirebase, userUuid)

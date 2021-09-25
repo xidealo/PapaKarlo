@@ -32,7 +32,7 @@ class ProfileViewModel @Inject constructor(
     val hasAddresses: StateFlow<Boolean> = mutableHasAddresses.asStateFlow()
 
     init {
-        subscribeOnUser()
+        subscribeOnProfile()
     }
 
     fun onLastOrderClicked() {
@@ -42,9 +42,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onSettingsClicked() {
-        profileUuid?.let { userUuid ->
-            router.navigate(toSettingsFragment(userUuid))
-        }
+        router.navigate(toSettingsFragment())
     }
 
     fun onAddressClicked() {
@@ -73,12 +71,9 @@ class ProfileViewModel @Inject constructor(
         router.navigate(toLoginFragment())
     }
 
-    private fun subscribeOnUser() {
-        val userUuid = authUtil.userUuid
-        if (userUuid == null) {
-            mutableProfileState.value = State.Empty()
-        } else {
-            userRepo.observeUserByUuid(userUuid).onEach { observedUser ->
+    private fun subscribeOnProfile() {
+        authUtil.observeUserUuid().flatMapLatest { userUuid ->
+            userRepo.observeUserByUuid(userUuid ?: "").onEach { observedUser ->
                 profileUuid = observedUser?.uuid
                 mutableProfileState.value = observedUser.toSuccessOrEmpty()
 
@@ -87,7 +82,7 @@ class ProfileViewModel @Inject constructor(
                 }?.let(orderUIMapper::toItem)
 
                 mutableHasAddresses.value = !observedUser?.addressList.isNullOrEmpty()
-            }.launchIn(viewModelScope)
-        }
+            }
+        }.launchIn(viewModelScope)
     }
 }

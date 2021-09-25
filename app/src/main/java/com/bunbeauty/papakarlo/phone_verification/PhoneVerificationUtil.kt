@@ -40,6 +40,7 @@ class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil {
         }
     }
 
+    // TODO return callback flow
     override fun sendVerificationCode(phone: String, activity: Activity) {
         val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
             .setPhoneNumber(phone)

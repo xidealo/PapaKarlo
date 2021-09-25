@@ -56,10 +56,14 @@ object Constants {
     const val CAFE_ADDRESS_REQUEST_KEY = "cafe address request key"
     const val RESULT_CAFE_ADDRESS_KEY = "result cafe address key"
 
-    // PATTERNS
+    // PATTERN
 
     const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
     const val HH_MM_PATTERN = "HH:mm"
+
+    // ERROR
+
+    const val NOT_FOUND_WITH_UUID = 400
 
     // DIVIDER
 

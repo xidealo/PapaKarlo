@@ -8,5 +8,5 @@ data class UserEntity(
     @PrimaryKey
     var uuid: String,
     var phone: String,
-    var email: String?
+    var email: String
 )

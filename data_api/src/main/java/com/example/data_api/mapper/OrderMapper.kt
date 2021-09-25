@@ -6,8 +6,8 @@ import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.mapper.IOrderProductMapper
 import com.example.domain_api.model.entity.user.order.OrderEntity
 import com.example.domain_api.model.entity.user.order.OrderWithProducts
-import com.example.domain_api.model.server.order.OrderPostServer
-import com.example.domain_api.model.server.order.OrderServer
+import com.example.domain_api.model.server.order.get.OrderServer
+import com.example.domain_api.model.server.order.post.OrderPostServer
 import javax.inject.Inject
 
 class OrderMapper @Inject constructor(

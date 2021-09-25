@@ -29,20 +29,18 @@
 
         <com.alimuzaffar.lib.pin.PinEntryEditText
             android:id="@+id/fragment_confirm_et_code"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
-            android:cursorVisible="false"
             android:digits="1234567890"
             android:inputType="number"
             android:maxLength="6"
             android:textColor="@color/mainTextColor"
             android:textIsSelectable="false"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             app:pinAnimationType="fromBottom"
             app:pinLineStroke="2dp" />
 

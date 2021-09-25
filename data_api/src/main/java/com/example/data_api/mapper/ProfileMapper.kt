@@ -6,8 +6,8 @@ import com.example.domain_api.mapper.IProfileMapper
 import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.model.entity.user.ProfileEntity
 import com.example.domain_api.model.entity.user.UserEntity
-import com.example.domain_api.model.server.ProfileServer
-import com.example.domain_api.model.server.UserEmailServer
+import com.example.domain_api.model.server.profile.get.ProfileServer
+import com.example.domain_api.model.server.profile.patch.ProfileEmailServer
 import javax.inject.Inject
 
 class ProfileMapper @Inject constructor(
@@ -37,8 +37,8 @@ class ProfileMapper @Inject constructor(
         )
     }
 
-    override fun toUserEmailServer(profile: Profile): UserEmailServer {
-        return UserEmailServer(
+    override fun toUserEmailServer(profile: Profile): ProfileEmailServer {
+        return ProfileEmailServer(
             email = profile.email
         )
     }
