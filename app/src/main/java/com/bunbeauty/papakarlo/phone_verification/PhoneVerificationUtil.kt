@@ -1,87 +1,146 @@
 package com.bunbeauty.papakarlo.phone_verification
 
 import android.app.Activity
-import com.bunbeauty.domain.model.AuthResult
-import com.google.android.gms.tasks.OnCompleteListener
+import com.bunbeauty.common.Constants.SOMETHING_WENT_WRONG
+import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.common.Constants.WRONG_CODE
+import com.bunbeauty.common.Logger.AUTH_TAG
+import com.bunbeauty.common.Logger.logE
+import com.bunbeauty.papakarlo.presentation.event.BaseEvent
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.*
-import kotlinx.coroutines.channels.awaitClose
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import com.google.firebase.auth.AuthResult as Result
+import kotlin.coroutines.CoroutineContext
 
-class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil {
+class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Job()
 
     val timeout = 60L
-    var resendToken: PhoneAuthProvider.ForceResendingToken? = null
-    var phoneVerificationId: String? = null
-    val verificationCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            //verifyPhoneNumberCallback.returnCredential(credential)
-        }
 
-        override fun onVerificationFailed(exception: FirebaseException) {
-            if (exception is FirebaseAuthInvalidCredentialsException) {
-                // verifyPhoneNumberCallback.returnVerificationFailed()
-            } else if (exception is FirebaseTooManyRequestsException) {
-                // verifyPhoneNumberCallback.returnTooManyRequestsError()
-            }
-        }
+    val mutableAuthErrorEvent: Channel<AuthErrorEvent> = Channel()
+    override val authErrorEvent: Flow<AuthErrorEvent> = mutableAuthErrorEvent.receiveAsFlow()
 
-        override fun onCodeSent(
-            verificationId: String,
-            token: PhoneAuthProvider.ForceResendingToken
-        ) {
-            phoneVerificationId = verificationId
-            resendToken = token
-        }
+    val mutableAuthSuccessEvent: Channel<AuthSuccessEvent> = Channel()
+    override val authSuccessEvent: Flow<AuthSuccessEvent> = mutableAuthSuccessEvent.receiveAsFlow()
+
+    val mutableCodeSentEvent: Channel<CodeSentEvent> = Channel()
+    override val codeSentEvent: Flow<CodeSentEvent> = mutableCodeSentEvent.receiveAsFlow()
+
+    override fun sendVerificationCode(phone: String, activity: Activity) {
+        verifyPhoneNumber(phone, activity)
     }
 
-    // TODO return callback flow
-    override fun sendVerificationCode(phone: String, activity: Activity) {
-        val options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
+    override fun resendVerificationCode(
+        phone: String,
+        activity: Activity,
+        token: PhoneAuthProvider.ForceResendingToken
+    ) {
+        verifyPhoneNumber(phone, activity, token)
+    }
+
+    override fun verifyCode(code: String, verificationId: String) {
+        val credential = PhoneAuthProvider.getCredential(verificationId, code)
+        signInWithCredential(credential)
+    }
+
+    fun verifyPhoneNumber(
+        phone: String,
+        activity: Activity,
+        token: PhoneAuthProvider.ForceResendingToken? = null
+    ) {
+        val verificationCallback =
+            object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                    signInWithCredential(credential)
+                }
+
+                override fun onVerificationFailed(exception: FirebaseException) {
+                    when (exception) {
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            sendError(WRONG_CODE)
+                        }
+                        is FirebaseTooManyRequestsException -> {
+                            sendError(TOO_MANY_REQUESTS)
+                        }
+                        else -> {
+                            sendError(SOMETHING_WENT_WRONG)
+                        }
+                    }
+                }
+
+                override fun onCodeSent(
+                    verificationId: String,
+                    token: PhoneAuthProvider.ForceResendingToken
+                ) {
+                    sendCodeSent(phone, verificationId, token)
+                }
+            }
+
+        val options = PhoneAuthOptions.newBuilder(Firebase.auth)
             .setPhoneNumber(phone)
             .setActivity(activity)
             .setTimeout(timeout, TimeUnit.SECONDS)
-            .setCallbacks(verificationCallbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-
-    override fun resendVerificationCode(phone: String, activity: Activity) {
-        resendToken?.let { resendToken ->
-            PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-                .setPhoneNumber(phone)
-                .setActivity(activity)
-                .setTimeout(timeout, TimeUnit.SECONDS)
-                .setCallbacks(verificationCallbacks)
-                .setForceResendingToken(resendToken)
-                .build()
+            .setCallbacks(verificationCallback)
+        if (token != null) {
+            options.setForceResendingToken(token)
         }
+        PhoneAuthProvider.verifyPhoneNumber(options.build())
     }
 
-    override fun verifyCode(code: String): Flow<AuthResult> = callbackFlow {
-        var onCompleteListener: OnCompleteListener<Result>? =
-            OnCompleteListener<Result> { task ->
-                if (task.isSuccessful) {
-                    trySend(AuthResult.AuthSuccess)
-                } else {
-                    trySend(AuthResult.AuthError(task.exception?.message ?: ""))
-                }
-            }
-        phoneVerificationId?.let { verificationId ->
-            val credential = PhoneAuthProvider.getCredential(verificationId, code)
-            val signInTask = FirebaseAuth.getInstance().signInWithCredential(credential)
-
-            onCompleteListener?.let { listener ->
-                signInTask.addOnCompleteListener(listener)
+    fun signInWithCredential(credential: PhoneAuthCredential) {
+        Firebase.auth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                sendSuccess()
+            } else {
+                logE(AUTH_TAG, task.exception?.message ?: SOMETHING_WENT_WRONG)
+                sendError(SOMETHING_WENT_WRONG)
             }
         }
-        awaitClose {
-            onCompleteListener = null
+    }
+
+    fun sendError(error: String) {
+        this@PhoneVerificationUtil.launch {
+            mutableAuthErrorEvent.send(AuthErrorEvent(error))
         }
     }
+
+    fun sendSuccess() {
+        this@PhoneVerificationUtil.launch {
+            mutableAuthSuccessEvent.send(AuthSuccessEvent())
+        }
+    }
+
+    fun sendCodeSent(
+        phone: String,
+        verificationId: String,
+        token: PhoneAuthProvider.ForceResendingToken
+    ) {
+        this@PhoneVerificationUtil.launch {
+            mutableCodeSentEvent.send(CodeSentEvent(phone, verificationId, token))
+        }
+    }
+
+    class AuthErrorEvent(val error: String) : BaseEvent()
+    class AuthSuccessEvent : BaseEvent()
+    class CodeSentEvent(
+        val phone: String,
+        val verificationId: String,
+        val token: PhoneAuthProvider.ForceResendingToken
+    ) :
+        BaseEvent()
 }

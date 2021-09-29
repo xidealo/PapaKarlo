@@ -144,13 +144,16 @@
     <string name="title_login_email">Email</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
+    <string name="error_login_something_went_wrong">Что-то пошло не так</string>
+    <string name="error_login_too_many_requests">Пренвышен лимит на отправку кодов, попробуйте позже</string>
 
     <!-- CONFIRM  -->
     <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
     <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
     <string name="msg_confirm_code_info">Получить повторно код можно через:&#160;</string>
     <string name="msg_confirm_seconds">&#160;секунд</string>
-    <string name="msg_confirm_error_code">Неправильный код</string>
+    <string name="error_confirm_wrong_code">Неправильный код</string>
+    <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
     <string name="action_confirm_resend_code">Отправить код повторно</string>
     <string name="action_confirm_change_phone">Изменить номер</string>
 

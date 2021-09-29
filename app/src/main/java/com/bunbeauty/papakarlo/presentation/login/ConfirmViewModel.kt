@@ -1,23 +1,23 @@
 package com.bunbeauty.papakarlo.presentation.login
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
-import com.bunbeauty.domain.model.AuthResult
-import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConfirmViewModel @Inject constructor(
     @Api private val userRepo: UserRepo,
-    private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {
 
@@ -36,20 +36,26 @@ class ConfirmViewModel @Inject constructor(
     private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
 
-    fun onCodeEntered(verifyCodeFlow: Flow<AuthResult>) {
-        mutableIsLoading.value = true
-        verifyCodeFlow.onEach { authResult ->
-            when (authResult) {
-                is AuthResult.AuthSuccess -> {
-                    refreshUser()
-                }
-                is AuthResult.AuthError -> {
-                    mutableIsLoading.value = false
-                    showError(resourcesProvider.getString(R.string.msg_confirm_error_code))
-                    logD(AUTH_TAG, authResult.errorMessage)
-                }
+    fun onSuccessVerified() {
+        viewModelScope.launch {
+            userRepo.refreshUser()
+            goBack()
+            goBack()
+        }
+    }
+
+    fun onVerificationError(error: String) {
+        mutableIsLoading.value = false
+        val errorResourceId = when (error) {
+            WRONG_CODE -> {
+                R.string.error_confirm_wrong_code
             }
-        }.launchIn(viewModelScope)
+            else -> {
+                R.string.error_confirm_something_went_wrong
+            }
+        }
+        showError(resourcesProvider.getString(errorResourceId))
+        logD(AUTH_TAG, error)
     }
 
     fun getPhoneInfo(phone: String): String {
@@ -80,15 +86,6 @@ class ConfirmViewModel @Inject constructor(
             }
             mutableIsTimerRun.value = false
             mutableResendSecondsInfo.value = label + timerSecondCount + seconds
-        }
-    }
-
-    private fun refreshUser() {
-        viewModelScope.launch {
-            dataStoreRepo.clearUserAddressUuid()
-            userRepo.refreshUser()
-            goBack()
-            goBack()
         }
     }
 }

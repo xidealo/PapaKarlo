@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -31,28 +32,29 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
     }
 
     private val phone: String by argument()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        viewModel.startResendTimer()
-        phoneVerificationUtil.sendVerificationCode(viewModel.formatPhone(phone), requireActivity())
-    }
+    private var verificationId: String by argument()
+    private var resendToken: PhoneAuthProvider.ForceResendingToken by argument()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.startResendTimer()
         viewDataBinding.run {
             fragmentConfirmTvPhoneInformation.text = viewModel.getPhoneInfo(phone)
+            fragmentConfirmEtCode.focus() // requestFocus()
             fragmentConfirmEtCode.setOnPinEnteredListener { code ->
-                viewModel.onCodeEntered(phoneVerificationUtil.verifyCode(code.toString()))
+                phoneVerificationUtil.verifyCode(
+                    code = code.toString(),
+                    verificationId = verificationId
+                )
             }
             fragmentConfirmTvResendCode.underlineText()
             fragmentConfirmTvResendCode.setOnClickListener {
                 viewModel.startResendTimer()
                 phoneVerificationUtil.resendVerificationCode(
-                    viewModel.formatPhone(phone),
-                    requireActivity()
+                    phone = viewModel.formatPhone(phone),
+                    activity = requireActivity(),
+                    token = resendToken
                 )
             }
             fragmentConfirmTvChangePhone.underlineText()
@@ -73,6 +75,17 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 viewDataBinding.fragmentConfirmEtCode.toggleVisibilityInvisibility(!isLoading)
                 fragmentConfirmTvResendSecondsInfo.toggleVisibility(viewModel.isTimerRun.value && !isLoading)
                 fragmentConfirmTvResendCode.toggleVisibility(!viewModel.isTimerRun.value && !isLoading)
+            }.startedLaunch()
+
+            phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->
+                verificationId = codeSentEvent.verificationId
+                resendToken = codeSentEvent.token
+            }.startedLaunch()
+            phoneVerificationUtil.authErrorEvent.onEach { authErrorEvent ->
+                viewModel.onVerificationError(authErrorEvent.error)
+            }.startedLaunch()
+            phoneVerificationUtil.authSuccessEvent.onEach {
+                viewModel.onSuccessVerified()
             }.startedLaunch()
         }
     }

@@ -193,6 +193,12 @@
         <argument
             android:name="phone"
             app:argType="string" />
+        <argument
+            android:name="verificationId"
+            app:argType="string" />
+        <argument
+            android:name="resendToken"
+            app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
         <action
             android:id="@+id/back_to_profile_fragment"
             app:destination="@id/profile_fragment"

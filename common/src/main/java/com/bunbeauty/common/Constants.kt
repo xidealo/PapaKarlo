@@ -64,6 +64,9 @@ object Constants {
     // ERROR
 
     const val NOT_FOUND_WITH_UUID = 400
+    const val SOMETHING_WENT_WRONG = "Something went wrong"
+    const val WRONG_CODE = "Wrong code"
+    const val TOO_MANY_REQUESTS = "Too many requests"
 
     // DIVIDER
 
