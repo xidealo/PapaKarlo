@@ -5,11 +5,11 @@ import com.bunbeauty.common.Constants.SOMETHING_WENT_WRONG
 import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
+import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
 import com.bunbeauty.papakarlo.presentation.event.BaseEvent
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -30,7 +31,8 @@ class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, Coro
     override val coroutineContext: CoroutineContext
         get() = Job()
 
-    val timeout = 60L
+    val autoRetrievalTimeout = 60L
+    val sendCodeTimeout = 10_000L
 
     val mutableAuthErrorEvent: Channel<AuthErrorEvent> = Channel()
     override val authErrorEvent: Flow<AuthErrorEvent> = mutableAuthErrorEvent.receiveAsFlow()
@@ -63,17 +65,21 @@ class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, Coro
         activity: Activity,
         token: PhoneAuthProvider.ForceResendingToken? = null
     ) {
+        val timeoutJob: Job = launch {
+            delay(sendCodeTimeout)
+            sendError(SOMETHING_WENT_WRONG)
+            logE(AUTH_TAG, "sendCodeTimeout")
+        }
         val verificationCallback =
             object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                    timeoutJob.cancel()
                     signInWithCredential(credential)
                 }
 
                 override fun onVerificationFailed(exception: FirebaseException) {
+                    timeoutJob.cancel()
                     when (exception) {
-                        is FirebaseAuthInvalidCredentialsException -> {
-                            sendError(WRONG_CODE)
-                        }
                         is FirebaseTooManyRequestsException -> {
                             sendError(TOO_MANY_REQUESTS)
                         }
@@ -81,20 +87,23 @@ class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, Coro
                             sendError(SOMETHING_WENT_WRONG)
                         }
                     }
+                    logE(AUTH_TAG, "onVerificationFailed exception " + exception.message)
                 }
 
                 override fun onCodeSent(
                     verificationId: String,
                     token: PhoneAuthProvider.ForceResendingToken
                 ) {
+                    timeoutJob.cancel()
                     sendCodeSent(phone, verificationId, token)
+                    logD(AUTH_TAG, "onCodeSent")
                 }
             }
 
         val options = PhoneAuthOptions.newBuilder(Firebase.auth)
             .setPhoneNumber(phone)
             .setActivity(activity)
-            .setTimeout(timeout, TimeUnit.SECONDS)
+            .setTimeout(autoRetrievalTimeout, TimeUnit.SECONDS)
             .setCallbacks(verificationCallback)
         if (token != null) {
             options.setForceResendingToken(token)
@@ -103,12 +112,14 @@ class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, Coro
     }
 
     fun signInWithCredential(credential: PhoneAuthCredential) {
+        logD(AUTH_TAG, "signInWithCredential")
         Firebase.auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 sendSuccess()
+                logD(AUTH_TAG, "signInWithCredential Successful")
             } else {
-                logE(AUTH_TAG, task.exception?.message ?: SOMETHING_WENT_WRONG)
-                sendError(SOMETHING_WENT_WRONG)
+                sendError(WRONG_CODE)
+                logE(AUTH_TAG, task.exception?.message ?: WRONG_CODE)
             }
         }
     }

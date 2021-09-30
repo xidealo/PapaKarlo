@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.focusAndShowKeyboard
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -26,10 +28,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.onViewCreated()
         viewDataBinding.run {
             val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
             fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
+            fragmentLoginEtPhone.focusAndShowKeyboard()
             fragmentLoginBtnLogin.setOnClickListener {
+                hideKeyboard()
                 viewModel.onNextClicked(fragmentLoginEtPhone.text.toString())
             }
         }
@@ -39,6 +44,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 phone = phoneCheckedEvent.phone,
                 activity = requireActivity()
             )
+        }.startedLaunch()
+        viewModel.isLoading.onEach { isLoading ->
+            viewDataBinding.fragmentLoginGroupMain.toggleVisibility(!isLoading)
+            viewDataBinding.fragmentLoginPbLoading.toggleVisibility(isLoading)
         }.startedLaunch()
         phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->
             viewModel.onCodeSent(

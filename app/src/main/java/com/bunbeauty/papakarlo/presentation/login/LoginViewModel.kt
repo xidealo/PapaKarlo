@@ -13,8 +13,7 @@ import com.bunbeauty.papakarlo.ui.LoginFragmentDirections.toConfirmFragment
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,15 +23,24 @@ class LoginViewModel @Inject constructor(
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {
 
+    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
+
     private val mutablePhoneCheckedEvent: Channel<PhoneCheckedEvent> = Channel()
     val phoneCheckedEvent: Flow<PhoneCheckedEvent> = mutablePhoneCheckedEvent.receiveAsFlow()
 
+    fun onViewCreated() {
+        mutableIsLoading.value = false
+    }
+
     fun onNextClicked(phone: String) {
+        mutableIsLoading.value = true
         if (textValidator.isFieldContentCorrect(phone, PHONE_LENGTH, PHONE_LENGTH)) {
             viewModelScope.launch {
                 mutablePhoneCheckedEvent.send(PhoneCheckedEvent(phone))
             }
         } else {
+            mutableIsLoading.value = false
             showError(resourcesProvider.getString(R.string.error_login_phone))
         }
     }
@@ -45,6 +53,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun onVerificationError(error: String) {
+        mutableIsLoading.value = false
         val errorResourceId = when (error) {
             TOO_MANY_REQUESTS -> {
                 R.string.error_login_too_many_requests

@@ -41,8 +41,9 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
         viewModel.startResendTimer()
         viewDataBinding.run {
             fragmentConfirmTvPhoneInformation.text = viewModel.getPhoneInfo(phone)
-            fragmentConfirmEtCode.focus() // requestFocus()
+            fragmentConfirmEtCode.focus()
             fragmentConfirmEtCode.setOnPinEnteredListener { code ->
+                viewModel.onCodeEntered()
                 phoneVerificationUtil.verifyCode(
                     code = code.toString(),
                     verificationId = verificationId
@@ -58,7 +59,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 )
             }
             fragmentConfirmTvChangePhone.underlineText()
-            fragmentConfirmTvChangePhone.setOnClickListener {
+            fragmentConfirmLlChangePhone.setOnClickListener {
                 viewModel.onChangePhoneClicked()
             }
 
@@ -70,11 +71,18 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 fragmentConfirmTvResendCode.toggleVisibility(!isTimerRun && !viewModel.isLoading.value)
             }.startedLaunch()
             viewModel.isLoading.onEach { isLoading ->
-                fragmentConfirmEtCode.setText("")
+                if (isLoading) {
+                    hideKeyboard()
+                    fragmentConfirmEtCode.clearFocus()
+                }
                 viewDataBinding.fragmentConfirmPbLoading.toggleVisibility(isLoading)
                 viewDataBinding.fragmentConfirmEtCode.toggleVisibilityInvisibility(!isLoading)
                 fragmentConfirmTvResendSecondsInfo.toggleVisibility(viewModel.isTimerRun.value && !isLoading)
                 fragmentConfirmTvResendCode.toggleVisibility(!viewModel.isTimerRun.value && !isLoading)
+                if (!isLoading) {
+                    fragmentConfirmEtCode.setText("")
+                    fragmentConfirmEtCode.focus()
+                }
             }.startedLaunch()
 
             phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->

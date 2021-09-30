@@ -1,11 +1,13 @@
 package com.bunbeauty.papakarlo.extensions
 
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Paint
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -83,4 +85,12 @@ fun TextInputLayout.setErrorFocus(errorMessage: String) {
 fun TextInputLayout.clearErrorFocus() {
     this.error = null
     this.isErrorEnabled = false
+}
+
+fun View.focusAndShowKeyboard() {
+    requestFocus()
+
+    // Show keyboard
+    val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.showSoftInput(this, 0)
 }

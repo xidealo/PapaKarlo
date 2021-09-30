@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -82,6 +83,14 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             }
             textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
         }.startedLaunch()
+    }
+
+    protected fun hideKeyboard() {
+        activity?.currentFocus?.let { currentFocus ->
+            val inputMethodManager =
+                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
     }
 
     override fun onDestroyView() {

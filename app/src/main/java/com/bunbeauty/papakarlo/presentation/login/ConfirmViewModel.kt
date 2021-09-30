@@ -36,6 +36,10 @@ class ConfirmViewModel @Inject constructor(
     private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
 
+    fun onCodeEntered() {
+        mutableIsLoading.value = true
+    }
+
     fun onSuccessVerified() {
         viewModelScope.launch {
             userRepo.refreshUser()
