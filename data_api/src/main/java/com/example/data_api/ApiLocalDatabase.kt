@@ -24,7 +24,7 @@ import com.example.domain_api.model.entity.user.order.OrderProductEntity
         UserAddressEntity::class,
         OrderEntity::class,
         OrderProductEntity::class,
-    ], version = 6
+    ], version = 7
 )
 abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getMenuProductDao(): MenuProductDao

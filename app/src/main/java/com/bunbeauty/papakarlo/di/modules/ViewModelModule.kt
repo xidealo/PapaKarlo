@@ -23,6 +23,7 @@ import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.presentation.profile.settings.CitySelectionViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.LogoutViewModel
 import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
@@ -133,4 +134,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CitySelectionViewModel::class)
     internal abstract fun provideCitySelectionViewModel(citySelectionViewModel: CitySelectionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LogoutViewModel::class)
+    internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
 }

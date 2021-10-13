@@ -163,6 +163,7 @@
 
     <!-- SETTINGS -->
     <string name="title_settings">Настройки</string>
+    <string name="hint_settings_phone">Номер телефона</string>
     <string name="action_settings_add_email">Добавить почту</string>
     <string name="hint_settings_email">Почта</string>
     <string name="title_settings_add_email">Добавление почты</string>
@@ -190,6 +191,11 @@
     <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>
     <string name="title_city_selection">Выбор города</string>
+
+    <!-- LOGOUT -->
+    <string name="title_logout">Выйти из профиля?</string>
+    <string name="action_logout">Выйти</string>
+    <string name="action_logout_cancel">Отмена</string>
 
     <!-- MAIN ACTIVITY -->
     <string name="msg_main_activity_downloaded">Обновление установлено</string>

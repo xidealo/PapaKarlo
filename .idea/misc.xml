@@ -13,13 +13,15 @@
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/ic_vk.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.67" />
         <entry key="app/src/main/res/layout/bottom_sheet_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_addresses.xml" value="0.4" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_city_selection.xml" value="0.22" />
         <entry key="app/src/main/res/layout/bottom_sheet_defered_time.xml" value="0.5920925747348119" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/bottom_sheet_logout.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/bottom_sheet_one_line_action.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_select_city.xml" value="0.39791666666666664" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_addresses.xml" value="0.5250255362614913" />
@@ -44,6 +46,8 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3854166666666667" />
         <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.5250255362614913" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.45740740740740743" />
+        <entry key="app/src/main/res/menu/logout_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.19270833333333334" />
       </map>
     </option>

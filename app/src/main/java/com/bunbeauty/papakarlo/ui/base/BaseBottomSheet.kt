@@ -59,7 +59,7 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()
 
-        viewModel.bundle = requireArguments()
+        viewModel.bundle = arguments
 
         viewModel.message.onEach { message ->
             viewDataBinding.root.showSnackbar(message, R.color.white, R.color.colorPrimary)

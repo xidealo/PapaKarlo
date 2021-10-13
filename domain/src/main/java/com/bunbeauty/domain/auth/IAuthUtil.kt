@@ -9,4 +9,5 @@ interface IAuthUtil {
     val userPhone: String?
 
     fun observeUserUuid(): Flow<String?>
+    fun signOut()
 }

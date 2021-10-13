@@ -32,13 +32,13 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
         viewDataBinding.run {
             viewModel.profileState.onEach { state ->
-                fragmentSettingsNcPhone.toggleVisibility(state is State.Success)
+                fragmentSettingsTcPhone.toggleVisibility(state is State.Success)
                 fragmentSettingsNcAddEmail.toggleVisibility(state is State.Success)
                 fragmentSettingsTcEmail.toggleVisibility(state is State.Success)
                 fragmentSettingsTcCity.toggleVisibility(state is State.Success)
                 fragmentSettingsPbLoading.toggleVisibility(state !is State.Success)
                 if (state is State.Success) {
-                    fragmentSettingsNcPhone.cardText = state.data.phone
+                    fragmentSettingsTcPhone.cardText = state.data.phone
                     val email = state.data.email
                     fragmentSettingsNcAddEmail.toggleVisibility(email.isEmpty())
                     fragmentSettingsTcEmail.toggleVisibility(email.isNotEmpty())
@@ -57,9 +57,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
             fragmentSettingsTcEmail.setOnClickListener {
                 viewModel.onEmailClicked()
-            }
-            fragmentSettingsNcPhone.setOnClickListener {
-                viewModel.onPhoneClicked()
             }
             fragmentSettingsTcCity.setOnClickListener {
                 viewModel.onCityClicked()

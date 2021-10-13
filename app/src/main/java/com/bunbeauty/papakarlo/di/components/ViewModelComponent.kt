@@ -15,6 +15,7 @@ import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrderDetailsFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.settings.LogoutBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
@@ -55,4 +56,5 @@ interface ViewModelComponent {
     fun inject(feedbackBottomSheet: FeedbackBottomSheet)
     fun inject(citySelectionBottomSheet: CitySelectionBottomSheet)
     fun inject(cafeAddressesBottomSheet: CafeAddressesBottomSheet)
+    fun inject(logoutBottomSheet: LogoutBottomSheet)
 }

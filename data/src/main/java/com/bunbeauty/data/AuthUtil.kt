@@ -2,6 +2,7 @@ package com.bunbeauty.data
 
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -9,24 +10,31 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthUtil @Inject constructor() : IAuthUtil {
+class AuthUtil @Inject constructor(
+    private val firebaseAuth: FirebaseAuth
+) : IAuthUtil {
 
     override val isAuthorize: Boolean
         get() = userUuid != null
 
     override val userUuid: String?
-        get() = FirebaseAuth.getInstance().currentUser?.uid
+        get() = firebaseAuth.currentUser?.uid
 
     override val userPhone: String?
-        get() = FirebaseAuth.getInstance().currentUser?.phoneNumber
+        get() = firebaseAuth.currentUser?.phoneNumber
 
+    @ExperimentalCoroutinesApi
     override fun observeUserUuid(): Flow<String?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { auth ->
             trySend(auth.currentUser?.uid)
         }
-        FirebaseAuth.getInstance().addAuthStateListener(listener)
+        firebaseAuth.addAuthStateListener(listener)
         awaitClose {
-            FirebaseAuth.getInstance().removeAuthStateListener(listener)
+            firebaseAuth.removeAuthStateListener(listener)
         }
+    }
+
+    override fun signOut() {
+        firebaseAuth.signOut()
     }
 }

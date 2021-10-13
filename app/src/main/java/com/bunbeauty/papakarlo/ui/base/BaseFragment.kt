@@ -67,6 +67,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             isLogoVisible,
             isCartVisible
         )
+        activity?.invalidateOptionsMenu()
 
         viewDataBinding.lifecycleOwner = this
         viewDataBinding.executePendingBindings()

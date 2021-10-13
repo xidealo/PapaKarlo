@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.di.components
 
 import android.content.Context
+import com.bunbeauty.data.di.DataModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.modules.*
 import dagger.BindsInstance
@@ -20,6 +21,7 @@ import javax.inject.Singleton
         UtilModule::class,
         UIMapperModule::class,
         AppUtilModule::class,
+        DataModule::class
     ]
 )
 interface AppComponent {

@@ -3,12 +3,14 @@ package com.bunbeauty.papakarlo.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bunbeauty.papakarlo.NavMainDirections.globalToCartFragment
@@ -21,6 +23,7 @@ import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.ui.base.IBottomNavigationBar
 import com.bunbeauty.papakarlo.ui.base.IToolbar
+import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -61,10 +64,33 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
 
+        viewModel?.connectWS()
+
         setupToolbar()
         setupBottomNavigationBar()
 
         router.attach(this, R.id.activity_main_fcv_container)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu?.size() == 0) {
+            menuInflater.inflate(R.menu.top_menu, menu)
+        }
+        val isSettings =
+            findNavController(R.id.activity_main_fcv_container).currentDestination?.id == R.id.settings_fragment
+        menu?.findItem(R.id.logoutBottomSheet)?.isVisible = isSettings
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.logoutBottomSheet) {
+            router.navigate(toLogoutBottomSheet())
+            true
+        } else {
+            item.onNavDestinationSelected(findNavController(R.id.activity_main_fcv_container))
+                    || super.onOptionsItemSelected(item)
+        }
     }
 
     //google in update
@@ -146,17 +172,16 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
             setOf(R.id.cafe_list_fragment, R.id.menu_fragment, R.id.profile_fragment)
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        viewDataBinding.activityMainTvCart.setOnClickListener(::goToCart)
-        viewDataBinding.activityMainIvCart.setOnClickListener(::goToCart)
+        viewDataBinding.activityMainClCart.setOnClickListener {
+            goToCart()
+        }
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()
         }
     }
 
-    private fun goToCart(view: View) {
-        if (findNavController(R.id.activity_main_fcv_container).currentDestination?.id != R.id.cart_fragment) {
-            router.navigate(globalToCartFragment())
-        }
+    private fun goToCart() {
+        router.navigate(globalToCartFragment())
     }
 
     private fun setupBottomNavigationBar() {

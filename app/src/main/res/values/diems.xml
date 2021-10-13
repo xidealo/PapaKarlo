@@ -14,7 +14,7 @@
     <dimen name="large_button_width">314dp</dimen>
     <dimen name="small_button_width">83dp</dimen>
     <dimen name="status_button_width">152dp</dimen>
-    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_height">40dp</dimen>
     <dimen name="button_progress_bar_size">36dp</dimen>
 
     <!-- MARGIN -->

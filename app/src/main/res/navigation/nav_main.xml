@@ -220,6 +220,9 @@
         <action
             android:id="@+id/to_citySelectionBottomSheet"
             app:destination="@id/citySelectionBottomSheet" />
+        <action
+            android:id="@+id/to_logoutBottomSheet"
+            app:destination="@id/logoutBottomSheet" />
     </fragment>
 
     <dialog
@@ -262,9 +265,22 @@
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/create_address_fragment" />
     </dialog>
+
     <dialog
         android:id="@+id/cafeAddressesBottomSheet"
         android:name="com.bunbeauty.papakarlo.ui.fragment.address.CafeAddressesBottomSheet"
         android:label="CafeAddressesBottomSheet"
         tools:layout="@layout/bottom_sheet_cafe_addresses" />
+
+    <dialog
+        android:id="@+id/logoutBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.LogoutBottomSheet"
+        android:label="LogoutBottomSheet"
+        tools:layout="@layout/bottom_sheet_logout">
+        <action
+            android:id="@+id/back_to_profile_fragment"
+            app:destination="@id/profile_fragment"
+            app:popUpTo="@id/profile_fragment"
+            app:popUpToInclusive="true" />
+    </dialog>
 </navigation>
