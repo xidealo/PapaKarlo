@@ -22,7 +22,7 @@ import javax.inject.Inject
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     @Inject
-    lateinit var modelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     abstract val viewModel: BaseViewModel
 

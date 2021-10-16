@@ -185,5 +185,8 @@ dependencies {
     //FB
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    //Timepicker
+    implementation "com.wdullaer:materialdatetimepicker:$rootProject.pickerVersion"
 }
 

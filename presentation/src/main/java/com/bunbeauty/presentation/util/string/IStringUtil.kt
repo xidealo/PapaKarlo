@@ -9,7 +9,8 @@ interface IStringUtil {
     fun toStringTime(time: Long): String
 
     fun getCafeAddressString(cafeAddress: CafeAddress?): String
-    fun getUserAddressString(userAddress: UserAddress?): String
+    fun getCafeAddressString(cafe: Cafe?): String?
+    fun getUserAddressString(userAddress: UserAddress?): String?
     fun getWorkingHoursString(cafe: Cafe): String
     fun getAddedToCartString(productName: String): String
     fun getRemovedFromCartString(productName: String): String

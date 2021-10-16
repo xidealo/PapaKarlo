@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
  */
 abstract class TopbarCartFragment<T : ViewDataBinding> : BaseFragment<T>() {
 
-    override val viewModel: CartViewModel by viewModels { modelFactory }
+    override val viewModel: CartViewModel by viewModels { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -6,9 +6,9 @@ import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragmentDirections.toMenuFragment
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

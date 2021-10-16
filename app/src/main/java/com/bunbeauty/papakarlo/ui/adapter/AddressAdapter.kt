@@ -4,25 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
+import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.item.AddressItem
 import javax.inject.Inject
 
 class AddressAdapter @Inject constructor() :
-    ListAdapter<AddressItem, AddressAdapter.AddressViewHolder>(DefaultDiffCallback()) {
-
-    private var onItemClickListener: ((AddressItem) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (AddressItem) -> Unit) {
-        onItemClickListener = listener
-    }
-
-    override fun onBindViewHolder(holder: AddressViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-    }
+    BaseListAdapter<AddressItem, ElementAddressBinding, AddressAdapter.AddressViewHolder>(
+        DefaultDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AddressViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -39,9 +31,9 @@ class AddressAdapter @Inject constructor() :
 
             binding.run {
                 elementAddressTvAddress.text = item.address
-                onItemClickListener?.let { listener ->
+                if (hasItemClickListener) {
                     elementAddressMcvMain.setOnClickListener {
-                        listener(item)
+                        onItemClicked(item)
                     }
                 }
             }

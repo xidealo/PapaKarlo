@@ -23,7 +23,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
     override val isCartVisible = true
     override val isBottomBarVisible = true
 
-    override val viewModel: ProfileViewModel by viewModels { modelFactory }
+    override val viewModel: ProfileViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.auth
 
 import android.os.Bundle
 import android.view.View
@@ -12,6 +12,7 @@ import com.bunbeauty.papakarlo.extensions.underlineText
 import com.bunbeauty.papakarlo.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
+import com.bunbeauty.presentation.enums.SuccessLoginDirection
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +26,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
     @Inject
     lateinit var phoneVerificationUtil: IPhoneVerificationUtil
 
-    override val viewModel: ConfirmViewModel by viewModels { modelFactory }
+    override val viewModel: ConfirmViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -34,6 +35,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
     private val phone: String by argument()
     private var verificationId: String by argument()
     private var resendToken: PhoneAuthProvider.ForceResendingToken by argument()
+    private var successLoginDirection: SuccessLoginDirection by argument()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -93,7 +95,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                 viewModel.onVerificationError(authErrorEvent.error)
             }.startedLaunch()
             phoneVerificationUtil.authSuccessEvent.onEach {
-                viewModel.onSuccessVerified()
+                viewModel.onSuccessVerified(successLoginDirection)
             }.startedLaunch()
         }
     }

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.annotation
+package com.example.data_api
 
 import javax.inject.Qualifier
 

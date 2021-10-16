@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.order.OrderDetails
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
@@ -11,5 +12,5 @@ interface OrderRepo {
 
     fun observeLastOrder(): Flow<Order?>
 
-    suspend fun saveOrder(order: Order)
+    suspend fun createOrder(orderDetails: OrderDetails): Order?
 }

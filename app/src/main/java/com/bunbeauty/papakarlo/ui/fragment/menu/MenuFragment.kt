@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.menu
 
 import android.os.Bundle
 import android.view.View
@@ -26,7 +26,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
     override val isLogoVisible = true
     override val isCartVisible = true
     override val isBottomBarVisible = true
-    override val viewModel: CartViewModel by viewModels { modelFactory }
+    override val viewModel: CartViewModel by viewModels { viewModelFactory }
 
     private var mediator: TabLayoutMediator? = null
 

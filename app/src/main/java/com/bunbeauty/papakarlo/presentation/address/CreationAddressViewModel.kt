@@ -11,9 +11,9 @@ import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

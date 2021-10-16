@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.OneLineActionBottomSheet">
+        tools:context=".ui.fragment.OneLineActionBottomSheet">
 
         <TextView
             android:id="@+id/bottom_sheet_one_line_action_tv_title"

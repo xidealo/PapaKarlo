@@ -37,6 +37,22 @@ class UserAddressRepository @Inject constructor(
         return userAddress
     }
 
+    override suspend fun saveSelectedUserAddress(userAddressUuid: String) {
+
+    }
+
+    override suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress? {
+        return null
+    }
+
+    override suspend fun observeSelectedUserAddress(): Flow<UserAddress?> {
+        return flow {  }
+    }
+
+    override suspend fun getUserAddressList(): List<UserAddress> {
+        return emptyList()
+    }
+
     override suspend fun assignToUser(userUuid: String) {
         withContext(IO) {
             val savedUserAddressUuid = dataStoreRepo.userAddressUuid.firstOrNull()

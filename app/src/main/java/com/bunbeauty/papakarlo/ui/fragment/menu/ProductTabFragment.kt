@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.menu
 
 import android.os.Bundle
 import android.view.View
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
 
-    override val viewModel: ProductTabViewModel by viewModels { modelFactory }
+    override val viewModel: ProductTabViewModel by viewModels { viewModelFactory }
 
     @Inject
     lateinit var menuProductsAdapter: MenuProductsAdapter

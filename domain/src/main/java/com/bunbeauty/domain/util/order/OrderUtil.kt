@@ -4,7 +4,7 @@ import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
 import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.model.product.ProductPosition
 import com.bunbeauty.domain.util.product.IProductHelper

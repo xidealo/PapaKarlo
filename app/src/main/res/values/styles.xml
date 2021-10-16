@@ -18,6 +18,12 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="DefaultDialog" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/cardViewBackground</item>
+    </style>
+
     <!--use ElementMaterialCard instead of this-->
     <style name="DefaultMaterialCard">
         <item name="cardBackgroundColor">@color/cardViewBackground</item>

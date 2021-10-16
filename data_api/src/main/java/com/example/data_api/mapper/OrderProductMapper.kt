@@ -1,5 +1,6 @@
 package com.example.data_api.mapper
 
+import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.model.product.OrderMenuProduct
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.example.domain_api.mapper.IOrderProductMapper
@@ -47,6 +48,14 @@ class OrderProductMapper @Inject constructor() : IOrderProductMapper {
             uuid = orderProduct.uuid,
             count = orderProduct.count,
             menuProductUuid = ""
+        )
+    }
+
+    override fun toPostServerModel(cartProduct: CartProduct): OrderProductPostServer {
+        return OrderProductPostServer(
+            uuid = cartProduct.uuid,
+            count = cartProduct.count,
+            menuProductUuid = cartProduct.menuProduct.uuid
         )
     }
 }

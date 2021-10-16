@@ -29,7 +29,6 @@ object Constants {
     // TAG
 
     const val NAV_TAG = "Nav"
-    const val CREATE_ORDER_TAG = "CreateOrder"
 
     // PAYMENT
 
@@ -60,6 +59,10 @@ object Constants {
 
     const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
     const val HH_MM_PATTERN = "HH:mm"
+
+    // TIME
+    const val MIN_DEFERRED_HOURS_ADDITION = 1
+    const val MIN_DEFERRED_MINUTES_ADDITION = 0
 
     // ERROR
 
@@ -97,6 +100,8 @@ object Constants {
 
     // ARGS_KEY
 
+    const val SELECTED_HOUR_KEY = "selectedHour"
+    const val SELECTED_MINUTE_KEY = "selectedMinute"
     const val MENU_PRODUCT_UUID_ARGS_KEY = "menuProductUuid"
 
     const val MINUTES_IN_HOUR = 60

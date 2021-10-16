@@ -20,7 +20,7 @@ class CreateAddressFragment : BaseFragment<FragmentCreateAddressBinding>() {
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
-    override val viewModel: CreationAddressViewModel by viewModels { modelFactory }
+    override val viewModel: CreationAddressViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

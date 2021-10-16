@@ -2,13 +2,22 @@ package com.bunbeauty.papakarlo.di.components
 
 import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
-import com.bunbeauty.papakarlo.ui.*
+import com.bunbeauty.papakarlo.ui.MainActivity
+import com.bunbeauty.papakarlo.ui.fragment.OneLineActionBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragment
 import com.bunbeauty.papakarlo.ui.fragment.address.CafeAddressesBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.address.CreateAddressFragment
 import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragment
+import com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragment
+import com.bunbeauty.papakarlo.ui.fragment.cafe.CafeListFragment
+import com.bunbeauty.papakarlo.ui.fragment.cafe.CafeOptionsBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.cart.ConsumerCartFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.menu.MenuFragment
+import com.bunbeauty.papakarlo.ui.fragment.menu.ProductFragment
+import com.bunbeauty.papakarlo.ui.fragment.menu.ProductTabFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.PaymentBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment

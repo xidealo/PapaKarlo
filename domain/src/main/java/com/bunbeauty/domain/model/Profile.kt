@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.model
 
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.order.Order
 
 data class Profile(
     val uuid: String,

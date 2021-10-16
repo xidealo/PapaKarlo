@@ -1,4 +1,4 @@
-package com.example.domain_api.model.entity
+package com.example.domain_api.model.entity.cafe
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

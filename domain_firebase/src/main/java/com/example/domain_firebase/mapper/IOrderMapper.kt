@@ -1,6 +1,6 @@
 package com.example.domain_firebase.mapper
 
-import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.order.Order
 import com.example.domain_firebase.model.entity.cafe.CafeEntity
 import com.example.domain_firebase.model.entity.order.OrderEntity
 import com.example.domain_firebase.model.entity.order.OrderWithProducts

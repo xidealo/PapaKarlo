@@ -64,6 +64,13 @@ class CartProductRepository @Inject constructor(
         cartProductDao.delete(cartProductList.map(cartProductMapper::toEntityModel))
     }
 
+    override suspend fun deleteAllCartProducts() {
+        val cartProductList = cartProductDao.getCartProductList().map { cartProductWithMenuProduct ->
+            cartProductWithMenuProduct.cartProductEntity
+        }
+        cartProductDao.delete(cartProductList)
+    }
+
     private fun List<CartProductWithMenuProduct>.toCartProductList(): List<CartProduct> {
         return this.filter { cartProductWithMenuProduct ->
             cartProductWithMenuProduct.menuProductEntity.visible

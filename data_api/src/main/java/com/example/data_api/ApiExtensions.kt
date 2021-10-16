@@ -11,7 +11,49 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
+suspend fun <T, R> ApiResult<T>.handleResultAndReturn(
+    tag: String,
+    onError: (suspend (ApiError) -> Unit)? = null,
+    onSuccess: (suspend (T) -> R?)
+): R? {
+    when (this) {
+        is ApiResult.Success -> {
+            val result = data
+            logD(tag, "ApiResult.Success $result")
+            if (result != null) {
+                return onSuccess(result)
+            }
+        }
+        is ApiResult.Error -> {
+            logE(tag, "ApiResult.Error $apiError")
+            onError?.invoke(apiError)
+        }
+    }
+
+    return null
+}
+
 suspend fun <T> ApiResult<T>.handleResult(
+    tag: String,
+    onError: (suspend (ApiError) -> Unit)? = null,
+    onSuccess: (suspend (T) -> Unit)
+) {
+    when (this) {
+        is ApiResult.Success -> {
+            val result = data
+            logD(tag, "ApiResult.Success $result")
+            if (result != null) {
+                onSuccess(result)
+            }
+        }
+        is ApiResult.Error -> {
+            logE(tag, "ApiResult.Error $apiError")
+            onError?.invoke(apiError)
+        }
+    }
+}
+
+suspend fun <T> ApiResult<T>.handleNullableResult(
     tag: String,
     onError: (suspend (ApiError) -> Unit)? = null,
     onSuccess: (suspend (T?) -> Unit)
@@ -55,7 +97,7 @@ fun <MS, M> Flow<List<MS>>.mapListFlow(toModel: ((MS) -> M)): Flow<List<M>> {
         .flowOn(Default)
 }
 
-fun <MS, M> Flow<MS?>.mapFlow(toModel: ((MS) -> M)): Flow<M?> {
+fun <MI, MO> Flow<MI?>.mapFlow(toModel: ((MI) -> MO)): Flow<MO?> {
     return flowOn(IO)
         .map { modelServer ->
             modelServer?.let {

@@ -39,8 +39,9 @@ class CafeAddressesBottomSheet : BaseBottomSheet<BottomSheetCafeAddressesBinding
         addressAdapter.setOnItemClickListener { address ->
             setFragmentResult(
                 CAFE_ADDRESS_REQUEST_KEY,
-                bundleOf(RESULT_CAFE_ADDRESS_KEY to address)
+                bundleOf(RESULT_CAFE_ADDRESS_KEY to address.uuid)
             )
+            viewModel.goBack()
         }
         viewDataBinding.bottomSheetCafeAddressesRvResult.adapter = addressAdapter
         viewDataBinding.bottomSheetCafeAddressesRvResult.addItemDecoration(marginItemDecoration)

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.cart
 
 import android.os.Bundle
 import android.view.View
@@ -6,10 +6,9 @@ import androidx.fragment.app.viewModels
 import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.strikeOutText
-import com.bunbeauty.papakarlo.extensions.visible
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
@@ -26,7 +25,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
     @Inject
     lateinit var marginItemDecoration: MarginItemDecoration
 
-    override val viewModel: ConsumerCartViewModel by viewModels { modelFactory }
+    override val viewModel: ConsumerCartViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -34,6 +33,29 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupProductList()
+        viewDataBinding.run {
+            fragmentConsumerCartBtnMenu.setOnClickListener {
+                viewModel.onMenuClicked()
+            }
+            fragmentConsumerCartBtnCrateOrder.setOnClickListener {
+                viewModel.onCreateOrderClicked()
+            }
+            fragmentConsumerCartTvOldTotalCost.strikeOutText()
+            viewModel.deliveryInfo.onEach { deliveryString ->
+                fragmentConsumerCartTvDeliveryInfo.text = deliveryString
+            }.startedLaunch(viewLifecycleOwner)
+            viewModel.oldTotalCost.onEach { oldTotalCost ->
+                fragmentConsumerCartTvOldTotalCost.text = oldTotalCost
+            }.startedLaunch(viewLifecycleOwner)
+            viewModel.cartCost.onEach { cartCost ->
+                fragmentConsumerCartTvNewTotalCost.text = cartCost
+            }.startedLaunch(viewLifecycleOwner)
+        }
+    }
+
+    private fun setupProductList() {
         cartProductAdapter.countChangeListener =
             object : CartProductAdapter.ItemCountChangeListener {
                 override fun onItemCountIncreased(item: CartProductItem) {
@@ -47,42 +69,15 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
         viewDataBinding.run {
             fragmentConsumerCartRvResult.addItemDecoration(marginItemDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter
-            fragmentConsumerCartBtnMenu.setOnClickListener {
-                viewModel.onMenuClicked()
-            }
-            fragmentConsumerCartBtnCrateOrder.setOnClickListener {
-                viewModel.onCreateOrderClicked()
-            }
-            fragmentConsumerCartTvOldTotalCost.strikeOutText()
+
             viewModel.orderProductListState.onEach { state ->
-                when (state) {
-                    is State.Empty -> {
-                        fragmentConsumerCartGroupEmptyCart.visible()
-                        fragmentConsumerCartGroupNotEmptyCart.gone()
-                        fragmentConsumerCartPbLoading.gone()
-                    }
-                    is State.Success -> {
-                        fragmentConsumerCartGroupEmptyCart.gone()
-                        fragmentConsumerCartGroupNotEmptyCart.visible()
-                        fragmentConsumerCartPbLoading.gone()
-                        cartProductAdapter.submitList(state.data)
-                    }
-                    is State.Loading -> {
-                        fragmentConsumerCartGroupEmptyCart.gone()
-                        fragmentConsumerCartGroupNotEmptyCart.gone()
-                        fragmentConsumerCartPbLoading.visible()
-                    }
-                    else -> Unit
+                fragmentConsumerCartGroupEmptyCart.toggleVisibility(state is State.Empty)
+                fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(state is State.Success)
+                fragmentConsumerCartPbLoading.toggleVisibility(state is State.Loading)
+
+                if (state is State.Success) {
+                    cartProductAdapter.submitList(state.data)
                 }
-            }.startedLaunch(viewLifecycleOwner)
-            viewModel.deliveryInfo.onEach { deliveryString ->
-                fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-            }.startedLaunch(viewLifecycleOwner)
-            viewModel.oldTotalCost.onEach { oldTotalCost ->
-                fragmentConsumerCartTvOldTotalCost.text = oldTotalCost
-            }.startedLaunch(viewLifecycleOwner)
-            viewModel.cartCost.onEach { cartCost ->
-                fragmentConsumerCartTvNewTotalCost.text = cartCost
             }.startedLaunch(viewLifecycleOwner)
         }
     }

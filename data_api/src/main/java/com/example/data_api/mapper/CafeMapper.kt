@@ -3,7 +3,7 @@ package com.example.data_api.mapper
 import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.example.domain_api.mapper.ICafeMapper
-import com.example.domain_api.model.entity.CafeEntity
+import com.example.domain_api.model.entity.cafe.CafeEntity
 import com.example.domain_api.model.server.CafeServer
 import javax.inject.Inject
 

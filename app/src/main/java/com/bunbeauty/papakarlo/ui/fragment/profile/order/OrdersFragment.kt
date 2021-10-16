@@ -22,7 +22,7 @@ class OrdersFragment : BaseFragment<FragmentOrdersBinding>() {
     @Inject
     lateinit var mardinItemDecoration: MarginItemDecoration
 
-    override val viewModel: OrdersViewModel by viewModels { modelFactory }
+    override val viewModel: OrdersViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

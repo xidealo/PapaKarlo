@@ -23,6 +23,35 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
     override val currentTimeMinute: Int
         get() = DateTime.now().minuteOfHour
 
+    override fun getTimeHourIn(hours: Int, minutes: Int): Int {
+        return DateTime.now()
+            .plusHours(hours)
+            .plusMinutes(minutes)
+            .hourOfDay
+    }
+
+    override fun getTimeMinuteIn(hours: Int, minutes: Int): Int {
+        return DateTime.now()
+            .plusHours(hours)
+            .plusMinutes(minutes)
+            .minuteOfHour
+    }
+
+    override fun getHour(millis: Long): Int {
+        return DateTime(millis).hourOfDay
+    }
+
+    override fun getMinute(millis: Long): Int {
+        return DateTime(millis).minuteOfHour
+    }
+
+    override fun getMillis(hours: Int, minutes: Int): Long {
+        return DateTime.now()
+            .withHourOfDay(hours)
+            .withMinuteOfHour(minutes)
+            .millis
+    }
+
     override fun getMinutesFromNowToTime(time: String): Int {
         val hoursMinutes = time
             .split(TIME_DIVIDER)

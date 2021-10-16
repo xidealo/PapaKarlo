@@ -26,7 +26,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     @Inject
     lateinit var marginItemDecoration: MarginItemDecoration
 
-    override val viewModel: OrderDetailsViewModel by viewModels { modelFactory }
+    override val viewModel: OrderDetailsViewModel by viewModels { viewModelFactory }
 
     private val orderUuid: String by argument()
 

@@ -31,9 +31,13 @@ class StringUtil @Inject constructor(
         return cafeAddress?.address ?: ""
     }
 
-    override fun getUserAddressString(userAddress: UserAddress?): String {
+    override fun getCafeAddressString(cafe: Cafe?): String? {
+        return cafe?.address
+    }
+
+    override fun getUserAddressString(userAddress: UserAddress?): String? {
         return if (userAddress == null) {
-            ""
+            null
         } else {
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)

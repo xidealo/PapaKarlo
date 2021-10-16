@@ -56,30 +56,21 @@
                     app:switcherMainTextColor="@color/white" />
 
                 <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-                    android:id="@+id/fragment_create_order_nc_phone"
-                    style="@style/NavigationCard"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:icon="@drawable/ic_right_arrow"
-                    android:text="@string/action_create_order_phone"
-                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
-                    app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_cs_delivery" />
-
-                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_add_address"
                     style="@style/NavigationCard"
                     android:layout_marginTop="@dimen/small_margin"
                     android:icon="@drawable/ic_add"
-                    android:text="@string/action_create_order_address"
+                    android:text="@string/hint_create_order_delivery_address"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_phone" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_cs_delivery" />
 
                 <com.bunbeauty.papakarlo.ui.custom.TextCard
                     android:id="@+id/fragment_create_order_tc_address"
                     style="@style/TextCard"
                     android:layout_marginTop="@dimen/small_margin"
-                    android:hint="@string/hint_create_order_address"
+                    android:hint="@string/hint_create_order_delivery_address"
+                    android:icon="@drawable/ic_right_arrow"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_address"
@@ -100,20 +91,11 @@
                     style="@style/TextCard"
                     android:layout_marginTop="@dimen/small_margin"
                     android:hint="@string/hint_create_order_comment"
+                    android:icon="@drawable/ic_right_arrow"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_comment"
                     tools:text="Не забудьте привезти еду" />
-
-                <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-                    android:id="@+id/fragment_create_order_nc_add_deferred_time"
-                    style="@style/NavigationCard"
-                    android:layout_marginTop="@dimen/small_margin"
-                    android:icon="@drawable/ic_right_arrow"
-                    android:text="@string/action_create_order_delivery_time"
-                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
-                    app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_comment" />
 
                 <com.bunbeauty.papakarlo.ui.custom.TextCard
                     android:id="@+id/fragment_create_order_tc_deferred_time"
@@ -121,10 +103,11 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginBottom="@dimen/small_margin"
                     android:hint="@string/hint_create_order_delivery_time"
-                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
+                    android:icon="@drawable/ic_right_arrow"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_nc_add_deferred_time"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tc_comment"
                     tools:text="Как можно скорее" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -205,15 +188,5 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tv_amount_to_pay" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ProgressBar
-            android:id="@+id/fragment_create_order_pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,11 +4,11 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragmentDirections.toOrderBottomSheet
 import com.bunbeauty.presentation.item.OrderItem
 import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

@@ -6,9 +6,14 @@ import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragmentDirections.backToProfileFragment
+import com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragmentDirections.toCreateOrderFragment
+import com.bunbeauty.presentation.enums.SuccessLoginDirection
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.example.data_api.Api
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,11 +45,14 @@ class ConfirmViewModel @Inject constructor(
         mutableIsLoading.value = true
     }
 
-    fun onSuccessVerified() {
+    fun onSuccessVerified(successLoginDirection: SuccessLoginDirection) {
         viewModelScope.launch {
             userRepo.refreshUser()
-            goBack()
-            goBack()
+
+            when (successLoginDirection) {
+                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
+                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
+            }
         }
     }
 

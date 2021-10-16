@@ -3,18 +3,19 @@ package com.bunbeauty.papakarlo.presentation.cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
+import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.backToMenuFragment
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections.toCreateOrder
+import com.bunbeauty.papakarlo.ui.fragment.cart.ConsumerCartFragmentDirections.*
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.item.CartProductItem
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -23,7 +24,8 @@ class ConsumerCartViewModel @Inject constructor(
     private val resourcesProvider: IResourcesProvider,
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
-    private val productHelper: IProductHelper
+    private val productHelper: IProductHelper,
+    private val authUtil: IAuthUtil,
 ) : CartViewModel() {
 
     private val mutableOrderProductListState: MutableStateFlow<State<List<CartProductItem>>> =
@@ -47,7 +49,11 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun onCreateOrderClicked() {
-        router.navigate(toCreateOrder())
+        if (authUtil.isAuthorize) {
+            router.navigate(toCreateOrder())
+        } else {
+            router.navigate(toLoginFragment(TO_CREATE_ORDER))
+        }
     }
 
     private fun subscribeOnCartProducts() {

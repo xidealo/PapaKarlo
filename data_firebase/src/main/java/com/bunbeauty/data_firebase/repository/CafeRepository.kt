@@ -28,6 +28,22 @@ class CafeRepository @Inject constructor(
         cafeDao.refreshCafeList(cafeWithDistrictsList)
     }
 
+    override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
+        return null
+    }
+
+    override suspend fun getCafeList(): List<Cafe> {
+        return emptyList()
+    }
+
+    override suspend fun saveSelectedCafeUuid(cafeUuid: String) {
+
+    }
+
+    override suspend fun observeSelectedCafe(): Flow<Cafe?> {
+        return flow{}
+    }
+
     override fun observeCafeList(): Flow<List<Cafe>> {
         return cafeDao.observeCafeList()
             .flowOn(IO)

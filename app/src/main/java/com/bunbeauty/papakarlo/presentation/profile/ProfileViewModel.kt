@@ -6,11 +6,12 @@ import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Profile
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.presentation.item.OrderItem
 import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -68,7 +69,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onLoginClicked() {
-        router.navigate(toLoginFragment())
+        router.navigate(toLoginFragment(BACK_TO_PROFILE))
     }
 
     private fun subscribeOnProfile() {

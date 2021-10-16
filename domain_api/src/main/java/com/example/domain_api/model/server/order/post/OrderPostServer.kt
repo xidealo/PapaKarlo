@@ -1,7 +1,9 @@
 package com.example.domain_api.model.server.order.post
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class OrderPostServer(
 
     @SerialName("uuid")
@@ -23,8 +25,11 @@ data class OrderPostServer(
     val orderProducts: List<OrderProductPostServer>,
 
     @SerialName("profileUuid")
-    val userUuid: String,
+    val profileUuid: String,
 
     @SerialName("addressUuid")
     val addressUuid: String?,
+
+    @SerialName("cafeUuid")
+    val cafeUuid: String?,
 )

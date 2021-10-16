@@ -1,16 +1,16 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.menu
 
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import coil.load
-import com.bunbeauty.common.State
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.*
+import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.startedLaunch
+import com.bunbeauty.papakarlo.extensions.strikeOutText
+import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -25,7 +25,7 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
     override val isCartVisible = true
     override val isBottomBarVisible = true
 
-    override val viewModel: ProductViewModel by viewModels { modelFactory }
+    override val viewModel: ProductViewModel by viewModels { viewModelFactory }
 
     private val menuProductUuid: String by argument()
     private val photo: Bitmap by argument()

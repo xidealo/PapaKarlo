@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_products_cl_main"
         style="@style/DefaultPage"
-        tools:context=".ui.ProductTabFragment">
+        tools:context=".ui.fragment.menu.ProductTabFragment">
 
         <ProgressBar
             android:id="@+id/activity_main_pb_loading"

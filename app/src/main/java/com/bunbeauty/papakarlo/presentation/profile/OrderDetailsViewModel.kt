@@ -4,18 +4,18 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.product.OrderProduct
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.item.OrderProductItem
 import com.bunbeauty.presentation.model.OrderUI
 import com.bunbeauty.presentation.util.string.IStringUtil
+import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

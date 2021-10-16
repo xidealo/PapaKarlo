@@ -11,6 +11,9 @@ abstract class BaseListAdapter<I : BaseItem, V : ViewBinding, VH : BaseViewHolde
 
     private var onItemClickListener: ((I) -> Unit)? = null
 
+    protected val hasItemClickListener: Boolean
+        get() = onItemClickListener != null
+
     fun setOnItemClickListener(listener: (I) -> Unit) {
         onItemClickListener = listener
     }

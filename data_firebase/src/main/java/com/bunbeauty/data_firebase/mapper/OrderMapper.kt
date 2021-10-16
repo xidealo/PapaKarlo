@@ -1,9 +1,9 @@
 package com.bunbeauty.data_firebase.mapper
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.Order
 import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.order.Order
 import com.example.domain_firebase.mapper.ICafeMapper
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IOrderProductMapper

@@ -1,9 +1,9 @@
 package com.bunbeauty.papakarlo.di.modules
 
+import com.bunbeauty.data_firebase.Firebase
 import com.bunbeauty.data_firebase.repository.*
 import com.bunbeauty.domain.repo.*
-import com.bunbeauty.papakarlo.di.annotation.Firebase
-import com.example.domain_firebase.repo.*
+import com.example.domain_firebase.repo.FirebaseRepo
 import dagger.Binds
 import dagger.Module
 

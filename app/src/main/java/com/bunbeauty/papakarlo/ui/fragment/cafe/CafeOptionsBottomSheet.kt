@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.cafe
 
 import android.annotation.SuppressLint
 import android.content.Intent

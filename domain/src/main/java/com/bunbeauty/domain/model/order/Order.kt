@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model
+package com.bunbeauty.domain.model.order
 
 import android.os.Parcelable
 import com.bunbeauty.domain.enums.OrderStatus

@@ -1,8 +1,11 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.Order
+import com.bunbeauty.domain.model.order.Order
+import com.bunbeauty.domain.model.order.OrderDetails
+import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
+import com.example.data_api.Api
 import com.example.data_api.dao.OrderDao
 import com.example.data_api.mapFlow
 import com.example.data_api.mapListFlow
@@ -12,11 +15,12 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
-    private val authUtil: IAuthUtil,
     private val orderDao: OrderDao,
+    @Api private val cartProductRepo: CartProductRepo,
+    private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
-    private val apiRepo: ApiRepo
-) : OrderRepo {
+    private val authUtil: IAuthUtil,
+) : BaseRepository(), OrderRepo {
 
     override fun observeOrderList(): Flow<List<Order>> {
         val userUuid = authUtil.userUuid
@@ -32,7 +36,15 @@ class OrderRepository @Inject constructor(
         return orderDao.observeLastOrderByUserUuid(userUuid ?: "").mapFlow(orderMapper::toModel)
     }
 
-    override suspend fun saveOrder(order: Order) {
-        apiRepo.postOrder(orderMapper.toPostServerModel(order))
+    override suspend fun createOrder(orderDetails: OrderDetails): Order? {
+        val cartProductList = cartProductRepo.getCartProductList()
+        val orderPostServer = orderMapper.toPostServerModel(orderDetails, cartProductList)
+        return apiRepo.postOrder(orderPostServer).handleResultAndReturn { oderServer ->
+            val order = orderMapper.toEntityModel(oderServer)
+            orderDao.insertOrder(order)
+            cartProductRepo.deleteAllCartProducts()
+
+            orderMapper.toModel(order)
+        }
     }
 }

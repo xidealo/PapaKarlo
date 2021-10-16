@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment.cafe
 
 import android.os.Bundle
 import android.view.View
@@ -23,7 +23,7 @@ class CafeListFragment : TopbarCartFragment<FragmentCafeListBinding>() {
     override val isCartVisible = true
     override val isBottomBarVisible = true
 
-    override val viewModel: CafeListViewModel by viewModels { modelFactory }
+    override val viewModel: CafeListViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

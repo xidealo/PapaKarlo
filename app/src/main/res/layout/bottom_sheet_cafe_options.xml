@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         style="@style/DefaultBottomSheet"
-        tools:context=".ui.CafeOptionsBottomSheet">
+        tools:context=".ui.fragment.cafe.CafeOptionsBottomSheet">
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_cafe_options_nc_call"

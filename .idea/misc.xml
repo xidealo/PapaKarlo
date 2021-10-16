@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_select_city.xml" value="0.39791666666666664" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_addresses.xml" value="0.5250255362614913" />
+        <entry key="app/src/main/res/layout/dialog_select_time.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/element_address.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.5354166666666667" />

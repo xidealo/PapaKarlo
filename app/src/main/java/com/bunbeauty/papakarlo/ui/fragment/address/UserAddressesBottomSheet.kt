@@ -51,8 +51,9 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
                 addressAdapter.setOnItemClickListener { address ->
                     setFragmentResult(
                         USER_ADDRESS_REQUEST_KEY,
-                        bundleOf(RESULT_USER_ADDRESS_KEY to address)
+                        bundleOf(RESULT_USER_ADDRESS_KEY to address.uuid)
                     )
+                    viewModel.goBack()
                 }
             }
             bottomSheetUserAddressesRvResult.adapter = addressAdapter

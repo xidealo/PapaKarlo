@@ -6,11 +6,12 @@ import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.di.annotation.Api
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.event.BaseEvent
-import com.bunbeauty.papakarlo.ui.LoginFragmentDirections.toConfirmFragment
+import com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragmentDirections.toConfirmFragment
+import com.bunbeauty.presentation.enums.SuccessLoginDirection
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.example.data_api.Api
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -68,9 +69,17 @@ class LoginViewModel @Inject constructor(
     fun onCodeSent(
         phone: String,
         verificationId: String,
-        resendToken: PhoneAuthProvider.ForceResendingToken
+        resendToken: PhoneAuthProvider.ForceResendingToken,
+        successLoginDirection: SuccessLoginDirection
     ) {
-        router.navigate(toConfirmFragment(phone, verificationId, resendToken))
+        router.navigate(
+            toConfirmFragment(
+                phone,
+                verificationId,
+                resendToken,
+                successLoginDirection
+            )
+        )
     }
 
     class PhoneCheckedEvent(val phone: String) : BaseEvent()

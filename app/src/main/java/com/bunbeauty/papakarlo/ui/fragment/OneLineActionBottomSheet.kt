@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui
+package com.bunbeauty.papakarlo.ui.fragment
 
 import android.os.Bundle
 import android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE

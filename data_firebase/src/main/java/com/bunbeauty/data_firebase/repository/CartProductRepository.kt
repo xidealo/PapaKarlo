@@ -1,12 +1,12 @@
 package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.CartProductDao
-import com.example.domain_firebase.model.entity.order.CartProductCountEntity
-import com.example.domain_firebase.model.entity.product.CartProductEntity
-import com.example.domain_firebase.model.entity.product.CartProductWithMenuProduct
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.example.domain_firebase.mapper.ICartProductMapper
+import com.example.domain_firebase.model.entity.order.CartProductCountEntity
+import com.example.domain_firebase.model.entity.product.CartProductEntity
+import com.example.domain_firebase.model.entity.product.CartProductWithMenuProduct
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
@@ -58,6 +58,10 @@ class CartProductRepository @Inject constructor(
 
     override suspend fun deleteCartProductList(cartProductList: List<CartProduct>) {
         cartProductDao.delete(cartProductList.map(cartProductMapper::toEntityModel))
+    }
+
+    override suspend fun deleteAllCartProducts() {
+
     }
 
     private fun Flow<List<CartProductWithMenuProduct>>.mapCartProducts(): Flow<List<CartProduct>> {

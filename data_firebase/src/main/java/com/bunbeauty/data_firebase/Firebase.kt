@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.annotation
+package com.bunbeauty.data_firebase
 
 import javax.inject.Qualifier
 

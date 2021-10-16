@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
 
     override val isToolbarVisible = false
-    override val viewModel: SelectCityViewModel by viewModels { modelFactory }
+    override val viewModel: SelectCityViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)

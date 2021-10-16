@@ -21,7 +21,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
 
-    override val viewModel: SettingsViewModel by viewModels { modelFactory }
+    override val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
