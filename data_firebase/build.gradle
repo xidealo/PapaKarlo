@@ -49,14 +49,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
-    implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
-    implementation "com.google.android.material:material:$rootProject.materialDesignVersion"
-    testImplementation "io.mockk:mockk:$rootProject.mockVerchion"
-    androidTestImplementation "androidx.test:runner:$rootProject.runnerVerchion"
-    androidTestImplementation "androidx.test:rules:$rootProject.rulesVerchion"
-
     //Room
     implementation "androidx.room:room-runtime:$rootProject.roomDatabaseVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomDatabaseVersion"

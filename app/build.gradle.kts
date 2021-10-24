@@ -20,16 +20,6 @@ dependencies {
 
     debugImplementation("com.squareup.leakcanary:leakcanary-android:2.7")
 
-    /*
-      implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
-      implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
-      implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
-      implementation "no.nordicsemi.android.support.v18:scanner:$rootProject.scannerVersion"
-      implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
-      implementation "com.android.support:appcompat-v7:$rootProject.appcompatV7Version"
-      implementation "com.android.support:design:$rootProject.designVersion"
-      */
-
     implementation(Google.material)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)

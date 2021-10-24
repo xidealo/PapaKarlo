@@ -15,7 +15,6 @@ import dagger.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-
 @Module
 interface InteractorModule {
 
