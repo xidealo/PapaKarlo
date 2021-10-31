@@ -3,6 +3,8 @@
     <attr name="colorOnSurfaceVariant" format="reference|color" />
     <attr name="colorStroke" format="reference|color" />
     <attr name="colorNavigation" format="reference|color" />
+    <attr name="logo_top" format="reference" />
+    <attr name="logo_start" format="reference" />
 
     <declare-styleable name="ProgressButton">
         <attr name="buttonText" format="string" />

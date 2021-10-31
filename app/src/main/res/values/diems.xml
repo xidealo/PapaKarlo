@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- SIZE -->
-    <dimen name="match_constraints">0dp</dimen>
-
     <!-- TEXT -->
     <dimen name="large_text_size">16sp</dimen>
     <dimen name="medium_text_size">14sp</dimen>
@@ -40,6 +37,7 @@
     <dimen name="image_element_height">72dp</dimen>
     <dimen name="empty_cart_img_size">176dp</dimen>
     <dimen name="empty_profile_size">176dp</dimen>
+    <dimen name="top_logo_height">48dp</dimen>
 
     <!-- RADIUS -->
     <dimen name="large_radius">16dp</dimen>

@@ -49,7 +49,7 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mutableViewDataBinding = getBinding(inflater, container)
+        mutableViewDataBinding = getBinding(requireActivity().layoutInflater, container)
         return viewDataBinding.root
     }
 

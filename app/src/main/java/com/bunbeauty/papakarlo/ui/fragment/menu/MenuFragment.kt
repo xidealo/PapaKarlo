@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.ui.fragment.menu
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.ColorRes
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.fragment.app.viewModels
@@ -14,6 +14,7 @@ import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import javax.inject.Inject
@@ -40,20 +41,20 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
         viewDataBinding.fragmentMenuTl.addOnTabSelectedListener(
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
-                    setIconColor(tab, R.color.colorPrimary)
+                    setIconColor(tab, R.attr.colorPrimary)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    setIconColor(tab, R.color.actionTextColor)
+                    setIconColor(tab, R.attr.colorOnSurfaceVariant)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                 }
 
-                fun setIconColor(tab: TabLayout.Tab?, @ColorRes colorId: Int) {
+                fun setIconColor(tab: TabLayout.Tab?, colorAttrId: Int) {
                     tab?.icon?.colorFilter =
                         BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                            resourcesProvider.getColor(colorId),
+                            MaterialColors.getColor(requireContext(), colorAttrId, Color.BLACK),
                             BlendModeCompat.SRC_ATOP
                         )
                 }

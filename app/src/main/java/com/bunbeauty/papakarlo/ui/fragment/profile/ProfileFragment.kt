@@ -83,7 +83,7 @@ class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
             viewDataBinding.fragmentProfileNcAddresses.run {
                 if (hasAddresses) {
                     cardText = resourcesProvider.getString(R.string.action_profile_your_addresses)
-                    icon = resourcesProvider.getDrawable(R.drawable.ic_right_arrow)
+                    icon = resourcesProvider.getDrawable(R.drawable.ic_address)
                 } else {
                     cardText = resourcesProvider.getString(R.string.action_profile_create_address)
                     icon = resourcesProvider.getDrawable(R.drawable.ic_add)
