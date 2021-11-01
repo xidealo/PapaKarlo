@@ -19,9 +19,9 @@
         tools:replace="android:icon"
         tools:targetApi="n">
         <activity
-            android:name="com.bunbeauty.papakarlo.ui.MainActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.LoadingScreen">
+            android:name="com.bunbeauty.papakarlo.ui.MainActivity"
+            android:theme="@style/LoadingAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

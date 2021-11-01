@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.fragment.create_order.CreateOrderFragment">
 
         <ScrollView
@@ -37,23 +38,13 @@
 
                 <com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
                     android:id="@+id/fragment_create_order_cs_delivery"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    style="@style/Switcher"
                     android:layout_marginTop="@dimen/medium_margin"
-                    android:elevation="0dp"
-                    app:backgroundColor="@color/white"
-                    app:buttonColor="@color/colorPrimary"
-                    app:cardCornerRadius="@dimen/medium_radius"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_order_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_order_gl_left"
                     app:layout_constraintTop_toTopOf="parent"
                     app:leftButtonText="@string/action_create_order_delivery"
-                    app:rightButtonText="@string/action_create_order_pickup"
-                    app:switcherAlternativeTextColor="@color/secondaryTextColor"
-                    app:switcherButtonMargin="@dimen/very_small_margin"
-                    app:switcherButtonRadius="@dimen/medium_radius"
-                    app:switcherHeight="@dimen/switcher_height"
-                    app:switcherMainTextColor="@color/white" />
+                    app:rightButtonText="@string/action_create_order_pickup" />
 
                 <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                     android:id="@+id/fragment_create_order_nc_add_address"
@@ -123,14 +114,14 @@
             android:id="@+id/fragment_create_order_cl_bottom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/cardViewBackground"
+            android:background="?attr/colorSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_total"
-                style="@style/MediumRegularText"
+                style="@style/MediumRegularWrapConstraintsText"
                 android:layout_margin="@dimen/medium_margin"
                 android:text="@string/msg_create_order_total_cost"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_create_order_tv_total_value"
@@ -139,7 +130,7 @@
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_total_value"
-                style="@style/MediumRegularText"
+                style="@style/MediumRegularWrapContentText"
                 android:layout_marginEnd="@dimen/medium_margin"
                 app:layout_constraintBaseline_toBaselineOf="@+id/fragment_create_order_tv_total"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +138,7 @@
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_delivery"
-                style="@style/MediumRegularText"
+                style="@style/MediumRegularWrapConstraintsText"
                 android:layout_margin="@dimen/medium_margin"
                 android:text="@string/msg_create_order_delivery_cost"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_create_order_tv_delivery_value"
@@ -156,7 +147,7 @@
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_delivery_value"
-                style="@style/MediumRegularText"
+                style="@style/MediumRegularWrapContentText"
                 android:layout_marginEnd="@dimen/medium_margin"
                 app:layout_constraintBaseline_toBaselineOf="@+id/fragment_create_order_tv_delivery"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +155,7 @@
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_amount_to_pay"
-                style="@style/MediumBoldText"
+                style="@style/MediumBoldWrapConstraintsText"
                 android:layout_margin="@dimen/medium_margin"
                 android:text="@string/msg_create_order_amount_to_pay"
                 app:layout_constraintEnd_toStartOf="@+id/fragment_create_order_tv_amount_to_pay_value"
@@ -173,7 +164,7 @@
 
             <TextView
                 android:id="@+id/fragment_create_order_tv_amount_to_pay_value"
-                style="@style/MediumBoldText"
+                style="@style/MediumBoldWrapContentText"
                 android:layout_marginEnd="@dimen/medium_margin"
                 app:layout_constraintBaseline_toBaselineOf="@+id/fragment_create_order_tv_amount_to_pay"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -182,6 +173,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragment_create_order_btn_create_order"
                 style="@style/MainButton"
+                android:layout_margin="@dimen/medium_margin"
                 android:text="@string/action_create_order_checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

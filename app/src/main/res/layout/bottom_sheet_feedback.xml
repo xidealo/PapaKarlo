@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_feedback_tv_title"
-            style="@style/MediumBoldCenterText"
+            style="@style/LargeBoldWrapContentText"
             android:layout_marginTop="@dimen/medium_margin"
             android:text="@string/title_feedback"
             app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_feedback_gl_right"
@@ -32,7 +32,7 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_feedback_nc_vk"
-            style="@style/NavigationCardWithoutShadow"
+            style="@style/ShadowlessNavigationCard"
             android:layout_marginTop="@dimen/medium_margin"
             android:icon="@drawable/ic_vk"
             android:text="@string/action_feedback_vk"
@@ -42,7 +42,7 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_feedback_nc_instagram"
-            style="@style/NavigationCardWithoutShadow"
+            style="@style/ShadowlessNavigationCard"
             android:layout_marginTop="@dimen/small_margin"
             android:icon="@drawable/ic_inst"
             android:text="@string/action_feedback_instagram"
@@ -52,7 +52,7 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_feedback_nc_play_market"
-            style="@style/NavigationCardWithoutShadow"
+            style="@style/ShadowlessNavigationCard"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/medium_margin"
             android:icon="@drawable/ic_google_play"

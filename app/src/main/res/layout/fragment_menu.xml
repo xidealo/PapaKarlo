@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-       style="@style/DefaultPage">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/fragment_menu_tl"
@@ -13,9 +14,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:tabMode="scrollable"
-            app:tabIconTint="@color/mainTextColor"
+            app:tabIconTint="@color/actionTextColor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/fragment_menu_vp"

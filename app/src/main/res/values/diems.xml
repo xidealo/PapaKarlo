@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- SIZE -->
+    <dimen name="match_constraints">0dp</dimen>
+
     <!-- TEXT -->
     <dimen name="large_text_size">16sp</dimen>
     <dimen name="medium_text_size">14sp</dimen>
     <dimen name="small_text_size">12sp</dimen>
+
+    <!-- CHIP -->
+    <dimen name="chip_height">20dp</dimen>
 
     <!-- INPUTS -->
     <dimen name="material_small_input_layout_width">314dp</dimen>
@@ -37,13 +44,10 @@
     <!-- RADIUS -->
     <dimen name="large_radius">16dp</dimen>
     <dimen name="medium_radius">8dp</dimen>
-    <dimen name="small_radius">4dp</dimen>
+    <dimen name="small_radius">6dp</dimen>
 
     <!-- STROKE -->
     <dimen name="button_stroke_width">2dp</dimen>
-
-    <!-- RECYCLER_VIEW -->
-    <dimen name="recycler_view_max_height">264dp</dimen>
 
     <!--COUNT_PICKER -->
     <dimen name="picker_width">28dp</dimen>
@@ -56,5 +60,8 @@
     <dimen name="cart_count_padding">2dp</dimen>
     <dimen name="cart_count_size">24dp</dimen>
     <dimen name="cart_count_margin">12dp</dimen>
+
+    <!--ELEVATION -->
+    <dimen name="no_elevation">0dp</dimen>
 
 </resources>

@@ -6,8 +6,8 @@
 
         <TextView
             android:id="@+id/bottom_sheet_logout_tv_title"
-            style="@style/MediumBoldCenterText"
-            android:layout_marginTop="@dimen/medium_margin"
+            style="@style/LargeBoldWrapContentText"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/title_logout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -16,6 +16,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bottom_sheet_logout_btn_logout"
             style="@style/MainButton"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/action_logout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,12 +24,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/bottom_sheet_logout_cv_cancel"
-            style="@style/MaterialCardWithoutShadow"
-            android:layout_height="@dimen/button_height"
-            android:layout_marginStart="@dimen/medium_margin"
-            android:layout_marginTop="@dimen/small_margin"
-            android:layout_marginEnd="@dimen/medium_margin"
-            android:layout_marginBottom="@dimen/medium_margin"
+            style="@style/MatchConstraintsShadowlessCard"
+            android:layout_margin="@dimen/medium_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,11 +33,10 @@
 
             <TextView
                 android:id="@+id/bottom_sheet_logout_tv_cancel"
-                style="@style/MediumSecondaryRegularText"
-                android:layout_width="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/action_logout_cancel"
-                android:textAllCaps="true" />
+                style="@style/SecondaryMediumRegularWrapContentCapsText"
+                android:layout_margin="@dimen/medium_margin"
+                android:text="@string/action_logout_cancel" />
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

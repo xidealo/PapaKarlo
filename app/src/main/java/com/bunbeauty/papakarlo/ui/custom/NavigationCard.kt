@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+import androidx.core.widget.TextViewCompat
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.card.MaterialCardView
 
@@ -98,6 +99,7 @@ class NavigationCard @JvmOverloads constructor(
                 endToStart = imageViewId
                 setMargins(0, 0, padding, 0)
             }
+            TextViewCompat.setTextAppearance(this, R.style.MediumRegularTextAppearance)
             text = cardText
         }
     }

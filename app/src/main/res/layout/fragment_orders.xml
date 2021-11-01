@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.fragment.profile.order.OrdersFragment">
 
         <TextView
             android:id="@+id/fragment_orders_tv_empty_orders"
-            style="@style/MainText"
-            android:gravity="center"
+            style="@style/MediumRegularWrapContentText"
             android:text="@string/msg_orders_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="4"
             tools:listitem="@layout/element_order" />
 
         <ProgressBar

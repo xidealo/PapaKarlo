@@ -9,7 +9,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_cafe_addresses__tv_title"
-            style="@style/MediumBoldCenterText"
+            style="@style/LargeBoldWrapContentText"
             android:layout_margin="@dimen/medium_margin"
             android:text="@string/title_cafe_addresses"
             app:layout_constraintEnd_toEndOf="parent"

@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/fragment_create_address_mcv_address"
-            style="@style/MaterialCardCreationAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/MatchConstraintsCard"
             android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:context=".ui.fragment.address.CreateAddressFragment">
@@ -24,17 +22,17 @@
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_create_address_gl_left"
-                    app:layout_constraintGuide_begin="@dimen/medium_margin"
-                    android:orientation="vertical"
                     android:layout_width="0dp"
-                    android:layout_height="0dp" />
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_create_address_gl_right"
-                    app:layout_constraintGuide_end="@dimen/medium_margin"
-                    android:orientation="vertical"
                     android:layout_width="0dp"
-                    android:layout_height="0dp" />
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/medium_margin" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_create_address_til_street"
@@ -48,10 +46,7 @@
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/fragment_create_address_et_street"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
+                        style="@style/MaterialInput"
                         android:padding="@dimen/large_padding" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,8 +122,8 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginBottom="@dimen/medium_margin"
                     android:hint="@string/hint_create_address_comment"
-                    app:counterMaxLength="100"
                     app:counterEnabled="true"
+                    app:counterMaxLength="100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
@@ -146,6 +141,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_create_address_btn_create_address"
             style="@style/MainButton"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/action_create_address_save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

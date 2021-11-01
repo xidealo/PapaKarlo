@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_menu_product_mcv_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/MatchParentCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -16,7 +15,6 @@
                 android:id="@+id/element_menu_product_iv_photo"
                 android:layout_width="@dimen/image_element_width"
                 android:layout_height="@dimen/image_element_height"
-                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -24,10 +22,8 @@
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"
-                style="@style/SmallTitle"
-                android:layout_marginStart="@dimen/very_small_margin"
-                android:layout_marginTop="@dimen/very_small_margin"
-                android:layout_marginEnd="@dimen/very_small_margin"
+                style="@style/MediumBoldWrapConstraintsText"
+                android:layout_margin="@dimen/small_margin"
                 app:layout_constraintEnd_toStartOf="@+id/element_menu_product_btn_want"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,17 +31,16 @@
 
             <TextView
                 android:id="@+id/element_menu_product_tv_old_price"
-                style="@style/SmallText"
-                android:layout_marginStart="@dimen/very_small_margin"
-                android:textColor="@color/grey"
+                style="@style/SecondaryMediumRegularWrapContentText"
+                android:layout_margin="@dimen/small_margin"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"
                 tools:text="100 ₽" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_new_price"
-                style="@style/SmallText"
-                android:layout_marginStart="@dimen/very_small_margin"
+                style="@style/MediumRegularWrapContentText"
+                android:layout_margin="@dimen/small_margin"
                 app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_old_price"
                 app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"
                 tools:text="99 ₽" />
@@ -53,7 +48,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/element_menu_product_btn_want"
                 style="@style/SmallButton"
-                android:layout_marginEnd="@dimen/small_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
                 android:text="@string/action_product_want"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

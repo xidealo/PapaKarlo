@@ -10,7 +10,7 @@
 
         <TextView
             android:id="@+id/fragment_confirm_tv_information"
-            style="@style/MainText"
+            style="@style/MediumRegularWrapConstraintsText"
             android:layout_margin="@dimen/small_margin"
             android:gravity="center"
             android:text="@string/msg_confirm_enter_code"
@@ -20,8 +20,9 @@
 
         <TextView
             android:id="@+id/fragment_confirm_tv_phone_information"
-            style="@style/MediumRegularCenterText"
+            style="@style/MediumRegularWrapConstraintsText"
             android:layout_margin="@dimen/medium_margin"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_et_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
             android:digits="1234567890"
             android:inputType="number"
             android:maxLength="6"
-            android:textColor="@color/mainTextColor"
+            android:textAppearance="@style/LargeRegularTextAppearance"
             android:textIsSelectable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,30 +43,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5"
             app:pinAnimationType="fromBottom"
-            app:pinLineStroke="2dp" />
-
-        <TextView
-            android:id="@+id/fragment_confirm_tv_resend_seconds_info"
-            style="@style/HelpTextCenter"
-            android:padding="@dimen/large_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_et_code"
-            tools:text="Получить повторно код можно через 60 секунд" />
+            app:pinLineStroke="2dp"
+            tools:text="123456" />
 
         <LinearLayout
             android:id="@+id/fragment_confirm_ll_resend_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
             android:padding="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_tv_resend_seconds_info">
+            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_et_code">
+
+            <TextView
+                android:id="@+id/fragment_confirm_tv_resend_seconds_info"
+                style="@style/SecondaryMediumRegularWrapContentText"
+                tools:text="Получить повторно код можно через 60 секунд" />
 
             <TextView
                 android:id="@+id/fragment_confirm_tv_resend_code"
-                style="@style/SmallRegularText"
-                android:layout_width="wrap_content"
+                style="@style/SecondaryMediumRegularWrapContentText"
                 android:text="@string/action_confirm_resend_code" />
         </LinearLayout>
 
@@ -80,8 +79,7 @@
 
             <TextView
                 android:id="@+id/fragment_confirm_tv_change_phone"
-                style="@style/SmallRegularText"
-                android:layout_width="wrap_content"
+                style="@style/SecondaryMediumRegularWrapContentText"
                 android:text="@string/action_confirm_change_phone" />
         </LinearLayout>
 

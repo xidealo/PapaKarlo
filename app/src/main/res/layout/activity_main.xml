@@ -7,7 +7,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_main_cl_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:theme="@style/AppTheme">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/activity_main_tb_toolbar"
@@ -35,8 +36,7 @@
 
                 <TextView
                     android:id="@+id/activity_main_tv_cart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/DefaultWrapContentText"
                     android:layout_marginEnd="@dimen/very_small_margin"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/activity_main_iv_cart"
@@ -48,12 +48,12 @@
                     android:id="@+id/activity_main_iv_cart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cart"
                     android:layout_margin="@dimen/cart_count_margin"
+                    android:src="@drawable/ic_cart"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/activity_main_tv_cart_count"
                     app:layout_constraintTop_toTopOf="@+id/activity_main_tv_cart_count"
-                    app:tint="@color/mainTextColor" />
+                    app:tint="@color/actionTextColor" />
 
                 <TextView
                     android:id="@+id/activity_main_tv_cart_count"
@@ -62,7 +62,7 @@
                     android:background="@drawable/background_circle"
                     android:gravity="center"
                     android:padding="@dimen/cart_count_padding"
-                    android:textColor="@color/buttonTextColor"
+                    android:textColor="?attr/colorOnPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="99" />
@@ -84,9 +84,8 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/activity_main_bnv_bottom_navigation"
             style="@style/BottomNavigation"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

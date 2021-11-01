@@ -44,7 +44,7 @@ class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
-                    setIconColor(tab, R.color.mainTextColor)
+                    setIconColor(tab, R.color.actionTextColor)
                 }
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {

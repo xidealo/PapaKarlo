@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
+import androidx.core.widget.TextViewCompat
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.card.MaterialCardView
 
@@ -60,22 +61,6 @@ class TextCard @JvmOverloads constructor(
         DEFAULT_COLOR
     )
 
-    private val textColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.TextCard,
-        R.styleable.TextCard_android_textColor,
-        DEFAULT_COLOR
-    )
-
-    private val hintTextColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.TextCard,
-        R.styleable.TextCard_hintTextColor,
-        DEFAULT_COLOR
-    )
-
     private val innerMargin = getDimensionPixel(
         context,
         attributeSet,
@@ -94,8 +79,8 @@ class TextCard @JvmOverloads constructor(
 
     private val hintTextViewId = generateViewId()
     private val imageViewId = generateViewId()
-    private var hintTextView: TextView = createHintTextView(context, hintText, hintTextColor)
-    private var textView: TextView = createTextView(context, cardText, textColor)
+    private var hintTextView: TextView = createHintTextView(context, hintText)
+    private var textView: TextView = createTextView(context, cardText)
     private var imageView: ImageView = createImageView(context)
 
     init {
@@ -127,11 +112,7 @@ class TextCard @JvmOverloads constructor(
         }
     }
 
-    private fun createHintTextView(
-        context: Context,
-        textViewText: String,
-        textColor: Int
-    ): TextView {
+    private fun createHintTextView(context: Context, textViewText: String): TextView {
         return TextView(context).apply {
             id = hintTextViewId
             textSize = 12f
@@ -141,12 +122,12 @@ class TextCard @JvmOverloads constructor(
                 endToStart = imageViewId
                 setMargins(0, 0, innerMargin, 0)
             }
-            setTextColor(textColor)
+            TextViewCompat.setTextAppearance(this, R.style.SecondarySmallRegularTextAppearance)
             text = textViewText
         }
     }
 
-    private fun createTextView(context: Context, textViewText: String, textColor: Int): TextView {
+    private fun createTextView(context: Context, textViewText: String): TextView {
         return TextView(context).apply {
             textSize = 14f
             layoutParams = ConstraintLayout.LayoutParams(0, WRAP_CONTENT).apply {
@@ -155,7 +136,7 @@ class TextCard @JvmOverloads constructor(
                 endToStart = imageViewId
                 setMargins(0, innerMargin, innerMargin, 0)
             }
-            setTextColor(textColor)
+            TextViewCompat.setTextAppearance(this, R.style.MediumRegularTextAppearance)
             text = textViewText
         }
     }

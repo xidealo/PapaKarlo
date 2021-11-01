@@ -6,13 +6,12 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_address_mcv_main"
-        style="@style/MaterialCardWithoutShadow"
+        style="@style/MatchParentShadowlessCard"
         app:contentPadding="@dimen/large_padding">
 
         <TextView
             android:id="@+id/element_address_tv_address"
-            style="@style/LargeRegularText"
-            android:layout_width="match_parent"
+            style="@style/LargeRegularWrapContentText"
             tools:text="Address" />
     </com.google.android.material.card.MaterialCardView>
 </layout>

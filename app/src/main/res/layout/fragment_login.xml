@@ -20,9 +20,8 @@
 
         <TextView
             android:id="@+id/fragment_login_tv_information"
-            style="@style/MainText"
+            style="@style/MediumRegularWrapContentText"
             android:layout_margin="@dimen/medium_margin"
-            android:gravity="center"
             android:text="@string/title_login_info"
             app:layout_constraintBottom_toTopOf="@+id/fragment_login_til_phone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +46,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_login_btn_login"
             style="@style/MainButton"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/action_login_continue"
             app:layout_constraintTop_toBottomOf="@id/fragment_login_til_phone"
             app:layout_constraintEnd_toEndOf="parent"

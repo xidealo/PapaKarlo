@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="colorOnSurfaceVariant" format="reference|color" />
+    <attr name="colorStroke" format="reference|color" />
+    <attr name="colorNavigation" format="reference|color" />
+
     <declare-styleable name="ProgressButton">
-        <attr name="android:text" />
-        <attr name="android:enabled" />
-        <attr name="android:layout_width" />
-        <attr name="android:layout_height" />
-        <attr name="android:fontFamily" />
-        <attr name="android:textAllCaps" />
-        <attr name="android:layout_marginStart" />
-        <attr name="android:layout_marginEnd" />
-        <attr name="android:layout_marginTop" />
-        <attr name="android:layout_marginBottom" />
-        <attr name="android:backgroundTint" />
-        <attr name="cornerRadius" />
+        <attr name="buttonText" format="string" />
+        <attr name="buttonTextAllCaps" format="boolean" />
+        <attr name="buttonCornerRadius" format="dimension" />
+        <attr name="progressButtonColor" format="color" />
+        <attr name="progressButtonForegroundColor" format="color" />
+        <attr name="progressButtonDisableForegroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="CountPicker">
@@ -24,10 +22,10 @@
     </declare-styleable>
 
     <declare-styleable name="CustomSwitcher">
-        <attr name="backgroundColor" format="color" />
-        <attr name="buttonColor" format="color" />
-        <attr name="switcherMainTextColor" format="color" />
-        <attr name="switcherAlternativeTextColor" format="color" />
+        <attr name="backgroundColor" format="reference|color" />
+        <attr name="buttonColor" format="reference|color" />
+        <attr name="switcherMainTextColor" format="reference|color" />
+        <attr name="switcherAlternativeTextColor" format="reference|color" />
         <attr name="leftButtonText" format="string" />
         <attr name="rightButtonText" format="string" />
         <attr name="switcherHeight" format="dimension" />
@@ -39,7 +37,7 @@
         <attr name="android:text" />
         <attr name="android:icon" />
         <attr name="iconColor" format="color" />
-        <attr name="android:padding"/>
+        <attr name="android:padding" />
     </declare-styleable>
 
     <declare-styleable name="TextCard">

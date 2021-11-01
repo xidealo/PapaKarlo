@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.ui.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -27,13 +28,13 @@ class CustomSwitcher @JvmOverloads constructor(
             }
         }
 
-    private val backgroundColor = getColor(
-        context,
-        attributeSet,
-        R.styleable.CustomSwitcher,
-        R.styleable.CustomSwitcher_backgroundColor,
-        DEFAULT_BACKGROUND_COLOR
-    )
+    //        getColor(
+//        context,
+//        attributeSet,
+//        R.styleable.CustomSwitcher,
+//        R.styleable.CustomSwitcher_backgroundColor,
+//        DEFAULT_BACKGROUND_COLOR
+//    )
     private val buttonColor = getColor(
         context,
         attributeSet,
@@ -95,7 +96,7 @@ class CustomSwitcher @JvmOverloads constructor(
     private val rightButton = createButton(rightButtonText, false)
 
     init {
-        backgroundTintList = ColorStateList.valueOf(backgroundColor)
+        //backgroundTintList = ColorStateList.valueOf(backgroundColor)
 
         val linearLayout = LinearLayout(context).apply {
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -126,12 +127,12 @@ class CustomSwitcher @JvmOverloads constructor(
             }
             setTextColor(ColorStateList.valueOf(textColor))
             text = buttonText
+            cornerRadius = switcherButtonRadius
             val backgroundColor = if (isLeftButton) {
                 buttonColor
             } else {
-                backgroundColor
+                Color.TRANSPARENT
             }
-            cornerRadius = switcherButtonRadius
             backgroundTintList = ColorStateList.valueOf(backgroundColor)
             setOnClickListener {
                 updateButtons(isLeftButton)
@@ -157,7 +158,7 @@ class CustomSwitcher @JvmOverloads constructor(
     }
 
     private fun MaterialButton.makeInactive() {
-        backgroundTintList = ColorStateList.valueOf(backgroundColor)
+        backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
         setTextColor(switcherAlternativeTextColor)
     }
 
@@ -166,7 +167,6 @@ class CustomSwitcher @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_BACKGROUND_COLOR = 0xFFB3BA
         private const val DEFAULT_BUTTON_COLOR = 0xFFB3BA
         private const val DEFAULT_BUTTON_TEXT_COLOR = 0xFFB3BA
         private const val DEFAULT_ALTERNATIVE_TEXT_COLOR = 0xFFB3BA

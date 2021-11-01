@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cart_product_mcv_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/MatchParentCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/element_cart_product_iv_photo"
@@ -19,11 +18,12 @@
                 android:src="@drawable/default_product"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/description_product"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_name"
-                style="@style/MediumBoldText"
+                style="@style/MediumBoldWrapConstraintsText"
                 android:layout_margin="@dimen/small_margin"
                 app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
@@ -32,8 +32,7 @@
 
             <TextView
                 android:id="@+id/element_cart_product_tv_old_cost"
-                style="@style/MediumSecondaryRegularText"
-                android:layout_width="wrap_content"
+                style="@style/SecondaryMediumRegularWrapContentText"
                 android:layout_margin="@dimen/small_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
@@ -43,8 +42,7 @@
 
             <TextView
                 android:id="@+id/element_cart_product_tv_new_cost"
-                style="@style/MediumRegularText"
-                android:layout_width="wrap_content"
+                style="@style/MediumRegularWrapContentText"
                 android:layout_marginStart="@dimen/very_small_margin"
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_marginEnd="@dimen/small_margin"
@@ -62,11 +60,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/medium_margin"
-                app:buttonTextColor="@color/white"
+                app:buttonTextColor="?attr/colorOnPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:pickerColor="@color/colorPrimary"
+                app:pickerColor="?attr/colorPrimary"
                 app:pickerHeight="@dimen/picker_height"
                 app:pickerWidth="@dimen/picker_width" />
         </androidx.constraintlayout.widget.ConstraintLayout>

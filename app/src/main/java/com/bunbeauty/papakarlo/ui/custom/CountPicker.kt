@@ -149,7 +149,7 @@ class CountPicker @JvmOverloads constructor(
         private const val DEFAULT_PICKER_WIDTH = 96f
         private const val DEFAULT_PICKER_HEIGHT = 42f
         private const val DEFAULT_PICKER_COLOR = R.color.colorPrimary
-        private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.white
+        private const val DEFAULT_BUTTON_TEXT_COLOR = R.color.actionTextColor
     }
 
 }

@@ -73,10 +73,18 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         viewDataBinding.executePendingBindings()
 
         viewModel.message.onEach { message ->
-            viewDataBinding.root.showSnackbar(message, R.color.white, R.color.colorPrimary)
+            viewDataBinding.root.showSnackbar(
+                message,
+                R.color.messageTextColor,
+                R.color.colorPrimary
+            )
         }.startedLaunch()
         viewModel.error.onEach { error ->
-            viewDataBinding.root.showSnackbar(error, R.color.white, R.color.errorColor)
+            viewDataBinding.root.showSnackbar(
+                error,
+                R.color.messageTextColor,
+                R.color.errorBackgroundColor
+            )
         }.startedLaunch()
         viewModel.fieldError.onEach { fieldError ->
             textInputMap.values.forEach { textInput ->

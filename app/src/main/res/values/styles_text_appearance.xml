@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TEXT APPEARANCE -->
+    <!-- Naming: [Secondary][Size*][FontWeight*][Caps]TextAppearance -->
+    <!-- Size* : Large, Medium, Small -->
+    <!-- FontWeight* : Regular, Bold -->
+    <!-- * - required -->
+
+    <style name="LargeBoldTextAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:fontFamily">@font/font_roboto_bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LargeRegularTextAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MediumBoldTextAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MediumRegularTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="SecondaryLargeRegularTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="SecondaryMediumBoldTextAppearance" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_bold</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SecondaryMediumRegularTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="SecondaryMediumRegularCapsTextAppearance" parent="SecondaryMediumRegularTextAppearance">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="SecondarySmallRegularTextAppearance" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:fontFamily">@font/font_roboto_regular</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+</resources>

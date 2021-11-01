@@ -1,409 +1,185 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/hintColor</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-    </style>
 
-    <style name="AppTheme.LoadingScreen">
-        <item name="android:windowBackground">@drawable/loading_screen</item>
-    </style>
+    <!-- CARD -->
 
-    <style name="DefaultPage">
-        <item name="android:background">@color/backgroundPage</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="DefaultDialog" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:layout_width">match_parent</item>
+    <style name="BaseCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/cardViewBackground</item>
-    </style>
-
-    <!--use ElementMaterialCard instead of this-->
-    <style name="DefaultMaterialCard">
-        <item name="cardBackgroundColor">@color/cardViewBackground</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
         <item name="cardCornerRadius">@dimen/medium_radius</item>
     </style>
 
-    <style name="MaterialCardWithoutRadius">
-        <item name="cardBackgroundColor">@color/cardViewBackground</item>
+    <style name="MatchParentCard" parent="BaseCard">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="MatchParentShadowlessCard" parent="MatchParentCard">
+        <item name="cardElevation">@dimen/no_elevation</item>
+    </style>
+
+    <style name="MatchConstraintsCard" parent="BaseCard">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="MatchConstraintsShadowlessCard" parent="MatchConstraintsCard">
+        <item name="cardElevation">@dimen/no_elevation</item>
+    </style>
+
+    <style name="NavigationCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="MaterialCardWithoutShadow" parent="DefaultMaterialCard">
-        <item name="cardElevation">0dp</item>
-    </style>
-
-    <style name="ElementMaterialCard" parent="DefaultMaterialCard">
-        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
-        <item name="android:layout_marginBottom">@dimen/very_small_margin</item>
-        <item name="android:layout_marginStart">@dimen/medium_margin</item>
-        <item name="android:layout_marginEnd">@dimen/medium_margin</item>
-    </style>
-
-    <style name="NavigationCard">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="iconColor">?attr/colorOnSurface</item>
+        <item name="cardCornerRadius">@dimen/medium_radius</item>
         <item name="android:padding">@dimen/medium_padding</item>
-        <item name="cardBackgroundColor">@color/cardViewBackground</item>
-        <item name="cardCornerRadius">@dimen/medium_radius</item>
-        <item name="iconColor">@color/black</item>
     </style>
 
-    <style name="NavigationCardWithoutShadow" parent="NavigationCard">
-        <item name="cardElevation">0dp</item>
+    <style name="ShadowlessNavigationCard" parent="NavigationCard">
+        <item name="cardElevation">@dimen/no_elevation</item>
     </style>
 
-    <style name="TextCard">
+    <style name="TextCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="textCardIconColor">?attr/colorOnSurface</item>
         <item name="android:padding">@dimen/medium_padding</item>
-        <item name="textCardIconColor">@color/black</item>
-        <item name="cardBackgroundColor">@color/cardViewBackground</item>
         <item name="cardCornerRadius">@dimen/medium_radius</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="hintTextColor">@color/secondaryTextColor</item>
         <item name="innerMargin">@dimen/very_small_margin</item>
     </style>
+
+    <style name="Switcher" parent="MatchConstraintsCard">
+        <item name="buttonColor">?attr/colorPrimary</item>
+        <item name="switcherMainTextColor">?attr/colorOnPrimary</item>
+        <item name="switcherAlternativeTextColor">?attr/colorOnSurfaceVariant</item>
+        <item name="switcherButtonMargin">@dimen/small_margin</item>
+        <item name="switcherButtonRadius">@dimen/small_radius</item>
+        <item name="switcherHeight">@dimen/button_height</item>
+    </style>
+
+    <!-- INPUT LAYOUT -->
 
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColorHint">@color/grey</item>
-        <item name="android:fontFamily">@font/font_roboto_medium</item>
+        <item name="android:textColorHint">?attr/colorOnSurfaceVariant</item>
+        <item name="boxStrokeColor">?attr/colorStroke</item>
     </style>
 
-    <style name="MaterialInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <!-- INPUT -->
+
+    <style name="MaterialInput">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
     </style>
 
-    <style name="MaterialAutoCompleteText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:background">@color/backgroundComponent</item>
-    </style>
     <!-- BUTTON -->
-    <style name="MainButton">
-        <item name="android:layout_width">match_parent</item>
+
+    <style name="BaseButton" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_height">@dimen/button_height</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
         <item name="cornerRadius">@dimen/medium_radius</item>
-        <item name="android:layout_margin">@dimen/medium_margin</item>
     </style>
 
-    <style name="SmallButton">
+    <style name="MainButton" parent="BaseButton">
+        <item name="android:layout_width">0dp</item>
+    </style>
+
+    <style name="SmallButton" parent="BaseButton">
         <item name="android:layout_width">@dimen/small_button_width</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="cornerRadius">@dimen/medium_radius</item>
-    </style>
-
-    <style name="OutLineButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:padding">@dimen/large_padding</item>
-        <item name="android:layout_margin">@dimen/small_margin</item>
-    </style>
-
-    <style name="ActiveSwitcherButton">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">34dp</item>
-        <item name="android:layout_margin">@dimen/very_small_margin</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <!-- FRAGMENT_PRODUCT -->
-    <style name="TitleFragmentProduct">
-        <item name="android:textSize">@dimen/large_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="CostFragmentProduct">
-        <item name="android:textSize">@dimen/large_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="OldCostFragmentProduct" parent="CostFragmentProduct">
-        <item name="android:textColor">@color/grey</item>
-    </style>
-
-    <style name="GramFragmentProduct">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_light</item>
-    </style>
-
-    <style name="DescriptionFragmentProduct">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <!--TOP BAR-->
-    <style name="TopBar">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="titleTextColor">@color/mainTextColor</item>
-    </style>
-
-    <style name="TopBarText">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawablePadding">4dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
     </style>
 
     <!-- BOTTOM BAR -->
+
     <style name="BottomNavigation">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="labelVisibilityMode">unlabeled</item>
-        <item name="elevation">10dp</item>
-        <item name="itemIconTint">@color/selector_navigation</item>
-        <item name="itemTextColor">@color/selector_navigation</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconTint">?attr/colorNavigation</item>
+        <item name="itemTextColor">?attr/colorNavigation</item>
     </style>
 
-    <!--PRODUCTS-->
+    <!--DEFAULT TEXT-->
 
-    <style name="CostElementProduct">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="OldCostElementProduct" parent="CostElementProduct">
-        <item name="android:textColor">@color/grey</item>
-    </style>
-
-    <!--IMAGE VIEW-->
-    <style name="Icon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <!--CART PRODUCT-->
-    <style name="PriceCartProduct">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/small_margin</item>
-    </style>
-
-    <style name="OldPriceCartProduct" parent="PriceCartProduct">
-        <item name="android:textColor">@color/grey</item>
-    </style>
-
-    <!--CREATION ADDRESS-->
-    <style name="TitleCreationAddress">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
-    </style>
-
-    <!--CREATION ORDER-->
-    <style name="TextCreationOrder">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
-    </style>
-
-    <!--TEXT-->
-    <!-- Naming: [Size*][Secondary][FontWeight*][Center]Text -->
-    <!-- Size* : Large, Medium, Small -->
-    <!-- FontWeight* : Regular, Bold -->
-    <!-- * - required -->
-    <style name="BaseText">
-        <item name="android:textColor">@color/mainTextColor</item>
+    <style name="DefaultWrapConstraintsText" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="MainTitle" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="SmallTitle" parent="BaseText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="MainText" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="LargeMainText" parent="BaseText">
-        <item name="android:textSize">@dimen/large_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="MainTextWrap" parent="MainText">
+    <style name="DefaultWrapContentText" parent="Widget.AppCompat.TextView">
         <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="SmallText" parent="BaseText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="HelpText" parent="BaseText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="HelpTextCenter" parent="HelpText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="SmallRegularCenterText" parent="BaseText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:textAlignment">center</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="SwitchTextAppearance" parent="@android:style/TextAppearance.Holo.Small">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="LargeBoldCenterText" parent="BaseText">
-        <item name="android:textSize">@dimen/large_text_size</item>
-        <item name="android:textAlignment">center</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="SecondaryText" parent="BaseText">
-        <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-
-    <style name="SmallRegularText" parent="BaseText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="SmallSecondaryText" parent="SecondaryText">
-        <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="MediumRegularText" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="MediumRegularCenterText" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="MediumBoldText" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="MediumBoldCenterText" parent="BaseText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="MediumSecondaryBoldText" parent="SecondaryText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_bold</item>
-    </style>
-
-    <style name="MediumSecondaryRegularText" parent="SecondaryText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <style name="MediumSecondaryRegularCenterText" parent="SecondaryText">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="LargeRegularText" parent="BaseText">
-        <item name="android:textSize">@dimen/large_text_size</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <!--ORDER ELEMENT-->
-    <style name="MaterialCardCreationAddress">
-        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/cardViewBackground</item>
-        <item name="cornerRadius">@dimen/medium_radius</item>
-        <item name="android:layout_marginTop">@dimen/very_small_margin</item>
     </style>
+
+    <!--TEXT-->
+    <!-- Naming: [Secondary][Size*][FontWeight*][Width*][Caps]Text -->
+    <!-- Size* : Large, Medium, Small -->
+    <!-- FontWeight* : Regular, Bold -->
+    <!-- Width* : WrapConstrain, WrapContent -->
+    <!-- * - required -->
+
+    <style name="LargeBoldWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/LargeBoldTextAppearance</item>
+    </style>
+
+    <style name="LargeBoldWrapConstraintText" parent="DefaultWrapConstraintsText">
+        <item name="android:textAppearance">@style/LargeBoldTextAppearance</item>
+    </style>
+
+    <style name="LargeRegularWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/LargeRegularTextAppearance</item>
+    </style>
+
+    <style name="LargeRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
+        <item name="android:textAppearance">@style/LargeRegularTextAppearance</item>
+    </style>
+
+    <style name="MediumBoldWrapConstraintsText" parent="DefaultWrapConstraintsText">
+        <item name="android:textAppearance">@style/MediumBoldTextAppearance</item>
+    </style>
+
+    <style name="MediumBoldWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/MediumBoldTextAppearance</item>
+    </style>
+
+    <style name="MediumRegularWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
+    </style>
+
+    <style name="MediumRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
+        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
+    </style>
+
+    <style name="SecondaryLargeRegularWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/SecondaryLargeRegularTextAppearance</item>
+    </style>
+
+    <style name="SecondaryMediumBoldWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/SecondaryMediumBoldTextAppearance</item>
+    </style>
+
+    <style name="SecondaryMediumRegularWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/SecondaryMediumRegularTextAppearance</item>
+    </style>
+
+    <style name="SecondaryMediumRegularWrapContentCapsText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/SecondaryMediumRegularCapsTextAppearance</item>
+    </style>
+
+    <style name="SecondarySmallRegularWrapContentText" parent="DefaultWrapContentText">
+        <item name="android:textAppearance">@style/SecondarySmallRegularTextAppearance</item>
+    </style>
+
 
     <!--ADDRESS-->
     <style name="AddressElement">
         <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:textColor">@color/actionTextColor</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
-    <!--DIVIDER-->
-    <style name="Divider">
-        <item name="android:background">@color/grey</item>
-    </style>
-
-    <style name="Divider.Horizontal" parent="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
     </style>
 
     <!--BOTTOM SHEET-->
@@ -427,14 +203,14 @@
     <style name="IconImageView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="tint">@color/mainTextColor</item>
+        <item name="tint">@color/actionTextColor</item>
         <item name="android:layout_marginEnd">@dimen/medium_margin</item>
     </style>
 
     <!--TOOLBAR-->
 
     <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
-        <item name="colorOnPrimary">@color/mainTextColor</item>
+        <item name="colorOnPrimary">@color/actionTextColor</item>
     </style>
 
     <style name="BlurView">

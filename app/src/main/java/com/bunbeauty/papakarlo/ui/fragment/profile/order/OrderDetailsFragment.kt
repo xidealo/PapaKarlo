@@ -40,7 +40,9 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
 
         viewModel.getOrder(orderUuid)
         viewModel.orderState.onEach { state ->
-            viewDataBinding.fragmentOrderDetailsClMain.toggleVisibility(state is State.Success)
+            viewDataBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
+            viewDataBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
+            viewDataBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
             viewDataBinding.fragmentOrderDetailsClBottomCost.toggleVisibility(state is State.Success)
             viewDataBinding.fragmentOrderDetailsPbLoading.toggleVisibility(state !is State.Success)
 

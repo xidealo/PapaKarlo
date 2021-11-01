@@ -4,7 +4,7 @@
 
     <com.google.android.material.card.MaterialCardView xmlns:tool="http://schemas.android.com/tools"
         android:id="@+id/element_order_mvc_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/MatchParentCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -12,7 +12,7 @@
 
             <TextView
                 android:id="@+id/element_order_tv_code"
-                style="@style/LargeBoldCenterText"
+                style="@style/LargeBoldWrapContentText"
                 android:layout_margin="@dimen/medium_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +21,12 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/element_order_chip_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MediumRegularWrapContentText"
                 android:layout_marginStart="@dimen/small_margin"
                 android:layout_marginTop="@dimen/medium_margin"
                 android:layout_marginBottom="@dimen/medium_margin"
                 android:clickable="false"
-                app:chipMinTouchTargetSize="20dp"
+                app:chipMinTouchTargetSize="@dimen/chip_height"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/element_order_tv_code"
                 app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +34,7 @@
 
             <TextView
                 android:id="@+id/element_order_tv_time"
-                style="@style/SmallSecondaryText"
+                style="@style/SecondarySmallRegularWrapContentText"
                 android:layout_margin="@dimen/medium_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

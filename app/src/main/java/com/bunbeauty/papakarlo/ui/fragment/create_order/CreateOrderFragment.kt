@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.ui.fragment.create_order
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
@@ -16,7 +14,6 @@ import com.bunbeauty.common.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.common.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.domain.util.validator.ITextValidator
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -24,7 +21,6 @@ import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -155,16 +151,5 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
                 fragmentCreateOrderTvAmountToPayValue.text = newAmountToPay
             }.startedLaunch()
         }
-    }
-
-    private fun activateButton(button: MaterialButton) {
-        button.backgroundTintList =
-            ColorStateList.valueOf(resourcesProvider.getColor(R.color.colorPrimary))
-        button.setTextColor(resourcesProvider.getColor(R.color.white))
-    }
-
-    private fun inactivateButton(button: MaterialButton) {
-        button.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-        button.setTextColor(resourcesProvider.getColor(R.color.grey))
     }
 }

@@ -14,6 +14,7 @@
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
+    <string name="description_product">Изображение продукта</string>
 
     <!-- MENU -->
     <string name="title_menu">Меню</string>

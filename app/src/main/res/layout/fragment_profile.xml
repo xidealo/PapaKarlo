@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.fragment.profile.ProfileFragment">
 
         <androidx.constraintlayout.widget.Guideline
@@ -94,11 +95,11 @@
 
         <TextView
             android:id="@+id/fragment_profile_tv_no_profile"
-            style="@style/MainText"
+            style="@style/MediumRegularWrapConstraintsText"
             android:gravity="center"
             android:text="@string/title_profile_no_profile"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
             app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
 
         <ImageView
@@ -106,7 +107,7 @@
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_profile_girl"
+            android:src="@drawable/no_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,10 +116,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_profile_btn_login"
             style="@style/MainButton"
+            android:layout_marginBottom="@dimen/medium_margin"
             android:text="@string/action_profile_login"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_profile_group_no_profile"

@@ -62,10 +62,18 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         viewModel.bundle = arguments
 
         viewModel.message.onEach { message ->
-            viewDataBinding.root.showSnackbar(message, R.color.white, R.color.colorPrimary)
+            viewDataBinding.root.showSnackbar(
+                message,
+                R.color.messageTextColor,
+                R.color.colorPrimary
+            )
         }.startedLaunch()
         viewModel.error.onEach { error ->
-            viewDataBinding.root.showSnackbar(error, R.color.white, R.color.errorColor)
+            viewDataBinding.root.showSnackbar(
+                error,
+                R.color.messageTextColor,
+                R.color.errorBackgroundColor
+            )
         }.startedLaunch()
     }
 

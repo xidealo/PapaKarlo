@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -10,7 +9,7 @@
 
         <TextView
             android:id="@+id/bottom_sheet_deferred_time_tv_title"
-            style="@style/MediumBoldCenterText"
+            style="@style/LargeBoldWrapContentText"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -19,14 +18,14 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/bottom_sheet_deferred_time_mcv_asap"
-            style="@style/NavigationCardWithoutShadow"
+            style="@style/MatchConstraintsShadowlessCard"
             android:layout_margin="@dimen/medium_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_tv_title">
 
             <TextView
-                style="@style/MediumRegularText"
+                style="@style/MediumRegularWrapContentText"
                 android:layout_width="wrap_content"
                 android:layout_margin="@dimen/medium_margin"
                 android:text="@string/msg_deferred_time_asap" />
@@ -34,7 +33,7 @@
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_deferred_time_nc_select_time"
-            style="@style/NavigationCardWithoutShadow"
+            style="@style/ShadowlessNavigationCard"
             android:layout_marginStart="@dimen/medium_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/medium_margin"

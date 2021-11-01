@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/element_cafe_mcv_main"
-        style="@style/DefaultMaterialCard">
+        style="@style/MatchParentCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/large_padding">
+            android:padding="@dimen/medium_padding">
 
             <TextView
                 android:id="@+id/element_cafe_tv_address"
-                style="@style/MainTitle"
-                android:drawablePadding="@dimen/large_padding"
-                app:drawableTint="@color/mainTextColor"
+                style="@style/LargeBoldWrapConstraintText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -25,10 +22,8 @@
 
             <TextView
                 android:id="@+id/element_cafe_tv_work_time"
-                style="@style/MainText"
+                style="@style/MediumRegularWrapConstraintsText"
                 android:layout_marginTop="@dimen/medium_margin"
-                android:drawablePadding="@dimen/large_padding"
-                app:drawableTint="@color/mainTextColor"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_address"
@@ -36,8 +31,8 @@
 
             <TextView
                 android:id="@+id/element_cafe_tv_time_status"
-                style="@style/HelpText"
-                android:layout_marginTop="@dimen/small_margin"
+                style="@style/MediumRegularWrapConstraintsText"
+                android:layout_marginTop="@dimen/very_small_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_work_time"

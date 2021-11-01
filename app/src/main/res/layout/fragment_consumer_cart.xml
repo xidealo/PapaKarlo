@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_consumer_cart_cl_main"
-        style="@style/DefaultPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         tools:context=".ui.fragment.cart.ConsumerCartFragment">
 
         <androidx.constraintlayout.widget.Group
@@ -32,7 +32,8 @@
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_empty_cart"
-            style="@style/MediumRegularCenterText"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:gravity="center"
             android:layout_margin="@dimen/medium_margin"
             android:text="@string/msg_consumer_cart_empty"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_btn_menu"
@@ -43,6 +44,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/fragment_consumer_cart_btn_menu"
             style="@style/MainButton"
+            android:layout_margin="@dimen/medium_margin"
             android:text="@string/action_consumer_cart_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,8 +62,9 @@
 
         <TextView
             android:id="@+id/fragment_consumer_cart_tv_delivery_info"
-            style="@style/MediumRegularCenterText"
+            style="@style/MediumRegularWrapConstraintsText"
             android:layout_margin="@dimen/medium_margin"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +83,6 @@
             tools:itemCount="2"
             tools:listitem="@layout/element_cart_product" />
 
-
         <View
             android:id="@+id/fragment_order_details_v_blur"
             style="@style/BlurView"
@@ -92,14 +94,14 @@
             android:id="@+id/fragment_consumer_cart_cl_bottom"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/cardViewBackground"
+            android:background="?attr/colorSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/fragment_consumer_cart_tv_total"
-                style="@style/MediumBoldText"
+                style="@style/MediumBoldWrapContentText"
                 android:layout_margin="@dimen/medium_margin"
                 android:text="@string/title_consumer_cart_total"
                 app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +109,7 @@
 
             <TextView
                 android:id="@+id/fragment_consumer_cart_tv_old_total_cost"
-                style="@style/MediumSecondaryBoldText"
+                style="@style/SecondaryMediumBoldWrapContentText"
                 android:layout_width="wrap_content"
                 android:layout_marginEnd="@dimen/small_margin"
                 app:layout_constraintBaseline_toBaselineOf="@+id/fragment_consumer_cart_tv_total"
@@ -116,8 +118,7 @@
 
             <TextView
                 android:id="@+id/fragment_consumer_cart_tv_new_total_cost"
-                style="@style/MediumBoldText"
-                android:layout_width="wrap_content"
+                style="@style/MediumBoldWrapContentText"
                 android:layout_marginEnd="@dimen/medium_margin"
                 app:layout_constraintBaseline_toBaselineOf="@+id/fragment_consumer_cart_tv_total"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -126,6 +127,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fragment_consumer_cart_btn_crate_order"
                 style="@style/MainButton"
+                android:layout_margin="@dimen/medium_margin"
                 android:text="@string/action_consumer_cart_checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
