@@ -182,42 +182,18 @@
         <item name="android:textAppearance">@style/SecondarySmallRegularTextAppearance</item>
     </style>
 
-
-    <!--ADDRESS-->
-    <style name="AddressElement">
-        <item name="android:textSize">@dimen/medium_text_size</item>
-        <item name="android:textColor">@color/actionTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="fontFamily">@font/font_roboto_regular</item>
-    </style>
-
     <!--BOTTOM SHEET-->
 
-    <style name="BottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheetModalStyle</item>
-    </style>
-
-    <style name="BottomSheetModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="DefaultBottomSheet">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_bottom_sheet</item>
     </style>
 
-    <!--ICON-->
-
-    <style name="IconImageView">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="BottomSheet">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="tint">@color/actionTextColor</item>
-        <item name="android:layout_marginEnd">@dimen/medium_margin</item>
     </style>
 
-    <style name="BlurView">
+    <style name="Blur">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">16dp</item>
         <item name="android:background">@drawable/background_blur</item>

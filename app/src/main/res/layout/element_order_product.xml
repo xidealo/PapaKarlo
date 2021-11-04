@@ -15,7 +15,7 @@
                 android:id="@+id/element_order_product_iv_photo"
                 android:layout_width="@dimen/image_element_width"
                 android:layout_height="@dimen/image_element_height"
-                android:src="@drawable/default_product"
+                android:src="@drawable/placeholder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:contentDescription="@string/description_product"

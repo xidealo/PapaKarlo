@@ -32,7 +32,6 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         setStyle(STYLE_NORMAL, R.style.BottomSheetTheme)
 
         val viewModelComponent =

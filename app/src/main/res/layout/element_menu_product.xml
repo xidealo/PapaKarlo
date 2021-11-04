@@ -18,7 +18,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/default_product" />
+                tools:src="@drawable/placeholder" />
 
             <TextView
                 android:id="@+id/element_menu_product_tv_title"

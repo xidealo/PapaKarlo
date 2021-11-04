@@ -39,7 +39,7 @@ class OrderProductAdapter @Inject constructor() :
                 elementOrderProductTvOldCost.toggleVisibility(item.oldCost != null)
                 elementOrderProductTvNewCost.text = item.newCost
                 elementOrderProductIvPhoto.load(item.photoLink) {
-                    placeholder(R.drawable.default_product)
+                    placeholder(R.drawable.placeholder)
                 }
             }
         }

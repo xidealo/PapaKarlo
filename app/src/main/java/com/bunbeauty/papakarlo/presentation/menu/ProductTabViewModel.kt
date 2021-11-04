@@ -57,7 +57,7 @@ class ProductTabViewModel @Inject constructor(
             toProductFragment(
                 menuProductItem.uuid,
                 menuProductItem.name,
-                menuProductItem.photoNotWeak.get()?.toBitmap()
+                menuProductItem.photoReference.get()?.toBitmap()
             )
         )
     }

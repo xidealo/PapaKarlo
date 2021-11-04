@@ -23,7 +23,7 @@
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
-            android:src="@drawable/ic_empty_cart"
+            android:src="@drawable/empty_cart"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_tv_empty_cart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
 
         <View
             android:id="@+id/fragment_order_details_v_blur"
-            style="@style/BlurView"
+            style="@style/Blur"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_cl_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

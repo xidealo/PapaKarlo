@@ -52,20 +52,20 @@
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_logout.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_one_line_action.xml" value="0.7107969151670951" />
-        <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5250255362614913" />
+        <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bottom_sheet_select_city.xml" value="0.39791666666666664" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/dialog_select_time.xml" value="0.5354166666666667" />
         <entry key="app/src/main/res/layout/element_address.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />
-        <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.1" />
         <entry key="app/src/main/res/layout/element_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_order_product.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_cafe_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.4" />
-        <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.4588744588744589" />
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_creation_address.xml" value="0.5250255362614913" />
@@ -73,7 +73,7 @@
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_orders.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_products.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.33" />

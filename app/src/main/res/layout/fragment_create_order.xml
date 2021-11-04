@@ -105,7 +105,7 @@
         </ScrollView>
 
         <View
-            style="@style/BlurView"
+            style="@style/Blur"
             app:layout_constraintBottom_toTopOf="@+id/fragment_create_order_cl_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

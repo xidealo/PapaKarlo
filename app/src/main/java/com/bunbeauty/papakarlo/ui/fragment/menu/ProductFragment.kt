@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
@@ -58,7 +57,7 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
                     fragmentProductTvDescription.text = menuProduct.description
                 }
             }
-        }.startedLaunch(viewLifecycleOwner)
+        }.startedLaunch()
         viewModel.getMenuProduct(menuProductUuid)
         viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(menuProductUuid)

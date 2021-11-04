@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout style="@style/DefaultBottomSheet">
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/BottomSheet">
 
         <TextView
             android:id="@+id/bottom_sheet_logout_tv_title"

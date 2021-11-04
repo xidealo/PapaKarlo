@@ -39,7 +39,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/default_product" />
+                    android:src="@drawable/placeholder_large" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/fragment_product_gl_inner_left"

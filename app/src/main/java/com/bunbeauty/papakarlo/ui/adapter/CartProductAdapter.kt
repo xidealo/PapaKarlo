@@ -42,7 +42,7 @@ class CartProductAdapter @Inject constructor() :
                 elementCartProductTvNewCost.text = item.newCost
                 elementCartProductCpCount.count = item.count
                 elementCartProductIvPhoto.load(item.photoLink) {
-                    placeholder(R.drawable.default_product)
+                    placeholder(R.drawable.placeholder)
                 }
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
             }

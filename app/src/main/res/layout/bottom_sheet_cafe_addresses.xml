@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultBottomSheet"
+        style="@style/BottomSheet"
         tools:context=".ui.fragment.address.UserAddressesBottomSheet">
 
         <TextView

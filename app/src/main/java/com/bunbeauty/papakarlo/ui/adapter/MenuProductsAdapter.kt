@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import coil.imageLoader
-import coil.request.ImageRequest
+import coil.load
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
@@ -50,15 +49,18 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvOldPrice.strikeOutText()
                 elementMenuProductTvOldPrice.toggleVisibility(item.oldPrice != null)
 
-                val request = ImageRequest.Builder(elementMenuProductIvPhoto.context)
-                    .data(item.photoLink)
-                    .target { drawable ->
-                        item.photoNotWeak = SoftReference(drawable)
-                        elementMenuProductIvPhoto.setImageDrawable(drawable)
+                val photo = item.photoReference.get()
+                if (photo == null) {
+                    elementMenuProductIvPhoto.load(item.photoLink) {
+                        target { drawable ->
+                            item.photoReference = SoftReference(drawable)
+                            elementMenuProductIvPhoto.setImageDrawable(drawable)
+                        }
+                        placeholder(R.drawable.placeholder)
                     }
-                    .placeholder(R.drawable.default_product)
-                    .build()
-                elementMenuProductIvPhoto.context.imageLoader.enqueue(request)
+                } else {
+                    elementMenuProductIvPhoto.setImageDrawable(photo)
+                }
 
                 elementMenuProductMcvMain.setOnClickListener {
                     onItemClicked(item)
