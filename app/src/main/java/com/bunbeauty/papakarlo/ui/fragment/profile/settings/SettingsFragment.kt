@@ -12,14 +12,9 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: SettingsViewModel by viewModels { viewModelFactory }
 

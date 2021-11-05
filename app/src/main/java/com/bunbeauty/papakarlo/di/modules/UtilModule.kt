@@ -18,10 +18,10 @@ import com.bunbeauty.domain.util.uri.IUriHelper
 import com.bunbeauty.domain.util.uri.UriHelper
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.domain.util.validator.TextValidator
+import com.bunbeauty.papakarlo.ResourcesProvider
 import com.bunbeauty.presentation.util.network.INetworkHelper
 import com.bunbeauty.presentation.util.network.NetworkHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.bunbeauty.presentation.util.resources.ResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.util.string.StringUtil
 import dagger.Binds

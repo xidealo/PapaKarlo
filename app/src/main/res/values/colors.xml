@@ -1,39 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6900</color>
-    <color name="colorPrimaryDark">#FF6900</color>
-    <color name="colorSecondary">#FFFFFF</color>
-    <color name="colorBackground">#F2F1F6</color>
-    <color name="colorSurface">#FFFFFF</color>
-    <color name="colorError">#B1021D</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="orange">#FF6900</color>
+    <color name="light_grey">#F2F1F6</color>
+    <color name="grey">#A7A5A5</color>
+    <color name="red">#B1021D</color>
 
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorOnSecondary">#000000</color>
-    <color name="colorOnBackground">#000000</color>
-    <color name="colorOnSurface">#000000</color>
-    <color name="colorOnSurfaceVariant">#A7A5A5</color>
-    <color name="colorOnError">#FFFFFF</color>
-
-
-    <!-- BACKGROUND -->
-    <color name="pageBackgroundColor">#242526</color>
-    <color name="componentBackgroundColor">#3C3D40</color>
-    <color name="cardBackgroundColor">#2B2C2E</color>
-    <color name="inactiveBackgroundColor">#A6A8AC</color>
-    <color name="errorBackgroundColor">#B1021D</color>
-
-    <!-- TEXT -->
-    <color name="mainTextColor">#FFFFFF</color>
-    <color name="actionTextColor">#FFFFFF</color>
-    <color name="actionTextColorDisabled">#FFFFFF</color>
-    <color name="messageTextColor">#FFFFFF</color>
-    <color name="secondaryTextColor">#A7A5A5</color>
-
-    <!-- ICON -->
-    <color name="mainIconColor">#FFFFFF</color>
-
-    <!-- SPECIAL -->
     <color name="green">#44AF49</color>
-    <color name="red">#FF6B60</color>
+    <color name="light_red">#FF6B60</color>
 
 </resources>

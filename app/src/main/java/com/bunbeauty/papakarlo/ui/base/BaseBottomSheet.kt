@@ -14,6 +14,7 @@ import com.bunbeauty.papakarlo.extensions.getBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
@@ -23,6 +24,9 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     abstract val viewModel: BaseViewModel
 
@@ -60,19 +64,15 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
 
         viewModel.bundle = arguments
 
+        val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
+        val colorOnPrimary = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary)
+        val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
+        val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
         viewModel.message.onEach { message ->
-            viewDataBinding.root.showSnackbar(
-                message,
-                R.color.messageTextColor,
-                R.color.colorPrimary
-            )
+            viewDataBinding.root.showSnackbar(message, colorOnPrimary, colorPrimary)
         }.startedLaunch()
         viewModel.error.onEach { error ->
-            viewDataBinding.root.showSnackbar(
-                error,
-                R.color.messageTextColor,
-                R.color.errorBackgroundColor
-            )
+            viewDataBinding.root.showSnackbar(error, colorOnError, colorError)
         }.startedLaunch()
     }
 

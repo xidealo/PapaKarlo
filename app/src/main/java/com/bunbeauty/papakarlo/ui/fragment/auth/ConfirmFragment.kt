@@ -13,15 +13,11 @@ import com.bunbeauty.papakarlo.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.presentation.enums.SuccessLoginDirection
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     @Inject
     lateinit var phoneVerificationUtil: IPhoneVerificationUtil

@@ -7,5 +7,5 @@ data class CafeItem(
     val address: String,
     val workingHours: String,
     val workingTimeMessage: String,
-    val workingTimeMessageColor: Int
+    val isOpen: Boolean,
 ) : BaseItem()

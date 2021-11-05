@@ -23,7 +23,7 @@
             android:id="@+id/fragment_consumer_cart_iv_empty_cart"
             android:layout_width="@dimen/empty_cart_img_size"
             android:layout_height="@dimen/empty_cart_img_size"
-            android:src="@drawable/empty_cart"
+            android:src="@drawable/empty_cart_papa_karlo"
             app:layout_constraintBottom_toTopOf="@+id/fragment_consumer_cart_tv_empty_cart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

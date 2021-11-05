@@ -10,10 +10,10 @@
 
         <ImageView
             android:id="@+id/fragment_login_iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/login_img_size"
+            android:layout_height="@dimen/login_img_size"
             android:layout_margin="@dimen/large_margin"
-            android:src="@drawable/ic_login"
+            android:src="?attr/logo_login"
             app:layout_constraintBottom_toTopOf="@+id/fragment_login_tv_information"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

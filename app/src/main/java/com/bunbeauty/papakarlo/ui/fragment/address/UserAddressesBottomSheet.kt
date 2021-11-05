@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
 import com.bunbeauty.papakarlo.ui.adapter.AddressAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -25,9 +24,6 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
 
     @Inject
     lateinit var marginItemDecoration: MarginItemDecoration
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: UserAddressesViewModel by viewModels { viewModelFactory }
 

@@ -10,15 +10,10 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 
 class ProfileFragment : TopbarCartFragment<FragmentProfileBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val isCartVisible = true
     override val isBottomBarVisible = true

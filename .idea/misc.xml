@@ -29,14 +29,30 @@
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_email.xml" value="0.161" />
         <entry key="app/src/main/res/drawable/ic_empty_cart.xml" value="0.161" />
+        <entry key="app/src/main/res/drawable/ic_feedback.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_google_play.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_history.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_in_oven.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_inst.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_login.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.303" />
         <entry key="app/src/main/res/drawable/ic_menu.xml" value="0.302" />
+        <entry key="app/src/main/res/drawable/ic_on_fire.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_order.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_oven.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_phone.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/ic_pizza.xml" value="0.14479166666666668" />
+        <entry key="app/src/main/res/drawable/ic_potato.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.2695" />
         <entry key="app/src/main/res/drawable/ic_profile_girl.xml" value="0.2695" />
+        <entry key="app/src/main/res/drawable/ic_resend.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/ic_save.xml" value="0.14479166666666668" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1175925925925926" />
+        <entry key="app/src/main/res/drawable/ic_spice.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_vk.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
         <entry key="app/src/main/res/drawable/loading_screen_papa_karlo.xml" value="0.356" />
@@ -69,7 +85,7 @@
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_creation_address.xml" value="0.5250255362614913" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_orders.xml" value="0.33" />
@@ -80,6 +96,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/menu/logout_menu.xml" value="0.45740740740740743" />
+        <entry key="app/src/main/res/menu/top_menu.xml" value="0.23796296296296296" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.19270833333333334" />
       </map>
     </option>

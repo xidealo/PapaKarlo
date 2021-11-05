@@ -7,7 +7,6 @@ import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.fragment.cafe.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.presentation.item.CafeItem
-import com.bunbeauty.presentation.util.resources.ResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
@@ -15,8 +14,7 @@ import javax.inject.Inject
 
 class CafeListViewModel @Inject constructor(
     private val cafeUtil: ICafeUtil,
-    private val stringUtil: IStringUtil,
-    private val resourcesProvider: ResourcesProvider
+    private val stringUtil: IStringUtil
 ) : CartViewModel() {
 
     private var cafeList: List<Cafe> = emptyList()
@@ -46,7 +44,7 @@ class CafeListViewModel @Inject constructor(
             address = cafe.address,
             workingHours = stringUtil.getWorkingHoursString(cafe),
             workingTimeMessage = stringUtil.getIsClosedMessage(cafe),
-            workingTimeMessageColor = resourcesProvider.getColor(cafeUtil.getIsClosedColorId(cafe))
+            isOpen = cafeUtil.getIsOpen(cafe)
         )
     }
 }

@@ -10,7 +10,6 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -48,11 +47,11 @@ fun View.toggleVisibilityInvisibility(isVisible: Boolean): View {
     return this
 }
 
-fun View.showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
+fun View.showSnackbar(errorMessage: String, textColor: Int, backgroundColor: Int) {
     val snack = Snackbar.make(this, errorMessage, Snackbar.LENGTH_SHORT)
-        .setBackgroundTint(ContextCompat.getColor(context, backgroundColorId))
-        .setTextColor(ContextCompat.getColor(context, textColorId))
-        .setActionTextColor(ContextCompat.getColor(context, textColorId))
+        .setBackgroundTint(backgroundColor)
+        .setTextColor(textColor)
+        .setActionTextColor(textColor)
     val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
         gravity = Gravity.TOP
         setMargins(getPixels(context, 16), getPixels(context, 72), getPixels(context, 16), 0)

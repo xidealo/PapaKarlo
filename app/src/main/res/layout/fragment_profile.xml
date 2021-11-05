@@ -107,7 +107,7 @@
             android:layout_width="@dimen/empty_profile_img_size"
             android:layout_height="@dimen/empty_profile_img_size"
             android:adjustViewBounds="true"
-            android:src="@drawable/empty_profile"
+            android:src="@drawable/empty_profile_papa_karlo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

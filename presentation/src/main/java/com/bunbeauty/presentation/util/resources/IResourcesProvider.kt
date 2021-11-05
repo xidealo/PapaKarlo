@@ -6,7 +6,8 @@ import android.graphics.drawable.Drawable
 interface IResourcesProvider {
     fun getString(stringId: Int): String
     fun getDrawable(drawableId: Int): Drawable?
-    fun getColor(colorId: Int): Int
+    fun getColorById(colorId: Int): Int
+    fun getColorByAttr(attrId: Int): Int
     fun getColorStateListById(colorId: Int): ColorStateList
     fun getColorStateListByColor(color: Int): ColorStateList
     fun getDimensionPixelOffset(dimensionId: Int): Int

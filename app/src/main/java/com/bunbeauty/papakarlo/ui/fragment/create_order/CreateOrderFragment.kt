@@ -20,14 +20,10 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     @Inject
     lateinit var textValidator: ITextValidator

@@ -11,14 +11,9 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
 class CreateAddressFragment : BaseFragment<FragmentCreateAddressBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: CreationAddressViewModel by viewModels { viewModelFactory }
 

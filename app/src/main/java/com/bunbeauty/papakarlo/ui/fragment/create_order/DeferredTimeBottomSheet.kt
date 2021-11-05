@@ -13,14 +13,9 @@ import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import javax.inject.Inject
 
 class DeferredTimeBottomSheet : BaseBottomSheet<BottomSheetDeferredTimeBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val viewModel: DeferredTimeViewModel by viewModels { viewModelFactory }
 
@@ -64,7 +59,7 @@ class DeferredTimeBottomSheet : BaseBottomSheet<BottomSheetDeferredTimeBinding>(
         }
         val timePicker = TimePickerDialog.newInstance(timeListener, hour, minute, true).apply {
             title = this@DeferredTimeBottomSheet.title
-            accentColor = resourcesProvider.getColor(R.color.colorPrimary)
+            accentColor = resourcesProvider.getColorById(R.color.orange)
             setMinTime(viewModel.minTimeHour, viewModel.minTimeMinute, 0)
         }
         timePicker.show(childFragmentManager, null)

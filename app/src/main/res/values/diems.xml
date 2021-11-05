@@ -37,6 +37,7 @@
     <dimen name="image_element_height">72dp</dimen>
     <dimen name="empty_cart_img_size">200dp</dimen>
     <dimen name="empty_profile_img_size">200dp</dimen>
+    <dimen name="login_img_size">200dp</dimen>
     <dimen name="top_logo_height">48dp</dimen>
 
     <!-- RADIUS -->

@@ -13,16 +13,11 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.adapter.ProductsPagerAdapter
 import com.bunbeauty.papakarlo.ui.base.TopbarCartFragment
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import javax.inject.Inject
 
 class MenuFragment : TopbarCartFragment<FragmentMenuBinding>() {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     override val isLogoVisible = true
     override val isCartVisible = true
