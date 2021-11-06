@@ -56,8 +56,4 @@ dependencies {
 
     //Joda time
     implementation "joda-time:joda-time:$rootProject.jodaVersion"
-
-    //True time
-    implementation "com.github.instacart.truetime-android:library:$rootProject.trueTimeVersion"
-
  }

@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
 
         viewModel = ViewModelProvider(this, modelFactory).get(MainViewModel::class.java)
 
-        viewModel?.connectWS()
+        //viewModel?.connectWS()
 
         setupToolbar()
         setupBottomNavigationBar()

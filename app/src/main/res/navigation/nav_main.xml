@@ -16,7 +16,9 @@
         tools:layout="@layout/fragment_select_city">
         <action
             android:id="@+id/to_menu_fragment"
-            app:destination="@id/menu_fragment" />
+            app:destination="@id/menu_fragment"
+            app:popUpTo="@id/selectCityFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
