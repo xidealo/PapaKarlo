@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_login"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragment"
+        android:label=""
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+        <argument
+            android:name="successLoginDirection"
+            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragment"
+        android:label=""
+        tools:layout="@layout/fragment_confirm">
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="verificationId"
+            app:argType="string" />
+        <argument
+            android:name="resendToken"
+            app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
+        <argument
+            android:name="successLoginDirection"
+            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        <action
+            android:id="@+id/back_to_profile_fragment"
+            app:destination="@id/profile_fragment"
+            app:popUpTo="@id/profile_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_create_order_fragment"
+            app:destination="@id/create_order_fragment"
+            app:popUpTo="@+id/nav_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

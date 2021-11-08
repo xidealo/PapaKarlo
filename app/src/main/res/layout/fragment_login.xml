@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
         tools:context=".ui.fragment.auth.LoginFragment">
 
         <ImageView
@@ -48,9 +49,9 @@
             style="@style/MainButton"
             android:layout_margin="@dimen/medium_margin"
             android:text="@string/action_login_continue"
-            app:layout_constraintTop_toBottomOf="@id/fragment_login_til_phone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_login_til_phone" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/fragment_login_group_main"

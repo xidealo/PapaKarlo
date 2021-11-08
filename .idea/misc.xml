@@ -85,7 +85,7 @@
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_creation_address.xml" value="0.5250255362614913" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_orders.xml" value="0.33" />

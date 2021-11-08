@@ -23,11 +23,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     override val viewModel: LoginViewModel by viewModels { viewModelFactory }
 
+    private val successLoginDirection: SuccessLoginDirection by argument()
+
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
     }
-
-    private val successLoginDirection: SuccessLoginDirection by argument()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

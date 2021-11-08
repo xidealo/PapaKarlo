@@ -77,8 +77,12 @@
             app:popUpTo="@id/menu_fragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/to_login_fragment"
-            app:destination="@id/login_fragment" />
+            android:id="@+id/to_loginFragment"
+            app:destination="@id/nav_login">
+            <argument
+                android:name="successLoginDirection"
+                app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/create_order_fragment"
@@ -168,7 +172,11 @@
             app:destination="@id/create_address_fragment" />
         <action
             android:id="@+id/to_loginFragment"
-            app:destination="@id/login_fragment" />
+            app:destination="@id/nav_login">
+            <argument
+                android:name="successLoginDirection"
+                app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        </action>
         <action
             android:id="@+id/to_settings_fragment"
             app:destination="@id/settings_fragment" />
@@ -185,44 +193,6 @@
             android:id="@+id/to_userAddressesBottomSheet"
             app:destination="@id/userAddressesBottomSheet" />
     </fragment>
-    <fragment
-        android:id="@+id/login_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragment"
-        android:label=""
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/to_confirmFragment"
-            app:destination="@id/confirm_fragment" />
-        <argument
-            android:name="successLoginDirection"
-            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
-    </fragment>
-    <fragment
-        android:id="@+id/confirm_fragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragment"
-        android:label=""
-        tools:layout="@layout/fragment_confirm">
-        <argument
-            android:name="phone"
-            app:argType="string" />
-        <argument
-            android:name="verificationId"
-            app:argType="string" />
-        <argument
-            android:name="resendToken"
-            app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
-        <argument
-            android:name="successLoginDirection"
-            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
-        <action
-            android:id="@+id/back_to_profile_fragment"
-            app:destination="@id/profile_fragment"
-            app:popUpTo="@id/profile_fragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/to_create_order_fragment"
-            app:destination="@id/create_order_fragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/settings_fragment"
@@ -232,9 +202,6 @@
         <action
             android:id="@+id/to_oneLineActionBottomSheet"
             app:destination="@id/oneLineActionBottomSheet" />
-        <action
-            android:id="@+id/to_login_fragment"
-            app:destination="@id/login_fragment" />
         <action
             android:id="@+id/to_citySelectionBottomSheet"
             app:destination="@id/citySelectionBottomSheet" />
@@ -301,4 +268,6 @@
             app:popUpTo="@id/profile_fragment"
             app:popUpToInclusive="true" />
     </dialog>
+
+    <include app:graph="@navigation/nav_login" />
 </navigation>
