@@ -91,7 +91,9 @@
         tools:layout="@layout/fragment_create_order">
         <action
             android:id="@+id/to_profile_fragment"
-            app:destination="@id/profile_fragment" />
+            app:destination="@id/profile_fragment"
+            app:popUpTo="@id/create_order_fragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/to_creation_address_fragment"
             app:destination="@id/create_address_fragment" />

@@ -44,8 +44,19 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
         setupDeferredTime()
         setupBottomPrices()
 
-        viewDataBinding.fragmentCreateOrderBtnCreateOrder.setOnClickListener {
-            viewModel.onCreateOrderClicked()
+        viewDataBinding.run {
+            fragmentCreateOrderBtnCreateOrder.setOnClickListener {
+                viewModel.onCreateOrderClicked()
+            }
+            viewModel.isLoading.onEach { isLoading ->
+                fragmentCreateOrderBtnCreateOrder.toggleLoading(isLoading)
+                fragmentCreateOrderBtnCreateOrder.toggleEnabling(!isLoading)
+                fragmentCreateOrderCsDelivery.isSwitcherEnabled = !isLoading
+                fragmentCreateOrderTcAddress.isClickable = !isLoading
+                fragmentCreateOrderNcAddComment.isClickable = !isLoading
+                fragmentCreateOrderTcComment.isClickable = !isLoading
+                fragmentCreateOrderTcDeferredTime.isClickable = !isLoading
+            }.startedLaunch()
         }
     }
 

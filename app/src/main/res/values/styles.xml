@@ -89,6 +89,17 @@
         <item name="android:layout_width">0dp</item>
     </style>
 
+    <style name="ProgressButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="buttonTextAllCaps">true</item>
+        <item name="buttonCornerRadius">@dimen/medium_radius</item>
+        <item name="progressButtonColor">?attr/colorPrimary</item>
+        <item name="progressButtonDisableColor">?attr/colorPrimary</item>
+        <item name="progressButtonForegroundColor">?attr/colorOnPrimary</item>
+        <item name="progressButtonDisableForegroundColor">?attr/colorOnPrimary</item>
+    </style>
+
     <style name="SmallButton" parent="BaseButton">
         <item name="android:layout_width">@dimen/small_button_width</item>
     </style>

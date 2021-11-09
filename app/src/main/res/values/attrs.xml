@@ -19,6 +19,7 @@
         <attr name="buttonCornerRadius" format="dimension" />
         <attr name="progressButtonColor" format="color" />
         <attr name="progressButtonForegroundColor" format="color" />
+        <attr name="progressButtonDisableColor" format="color" />
         <attr name="progressButtonDisableForegroundColor" format="color" />
     </declare-styleable>
 

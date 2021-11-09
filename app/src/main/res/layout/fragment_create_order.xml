@@ -170,15 +170,25 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="560 ₽" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.bunbeauty.papakarlo.ui.custom.ProgressButton
                 android:id="@+id/fragment_create_order_btn_create_order"
-                style="@style/MainButton"
+                style="@style/ProgressButton"
                 android:layout_margin="@dimen/medium_margin"
-                android:text="@string/action_create_order_checkout"
+                app:buttonText="@string/action_create_order_checkout"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tv_amount_to_pay" />
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/fragment_create_order_btn_create_order"-->
+            <!--                style="@style/MainButton"-->
+            <!--                android:layout_margin="@dimen/medium_margin"-->
+            <!--                android:text="@string/action_create_order_checkout"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/fragment_create_order_tv_amount_to_pay" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

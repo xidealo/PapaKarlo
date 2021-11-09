@@ -81,6 +81,9 @@ class CreateOrderViewModel @Inject constructor(
     private val mutableAmountToPay: MutableStateFlow<String> = MutableStateFlow("")
     val amountToPay: StateFlow<String> = mutableAmountToPay.asStateFlow()
 
+    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
+
     init {
         subscribeOnAddress()
         subscribeOnCartProduct()
@@ -131,6 +134,8 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     fun onCreateOrderClicked() {
+        mutableIsLoading.value = true
+
         val isDelivery = mutableIsDelivery.value
         val selectedAddress = address.value
         if ((isDelivery && (selectedUserAddressUuid == null))
@@ -138,6 +143,7 @@ class CreateOrderViewModel @Inject constructor(
             || selectedAddress == null
         ) {
             showError(resourcesProvider.getString(R.string.error_create_order_address))
+            mutableIsLoading.value = false
             return
         }
 
@@ -163,6 +169,7 @@ class CreateOrderViewModel @Inject constructor(
                 showError(
                     resourcesProvider.getString(R.string.error_create_order_something_went_wrong)
                 )
+                mutableIsLoading.value = false
             } else {
                 showMessage(
                     resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code

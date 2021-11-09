@@ -19,7 +19,7 @@ class CustomSwitcher @JvmOverloads constructor(
 ) : MaterialCardView(context, attributeSet, defStyleAttr), Customizable {
 
     var switchListener: SwitchListener? = null
-
+    var isSwitcherEnabled: Boolean = true
     var isLeft: Boolean = true
         set(value) {
             if (field != value) {
@@ -28,13 +28,6 @@ class CustomSwitcher @JvmOverloads constructor(
             }
         }
 
-    //        getColor(
-//        context,
-//        attributeSet,
-//        R.styleable.CustomSwitcher,
-//        R.styleable.CustomSwitcher_backgroundColor,
-//        DEFAULT_BACKGROUND_COLOR
-//    )
     private val buttonColor = getColor(
         context,
         attributeSet,
@@ -96,8 +89,6 @@ class CustomSwitcher @JvmOverloads constructor(
     private val rightButton = createButton(rightButtonText, false)
 
     init {
-        //backgroundTintList = ColorStateList.valueOf(backgroundColor)
-
         val linearLayout = LinearLayout(context).apply {
             layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
             addView(leftButton)
@@ -135,9 +126,11 @@ class CustomSwitcher @JvmOverloads constructor(
             }
             backgroundTintList = ColorStateList.valueOf(backgroundColor)
             setOnClickListener {
-                updateButtons(isLeftButton)
-                isLeft = isLeftButton
-                switchListener?.onSwitched(isLeftButton)
+                if (isSwitcherEnabled) {
+                    updateButtons(isLeftButton)
+                    isLeft = isLeftButton
+                    switchListener?.onSwitched(isLeftButton)
+                }
             }
         }
     }

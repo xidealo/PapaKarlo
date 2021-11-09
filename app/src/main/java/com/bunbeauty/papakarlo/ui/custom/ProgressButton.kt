@@ -54,6 +54,13 @@ class ProgressButton @JvmOverloads constructor(
         R.styleable.ProgressButton_progressButtonForegroundColor,
         DEFAULT_BUTTON_COLOR
     )
+    private val progressButtonDisableColor = getColor(
+        context,
+        attributeSet,
+        R.styleable.ProgressButton,
+        R.styleable.ProgressButton_progressButtonDisableColor,
+        progressButtonColor
+    )
     private val progressButtonDisableForegroundColor = getColor(
         context,
         attributeSet,
@@ -77,6 +84,8 @@ class ProgressButton @JvmOverloads constructor(
             }
             text = buttonText
             isAllCaps = buttonTextAllCaps
+            insetTop = 0
+            insetBottom = 0
             backgroundTintList = ColorStateList.valueOf(progressButtonColor)
             cornerRadius = buttonCornerRadius
             setTextColor(progressButtonForegroundColor)
@@ -123,7 +132,7 @@ class ProgressButton @JvmOverloads constructor(
     fun enable() {
         button.run {
             isEnabled = true
-            alpha = 0.5f
+            backgroundTintList = ColorStateList.valueOf(progressButtonColor)
             setTextColor(ColorStateList.valueOf(progressButtonForegroundColor))
         }
     }
@@ -131,8 +140,9 @@ class ProgressButton @JvmOverloads constructor(
     fun disable() {
         button.run {
             isEnabled = false
-            alpha = 1f
-            setTextColor(ColorStateList.valueOf(progressButtonDisableForegroundColor))
+            alpha = 0.6f
+            //backgroundTintList = ColorStateList.valueOf(progressButtonDisableColor)
+            //setTextColor(ColorStateList.valueOf(progressButtonDisableForegroundColor))
         }
     }
 
