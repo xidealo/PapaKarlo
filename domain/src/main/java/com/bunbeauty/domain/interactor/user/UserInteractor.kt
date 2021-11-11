@@ -16,4 +16,9 @@ class UserInteractor @Inject constructor(
             userWorkerUtil.refreshUserBlocking(userUuid, userPhone)
         }
     }
+
+    override fun logout() {
+        userWorkerUtil.cancelRefreshUser()
+        authUtil.signOut()
+    }
 }

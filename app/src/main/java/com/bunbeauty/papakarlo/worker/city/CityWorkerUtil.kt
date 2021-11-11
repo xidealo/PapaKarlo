@@ -7,6 +7,6 @@ import javax.inject.Inject
 class CityWorkerUtil @Inject constructor(): BaseWorkerUtil(), ICityWorkerUtil {
 
     override fun refreshCityList() {
-        RefreshCityWorker::class.java.start()
+        RefreshCityWorker::class.start()
     }
 }

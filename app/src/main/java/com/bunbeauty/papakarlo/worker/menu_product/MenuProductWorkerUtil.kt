@@ -7,6 +7,6 @@ import javax.inject.Inject
 class MenuProductWorkerUtil @Inject constructor(): BaseWorkerUtil(), IMenuProductWorkerUtil {
 
     override fun refreshMenuProductList() {
-        RefreshMenuProductWorker::class.java.start()
+        RefreshMenuProductWorker::class.start()
     }
 }

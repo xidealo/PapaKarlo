@@ -12,6 +12,6 @@ class CafeWorkerUtil @Inject constructor() : BaseWorkerUtil(), ICafeWorkerUtil {
         val data = workDataOf(
             SELECTED_CITY_UUID to selectedCafeUUid
         )
-        RefreshCafeWorker::class.java.startWithReplace(data)
+        RefreshCafeWorker::class.startWithReplace(data)
     }
 }

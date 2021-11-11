@@ -2,7 +2,6 @@ package com.bunbeauty.data
 
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -23,7 +22,6 @@ class AuthUtil @Inject constructor(
     override val userPhone: String?
         get() = firebaseAuth.currentUser?.phoneNumber
 
-    @ExperimentalCoroutinesApi
     override fun observeUserUuid(): Flow<String?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { auth ->
             trySend(auth.currentUser?.uid)

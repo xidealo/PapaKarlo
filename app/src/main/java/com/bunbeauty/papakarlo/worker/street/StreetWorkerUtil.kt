@@ -12,6 +12,6 @@ class StreetWorkerUtil @Inject constructor() : BaseWorkerUtil(), IStreetWorkerUt
         val data = workDataOf(
             SELECTED_CITY_UUID to selectedCityUuid
         )
-        RefreshStreetWorker::class.java.startWithReplace(data)
+        RefreshStreetWorker::class.startWithReplace(data)
     }
 }

@@ -7,6 +7,6 @@ import javax.inject.Inject
 class DeliveryWorkerUtil @Inject constructor(): BaseWorkerUtil(), IDeliveryWorkerUtil {
 
     override fun refreshDelivery() {
-        RefreshDeliveryWorker::class.java.start()
+        RefreshDeliveryWorker::class.start()
     }
 }

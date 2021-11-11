@@ -4,45 +4,49 @@ import androidx.lifecycle.asFlow
 import androidx.work.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.transformWhile
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.reflect.KClass
 
 abstract class BaseWorkerUtil {
 
     @Inject
     lateinit var workManager: WorkManager
 
-    protected fun <T : ListenableWorker> Class<T>.start(workDataOf: Data = workDataOf()) {
+    protected fun KClass<out ListenableWorker>.start(workDataOf: Data = workDataOf()) {
         workManager.enqueueUniqueWork(
-            simpleName,
+            java.simpleName,
             ExistingWorkPolicy.KEEP,
             getOneTimeWork(workDataOf)
         )
     }
 
-    protected fun <T : ListenableWorker> Class<T>.startWithReplace(workDataOf: Data = workDataOf()) {
+    protected fun KClass<out ListenableWorker>.startWithReplace(workDataOf: Data = workDataOf()) {
         workManager.enqueueUniqueWork(
-            simpleName,
+            java.simpleName,
             ExistingWorkPolicy.REPLACE,
             getOneTimeWork(workDataOf)
         )
     }
 
-    protected suspend fun <T : ListenableWorker> Class<T>.startWithReplaceBlocking(workDataOf: Data = workDataOf()) {
+    protected suspend fun KClass<out ListenableWorker>.startWithReplaceBlocking(workDataOf: Data = workDataOf()) {
         val workRequest = getOneTimeWork(workDataOf)
-        workManager.enqueueUniqueWork(simpleName, ExistingWorkPolicy.REPLACE, workRequest)
-        workManager.observe(workRequest).collect { workInfo ->
-            if (workInfo.isFinished()) {
-                return@collect
-            }
-        }
+        workManager.enqueueUniqueWork(java.simpleName, ExistingWorkPolicy.REPLACE, workRequest)
+        workManager.observe(workRequest).transformWhile<WorkInfo, Unit> { workInfo ->
+            !workInfo.isFinished()
+        }.collect()
     }
 
-    private fun Class<out ListenableWorker>.getOneTimeWork(workDataOf: Data): OneTimeWorkRequest {
+    protected fun <T : ListenableWorker> KClass<T>.cancel() {
+        workManager.cancelUniqueWork(java.simpleName)
+    }
+
+    private fun KClass<out ListenableWorker>.getOneTimeWork(workDataOf: Data): OneTimeWorkRequest {
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
-        return OneTimeWorkRequest.Builder(this).apply {
+        return OneTimeWorkRequest.Builder(java).apply {
             setInputData(workDataOf)
             setConstraints(constraints)
             setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.MILLISECONDS)

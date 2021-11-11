@@ -14,7 +14,7 @@ class UserWorkerUtil @Inject constructor() : BaseWorkerUtil(), IUserWorkerUtil {
             USER_UUID to userUuid,
             USER_PHONE to userPhone
         )
-        RefreshUserWorker::class.java.startWithReplace(data)
+        RefreshUserWorker::class.startWithReplace(data)
     }
 
     override suspend fun refreshUserBlocking(userUuid: String, userPhone: String) {
@@ -22,6 +22,10 @@ class UserWorkerUtil @Inject constructor() : BaseWorkerUtil(), IUserWorkerUtil {
             USER_UUID to userUuid,
             USER_PHONE to userPhone
         )
-        RefreshUserWorker::class.java.startWithReplaceBlocking(data)
+        RefreshUserWorker::class.startWithReplaceBlocking(data)
+    }
+
+    override fun cancelRefreshUser() {
+        RefreshUserWorker::class.cancel()
     }
 }
