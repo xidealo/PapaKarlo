@@ -22,8 +22,13 @@ import com.bunbeauty.presentation.util.network.NetworkHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.util.string.StringUtil
+import com.example.data_api.mapper.CafeMapper
+import com.example.domain_api.mapper.ICafeMapper
 import dagger.Binds
 import dagger.Module
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.bind
+import org.koin.dsl.module
 import javax.inject.Singleton
 
 @Module
@@ -64,4 +69,24 @@ interface UtilModule {
 
     @Binds
     fun bindAuthUtil(authUtil: AuthUtil): IAuthUtil
+}
+
+fun utilModule() = module {
+    single { DataStoreRepository(androidContext()) } bind DataStoreRepo::class
+    single { ResourcesProvider(androidContext()) } bind IResourcesProvider::class
+    single { UriHelper() } bind IUriHelper::class
+    single {
+        StringUtil(
+            resourcesProvider = get(),
+            dateTimeUtil = get(),
+        )
+    } bind IStringUtil::class
+    single { OrderUtil(productHelper = get()) } bind IOrderUtil::class
+    single { NetworkHelper() } bind INetworkHelper::class
+    single { ProductHelper() } bind IProductHelper::class
+    single { TextValidator() } bind ITextValidator::class
+    single { CafeUtil(dateTimeUtil = get()) } bind ICafeUtil::class
+    single { DateTimeUtil() } bind IDateTimeUtil::class
+    single { AuthUtil(firebaseAuth = get()) } bind IAuthUtil::class
+
 }

@@ -4,9 +4,15 @@ import android.content.Context
 import androidx.room.Room
 import com.bunbeauty.data_firebase.FirebaseLocalDatabase
 import com.bunbeauty.papakarlo.BuildConfig.FB_LINK
+import com.bunbeauty.papakarlo.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.phone_verification.PhoneVerificationUtil
+import com.example.data_api.ApiLocalDatabase
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.bind
+import org.koin.dsl.module
 import javax.inject.Singleton
 
 @Module
@@ -65,5 +71,24 @@ class FirebaseDataModule {
     @Provides
     fun provideUserDao(firebaseLocalDatabase: FirebaseLocalDatabase) =
         firebaseLocalDatabase.getUserDao()
+}
 
+fun firebaseDataModule() = module {
+    single { FirebaseDatabase.getInstance(FB_LINK) }
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            FirebaseLocalDatabase::class.java,
+            "FirebaseLocalDatabase"
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    single { get<FirebaseLocalDatabase>().getCartProductDao() }
+    single { get<FirebaseLocalDatabase>().getOrderDao() }
+    single { get<FirebaseLocalDatabase>().getMenuProductDao() }
+    single { get<FirebaseLocalDatabase>().getUserAddressDao() }
+    single { get<FirebaseLocalDatabase>().getCafeDao() }
+    single { get<FirebaseLocalDatabase>().getDistrictDao() }
+    single { get<FirebaseLocalDatabase>().getStreetDao() }
+    single { get<FirebaseLocalDatabase>().getUserDao() }
 }

@@ -29,6 +29,8 @@ import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 @Module
 abstract class ViewModelModule {
@@ -145,4 +147,161 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LogoutViewModel::class)
     internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
+}
+
+fun viewModelModule() = module {
+    viewModel {
+        LoginViewModel(
+            textValidator = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+
+            )
+    }
+    viewModel {
+        ProductTabViewModel(
+            menuProductRepo = get(),
+            stringUtil = get(),
+            productHelper = get(),
+        )
+    }
+    viewModel { MenuViewModel() }
+    viewModel { MainViewModel() }
+    viewModel {
+        ConsumerCartViewModel(
+            cartProductRepo = get(),
+            resourcesProvider = get(),
+            dataStoreRepo = get(),
+            stringUtil = get(),
+            productHelper = get(),
+            authUtil = get(),
+        )
+    }
+    viewModel {
+        CreateOrderViewModel(
+            cartProductRepo = get(),
+            userAddressRepo = get(),
+            cafeRepo = get(),
+            orderRepo = get(),
+            dataStoreRepo = get(),
+            stringUtil = get(),
+            productHelper = get(),
+            resourcesProvider = get(),
+            orderUtil = get(),
+            authUtil = get(),
+            dateTimeUtils = get(),
+
+            )
+    }
+    viewModel {
+        CafeListViewModel(
+
+            cafeInteractor = get(),
+            resourcesProvider = get(),
+            stringUtil = get(),
+        )
+    }
+    viewModel {
+        OrdersViewModel(
+
+            orderRepo = get(),
+            orderUIMapper = get(),
+        )
+    }
+    viewModel {
+        CreationAddressViewModel(
+            userAddressRepo = get(),
+            streetRepo = get(),
+            dataStoreRepo = get(),
+            resourcesProvider = get(),
+            authUtil = get(),
+            textValidator = get(),
+
+            )
+    }
+    viewModel {
+        UserAddressesViewModel(
+            userAddressRepo = get(),
+            stringUtil = get(),
+
+            )
+    }
+    viewModel {
+        CafeAddressesViewModel(
+            cafeRepo = get(),
+            stringUtil = get(),
+        )
+    }
+    viewModel {
+        CafeOptionsViewModel(
+            resourcesProvider = get(),
+            cafeInteractor = get(),
+        )
+    }
+    viewModel { EmptyViewModel() }
+    viewModel {
+        OrderDetailsViewModel(
+            orderRepo = get(),
+            dataStoreRepo = get(),
+            stringUtil = get(),
+            productHelper = get(),
+            orderUtil = get(),
+            dateTimeUtil = get(),
+        )
+    }
+    viewModel {
+        ProfileViewModel(
+            userRepo = get(),
+            authUtil = get(),
+            orderUIMapper = get(),
+        )
+    }
+    viewModel {
+        LoginViewModel(
+            textValidator = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        ConfirmViewModel(
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        SettingsViewModel(
+            cityInteractor = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        ProductViewModel(
+            menuProductRepo = get(),
+            stringUtil = get(),
+            productHelper = get(),
+        )
+    }
+    viewModel {
+        DeferredTimeViewModel(
+            dateTimeUtils = get(),
+        )
+    }
+    viewModel {
+        SelectCityViewModel(
+            cityInteractor = get(),
+        )
+    }
+    viewModel {
+        CitySelectionViewModel(
+            cityInteractor = get(),
+        )
+    }
+    viewModel {
+        LogoutViewModel(
+            userInteractor = get(),
+        )
+    }
+
 }

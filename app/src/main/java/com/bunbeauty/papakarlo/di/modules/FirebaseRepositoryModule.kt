@@ -6,6 +6,8 @@ import com.bunbeauty.domain.repo.*
 import com.example.domain_firebase.repo.FirebaseRepo
 import dagger.Binds
 import dagger.Module
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
 @Module
 interface FirebaseRepositoryModule {
@@ -45,3 +47,68 @@ interface FirebaseRepositoryModule {
     @Firebase
     fun bindUserRepo(userRepository: UserRepository): UserRepo
 }
+
+fun firebaseRepositoryModule() = module {
+    single { FirebaseRepository(firebaseDatabase = get()) } bind FirebaseRepo::class
+    single {
+        CartProductRepository(
+            cartProductDao = get(),
+            cartProductMapper = get(),
+        )
+    } bind CartProductRepo::class
+    single {
+        OrderRepository(
+            firebaseRepo = get(),
+            orderDao = get(),
+            cafeDao = get(),
+            orderMapper = get(),
+            authUtil = get(),
+        )
+    } bind OrderRepo::class
+    single {
+        MenuProductRepository(
+            menuProductDao = get(),
+            menuProductMapper = get(),
+            firebaseRepo = get(),
+        )
+    } bind MenuProductRepo::class
+    single {
+        UserAddressRepository(
+            userAddressDao = get(),
+            firebaseRepo = get(),
+            dataStoreRepo = get(),
+            userAddressMapper = get(),
+        )
+    } bind UserAddressRepo::class
+    single {
+        CafeRepository(
+            cafeDao = get(),
+            firebaseRepo = get(),
+            cafeMapper = get(),
+        )
+    } bind CafeRepo::class
+    single {
+        StreetRepository(
+            streetDao = get(),
+            streetMapper = get(),
+        )
+    } bind StreetRepo::class
+    single {
+        DeliveryRepository(
+            firebaseRepo = get(),
+            dataStoreRepo = get(),
+        )
+    } bind DeliveryRepo::class
+    single {
+        UserRepository(
+            userDao = get(),
+            orderDao = get(),
+            userAddressDao = get(),
+            firebaseRepo = get(),
+            authUtil = get(),
+            userMapper = get(),
+            orderMapper = get(),
+        )
+    } bind UserRepo::class
+}
+

@@ -10,6 +10,8 @@ import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import dagger.Module
 import dagger.Provides
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
 @Module(subcomponents = [ViewModelComponent::class])
 class AppModule {
@@ -29,5 +31,12 @@ class AppModule {
 
     @Provides
     fun provideWorkManager(context: Context): WorkManager = WorkManager.getInstance(context)
+}
 
+fun appModule() = module {
+    single { LinearLayoutManager(androidContext()) }
+    single { androidContext().resources }
+    single { androidContext().imageLoader }
+    single { ImageRequest.Builder(androidContext()) }
+    single { WorkManager.getInstance(androidContext()) }
 }
