@@ -2,10 +2,12 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.Constants.NOT_FOUND_WITH_UUID
 import com.bunbeauty.common.Logger.USER_TAG
-import com.bunbeauty.domain.model.Profile
+import com.bunbeauty.domain.model.profile.Profile
+import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.data_api.dao.UserDao
 import com.example.data_api.handleNullableResult
+import com.example.data_api.handleResultAndReturn
 import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IProfileMapper
 import com.example.domain_api.model.server.profile.get.ProfileServer
@@ -47,13 +49,12 @@ class UserRepository @Inject constructor(
         return userDao.observeUserByUuid(userUuid).mapFlow(profileMapper::toModel)
     }
 
-    override suspend fun updateUserEmail(profile: Profile) {
-        val userEmailServer = profileMapper.toUserEmailServer(profile)
-        apiRepo.patchProfileEmail(profile.uuid, userEmailServer)
-            .handleNullableResult(USER_TAG) { patchedUser ->
-                patchedUser?.let {
-                    userDao.update(profileMapper.toEntityModel(patchedUser).user)
-                }
+    override suspend fun updateUserEmail(user: User): User? {
+        val userEmailServer = profileMapper.toUserEmailServer(user)
+        return apiRepo.patchProfileEmail(user.uuid, userEmailServer)
+            .handleResultAndReturn(USER_TAG) { patchedUser ->
+                userDao.update(profileMapper.toEntityModel(patchedUser).user)
+                profileMapper.toModel(patchedUser).user
             }
     }
 

@@ -9,6 +9,7 @@ interface IStreetMapper {
     fun toEntityModel(street: StreetServer): StreetEntity
     fun toEntityModel(street: Street): StreetEntity
     fun toModel(street: StreetEntity): Street
+    fun toModel(street: StreetServer): Street
     fun toServerModel(street: Street): StreetServer
     fun toServerModel(street: StreetEntity): StreetServer
 }

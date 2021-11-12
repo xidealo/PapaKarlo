@@ -8,4 +8,5 @@ interface ICityInteractor {
     suspend fun checkIsCitySelected(): Boolean
     suspend fun saveSelectedCity(city: City)
     fun observeCityList(): Flow<List<City>>
+    fun observeSelectedCity(): Flow<City?>
 }

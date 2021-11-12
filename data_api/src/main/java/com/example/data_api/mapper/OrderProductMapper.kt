@@ -43,6 +43,22 @@ class OrderProductMapper @Inject constructor() : IOrderProductMapper {
         )
     }
 
+    override fun toModel(orderProduct: OrderProductServer): OrderProduct {
+        return OrderProduct(
+            uuid = orderProduct.uuid,
+            count = orderProduct.count,
+            menuProduct = OrderMenuProduct(
+                name = orderProduct.name,
+                cost = orderProduct.cost,
+                discountCost = orderProduct.discountCost,
+                weight = orderProduct.weight,
+                description = orderProduct.description,
+                comboDescription = orderProduct.comboDescription,
+                photoLink = orderProduct.photoLink,
+            ),
+        )
+    }
+
     override fun toPostServerModel(orderProduct: OrderProduct): OrderProductPostServer {
         return OrderProductPostServer(
             uuid = orderProduct.uuid,

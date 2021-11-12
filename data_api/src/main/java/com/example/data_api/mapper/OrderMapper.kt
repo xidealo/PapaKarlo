@@ -49,6 +49,22 @@ class OrderMapper @Inject constructor(
         )
     }
 
+    override fun toModel(order: OrderServer): Order {
+        return Order(
+            uuid = order.uuid,
+            isDelivery = order.isDelivery,
+            address = order.address,
+            comment = order.comment,
+            deferredTime = order.deferredTime,
+            time = order.time,
+            code = order.code,
+            orderStatus = OrderStatus.valueOf(order.orderStatus),
+            orderProductList = order.orderProducts.map(orderProductMapper::toModel),
+            userUuid = order.userUuid,
+            addressUuid = null,
+        )
+    }
+
     override fun toPostServerModel(
         orderDetails: OrderDetails,
         cartProductList: List<CartProduct>

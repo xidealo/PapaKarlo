@@ -132,8 +132,9 @@ class ProgressButton @JvmOverloads constructor(
     fun enable() {
         button.run {
             isEnabled = true
-            backgroundTintList = ColorStateList.valueOf(progressButtonColor)
-            setTextColor(ColorStateList.valueOf(progressButtonForegroundColor))
+            alpha = 1f
+//            backgroundTintList = ColorStateList.valueOf(progressButtonColor)
+//            setTextColor(ColorStateList.valueOf(progressButtonForegroundColor))
         }
     }
 

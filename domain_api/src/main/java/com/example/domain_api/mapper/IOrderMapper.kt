@@ -11,6 +11,7 @@ interface IOrderMapper {
 
     fun toEntityModel(order: OrderServer): OrderWithProducts
     fun toModel(order: OrderWithProducts): Order
+    fun toModel(order: OrderServer): Order
     fun toPostServerModel(
         orderDetails: OrderDetails,
         cartProductList: List<CartProduct>

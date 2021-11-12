@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.Profile
+import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
@@ -75,7 +75,7 @@ class ProfileViewModel @Inject constructor(
     private fun subscribeOnProfile() {
         authUtil.observeUserUuid().flatMapLatest { userUuid ->
             userRepo.observeUserByUuid(userUuid ?: "").onEach { observedUser ->
-                profileUuid = observedUser?.uuid
+                profileUuid = observedUser?.user?.uuid
                 mutableProfileState.value = observedUser.toSuccessOrEmpty()
 
                 mutableLastOrder.value = observedUser?.orderList?.maxByOrNull { order ->

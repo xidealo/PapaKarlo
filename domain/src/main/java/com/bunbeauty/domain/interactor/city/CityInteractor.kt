@@ -7,6 +7,7 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.worker.ICafeWorkerUtil
 import com.bunbeauty.domain.worker.IStreetWorkerUtil
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 class CityInteractor @Inject constructor(
@@ -34,5 +35,11 @@ class CityInteractor @Inject constructor(
 
     override fun observeCityList(): Flow<List<City>> {
         return cityRepo.observeCityList()
+    }
+
+    override fun observeSelectedCity(): Flow<City?> {
+        return dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
+            cityRepo.observeCityByUuid(selectedCityUuid ?: "")
+        }
     }
 }

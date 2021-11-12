@@ -8,6 +8,7 @@ import com.example.domain_api.model.server.UserAddressServer
 interface IUserAddressMapper {
 
     fun toModel(userAddress: UserAddressEntity): UserAddress
+    fun toModel(userAddress: UserAddressServer): UserAddress
     fun toEntityModel(userAddress: UserAddressServer): UserAddressEntity
     fun toEntityModel(userAddress: UserAddress): UserAddressEntity
     fun toServerModel(userAddress: UserAddress): UserAddressServer

@@ -171,6 +171,7 @@
     <string name="action_settings_save">Сохранить</string>
     <string name="hint_settings_city">Город</string>
     <string name="title_settings_select_city">Выберите город</string>
+    <string name="error_settings_email">Не удалось сменить почту</string>
 
     <!-- ORDERS -->
     <string name="title_orders">История заказов</string>

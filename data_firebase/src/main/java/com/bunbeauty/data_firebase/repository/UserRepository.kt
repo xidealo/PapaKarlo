@@ -5,7 +5,8 @@ import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.data_firebase.dao.UserDao
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.Profile
+import com.bunbeauty.domain.model.profile.Profile
+import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.UserRepo
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IUserMapper
@@ -66,8 +67,10 @@ class UserRepository @Inject constructor(
             .flowOn(Default)
     }
 
-    override suspend fun updateUserEmail(profile: Profile) {
+    override suspend fun updateUserEmail(user: User): User? {
         // TODO
+
+        return null
     }
 
     suspend fun refreshOrders(userOrderFirebaseList: List<UserOrderFirebase>, userUuid: String) {

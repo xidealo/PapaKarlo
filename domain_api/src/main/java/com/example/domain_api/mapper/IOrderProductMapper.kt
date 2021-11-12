@@ -10,6 +10,7 @@ interface IOrderProductMapper {
 
     fun toEntityModel(orderProduct: OrderProductServer): OrderProductEntity
     fun toModel(orderProduct: OrderProductEntity): OrderProduct
+    fun toModel(orderProduct: OrderProductServer): OrderProduct
     fun toPostServerModel(orderProduct: OrderProduct): OrderProductPostServer
     fun toPostServerModel(cartProduct: CartProduct): OrderProductPostServer
 }

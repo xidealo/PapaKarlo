@@ -25,6 +25,19 @@ class UserAddressMapper @Inject constructor(
         )
     }
 
+    override fun toModel(userAddress: UserAddressServer): UserAddress {
+        return UserAddress(
+            uuid = userAddress.uuid,
+            street = streetMapper.toModel(userAddress.street),
+            house = userAddress.house,
+            flat = userAddress.flat,
+            entrance = userAddress.entrance,
+            floor = userAddress.floor,
+            comment = userAddress.comment,
+            userUuid = userAddress.userUuid,
+        )
+    }
+
     override fun toEntityModel(userAddress: UserAddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = userAddress.uuid,

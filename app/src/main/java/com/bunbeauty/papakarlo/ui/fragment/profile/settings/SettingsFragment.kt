@@ -26,11 +26,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
-            viewModel.profileState.onEach { state ->
-                fragmentSettingsTcPhone.toggleVisibility(state is State.Success)
-                fragmentSettingsNcAddEmail.toggleVisibility(state is State.Success)
-                fragmentSettingsTcEmail.toggleVisibility(state is State.Success)
-                fragmentSettingsTcCity.toggleVisibility(state is State.Success)
+            viewModel.userState.onEach { state ->
+                fragmentSettingsGroupMain.toggleVisibility(state is State.Success)
                 fragmentSettingsPbLoading.toggleVisibility(state !is State.Success)
                 if (state is State.Success) {
                     fragmentSettingsTcPhone.cardText = state.data.phone
@@ -40,11 +37,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     fragmentSettingsTcEmail.cardText = email
                 }
             }.startedLaunch()
-            viewModel.city.onEach { city ->
-                fragmentSettingsTcCity.toggleVisibility(city != null)
-                if (city != null) {
-                    fragmentSettingsTcCity.cardText = city.name
-                }
+            viewModel.cityName.onEach { cityName ->
+                fragmentSettingsTcCity.cardText = cityName
             }.startedLaunch()
 
             fragmentSettingsNcAddEmail.setOnClickListener {

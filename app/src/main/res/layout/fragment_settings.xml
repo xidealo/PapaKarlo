@@ -73,5 +73,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/fragment_settings_group_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="fragment_settings_tc_phone,
+            fragment_settings_nc_add_email,
+            fragment_settings_tc_email,
+            fragment_settings_tc_city" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

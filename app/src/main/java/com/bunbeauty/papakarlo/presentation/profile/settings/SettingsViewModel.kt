@@ -4,16 +4,13 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.common.State
+import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.common.extensions.toSuccessOrEmpty
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OneLineActionType
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.domain.interactor.city.ICityInteractor
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.Profile
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.CityRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
@@ -24,28 +21,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SettingsViewModel @Inject constructor(
-    @Api private val userRepo: UserRepo,
-    @Api private val cityRepo: CityRepo,
-    private val authUtil: IAuthUtil,
-    private val dataStoreRepo: DataStoreRepo,
+    private val cityInteractor: ICityInteractor,
+    private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
 
-    private var profileValue: Profile? = null
-    private val mutableProfileState: MutableStateFlow<State<Profile>> =
+    private var userValue: User? = null
+    private val mutableUserState: MutableStateFlow<State<User>> =
         MutableStateFlow(State.Loading())
-    val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
+    val userState: StateFlow<State<User>> = mutableUserState.asStateFlow()
 
-    private val mutableCity: MutableStateFlow<City?> = MutableStateFlow(null)
-    val city: StateFlow<City?> = mutableCity.asStateFlow()
+    private val mutableCityName: MutableStateFlow<String> = MutableStateFlow("")
+    val cityName: StateFlow<String> = mutableCityName.asStateFlow()
 
     init {
-        subscribeOnSelectedCity()
-        subscribeOnProfile()
+        observeSelectedCity()
+        observeUser()
     }
 
     fun onEmailClicked() {
-        val titleResourceId = if (profileValue?.email.isNullOrEmpty()) {
+        val titleResourceId = if (userValue?.email.isNullOrEmpty()) {
             R.string.title_settings_add_email
         } else {
             R.string.title_settings_edit_email
@@ -55,7 +50,7 @@ class SettingsViewModel @Inject constructor(
             infoText = null,
             hint = resourcesProvider.getString(R.string.hint_settings_email),
             type = OneLineActionType.EMAIL,
-            inputText = profileValue?.email,
+            inputText = userValue?.email,
             buttonText = resourcesProvider.getString(R.string.action_settings_save),
             requestKey = EMAIL_REQUEST_KEY,
             resultKey = RESULT_EMAIL_KEY,
@@ -64,12 +59,14 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun onEmailChanged(email: String?) {
-        mutableProfileState.value = State.Loading()
-        val user = profileValue?.copy(email = email ?: return)
-        if (user != null && user.email != profileValue?.email) {
-            viewModelScope.launch {
-                userRepo.updateUserEmail(user)
-                mutableProfileState.value = profileValue.toSuccessOrEmpty()
+        mutableUserState.value = State.Loading()
+        viewModelScope.launch {
+            val user = userInteractor.updateUserEmail(email ?: "")
+            if (user == null) {
+                mutableUserState.value = userValue.toSuccessOrEmpty()
+                showError(resourcesProvider.getString(R.string.error_settings_email))
+            } else {
+                mutableUserState.value = user.toStateSuccess()
             }
         }
     }
@@ -78,20 +75,18 @@ class SettingsViewModel @Inject constructor(
         router.navigate(toCitySelectionBottomSheet())
     }
 
-    private fun subscribeOnSelectedCity() {
-        dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
-            cityRepo.observeCityByUuid(selectedCityUuid ?: "").onEach { city ->
-                mutableCity.value = city
+    private fun observeSelectedCity() {
+        cityInteractor.observeSelectedCity().onEach { city ->
+            if (city != null) {
+                mutableCityName.value = city.name
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun subscribeOnProfile() {
-        authUtil.observeUserUuid().flatMapLatest { userUuid ->
-            userRepo.observeUserByUuid(userUuid ?: "").onEach { user ->
-                profileValue = user
-                mutableProfileState.value = user.toSuccessOrEmpty()
-            }
+    private fun observeUser() {
+        userInteractor.observeUser().onEach { user ->
+            userValue = user
+            mutableUserState.value = user.toSuccessOrEmpty()
         }.launchIn(viewModelScope)
     }
 }

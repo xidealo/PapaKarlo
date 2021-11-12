@@ -1,6 +1,6 @@
 package com.example.domain_firebase.mapper
 
-import com.bunbeauty.domain.model.Profile
+import com.bunbeauty.domain.model.profile.Profile
 import com.example.domain_firebase.model.entity.user.UserEntity
 import com.example.domain_firebase.model.entity.user.UserWithAddresses
 import com.example.domain_firebase.model.firebase.UserFirebase
