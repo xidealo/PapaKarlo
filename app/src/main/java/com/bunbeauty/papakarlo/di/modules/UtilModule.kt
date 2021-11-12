@@ -6,8 +6,6 @@ import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.cafe.CafeUtil
 import com.bunbeauty.domain.util.cafe.ICafeUtil
-import com.bunbeauty.domain.util.code.CodeGenerator
-import com.bunbeauty.domain.util.code.ICodeGenerator
 import com.bunbeauty.domain.util.date_time.DateTimeUtil
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
@@ -66,7 +64,4 @@ interface UtilModule {
 
     @Binds
     fun bindAuthUtil(authUtil: AuthUtil): IAuthUtil
-
-    @Binds
-    fun bindCodeGenerator(codeGenerator: CodeGenerator): ICodeGenerator
 }

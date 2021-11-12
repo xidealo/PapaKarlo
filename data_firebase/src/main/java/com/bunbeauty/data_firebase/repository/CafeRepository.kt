@@ -18,7 +18,7 @@ class CafeRepository @Inject constructor(
     private val cafeMapper: ICafeMapper,
 ) : CafeRepo {
 
-    override suspend fun refreshCafeList() {
+    override suspend fun refreshCafeList(selectedCityUuid: String) {
         val cafeWithDistrictsList = firebaseRepo.getCafeList()
             .flowOn(IO)
             .map { cafeFirebaseList: List<CafeFirebase> ->

@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
 
-    suspend fun refreshUser()
+    suspend fun refreshUser(userUuid: String, userPhone: String)
 
     suspend fun getUserByUuid(userUuid: String): Profile?
 

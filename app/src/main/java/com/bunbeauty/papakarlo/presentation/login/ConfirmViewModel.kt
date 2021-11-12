@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragmentDirections.backToProfileFragment
@@ -13,7 +13,6 @@ import com.bunbeauty.presentation.enums.SuccessLoginDirection
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.example.data_api.Api
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +21,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConfirmViewModel @Inject constructor(
-    @Api private val userRepo: UserRepo,
+    private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {
 
@@ -47,7 +46,7 @@ class ConfirmViewModel @Inject constructor(
 
     fun onSuccessVerified(successLoginDirection: SuccessLoginDirection) {
         viewModelScope.launch {
-            userRepo.refreshUser()
+            userInteractor.refreshUser()
 
             when (successLoginDirection) {
                 BACK_TO_PROFILE -> router.navigate(backToProfileFragment())

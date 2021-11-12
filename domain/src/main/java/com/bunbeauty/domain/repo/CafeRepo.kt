@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CafeRepo {
 
-    suspend fun refreshCafeList()
+    suspend fun refreshCafeList(selectedCityUuid: String)
     suspend fun saveSelectedCafeUuid(cafeUuid: String)
 
     suspend fun getCafeList(): List<Cafe>

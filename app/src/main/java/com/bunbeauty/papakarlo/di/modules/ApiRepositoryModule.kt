@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.domain.repo.*
-import com.example.data_api.Api
 import com.example.data_api.repository.*
 import com.example.domain_api.repo.ApiRepo
 import dagger.Binds

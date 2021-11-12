@@ -65,7 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             viewModel.onVerificationError(authErrorEvent.error)
         }.startedLaunch()
         phoneVerificationUtil.authSuccessEvent.onEach {
-            viewModel.onSuccessVerified()
+            viewModel.onSuccessVerified(successLoginDirection)
         }.startedLaunch()
     }
 

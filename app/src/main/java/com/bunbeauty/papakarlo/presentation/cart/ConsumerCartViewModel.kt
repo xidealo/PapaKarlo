@@ -5,6 +5,7 @@ import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper
@@ -15,7 +16,6 @@ import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.item.CartProductItem
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

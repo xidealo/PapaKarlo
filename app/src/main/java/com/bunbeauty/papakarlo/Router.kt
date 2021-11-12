@@ -7,7 +7,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import com.bunbeauty.common.Constants.NAV_TAG
+import com.bunbeauty.common.Logger.NAV_TAG
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main

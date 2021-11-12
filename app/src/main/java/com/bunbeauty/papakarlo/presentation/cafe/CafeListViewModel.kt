@@ -2,13 +2,13 @@ package com.bunbeauty.papakarlo.presentation.cafe
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.Cafe
+import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.fragment.cafe.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.presentation.item.CafeItem
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

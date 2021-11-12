@@ -1,4 +1,4 @@
-package com.example.data_api
+package com.bunbeauty.domain.repo
 
 import javax.inject.Qualifier
 

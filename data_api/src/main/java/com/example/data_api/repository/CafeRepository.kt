@@ -26,13 +26,10 @@ class CafeRepository @Inject constructor(
     private val authUtil: IAuthUtil,
 ) : CafeRepo {
 
-    override suspend fun refreshCafeList() {
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
-        if (selectedCityUuid != null) {
-            apiRepo.getCafeListByCityUuid(selectedCityUuid).handleListResult(CAFE_TAG) { cafeList ->
-                if (cafeList != null) {
-                    cafeDao.insertAll(cafeList.map(cafeMapper::toEntityModel))
-                }
+    override suspend fun refreshCafeList(selectedCityUuid: String) {
+        apiRepo.getCafeListByCityUuid(selectedCityUuid).handleListResult(CAFE_TAG) { cafeList ->
+            if (cafeList != null) {
+                cafeDao.insertAll(cafeList.map(cafeMapper::toEntityModel))
             }
         }
     }

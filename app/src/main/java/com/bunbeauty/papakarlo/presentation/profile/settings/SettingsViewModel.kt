@@ -10,6 +10,7 @@ import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.Profile
+import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
@@ -18,7 +19,6 @@ import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toOneLineActionBottomSheet
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -4,6 +4,12 @@ import android.content.Context
 import com.bunbeauty.data.di.DataModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.modules.*
+import com.bunbeauty.papakarlo.worker.cafe.RefreshCafeWorker
+import com.bunbeauty.papakarlo.worker.city.RefreshCityWorker
+import com.bunbeauty.papakarlo.worker.delivery.RefreshDeliveryWorker
+import com.bunbeauty.papakarlo.worker.menu_product.RefreshMenuProductWorker
+import com.bunbeauty.papakarlo.worker.street.RefreshStreetWorker
+import com.bunbeauty.papakarlo.worker.user.RefreshUserWorker
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -21,7 +27,9 @@ import javax.inject.Singleton
         UtilModule::class,
         UIMapperModule::class,
         AppUtilModule::class,
-        DataModule::class
+        DataModule::class,
+        WorkerModule::class,
+        InteractorModule::class,
     ]
 )
 interface AppComponent {
@@ -34,4 +42,13 @@ interface AppComponent {
     fun getViewModelComponent(): ViewModelComponent.Factory
 
     fun inject(application: PapaKarloApplication)
+
+    // Worker
+
+    fun inject(refreshCafeWorker: RefreshCafeWorker)
+    fun inject(refreshStreetWorker: RefreshStreetWorker)
+    fun inject(refreshCityWorker: RefreshCityWorker)
+    fun inject(refreshDeliveryWorker: RefreshDeliveryWorker)
+    fun inject(refreshMenuProductWorker: RefreshMenuProductWorker)
+    fun inject(refreshUserWorker: RefreshUserWorker)
 }

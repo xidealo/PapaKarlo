@@ -2,12 +2,12 @@ package com.bunbeauty.papakarlo.presentation.address
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheetDirections.toCreationAddressFragment
 import com.bunbeauty.presentation.item.AddressItem
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

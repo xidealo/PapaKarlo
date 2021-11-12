@@ -1,22 +1,15 @@
 package com.bunbeauty.papakarlo.presentation.profile.settings
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.model.City
-import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.CityRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CitySelectionViewModel @Inject constructor(
-    @Api private val cityRepo: CityRepo,
-    @Api private val cafeRepo: CafeRepo,
-    @Api private val streetRepo: StreetRepo,
-    private val dataStoreRepo: DataStoreRepo,
+    private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
     private val mutableCityList: MutableStateFlow<List<City>> = MutableStateFlow(emptyList())
@@ -28,15 +21,13 @@ class CitySelectionViewModel @Inject constructor(
 
     fun onCitySelected(city: City) {
         viewModelScope.launch {
-            dataStoreRepo.saveSelectedCityUuid(city.uuid)
-            cafeRepo.refreshCafeList()
-            streetRepo.refreshStreetList()
+            cityInteractor.saveSelectedCity(city)
             goBack()
         }
     }
 
     private fun subscribeOnCityList() {
-        cityRepo.observeCityList().onEach { cityList ->
+        cityInteractor.observeCityList().onEach { cityList ->
             mutableCityList.value = cityList
         }.launchIn(viewModelScope)
     }

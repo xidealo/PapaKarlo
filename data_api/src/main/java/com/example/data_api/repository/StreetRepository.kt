@@ -20,16 +20,13 @@ class StreetRepository @Inject constructor(
     private val streetMapper: IStreetMapper,
 ) : StreetRepo {
 
-    override suspend fun refreshStreetList() {
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
-        if (selectedCityUuid != null) {
-            apiRepo.getStreetListByCityUuid(selectedCityUuid)
-                .handleListResult(STREET_TAG) { streetList ->
-                    if (streetList != null) {
-                        streetDao.insertAll(streetList.map(streetMapper::toEntityModel))
-                    }
+    override suspend fun refreshStreetList(selectedCityUuid: String) {
+        apiRepo.getStreetListByCityUuid(selectedCityUuid)
+            .handleListResult(STREET_TAG) { streetList ->
+                if (streetList != null) {
+                    streetDao.insertAll(streetList.map(streetMapper::toEntityModel))
                 }
-        }
+            }
     }
 
     override suspend fun getStreets(): List<Street> {

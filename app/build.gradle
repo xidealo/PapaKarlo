@@ -98,7 +98,6 @@ dependencies {
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
-    implementation fileTree(dir: "libs", include: ["*.jar", "*.arr"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
@@ -120,18 +119,23 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testJunitVerchion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVerchion"
 
-    //Optional -- Mockito framework
+    // WorkManager
+    implementation "androidx.work:work-runtime-ktx:$rootProject.workManagerVersion"
+    implementation "androidx.work:work-gcm:$rootProject.workManagerVersion"
+
+    // Mockito
     testImplementation "org.mockito:mockito-core:$rootProject.mockitoVerchion"
     testImplementation "org.mockito:mockito-inline:$rootProject.mockitoVerchion"
 
-    //Lifecycle
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.extensionsVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.livedataVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"
 
-    //Dagger 2
+    // Dagger 2
     implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     implementation "com.google.dagger:dagger-android:$rootProject.dagger2Version"

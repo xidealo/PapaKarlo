@@ -1,6 +1,7 @@
 package com.bunbeauty.common
 
 object Constants {
+
     const val PRODUCT_CODE: String = "productCode"
     const val ORDERS = "ORDERS"
     const val L_ORDERS = "orders"
@@ -11,24 +12,16 @@ object Constants {
     const val CAFES = "cafes"
     const val MENU_PRODUCTS: String = "menu_products"
     const val DELIVERY: String = "delivery"
-    const val BONUSES_PERCENT: Double = 0.1
-    const val COMMON_WORKER_TAG = "common worker tag"
 
-    const val CAFE_ARG_KEY = "cafe"
+    // WORKER KEYS
 
-    //
-
-    const val ASAP = "as soon as possible"
-    const val DIGITS = "0123456789"
-    const val CODE_NUMBER_COUNT = 100
+    const val SELECTED_CITY_UUID = "selected sity uuid"
+    const val USER_UUID = "user uuid"
+    const val USER_PHONE = "user phone"
 
     // LIMITS
 
     const val PHONE_LENGTH = 18
-
-    // TAG
-
-    const val NAV_TAG = "Nav"
 
     // PAYMENT
 
@@ -61,8 +54,10 @@ object Constants {
     const val HH_MM_PATTERN = "HH:mm"
 
     // TIME
+
     const val MIN_DEFERRED_HOURS_ADDITION = 1
     const val MIN_DEFERRED_MINUTES_ADDITION = 0
+    const val MINUTES_IN_HOUR = 60
 
     // ERROR
 
@@ -90,22 +85,6 @@ object Constants {
 
     // ERROR_KEY
 
-    const val PHONE_ERROR_KEY = "phone error key"
     const val STREET_ERROR_KEY = "street error key"
     const val HOUSE_ERROR_KEY = "house error key"
-//    const val FLAT_ERROR_KEY = "flat error key"
-//    const val ENTRANCE_ERROR_KEY = "entrance error key"
-//    const val FLOOR_ERROR_KEY = "floor error key"
-//    const val COMMENT_ERROR_KEY = "comment error key"
-
-    // ARGS_KEY
-
-    const val SELECTED_HOUR_KEY = "selectedHour"
-    const val SELECTED_MINUTE_KEY = "selectedMinute"
-    const val MENU_PRODUCT_UUID_ARGS_KEY = "menuProductUuid"
-
-    const val MINUTES_IN_HOUR = 60
-    const val SECONDS_IN_MINUTE = 60
-    const val MILLIS_IN_SECOND = 1000L
-    const val MILLIS_INTERVAL = 1000L
 }

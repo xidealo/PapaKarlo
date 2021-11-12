@@ -30,10 +30,8 @@ class UserRepository @Inject constructor(
     private val orderMapper: IOrderMapper
 ) : UserRepo {
 
-    override suspend fun refreshUser() {
-        val userPhone = authUtil.userPhone
-        val userUuid = authUtil.userUuid
-        if (authUtil.isAuthorize && userPhone != null && userUuid != null) {
+    override suspend fun refreshUser(userUuid: String, userPhone: String) {
+        if (authUtil.isAuthorize) {
             val userFirebase = firebaseRepo.getUser(userUuid).flowOn(IO).first()
             if (userFirebase == null) {
                 val newUserFirebase =

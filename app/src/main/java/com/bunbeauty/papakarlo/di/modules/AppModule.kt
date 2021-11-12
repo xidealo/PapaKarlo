@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.di.modules
 import android.content.Context
 import android.content.res.Resources
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkManager
 import coil.ImageLoader
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -25,5 +26,8 @@ class AppModule {
     @Provides
     fun provideImageRequestBuilder(context: Context): ImageRequest.Builder =
         ImageRequest.Builder(context)
+
+    @Provides
+    fun provideWorkManager(context: Context): WorkManager = WorkManager.getInstance(context)
 
 }

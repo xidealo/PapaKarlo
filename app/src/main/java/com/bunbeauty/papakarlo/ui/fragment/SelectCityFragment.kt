@@ -23,7 +23,6 @@ class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.checkIsCitySelected()
         viewDataBinding.run {
             viewModel.cityList.onEach { cityList ->
                 fragmentSelectCityLlCityList.removeAllViews()

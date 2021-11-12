@@ -5,7 +5,11 @@ import android.util.Log
 object Logger {
 
     private const val COMMON_TAG = "commonTag"
+    private const val WORKER_TAG = "workerTag"
+
     const val TEST_TAG = "testTag"
+    const val NAV_TAG = "navTag"
+
     const val USER_TAG = "userTag"
     const val USER_ADDRESS_TAG = "userAddressTag"
     const val ORDER_TAG = "orderTag"
@@ -16,6 +20,9 @@ object Logger {
     const val AUTH_TAG = "authTag"
 
     fun logD(tag: String, message: Any) {
+        if (isWorkerTag(tag)) {
+            Log.d(WORKER_TAG, "$tag $message")
+        }
         Log.d(COMMON_TAG, "$tag $message")
         Log.d(tag, message.toString())
     }
@@ -23,5 +30,9 @@ object Logger {
     fun logE(tag: String, message: Any) {
         Log.e(COMMON_TAG, "$tag $message")
         Log.e(tag, message.toString())
+    }
+
+    private fun isWorkerTag(tag: String): Boolean {
+        return tag.contains(Regex("Worker$"))
     }
 }

@@ -19,7 +19,6 @@ import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
-import com.example.data_api.Api
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

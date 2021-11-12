@@ -3,15 +3,16 @@ package com.bunbeauty.papakarlo.presentation.login
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.PHONE_LENGTH
 import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.event.BaseEvent
-import com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragmentDirections.toConfirmFragment
+import com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragmentDirections.*
 import com.bunbeauty.presentation.enums.SuccessLoginDirection
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.example.data_api.Api
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -19,8 +20,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
-    @Api private val userRepo: UserRepo,
     private val textValidator: ITextValidator,
+    private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {
 
@@ -46,10 +47,14 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onSuccessVerified() {
+    fun onSuccessVerified(successLoginDirection: SuccessLoginDirection) {
         viewModelScope.launch {
-            userRepo.refreshUser()
-            goBack()
+            userInteractor.refreshUser()
+
+            when (successLoginDirection) {
+                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
+                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
+            }
         }
     }
 
