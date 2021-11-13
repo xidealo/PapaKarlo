@@ -1,8 +1,8 @@
 package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.CafeDao
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.example.domain_firebase.mapper.ICafeMapper
 import com.example.domain_firebase.model.firebase.cafe.CafeFirebase

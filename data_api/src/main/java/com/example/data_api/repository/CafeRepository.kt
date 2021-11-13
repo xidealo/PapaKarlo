@@ -2,8 +2,8 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.CAFE_TAG
 import com.bunbeauty.domain.auth.IAuthUtil
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.example.data_api.dao.CafeDao

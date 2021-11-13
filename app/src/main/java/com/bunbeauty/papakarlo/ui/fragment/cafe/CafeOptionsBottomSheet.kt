@@ -9,18 +9,18 @@ import androidx.fragment.app.viewModels
 import com.bunbeauty.common.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.common.Constants.MAPS_LINK
 import com.bunbeauty.common.Constants.PHONE_LINK
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
+import kotlinx.coroutines.flow.onEach
 
 class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() {
 
     override val viewModel: CafeOptionsViewModel by viewModels { viewModelFactory }
 
-    private val cafe: Cafe by argument()
+    private val cafeUuid: String by argument()
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -30,19 +30,23 @@ class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cafeOption = viewModel.getCafeOptions(cafe)
+        viewModel.getCafe(cafeUuid)
         viewDataBinding.run {
-            bottomSheetCafeOptionsNcCall.cardText = cafeOption.callToCafe
-            bottomSheetCafeOptionsNcShowMap.cardText = cafeOption.showOnMap
-            bottomSheetCafeOptionsNcCall.setOnClickListener {
-                val uri = Uri.parse(PHONE_LINK + cafeOption.phone)
-                goByUri(uri, Intent.ACTION_DIAL)
-            }
-            bottomSheetCafeOptionsNcShowMap.setOnClickListener {
-                val uri =
-                    Uri.parse(MAPS_LINK + cafeOption.latitude + COORDINATES_DIVIDER + cafeOption.longitude)
-                goByUri(uri, Intent.ACTION_VIEW)
-            }
+            viewModel.cafeOptions.onEach { cafeOptions ->
+                cafeOptions ?: return@onEach
+
+                bottomSheetCafeOptionsNcCall.cardText = cafeOptions.callToCafe
+                bottomSheetCafeOptionsNcShowMap.cardText = cafeOptions.showOnMap
+                bottomSheetCafeOptionsNcCall.setOnClickListener {
+                    val uri = Uri.parse(PHONE_LINK + cafeOptions.phone)
+                    goByUri(uri, Intent.ACTION_DIAL)
+                }
+                bottomSheetCafeOptionsNcShowMap.setOnClickListener {
+                    val uri =
+                        Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
+                    goByUri(uri, Intent.ACTION_VIEW)
+                }
+            }.startedLaunch()
         }
     }
 

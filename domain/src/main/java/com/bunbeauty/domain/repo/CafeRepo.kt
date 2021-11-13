@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.cafe.Cafe
 import kotlinx.coroutines.flow.Flow
 
 interface CafeRepo {

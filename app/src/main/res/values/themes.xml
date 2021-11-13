@@ -21,8 +21,9 @@
         <item name="colorNavigation">@color/selector_navigation</item>
         <item name="colorPin">@color/selector_pin</item>
 
-        <item name="colorClosed">@color/light_red</item>
         <item name="colorOpen">@color/green</item>
+        <item name="colorCloseSoon">@color/yellow</item>
+        <item name="colorClosed">@color/light_red</item>
 
         <item name="logo_top">@drawable/logo_top_papa_karlo</item>
         <item name="logo_start">@drawable/logo_start_papa_karlo</item>

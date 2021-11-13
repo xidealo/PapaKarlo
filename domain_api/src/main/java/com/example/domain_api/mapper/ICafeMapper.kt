@@ -1,7 +1,7 @@
 package com.example.domain_api.mapper
 
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.cafe.Cafe
 import com.example.domain_api.model.entity.cafe.CafeEntity
 import com.example.domain_api.model.server.CafeServer
 

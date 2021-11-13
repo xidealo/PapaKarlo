@@ -1,6 +1,6 @@
 package com.bunbeauty.data_firebase.mapper
 
-import com.bunbeauty.domain.model.Cafe
+import com.bunbeauty.domain.model.cafe.Cafe
 import com.example.domain_firebase.mapper.ICafeMapper
 import com.example.domain_firebase.mapper.IStreetMapper
 import com.example.domain_firebase.model.entity.address.DistrictEntity

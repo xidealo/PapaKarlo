@@ -5,10 +5,11 @@ import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.common.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.Time
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.presentation.R
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
@@ -52,7 +53,7 @@ class StringUtil @Inject constructor(
         }
     }
 
-    override fun getWorkingHoursString(cafe: Cafe): String {
+    override fun getWorkingHoursString(cafe: CafePreview): String {
         return cafe.fromTime + WORKING_HOURS_DIVIDER + cafe.toTime
     }
 

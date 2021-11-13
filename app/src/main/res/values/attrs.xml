@@ -4,8 +4,9 @@
     <attr name="colorStroke" format="reference|color" />
     <attr name="colorPin" format="reference|color" />
     <attr name="colorNavigation" format="reference|color" />
-    <attr name="colorClosed" format="reference|color" />
     <attr name="colorOpen" format="reference|color" />
+    <attr name="colorCloseSoon" format="reference|color" />
+    <attr name="colorClosed" format="reference|color" />
 
     <attr name="logo_top" format="reference" />
     <attr name="logo_start" format="reference" />

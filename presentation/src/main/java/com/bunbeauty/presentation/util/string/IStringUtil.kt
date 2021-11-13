@@ -1,9 +1,10 @@
 package com.bunbeauty.presentation.util.string
 
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.model.Cafe
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.cafe.CafePreview
 
 interface IStringUtil {
     fun toStringTime(time: Long): String
@@ -11,7 +12,7 @@ interface IStringUtil {
     fun getCafeAddressString(cafeAddress: CafeAddress?): String
     fun getCafeAddressString(cafe: Cafe?): String?
     fun getUserAddressString(userAddress: UserAddress?): String?
-    fun getWorkingHoursString(cafe: Cafe): String
+    fun getWorkingHoursString(cafe: CafePreview): String
     fun getAddedToCartString(productName: String): String
     fun getRemovedFromCartString(productName: String): String
     fun getDeliveryCostString(deliveryCost: Int): String
