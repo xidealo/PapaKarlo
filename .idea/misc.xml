@@ -45,6 +45,7 @@
         <entry key="app/src/main/res/drawable/ic_payment.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_phone.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/ic_pizza.xml" value="0.14479166666666668" />
+        <entry key="app/src/main/res/drawable/ic_plus_7.xml" value="0.5222222222222223" />
         <entry key="app/src/main/res/drawable/ic_potato.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.2695" />
         <entry key="app/src/main/res/drawable/ic_profile_girl.xml" value="0.2695" />
@@ -85,7 +86,7 @@
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_creation_address.xml" value="0.5250255362614913" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="1.1" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_orders.xml" value="0.33" />

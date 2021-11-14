@@ -33,6 +33,8 @@
             style="@style/MaterialInputLayout"
             android:layout_margin="@dimen/medium_margin"
             android:hint="@string/title_login_phone"
+            app:startIconDrawable="@drawable/ic_plus_7"
+            app:startIconTint="?attr/colorOnSurface"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +43,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fragment_login_et_phone"
                 style="@style/MaterialInput"
+                tools:text="000 0000 00"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 

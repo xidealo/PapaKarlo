@@ -37,7 +37,6 @@
             android:inputType="number"
             android:maxLength="6"
             android:textAppearance="@style/LargeRegularTextAppearance"
-            app:pinLineColors="?attr/colorPin"
             android:textIsSelectable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +44,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5"
             app:pinAnimationType="fromBottom"
+            app:pinLineColors="?attr/colorPin"
             app:pinLineStroke="2dp"
             tools:text="123456" />
 
@@ -62,11 +62,13 @@
             <TextView
                 android:id="@+id/fragment_confirm_tv_resend_seconds_info"
                 style="@style/SecondaryMediumRegularWrapContentText"
+                android:gravity="center"
                 tools:text="Получить повторно код можно через 60 секунд" />
 
             <TextView
                 android:id="@+id/fragment_confirm_tv_resend_code"
                 style="@style/SecondaryMediumRegularWrapContentText"
+                android:gravity="center"
                 android:text="@string/action_confirm_resend_code" />
         </LinearLayout>
 
