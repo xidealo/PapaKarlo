@@ -8,7 +8,7 @@ data class MenuProductItem(
     override var uuid: String,
     val name: String,
     val newPrice: String,
-    val oldPrice: String?,
+    val oldPrice: String,
     val photoLink: String,
     var photoReference: SoftReference<Drawable?> = SoftReference(null)
 ) : BaseItem()

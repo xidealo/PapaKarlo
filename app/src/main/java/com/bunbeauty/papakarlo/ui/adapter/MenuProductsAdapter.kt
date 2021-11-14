@@ -47,7 +47,7 @@ class MenuProductsAdapter @Inject constructor() :
                 elementMenuProductTvNewPrice.text = item.newPrice
                 elementMenuProductTvOldPrice.text = item.oldPrice
                 elementMenuProductTvOldPrice.strikeOutText()
-                elementMenuProductTvOldPrice.toggleVisibility(item.oldPrice != null)
+                elementMenuProductTvOldPrice.toggleVisibility(item.oldPrice.isNotEmpty())
 
                 val photo = item.photoReference.get()
                 if (photo == null) {
