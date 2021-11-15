@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.presentation.menu
 
-import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.State
 import com.bunbeauty.common.extensions.toStateSuccess
@@ -54,11 +53,7 @@ class ProductTabViewModel @Inject constructor(
 
     fun onProductClicked(menuProductItem: MenuProductItem) {
         router.navigate(
-            toProductFragment(
-                menuProductItem.uuid,
-                menuProductItem.name,
-                menuProductItem.photoReference.get()?.toBitmap()
-            )
+            toProductFragment(menuProductItem.uuid, menuProductItem.name, menuProductItem.photoLink)
         )
     }
 

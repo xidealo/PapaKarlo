@@ -1,9 +1,10 @@
 package com.bunbeauty.papakarlo.ui.fragment.menu
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import coil.load
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -27,7 +28,7 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
     override val viewModel: ProductViewModel by viewModels { viewModelFactory }
 
     private val menuProductUuid: String by argument()
-    private val photo: Bitmap by argument()
+    private val photoLink: String by argument()
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -44,7 +45,9 @@ class ProductFragment : TopbarCartFragment<FragmentProductBinding>() {
                 fragmentProductBtnAdd.toggleVisibility(!isLoading)
 
                 if (menuProduct != null) {
-                    fragmentProductIvPhoto.setImageBitmap(photo)
+                    fragmentProductIvPhoto.load(photoLink) {
+                        placeholder(resourcesProvider.getDrawable(R.drawable.placeholder_large))
+                    }
                     fragmentProductTvName.text = menuProduct.name
                     fragmentProductTvSize.text = menuProduct.size
                     if (menuProduct.oldPrice == null) {

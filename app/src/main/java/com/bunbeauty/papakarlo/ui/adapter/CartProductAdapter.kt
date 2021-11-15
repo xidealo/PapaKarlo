@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import coil.load
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -12,6 +10,7 @@ import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
 import com.bunbeauty.papakarlo.ui.custom.CountPicker
 import com.bunbeauty.presentation.item.CartProductItem
+import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
@@ -41,10 +40,17 @@ class CartProductAdapter @Inject constructor() :
                 elementCartProductTvOldCost.toggleVisibility(item.oldCost != null)
                 elementCartProductTvNewCost.text = item.newCost
                 elementCartProductCpCount.count = item.count
-                elementCartProductIvPhoto.load(item.photoLink) {
-                    placeholder(R.drawable.placeholder)
+                elementCartProductIvPhoto.setPhoto(
+                    item.photoReference,
+                    item.photoLink
+                ) { drawable ->
+                    item.photoReference = SoftReference(drawable)
                 }
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
+                elementCartProductClMain.setOnClickListener {
+                    onItemClicked(item)
+                }
+                elementCartProductLlCount.setOnClickListener {}
             }
         }
 
@@ -56,6 +62,10 @@ class CartProductAdapter @Inject constructor() :
                     elementCartProductTvOldCost.text = item.oldCost
                     elementCartProductTvNewCost.text = item.newCost
                     elementCartProductCpCount.count = item.count
+                    elementCartProductClMain.setOnClickListener {
+                        onItemClicked(item)
+                    }
+                    elementCartProductLlCount.setOnClickListener {}
                 }
             }
         }

@@ -9,6 +9,7 @@ data class MenuProductItem(
     val name: String,
     val newPrice: String,
     val oldPrice: String,
-    val photoLink: String,
+    val photoLink: String
+) : BaseItem() {
     var photoReference: SoftReference<Drawable?> = SoftReference(null)
-) : BaseItem()
+}

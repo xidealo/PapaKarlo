@@ -40,8 +40,8 @@ class ConsumerCartViewModel @Inject constructor(
     val oldTotalCost: StateFlow<String> = mutableOldTotalCost.asStateFlow()
 
     init {
-        subscribeOnCartProducts()
-        subscribeOnDelivery()
+        observeCartProducts()
+        observeDelivery()
     }
 
     fun onMenuClicked() {
@@ -56,7 +56,17 @@ class ConsumerCartViewModel @Inject constructor(
         }
     }
 
-    private fun subscribeOnCartProducts() {
+    fun onProductClicked(cartProductItem: CartProductItem) {
+        router.navigate(
+            toProductFragment(
+                cartProductItem.menuProductUuid,
+                cartProductItem.name,
+                cartProductItem.photoLink
+            )
+        )
+    }
+
+    private fun observeCartProducts() {
         cartProductRepo.observeCartProductList().onEach { productList ->
             mutableOrderProductListState.value = if (productList.isEmpty()) {
                 State.Empty()
@@ -68,7 +78,7 @@ class ConsumerCartViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun subscribeOnDelivery() {
+    private fun observeDelivery() {
         dataStoreRepo.delivery.onEach { delivery ->
             mutableDeliveryInfo.value =
                 resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery_from) +

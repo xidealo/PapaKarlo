@@ -1,6 +1,8 @@
 package com.bunbeauty.presentation.item
 
+import android.graphics.drawable.Drawable
 import com.bunbeauty.domain.model.BaseItem
+import java.lang.ref.SoftReference
 
 data class CartProductItem(
     override var uuid: String,
@@ -9,5 +11,7 @@ data class CartProductItem(
     val oldCost: String?,
     val photoLink: String,
     val count: Int,
-    val menuProductUuid: String
-) : BaseItem()
+    val menuProductUuid: String,
+) : BaseItem() {
+    var photoReference: SoftReference<Drawable?> = SoftReference(null)
+}

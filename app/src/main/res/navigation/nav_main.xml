@@ -83,6 +83,9 @@
                 android:name="successLoginDirection"
                 app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
         </action>
+        <action
+            android:id="@+id/to_product_fragment"
+            app:destination="@id/product_fragment" />
     </fragment>
     <fragment
         android:id="@+id/create_order_fragment"
@@ -137,9 +140,8 @@
             android:name="menuProductName"
             app:argType="string" />
         <argument
-            android:name="photo"
-            app:argType="android.graphics.Bitmap"
-            app:nullable="true" />
+            android:name="photoLink"
+            app:argType="string" />
     </fragment>
 
     <fragment

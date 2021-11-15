@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -24,22 +25,26 @@ class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
-            viewModel.cityList.onEach { cityList ->
-                fragmentSelectCityLlCityList.removeAllViews()
-                cityList.forEach { city ->
-                    ElementCityBinding.inflate(layoutInflater, fragmentSelectCityLlCityList, true)
-                        .apply {
+            viewModel.cityList.onEach { state ->
+                fragmentSelectCityPbLoading.toggleVisibility(state !is State.Success)
+                fragmentSelectCityLlCityList.toggleVisibility(state is State.Success)
+                fragmentSelectCityTvTitle.toggleVisibility(state is State.Success)
+
+                if (state is State.Success) {
+                    fragmentSelectCityLlCityList.removeAllViews()
+                    state.data.forEach { city ->
+                        ElementCityBinding.inflate(
+                            layoutInflater,
+                            fragmentSelectCityLlCityList,
+                            true
+                        ).apply {
                             elementCityTvName.text = city.name
                             root.setOnClickListener {
                                 viewModel.onCitySelected(city)
                             }
                         }
+                    }
                 }
-            }.startedLaunch()
-            viewModel.isLoading.onEach { isLoading ->
-                fragmentSelectCityPbLoading.toggleVisibility(isLoading)
-                fragmentSelectCityLlCityList.toggleVisibility(!isLoading)
-                fragmentSelectCityTvTitle.toggleVisibility(!isLoading)
             }.startedLaunch()
         }
     }

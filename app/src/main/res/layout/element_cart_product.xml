@@ -8,6 +8,7 @@
         style="@style/MatchParentCard">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/element_cart_product_cl_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -15,17 +16,17 @@
                 android:id="@+id/element_cart_product_iv_photo"
                 android:layout_width="@dimen/image_element_width"
                 android:layout_height="@dimen/image_element_height"
+                android:contentDescription="@string/description_product"
                 android:src="@drawable/placeholder"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:contentDescription="@string/description_product"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/element_cart_product_tv_name"
                 style="@style/MediumBoldWrapConstraintsText"
                 android:layout_margin="@dimen/small_margin"
-                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
+                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_ll_count"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Бэргер" />
@@ -48,25 +49,32 @@
                 android:layout_marginEnd="@dimen/small_margin"
                 app:flow_horizontalBias="0"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
+                app:layout_constraintEnd_toStartOf="@+id/element_cart_product_ll_count"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/element_cart_product_tv_old_cost"
                 app:layout_constraintTop_toBottomOf="@+id/element_cart_product_tv_name"
                 app:layout_constraintVertical_bias="0"
                 tools:text="90₽" />
 
-            <com.bunbeauty.papakarlo.ui.custom.CountPicker
-                android:id="@+id/element_cart_product_cp_count"
+            <LinearLayout
+                android:id="@+id/element_cart_product_ll_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/medium_margin"
-                app:buttonTextColor="?attr/colorOnPrimary"
+                android:padding="@dimen/medium_margin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:pickerColor="?attr/colorPrimary"
-                app:pickerHeight="@dimen/picker_height"
-                app:pickerWidth="@dimen/picker_width" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.bunbeauty.papakarlo.ui.custom.CountPicker
+                    android:id="@+id/element_cart_product_cp_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:buttonTextColor="?attr/colorOnPrimary"
+                    app:pickerColor="?attr/colorPrimary"
+                    app:pickerHeight="@dimen/picker_height"
+                    app:pickerWidth="@dimen/picker_width" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
