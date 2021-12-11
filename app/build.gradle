@@ -94,7 +94,6 @@ dependencies {
     implementation project(":common")
     implementation project(":presentation")
     implementation project(":data")
-    implementation project(":shared")
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
@@ -130,7 +129,6 @@ dependencies {
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.extensionsVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.livedataVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.viewmodelVersion"

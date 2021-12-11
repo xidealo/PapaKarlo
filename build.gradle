@@ -5,31 +5,29 @@ ext {
     targetSdkVersion = 31
     compileSdkVersion = 31
     buildToolsVersion = "30.0.2"
-    constraintLayoutVersion = "1.1.3"
 
     // App dependencies
-    viewModelVersion = "2.3.0-beta01"
-    dagger2Version = "2.35.1"
-    corountinesVersion = "1.5.0"
+    dagger2Version = "2.40.1"
+    corountinesVersion = "1.5.2"
 
     livedataVersion = "2.3.1"
 
-    roomDatabaseVersion = "2.4.0-beta01"
+    roomDatabaseVersion = "2.4.0-rc01"
     roomCompilerVersion = "1.1.1"
     datastoreVersion = "1.0.0"
-    lifecycleVersion = "2.4.0-beta01"
+    lifecycleVersion = "2.4.0"
     extensionsVersion = "2.2.0"
-    viewmodelVersion = "2.3.1"
-    activityVersion = "1.3.1"
-    fragmentVersion = "1.3.6"
-    workManagerVersion = "2.7.0"
-    jodaVersion = "2.10.9"
-    coilVersion = "1.3.1"
-    coreKtxVersion = "1.6.0"
-    appcompatVersion = "1.3.1"
+    viewmodelVersion = "2.4.0"
+    activityVersion = "1.4.0"
+    fragmentVersion = "1.4.0"
+    workManagerVersion = "2.7.1"
+    jodaVersion = "2.10.13"
+    coilVersion = "1.4.0"
+    coreKtxVersion = "1.7.0"
+    appcompatVersion = "1.4.0"
     navigationVersion = "2.4.0-beta02"
     firebaseVersion = "26.7.0"
-    ktorVersion = "1.6.4"
+    ktorVersion = "1.6.5"
     jsonVersion = "1.0.1"
 
     //design
@@ -37,8 +35,8 @@ ext {
     recyclerViewVersion = "1.2.1"
     recyclerviewAnimatorsViewVersion = "4.0.2"
     designVersion = "28.0.0"
-    constraintlayoutVersion = "2.1.1"
-    scannerVersion = "1.4.2"
+    constraintlayoutVersion = "2.1.2"
+    scannerVersion = "1.6.0"
     legacySupportVersion = "1.0.0"
     appcompatV7Version = "28.0.0"
     pinentryedittextVersion = "2.0.6"
@@ -46,7 +44,7 @@ ext {
     pickerVersion = "4.2.3"
 
     // Test dependencies
-    mockitoVerchion = "3.11.0"
+    mockitoVerchion = "4.0.0"
     junitVerchion = "4.13.2"
     testJunitVerchion = "1.1.3"
     espressoVerchion = "3.4.0"

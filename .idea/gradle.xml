@@ -20,7 +20,6 @@
             <option value="$PROJECT_DIR$/domain_api" />
             <option value="$PROJECT_DIR$/domain_firebase" />
             <option value="$PROJECT_DIR$/presentation" />
-            <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

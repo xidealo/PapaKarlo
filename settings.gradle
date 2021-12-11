@@ -4,7 +4,6 @@ include ':domain'
 include ':data_firebase'
 include ':app'
 rootProject.name = "PapaKarlo"
-include ':shared'
 include ':domain_api'
 include ':domain_firebase'
 include ':data_api'
