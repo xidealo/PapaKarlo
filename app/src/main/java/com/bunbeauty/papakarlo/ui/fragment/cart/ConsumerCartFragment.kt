@@ -66,6 +66,9 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
                     viewModel.removeProductFromCart(item.menuProductUuid)
                 }
             }
+        cartProductAdapter.setOnItemClickListener { cartProductItem ->
+            viewModel.onProductClicked(cartProductItem)
+        }
         viewDataBinding.run {
             fragmentConsumerCartRvResult.addItemDecoration(marginItemDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter

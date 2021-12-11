@@ -21,7 +21,7 @@ object Constants {
 
     // LIMITS
 
-    const val PHONE_LENGTH = 18
+    const val PHONE_LENGTH = 15
 
     // PAYMENT
 

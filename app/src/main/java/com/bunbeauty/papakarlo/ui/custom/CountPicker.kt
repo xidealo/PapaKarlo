@@ -6,7 +6,6 @@ import android.graphics.Typeface
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.Gravity.CENTER
 import android.view.View
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -67,8 +66,8 @@ class CountPicker @JvmOverloads constructor(
 
     init {
         backgroundTintList = ColorStateList.valueOf(buttonColor)
-        //setBackgroundColor(buttonColor)
-        radius = getPixels(8)
+        radius = context.resources.getDimensionPixelOffset(R.dimen.medium_radius).toFloat()
+        setPadding(20, 20, 20, 20)
 
         val linearLayout = LinearLayout(context).apply {
             layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
@@ -91,7 +90,7 @@ class CountPicker @JvmOverloads constructor(
             setTextColor(ColorStateList.valueOf(buttonTextColor))
             text = getSpan(buttonText)
             backgroundTintList = ColorStateList.valueOf(buttonColor)
-            cornerRadius = getPixels(8).toInt()
+            cornerRadius = context.resources.getDimensionPixelOffset(R.dimen.medium_radius)
             setOnClickListener(onClickListener)
         }
     }
@@ -120,14 +119,6 @@ class CountPicker @JvmOverloads constructor(
         val spanText = SpannableString(text)
         spanText.setSpan(StyleSpan(Typeface.BOLD), 0, text.length, 0)
         return spanText
-    }
-
-    private fun getPixels(dp: Int): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            context.resources.displayMetrics
-        )
     }
 
     interface CountChangeListener {

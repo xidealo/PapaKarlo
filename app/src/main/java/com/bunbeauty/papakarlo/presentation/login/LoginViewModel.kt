@@ -39,7 +39,8 @@ class LoginViewModel @Inject constructor(
         mutableIsLoading.value = true
         if (textValidator.isFieldContentCorrect(phone, PHONE_LENGTH, PHONE_LENGTH)) {
             viewModelScope.launch {
-                mutablePhoneCheckedEvent.send(PhoneCheckedEvent(phone))
+                val phoneWithCode = PHONE_CODE + phone
+                mutablePhoneCheckedEvent.send(PhoneCheckedEvent(phoneWithCode))
             }
         } else {
             mutableIsLoading.value = false
@@ -85,6 +86,10 @@ class LoginViewModel @Inject constructor(
                 successLoginDirection
             )
         )
+    }
+
+    companion object {
+        private const val PHONE_CODE = "+7"
     }
 
     class PhoneCheckedEvent(val phone: String) : BaseEvent()

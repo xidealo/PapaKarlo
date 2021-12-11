@@ -9,11 +9,10 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
 
     @SuppressLint("SetTextI18n")
     override fun afterTextChanged(text: Editable?) {
+        text ?: return
         var cursorPosition = phoneEditText.selectionEnd
 
         val numbers = text.toString()
-            .replace("+7", "")
-            .replace("7 (", "")
             .replace(Regex("\\D"), "")
         val firstGroup = numbers.take(3)
         val secondGroup = numbers.drop(3).take(3)
@@ -22,7 +21,7 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
 
         var result = ""
         if (firstGroup.isNotEmpty()) {
-            result += "+7 ($firstGroup"
+            result += "($firstGroup"
         }
 
         if (secondGroup.isNotEmpty()) {
@@ -39,62 +38,61 @@ class PhoneTextWatcher(private val phoneEditText: TextInputEditText) : TextWatch
 
         when (cursorPosition) {
             1 -> {
-                // "0" -> "+7 (0"
-                if (text?.first() != '+') {
-                    cursorPosition += 4
+                // "(" -> ""
+                if (text.first() == '(') {
+                    cursorPosition -= 1
+                }
+
+                // "0" -> "(0"
+                else {
+                    cursorPosition += 1
                 }
             }
-            4 -> {
-                // "+7 (" -> ""
-                if (text.toString() == "+7 (") {
-                    cursorPosition -= 4
-                }
-            }
-            8 -> {
-                // "+7 (0000" -> "+7 (000) 0"
-                if (text!![7] != ')') {
+            5 -> {
+                // "(0000" -> "(000) 0"
+                if (text[4] != ')') {
                     cursorPosition += 2
                 }
             }
-            9 -> {
-                // "+7 (000) " -> "+7 (000"
-                if (text!![8] == ' ') {
+            6 -> {
+                // "(000) " -> "(000"
+                if (text[5] == ' ') {
                     cursorPosition -= 2
                 }
 
-                // "+7 (000)0" -> "+7 (000) 0"
+                // "(000)0" -> "(000) 0"
                 else {
                     cursorPosition++
                 }
             }
-            13 -> {
-                // "+7 (000) 000-" -> "+7 (000) 000"
-                if (text?.last() == '-') {
+            10 -> {
+                // "(000) 000-" -> "(000) 000"
+                if (text.last() == '-') {
                     cursorPosition--
                 }
 
-                // "+7 (000) 0000" -> "+7 (000) 000-0"
+                // "(000) 0000" -> "(000) 000-0"
                 else {
-                    if (text!![12] != '-') {
+                    if (text[9] != '-') {
+                        cursorPosition++
+                    }
+                }
+            }
+            13 -> {
+                // "(000) 000-00-" -> "(000) 000-00"
+                if (text.last() == '-') {
+                    cursorPosition--
+                }
+
+                // "(000) 000-000" -> "(000) 000-00-0"
+                else {
+                    if (text[12] != '-') {
                         cursorPosition++
                     }
                 }
             }
             16 -> {
-                // "+7 (000) 000-00-" -> "+7 (000) 000-00"
-                if (text?.last() == '-') {
-                    cursorPosition--
-                }
-
-                // "+7 (000) 000-000" -> "+7 (000) 000-00-0"
-                else {
-                    if (text!![15] != '-') {
-                        cursorPosition++
-                    }
-                }
-            }
-            19 -> {
-                // "+7 (000) 000-00-000" -> "+7 (000) 000-00-00"
+                // "(000) 000-00-000" -> "(000) 000-00-00"
                 cursorPosition--
             }
         }

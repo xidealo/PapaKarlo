@@ -18,11 +18,18 @@ class MarginItemDecoration @Inject constructor(private val resourcesProvider: IR
     ) {
         val smallMargin = resourcesProvider.getDimensionPixelOffset(R.dimen.small_margin)
         val mediumMargin = resourcesProvider.getDimensionPixelOffset(R.dimen.medium_margin)
+
+        val currentPosition = parent.getChildAdapterPosition(view).takeIf { position ->
+            position != RecyclerView.NO_POSITION
+        } ?: return
+        val isFistItem = currentPosition == 0
+        val isLastItem = currentPosition == state.itemCount - 1
+
         outRect.run {
-            if (isFistItem(view, parent)) {
+            if (isFistItem) {
                 top = mediumMargin
             }
-            bottom = if (isLastItem(view, parent, state)) {
+            bottom = if (isLastItem) {
                 mediumMargin
             } else {
                 smallMargin
@@ -30,13 +37,5 @@ class MarginItemDecoration @Inject constructor(private val resourcesProvider: IR
             left = mediumMargin
             right = mediumMargin
         }
-    }
-
-    private fun isFistItem(view: View, parent: RecyclerView):Boolean {
-        return parent.getChildAdapterPosition(view) == 0
-    }
-
-    private fun isLastItem(view: View, parent: RecyclerView, state: RecyclerView.State):Boolean {
-        return parent.getChildAdapterPosition(view) == state.itemCount - 1
     }
 }

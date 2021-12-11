@@ -12,14 +12,14 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/small_margin" />
+            app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_sheet_payment_gl_right"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/small_margin" />
+            app:layout_constraintGuide_end="@dimen/medium_margin" />
 
         <TextView
             android:id="@+id/bottom_sheet_payment_tv_title"
@@ -30,6 +30,15 @@
             app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/bottom_sheet_payment_tv_description"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:layout_marginTop="@dimen/medium_margin"
+            android:text="@string/msg_payment_description"
+            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title" />
+
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
             android:id="@+id/bottom_sheet_payment_nc_card_number"
             style="@style/ShadowlessNavigationCard"
@@ -37,7 +46,7 @@
             android:icon="@drawable/ic_copy"
             app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
             app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_description"
             tools:text="4279 3800 2260 1191" />
 
         <com.bunbeauty.papakarlo.ui.custom.NavigationCard
