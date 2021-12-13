@@ -16,6 +16,8 @@ import io.ktor.client.features.observer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 import javax.inject.Singleton
 
 @Module
@@ -111,3 +113,82 @@ class ApiDataModule {
     fun provideOrderDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getOrderDao()
 
 }
+
+fun apiDataModule() = module {
+    //json
+    single {
+        Json {
+            prettyPrint = true
+            isLenient = true
+            ignoreUnknownKeys = true
+        }
+    }
+    //ktor
+    single {
+        HttpClient {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                })
+            }
+
+            install(Logging) {
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        Log.v("Logger Ktor =>", message)
+                    }
+                }
+                level = LogLevel.ALL
+            }
+
+            install(ResponseObserver) {
+                onResponse { response ->
+                    Log.d("HTTP status:", "${response.status.value}")
+                }
+            }
+
+            install(DefaultRequest) {
+                host = "food-delivery-api-bunbeauty.herokuapp.com"
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+            }
+
+        }
+    }
+    //room
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            ApiLocalDatabase::class.java,
+            "ApiLocalDatabase"
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    //dao
+    single {
+        get<ApiLocalDatabase>().getMenuProductDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getCartProductDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getCafeDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getUserDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getUserAddressDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getStreetDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getCityDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getOrderDao()
+    }
+}
+

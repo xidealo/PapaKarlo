@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), IToolbar, IBottomNavigationBar {
         router.attach(this, R.id.activity_main_fcv_container)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (menu?.size() == 0) {
             menuInflater.inflate(R.menu.top_menu, menu)
         }
