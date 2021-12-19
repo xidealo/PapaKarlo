@@ -101,7 +101,7 @@
     </style>
 
     <style name="SmallButton" parent="BaseButton">
-        <item name="android:layout_width">@dimen/small_button_width</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <style name="MyShapeAppearance">
