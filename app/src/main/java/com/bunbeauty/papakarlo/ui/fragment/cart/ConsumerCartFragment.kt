@@ -3,13 +3,13 @@ package com.bunbeauty.papakarlo.ui.fragment.cart
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration

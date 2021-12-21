@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.product.OrderProduct
@@ -13,6 +11,8 @@ import com.bunbeauty.domain.util.date_time.IDateTimeUtil
 import com.bunbeauty.domain.util.order.IOrderUtil
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
 import com.bunbeauty.presentation.item.OrderProductItem
 import com.bunbeauty.presentation.model.OrderUI
 import com.bunbeauty.presentation.util.string.IStringUtil

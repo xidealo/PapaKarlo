@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.cart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.Api
@@ -11,6 +9,8 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toStateSuccess
 import com.bunbeauty.papakarlo.ui.fragment.cart.ConsumerCartFragmentDirections.*
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.presentation.item.CartProductItem

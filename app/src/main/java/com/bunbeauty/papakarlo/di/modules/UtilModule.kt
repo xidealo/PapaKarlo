@@ -4,6 +4,7 @@ import com.bunbeauty.data.AuthUtil
 import com.bunbeauty.data.DataStoreRepository
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.VersionRepo
 import com.bunbeauty.domain.util.cafe.CafeUtil
 import com.bunbeauty.domain.util.cafe.ICafeUtil
 import com.bunbeauty.domain.util.date_time.DateTimeUtil
@@ -22,8 +23,7 @@ import com.bunbeauty.presentation.util.network.NetworkHelper
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import com.bunbeauty.presentation.util.string.StringUtil
-import com.example.data_api.mapper.CafeMapper
-import com.example.domain_api.mapper.ICafeMapper
+import com.example.data_api.repository.VersionRepository
 import dagger.Binds
 import dagger.Module
 import org.koin.android.ext.koin.androidContext
@@ -37,6 +37,10 @@ interface UtilModule {
     @Singleton
     @Binds
     fun bindDataStoreRepository(dataStoreRepository: DataStoreRepository): DataStoreRepo
+
+    @Singleton
+    @Binds
+    fun bindRemoteConfigRepository(remoteConfigRepository: VersionRepository): VersionRepo
 
     // HELPERS
 
@@ -73,6 +77,7 @@ interface UtilModule {
 
 fun utilModule() = module {
     single { DataStoreRepository(androidContext()) } bind DataStoreRepo::class
+    single<VersionRepo> { VersionRepository(get()) }
     single { ResourcesProvider(androidContext()) } bind IResourcesProvider::class
     single { UriHelper() } bind IUriHelper::class
     single {

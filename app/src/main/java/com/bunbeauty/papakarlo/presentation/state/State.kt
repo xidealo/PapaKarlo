@@ -1,4 +1,4 @@
-package com.bunbeauty.common
+package com.bunbeauty.papakarlo.presentation.state
 
 sealed class State<T> {
     class Loading<T> : State<T>()

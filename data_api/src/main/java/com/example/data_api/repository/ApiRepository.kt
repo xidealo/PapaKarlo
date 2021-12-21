@@ -2,6 +2,8 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
+import com.bunbeauty.common.Constants.COMPANY_UUID
+import com.bunbeauty.common.Constants.COMPANY_UUID_PARAMETER
 import com.example.domain_api.model.server.*
 import com.example.domain_api.model.server.order.get.OrderServer
 import com.example.domain_api.model.server.order.post.OrderPostServer
@@ -24,6 +26,14 @@ class ApiRepository @Inject constructor(
 ) : ApiRepo {
 
     // GET
+
+    override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
+        return getData(
+            path = "force_update_version",
+            serializer = ForceUpdateVersionServer.serializer(),
+            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+        )
+    }
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
@@ -119,7 +129,7 @@ class ApiRepository @Inject constructor(
     suspend fun <T : Any> getData(
         path: String,
         serializer: KSerializer<T>,
-        parameters: HashMap<String, String> = hashMapOf()
+        parameters: Map<String, String> = mapOf()
     ): ApiResult<T> {
         return try {
             ApiResult.Success(
@@ -136,7 +146,7 @@ class ApiRepository @Inject constructor(
                 )
             )
         } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Exception) {
             ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
@@ -146,7 +156,7 @@ class ApiRepository @Inject constructor(
         path: String,
         postBody: T,
         serializer: KSerializer<R>,
-        parameters: HashMap<String, String> = hashMapOf()
+        parameters: Map<String, String> = mapOf()
     ): ApiResult<R> {
         return try {
             ApiResult.Success(
@@ -164,7 +174,7 @@ class ApiRepository @Inject constructor(
                 )
             )
         } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Exception) {
             ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
@@ -174,7 +184,7 @@ class ApiRepository @Inject constructor(
         path: String,
         body: T,
         serializer: KSerializer<R>,
-        parameters: HashMap<String, String> = hashMapOf()
+        parameters: Map<String, String> = mapOf()
     ): ApiResult<R> {
         return try {
             ApiResult.Success(
@@ -191,7 +201,7 @@ class ApiRepository @Inject constructor(
                 )
             )
         } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message ?: "-"))
+            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Exception) {
             ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }

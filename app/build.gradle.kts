@@ -119,10 +119,7 @@ android {
             variant.outputs
                 .map { it as com.android.build.gradle.internal.api.BaseVariantOutputImpl }
                 .forEach { output ->
-                    val outputFileName =
-                        "Fleet_Manager_${variant.baseName}.apk"
-                    println("OutputFileName: $outputFileName")
-                    output.outputFileName = outputFileName
+                    output.outputFileName = "FoodDelivery_${variant.baseName}.apk"
                 }
         }
         getByName("debug") {

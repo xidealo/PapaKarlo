@@ -1,13 +1,13 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.presentation.item.OrderItem

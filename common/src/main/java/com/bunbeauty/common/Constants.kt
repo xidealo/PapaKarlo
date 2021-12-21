@@ -2,7 +2,15 @@ package com.bunbeauty.common
 
 object Constants {
 
-    const val PRODUCT_CODE: String = "productCode"
+    // UUID
+
+    const val COMPANY_UUID = "ed85ea4c-23f2-48d7-adc5-3d64d2dcc348"
+
+    // PARAMETER
+
+    const val COMPANY_UUID_PARAMETER = "companyUuid"
+
+    const val PRODUCT_CODE = "productCode"
     const val ORDERS = "ORDERS"
     const val L_ORDERS = "orders"
     const val USERS = "USERS"
@@ -10,8 +18,8 @@ object Constants {
     const val ADDRESSES = "addresses"
     const val COMPANY = "COMPANY"
     const val CAFES = "cafes"
-    const val MENU_PRODUCTS: String = "menu_products"
-    const val DELIVERY: String = "delivery"
+    const val MENU_PRODUCTS = "menu_products"
+    const val DELIVERY = "delivery"
 
     // WORKER KEYS
 
@@ -87,4 +95,9 @@ object Constants {
 
     const val STREET_ERROR_KEY = "street error key"
     const val HOUSE_ERROR_KEY = "house error key"
+
+    // REMOTE CONFIG KEY
+
+    const val FORCE_UPDATE_VERSION = "forceUpdateVersion"
+
 }

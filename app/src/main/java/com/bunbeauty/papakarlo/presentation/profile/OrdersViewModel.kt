@@ -1,11 +1,11 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toStateSuccess
 import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragmentDirections.toOrderBottomSheet
 import com.bunbeauty.presentation.item.OrderItem
 import com.bunbeauty.presentation.mapper.order.IOrderUIMapper

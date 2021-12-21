@@ -8,6 +8,8 @@ import com.bunbeauty.domain.interactor.city.CityInteractor
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
 import com.bunbeauty.domain.interactor.main.MainInteractor
+import com.bunbeauty.domain.interactor.update.IUpdateInteractor
+import com.bunbeauty.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.interactor.user.UserInteractor
 import dagger.Binds
@@ -32,6 +34,9 @@ interface InteractorModule {
 
     @Binds
     fun bindsCafeInteractor(cafeInteractor: CafeInteractor): ICafeInteractor
+
+    @Binds
+    fun bindsUpdateInteractor(updateInteractor: UpdateInteractor): IUpdateInteractor
 }
 
 fun interactorModule() = module {
@@ -42,14 +47,14 @@ fun interactorModule() = module {
             deliveryWorkerUtil = get(),
             userWorkerUtil = get(),
             authUtil = get(),
-            )
+        )
     } bind IMainInteractor::class
     single {
         UserInteractor(
             userRepo = get(),
             userWorkerUtil = get(),
             authUtil = get(),
-            )
+        )
     } bind IUserInteractor::class
     single {
         CityInteractor(
@@ -63,7 +68,7 @@ fun interactorModule() = module {
     single {
         CartProductInteractor(
             cartProductRepo = get(),
-            )
+        )
     } bind ICartProductInteractor::class
     single {
         CafeInteractor(
@@ -71,5 +76,5 @@ fun interactorModule() = module {
             dateTimeUtil = get(),
         )
     } bind ICafeInteractor::class
-
+    single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
 }

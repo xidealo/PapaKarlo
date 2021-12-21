@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -12,6 +11,7 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.OrderProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration

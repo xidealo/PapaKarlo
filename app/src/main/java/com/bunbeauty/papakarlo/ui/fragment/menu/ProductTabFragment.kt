@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.Constants.PRODUCT_CODE
-import com.bunbeauty.common.State
 import com.bunbeauty.domain.enums.ProductCode
 import com.bunbeauty.papakarlo.databinding.FragmentProductsBinding
 import com.bunbeauty.papakarlo.delegates.argument
@@ -13,6 +12,7 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration

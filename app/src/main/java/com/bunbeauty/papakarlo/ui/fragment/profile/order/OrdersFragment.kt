@@ -3,11 +3,11 @@ package com.bunbeauty.papakarlo.ui.fragment.profile.order
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentOrdersBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.OrderAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration

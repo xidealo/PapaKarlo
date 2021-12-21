@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
-import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
+import com.bunbeauty.papakarlo.presentation.StartViewModel
 import com.bunbeauty.papakarlo.presentation.address.CafeAddressesViewModel
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
@@ -135,8 +135,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SelectCityViewModel::class)
-    internal abstract fun provideSelectCityViewModel(selectCityViewModel: SelectCityViewModel): ViewModel
+    @ViewModelKey(StartViewModel::class)
+    internal abstract fun provideSelectCityViewModel(startViewModel: StartViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -289,8 +289,9 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        SelectCityViewModel(
+        StartViewModel(
             cityInteractor = get(),
+            updateInteractor = get()
         )
     }
     viewModel {

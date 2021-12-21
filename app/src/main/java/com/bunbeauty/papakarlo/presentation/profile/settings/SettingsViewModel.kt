@@ -3,9 +3,6 @@ package com.bunbeauty.papakarlo.presentation.profile.settings
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.common.extensions.toSuccessOrEmpty
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
@@ -13,6 +10,9 @@ import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toStateSuccess
+import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toOneLineActionBottomSheet
 import com.bunbeauty.presentation.util.resources.IResourcesProvider

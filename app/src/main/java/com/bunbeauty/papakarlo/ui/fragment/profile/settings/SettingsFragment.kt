@@ -6,11 +6,11 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
-import com.bunbeauty.common.State
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 

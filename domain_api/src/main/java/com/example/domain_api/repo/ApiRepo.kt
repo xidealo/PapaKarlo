@@ -10,6 +10,8 @@ import com.example.domain_api.model.server.profile.post.ProfilePostServer
 
 interface ApiRepo {
 
+    suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer>
+
     suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>>
     suspend fun getCafeList(): ApiResult<ListServer<CafeServer>>
     suspend fun getCityList(): ApiResult<ListServer<CityServer>>

@@ -12,6 +12,12 @@
 
     <string name="msg_ruble">&#160;₽</string>
 
+    <!-- START -->
+    <string name="title_start_select_city">Выберите город</string>
+    <string name="title_start_new_app_version">Новая версия приложения</string>
+    <string name="msg_start_new_app_version">Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет</string>
+    <string name="action_start_update">Обновить</string>
+
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
     <string name="description_product">Изображение продукта</string>
@@ -193,7 +199,6 @@
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>
-    <string name="title_city_selection">Выбор города</string>
 
     <!-- LOGOUT -->
     <string name="title_logout">Выйти из профиля?</string>

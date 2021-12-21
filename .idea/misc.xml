@@ -100,6 +100,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_start.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/menu/logout_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/menu/top_menu.xml" value="0.23796296296296296" />

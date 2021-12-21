@@ -10,6 +10,7 @@ object Logger {
     const val TEST_TAG = "testTag"
     const val NAV_TAG = "navTag"
 
+    const val VERSION_TAG = "versionTag"
     const val USER_TAG = "userTag"
     const val USER_ADDRESS_TAG = "userAddressTag"
     const val ORDER_TAG = "orderTag"

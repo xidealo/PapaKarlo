@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/fragment_start_tv_select_city"
+            style="@style/LargeBoldWrapConstraintText"
+            android:layout_margin="@dimen/medium_margin"
+            android:gravity="center"
+            android:text="@string/title_start_select_city"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_start_ll_city_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <LinearLayout
+            android:id="@+id/fragment_start_ll_city_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_start_tv_select_city" />
+
+        <ProgressBar
+            android:id="@+id/fragment_start_pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_start_tv_update_app"
+            style="@style/LargeBoldWrapConstraintText"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:gravity="center"
+            android:text="@string/title_start_new_app_version"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_start_tv_update_app_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/fragment_start_tv_update_app_info"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:layout_margin="@dimen/medium_margin"
+            android:gravity="center"
+            android:text="@string/msg_start_new_app_version"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_start_btn_update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_start_tv_update_app"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fragment_start_btn_update"
+            style="@style/MainButton"
+            android:layout_marginStart="@dimen/medium_margin"
+            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/medium_margin"
+            android:text="@string/action_start_update"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_start_tv_update_app_info" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
