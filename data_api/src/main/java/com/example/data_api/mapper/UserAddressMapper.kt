@@ -4,8 +4,8 @@ import com.bunbeauty.domain.model.address.UserAddress
 import com.example.domain_api.mapper.IStreetMapper
 import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.model.entity.user.UserAddressEntity
+import com.example.domain_api.model.server.AddressServer
 import com.example.domain_api.model.server.UserAddressPostServer
-import com.example.domain_api.model.server.UserAddressServer
 import javax.inject.Inject
 
 class UserAddressMapper @Inject constructor(
@@ -25,29 +25,29 @@ class UserAddressMapper @Inject constructor(
         )
     }
 
-    override fun toModel(userAddress: UserAddressServer): UserAddress {
+    override fun toModel(address: AddressServer): UserAddress {
         return UserAddress(
-            uuid = userAddress.uuid,
-            street = streetMapper.toModel(userAddress.street),
-            house = userAddress.house,
-            flat = userAddress.flat,
-            entrance = userAddress.entrance,
-            floor = userAddress.floor,
-            comment = userAddress.comment,
-            userUuid = userAddress.userUuid,
+            uuid = address.uuid,
+            street = streetMapper.toModel(address.street),
+            house = address.house,
+            flat = address.flat,
+            entrance = address.entrance,
+            floor = address.floor,
+            comment = address.comment,
+            userUuid = address.userUuid,
         )
     }
 
-    override fun toEntityModel(userAddress: UserAddressServer): UserAddressEntity {
+    override fun toEntityModel(address: AddressServer): UserAddressEntity {
         return UserAddressEntity(
-            uuid = userAddress.uuid,
-            street = streetMapper.toEntityModel(userAddress.street),
-            house = userAddress.house,
-            flat = userAddress.flat,
-            entrance = userAddress.entrance,
-            floor = userAddress.floor,
-            comment = userAddress.comment,
-            userUuid = userAddress.userUuid,
+            uuid = address.uuid,
+            street = streetMapper.toEntityModel(address.street),
+            house = address.house,
+            flat = address.flat,
+            entrance = address.entrance,
+            floor = address.floor,
+            comment = address.comment,
+            userUuid = address.userUuid,
         )
     }
 
@@ -64,8 +64,8 @@ class UserAddressMapper @Inject constructor(
         )
     }
 
-    override fun toServerModel(userAddress: UserAddress): UserAddressServer {
-        return UserAddressServer(
+    override fun toServerModel(userAddress: UserAddress): AddressServer {
+        return AddressServer(
             uuid = userAddress.uuid,
             street = streetMapper.toServerModel(userAddress.street),
             house = userAddress.house,
@@ -77,8 +77,8 @@ class UserAddressMapper @Inject constructor(
         )
     }
 
-    override fun toServerModel(userAddress: UserAddressEntity): UserAddressServer {
-        return UserAddressServer(
+    override fun toServerModel(userAddress: UserAddressEntity): AddressServer {
+        return AddressServer(
             uuid = userAddress.uuid,
             street = streetMapper.toServerModel(userAddress.street),
             house = userAddress.house,

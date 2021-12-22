@@ -2,14 +2,18 @@ package com.example.data_api.repository
 
 import com.bunbeauty.common.ApiError
 import com.bunbeauty.common.ApiResult
+import com.bunbeauty.common.Constants.AUTHORIZATION_HEADER
+import com.bunbeauty.common.Constants.BEARER
+import com.bunbeauty.common.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Constants.COMPANY_UUID_PARAMETER
 import com.example.domain_api.model.server.*
+import com.example.domain_api.model.server.login.AuthResponseServer
+import com.example.domain_api.model.server.login.LoginPostServer
 import com.example.domain_api.model.server.order.get.OrderServer
 import com.example.domain_api.model.server.order.post.OrderPostServer
 import com.example.domain_api.model.server.profile.get.ProfileServer
 import com.example.domain_api.model.server.profile.patch.ProfileEmailServer
-import com.example.domain_api.model.server.profile.post.ProfilePostServer
 import com.example.domain_api.repo.ApiRepo
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -37,15 +41,9 @@ class ApiRepository @Inject constructor(
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
-            path = "menuProduct",
-            serializer = ListServer.serializer(MenuProductServer.serializer())
-        )
-    }
-
-    override suspend fun getCafeList(): ApiResult<ListServer<CafeServer>> {
-        return getData(
-            path = "cafe",
-            serializer = ListServer.serializer(CafeServer.serializer())
+            path = "menu_product",
+            serializer = ListServer.serializer(MenuProductServer.serializer()),
+            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
         )
     }
 
@@ -61,7 +59,7 @@ class ApiRepository @Inject constructor(
         return getData(
             path = "cafe",
             serializer = ListServer.serializer(CafeServer.serializer()),
-            parameters = hashMapOf("cityUuid" to cityUuid)
+            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
     }
 
@@ -69,37 +67,41 @@ class ApiRepository @Inject constructor(
         return getData(
             path = "street",
             serializer = ListServer.serializer(StreetServer.serializer()),
-            parameters = hashMapOf("cityUuid" to cityUuid)
+            parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
     }
 
     override suspend fun getDelivery(): ApiResult<DeliveryServer> {
-        return getData(path = "delivery", serializer = DeliveryServer.serializer())
+        return getData(
+            path = "delivery",
+            serializer = DeliveryServer.serializer(),
+            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+        )
     }
 
-    override suspend fun getProfileByUuid(userUuid: String): ApiResult<ProfileServer> {
-        return getData(
-            path = "profile",
+    override suspend fun getProfile(token: String): ApiResult<ProfileServer> {
+        return getDataWithAuth(
+            path = "client",
             serializer = ProfileServer.serializer(),
-            parameters = hashMapOf("uuid" to userUuid)
+            token = token
         )
     }
 
     // POST
 
-    override suspend fun postProfile(profile: ProfilePostServer): ApiResult<ProfileServer> {
+    override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
-            path = "profile",
-            postBody = profile,
-            serializer = ProfileServer.serializer()
+            path = "client/login",
+            postBody = loginPostServer,
+            serializer = AuthResponseServer.serializer()
         )
     }
 
-    override suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<UserAddressServer> {
+    override suspend fun postUserAddress(userAddress: UserAddressPostServer): ApiResult<AddressServer> {
         return postData(
             path = "address",
             postBody = userAddress,
-            serializer = UserAddressServer.serializer()
+            serializer = AddressServer.serializer()
         )
     }
 
@@ -127,10 +129,26 @@ class ApiRepository @Inject constructor(
 
     // COMMON
 
+    suspend fun <T : Any> getDataWithAuth(
+        path: String,
+        serializer: KSerializer<T>,
+        parameters: Map<String, String> = mapOf(),
+        token: String
+    ): ApiResult<T> {
+        return getData(
+            path = path,
+            serializer = serializer,
+            parameters = parameters,
+            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
+        )
+
+    }
+
     suspend fun <T : Any> getData(
         path: String,
         serializer: KSerializer<T>,
-        parameters: Map<String, String> = mapOf()
+        parameters: Map<String, String> = mapOf(),
+        headers: Map<String, String> = mapOf(),
     ): ApiResult<T> {
         return try {
             ApiResult.Success(
@@ -140,8 +158,11 @@ class ApiRepository @Inject constructor(
                         url {
                             path(path)
                         }
-                        parameters.forEach { parameterMap ->
-                            parameter(parameterMap.key, parameterMap.value)
+                        parameters.forEach { parameterEntry ->
+                            parameter(parameterEntry.key, parameterEntry.value)
+                        }
+                        headers.forEach { headerEntry ->
+                            header(headerEntry.key, headerEntry.value)
                         }
                     }.execute().readText()
                 )

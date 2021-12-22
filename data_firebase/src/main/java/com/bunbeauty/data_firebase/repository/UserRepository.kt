@@ -12,7 +12,6 @@ import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.mapper.IUserMapper
 import com.example.domain_firebase.model.entity.address.UserAddressEntity
 import com.example.domain_firebase.model.entity.order.OrderStatusEntity
-import com.example.domain_firebase.model.entity.user.UserEntity
 import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
 import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
@@ -31,23 +30,27 @@ class UserRepository @Inject constructor(
     private val orderMapper: IOrderMapper
 ) : UserRepo {
 
-    override suspend fun refreshUser(userUuid: String, userPhone: String) {
-        if (authUtil.isAuthorize) {
-            val userFirebase = firebaseRepo.getUser(userUuid).flowOn(IO).first()
-            if (userFirebase == null) {
-                val newUserFirebase =
-                    com.example.domain_firebase.model.firebase.UserFirebase(phone = userPhone)
-                firebaseRepo.postUser(userUuid, newUserFirebase)
-                val newUserEntity =
-                    UserEntity(uuid = userUuid, phone = userPhone, email = "")
-                userDao.insert(newUserEntity)
-            } else {
-                val userWithAddresses = userMapper.toEntityModel(userFirebase, userUuid)
-                userDao.insert(userWithAddresses.user)
-                refreshUserAddresses(userWithAddresses.userAddressList)
-                refreshOrders(userFirebase.orders.values.toList(), userUuid)
-            }
-        }
+    override suspend fun refreshUser(token: String) {
+//        if (authUtil.isAuthorize) {
+//            val userFirebase = firebaseRepo.getUser(token).flowOn(IO).first()
+//            if (userFirebase == null) {
+//                val newUserFirebase =
+//                    com.example.domain_firebase.model.firebase.UserFirebase(phone = userPhone)
+//                firebaseRepo.postUser(token, newUserFirebase)
+//                val newUserEntity =
+//                    UserEntity(uuid = token, phone = userPhone, email = "")
+//                userDao.insert(newUserEntity)
+//            } else {
+//                val userWithAddresses = userMapper.toEntityModel(userFirebase, token)
+//                userDao.insert(userWithAddresses.user)
+//                refreshUserAddresses(userWithAddresses.userAddressList)
+//                refreshOrders(userFirebase.orders.values.toList(), token)
+//            }
+//        }
+    }
+
+    override suspend fun login(userUuid: String, userPhone: String): String? {
+        return null
     }
 
     override suspend fun getUserByUuid(userUuid: String): Profile? {

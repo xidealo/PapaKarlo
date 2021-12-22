@@ -9,6 +9,12 @@ object Constants {
     // PARAMETER
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
+    const val CITY_UUID_PARAMETER = "cityUuid"
+
+    // HEADER
+
+    const val AUTHORIZATION_HEADER = "Authorization"
+    const val BEARER = "Bearer "
 
     const val PRODUCT_CODE = "productCode"
     const val ORDERS = "ORDERS"
@@ -23,6 +29,7 @@ object Constants {
 
     // WORKER KEYS
 
+    const val TOKEN_WORK_KEY = "token"
     const val SELECTED_CITY_UUID = "selected sity uuid"
     const val USER_UUID = "user uuid"
     const val USER_PHONE = "user phone"

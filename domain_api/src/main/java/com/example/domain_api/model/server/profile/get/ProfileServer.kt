@@ -1,6 +1,6 @@
 package com.example.domain_api.model.server.profile.get
 
-import com.example.domain_api.model.server.UserAddressServer
+import com.example.domain_api.model.server.AddressServer
 import com.example.domain_api.model.server.order.get.OrderServer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,15 +10,15 @@ data class ProfileServer(
     @SerialName("uuid")
     val uuid: String,
 
-    @SerialName("phone")
-    val phone: String,
+    @SerialName("phoneNumber")
+    val phoneNumber: String,
 
     @SerialName("email")
-    val email: String,
+    val email: String?,
 
-    @SerialName("addressList")
-    val addressList: List<UserAddressServer>,
+    @SerialName("addresses")
+    val addresses: List<AddressServer>,
 
-    @SerialName("userOrderList")
-    val orderList: List<OrderServer>
+    @SerialName("orders")
+    val orders: List<OrderServer>
 )

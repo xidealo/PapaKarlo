@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserAddressServer(
+data class AddressServer(
 
     @SerialName("uuid")
     val uuid: String,

@@ -9,30 +9,30 @@ data class OrderServer(
     @SerialName("uuid")
     val uuid: String,
 
+    @SerialName("code")
+    val code: String,
+
+    @SerialName("status")
+    val status: String,
+
     @SerialName("time")
     val time: Long,
-
-    @SerialName("orderStatus")
-    val orderStatus: String,
 
     @SerialName("isDelivery")
     val isDelivery: Boolean,
 
-    @SerialName("code")
-    val code: String,
+    @SerialName("deferredTime")
+    val deferredTime: Long?,
+
+    @SerialName("addressDescription")
+    val addressDescription: String,
 
     @SerialName("comment")
     val comment: String?,
 
-    @SerialName("deferredTime")
-    val deferredTime: Long?,
-
-    @SerialName("address")
-    val address: String,
-
-    @SerialName("profileUuid")
-    val userUuid: String,
+    @SerialName("clientUserUuid")
+    val clientUserUuid: String,
 
     @SerialName("orderProducts")
-    val orderProducts: List<OrderProductServer>,
+    val oderProductList: List<OrderProductServer>,
 )

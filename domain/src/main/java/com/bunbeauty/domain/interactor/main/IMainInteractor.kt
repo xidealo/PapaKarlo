@@ -2,5 +2,5 @@ package com.bunbeauty.domain.interactor.main
 
 interface IMainInteractor {
 
-    fun refreshData()
+    suspend fun refreshData()
 }

@@ -12,15 +12,15 @@ class MenuProductMapper @Inject constructor() : IMenuProductMapper {
         return MenuProductEntity(
             uuid = menuProduct.uuid,
             name = menuProduct.name,
-            cost = menuProduct.cost,
-            discountCost = menuProduct.discountCost,
-            weight = menuProduct.weight,
+            cost = menuProduct.newPrice,
+            discountCost = menuProduct.oldPrice,
+            weight = menuProduct.nutrition,
             description = menuProduct.description,
             comboDescription = menuProduct.comboDescription,
             photoLink = menuProduct.photoLink,
-            productCode = menuProduct.productCodes.firstOrNull()?.name ?: "",
+            productCode = menuProduct.categories.firstOrNull()?.name ?: "",
             barcode = menuProduct.barcode,
-            visible = menuProduct.visible,
+            visible = menuProduct.isVisible,
         )
     }
 

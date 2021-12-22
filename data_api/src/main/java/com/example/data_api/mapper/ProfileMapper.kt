@@ -20,11 +20,11 @@ class ProfileMapper @Inject constructor(
         return ProfileEntity(
             user = UserEntity(
                 uuid = profile.uuid,
-                phone = profile.phone,
+                phone = profile.phoneNumber,
                 email = profile.email,
             ),
-            userAddressList = profile.addressList.map(userAddressMapper::toEntityModel),
-            orderList = profile.orderList.map(orderMapper::toEntityModel)
+            userAddressList = profile.addresses.map(userAddressMapper::toEntityModel),
+            orderList = profile.orders.map(orderMapper::toEntityModel)
         )
     }
 
@@ -44,17 +44,17 @@ class ProfileMapper @Inject constructor(
         return Profile(
             user = User(
                 uuid = profile.uuid,
-                phone = profile.phone,
+                phone = profile.phoneNumber,
                 email = profile.email,
             ),
-            addressList = profile.addressList.map(userAddressMapper::toModel),
-            orderList = profile.orderList.map(orderMapper::toModel),
+            addressList = profile.addresses.map(userAddressMapper::toModel),
+            orderList = profile.orders.map(orderMapper::toModel),
         )
     }
 
     override fun toUserEmailServer(user: User): ProfileEmailServer {
         return ProfileEmailServer(
-            email = user.email
+            email = user.email ?: ""
         )
     }
 }

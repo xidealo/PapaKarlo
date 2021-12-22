@@ -5,6 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepo {
 
+    suspend fun getToken(): String?
+    suspend fun saveToken(token: String)
+    suspend fun clearToken()
+
     val userAddressUuid: Flow<String?>
     suspend fun saveUserAddressUuid(addressId: String)
     suspend fun clearUserAddressUuid()

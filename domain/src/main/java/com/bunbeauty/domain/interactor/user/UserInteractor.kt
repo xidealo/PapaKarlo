@@ -3,6 +3,7 @@ package com.bunbeauty.domain.interactor.user
 import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.Api
+import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import com.bunbeauty.domain.worker.IUserWorkerUtil
 import kotlinx.coroutines.flow.Flow
@@ -13,20 +14,26 @@ import javax.inject.Inject
 class UserInteractor @Inject constructor(
     @Api private val userRepo: UserRepo,
     private val userWorkerUtil: IUserWorkerUtil,
+    private val dataStoreRepo: DataStoreRepo,
     private val authUtil: IAuthUtil,
-): IUserInteractor {
+) : IUserInteractor {
 
-    override suspend fun refreshUser() {
+    override suspend fun login() {
         val userUuid = authUtil.userUuid
         val userPhone = authUtil.userPhone
-        if (authUtil.isAuthorize && userUuid != null && userPhone != null) {
-            userWorkerUtil.refreshUserBlocking(userUuid, userPhone)
+        if (userUuid != null && userPhone != null) {
+            val token = userRepo.login(userUuid, userPhone)
+            if (token != null) {
+                dataStoreRepo.saveToken(token)
+                userWorkerUtil.refreshUserBlocking(token)
+            }
         }
     }
 
-    override fun logout() {
+    override suspend fun logout() {
         userWorkerUtil.cancelRefreshUser()
         authUtil.signOut()
+        dataStoreRepo.clearToken()
     }
 
     override fun observeUser(): Flow<User?> {

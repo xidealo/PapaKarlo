@@ -6,6 +6,7 @@ import com.bunbeauty.domain.interactor.main.IMainInteractor
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -39,6 +40,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun refreshData() {
-        mainInteractor.refreshData()
+        viewModelScope.launch {
+            mainInteractor.refreshData()
+        }
     }
 }

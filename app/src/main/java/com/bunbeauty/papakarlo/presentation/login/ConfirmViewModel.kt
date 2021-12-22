@@ -46,7 +46,7 @@ class ConfirmViewModel @Inject constructor(
 
     fun onSuccessVerified(successLoginDirection: SuccessLoginDirection) {
         viewModelScope.launch {
-            userInteractor.refreshUser()
+            userInteractor.login()
 
             when (successLoginDirection) {
                 BACK_TO_PROFILE -> router.navigate(backToProfileFragment())

@@ -46,13 +46,14 @@ fun interactorModule() = module {
             menuProductWorkerUtil = get(),
             deliveryWorkerUtil = get(),
             userWorkerUtil = get(),
-            authUtil = get(),
+            dataStoreRepo = get(),
         )
     } bind IMainInteractor::class
     single {
         UserInteractor(
             userRepo = get(),
             userWorkerUtil = get(),
+            dataStoreRepo = get(),
             authUtil = get(),
         )
     } bind IUserInteractor::class

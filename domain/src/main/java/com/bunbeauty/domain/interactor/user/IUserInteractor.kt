@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IUserInteractor {
 
-    suspend fun refreshUser()
-    fun logout()
+    suspend fun login()
+    suspend fun logout()
     fun observeUser(): Flow<User?>
     suspend fun updateUserEmail(email: String): User?
 }

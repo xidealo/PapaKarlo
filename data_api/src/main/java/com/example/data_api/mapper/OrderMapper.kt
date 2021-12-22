@@ -20,16 +20,16 @@ class OrderMapper @Inject constructor(
         return OrderWithProducts(
             order = OrderEntity(
                 uuid = order.uuid,
-                status = OrderStatus.valueOf(order.orderStatus),
+                status = OrderStatus.valueOf(order.status),
                 isDelivery = order.isDelivery,
                 time = order.time,
                 code = order.code,
-                address = order.address,
+                address = order.addressDescription,
                 comment = order.comment,
                 deferredTime = order.deferredTime,
-                userUuid = order.userUuid,
+                userUuid = order.clientUserUuid,
             ),
-            orderProductList = order.orderProducts.map(orderProductMapper::toEntityModel)
+            orderProductList = order.oderProductList.map(orderProductMapper::toEntityModel)
         )
     }
 
@@ -53,14 +53,14 @@ class OrderMapper @Inject constructor(
         return Order(
             uuid = order.uuid,
             isDelivery = order.isDelivery,
-            address = order.address,
+            address = order.addressDescription,
             comment = order.comment,
             deferredTime = order.deferredTime,
             time = order.time,
             code = order.code,
-            orderStatus = OrderStatus.valueOf(order.orderStatus),
-            orderProductList = order.orderProducts.map(orderProductMapper::toModel),
-            userUuid = order.userUuid,
+            orderStatus = OrderStatus.valueOf(order.status),
+            orderProductList = order.oderProductList.map(orderProductMapper::toModel),
+            userUuid = order.clientUserUuid,
             addressUuid = null,
         )
     }

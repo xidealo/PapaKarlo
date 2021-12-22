@@ -32,9 +32,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 if (state is State.Success) {
                     fragmentSettingsTcPhone.cardText = state.data.phone
                     val email = state.data.email
-                    fragmentSettingsNcAddEmail.toggleVisibility(email.isEmpty())
-                    fragmentSettingsTcEmail.toggleVisibility(email.isNotEmpty())
-                    fragmentSettingsTcEmail.cardText = email
+                    fragmentSettingsNcAddEmail.toggleVisibility(email.isNullOrEmpty())
+                    fragmentSettingsTcEmail.toggleVisibility(email.isNullOrEmpty())
+                    fragmentSettingsTcEmail.cardText = email ?: ""
                 }
             }.startedLaunch()
             viewModel.cityName.onEach { cityName ->

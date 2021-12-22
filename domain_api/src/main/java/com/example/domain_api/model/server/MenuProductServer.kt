@@ -12,14 +12,17 @@ data class MenuProductServer(
     @SerialName("name")
     val name: String,
 
-    @SerialName("cost")
-    val cost: Int,
+    @SerialName("newPrice")
+    val newPrice: Int,
 
-    @SerialName("discountCost")
-    val discountCost: Int?,
+    @SerialName("oldPrice")
+    val oldPrice: Int?,
 
-    @SerialName("weight")
-    val weight: Int?,
+    @SerialName("utils")
+    val utils: String?,
+
+    @SerialName("nutrition")
+    val nutrition: Int?,
 
     @SerialName("description")
     val description: String,
@@ -33,9 +36,9 @@ data class MenuProductServer(
     @SerialName("barcode")
     val barcode: Int?,
 
-    @SerialName("productCodes")
-    val productCodes: List<ProductCodeServer>,
+    @SerialName("categories")
+    val categories: List<CategoryServer>,
 
-    @SerialName("visible")
-    val visible: Boolean
+    @SerialName("isVisible")
+    val isVisible: Boolean
 )

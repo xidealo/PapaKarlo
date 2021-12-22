@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-class ProductCodeServer(
+class CategoryServer(
 
     @SerialName("uuid")
     val uuid: String,

@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.main
 
-import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.worker.ICityWorkerUtil
 import com.bunbeauty.domain.worker.IDeliveryWorkerUtil
 import com.bunbeauty.domain.worker.IMenuProductWorkerUtil
@@ -12,18 +12,17 @@ class MainInteractor @Inject constructor(
     private val menuProductWorkerUtil: IMenuProductWorkerUtil,
     private val deliveryWorkerUtil: IDeliveryWorkerUtil,
     private val userWorkerUtil: IUserWorkerUtil,
-    private val authUtil: IAuthUtil,
+    private val dataStoreRepo: DataStoreRepo
 ) : IMainInteractor {
 
-    override fun refreshData() {
+    override suspend fun refreshData() {
         cityWorkerUtil.refreshCityList()
         menuProductWorkerUtil.refreshMenuProductList()
         deliveryWorkerUtil.refreshDelivery()
 
-        val userUuid = authUtil.userUuid
-        val userPhone = authUtil.userPhone
-        if (authUtil.isAuthorize && userUuid != null && userPhone != null) {
-            userWorkerUtil.refreshUser(userUuid, userPhone)
+        val token = dataStoreRepo.getToken()
+        if (token != null) {
+            userWorkerUtil.refreshUser(token)
         }
     }
 }
