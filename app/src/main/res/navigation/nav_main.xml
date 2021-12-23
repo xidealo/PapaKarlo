@@ -3,21 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/splashFragment">
 
     <action
         android:id="@+id/global_to_cartFragment"
         app:destination="@id/consumerCartFragment" />
 
     <fragment
-        android:id="@+id/startFragment"
-        android:name="com.bunbeauty.papakarlo.ui.fragment.StartFragment"
-        android:label="SelectCityFragment"
-        tools:layout="@layout/fragment_start">
+        android:id="@+id/splashFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/to_updateFragment"
+            app:destination="@id/updateFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/to_menu_fragment"
             app:destination="@id/menu_fragment"
-            app:popUpTo="@id/startFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_selectCityFragment"
+            app:destination="@id/selectCityFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.UpdateFragment"
+        android:label="UpdateFragment"
+        tools:layout="@layout/fragment_update" />
+
+    <fragment
+        android:id="@+id/selectCityFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.SelectCityFragment"
+        android:label="SelectCityFragment"
+        tools:layout="@layout/fragment_select_city">
+        <action
+            android:id="@+id/to_menu_fragment"
+            app:destination="@id/menu_fragment"
+            app:popUpTo="@id/selectCityFragment"
             app:popUpToInclusive="true" />
     </fragment>
 

@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.presentation.MainViewModel
-import com.bunbeauty.papakarlo.presentation.StartViewModel
+import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
+import com.bunbeauty.papakarlo.presentation.SplashViewModel
 import com.bunbeauty.papakarlo.presentation.address.CafeAddressesViewModel
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
@@ -135,8 +136,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(StartViewModel::class)
-    internal abstract fun provideSelectCityViewModel(startViewModel: StartViewModel): ViewModel
+    @ViewModelKey(SelectCityViewModel::class)
+    internal abstract fun provideSelectCityViewModel(selectCityViewModel: SelectCityViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -147,6 +148,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LogoutViewModel::class)
     internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    internal abstract fun provideSplashViewModel(splashViewModel: SplashViewModel): ViewModel
 }
 
 fun viewModelModule() = module {
@@ -171,6 +177,7 @@ fun viewModelModule() = module {
             cartProductInteractor = get(),
             mainInteractor = get(),
             stringUtil = get(),
+            networkUtil = get()
         )
     }
     viewModel {
@@ -295,9 +302,8 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        StartViewModel(
-            cityInteractor = get(),
-            updateInteractor = get()
+        SelectCityViewModel(
+            cityInteractor = get()
         )
     }
     viewModel {
@@ -308,6 +314,12 @@ fun viewModelModule() = module {
     viewModel {
         LogoutViewModel(
             userInteractor = get(),
+        )
+    }
+    viewModel {
+        SplashViewModel(
+            updateInteractor = get(),
+            cityInteractor = get(),
         )
     }
 

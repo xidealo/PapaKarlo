@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.bunbeauty.papakarlo.di.modules.ViewModelModule
 import com.bunbeauty.papakarlo.ui.MainActivity
 import com.bunbeauty.papakarlo.ui.fragment.OneLineActionBottomSheet
-import com.bunbeauty.papakarlo.ui.fragment.StartFragment
+import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragment
+import com.bunbeauty.papakarlo.ui.fragment.SplashFragment
+import com.bunbeauty.papakarlo.ui.fragment.UpdateFragment
 import com.bunbeauty.papakarlo.ui.fragment.address.CafeAddressesBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.address.CreateAddressFragment
 import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheet
@@ -53,7 +55,9 @@ interface ViewModelComponent {
     fun inject(confirmFragment: ConfirmFragment)
     fun inject(loginFragment: LoginFragment)
     fun inject(settingsFragment: SettingsFragment)
-    fun inject(startFragment: StartFragment)
+    fun inject(selectCityFragment: SelectCityFragment)
+    fun inject(splashFragment: SplashFragment)
+    fun inject(updateFragment: UpdateFragment)
 
     //bottom sheet
     fun inject(userAddressesBottomSheet: UserAddressesBottomSheet)

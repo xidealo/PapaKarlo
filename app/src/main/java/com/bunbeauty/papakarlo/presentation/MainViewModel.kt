@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.presentation
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
+import com.bunbeauty.papakarlo.network.INetworkUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
@@ -13,6 +14,7 @@ class MainViewModel @Inject constructor(
     private val cartProductInteractor: ICartProductInteractor,
     private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,
+    private val networkUtil: INetworkUtil
 ) : BaseViewModel() {
 
     private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
@@ -21,10 +23,20 @@ class MainViewModel @Inject constructor(
     private val mutableCartProductCount: MutableStateFlow<String> = MutableStateFlow("")
     val cartProductCount: StateFlow<String> = mutableCartProductCount.asStateFlow()
 
+    private val mutableIsOnline: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isOnline: StateFlow<Boolean> = mutableIsOnline.asStateFlow()
+
     init {
         refreshData()
         observeTotalCartCount()
         observeTotalCartCost()
+        observeNetworkConnection()
+    }
+
+    private fun refreshData() {
+        viewModelScope.launch {
+            mainInteractor.refreshData()
+        }
     }
 
     private fun observeTotalCartCount() {
@@ -39,9 +51,9 @@ class MainViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun refreshData() {
-        viewModelScope.launch {
-            mainInteractor.refreshData()
-        }
+    private fun observeNetworkConnection() {
+        networkUtil.observeIsOnline().onEach { isOnline ->
+            mutableIsOnline.value = isOnline
+        }.launchIn(viewModelScope)
     }
 }

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.di.modules
 
 import android.content.Context
 import android.content.res.Resources
+import android.net.ConnectivityManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkManager
 import coil.ImageLoader
@@ -31,6 +32,11 @@ class AppModule {
 
     @Provides
     fun provideWorkManager(context: Context): WorkManager = WorkManager.getInstance(context)
+
+    @Provides
+    fun provideConnectivityManager(context: Context): ConnectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
 }
 
 fun appModule() = module {
@@ -39,4 +45,5 @@ fun appModule() = module {
     single { androidContext().imageLoader }
     single { ImageRequest.Builder(androidContext()) }
     single { WorkManager.getInstance(androidContext()) }
+    single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
 }

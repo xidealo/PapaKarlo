@@ -69,6 +69,19 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <TextView
+            android:id="@+id/activity_main_tv_internet_warning"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:background="?attr/colorError"
+            android:padding="@dimen/small_padding"
+            android:text="@string/error_no_internet"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnError"
+            app:layout_constraintBottom_toTopOf="@+id/activity_main_fcv_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_tb_toolbar" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/activity_main_fcv_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -78,7 +91,7 @@
             app:layout_constraintBottom_toTopOf="@+id/activity_main_bnv_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_main_tb_toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_tv_internet_warning"
             app:navGraph="@navigation/nav_main" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

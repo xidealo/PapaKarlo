@@ -11,6 +11,7 @@
     -->
 
     <string name="msg_ruble">&#160;₽</string>
+    <string name="error_no_internet">Нет подключения к интернету</string>
 
     <!-- START -->
     <string name="title_start_select_city">Выберите город</string>
@@ -213,11 +214,6 @@
     <string name="description_vk">vk image</string>
     <string name="description_inst">inst image</string>
     <string name="description_google_play">google play image</string>
-
-    <string name="code_letters">АБВГДЕЗИКЛМНПРСТУФЦЧШЭЮЯ</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="menu_arr">
         <item>224;Бургер MINI с говядиной;BURGER;200;100;Сочная котлета из говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/224.jpg?alt=media&amp;token=9de6a6b4-1ed4-4671-ac40-a288289c0e6f</item>

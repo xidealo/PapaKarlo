@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavigationBar()
         setupNavigationListener()
         observeCart()
+        observeIsOnline()
 
         router.attach(this, R.id.activity_main_fcv_container)
     }
@@ -184,5 +185,11 @@ class MainActivity : AppCompatActivity() {
                 setCartProductCount(cartProductCount)
             }.startedLaunch(this@MainActivity)
         }
+    }
+
+    private fun observeIsOnline() {
+        viewModel?.isOnline?.onEach { isOnline ->
+            viewDataBinding.activityMainTvInternetWarning.toggleVisibility(!isOnline)
+        }?.startedLaunch(this)
     }
 }

@@ -64,7 +64,7 @@
         <entry key="app/src/main/res/drawable/loading_screen_papa_karlo.xml" value="0.356" />
         <entry key="app/src/main/res/drawable/logo_top.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/switcher_thumb.xml" value="0.2085" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/bottom_sheet_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_addresses.xml" value="0.4" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />
@@ -100,7 +100,9 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_start.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_update.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/menu/logout_menu.xml" value="0.45740740740740743" />
         <entry key="app/src/main/res/menu/top_menu.xml" value="0.23796296296296296" />
