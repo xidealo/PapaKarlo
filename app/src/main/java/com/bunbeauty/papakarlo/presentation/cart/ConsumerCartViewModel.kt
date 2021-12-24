@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.presentation.cart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
@@ -17,6 +17,7 @@ import com.bunbeauty.presentation.item.CartProductItem
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConsumerCartViewModel @Inject constructor(
@@ -25,7 +26,7 @@ class ConsumerCartViewModel @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val stringUtil: IStringUtil,
     private val productHelper: IProductHelper,
-    private val authUtil: IAuthUtil,
+    private val userInteractor: IUserInteractor,
 ) : CartViewModel() {
 
     private val mutableOrderProductListState: MutableStateFlow<State<List<CartProductItem>>> =
@@ -52,10 +53,12 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun onCreateOrderClicked() {
-        if (authUtil.isAuthorize) {
-            router.navigate(toCreateOrder())
-        } else {
-            router.navigate(toLoginFragment(TO_CREATE_ORDER))
+        viewModelScope.launch {
+            if (userInteractor.isUserAuthorize()) {
+                router.navigate(toCreateOrder())
+            } else {
+                router.navigate(toLoginFragment(TO_CREATE_ORDER))
+            }
         }
     }
 

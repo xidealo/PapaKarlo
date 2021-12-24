@@ -4,6 +4,7 @@ import androidx.room.*
 import com.bunbeauty.data.BaseDao
 import com.example.domain_api.model.entity.user.ProfileEntity
 import com.example.domain_api.model.entity.user.UserAddressEntity
+import com.example.domain_api.model.entity.user.UserEmailUpdate
 import com.example.domain_api.model.entity.user.UserEntity
 import com.example.domain_api.model.entity.user.order.OrderEntity
 import com.example.domain_api.model.entity.user.order.OrderProductEntity
@@ -15,7 +16,10 @@ abstract class UserDao : BaseDao<UserEntity> {
     // OBSERVE
 
     @Query("SELECT * FROM UserEntity WHERE uuid = :uuid")
-    abstract fun observeUserByUuid(uuid: String): Flow<ProfileEntity?>
+    abstract fun observeProfileByUuid(uuid: String): Flow<ProfileEntity?>
+
+    @Query("SELECT * FROM UserEntity WHERE uuid = :uuid")
+    abstract fun observeUserByUuid(uuid: String): Flow<UserEntity?>
 
     // GET
 
@@ -43,4 +47,8 @@ abstract class UserDao : BaseDao<UserEntity> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards
     abstract suspend fun insertOrderProductList(userAddressList: List<OrderProductEntity>)
+
+    // UPDATE
+    @Update(entity = UserEntity::class)
+    abstract suspend fun update(userEmailUpdate: UserEmailUpdate)
 }

@@ -1,9 +1,9 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.CAFE_TAG
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.example.data_api.dao.CafeDao
@@ -23,7 +23,7 @@ class CafeRepository @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: CafeDao,
     private val cafeMapper: ICafeMapper,
-    private val authUtil: IAuthUtil,
+    private val authRepo: AuthRepo,
 ) : CafeRepo {
 
     override suspend fun refreshCafeList(selectedCityUuid: String) {
@@ -34,18 +34,17 @@ class CafeRepository @Inject constructor(
         }
     }
 
-    override suspend fun saveSelectedCafeUuid(cafeUuid: String) {
-        val userUuid = authUtil.userUuid
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
-
-        if (userUuid != null && selectedCityUuid != null) {
-            val selectedCafeUuidEntity = SelectedCafeUuidEntity(
-                userUuid = userUuid,
-                cityUuid = selectedCityUuid,
-                cafeUuid = cafeUuid,
-            )
-            cafeDao.insertSelectedCafeUuid(selectedCafeUuidEntity)
-        }
+    override suspend fun saveSelectedCafeUuid(
+        userUuid: String,
+        selectedCityUuid: String,
+        cafeUuid: String
+    ) {
+        val selectedCafeUuidEntity = SelectedCafeUuidEntity(
+            userUuid = userUuid,
+            cityUuid = selectedCityUuid,
+            cafeUuid = cafeUuid,
+        )
+        cafeDao.insertSelectedCafeUuid(selectedCafeUuidEntity)
     }
 
     override suspend fun getCafeList(): List<Cafe> {
@@ -60,7 +59,7 @@ class CafeRepository @Inject constructor(
     }
 
     override suspend fun observeSelectedCafe(): Flow<Cafe?> {
-        val userUuid = authUtil.userUuid ?: ""
+        val userUuid = authRepo.firebaseUserUuid ?: ""
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
 
         return cafeDao.observeSelectedCafeByUserAndCityUuid(userUuid, selectedCityUuid)

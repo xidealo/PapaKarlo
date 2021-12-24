@@ -36,12 +36,16 @@ class CafeRepository @Inject constructor(
         return emptyList()
     }
 
-    override suspend fun saveSelectedCafeUuid(cafeUuid: String) {
+    override suspend fun saveSelectedCafeUuid(
+        userUuid: String,
+        selectedCityUuid: String,
+        cafeUuid: String
+    ) {
 
     }
 
     override suspend fun observeSelectedCafe(): Flow<Cafe?> {
-        return flow{}
+        return flow {}
     }
 
     override fun observeCafeList(): Flow<List<Cafe>> {

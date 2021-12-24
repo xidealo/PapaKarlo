@@ -2,9 +2,9 @@ package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.CafeDao
 import com.bunbeauty.data_firebase.dao.OrderDao
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
+import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
 import com.example.domain_firebase.repo.FirebaseRepo
@@ -20,11 +20,11 @@ class OrderRepository @Inject constructor(
     private val orderDao: OrderDao,
     private val cafeDao: CafeDao,
     private val orderMapper: com.example.domain_firebase.mapper.IOrderMapper,
-    private val authUtil: IAuthUtil,
+    private val authRepo: AuthRepo,
 ) : OrderRepo {
 
     override fun observeOrderList(): Flow<List<Order>> {
-        return orderDao.observeOrderListByUserUuid(authUtil.userUuid ?: "").mapOrders()
+        return orderDao.observeOrderListByUserUuid(authRepo.firebaseUserUuid ?: "").mapOrders()
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {

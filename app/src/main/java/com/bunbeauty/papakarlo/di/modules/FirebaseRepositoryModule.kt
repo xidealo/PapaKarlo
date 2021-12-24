@@ -62,7 +62,7 @@ fun firebaseRepositoryModule() = module {
             orderDao = get(),
             cafeDao = get(),
             orderMapper = get(),
-            authUtil = get(),
+            authRepo = get(),
         )
     } bind OrderRepo::class
     single {
@@ -105,7 +105,6 @@ fun firebaseRepositoryModule() = module {
             orderDao = get(),
             userAddressDao = get(),
             firebaseRepo = get(),
-            authUtil = get(),
             userMapper = get(),
             orderMapper = get(),
         )

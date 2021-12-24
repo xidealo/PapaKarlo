@@ -5,8 +5,9 @@ import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.common.Logger.ORDER_TAG
 import com.bunbeauty.common.Logger.logD
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OneLineActionType
+import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.OneLineActionModel
 import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.model.product.CartProduct
@@ -33,7 +34,8 @@ class CreateOrderViewModel @Inject constructor(
     private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
     private val orderUtil: IOrderUtil,
-    private val authUtil: IAuthUtil,
+    private val cafeInteractor: ICafeInteractor,
+    private val userInteractor: IUserInteractor,
     private val dateTimeUtils: IDateTimeUtil,
 ) : BaseViewModel() {
 
@@ -128,7 +130,7 @@ class CreateOrderViewModel @Inject constructor(
 
     fun onCafeAddressChanged(cafeUuid: String) {
         viewModelScope.launch {
-            cafeRepo.saveSelectedCafeUuid(cafeUuid)
+            cafeInteractor.selectCafe(cafeUuid)
         }
     }
 
@@ -146,17 +148,20 @@ class CreateOrderViewModel @Inject constructor(
             return
         }
 
-        val userUuid = authUtil.userUuid
-        if (userUuid == null) {
-            showError(resourcesProvider.getString(R.string.error_create_order_user))
-            goBack()
-            return
+        viewModelScope.launch {
+            if (userInteractor.isUserAuthorize()) {
+                showError(resourcesProvider.getString(R.string.error_create_order_user))
+                goBack()
+                return@launch
+            }
+
+            // TODO orderInteractor create order
         }
 
         viewModelScope.launch {
             val orderDetails = OrderDetails(
                 isDelivery = isDelivery,
-                profileUuid = userUuid,
+                profileUuid = "",
                 userAddressUuid = selectedUserAddressUuid,
                 cafeUuid = selectedCafeUuid,
                 address = selectedAddress,

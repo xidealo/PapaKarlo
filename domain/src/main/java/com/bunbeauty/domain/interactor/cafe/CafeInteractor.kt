@@ -6,14 +6,18 @@ import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.repo.Api
+import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeInteractor @Inject constructor(
-    @Api private val cafeRepo: CafeRepo
+    @Api private val cafeRepo: CafeRepo,
+    private val authRepo: AuthRepo,
+    private val dataStoreRepo: DataStoreRepo
 ) : ICafeInteractor {
 
     override fun observeCafeList(): Flow<List<CafePreview>> {
@@ -33,6 +37,15 @@ class CafeInteractor @Inject constructor(
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeRepo.getCafeByUuid(cafeUuid)
+    }
+
+    override suspend fun selectCafe(cafeUuid: String) {
+        val userUuid = authRepo.firebaseUserUuid
+        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
+
+        if (userUuid != null && selectedCityUuid != null) {
+            cafeRepo.saveSelectedCafeUuid(userUuid, selectedCityUuid, cafeUuid)
+        }
     }
 
     fun getCafeTime(daySeconds: Int): String {

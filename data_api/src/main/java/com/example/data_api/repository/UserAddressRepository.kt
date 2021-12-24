@@ -1,8 +1,8 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.example.data_api.dao.UserAddressDao
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class UserAddressRepository @Inject constructor(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val authUtil: IAuthUtil,
+    private val authRepo: AuthRepo,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper
 ) : UserAddressRepo {
@@ -41,7 +41,7 @@ class UserAddressRepository @Inject constructor(
     }
 
     override suspend fun saveSelectedUserAddress(userAddressUuid: String) {
-        val userUuid = authUtil.userUuid
+        val userUuid = authRepo.firebaseUserUuid
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
 
         if (userUuid != null && selectedCityUuid != null) {
@@ -61,7 +61,7 @@ class UserAddressRepository @Inject constructor(
     }
 
     override suspend fun getUserAddressList(): List<UserAddress> {
-        val userUuid = authUtil.userUuid ?: ""
+        val userUuid = authRepo.firebaseUserUuid ?: ""
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
         return userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, selectedCityUuid)
             .map(userAddressMapper::toModel)
@@ -86,7 +86,7 @@ class UserAddressRepository @Inject constructor(
     }
 
     override suspend fun observeSelectedUserAddress(): Flow<UserAddress?> {
-        val userUuid = authUtil.userUuid ?: ""
+        val userUuid = authRepo.firebaseUserUuid ?: ""
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
 
         return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(
@@ -108,7 +108,7 @@ class UserAddressRepository @Inject constructor(
     }
 
     override fun observeUserAddressList(): Flow<List<UserAddress>> {
-        val userUuid = authUtil.userUuid ?: ""
+        val userUuid = authRepo.firebaseUserUuid ?: ""
         return dataStoreRepo.selectedCityUuid.flatMapLatest { cityUuid ->
             userAddressDao.observeUserAddressListByUserAndCityUuid(userUuid, cityUuid ?: "")
         }.mapListFlow(userAddressMapper::toModel)

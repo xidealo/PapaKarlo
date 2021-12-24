@@ -14,7 +14,7 @@ class Order(
     val deferredTime: Long?,
     val time: Long,
     val code: String,
-    val orderStatus: OrderStatus,
+    val status: OrderStatus,
     val orderProductList: List<OrderProduct>,
     val userUuid: String,
     val addressUuid: String?,

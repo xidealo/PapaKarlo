@@ -52,9 +52,9 @@ class OrderDetailsViewModel @Inject constructor(
 
         return OrderUI(
             code = code,
-            stepCount = orderUtil.getOrderStepCount(orderStatus),
-            status = stringUtil.getOrderStatusString(orderStatus),
-            orderStatusBackground = orderUtil.getBackgroundColor(orderStatus),
+            stepCount = orderUtil.getOrderStepCount(status),
+            status = stringUtil.getOrderStatusString(status),
+            orderStatusBackground = orderUtil.getBackgroundColor(status),
             dateTime = dateTimeUtil.getTimeDDMMMMHHMM(time),
             pickupMethod = stringUtil.getPickupMethodString(isDelivery),
             deferredTime = deferredTime,

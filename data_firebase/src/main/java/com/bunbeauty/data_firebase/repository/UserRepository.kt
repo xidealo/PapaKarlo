@@ -3,7 +3,6 @@ package com.bunbeauty.data_firebase.repository
 import com.bunbeauty.data_firebase.dao.OrderDao
 import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.data_firebase.dao.UserDao
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
@@ -14,7 +13,6 @@ import com.example.domain_firebase.model.entity.address.UserAddressEntity
 import com.example.domain_firebase.model.entity.order.OrderStatusEntity
 import com.example.domain_firebase.model.firebase.order.UserOrderFirebase
 import com.example.domain_firebase.repo.FirebaseRepo
-import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -25,7 +23,6 @@ class UserRepository @Inject constructor(
     private val orderDao: OrderDao,
     private val userAddressDao: UserAddressDao,
     private val firebaseRepo: FirebaseRepo,
-    private val authUtil: IAuthUtil,
     private val userMapper: IUserMapper,
     private val orderMapper: IOrderMapper
 ) : UserRepo {
@@ -49,6 +46,10 @@ class UserRepository @Inject constructor(
 //        }
     }
 
+    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+        return flow {}
+    }
+
     override suspend fun login(userUuid: String, userPhone: String): String? {
         return null
     }
@@ -60,17 +61,16 @@ class UserRepository @Inject constructor(
     }
 
     override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
-        return userDao.observeByUuid(userUuid)
-            .flowOn(IO)
-            .mapNotNull { userEntity ->
-                userEntity?.let {
-                    userMapper.toUIModel(userEntity)
-                }
+        return userDao.observeByUuid(userUuid).map { userEntity ->
+            if (userEntity == null) {
+                null
+            } else {
+                userMapper.toUIModel(userEntity)
             }
-            .flowOn(Default)
+        }
     }
 
-    override suspend fun updateUserEmail(user: User): User? {
+    override suspend fun updateUserEmail(userUuid: String, email: String): User? {
         // TODO
 
         return null

@@ -11,6 +11,7 @@ import com.example.data_api.handleResult
 import com.example.data_api.handleResultAndReturn
 import com.example.data_api.mapFlow
 import com.example.domain_api.mapper.IProfileMapper
+import com.example.domain_api.mapper.IUserMapper
 import com.example.domain_api.model.server.login.LoginPostServer
 import com.example.domain_api.model.server.profile.get.ProfileServer
 import com.example.domain_api.repo.ApiRepo
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
     private val apiRepo: ApiRepo,
     private val profileMapper: IProfileMapper,
+    private val userMapper: IUserMapper,
     private val userDao: UserDao,
     private val dataStoreRepo: DataStoreRepo
 ) : UserRepo {
@@ -47,16 +49,20 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
-        return userDao.observeUserByUuid(userUuid).mapFlow(profileMapper::toModel)
+    override fun observeUserByUuid(userUuid: String): Flow<User?> {
+        return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toModel)
     }
 
-    override suspend fun updateUserEmail(user: User): User? {
-        val userEmailServer = profileMapper.toUserEmailServer(user)
-        return apiRepo.patchProfileEmail(user.uuid, userEmailServer)
-            .handleResultAndReturn(USER_TAG) { patchedUser ->
-                userDao.update(profileMapper.toEntityModel(patchedUser).user)
-                profileMapper.toModel(patchedUser).user
+    override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
+        return userDao.observeProfileByUuid(userUuid).mapFlow(profileMapper::toModel)
+    }
+
+    override suspend fun updateUserEmail(userUuid: String, email: String): User? {
+        val patchUserServer = userMapper.toPatchServerModel(userUuid)
+        return apiRepo.patchProfileEmail(userUuid, patchUserServer)
+            .handleResultAndReturn(USER_TAG) { profile ->
+                userDao.update(userMapper.toUserUpdate(profile))
+                userMapper.toModel(profile)
             }
     }
 

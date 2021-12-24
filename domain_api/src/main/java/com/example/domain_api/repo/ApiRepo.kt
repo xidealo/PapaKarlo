@@ -7,7 +7,7 @@ import com.example.domain_api.model.server.login.LoginPostServer
 import com.example.domain_api.model.server.order.get.OrderServer
 import com.example.domain_api.model.server.order.post.OrderPostServer
 import com.example.domain_api.model.server.profile.get.ProfileServer
-import com.example.domain_api.model.server.profile.patch.ProfileEmailServer
+import com.example.domain_api.model.server.profile.patch.PatchUserServer
 
 interface ApiRepo {
 
@@ -27,7 +27,7 @@ interface ApiRepo {
 
     suspend fun patchProfileEmail(
         profileUuid: String,
-        profileEmailServer: ProfileEmailServer
+        patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
 
 }

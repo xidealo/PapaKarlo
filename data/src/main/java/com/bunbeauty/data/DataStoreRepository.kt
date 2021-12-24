@@ -93,6 +93,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         it[USER_UUID_KEY]
     }
 
+    override suspend fun getUserUuid(): String? {
+        return userUuid.firstOrNull()
+    }
+
     override suspend fun saveUserUuid(userId: String) {
         context.userUuidDataStore.edit {
             it[USER_UUID_KEY] = userId

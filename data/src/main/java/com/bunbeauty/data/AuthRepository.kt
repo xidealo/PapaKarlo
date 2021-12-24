@@ -1,6 +1,6 @@
 package com.bunbeauty.data
 
-import com.bunbeauty.domain.auth.IAuthUtil
+import com.bunbeauty.domain.repo.AuthRepo
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -9,20 +9,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthUtil @Inject constructor(
+class AuthRepository @Inject constructor(
     private val firebaseAuth: FirebaseAuth
-) : IAuthUtil {
+) : AuthRepo {
 
     override val isAuthorize: Boolean
-        get() = userUuid != null
+        get() = (firebaseAuth.currentUser != null)
 
-    override val userUuid: String?
+    override val firebaseUserUuid: String?
         get() = firebaseAuth.currentUser?.uid
 
-    override val userPhone: String?
+    override val firebaseUserPhone: String?
         get() = firebaseAuth.currentUser?.phoneNumber
 
-    override fun observeUserUuid(): Flow<String?> = callbackFlow {
+    override fun observeFirebaseUserUuid(): Flow<String?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { auth ->
             trySend(auth.currentUser?.uid)
         }

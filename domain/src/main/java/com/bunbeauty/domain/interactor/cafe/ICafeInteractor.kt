@@ -8,4 +8,5 @@ interface ICafeInteractor {
 
     fun observeCafeList(): Flow<List<CafePreview>>
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
+    suspend fun selectCafe(cafeUuid: String)
 }

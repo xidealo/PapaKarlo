@@ -3,13 +3,9 @@ package com.bunbeauty.papakarlo.presentation.address
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.StreetRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.domain.repo.*
 import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
@@ -23,7 +19,7 @@ class CreationAddressViewModel @Inject constructor(
     @Api private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val resourcesProvider: IResourcesProvider,
-    private val authUtil: IAuthUtil,
+    private val authRepo: AuthRepo,
     private val textValidator: ITextValidator
 ) : BaseViewModel() {
 
@@ -75,7 +71,7 @@ class CreationAddressViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            val userUuid = authUtil.userUuid
+            val userUuid = authRepo.firebaseUserUuid
             val userAddress = UserAddress(
                 street = selectedStreet,
                 house = house,

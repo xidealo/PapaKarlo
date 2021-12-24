@@ -187,7 +187,7 @@ fun viewModelModule() = module {
             dataStoreRepo = get(),
             stringUtil = get(),
             productHelper = get(),
-            authUtil = get(),
+            userInteractor = get(),
         )
     }
     viewModel {
@@ -201,10 +201,10 @@ fun viewModelModule() = module {
             productHelper = get(),
             resourcesProvider = get(),
             orderUtil = get(),
-            authUtil = get(),
-            dateTimeUtils = get(),
-
-            )
+            cafeInteractor = get(),
+            userInteractor = get(),
+            dateTimeUtils = get()
+        )
     }
     viewModel {
         CafeListViewModel(
@@ -227,17 +227,15 @@ fun viewModelModule() = module {
             streetRepo = get(),
             dataStoreRepo = get(),
             resourcesProvider = get(),
-            authUtil = get(),
-            textValidator = get(),
-
-            )
+            authRepo = get(),
+            textValidator = get()
+        )
     }
     viewModel {
         UserAddressesViewModel(
             userAddressRepo = get(),
-            stringUtil = get(),
-
-            )
+            stringUtil = get()
+        )
     }
     viewModel {
         CafeAddressesViewModel(
@@ -264,10 +262,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         ProfileViewModel(
-            userRepo = get(),
-            authUtil = get(),
-            orderUIMapper = get(),
             userInteractor = get(),
+            stringUtil = get(),
+            colorUtil = get(),
         )
     }
     viewModel {

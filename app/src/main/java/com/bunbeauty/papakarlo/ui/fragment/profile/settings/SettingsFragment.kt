@@ -33,7 +33,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     fragmentSettingsTcPhone.cardText = state.data.phone
                     val email = state.data.email
                     fragmentSettingsNcAddEmail.toggleVisibility(email.isNullOrEmpty())
-                    fragmentSettingsTcEmail.toggleVisibility(email.isNullOrEmpty())
+                    fragmentSettingsTcEmail.toggleVisibility(!email.isNullOrEmpty())
                     fragmentSettingsTcEmail.cardText = email ?: ""
                 }
             }.startedLaunch()

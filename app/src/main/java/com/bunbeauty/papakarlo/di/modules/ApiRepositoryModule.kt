@@ -70,7 +70,7 @@ fun apiRepositoryModule() = module {
             cartProductRepo = get(),
             apiRepo = get(),
             orderMapper = get(),
-            authUtil = get(),
+            authRepo = get(),
         )
     } bind OrderRepo::class
     single {
@@ -84,7 +84,7 @@ fun apiRepositoryModule() = module {
         UserAddressRepository(
             apiRepo = get(),
             dataStoreRepo = get(),
-            authUtil = get(),
+            authRepo = get(),
             userAddressDao = get(),
             userAddressMapper = get(),
         )
@@ -95,7 +95,7 @@ fun apiRepositoryModule() = module {
             dataStoreRepo = get(),
             cafeDao = get(),
             cafeMapper = get(),
-            authUtil = get(),
+            authRepo = get(),
         )
     } bind CafeRepo::class
     single {
@@ -116,6 +116,7 @@ fun apiRepositoryModule() = module {
         UserRepository(
             apiRepo = get(),
             profileMapper = get(),
+            userMapper = get(),
             userDao = get(),
             dataStoreRepo = get(),
         )

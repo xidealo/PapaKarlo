@@ -1,9 +1,9 @@
 package com.example.data_api.repository
 
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.repo.Api
+import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.data_api.dao.OrderDao
@@ -19,11 +19,11 @@ class OrderRepository @Inject constructor(
     @Api private val cartProductRepo: CartProductRepo,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
-    private val authUtil: IAuthUtil,
+    private val authRepo: AuthRepo,
 ) : BaseRepository(), OrderRepo {
 
     override fun observeOrderList(): Flow<List<Order>> {
-        val userUuid = authUtil.userUuid
+        val userUuid = authRepo.firebaseUserUuid
         return orderDao.observeOrderListByUserUuid(userUuid ?: "").mapListFlow(orderMapper::toModel)
     }
 
@@ -32,7 +32,7 @@ class OrderRepository @Inject constructor(
     }
 
     override fun observeLastOrder(): Flow<Order?> {
-        val userUuid = authUtil.userUuid
+        val userUuid = authRepo.firebaseUserUuid
         return orderDao.observeLastOrderByUserUuid(userUuid ?: "").mapFlow(orderMapper::toModel)
     }
 

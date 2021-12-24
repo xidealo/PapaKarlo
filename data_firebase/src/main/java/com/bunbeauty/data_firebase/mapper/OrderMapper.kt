@@ -54,7 +54,7 @@ class OrderMapper @Inject constructor(
             deferredTime = order.deferredTime.toString(),
             time = order.time,
             code = order.code,
-            orderStatus = order.orderStatus,
+            orderStatus = order.status,
             userAddressStreet = order.address,
             userAddressHouse = null,
             userAddressFlat = null,
@@ -125,7 +125,7 @@ class OrderMapper @Inject constructor(
             deferredTime = null,
             time = order.order.time,
             code = order.order.code,
-            orderStatus = order.order.orderStatus,
+            status = order.order.orderStatus,
             orderProductList = order.orderProductList.map(orderProductMapper::toUIModel),
             addressUuid = null
         )

@@ -1,32 +1,30 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.auth.IAuthUtil
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.profile.Profile
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.model.order.LightOrder
+import com.bunbeauty.domain.model.profile.LightProfile
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.presentation.item.OrderItem
-import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
+import com.bunbeauty.presentation.util.color.IColorUtil
+import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
-    @Api private val userRepo: UserRepo,
-    private val authUtil: IAuthUtil,
-    private val orderUIMapper: IOrderUIMapper,
-    private val userInteractor: IUserInteractor
+    private val userInteractor: IUserInteractor,
+    private val stringUtil: IStringUtil,
+    private val colorUtil: IColorUtil,
 ) : CartViewModel() {
 
-    private var profileUuid: String? = null
-    private val mutableProfileState: MutableStateFlow<State<Profile>> =
+    private var userUuid: String? = null
+    private val mutableProfileState: MutableStateFlow<State<LightProfile>> =
         MutableStateFlow(State.Loading())
-    val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
+    val profileState: StateFlow<State<LightProfile>> = mutableProfileState.asStateFlow()
 
     private val mutableLastOrder: MutableStateFlow<OrderItem?> = MutableStateFlow(null)
     val lastOrder: StateFlow<OrderItem?> = mutableLastOrder.asStateFlow()
@@ -57,8 +55,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun onOrderListClicked() {
-        authUtil.userUuid?.let { userUuid ->
-            router.navigate(toOrdersFragment(userUuid))
+        userUuid?.let { uuid ->
+            router.navigate(toOrdersFragment(uuid))
         }
     }
 
@@ -75,15 +73,23 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun subscribeOnProfile() {
-        userInteractor.observeProfile().onEach { profile ->
-            profileUuid = profile?.user?.uuid
-            mutableProfileState.value = profile.toSuccessOrEmpty()
-
-            mutableLastOrder.value = profile?.orderList?.maxByOrNull { order ->
-                order.time
-            }?.let(orderUIMapper::toItem)
-
-            mutableHasAddresses.value = !profile?.addressList.isNullOrEmpty()
+        userInteractor.observeLightProfile().onEach { lightProfile ->
+            userUuid = lightProfile?.userUuid
+            mutableProfileState.value = lightProfile.toSuccessOrEmpty()
+            mutableLastOrder.value = lightProfile?.lastOrder?.let { lightOrder ->
+                lightOrder.toOrderItem()
+            }
+            mutableHasAddresses.value = lightProfile?.hasAddresses ?: false
         }.launchIn(viewModelScope)
+    }
+
+    private fun LightOrder.toOrderItem(): OrderItem {
+        return OrderItem(
+            uuid = uuid,
+            orderStatus = stringUtil.getOrderStatusString(status),
+            orderColorResource = colorUtil.getOrderStatusColor(status),
+            code = code,
+            dateTime = dateTime
+        )
     }
 }

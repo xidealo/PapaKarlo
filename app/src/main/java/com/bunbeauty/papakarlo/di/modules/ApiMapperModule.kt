@@ -20,7 +20,10 @@ interface ApiMapperModule {
     fun bindCafeMapper(cafeMapper: CafeMapper): ICafeMapper
 
     @Binds
-    fun bindProfileMapper(userMapper: ProfileMapper): IProfileMapper
+    fun bindProfileMapper(profileMapper: ProfileMapper): IProfileMapper
+
+    @Binds
+    fun bindUserMapper(userMapper: UserMapper): IUserMapper
 
     @Binds
     fun bindUserAddressMapper(userAddressMapper: UserAddressMapper): IUserAddressMapper
@@ -46,8 +49,10 @@ fun apiMapperModule() = module {
         ProfileMapper(
             userAddressMapper = get(),
             orderMapper = get(),
+            userMapper = get(),
         )
     } bind IProfileMapper::class
+    single<IUserMapper> { UserMapper() }
     single { UserAddressMapper(streetMapper = get()) } bind IUserAddressMapper::class
     single { StreetMapper() } bind IStreetMapper::class
     single { CityMapper() } bind ICityMapper::class
