@@ -10,6 +10,7 @@ object Constants {
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
     const val CITY_UUID_PARAMETER = "cityUuid"
+    const val UUID_PARAMETER = "uuid"
 
     // HEADER
 

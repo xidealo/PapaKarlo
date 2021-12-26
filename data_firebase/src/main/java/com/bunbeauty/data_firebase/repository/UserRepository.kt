@@ -70,9 +70,7 @@ class UserRepository @Inject constructor(
         }
     }
 
-    override suspend fun updateUserEmail(userUuid: String, email: String): User? {
-        // TODO
-
+    override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
         return null
     }
 

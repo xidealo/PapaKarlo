@@ -16,5 +16,5 @@ interface UserRepo {
 
     fun observeProfileByUuid(userUuid: String): Flow<Profile?>
 
-    suspend fun updateUserEmail(userUuid: String, email: String): User?
+    suspend fun updateUserEmail(token: String, userUuid: String, email: String): User?
 }

@@ -67,6 +67,7 @@ class SettingsViewModel @Inject constructor(
                 showError(resourcesProvider.getString(R.string.error_settings_email))
             } else {
                 mutableUserState.value = user.toStateSuccess()
+                showMessage(resourcesProvider.getString(R.string.msg_settings_email_updated))
             }
         }
     }

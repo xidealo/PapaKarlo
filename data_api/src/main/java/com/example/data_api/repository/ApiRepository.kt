@@ -7,6 +7,7 @@ import com.bunbeauty.common.Constants.BEARER
 import com.bunbeauty.common.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.common.Constants.UUID_PARAMETER
 import com.example.domain_api.model.server.*
 import com.example.domain_api.model.server.login.AuthResponseServer
 import com.example.domain_api.model.server.login.LoginPostServer
@@ -19,7 +20,6 @@ import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import io.ktor.http.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -120,20 +120,22 @@ class ApiRepository @Inject constructor(
     // PATCH
 
     override suspend fun patchProfileEmail(
-        profileUuid: String,
+        token: String,
+        userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer> {
-        return patchData(
-            path = "profile",
-            body = patchUserServer,
+        return patchDataWithAuth(
+            path = "client",
+            patchBody = patchUserServer,
             serializer = ProfileServer.serializer(),
-            parameters = hashMapOf("uuid" to profileUuid)
+            parameters = hashMapOf(UUID_PARAMETER to userUuid),
+            token = token
         )
     }
 
     // COMMON
 
-    suspend fun <T : Any> getDataWithAuth(
+    suspend fun <T> getDataWithAuth(
         path: String,
         serializer: KSerializer<T>,
         parameters: Map<String, String> = mapOf(),
@@ -147,39 +149,21 @@ class ApiRepository @Inject constructor(
         )
     }
 
-    suspend fun <T : Any> getData(
+    suspend fun <T> getData(
         path: String,
         serializer: KSerializer<T>,
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<T> {
-        return try {
-            ApiResult.Success(
-                json.decodeFromString(
-                    serializer,
-                    client.get<HttpStatement> {
-                        url {
-                            path(path)
-                        }
-                        parameters.forEach { parameterEntry ->
-                            parameter(parameterEntry.key, parameterEntry.value)
-                        }
-                        headers.forEach { headerEntry ->
-                            header(headerEntry.key, headerEntry.value)
-                        }
-                    }.execute().readText()
-                )
-            )
-        } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
-        } catch (exception: Exception) {
-            ApiResult.Error(ApiError(0, exception.message ?: "-"))
+        val request = client.get<HttpStatement> {
+            buildRequest(path, null, parameters, headers)
         }
+        return handleResponse(serializer, request)
     }
 
-    suspend fun <T : Any, R> postDataWithAuth(
+    suspend fun <R> postDataWithAuth(
         path: String,
-        postBody: T,
+        postBody: Any,
         serializer: KSerializer<R>,
         parameters: Map<String, String> = mapOf(),
         token: String
@@ -193,31 +177,54 @@ class ApiRepository @Inject constructor(
         )
     }
 
-    suspend fun <T : Any, R> postData(
+    suspend fun <R> postData(
         path: String,
-        postBody: T,
+        postBody: Any,
         serializer: KSerializer<R>,
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<R> {
+        val request = client.post<HttpStatement> {
+            buildRequest(path, postBody, parameters, headers)
+        }
+        return handleResponse(serializer, request)
+    }
+
+    suspend fun <R> patchDataWithAuth(
+        path: String,
+        patchBody: Any,
+        serializer: KSerializer<R>,
+        parameters: Map<String, String> = mapOf(),
+        token: String
+    ): ApiResult<R> {
+        return patchData(
+            path = path,
+            patchBody = patchBody,
+            serializer = serializer,
+            parameters = parameters,
+            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
+        )
+    }
+
+    suspend fun <R> patchData(
+        path: String,
+        patchBody: Any,
+        serializer: KSerializer<R>,
+        parameters: Map<String, String> = mapOf(),
+        headers: Map<String, String> = mapOf(),
+    ): ApiResult<R> {
+        val request = client.patch<HttpStatement> {
+            buildRequest(path, patchBody, parameters, headers)
+        }
+        return handleResponse(serializer, request)
+    }
+
+    suspend fun <R> handleResponse(
+        serializer: KSerializer<R>,
+        request: HttpStatement
+    ): ApiResult<R> {
         return try {
-            ApiResult.Success(
-                json.decodeFromString(
-                    serializer,
-                    client.post<HttpStatement>(body = postBody) {
-                        contentType(ContentType.Application.Json)
-                        url {
-                            path(path)
-                        }
-                        parameters.forEach { parameterMap ->
-                            parameter(parameterMap.key, parameterMap.value)
-                        }
-                        headers.forEach { headerEntry ->
-                            header(headerEntry.key, headerEntry.value)
-                        }
-                    }.execute().readText()
-                )
-            )
+            ApiResult.Success(json.decodeFromString(serializer, request.execute().readText()))
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Exception) {
@@ -225,31 +232,25 @@ class ApiRepository @Inject constructor(
         }
     }
 
-    suspend fun <T : Any, R> patchData(
+    fun HttpRequestBuilder.buildRequest(
         path: String,
-        body: T,
-        serializer: KSerializer<R>,
-        parameters: Map<String, String> = mapOf()
-    ): ApiResult<R> {
-        return try {
-            ApiResult.Success(
-                json.decodeFromString(
-                    serializer,
-                    client.patch<HttpStatement>(body = body) {
-                        url {
-                            path(path)
-                        }
-                        parameters.forEach { parameterMap ->
-                            parameter(parameterMap.key, parameterMap.value)
-                        }
-                    }.execute().readText()
-                )
-            )
-        } catch (exception: ClientRequestException) {
-            ApiResult.Error(ApiError(exception.response.status.value, exception.message))
-        } catch (exception: Exception) {
-            ApiResult.Error(ApiError(0, exception.message ?: "-"))
+        body: Any?,
+        parameters: Map<String, String> = mapOf(),
+        headers: Map<String, String> = mapOf()
+    ) {
+        if (body != null) {
+            this.body = body
+        }
+        url {
+            path(path)
+        }
+        parameters.forEach { parameterMap ->
+            parameter(parameterMap.key, parameterMap.value)
+        }
+        headers.forEach { headerEntry ->
+            header(headerEntry.key, headerEntry.value)
         }
     }
+
 
 }

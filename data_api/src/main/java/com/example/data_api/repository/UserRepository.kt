@@ -57,9 +57,9 @@ class UserRepository @Inject constructor(
         return userDao.observeProfileByUuid(userUuid).mapFlow(profileMapper::toModel)
     }
 
-    override suspend fun updateUserEmail(userUuid: String, email: String): User? {
-        val patchUserServer = userMapper.toPatchServerModel(userUuid)
-        return apiRepo.patchProfileEmail(userUuid, patchUserServer)
+    override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
+        val patchUserServer = userMapper.toPatchServerModel(email)
+        return apiRepo.patchProfileEmail(token, userUuid, patchUserServer)
             .handleResultAndReturn(USER_TAG) { profile ->
                 userDao.update(userMapper.toUserUpdate(profile))
                 userMapper.toModel(profile)

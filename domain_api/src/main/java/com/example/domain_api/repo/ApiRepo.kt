@@ -24,13 +24,14 @@ interface ApiRepo {
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
         token: String,
-        userAddress: UserAddressPostServer
+        userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer>
 
     suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer>
 
     suspend fun patchProfileEmail(
-        profileUuid: String,
+        token: String,
+        userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
 
