@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.FloatingWindow
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -133,17 +134,19 @@ class MainActivity : AppCompatActivity() {
         val navController =
             (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            val isToolbarVisible = destination.id in toolbarFragmentIdList
-            viewDataBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
-            val isLogoVisible = destination.id in logoFragmentIdList
-            viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
-            val isCartVisible = destination.id in cartFragmentIdList
-            viewDataBinding.activityMainClCart.toggleVisibility(isCartVisible)
-            viewDataBinding.activityMainIvCart.toggleVisibility(isCartVisible)
-            val isBottomNavigationVisible = destination.id in bottomNavigationFragmentIdList
-            viewDataBinding.activityMainBnvBottomNavigation.toggleVisibility(
-                isBottomNavigationVisible
-            )
+            if (destination !is FloatingWindow) {
+                val isToolbarVisible = destination.id in toolbarFragmentIdList
+                viewDataBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
+                val isLogoVisible = destination.id in logoFragmentIdList
+                viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
+                val isCartVisible = destination.id in cartFragmentIdList
+                viewDataBinding.activityMainClCart.toggleVisibility(isCartVisible)
+                viewDataBinding.activityMainIvCart.toggleVisibility(isCartVisible)
+                val isBottomNavigationVisible = destination.id in bottomNavigationFragmentIdList
+                viewDataBinding.activityMainBnvBottomNavigation.toggleVisibility(
+                    isBottomNavigationVisible
+                )
+            }
         }
     }
 
