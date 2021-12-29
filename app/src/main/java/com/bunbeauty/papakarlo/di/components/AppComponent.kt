@@ -5,6 +5,7 @@ import com.bunbeauty.data.di.DataModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.modules.*
 import com.bunbeauty.papakarlo.worker.cafe.RefreshCafeWorker
+import com.bunbeauty.papakarlo.worker.category.RefreshCategoryWorker
 import com.bunbeauty.papakarlo.worker.city.RefreshCityWorker
 import com.bunbeauty.papakarlo.worker.delivery.RefreshDeliveryWorker
 import com.bunbeauty.papakarlo.worker.menu_product.RefreshMenuProductWorker
@@ -51,4 +52,5 @@ interface AppComponent {
     fun inject(refreshDeliveryWorker: RefreshDeliveryWorker)
     fun inject(refreshMenuProductWorker: RefreshMenuProductWorker)
     fun inject(refreshUserWorker: RefreshUserWorker)
+    fun inject(refreshCategoryWorker: RefreshCategoryWorker)
 }

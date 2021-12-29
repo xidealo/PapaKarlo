@@ -13,6 +13,7 @@ interface ApiRepo {
 
     suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer>
 
+    suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>>
     suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>>
     suspend fun getCityList(): ApiResult<ListServer<CityServer>>
     suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>>

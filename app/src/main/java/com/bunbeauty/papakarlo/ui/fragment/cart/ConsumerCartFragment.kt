@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.CartProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.presentation.item.CartProductItem
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
     lateinit var cartProductAdapter: CartProductAdapter
 
     @Inject
-    lateinit var marginItemDecoration: MarginItemDecoration
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: ConsumerCartViewModel by viewModels { viewModelFactory }
 
@@ -70,7 +70,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
             viewModel.onProductClicked(cartProductItem)
         }
         viewDataBinding.run {
-            fragmentConsumerCartRvResult.addItemDecoration(marginItemDecoration)
+            fragmentConsumerCartRvResult.addItemDecoration(marginItemVerticalDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter
 
             viewModel.orderProductListState.onEach { state ->

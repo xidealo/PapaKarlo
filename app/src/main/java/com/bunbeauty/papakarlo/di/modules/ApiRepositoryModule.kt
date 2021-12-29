@@ -49,6 +49,10 @@ interface ApiRepositoryModule {
     @Binds
     @Api
     fun bindCityRepository(cityRepository: CityRepository): CityRepo
+
+    @Binds
+    @Api
+    fun bindCategoryRepository(categoryRepository: CategoryRepository): CategoryRepo
 }
 
 fun apiRepositoryModule() = module {
@@ -128,6 +132,12 @@ fun apiRepositoryModule() = module {
             cityMapper = get(),
         )
     } bind CityRepo::class
+    single<CategoryRepo> {
+        CategoryRepository(
+            apiRepository = get(),
+            categoryDao = get()
+        )
+    }
 
 }
 

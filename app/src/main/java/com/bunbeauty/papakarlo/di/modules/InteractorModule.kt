@@ -6,6 +6,8 @@ import com.bunbeauty.domain.interactor.cafe.CafeInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.interactor.cart.CartProductInteractor
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.domain.interactor.categories.CategoryInteractor
+import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.city.CityInteractor
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
@@ -52,12 +54,16 @@ interface InteractorModule {
 
     @Binds
     fun bindsAddressInteractor(addressInteractor: AddressInteractor): IAddressInteractor
+
+    @Binds
+    fun bindsCategoryInteractor(categoryInteractor: CategoryInteractor): ICategoryInteractor
 }
 
 fun interactorModule() = module {
     single {
         MainInteractor(
             cityWorkerUtil = get(),
+            categoryWorkerUtil = get(),
             menuProductWorkerUtil = get(),
             deliveryWorkerUtil = get(),
             userWorkerUtil = get(),
@@ -107,6 +113,11 @@ fun interactorModule() = module {
         StreetInteractor(
             streetRepo = get(),
             dataStoreRepo = get(),
+        )
+    }
+    single<ICategoryInteractor> {
+        CategoryInteractor(
+            categoryRepo = get(),
         )
     }
 }

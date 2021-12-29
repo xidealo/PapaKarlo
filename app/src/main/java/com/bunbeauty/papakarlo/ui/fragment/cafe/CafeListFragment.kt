@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CafeAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
     lateinit var cafeAdapter: CafeAdapter
 
     @Inject
-    lateinit var marginItemDecoration: MarginItemDecoration
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: CafeListViewModel by viewModels { viewModelFactory }
 
@@ -29,7 +29,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemDecoration)
+        viewDataBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemVerticalDecoration)
         cafeAdapter.setOnItemClickListener { cafeItem ->
             viewModel.onCafeCardClicked(cafeItem)
         }

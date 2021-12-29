@@ -39,6 +39,14 @@ class ApiRepository @Inject constructor(
         )
     }
 
+    override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
+        return getData(
+            path = "category",
+            serializer = ListServer.serializer(CategoryServer.serializer()),
+            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+        )
+    }
+
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
             path = "menu_product",

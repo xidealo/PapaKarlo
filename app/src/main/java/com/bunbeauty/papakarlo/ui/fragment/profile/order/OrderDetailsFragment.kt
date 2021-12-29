@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.OrderProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -24,7 +24,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     lateinit var orderProductAdapter: OrderProductAdapter
 
     @Inject
-    lateinit var marginItemDecoration: MarginItemDecoration
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: OrderDetailsViewModel by viewModels { viewModelFactory }
 
@@ -62,7 +62,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
                     fragmentOrderDetailsTvOrderOldTotalCost.text = order.oldTotalCost
                     fragmentOrderDetailsTvOrderOldTotalCost.strikeOutText()
                     fragmentOrderDetailsTvOrderNewTotalCost.text = order.newTotalCost
-                    fragmentOrderDetailsRvProductList.addItemDecoration(marginItemDecoration)
+                    fragmentOrderDetailsRvProductList.addItemDecoration(marginItemVerticalDecoration)
                     fragmentOrderDetailsRvProductList.adapter = orderProductAdapter
                     orderProductAdapter.submitList(order.orderProductList)
 

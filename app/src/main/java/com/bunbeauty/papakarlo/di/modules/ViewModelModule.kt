@@ -171,7 +171,11 @@ fun viewModelModule() = module {
             productHelper = get(),
         )
     }
-    viewModel { MenuViewModel() }
+    viewModel {
+        MenuViewModel(
+            categoryInteractor = get()
+        )
+    }
     viewModel {
         MainViewModel(
             cartProductInteractor = get(),

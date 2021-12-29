@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.ui.custom
+package com.bunbeauty.papakarlo.ui.decorator
 
 import android.graphics.Rect
 import android.view.View
@@ -7,7 +7,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import javax.inject.Inject
 
-class MarginItemDecoration @Inject constructor(private val resourcesProvider: IResourcesProvider) :
+class MarginItemVerticalDecoration @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(

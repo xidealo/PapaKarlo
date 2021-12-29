@@ -112,6 +112,10 @@ class ApiDataModule {
     @Provides
     fun provideOrderDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getOrderDao()
 
+    @Singleton
+    @Provides
+    fun provideCategoryDao(apiLocalDatabase: ApiLocalDatabase) = apiLocalDatabase.getCategoryDao()
+
 }
 
 fun apiDataModule() = module {
@@ -189,6 +193,9 @@ fun apiDataModule() = module {
     }
     single {
         get<ApiLocalDatabase>().getOrderDao()
+    }
+    single {
+        get<ApiLocalDatabase>().getCategoryDao()
     }
 }
 

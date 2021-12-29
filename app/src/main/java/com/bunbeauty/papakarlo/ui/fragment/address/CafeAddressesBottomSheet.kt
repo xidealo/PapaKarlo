@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.address.CafeAddressesViewModel
 import com.bunbeauty.papakarlo.ui.adapter.AddressAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
-import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -22,7 +22,7 @@ class CafeAddressesBottomSheet : BaseBottomSheet<BottomSheetCafeAddressesBinding
     lateinit var addressAdapter: AddressAdapter
 
     @Inject
-    lateinit var marginItemDecoration: MarginItemDecoration
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: CafeAddressesViewModel by viewModels { viewModelFactory }
 
@@ -44,6 +44,8 @@ class CafeAddressesBottomSheet : BaseBottomSheet<BottomSheetCafeAddressesBinding
             viewModel.goBack()
         }
         viewDataBinding.bottomSheetCafeAddressesRvResult.adapter = addressAdapter
-        viewDataBinding.bottomSheetCafeAddressesRvResult.addItemDecoration(marginItemDecoration)
+        viewDataBinding.bottomSheetCafeAddressesRvResult.addItemDecoration(
+            marginItemVerticalDecoration
+        )
     }
 }

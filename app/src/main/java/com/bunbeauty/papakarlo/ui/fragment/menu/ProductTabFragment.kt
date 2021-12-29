@@ -15,7 +15,7 @@ import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
-import com.bunbeauty.papakarlo.ui.custom.MarginItemDecoration
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     lateinit var menuProductsAdapter: MenuProductsAdapter
 
     @Inject
-    lateinit var marginItemDecoration: MarginItemDecoration
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     private val productCode: ProductCode by argument()
 
@@ -69,7 +69,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     }
 
     private fun setupRecyclerView() {
-        viewDataBinding.fragmentProductsRvResult.addItemDecoration(marginItemDecoration)
+        viewDataBinding.fragmentProductsRvResult.addItemDecoration(marginItemVerticalDecoration)
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
 
         menuProductsAdapter.setOnItemClickListener { menuProductItem ->
