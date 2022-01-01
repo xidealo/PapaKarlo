@@ -1,15 +1,15 @@
 package com.example.data_api.mapper
 
-import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.model.product.MenuProduct
+import com.example.domain_api.mapper.ICategoryMapper
 import com.example.domain_api.mapper.IMenuProductMapper
-import com.example.domain_api.model.entity.CategoryEntity
 import com.example.domain_api.model.entity.product.MenuProductEntity
 import com.example.domain_api.model.entity.product_with_category.MenuProductWithCategory
 import com.example.domain_api.model.server.MenuProductServer
 import javax.inject.Inject
 
-class MenuProductMapper @Inject constructor() : IMenuProductMapper {
+class MenuProductMapper @Inject constructor(private val categoryMapper: ICategoryMapper) :
+    IMenuProductMapper {
 
     override fun toEntityModel(menuProduct: MenuProductServer): MenuProductWithCategory {
         return MenuProductWithCategory(
@@ -26,12 +26,7 @@ class MenuProductMapper @Inject constructor() : IMenuProductMapper {
                 barcode = menuProduct.barcode,
                 visible = menuProduct.isVisible,
             ),
-            categoryList = menuProduct.categories.map { categoryServer ->
-                CategoryEntity(
-                    uuid = categoryServer.uuid,
-                    name = categoryServer.name
-                )
-            }
+            categoryList = menuProduct.categories.map(categoryMapper::toEntityModel)
         )
     }
 
@@ -61,12 +56,7 @@ class MenuProductMapper @Inject constructor() : IMenuProductMapper {
             description = menuProduct.menuProduct.description,
             comboDescription = menuProduct.menuProduct.comboDescription,
             photoLink = menuProduct.menuProduct.photoLink,
-            categoryList = menuProduct.categoryList.map { category ->
-                Category(
-                    uuid = category.uuid,
-                    name = category.name
-                )
-            },
+            categoryList = menuProduct.categoryList.map(categoryMapper::toModel),
         )
     }
 }

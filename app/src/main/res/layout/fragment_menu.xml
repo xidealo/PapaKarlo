@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_menu_sv_categories"
+            android:id="@+id/fragment_menu_rv_categories"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_menu_sv_categories"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_menu_rv_categories"
             tools:listitem="@layout/element_menu_product" />
 
         <!--        <com.google.android.material.tabs.TabLayout-->

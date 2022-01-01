@@ -26,7 +26,7 @@ object Versions {
     const val googleServices = "4.3.10"
     const val crashlyticsClassPath = "2.8.1"
 
-    const val navigation = "2.3.5"
+    const val navigation = "2.4.0-rc01"
 
     const val firebaseBom = "28.4.0"
     const val grpc = "1.40.0"
@@ -36,7 +36,7 @@ object Versions {
     const val extensions = "2.2.0"
     const val viewmodel = "2.4.0"
     const val activity = "1.4.0"
-    const val fragment = "1.3.6"
+    const val fragment = "1.4.0"
     const val lifecycle = "2.4.0"
     const val livedata = "2.4.0"
 
@@ -145,8 +145,16 @@ object Koin {
 
 object Navigation {
     const val navigationFragment =
+        "androidx.navigation:navigation-fragment:${Versions.navigation}"
+    const val navigationFragmentKtx =
         "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-    const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
+    const val navigationRuntime = "androidx.navigation:navigation-runtime:${Versions.navigation}"
+    const val navigationRuntimeKtx =
+        "androidx.navigation:navigation-runtime-ktx:${Versions.navigation}"
+    const val navigationUI =
+        "androidx.navigation:navigation-ui:${Versions.navigation}"
+    const val navigationUIKtx =
+        "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     const val navigationTesting = "androidx.navigation:navigation-testing:${Versions.navigation}"
 }
 

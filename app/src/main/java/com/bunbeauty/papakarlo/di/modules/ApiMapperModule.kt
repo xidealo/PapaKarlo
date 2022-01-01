@@ -39,11 +39,18 @@ interface ApiMapperModule {
 
     @Binds
     fun bindOrderProductMapper(orderProductMapper: OrderProductMapper): IOrderProductMapper
+
+    @Binds
+    fun bindCategoryMapper(categoryMapper: CategoryMapper): ICategoryMapper
 }
 
 fun apiMapperModule() = module {
     single { CafeMapper() } bind ICafeMapper::class
-    single { MenuProductMapper() } bind IMenuProductMapper::class
+    single<IMenuProductMapper> {
+        MenuProductMapper(
+            categoryMapper = get(),
+        )
+    }
     single { CartProductMapper(menuProductMapper = get()) } bind ICartProductMapper::class
     single {
         ProfileMapper(
@@ -58,5 +65,6 @@ fun apiMapperModule() = module {
     single { CityMapper() } bind ICityMapper::class
     single { OrderMapper(orderProductMapper = get()) } bind IOrderMapper::class
     single { OrderProductMapper() } bind IOrderProductMapper::class
+    single<ICategoryMapper> { CategoryMapper() }
 }
 

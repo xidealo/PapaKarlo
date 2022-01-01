@@ -135,6 +135,7 @@ fun apiRepositoryModule() = module {
     single<CategoryRepo> {
         CategoryRepository(
             apiRepository = get(),
+            categoryMapper = get(),
             categoryDao = get()
         )
     }

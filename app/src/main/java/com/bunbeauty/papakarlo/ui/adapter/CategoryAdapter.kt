@@ -4,14 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCategoryBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.item.CategoryItem
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import javax.inject.Inject
 
-class CategoryAdapter @Inject constructor() :
+class CategoryAdapter @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(
         DefaultDiffCallback()
     ) {
@@ -31,6 +33,20 @@ class CategoryAdapter @Inject constructor() :
 
             (binding as ElementCategoryBinding).run {
                 elementCategoryChipMain.text = item.name
+                if (item.isSelected) {
+                    elementCategoryChipMain.isClickable = false
+                    elementCategoryChipMain.chipBackgroundColor =
+                        resourcesProvider.getColorStateListByAttr(R.attr.colorPrimary)
+                    elementCategoryChipMain.setTextColor(resourcesProvider.getColorStateListByAttr(R.attr.colorOnPrimary))
+                } else {
+                    elementCategoryChipMain.isClickable = true
+                    elementCategoryChipMain.chipBackgroundColor =
+                        resourcesProvider.getColorStateListByAttr(R.attr.colorSurface)
+                    elementCategoryChipMain.setTextColor(resourcesProvider.getColorStateListByAttr(R.attr.colorOnSurface))
+                    elementCategoryChipMain.setOnClickListener {
+                        onItemClicked(item)
+                    }
+                }
             }
         }
     }

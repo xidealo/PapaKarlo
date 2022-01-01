@@ -31,6 +31,10 @@ class ResourcesProvider @Inject constructor(private val context: Context) : IRes
         return ColorStateList.valueOf(getColorById(colorId))
     }
 
+    override fun getColorStateListByAttr(attrId: Int): ColorStateList {
+        return getColorStateListByColor(getColorByAttr(attrId))
+    }
+
     override fun getColorStateListByColor(color: Int): ColorStateList {
         return ColorStateList.valueOf(color)
     }

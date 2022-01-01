@@ -18,6 +18,9 @@ class MenuProductInteractor @Inject constructor(
             menuProductList.flatMap { menuProduct ->
                 menuProduct.categoryList
             }.toSet()
+                .sortedBy { category ->
+                    category.priority
+                }
                 .forEach { category ->
                     menuList.add(MenuModel.Section(category))
                     val categoryMenuProductList = menuProductList.filter { menuProduct ->
@@ -30,6 +33,21 @@ class MenuProductInteractor @Inject constructor(
                     menuList.addAll(categoryMenuProductList)
                 }
             menuList
+        }
+    }
+
+    override fun getCurrentMenuPosition(
+        currentCategoryUuid: String,
+        menuList: List<MenuModel>
+    ): Int {
+        val menuItem = menuList.find { menuItem ->
+            (menuItem is MenuModel.Section) && (menuItem.category.uuid == currentCategoryUuid)
+        }
+        val position = menuList.indexOf(menuItem)
+        return if (position == -1) {
+            0
+        } else {
+            position
         }
     }
 }

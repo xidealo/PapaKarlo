@@ -8,4 +8,5 @@ class CategoryEntity(
     @PrimaryKey
     val uuid: String,
     val name: String,
+    val priority: Int,
 )

@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface IMenuProductInteractor {
 
     fun observeMenuList(): Flow<List<MenuModel>>
+    fun getCurrentMenuPosition(currentCategoryUuid: String, menuList: List<MenuModel>): Int
 }

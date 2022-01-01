@@ -17,9 +17,9 @@
             android:id="@+id/to_confirmFragment"
             app:destination="@id/confirmFragment" />
         <action
-            android:id="@+id/back_to_profile_fragment"
-            app:destination="@id/profile_fragment"
-            app:popUpTo="@id/profile_fragment"
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/to_create_order_fragment"
@@ -46,9 +46,9 @@
             android:name="successLoginDirection"
             app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
         <action
-            android:id="@+id/back_to_profile_fragment"
-            app:destination="@id/profile_fragment"
-            app:popUpTo="@id/profile_fragment"
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/to_create_order_fragment"

@@ -26,7 +26,11 @@ dependencies {
     implementation(AndroidX.constraintLayout)
 
     implementation(Navigation.navigationFragment)
-    implementation(Navigation.navigationUi)
+    implementation(Navigation.navigationFragmentKtx)
+    implementation(Navigation.navigationRuntime)
+    implementation(Navigation.navigationRuntimeKtx)
+    implementation(Navigation.navigationUI)
+    implementation(Navigation.navigationUIKtx)
     androidTestImplementation(Navigation.navigationTesting)
 
     // WorkManager

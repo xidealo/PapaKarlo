@@ -6,13 +6,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.FloatingWindow
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.bunbeauty.papakarlo.NavMainDirections.globalToCartFragment
+import androidx.navigation.ui.*
+import com.bunbeauty.papakarlo.NavMainDirections.*
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.Router
@@ -29,35 +27,34 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private var mutableViewDataBinding: ActivityMainBinding? = null
-    val viewDataBinding: ActivityMainBinding by lazy {
+    private val viewDataBinding: ActivityMainBinding by lazy {
         checkNotNull(mutableViewDataBinding)
     }
-
     private val toolbarFragmentIdList = listOf(
-        R.id.cafe_list_fragment,
+        R.id.cafeListFragment,
         R.id.confirmFragment,
         R.id.consumerCartFragment,
         R.id.create_address_fragment,
         R.id.create_order_fragment,
         R.id.loginFragment,
-        R.id.menu_fragment,
+        R.id.menuFragment,
         R.id.order_derails_fragment,
         R.id.orders_fragment,
         R.id.product_fragment,
-        R.id.profile_fragment,
+        R.id.profileFragment,
         R.id.settings_fragment
     )
-    private val logoFragmentIdList = listOf(R.id.menu_fragment)
+    private val logoFragmentIdList = listOf(R.id.menuFragment)
     private val cartFragmentIdList = listOf(
-        R.id.cafe_list_fragment,
-        R.id.menu_fragment,
+        R.id.cafeListFragment,
+        R.id.menuFragment,
         R.id.product_fragment,
-        R.id.profile_fragment,
+        R.id.profileFragment,
     )
     private val bottomNavigationFragmentIdList = listOf(
-        R.id.cafe_list_fragment,
-        R.id.menu_fragment,
-        R.id.profile_fragment,
+        R.id.cafeListFragment,
+        R.id.menuFragment,
+        R.id.profileFragment,
     )
 
     private var viewModel: MainViewModel? = null
@@ -70,6 +67,15 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var resourcesProvider: IResourcesProvider
+
+    private val appBarConfiguration = AppBarConfiguration(
+        topLevelDestinationIds = setOf(
+            R.id.cafeListFragment,
+            R.id.menuFragment,
+            R.id.profileFragment
+        ),
+        fallbackOnNavigateUpListener = ::onSupportNavigateUp
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -85,13 +91,19 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, modelFactory)[MainViewModel::class.java]
 
-        setupToolbar()
-        setupBottomNavigationBar()
-        setupNavigationListener()
+        val navController = getNavController()
+
+        setupBottomNavigationBar(navController)
+        setupNavigationListener(navController)
+        setupToolbar(navController, appBarConfiguration)
         observeCart()
         observeIsOnline()
 
         router.attach(this, R.id.activity_main_fcv_container)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return getNavController().navigateUp(appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -122,17 +134,14 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun setCartText(cartText: String) {
-        viewDataBinding.activityMainTvCart.text = cartText
+    private fun getNavController(): NavController {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container)
+                    as NavHostFragment
+        return navHostFragment.navController
     }
 
-    private fun setCartProductCount(cartProductCount: String) {
-        viewDataBinding.activityMainTvCartCount.text = cartProductCount
-    }
-
-    private fun setupNavigationListener() {
-        val navController =
-            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
+    private fun setupNavigationListener(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination !is FloatingWindow) {
                 val isToolbarVisible = destination.id in toolbarFragmentIdList
@@ -150,31 +159,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupToolbar() {
-        val navController =
-            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
-
+    private fun setupToolbar(
+        navController: NavController,
+        appBarConfiguration: AppBarConfiguration
+    ) {
         setSupportActionBar(viewDataBinding.activityMainTbToolbar)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.cafe_list_fragment, R.id.menu_fragment, R.id.profile_fragment)
-        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewDataBinding.activityMainClCart.setOnClickListener {
-            goToCart()
+            router.navigate(globalToCartFragment())
         }
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()
         }
     }
 
-    private fun goToCart() {
-        router.navigate(globalToCartFragment())
-    }
-
-    private fun setupBottomNavigationBar() {
-        val navController =
-            (supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container) as NavHostFragment).navController
-
+    private fun setupBottomNavigationBar(navController: NavController) {
         viewDataBinding.activityMainBnvBottomNavigation.setupWithNavController(navController)
         viewDataBinding.activityMainBnvBottomNavigation.setOnItemReselectedListener {}
     }
@@ -182,10 +181,10 @@ class MainActivity : AppCompatActivity() {
     private fun observeCart() {
         viewModel?.run {
             cartCost.onEach { cartCost ->
-                setCartText(cartCost)
+                viewDataBinding.activityMainTvCart.text = cartCost
             }.startedLaunch(this@MainActivity)
             cartProductCount.onEach { cartProductCount ->
-                setCartProductCount(cartProductCount)
+                viewDataBinding.activityMainTvCartCount.text = cartProductCount
             }.startedLaunch(this@MainActivity)
         }
     }

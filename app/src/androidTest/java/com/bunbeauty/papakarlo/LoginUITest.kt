@@ -25,7 +25,7 @@ class LoginUITest : MainTest() {
     }
 
     fun testLoginWithLoginBefore(phone: String, code: String) {
-        onView(withId(R.id.profile_fragment))
+        onView(withId(R.id.profileFragment))
             .perform(ViewActions.click())
         Thread.sleep(PAUSE)
 
