@@ -4,6 +4,7 @@ import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.MenuModel
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.ui.fragment.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.presentation.item.CategoryItem
 import com.bunbeauty.presentation.item.MenuItem
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -61,6 +62,16 @@ class MenuViewModel @Inject constructor(
 
     fun getMenuPosition(currentCategoryItem: CategoryItem): Int {
         return menuProductInteractor.getCurrentMenuPosition(currentCategoryItem.uuid, menuModelList)
+    }
+
+    fun onMenuItemClicked(menuItem: MenuItem) {
+        if (menuItem is MenuItem.MenuProductItem) {
+            router.navigate(toProductFragment(menuItem.uuid, menuItem.name, menuItem.photoLink))
+        }
+    }
+
+    fun onAddProductClicked(menuProductItem: MenuItem.MenuProductItem) {
+        addProductToCart(menuProductItem.uuid)
     }
 
     private fun observeCategoryList() {

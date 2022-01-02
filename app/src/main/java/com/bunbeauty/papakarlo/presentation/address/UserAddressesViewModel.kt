@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.presentation.address
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheetDirections.toCreationAddressFragment
+import com.bunbeauty.papakarlo.ui.fragment.address.UserAddressesBottomSheetDirections.toCreateAddressFragment
 import com.bunbeauty.presentation.item.AddressItem
 import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,7 +25,7 @@ class UserAddressesViewModel @Inject constructor(
     }
 
     fun onCreateAddressClicked() {
-        router.navigate(toCreationAddressFragment())
+        router.navigate(toCreateAddressFragment())
     }
 
     private fun observeUserAddressList() {

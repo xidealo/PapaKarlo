@@ -14,11 +14,7 @@ class SplashViewModel @Inject constructor(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
-    init {
-        checkIsUpdated()
-    }
-
-    private fun checkIsUpdated() {
+    fun checkIsUpdated() {
         viewModelScope.launch {
             val isUpdated = updateInteractor.checkIsUpdated(BuildConfig.VERSION_CODE)
             if (isUpdated) {
@@ -32,7 +28,7 @@ class SplashViewModel @Inject constructor(
     private suspend fun checkIsCitySelected() {
         val isCitySelected = cityInteractor.checkIsCitySelected()
         if (isCitySelected) {
-            router.navigate(toMenuFragment())
+            router.navigate(toNavMenu())
         } else {
             router.navigate(toSelectCityFragment())
         }

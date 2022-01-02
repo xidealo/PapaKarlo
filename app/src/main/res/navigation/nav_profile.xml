@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_profile"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+        <action
+            android:id="@+id/to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/to_createAddressFragment"
+            app:destination="@id/createAddressFragment" />
+        <action
+            android:id="@+id/to_nav_address"
+            app:destination="@id/nav_address">
+            <argument
+                android:name="isClickable"
+                app:argType="boolean" />
+        </action>
+        <action
+            android:id="@+id/to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+        <action
+            android:id="@+id/to_paymentBottomSheet"
+            app:destination="@id/paymentBottomSheet" />
+        <action
+            android:id="@+id/to_feedbackBottomSheet"
+            app:destination="@id/feedbackBottomSheet" />
+        <action
+            android:id="@+id/to_loginFragment"
+            app:destination="@id/nav_login">
+            <argument
+                android:name="successLoginDirection"
+                app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.order.OrderDetailsFragment"
+        android:label="{orderCode}"
+        tools:layout="@layout/fragment_order_details">
+        <argument
+            android:name="orderUuid"
+            app:argType="string" />
+        <argument
+            android:name="orderCode"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/to_oneLineActionBottomSheet"
+            app:destination="@id/oneLineActionBottomSheet" />
+        <action
+            android:id="@+id/to_citySelectionBottomSheet"
+            app:destination="@id/citySelectionBottomSheet" />
+        <action
+            android:id="@+id/to_logoutBottomSheet"
+            app:destination="@id/logoutBottomSheet" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAddressFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.address.CreateAddressFragment"
+        android:label="@string/title_create_address"
+        tools:layout="@layout/fragment_create_address" />
+
+    <include app:graph="@navigation/nav_address" />
+
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragment"
+        android:label="@string/title_orders"
+        tools:layout="@layout/fragment_orders">
+        <argument
+            android:name="userUuid"
+            app:argType="string" />
+        <action
+            android:id="@+id/to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/paymentBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.PaymentBottomSheet"
+        android:label="PaymentBottomSheet"
+        tools:layout="@layout/bottom_sheet_payment" />
+
+    <dialog
+        android:id="@+id/feedbackBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet"
+        android:label="FeedbackBottomSheet"
+        tools:layout="@layout/bottom_sheet_feedback" />
+
+    <include app:graph="@navigation/nav_login" />
+
+    <dialog
+        android:id="@+id/oneLineActionBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.OneLineActionBottomSheet"
+        android:label="OneLineActionBottomSheet"
+        tools:layout="@layout/bottom_sheet_one_line_action">
+        <argument
+            android:name="oneLineActionModel"
+            app:argType="com.bunbeauty.domain.model.OneLineActionModel" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/citySelectionBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.CitySelectionBottomSheet"
+        android:label="CitySelectionBottomSheet"
+        tools:layout="@layout/bottom_sheet_city_selection" />
+
+    <dialog
+        android:id="@+id/logoutBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.settings.LogoutBottomSheet"
+        android:label="LogoutBottomSheet"
+        tools:layout="@layout/bottom_sheet_logout">
+        <action
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
+</navigation>

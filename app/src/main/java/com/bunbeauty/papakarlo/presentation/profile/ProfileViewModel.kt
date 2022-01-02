@@ -38,7 +38,7 @@ class ProfileViewModel @Inject constructor(
 
     fun onLastOrderClicked() {
         mutableLastOrder.value?.let { orderItem ->
-            router.navigate(toOrderDerailsFragment(orderItem.uuid, orderItem.code))
+            router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
         }
     }
 
@@ -48,9 +48,9 @@ class ProfileViewModel @Inject constructor(
 
     fun onAddressClicked() {
         if (mutableHasAddresses.value) {
-            router.navigate(toUserAddressesBottomSheet(false))
+            router.navigate(toNavAddress(false))
         } else {
-            router.navigate(toCreationAddressFragment())
+            router.navigate(toCreateAddressFragment())
         }
     }
 

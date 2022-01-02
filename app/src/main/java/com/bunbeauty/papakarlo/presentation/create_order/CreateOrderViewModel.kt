@@ -178,7 +178,7 @@ class CreateOrderViewModel @Inject constructor(
                 showMessage(
                     resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code
                 )
-                router.navigate(toProfileFragment())
+                router.navigate(toNavProfile())
             }
         }
     }
@@ -234,14 +234,14 @@ class CreateOrderViewModel @Inject constructor(
 
     fun onAddressClicked() {
         if (isDelivery.value) {
-            router.navigate(toUserAddressesBottomSheet(true))
+            router.navigate(toNavAddress(true))
         } else {
             router.navigate(toCafeAddressesBottomSheet())
         }
     }
 
     fun onAddAddressClicked() {
-        router.navigate(toCreationAddressFragment())
+        router.navigate(toCreateAddressFragment())
     }
 
     fun onDeferredTimeClicked() {

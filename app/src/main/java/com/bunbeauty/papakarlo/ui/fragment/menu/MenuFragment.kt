@@ -40,6 +40,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        disableBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
@@ -50,6 +51,12 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
 
             fragmentMenuRvProducts.addItemDecoration(marginItemVerticalDecoration)
             fragmentMenuRvProducts.adapter = menuProductAdapter
+            menuProductAdapter.setOnItemClickListener { menuItem ->
+                viewModel.onMenuItemClicked(menuItem)
+            }
+            menuProductAdapter.setOnButtonClickListener { menuProductItem ->
+                viewModel.onAddProductClicked(menuProductItem)
+            }
 
             categoryAdapter.setOnItemClickListener { categoryItem ->
                 viewModel.onCategorySelected(categoryItem.uuid)

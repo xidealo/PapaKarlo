@@ -22,8 +22,8 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/to_create_order_fragment"
-            app:destination="@id/create_order_fragment"
+            android:id="@+id/to_createOrderFragment"
+            app:destination="@id/createOrderFragment"
             app:popUpTo="@+id/nav_login"
             app:popUpToInclusive="true" />
     </fragment>
@@ -51,8 +51,8 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/to_create_order_fragment"
-            app:destination="@id/create_order_fragment"
+            android:id="@+id/to_createOrderFragment"
+            app:destination="@id/createOrderFragment"
             app:popUpTo="@+id/nav_login"
             app:popUpToInclusive="true" />
     </fragment>

@@ -27,6 +27,7 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        disableBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemVerticalDecoration)

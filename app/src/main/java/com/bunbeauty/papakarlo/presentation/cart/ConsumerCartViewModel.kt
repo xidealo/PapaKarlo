@@ -49,13 +49,13 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun onMenuClicked() {
-        router.navigate(backToMenuFragment())
+        router.navigateUp()
     }
 
     fun onCreateOrderClicked() {
         viewModelScope.launch {
             if (userInteractor.isUserAuthorize()) {
-                router.navigate(toCreateOrder())
+                router.navigate(toCreateOrderFragment())
             } else {
                 router.navigate(toLoginFragment(TO_CREATE_ORDER))
             }

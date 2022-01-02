@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragmentDirections.toMenuFragment
+import com.bunbeauty.papakarlo.ui.fragment.SelectCityFragmentDirections.toNavMenu
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class SelectCityViewModel @Inject constructor(
     fun onCitySelected(city: City) {
         viewModelScope.launch {
             cityInteractor.saveSelectedCity(city)
-            router.navigate(toMenuFragment())
+            router.navigate(toNavMenu())
         }
     }
 

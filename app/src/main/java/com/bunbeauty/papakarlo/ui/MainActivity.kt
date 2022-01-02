@@ -34,21 +34,21 @@ class MainActivity : AppCompatActivity() {
         R.id.cafeListFragment,
         R.id.confirmFragment,
         R.id.consumerCartFragment,
-        R.id.create_address_fragment,
-        R.id.create_order_fragment,
+        R.id.createAddressFragment,
+        R.id.createOrderFragment,
         R.id.loginFragment,
         R.id.menuFragment,
-        R.id.order_derails_fragment,
-        R.id.orders_fragment,
-        R.id.product_fragment,
+        R.id.orderDetailsFragment,
+        R.id.ordersFragment,
+        R.id.productFragment,
         R.id.profileFragment,
-        R.id.settings_fragment
+        R.id.settingsFragment
     )
     private val logoFragmentIdList = listOf(R.id.menuFragment)
     private val cartFragmentIdList = listOf(
         R.id.cafeListFragment,
         R.id.menuFragment,
-        R.id.product_fragment,
+        R.id.productFragment,
         R.id.profileFragment,
     )
     private val bottomNavigationFragmentIdList = listOf(
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             menuInflater.inflate(R.menu.top_menu, menu)
         }
         val isSettings =
-            findNavController(R.id.activity_main_fcv_container).currentDestination?.id == R.id.settings_fragment
+            findNavController(R.id.activity_main_fcv_container).currentDestination?.id == R.id.settingsFragment
         menu.findItem(R.id.logoutBottomSheet)?.isVisible = isSettings
 
         return true
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(viewDataBinding.activityMainTbToolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewDataBinding.activityMainClCart.setOnClickListener {
-            router.navigate(globalToCartFragment())
+            router.navigate(globalToNavCart())
         }
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()

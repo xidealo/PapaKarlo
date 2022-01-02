@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_cafe"
+    app:startDestination="@id/cafeListFragment">
+
+    <fragment
+        android:id="@+id/cafeListFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.cafe.CafeListFragment"
+        android:label="@string/title_cafe_list"
+        tools:layout="@layout/fragment_cafe_list">
+        <action
+            android:id="@+id/to_cafeOptionsBottomSheet"
+            app:destination="@id/cafeOptionsBottomSheet" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/cafeOptionsBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.cafe.CafeOptionsBottomSheet"
+        android:label="CafeOptionsBottomSheet"
+        tools:layout="@layout/bottom_sheet_cafe_options">
+        <argument
+            android:name="cafeUuid"
+            app:argType="string" />
+    </dialog>
+
+</navigation>

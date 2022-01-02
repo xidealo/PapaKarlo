@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +37,9 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     private var mutableViewDataBinding: B? = null
     val viewDataBinding: B
         get() = checkNotNull(mutableViewDataBinding)
+
+    var isBackPressedDisabled = false
+    var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -81,6 +86,26 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             }
             textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
         }.startedLaunch()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (isBackPressedDisabled) {
+            onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {}
+        }
+    }
+
+    override fun onStop() {
+        if (isBackPressedDisabled) {
+            onBackPressedCallback?.remove()
+        }
+
+        super.onStop()
+    }
+
+    protected fun disableBackPressedCallback() {
+        isBackPressedDisabled = true
     }
 
     protected fun hideKeyboard() {

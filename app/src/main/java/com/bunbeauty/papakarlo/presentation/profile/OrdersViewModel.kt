@@ -6,7 +6,7 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.presentation.state.toStateSuccess
-import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragmentDirections.toOrderBottomSheet
+import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragmentDirections.toOrderDetailsFragment
 import com.bunbeauty.presentation.item.OrderItem
 import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
@@ -36,7 +36,7 @@ class OrdersViewModel @Inject constructor(
     }
 
     fun onOrderClicked(orderItem: OrderItem) {
-        router.navigate(toOrderBottomSheet(orderItem.uuid, orderItem.code))
+        router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 
 }
