@@ -14,7 +14,7 @@ import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
-    BaseListAdapter<CartProductItem, ElementCartProductBinding, CartProductAdapter.CartProductViewHolder>(
+    BaseListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(
         CartProductDiffCallback()
     ) {
 
@@ -28,12 +28,12 @@ class CartProductAdapter @Inject constructor() :
     }
 
     inner class CartProductViewHolder(binding: ElementCartProductBinding) :
-        BaseViewHolder<ElementCartProductBinding, CartProductItem>(binding) {
+        BaseViewHolder<CartProductItem>(binding) {
 
         override fun onBind(item: CartProductItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementCartProductBinding).run {
                 elementCartProductTvName.text = item.name
                 elementCartProductTvOldCost.text = item.oldCost
                 elementCartProductTvOldCost.strikeOutText()
@@ -58,7 +58,7 @@ class CartProductAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                binding.run {
+                (binding as ElementCartProductBinding).run {
                     elementCartProductTvOldCost.text = item.oldCost
                     elementCartProductTvNewCost.text = item.newCost
                     elementCartProductCpCount.count = item.count

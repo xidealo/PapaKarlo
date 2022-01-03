@@ -9,9 +9,10 @@ import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.ui.adapter.CategoryAdapter
+import com.bunbeauty.papakarlo.ui.adapter.MenuProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.decorator.MarginItemHorizontalDecoration
-import com.google.android.material.tabs.TabLayoutMediator
+import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
@@ -19,13 +20,17 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
 
     override val viewModel: MenuViewModel by viewModels { viewModelFactory }
 
-    private var mediator: TabLayoutMediator? = null
-
     @Inject
     lateinit var categoryAdapter: CategoryAdapter
 
     @Inject
+    lateinit var menuProductAdapter: MenuProductAdapter
+
+    @Inject
     lateinit var marginItemHorizontalDecoration: MarginItemHorizontalDecoration
+
+    @Inject
+    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -39,9 +44,15 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             fragmentMenuSvCategories.addItemDecoration(marginItemHorizontalDecoration)
             fragmentMenuSvCategories.adapter = categoryAdapter
+
+            fragmentMenuRvProducts.addItemDecoration(marginItemVerticalDecoration)
+            fragmentMenuRvProducts.adapter = menuProductAdapter
         }
         viewModel.categoryList.onEach { categoryList ->
             categoryAdapter.submitList(categoryList)
+        }.startedLaunch()
+        viewModel.menuList.onEach { menuList ->
+            menuProductAdapter.submitList(menuList)
         }.startedLaunch()
     }
 

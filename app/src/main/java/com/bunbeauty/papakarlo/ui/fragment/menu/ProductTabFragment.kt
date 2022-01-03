@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.visible
 import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
-import com.bunbeauty.papakarlo.ui.adapter.MenuProductsAdapter
+import com.bunbeauty.papakarlo.ui.adapter.MenuProductAdapter
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
@@ -24,7 +24,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
     override val viewModel: ProductTabViewModel by viewModels { viewModelFactory }
 
     @Inject
-    lateinit var menuProductsAdapter: MenuProductsAdapter
+    lateinit var menuProductsAdapter: MenuProductAdapter
 
     @Inject
     lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
@@ -54,7 +54,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
 
                     viewDataBinding.fragmentProductsRvResult.postDelayed(
                         {
-                            menuProductsAdapter.submitList(state.data)
+                            //menuProductsAdapter.submitList(state.data)
                         },
                         1
                     )
@@ -73,7 +73,7 @@ class ProductTabFragment : BaseFragment<FragmentProductsBinding>() {
         viewDataBinding.fragmentProductsRvResult.adapter = menuProductsAdapter
 
         menuProductsAdapter.setOnItemClickListener { menuProductItem ->
-            viewModel.onProductClicked(menuProductItem)
+            //viewModel.onProductClicked(menuProductItem)
         }
         menuProductsAdapter.setOnButtonClickListener { menuProductItem ->
             viewModel.addProductToCart(menuProductItem.uuid)

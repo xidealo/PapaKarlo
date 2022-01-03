@@ -12,7 +12,7 @@ import com.bunbeauty.presentation.item.CategoryItem
 import javax.inject.Inject
 
 class CategoryAdapter @Inject constructor() :
-    BaseListAdapter<CategoryItem, ElementCategoryBinding, CategoryAdapter.CategoryViewHolder>(
+    BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(
         DefaultDiffCallback()
     ) {
 
@@ -24,12 +24,12 @@ class CategoryAdapter @Inject constructor() :
     }
 
     inner class CategoryViewHolder(view: View) :
-        BaseViewHolder<ElementCategoryBinding, CategoryItem>(DataBindingUtil.bind(view)!!) {
+        BaseViewHolder<CategoryItem>(DataBindingUtil.bind(view)!!) {
 
         override fun onBind(item: CategoryItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementCategoryBinding).run {
                 elementCategoryChipMain.text = item.name
             }
         }

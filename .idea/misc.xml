@@ -82,6 +82,7 @@
         <entry key="app/src/main/res/layout/element_cafe.xml" value="0.36302083333333335" />
         <entry key="app/src/main/res/layout/element_cart_product.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_category.xml" value="0.5369791666666667" />
+        <entry key="app/src/main/res/layout/element_category_section.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/element_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.48918640576725025" />
         <entry key="app/src/main/res/layout/element_order.xml" value="0.33" />

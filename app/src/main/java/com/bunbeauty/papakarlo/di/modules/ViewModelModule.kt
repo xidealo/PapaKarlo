@@ -173,7 +173,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         MenuViewModel(
-            categoryInteractor = get()
+            categoryInteractor = get(),
+            menuProductInteractor = get(),
+            stringUtil = get()
         )
     }
     viewModel {

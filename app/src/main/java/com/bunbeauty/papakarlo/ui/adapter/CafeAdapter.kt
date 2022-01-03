@@ -12,7 +12,7 @@ import com.bunbeauty.presentation.item.CafeItem
 import javax.inject.Inject
 
 class CafeAdapter @Inject constructor() :
-    BaseListAdapter<CafeItem, ElementCafeBinding, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
+    BaseListAdapter<CafeItem, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,12 +22,12 @@ class CafeAdapter @Inject constructor() :
     }
 
     inner class CafeViewHolder(view: View) :
-        BaseViewHolder<ElementCafeBinding, CafeItem>(DataBindingUtil.bind(view)!!) {
+        BaseViewHolder<CafeItem>(DataBindingUtil.bind(view)!!) {
 
         override fun onBind(item: CafeItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementCafeBinding).run {
                 elementCafeTvAddress.text = item.address
                 elementCafeTvWorkTime.text = item.workingHours
                 elementCafeTvTimeStatus.text = item.isOpenMessage

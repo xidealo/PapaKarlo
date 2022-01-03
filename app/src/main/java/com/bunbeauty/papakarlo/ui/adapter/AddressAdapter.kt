@@ -12,7 +12,7 @@ import com.bunbeauty.presentation.item.AddressItem
 import javax.inject.Inject
 
 class AddressAdapter @Inject constructor() :
-    BaseListAdapter<AddressItem, ElementAddressBinding, AddressAdapter.AddressViewHolder>(
+    BaseListAdapter<AddressItem, AddressAdapter.AddressViewHolder>(
         DefaultDiffCallback()
     ) {
 
@@ -24,12 +24,12 @@ class AddressAdapter @Inject constructor() :
     }
 
     inner class AddressViewHolder(view: View) :
-        BaseViewHolder<ElementAddressBinding, AddressItem>(DataBindingUtil.bind(view)!!) {
+        BaseViewHolder<AddressItem>(DataBindingUtil.bind(view)!!) {
 
         override fun onBind(item: AddressItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementAddressBinding).run {
                 elementAddressTvAddress.text = item.address
                 if (hasItemClickListener) {
                     elementAddressMcvMain.setOnClickListener {

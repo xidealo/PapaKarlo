@@ -14,7 +14,7 @@ import com.bunbeauty.presentation.item.OrderProductItem
 import javax.inject.Inject
 
 class OrderProductAdapter @Inject constructor() :
-    BaseListAdapter<OrderProductItem, ElementOrderProductBinding, OrderProductAdapter.OrderProductViewHolder>(
+    BaseListAdapter<OrderProductItem, OrderProductAdapter.OrderProductViewHolder>(
         DefaultDiffCallback()
     ) {
 
@@ -26,12 +26,12 @@ class OrderProductAdapter @Inject constructor() :
     }
 
     inner class OrderProductViewHolder(binding: ElementOrderProductBinding) :
-        BaseViewHolder<ElementOrderProductBinding, OrderProductItem>(binding) {
+        BaseViewHolder<OrderProductItem>(binding) {
 
         override fun onBind(item: OrderProductItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementOrderProductBinding).run {
                 elementOrderProductTvName.text = item.name
                 elementOrderProductTvCount.text = item.count
                 elementOrderProductTvOldCost.text = item.oldCost

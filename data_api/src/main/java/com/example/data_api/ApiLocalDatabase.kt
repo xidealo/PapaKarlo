@@ -10,6 +10,7 @@ import com.example.domain_api.model.entity.cafe.CafeEntity
 import com.example.domain_api.model.entity.cafe.SelectedCafeUuidEntity
 import com.example.domain_api.model.entity.product.CartProductEntity
 import com.example.domain_api.model.entity.product.MenuProductEntity
+import com.example.domain_api.model.entity.product_with_category.MenuProductCategoryReference
 import com.example.domain_api.model.entity.user.SelectedUserAddressUuidEntity
 import com.example.domain_api.model.entity.user.UserAddressEntity
 import com.example.domain_api.model.entity.user.UserEntity
@@ -30,7 +31,8 @@ import com.example.domain_api.model.entity.user.order.OrderProductEntity
         OrderProductEntity::class,
         SelectedUserAddressUuidEntity::class,
         SelectedCafeUuidEntity::class,
-    ], version = 13
+        MenuProductCategoryReference::class,
+    ], version = 14
 )
 abstract class ApiLocalDatabase : RoomDatabase() {
     abstract fun getMenuProductDao(): MenuProductDao

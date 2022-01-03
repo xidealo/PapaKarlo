@@ -10,7 +10,7 @@ import com.bunbeauty.presentation.item.OrderItem
 import javax.inject.Inject
 
 class OrderAdapter @Inject constructor() :
-    BaseListAdapter<OrderItem, ElementOrderBinding, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
+    BaseListAdapter<OrderItem, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -20,12 +20,12 @@ class OrderAdapter @Inject constructor() :
     }
 
     inner class OrderViewHolder(binding: ElementOrderBinding) :
-        BaseViewHolder<ElementOrderBinding, OrderItem>(binding) {
+        BaseViewHolder<OrderItem>(binding) {
 
         override fun onBind(item: OrderItem) {
             super.onBind(item)
 
-            binding.run {
+            (binding as ElementOrderBinding).run {
                 elementOrderTvCode.text = item.code
                 elementOrderTvTime.text = item.dateTime
                 elementOrderChipStatus.text = item.orderStatus
@@ -41,7 +41,7 @@ class OrderAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                binding.run {
+                (binding as ElementOrderBinding).run {
                     elementOrderChipStatus.text = item.orderStatus
                     elementOrderChipStatus.setChipBackgroundColorResource(item.orderColorResource)
 

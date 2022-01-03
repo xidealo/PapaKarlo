@@ -37,7 +37,7 @@ class ProductTabViewModel @Inject constructor(
                     }.toStateSuccess()
                 } else {
                     val filteredMenuProductList = menuProductList.filter { menuProduct ->
-                        menuProduct.productCode == productCode.name
+                        true//menuProduct.productCode == productCode.name
                     }
                     if (filteredMenuProductList.isEmpty()) {
                         mutableProductListState.value = State.Empty()
