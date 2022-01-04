@@ -58,11 +58,9 @@ fun firebaseRepositoryModule() = module {
     } bind CartProductRepo::class
     single {
         OrderRepository(
-            firebaseRepo = get(),
             orderDao = get(),
             cafeDao = get(),
             orderMapper = get(),
-            authRepo = get(),
         )
     } bind OrderRepo::class
     single {

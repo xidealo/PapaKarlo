@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.di.components
 
 import android.content.Context
 import com.bunbeauty.data.di.DataModule
+import com.bunbeauty.data.di.MapperModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.modules.*
 import com.bunbeauty.papakarlo.worker.cafe.RefreshCafeWorker
@@ -31,6 +32,7 @@ import javax.inject.Singleton
         DataModule::class,
         WorkerModule::class,
         InteractorModule::class,
+        MapperModule::class,
     ]
 )
 interface AppComponent {

@@ -81,7 +81,7 @@ fun interactorModule() = module {
             userWorkerUtil = get(),
             dataStoreRepo = get(),
             authRepo = get(),
-            orderInteractor = get(),
+            orderMapper = get(),
         )
     } bind IUserInteractor::class
     single {
@@ -105,7 +105,14 @@ fun interactorModule() = module {
         )
     } bind ICafeInteractor::class
     single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
-    single<IOrderInteractor> { OrderInteractor() }
+    single<IOrderInteractor> {
+        OrderInteractor(
+            orderRepo = get(),
+            dataStoreRepo = get(),
+            userInteractor = get(),
+            orderMapper = get(),
+        )
+    }
     single<IAddressInteractor> {
         AddressInteractor(
             dataStoreRepo = get(),

@@ -74,7 +74,6 @@ fun apiRepositoryModule() = module {
             cartProductRepo = get(),
             apiRepo = get(),
             orderMapper = get(),
-            authRepo = get(),
         )
     } bind OrderRepo::class
     single {

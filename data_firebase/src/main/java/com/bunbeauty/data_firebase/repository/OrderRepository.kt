@@ -4,28 +4,22 @@ import com.bunbeauty.data_firebase.dao.CafeDao
 import com.bunbeauty.data_firebase.dao.OrderDao
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
-import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.OrderRepo
+import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
-import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
-    private val firebaseRepo: FirebaseRepo,
     private val orderDao: OrderDao,
     private val cafeDao: CafeDao,
-    private val orderMapper: com.example.domain_firebase.mapper.IOrderMapper,
-    private val authRepo: AuthRepo,
+    private val orderMapper: IOrderMapper,
 ) : OrderRepo {
-
-    override fun observeOrderList(): Flow<List<Order>> {
-        return orderDao.observeOrderListByUserUuid(authRepo.firebaseUserUuid ?: "").mapOrders()
-    }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderDao.observeOrderByUuid(orderUuid).map { orderWithCartProducts ->
@@ -36,8 +30,8 @@ class OrderRepository @Inject constructor(
         }.flowOn(IO)
     }
 
-    override fun observeLastOrder(): Flow<Order?> {
-        return orderDao.observeLastOrder().mapOrder()
+    override fun observeOrderListByUserUuid(userUuid: String): Flow<List<Order>> {
+        return flow { }
     }
 
 //    override suspend fun saveOrder(order: Order) {

@@ -222,9 +222,8 @@ fun viewModelModule() = module {
     }
     viewModel {
         OrdersViewModel(
-
-            orderRepo = get(),
             orderUIMapper = get(),
+            orderInteractor = get(),
         )
     }
     viewModel {
@@ -267,8 +266,7 @@ fun viewModelModule() = module {
     viewModel {
         ProfileViewModel(
             userInteractor = get(),
-            stringUtil = get(),
-            colorUtil = get(),
+            orderUIMapper = get(),
         )
     }
     viewModel {

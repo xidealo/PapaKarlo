@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.profile.LightProfile
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.presentation.state.State
@@ -10,15 +9,13 @@ import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragmentDirections.*
 import com.bunbeauty.presentation.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.presentation.item.OrderItem
-import com.bunbeauty.presentation.util.color.IColorUtil
-import com.bunbeauty.presentation.util.string.IStringUtil
+import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val userInteractor: IUserInteractor,
-    private val stringUtil: IStringUtil,
-    private val colorUtil: IColorUtil,
+    private val orderUIMapper: IOrderUIMapper,
 ) : CartViewModel() {
 
     private var userUuid: String? = null
@@ -77,19 +74,9 @@ class ProfileViewModel @Inject constructor(
             userUuid = lightProfile?.userUuid
             mutableProfileState.value = lightProfile.toSuccessOrEmpty()
             mutableLastOrder.value = lightProfile?.lastOrder?.let { lightOrder ->
-                lightOrder.toOrderItem()
+                orderUIMapper.toItem(lightOrder)
             }
             mutableHasAddresses.value = lightProfile?.hasAddresses ?: false
         }.launchIn(viewModelScope)
-    }
-
-    private fun LightOrder.toOrderItem(): OrderItem {
-        return OrderItem(
-            uuid = uuid,
-            orderStatus = stringUtil.getOrderStatusString(status),
-            orderColorResource = colorUtil.getOrderStatusColor(status),
-            code = code,
-            dateTime = dateTime
-        )
     }
 }

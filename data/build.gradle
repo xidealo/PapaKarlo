@@ -52,4 +52,7 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseVersion")
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-config'
+    
+    //Joda time
+    implementation "joda-time:joda-time:$rootProject.jodaVersion"
 }

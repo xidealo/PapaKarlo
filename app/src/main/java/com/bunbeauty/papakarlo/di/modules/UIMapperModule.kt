@@ -17,9 +17,8 @@ interface UIMapperModule {
 fun uiMapperModule() = module {
     single {
         OrderUIMapper(
-            dateTimeUtil = get(),
             stringUtil = get(),
-            orderUtil = get(),
+            colorUtil = get(),
         )
     } bind IOrderUIMapper::class
 }

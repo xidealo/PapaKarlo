@@ -5,7 +5,6 @@ import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.data_api.dao.OrderDao
@@ -19,21 +18,14 @@ class OrderRepository @Inject constructor(
     @Api private val cartProductRepo: CartProductRepo,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
-    private val authRepo: AuthRepo,
 ) : BaseRepository(), OrderRepo {
 
-    override fun observeOrderList(): Flow<List<Order>> {
-        val userUuid = authRepo.firebaseUserUuid
-        return orderDao.observeOrderListByUserUuid(userUuid ?: "").mapListFlow(orderMapper::toModel)
+    override fun observeOrderListByUserUuid(userUuid: String): Flow<List<Order>> {
+        return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toModel)
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toModel)
-    }
-
-    override fun observeLastOrder(): Flow<Order?> {
-        val userUuid = authRepo.firebaseUserUuid
-        return orderDao.observeLastOrderByUserUuid(userUuid ?: "").mapFlow(orderMapper::toModel)
     }
 
     override suspend fun createOrder(orderDetails: OrderDetails): Order? {

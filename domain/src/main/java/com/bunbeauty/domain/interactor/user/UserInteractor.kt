@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.user
 
-import com.bunbeauty.domain.interactor.order.OrderInteractor
+import com.bunbeauty.domain.mapper.IOrderMapper
 import com.bunbeauty.domain.model.profile.LightProfile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.Api
@@ -18,7 +18,7 @@ class UserInteractor @Inject constructor(
     private val userWorkerUtil: IUserWorkerUtil,
     private val dataStoreRepo: DataStoreRepo,
     private val authRepo: AuthRepo,
-    private val orderInteractor: OrderInteractor
+    private val orderMapper: IOrderMapper
 ) : IUserInteractor {
 
     override suspend fun login() {
@@ -61,7 +61,7 @@ class UserInteractor @Inject constructor(
                     val lastOrderItem = profile.orderList.maxByOrNull { order ->
                         order.time
                     }?.let { order ->
-                        orderInteractor.getLightOrder(order)
+                        orderMapper.toLightOrder(order)
                     }
                     LightProfile(
                         userUuid = profile.user.uuid,
