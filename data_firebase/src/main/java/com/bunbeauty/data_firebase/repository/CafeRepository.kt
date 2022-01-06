@@ -44,8 +44,15 @@ class CafeRepository @Inject constructor(
 
     }
 
-    override suspend fun observeSelectedCafe(): Flow<Cafe?> {
-        return flow {}
+    override fun observeFirstCafeCityUuid(cityUuid: String): Flow<Cafe?> {
+        return flow { }
+    }
+
+    override fun observeSelectedCafeByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<Cafe?> {
+        return flow { }
     }
 
     override fun observeCafeList(): Flow<List<Cafe>> {

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class CategoryWorkerUtil @Inject constructor() : BaseWorkerUtil(), ICategoryWorkerUtil {
 
-    override fun refreshCategoryList() {
-        RefreshCategoryWorker::class.start()
+    override suspend fun refreshCategoryList() {
+        RefreshCategoryWorker::class.startWithReplaceBlocking()
     }
 }

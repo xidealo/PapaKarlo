@@ -4,19 +4,20 @@ import com.bunbeauty.common.Constants.SECONDS_IN_HOUR
 import com.bunbeauty.common.Constants.SECONDS_IN_MINUTE
 import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.domain.model.cafe.CafeAddress
 import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeInteractor @Inject constructor(
     @Api private val cafeRepo: CafeRepo,
-    private val authRepo: AuthRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : ICafeInteractor {
 
@@ -35,16 +36,42 @@ class CafeInteractor @Inject constructor(
         }
     }
 
+    override fun observeSelectedCafeAddress(): Flow<CafeAddress> {
+        return observeCafe().map { cafe ->
+            CafeAddress(
+                cafeUuid = cafe?.uuid,
+                address = cafe?.address ?: ""
+            )
+        }
+    }
+
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeRepo.getCafeByUuid(cafeUuid)
     }
 
     override suspend fun selectCafe(cafeUuid: String) {
-        val userUuid = authRepo.firebaseUserUuid
+        val userUuid = dataStoreRepo.getUserUuid()
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
 
         if (userUuid != null && selectedCityUuid != null) {
             cafeRepo.saveSelectedCafeUuid(userUuid, selectedCityUuid, cafeUuid)
+        }
+    }
+
+    fun observeCafe(): Flow<Cafe?> {
+        return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
+            cafeRepo.observeSelectedCafeByUserAndCityUuid(
+                userCityUuid.userUuid,
+                userCityUuid.cityUuid
+            ).flatMapLatest { cafe ->
+                if (cafe == null) {
+                    cafeRepo.observeFirstCafeCityUuid(userCityUuid.cityUuid)
+                } else {
+                    flow {
+                        emit(cafe)
+                    }
+                }
+            }
         }
     }
 

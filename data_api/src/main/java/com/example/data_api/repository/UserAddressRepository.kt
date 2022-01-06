@@ -5,8 +5,6 @@ import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.AuthRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.example.data_api.dao.UserAddressDao
 import com.example.data_api.handleResultAndReturn
@@ -14,14 +12,10 @@ import com.example.domain_api.mapper.IUserAddressMapper
 import com.example.domain_api.model.entity.user.SelectedUserAddressUuidEntity
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserAddressRepository @Inject constructor(
     private val apiRepo: ApiRepo,
-    private val dataStoreRepo: DataStoreRepo,
-    private val authRepo: AuthRepo,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper
 ) : UserAddressRepo {
@@ -40,18 +34,17 @@ class UserAddressRepository @Inject constructor(
             }
     }
 
-    override suspend fun saveSelectedUserAddress(userAddressUuid: String) {
-        val userUuid = authRepo.firebaseUserUuid
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
-
-        if (userUuid != null && selectedCityUuid != null) {
-            val selectedUserAddressUuid = SelectedUserAddressUuidEntity(
-                userUuid = userUuid,
-                cityUuid = selectedCityUuid,
-                addressUuid = userAddressUuid
-            )
-            userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
-        }
+    override suspend fun saveSelectedUserAddress(
+        addressUuid: String,
+        userUuid: String,
+        cityUuid: String
+    ) {
+        val selectedUserAddressUuid = SelectedUserAddressUuidEntity(
+            userUuid = userUuid,
+            cityUuid = cityUuid,
+            addressUuid = addressUuid
+        )
+        userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
     }
 
     override suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress? {
@@ -60,28 +53,20 @@ class UserAddressRepository @Inject constructor(
         }
     }
 
-    override suspend fun getUserAddressList(): List<UserAddress> {
-        val userUuid = authRepo.firebaseUserUuid ?: ""
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
-        return userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, selectedCityUuid)
-            .map(userAddressMapper::toModel)
+    override fun observeSelectedUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?> {
+        return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
+            .mapFlow(userAddressMapper::toModel)
     }
 
-    override suspend fun observeSelectedUserAddress(): Flow<UserAddress?> {
-        val userUuid = authRepo.firebaseUserUuid ?: ""
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
-
-        return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(
-            userUuid,
-            selectedCityUuid
-        ).flatMapLatest { selectedUserAddress ->
-            userAddressDao.observeFirstUserAddressByUserAndCityUuid(userUuid, selectedCityUuid)
-                .map { firstUserAddress ->
-                    (selectedUserAddress ?: firstUserAddress)?.let { userAddress ->
-                        userAddressMapper.toModel(userAddress)
-                    }
-                }
-        }
+    override fun observeFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?> {
+        return userAddressDao.observeFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
+            .mapFlow(userAddressMapper::toModel)
     }
 
     override fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?> {

@@ -1,14 +1,19 @@
 package com.bunbeauty.domain.interactor.cart
 
+import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CartProductInteractor @Inject constructor(@Api private val cartProductRepo: CartProductRepo) :
-    ICartProductInteractor {
+class CartProductInteractor @Inject constructor(
+    @Api private val cartProductRepo: CartProductRepo,
+    private val dataStoreRepo: DataStoreRepo
+) : ICartProductInteractor {
 
     override fun observeTotalCartCount(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
@@ -19,6 +24,27 @@ class CartProductInteractor @Inject constructor(@Api private val cartProductRepo
     override fun observeNewTotalCartCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getNewTotalCost(cartProductList)
+        }
+    }
+
+    override fun observeDeliveryCost(): Flow<Int> {
+        return dataStoreRepo.delivery.flatMapLatest { delivery ->
+            observeNewTotalCartCost().map { newTotalCost ->
+                logD("testTag", delivery.toString())
+                if (newTotalCost < delivery.forFree) {
+                    delivery.cost
+                } else {
+                    0
+                }
+            }
+        }
+    }
+
+    override fun observeAmountToPay(): Flow<Int> {
+        return observeNewTotalCartCost().flatMapLatest { newTotalCost ->
+            observeDeliveryCost().map { deliveryCost ->
+                newTotalCost + deliveryCost
+            }
         }
     }
 
@@ -42,6 +68,10 @@ class CartProductInteractor @Inject constructor(@Api private val cartProductRepo
         } else {
             cartProductRepo.deleteCartProduct(cartProduct)
         }
+    }
+
+    override suspend fun removeAllProductsFromCart() {
+        cartProductRepo.deleteAllCartProducts()
     }
 
     suspend fun getTotalCartCount(): Int {

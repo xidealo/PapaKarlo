@@ -10,6 +10,8 @@ import com.bunbeauty.domain.interactor.categories.CategoryInteractor
 import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.city.CityInteractor
 import com.bunbeauty.domain.interactor.city.ICityInteractor
+import com.bunbeauty.domain.interactor.deferred_time.DeferredTimeInteractor
+import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
 import com.bunbeauty.domain.interactor.main.MainInteractor
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
@@ -62,6 +64,9 @@ interface InteractorModule {
 
     @Binds
     fun bindsMenuProductInteractor(menuProductInteractor: MenuProductInteractor): IMenuProductInteractor
+
+    @Binds
+    fun bindsDeferredTimeInteractor(deferredTimeInteractor: DeferredTimeInteractor): IDeferredTimeInteractor
 }
 
 fun interactorModule() = module {
@@ -95,22 +100,22 @@ fun interactorModule() = module {
     single {
         CartProductInteractor(
             cartProductRepo = get(),
-        )
-    } bind ICartProductInteractor::class
-    single {
-        CafeInteractor(
-            cafeRepo = get(),
-            authRepo = get(),
             dataStoreRepo = get(),
         )
-    } bind ICafeInteractor::class
+    } bind ICartProductInteractor::class
+    single<ICafeInteractor> {
+        CafeInteractor(
+            cafeRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
     single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
     single<IOrderInteractor> {
         OrderInteractor(
             orderRepo = get(),
+            cartProductRepo = get(),
             dataStoreRepo = get(),
-            userInteractor = get(),
-            orderMapper = get(),
+            orderMapper = get()
         )
     }
     single<IAddressInteractor> {
@@ -136,5 +141,8 @@ fun interactorModule() = module {
         MenuProductInteractor(
             menuProductRepo = get(),
         )
+    }
+    single<IDeferredTimeInteractor> {
+        DeferredTimeInteractor()
     }
 }

@@ -1,27 +1,20 @@
 package com.bunbeauty.papakarlo.presentation.create_order
 
-import com.bunbeauty.common.Constants.MIN_DEFERRED_HOURS_ADDITION
-import com.bunbeauty.common.Constants.MIN_DEFERRED_MINUTES_ADDITION
-import com.bunbeauty.domain.util.date_time.IDateTimeUtil
+import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import javax.inject.Inject
 
 class DeferredTimeViewModel @Inject constructor(
-    private val dateTimeUtils: IDateTimeUtil
+    private val deferredTimeInteractor: IDeferredTimeInteractor,
 ) : BaseViewModel() {
 
     val minTimeHour: Int
-        get() = dateTimeUtils.getTimeHourIn(
-            MIN_DEFERRED_HOURS_ADDITION,
-            MIN_DEFERRED_MINUTES_ADDITION
-        )
+        get() = deferredTimeInteractor.getMinTimeHours()
+
     val minTimeMinute: Int
-        get() = dateTimeUtils.getTimeMinuteIn(
-            MIN_DEFERRED_HOURS_ADDITION,
-            MIN_DEFERRED_MINUTES_ADDITION
-        )
+        get() = deferredTimeInteractor.getMinTimeMinutes()
 
     fun getSelectedMillis(hour: Int, minute: Int): Long {
-        return dateTimeUtils.getMillis(hour, minute)
+        return deferredTimeInteractor.getDeferredTimeMillis(hour, minute)
     }
 }

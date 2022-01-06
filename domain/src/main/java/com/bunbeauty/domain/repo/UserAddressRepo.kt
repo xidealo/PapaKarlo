@@ -7,12 +7,20 @@ import kotlinx.coroutines.flow.Flow
 interface UserAddressRepo {
 
     suspend fun saveUserAddress(token: String, createdUserAddress: CreatedUserAddress): UserAddress?
-    suspend fun saveSelectedUserAddress(userAddressUuid: String)
+    suspend fun saveSelectedUserAddress(addressUuid: String, userUuid: String, cityUuid: String)
 
     suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress?
-    suspend fun getUserAddressList(): List<UserAddress>
 
-    suspend fun observeSelectedUserAddress(): Flow<UserAddress?>
+    fun observeSelectedUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?>
+
+    fun observeFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?>
+
     fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?>
     fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,

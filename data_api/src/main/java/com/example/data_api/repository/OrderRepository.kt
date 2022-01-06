@@ -2,10 +2,8 @@ package com.example.data_api.repository
 
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderDetails
-import com.bunbeauty.domain.repo.Api
-import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.data_api.dao.OrderDao
 import com.example.domain_api.mapper.IOrderMapper
@@ -15,7 +13,6 @@ import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
     private val orderDao: OrderDao,
-    @Api private val cartProductRepo: CartProductRepo,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
 ) : BaseRepository(), OrderRepo {
@@ -28,15 +25,14 @@ class OrderRepository @Inject constructor(
         return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toModel)
     }
 
-    override suspend fun createOrder(orderDetails: OrderDetails): Order? {
-        val cartProductList = cartProductRepo.getCartProductList()
-        val orderPostServer = orderMapper.toPostServerModel(orderDetails, cartProductList)
-        return apiRepo.postOrder(orderPostServer).handleResultAndReturn { oderServer ->
-            val order = orderMapper.toEntityModel(oderServer)
-            orderDao.insertOrder(order)
-            cartProductRepo.deleteAllCartProducts()
+    override suspend fun createOrder(token: String, createdOrder: CreatedOrder): Order? {
+        val orderPostServer = orderMapper.toPostServerModel(createdOrder)
+        return apiRepo.postOrder(token, orderPostServer)
+            .handleResultAndReturn { oderServer ->
+                val order = orderMapper.toEntityModel(oderServer)
+                orderDao.insertOrder(order)
 
-            orderMapper.toModel(order)
-        }
+                orderMapper.toModel(order)
+            }
     }
 }

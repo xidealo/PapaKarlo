@@ -2,8 +2,8 @@ package com.bunbeauty.data_firebase.repository
 
 import com.bunbeauty.data_firebase.dao.CafeDao
 import com.bunbeauty.data_firebase.dao.OrderDao
+import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.repo.OrderRepo
 import com.example.domain_firebase.mapper.IOrderMapper
 import com.example.domain_firebase.model.entity.order.OrderWithProducts
@@ -34,16 +34,8 @@ class OrderRepository @Inject constructor(
         return flow { }
     }
 
-//    override suspend fun saveOrder(order: Order) {
-//        val orderFirebase = orderMapper.toFirebaseModel(order)
-//        val orderUuid = firebaseRepo.postOrder(orderFirebase, "")
-//        order.uuid = orderUuid
-//        val orderEntity = orderMapper.toEntityModel(order)
-//        orderDao.insert(orderEntity)
-//    }
-
-    override suspend fun createOrder(orderDetails: OrderDetails): Order? {
-        return Any() as Order
+    override suspend fun createOrder(token: String, createdOrder: CreatedOrder): Order? {
+        return null
     }
 
     // EXTENSIONS

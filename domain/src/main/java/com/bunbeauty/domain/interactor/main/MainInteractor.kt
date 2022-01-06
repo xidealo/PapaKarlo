@@ -15,9 +15,9 @@ class MainInteractor @Inject constructor(
 
     override suspend fun refreshData() {
         cityWorkerUtil.refreshCityList()
+        deliveryWorkerUtil.refreshDelivery()
         categoryWorkerUtil.refreshCategoryList()
         menuProductWorkerUtil.refreshMenuProductList()
-        deliveryWorkerUtil.refreshDelivery()
 
         val token = dataStoreRepo.getToken()
         if (token != null) {

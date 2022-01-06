@@ -71,7 +71,6 @@ fun apiRepositoryModule() = module {
     single {
         OrderRepository(
             orderDao = get(),
-            cartProductRepo = get(),
             apiRepo = get(),
             orderMapper = get(),
         )
@@ -86,8 +85,6 @@ fun apiRepositoryModule() = module {
     single {
         UserAddressRepository(
             apiRepo = get(),
-            dataStoreRepo = get(),
-            authRepo = get(),
             userAddressDao = get(),
             userAddressMapper = get(),
         )

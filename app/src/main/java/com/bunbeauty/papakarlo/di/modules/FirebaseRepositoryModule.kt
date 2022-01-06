@@ -73,8 +73,6 @@ fun firebaseRepositoryModule() = module {
     single {
         UserAddressRepository(
             userAddressDao = get(),
-            firebaseRepo = get(),
-            dataStoreRepo = get(),
             userAddressMapper = get(),
         )
     } bind UserAddressRepo::class

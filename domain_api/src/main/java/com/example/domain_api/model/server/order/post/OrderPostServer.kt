@@ -6,30 +6,24 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class OrderPostServer(
 
-    @SerialName("uuid")
-    val uuid: String,
-
     @SerialName("isDelivery")
     val isDelivery: Boolean,
-
-    @SerialName("address")
-    val address: String,
 
     @SerialName("comment")
     val comment: String?,
 
+    @SerialName("addressDescription")
+    val addressDescription: String,
+
     @SerialName("deferredTime")
     val deferredTime: Long?,
-
-    @SerialName("orderProducts")
-    val orderProducts: List<OrderProductPostServer>,
-
-    @SerialName("profileUuid")
-    val profileUuid: String,
 
     @SerialName("addressUuid")
     val addressUuid: String?,
 
     @SerialName("cafeUuid")
     val cafeUuid: String?,
+
+    @SerialName("orderProducts")
+    val orderProducts: List<OrderProductPostServer>,
 )

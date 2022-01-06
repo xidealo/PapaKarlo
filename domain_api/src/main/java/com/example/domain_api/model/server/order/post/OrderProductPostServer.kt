@@ -6,9 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class OrderProductPostServer(
 
-    @SerialName("uuid")
-    val uuid: String,
-
     @SerialName("count")
     val count: Int,
 

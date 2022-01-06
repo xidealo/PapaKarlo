@@ -20,6 +20,7 @@ object Logger {
     const val MENU_PRODUCT_TAG = "menuProductTag"
     const val CATEGORY_TAG = "categoryTag"
     const val AUTH_TAG = "authTag"
+    const val DELIVERY_TAG = "deliveryTag"
 
     fun logD(tag: String, message: Any) {
         if (isWorkerTag(tag)) {

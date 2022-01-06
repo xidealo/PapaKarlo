@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DeliveryServer(
-    @SerialName("uuid")
-    val uuid:String,
     @SerialName("cost")
     val cost: Int,
     @SerialName("forFree")

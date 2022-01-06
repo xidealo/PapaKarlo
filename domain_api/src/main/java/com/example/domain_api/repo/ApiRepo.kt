@@ -28,7 +28,7 @@ interface ApiRepo {
         userAddress: UserAddressPostServer,
     ): ApiResult<AddressServer>
 
-    suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer>
+    suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
 
     suspend fun patchProfileEmail(
         token: String,

@@ -3,10 +3,8 @@ package com.bunbeauty.data_firebase.repository
 import com.bunbeauty.data_firebase.dao.UserAddressDao
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
 import com.example.domain_firebase.mapper.IUserAddressMapper
-import com.example.domain_firebase.repo.FirebaseRepo
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.*
@@ -14,8 +12,6 @@ import javax.inject.Inject
 
 class UserAddressRepository @Inject constructor(
     private val userAddressDao: UserAddressDao,
-    private val firebaseRepo: FirebaseRepo,
-    private val dataStoreRepo: DataStoreRepo,
     private val userAddressMapper: IUserAddressMapper,
 ) : UserAddressRepo {
 
@@ -41,20 +37,30 @@ class UserAddressRepository @Inject constructor(
 //        return createdUserAddress
     }
 
-    override suspend fun saveSelectedUserAddress(userAddressUuid: String) {
+    override suspend fun saveSelectedUserAddress(
+        addressUuid: String,
+        userUuid: String,
+        cityUuid: String
+    ) {
 
+    }
+
+    override fun observeFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?> {
+        return flow { }
     }
 
     override suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress? {
         return null
     }
 
-    override suspend fun observeSelectedUserAddress(): Flow<UserAddress?> {
-        return flow {  }
-    }
-
-    override suspend fun getUserAddressList(): List<UserAddress> {
-        return emptyList()
+    override fun observeSelectedUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<UserAddress?> {
+        return flow { }
     }
 
     override fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?> {

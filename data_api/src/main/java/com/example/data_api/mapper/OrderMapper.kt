@@ -1,9 +1,8 @@
 package com.example.data_api.mapper
 
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderDetails
-import com.bunbeauty.domain.model.product.CartProduct
 import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.mapper.IOrderProductMapper
 import com.example.domain_api.model.entity.user.order.OrderEntity
@@ -65,20 +64,15 @@ class OrderMapper @Inject constructor(
         )
     }
 
-    override fun toPostServerModel(
-        orderDetails: OrderDetails,
-        cartProductList: List<CartProduct>
-    ): OrderPostServer {
+    override fun toPostServerModel(createdOrder: CreatedOrder): OrderPostServer {
         return OrderPostServer(
-            uuid = "",
-            isDelivery = orderDetails.isDelivery,
-            address = orderDetails.address,
-            comment = orderDetails.comment,
-            deferredTime = orderDetails.deferredTime,
-            orderProducts = cartProductList.map(orderProductMapper::toPostServerModel),
-            profileUuid = orderDetails.profileUuid,
-            addressUuid = orderDetails.userAddressUuid,
-            cafeUuid = orderDetails.cafeUuid,
+            isDelivery = createdOrder.isDelivery,
+            addressDescription = createdOrder.addressDescription,
+            comment = createdOrder.comment,
+            deferredTime = createdOrder.deferredTime,
+            addressUuid = createdOrder.userAddressUuid,
+            cafeUuid = createdOrder.cafeUuid,
+            orderProducts = createdOrder.orderProducts.map(orderProductMapper::toPostServerModel),
         )
     }
 }

@@ -15,7 +15,6 @@ import com.example.domain_api.model.entity.cafe.SelectedCafeUuidEntity
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CafeRepository @Inject constructor(
@@ -58,18 +57,17 @@ class CafeRepository @Inject constructor(
         }
     }
 
-    override suspend fun observeSelectedCafe(): Flow<Cafe?> {
-        val userUuid = authRepo.firebaseUserUuid ?: ""
-        val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
+    override fun observeSelectedCafeByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<Cafe?> {
+        return cafeDao.observeSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
+            .mapFlow(cafeMapper::toModel)
+    }
 
-        return cafeDao.observeSelectedCafeByUserAndCityUuid(userUuid, selectedCityUuid)
-            .flatMapLatest { selectedCafe ->
-                cafeDao.observeFirstCafeByCityUuid(selectedCityUuid).map { firstCafe ->
-                    (selectedCafe ?: firstCafe)?.let { cafe ->
-                        cafeMapper.toModel(cafe)
-                    }
-                }
-            }
+    override fun observeFirstCafeCityUuid(cityUuid: String): Flow<Cafe?> {
+        return cafeDao.observeFirstCafeByCityUuid(cityUuid)
+            .mapFlow(cafeMapper::toModel)
     }
 
     override fun observeCafeList(): Flow<List<Cafe>> {

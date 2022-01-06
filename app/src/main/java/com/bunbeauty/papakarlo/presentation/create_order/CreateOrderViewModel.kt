@@ -3,18 +3,15 @@ package com.bunbeauty.papakarlo.presentation.create_order
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
-import com.bunbeauty.common.Logger.ORDER_TAG
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.enums.OneLineActionType
+import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
+import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.OneLineActionModel
-import com.bunbeauty.domain.model.order.OrderDetails
-import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.*
-import com.bunbeauty.domain.util.date_time.IDateTimeUtil
-import com.bunbeauty.domain.util.order.IOrderUtil
-import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
 import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragmentDirections.*
@@ -25,18 +22,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CreateOrderViewModel @Inject constructor(
-    @Api private val cartProductRepo: CartProductRepo,
-    @Api private val userAddressRepo: UserAddressRepo,
-    @Api private val cafeRepo: CafeRepo,
-    @Api private val orderRepo: OrderRepo,
-    private val dataStoreRepo: DataStoreRepo,
-    private val stringUtil: IStringUtil,
-    private val productHelper: IProductHelper,
-    private val resourcesProvider: IResourcesProvider,
-    private val orderUtil: IOrderUtil,
+    private val addressInteractor: IAddressInteractor,
+    private val cartProductInteractor: ICartProductInteractor,
+    private val orderInteractor: IOrderInteractor,
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
-    private val dateTimeUtils: IDateTimeUtil,
+    private val deferredTimeInteractor: IDeferredTimeInteractor,
+    private val stringUtil: IStringUtil,
+    private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
 
     private val mutableIsDelivery: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -72,7 +65,6 @@ class CreateOrderViewModel @Inject constructor(
     private val mutableDeferredTime: MutableStateFlow<String> = MutableStateFlow(asap)
     val deferredTime: StateFlow<String> = mutableDeferredTime.asStateFlow()
 
-    private var cartProductList: List<CartProduct> = listOf()
     private val mutableTotalCost: MutableStateFlow<String> = MutableStateFlow("")
     val totalCost: StateFlow<String> = mutableTotalCost.asStateFlow()
 
@@ -86,8 +78,8 @@ class CreateOrderViewModel @Inject constructor(
     val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
 
     init {
-        subscribeOnAddress()
-        subscribeOnCartProduct()
+        observeAddress()
+        observeCartProducts()
     }
 
     fun onIsDeliveryChanged(isDelivery: Boolean) {
@@ -108,9 +100,10 @@ class CreateOrderViewModel @Inject constructor(
             selectedTimeMinute = -1
             mutableDeferredTime.value = asap
         } else {
-            selectedTimeHour = dateTimeUtils.getHour(deferredTimeMillis)
-            selectedTimeMinute = dateTimeUtils.getMinute(deferredTimeMillis)
-            mutableDeferredTime.value = dateTimeUtils.getTimeHHMM(deferredTimeMillis)
+            selectedTimeHour = deferredTimeInteractor.getDeferredTimeHours(deferredTimeMillis)
+            selectedTimeMinute = deferredTimeInteractor.getDeferredTimeMinutes(deferredTimeMillis)
+            mutableDeferredTime.value =
+                deferredTimeInteractor.getDeferredTimeHHMM(deferredTimeMillis)
         }
     }
 
@@ -124,7 +117,7 @@ class CreateOrderViewModel @Inject constructor(
 
     fun onUserAddressChanged(userAddressUuid: String) {
         viewModelScope.launch {
-            userAddressRepo.saveSelectedUserAddress(userAddressUuid)
+            addressInteractor.saveSelectedUserAddress(userAddressUuid)
         }
     }
 
@@ -149,26 +142,22 @@ class CreateOrderViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            if (userInteractor.isUserAuthorize()) {
+            if (!userInteractor.isUserAuthorize()) {
                 showError(resourcesProvider.getString(R.string.error_create_order_user))
                 goBack()
                 return@launch
             }
 
-            // TODO orderInteractor create order
-        }
-
-        viewModelScope.launch {
-            val orderDetails = OrderDetails(
+            val order = orderInteractor.createOrder(
                 isDelivery = isDelivery,
-                profileUuid = "",
                 userAddressUuid = selectedUserAddressUuid,
                 cafeUuid = selectedCafeUuid,
-                address = selectedAddress,
+                addressDescription = selectedAddress,
                 comment = comment.value,
                 deferredTime = deferredTimeValue,
             )
-            val order = orderRepo.createOrder(orderDetails)
+            cartProductInteractor.removeAllProductsFromCart()
+
             if (order == null) {
                 showError(
                     resourcesProvider.getString(R.string.error_create_order_something_went_wrong)
@@ -183,53 +172,32 @@ class CreateOrderViewModel @Inject constructor(
         }
     }
 
-    private fun subscribeOnAddress() {
+    private fun observeAddress() {
         mutableIsDelivery.flatMapLatest { isDelivery ->
             if (isDelivery) {
-                userAddressRepo.observeSelectedUserAddress().onEach { userAddress ->
-                    logD(ORDER_TAG, "selectedUserAddress = $userAddress")
-                    if (userAddress == null) {
-                        val userAddressList = userAddressRepo.getUserAddressList()
-                        selectedUserAddressUuid = userAddressList.firstOrNull()?.uuid
-                        mutableAddress.value =
-                            stringUtil.getUserAddressString(userAddressList.firstOrNull())
-                    } else {
-                        selectedUserAddressUuid = userAddress.uuid
-                        mutableAddress.value = stringUtil.getUserAddressString(userAddress)
-                    }
+                addressInteractor.observeAddress().onEach { userAddress ->
+                    selectedUserAddressUuid = userAddress?.uuid
+                    mutableAddress.value = stringUtil.getUserAddressString(userAddress)
                 }
             } else {
-                cafeRepo.observeSelectedCafe().onEach { cafe ->
-                    logD(ORDER_TAG, "selectedCafe = $cafe")
-                    if (cafe == null) {
-                        val cafeList = cafeRepo.getCafeList()
-                        selectedCafeUuid = cafeList.firstOrNull()?.uuid
-                        mutableAddress.value =
-                            stringUtil.getCafeAddressString(cafeList.firstOrNull())
-                    } else {
-                        selectedCafeUuid = cafe.uuid
-                        mutableAddress.value = stringUtil.getCafeAddressString(cafe)
-                    }
+                cafeInteractor.observeSelectedCafeAddress().onEach { cafeAddress ->
+                    mutableAddress.value = cafeAddress.address
+                    selectedCafeUuid = cafeAddress.cafeUuid
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    private fun subscribeOnCartProduct() {
-        cartProductRepo.observeCartProductList().flatMapLatest { productList ->
-            cartProductList = productList
-            val totalCost = productHelper.getNewTotalCost(productList)
+    private fun observeCartProducts() {
+        cartProductInteractor.observeNewTotalCartCost().launchOnEach { totalCost ->
             mutableTotalCost.value = stringUtil.getCostString(totalCost)
-
-            mutableIsDelivery.onEach { isDelivery ->
-                val delivery = dataStoreRepo.delivery.first()
-                val deliveryCost = orderUtil.getDeliveryCost(isDelivery, productList, delivery)
-                mutableDeliveryCost.value = stringUtil.getCostString(deliveryCost)
-
-                val amountToPay = orderUtil.getNewOrderCost(isDelivery, productList, delivery)
-                mutableAmountToPay.value = stringUtil.getCostString(amountToPay)
-            }
-        }.launchIn(viewModelScope)
+        }
+        cartProductInteractor.observeDeliveryCost().launchOnEach { deliveryCost ->
+            mutableDeliveryCost.value = stringUtil.getCostString(deliveryCost)
+        }
+        cartProductInteractor.observeAmountToPay().launchOnEach { amountToPay ->
+            mutableAmountToPay.value = stringUtil.getCostString(amountToPay)
+        }
     }
 
     fun onAddressClicked() {

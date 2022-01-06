@@ -1,6 +1,7 @@
 package com.bunbeauty.domain.repo
 
 import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
 
 interface DataStoreRepo {
@@ -24,4 +25,7 @@ interface DataStoreRepo {
     val selectedCityUuid: Flow<String?>
     suspend fun saveSelectedCityUuid(cityUuid: String)
     suspend fun getSelectedCityUuid(): String?
+
+    fun observeUserAndCityUuid(): Flow<UserCityUuid>
+    suspend fun getUserAndCityUuid(): UserCityUuid
 }

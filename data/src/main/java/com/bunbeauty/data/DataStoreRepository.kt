@@ -8,11 +8,9 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.domain.model.Delivery
+import com.bunbeauty.domain.model.UserCityUuid
 import com.bunbeauty.domain.repo.DataStoreRepo
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class DataStoreRepository @Inject constructor(private val context: Context) : DataStoreRepo {
@@ -104,6 +102,24 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         return context.selectedCityDataStore.data.map {
             it[SELECTED_CITY_UUID_KEY]
         }.firstOrNull()
+    }
+
+    override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
+        return userUuid.flatMapLatest { userUuid ->
+            selectedCityUuid.map { cityUuid ->
+                UserCityUuid(
+                    userUuid = userUuid ?: "",
+                    cityUuid = cityUuid ?: ""
+                )
+            }
+        }
+    }
+
+    override suspend fun getUserAndCityUuid(): UserCityUuid {
+        return UserCityUuid(
+            userUuid = getUserUuid() ?: "",
+            cityUuid = getSelectedCityUuid() ?: ""
+        )
     }
 
     companion object {

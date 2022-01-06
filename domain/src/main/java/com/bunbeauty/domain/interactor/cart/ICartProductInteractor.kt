@@ -9,7 +9,13 @@ interface ICartProductInteractor {
 
     fun observeTotalCartCount(): Flow<Int>
 
+    fun observeDeliveryCost(): Flow<Int>
+
+    fun observeAmountToPay(): Flow<Int>
+
     suspend fun addProductToCart(menuProductUuid: String): CartProduct?
 
     suspend fun removeProductFromCart(menuProductUuid: String)
+
+    suspend fun removeAllProductsFromCart()
 }

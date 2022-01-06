@@ -117,11 +117,12 @@ class ApiRepository @Inject constructor(
         )
     }
 
-    override suspend fun postOrder(order: OrderPostServer): ApiResult<OrderServer> {
-        return postData(
-            path = "user_order",
+    override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
+        return postDataWithAuth(
+            path = "order",
             postBody = order,
-            serializer = OrderServer.serializer()
+            serializer = OrderServer.serializer(),
+            token = token
         )
     }
 

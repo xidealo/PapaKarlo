@@ -15,4 +15,8 @@ interface IAddressInteractor {
     ): UserAddress?
 
     fun observeAddressList(): Flow<List<UserAddress>>
+
+    suspend fun observeAddress(): Flow<UserAddress?>
+
+    suspend fun saveSelectedUserAddress(addressUuid: String)
 }

@@ -198,18 +198,14 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateOrderViewModel(
-            cartProductRepo = get(),
-            userAddressRepo = get(),
-            cafeRepo = get(),
-            orderRepo = get(),
-            dataStoreRepo = get(),
-            stringUtil = get(),
-            productHelper = get(),
-            resourcesProvider = get(),
-            orderUtil = get(),
+            addressInteractor = get(),
+            cartProductInteractor = get(),
+            orderInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
-            dateTimeUtils = get()
+            deferredTimeInteractor = get(),
+            stringUtil = get(),
+            resourcesProvider = get(),
         )
     }
     viewModel {
@@ -224,6 +220,7 @@ fun viewModelModule() = module {
         OrdersViewModel(
             orderUIMapper = get(),
             orderInteractor = get(),
+            userInteractor = get(),
         )
     }
     viewModel {
@@ -298,7 +295,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         DeferredTimeViewModel(
-            dateTimeUtils = get(),
+            deferredTimeInteractor = get(),
         )
     }
     viewModel {
