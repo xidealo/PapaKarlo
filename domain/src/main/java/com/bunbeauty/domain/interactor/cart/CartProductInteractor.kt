@@ -1,10 +1,9 @@
 package com.bunbeauty.domain.interactor.cart
 
-import com.bunbeauty.common.Logger.logD
+import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -12,7 +11,7 @@ import javax.inject.Inject
 
 class CartProductInteractor @Inject constructor(
     @Api private val cartProductRepo: CartProductRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val productInteractor: IProductInteractor,
 ) : ICartProductInteractor {
 
     override fun observeTotalCartCount(): Flow<Int> {
@@ -23,20 +22,13 @@ class CartProductInteractor @Inject constructor(
 
     override fun observeNewTotalCartCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
-            getNewTotalCost(cartProductList)
+            productInteractor.getNewTotalCost(cartProductList)
         }
     }
 
     override fun observeDeliveryCost(): Flow<Int> {
-        return dataStoreRepo.delivery.flatMapLatest { delivery ->
-            observeNewTotalCartCost().map { newTotalCost ->
-                logD("testTag", delivery.toString())
-                if (newTotalCost < delivery.forFree) {
-                    delivery.cost
-                } else {
-                    0
-                }
-            }
+        return cartProductRepo.observeCartProductList().map { cartProductList ->
+            productInteractor.getDeliveryCost(cartProductList)
         }
     }
 
@@ -77,16 +69,6 @@ class CartProductInteractor @Inject constructor(
     suspend fun getTotalCartCount(): Int {
         val cartProductList = cartProductRepo.getCartProductList()
         return getTotalCount(cartProductList)
-    }
-
-    // TODO move to base interactor
-
-    fun getNewTotalCost(productList: List<CartProduct>): Int {
-        return productList.sumOf(::getProductPositionNewCost)
-    }
-
-    fun getProductPositionNewCost(product: CartProduct): Int {
-        return product.menuProduct.newPrice * product.count
     }
 
     fun getTotalCount(productList: List<CartProduct>): Int {

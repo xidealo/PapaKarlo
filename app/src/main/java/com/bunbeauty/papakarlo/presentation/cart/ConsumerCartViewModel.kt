@@ -102,12 +102,12 @@ class ConsumerCartViewModel @Inject constructor(
 
         return CartProductItem(
             uuid = cartProduct.uuid,
-            name = cartProduct.menuProduct.name,
+            name = cartProduct.product.name,
             newCost = newCostString,
             oldCost = oldCostString,
-            photoLink = cartProduct.menuProduct.photoLink,
+            photoLink = cartProduct.product.photoLink,
             count = cartProduct.count,
-            menuProductUuid = cartProduct.menuProduct.uuid
+            menuProductUuid = cartProduct.product.uuid
         )
     }
 }

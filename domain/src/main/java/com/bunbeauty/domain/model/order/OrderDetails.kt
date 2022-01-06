@@ -1,11 +1,19 @@
 package com.bunbeauty.domain.model.order
 
+import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.model.product.OrderProduct
+
 data class OrderDetails(
+    val code: String,
+    val stepCount: Int,
+    val status: OrderStatus,
+    val dateTime: String,
     val isDelivery: Boolean,
-    val profileUuid: String,
-    val userAddressUuid: String?,
-    val cafeUuid: String?,
+    val deferredTime: String?,
     val address: String,
     val comment: String?,
-    val deferredTime: Long?
+    val deliveryCost: Int,
+    val oldTotalCost: Int?,
+    val newTotalCost: Int,
+    val orderProductList: List<OrderProduct>
 )

@@ -15,7 +15,7 @@ class CartProductMapper @Inject constructor(
         return CartProduct(
             uuid = cartProductWithMenuProduct.cartProductEntity.uuid,
             count = cartProductWithMenuProduct.cartProductEntity.count,
-            menuProduct = menuProductMapper.toModel(cartProductWithMenuProduct.menuProductEntity),
+            product = menuProductMapper.toModel(cartProductWithMenuProduct.menuProductEntity),
         )
     }
 
@@ -23,7 +23,7 @@ class CartProductMapper @Inject constructor(
         return CartProductEntity(
             uuid = cartProduct.uuid,
             count = cartProduct.count,
-            menuProductUuid = cartProduct.menuProduct.uuid,
+            menuProductUuid = cartProduct.product.uuid,
         )
     }
 }

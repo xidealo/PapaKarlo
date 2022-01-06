@@ -33,7 +33,7 @@ class OrderProductMapper @Inject constructor() : IOrderProductMapper {
         return OrderProduct(
             uuid = orderProduct.uuid,
             count = orderProduct.count,
-            menuProduct = OrderMenuProduct(
+            product = OrderMenuProduct(
                 name = orderProduct.name,
                 newPrice = orderProduct.newPrice,
                 oldPrice = orderProduct.oldPrice,
@@ -50,7 +50,7 @@ class OrderProductMapper @Inject constructor() : IOrderProductMapper {
         return OrderProduct(
             uuid = orderProduct.uuid,
             count = orderProduct.count,
-            menuProduct = OrderMenuProduct(
+            product = OrderMenuProduct(
                 name = orderProduct.name,
                 newPrice = orderProduct.newPrice,
                 oldPrice = orderProduct.oldPrice,
@@ -73,7 +73,7 @@ class OrderProductMapper @Inject constructor() : IOrderProductMapper {
     override fun toPostServerModel(cartProduct: CartProduct): OrderProductPostServer {
         return OrderProductPostServer(
             count = cartProduct.count,
-            menuProductUuid = cartProduct.menuProduct.uuid
+            menuProductUuid = cartProduct.product.uuid
         )
     }
 

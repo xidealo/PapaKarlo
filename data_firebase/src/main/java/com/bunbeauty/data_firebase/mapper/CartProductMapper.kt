@@ -16,7 +16,7 @@ class CartProductMapper @Inject constructor(private val menuProductMapper: IMenu
         return CartProductEntity(
             uuid = cartProduct.uuid,
             count = cartProduct.count,
-            menuProductUuid = cartProduct.menuProduct.uuid,
+            menuProductUuid = cartProduct.product.uuid,
         )
     }
 
@@ -24,7 +24,7 @@ class CartProductMapper @Inject constructor(private val menuProductMapper: IMenu
         return CartProduct(
             uuid = cartProductWithMenuProduct.cartProductEntity.uuid,
             count = cartProductWithMenuProduct.cartProductEntity.count,
-            menuProduct = menuProductMapper.toUIModel(cartProductWithMenuProduct.menuProductEntity),
+            product = menuProductMapper.toUIModel(cartProductWithMenuProduct.menuProductEntity),
         )
     }
 
@@ -32,15 +32,15 @@ class CartProductMapper @Inject constructor(private val menuProductMapper: IMenu
         return OrderProduct(
             uuid = cartProduct.uuid,
             count = cartProduct.count,
-            menuProduct = OrderMenuProduct(
-                name = cartProduct.menuProduct.name,
-                newPrice = cartProduct.menuProduct.newPrice,
-                oldPrice = cartProduct.menuProduct.oldPrice,
-                utils = cartProduct.menuProduct.utils,
-                nutrition = cartProduct.menuProduct.nutrition,
-                description = cartProduct.menuProduct.description,
-                comboDescription = cartProduct.menuProduct.comboDescription,
-                photoLink = cartProduct.menuProduct.photoLink
+            product = OrderMenuProduct(
+                name = cartProduct.product.name,
+                newPrice = cartProduct.product.newPrice,
+                oldPrice = cartProduct.product.oldPrice,
+                utils = cartProduct.product.utils,
+                nutrition = cartProduct.product.nutrition,
+                description = cartProduct.product.description,
+                comboDescription = cartProduct.product.comboDescription,
+                photoLink = cartProduct.product.photoLink
             ),
         )
     }

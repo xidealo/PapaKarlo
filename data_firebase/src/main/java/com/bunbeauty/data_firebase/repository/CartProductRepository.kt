@@ -73,7 +73,7 @@ class CartProductRepository @Inject constructor(
                     cartProduct.menuProductEntity.visible
                 }.map(cartProductMapper::toUIModel)
                     .sortedBy { cartProduct ->
-                        cartProduct.menuProduct.name
+                        cartProduct.product.name
                     }
             }.flowOn(Default)
     }

@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class CartProduct(
     val uuid: String,
     override val count: Int,
-    override val menuProduct: MenuProduct
+    override val product: MenuProduct
 ) : ProductPosition(), Parcelable

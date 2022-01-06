@@ -252,12 +252,8 @@ fun viewModelModule() = module {
     viewModel { EmptyViewModel() }
     viewModel {
         OrderDetailsViewModel(
-            orderRepo = get(),
-            dataStoreRepo = get(),
-            stringUtil = get(),
-            productHelper = get(),
-            orderUtil = get(),
-            dateTimeUtil = get(),
+            orderInteractor = get(),
+            orderUIMapper = get(),
         )
     }
     viewModel {

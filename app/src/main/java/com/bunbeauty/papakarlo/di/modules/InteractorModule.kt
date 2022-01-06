@@ -18,6 +18,8 @@ import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.interactor.menu_product.MenuProductInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.order.OrderInteractor
+import com.bunbeauty.domain.interactor.product.IProductInteractor
+import com.bunbeauty.domain.interactor.product.ProductInteractor
 import com.bunbeauty.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.domain.interactor.street.StreetInteractor
 import com.bunbeauty.domain.interactor.update.IUpdateInteractor
@@ -67,6 +69,9 @@ interface InteractorModule {
 
     @Binds
     fun bindsDeferredTimeInteractor(deferredTimeInteractor: DeferredTimeInteractor): IDeferredTimeInteractor
+
+    @Binds
+    fun bindsProductInteractor(productInteractor: ProductInteractor): IProductInteractor
 }
 
 fun interactorModule() = module {
@@ -100,7 +105,7 @@ fun interactorModule() = module {
     single {
         CartProductInteractor(
             cartProductRepo = get(),
-            dataStoreRepo = get(),
+            productInteractor = get(),
         )
     } bind ICartProductInteractor::class
     single<ICafeInteractor> {
@@ -115,7 +120,8 @@ fun interactorModule() = module {
             orderRepo = get(),
             cartProductRepo = get(),
             dataStoreRepo = get(),
-            orderMapper = get()
+            orderMapper = get(),
+            productInteractor = get()
         )
     }
     single<IAddressInteractor> {

@@ -15,7 +15,7 @@ class OrderProductMapper @Inject constructor(
     override fun toFirebaseModel(orderProduct: OrderProduct): OrderProductFirebase {
         return OrderProductFirebase(
             count = orderProduct.count,
-            menuProduct = menuProductMapper.toFirebaseModel(orderProduct.menuProduct)
+            menuProduct = menuProductMapper.toFirebaseModel(orderProduct.product)
         )
     }
 
@@ -34,7 +34,7 @@ class OrderProductMapper @Inject constructor(
     override fun toUIModel(cartProduct: OrderProductEntity): OrderProduct {
         return OrderProduct(
             uuid = cartProduct.uuid,
-            menuProduct = menuProductMapper.toOrderMenuProduct(cartProduct.menuProduct),
+            product = menuProductMapper.toOrderMenuProduct(cartProduct.menuProduct),
             count = cartProduct.count
         )
     }

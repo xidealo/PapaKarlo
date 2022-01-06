@@ -10,6 +10,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.chip.Chip
+                android:id="@+id/element_order_chip_status"
+                style="@style/MediumRegularWrapContentText"
+                android:layout_marginStart="@dimen/order_status_margin"
+                android:layout_marginTop="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/medium_margin"
+                android:clickable="false"
+                app:chipMinTouchTargetSize="@dimen/chip_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tool:text="Готов" />
+
             <TextView
                 android:id="@+id/element_order_tv_code"
                 style="@style/LargeBoldWrapContentText"
@@ -17,20 +30,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tool:text="A-90" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/element_order_chip_status"
-                style="@style/MediumRegularWrapContentText"
-                android:layout_marginStart="@dimen/small_margin"
-                android:layout_marginTop="@dimen/medium_margin"
-                android:layout_marginBottom="@dimen/medium_margin"
-                android:clickable="false"
-                app:chipMinTouchTargetSize="@dimen/chip_height"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/element_order_tv_code"
-                app:layout_constraintTop_toTopOf="parent"
-                tool:text="Готов" />
+                tool:text="Ш-90" />
 
             <TextView
                 android:id="@+id/element_order_tv_time"

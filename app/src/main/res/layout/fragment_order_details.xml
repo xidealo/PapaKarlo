@@ -48,7 +48,7 @@
                     android:id="@+id/fragment_order_details_psv_status"
                     android:layout_width="0dp"
                     android:layout_height="8dp"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     app:activeColor="?attr/colorPrimary"
                     app:inactiveColor="?attr/colorOnSurfaceVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,7 @@
                 <TextView
                     android:id="@+id/fragment_order_details_tv_pickup_method"
                     style="@style/SecondarySmallRegularWrapContentText"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/msg_order_details_pickup_method"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_time_value" />
@@ -113,7 +113,7 @@
                 <TextView
                     android:id="@+id/fragment_order_details_tv_deferred_time"
                     style="@style/SecondarySmallRegularWrapContentText"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/msg_order_details_deferred_time"
                     app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_center"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_time_value" />
@@ -129,7 +129,7 @@
                 <TextView
                     android:id="@+id/fragment_order_details_tv_address"
                     style="@style/SecondarySmallRegularWrapContentText"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/msg_order_details_address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_pickup_method_value" />
@@ -146,7 +146,7 @@
                 <TextView
                     android:id="@+id/fragment_order_details_tv_comment"
                     style="@style/SecondarySmallRegularWrapContentText"
-                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginTop="@dimen/medium_margin"
                     android:text="@string/msg_order_details_comment"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_order_details_tv_address_value" />

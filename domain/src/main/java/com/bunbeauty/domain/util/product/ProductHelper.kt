@@ -11,7 +11,7 @@ class ProductHelper @Inject constructor() : IProductHelper {
 
     override fun <T : ProductPosition> getOldTotalCost(productList: List<T>): Int? {
         val hasSomeDiscounts = productList.any { cartProduct ->
-            cartProduct.menuProduct.oldPrice != null
+            cartProduct.product.oldPrice != null
         }
 
         return if (hasSomeDiscounts) {
@@ -24,11 +24,11 @@ class ProductHelper @Inject constructor() : IProductHelper {
     }
 
     override fun getProductPositionNewCost(product: ProductPosition): Int {
-        return product.menuProduct.newPrice * product.count
+        return product.product.newPrice * product.count
     }
 
     override fun getProductPositionOldCost(product: ProductPosition): Int? {
-        return product.menuProduct.oldPrice?.let { oldPrice ->
+        return product.product.oldPrice?.let { oldPrice ->
             oldPrice * product.count
         }
     }
