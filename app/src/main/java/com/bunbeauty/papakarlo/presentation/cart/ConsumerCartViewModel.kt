@@ -46,7 +46,7 @@ class ConsumerCartViewModel @Inject constructor(
     }
 
     fun onMenuClicked() {
-        router.navigateUp()
+        router.navigate(toMenuFragment())
     }
 
     fun onCreateOrderClicked() {

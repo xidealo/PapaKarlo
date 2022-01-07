@@ -249,6 +249,11 @@
         <action
             android:id="@+id/to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/to_menuFragment"
+            app:destination="@id/menuFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -259,8 +264,8 @@
         <action
             android:id="@+id/to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/createOrderFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/to_createAddressFragment"
             app:destination="@id/createAddressFragment" />
