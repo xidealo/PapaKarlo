@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
             if (router.checkPrevious(R.id.consumerCartFragment)) {
                 router.navigateUp()
             } else {
-                router.navigate(globalToNavCart())
+                router.navigate(globalConsumerCartFragment())
             }
         }
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {

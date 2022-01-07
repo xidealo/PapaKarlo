@@ -28,7 +28,7 @@ class SplashViewModel @Inject constructor(
     private suspend fun checkIsCitySelected() {
         val isCitySelected = cityInteractor.checkIsCitySelected()
         if (isCitySelected) {
-            router.navigate(toNavMenu())
+            router.navigate(toMenuFragment())
         } else {
             router.navigate(toSelectCityFragment())
         }

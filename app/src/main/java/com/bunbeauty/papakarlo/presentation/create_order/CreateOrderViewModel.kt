@@ -167,7 +167,7 @@ class CreateOrderViewModel @Inject constructor(
                 showMessage(
                     resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code
                 )
-                router.navigate(toNavProfile())
+                router.navigate(toProfileFragment())
             }
         }
     }
