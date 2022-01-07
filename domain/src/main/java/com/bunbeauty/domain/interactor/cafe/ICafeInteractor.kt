@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ICafeInteractor {
 
     fun observeCafeList(): Flow<List<CafePreview>>
+    fun observeCafeAddressList(): Flow<List<CafeAddress>>
     fun observeSelectedCafeAddress(): Flow<CafeAddress>
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
     suspend fun selectCafe(cafeUuid: String)

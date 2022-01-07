@@ -224,8 +224,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         CafeAddressesViewModel(
-            cafeRepo = get(),
-            stringUtil = get(),
+            cafeInteractor = get(),
         )
     }
     viewModel {
@@ -269,7 +268,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         ProductViewModel(
-            menuProductRepo = get(),
+            menuProductInteractor = get(),
             stringUtil = get()
         )
     }

@@ -36,6 +36,10 @@ class MenuProductInteractor @Inject constructor(
         }
     }
 
+    override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
+        return menuProductRepo.observeMenuProductByUuid(menuProductUuid)
+    }
+
     override fun getCurrentMenuPosition(
         currentCategoryUuid: String,
         menuList: List<MenuModel>

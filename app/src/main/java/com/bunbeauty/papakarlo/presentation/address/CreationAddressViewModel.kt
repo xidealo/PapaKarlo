@@ -29,10 +29,10 @@ class CreationAddressViewModel @Inject constructor(
     val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
 
     init {
-        subscribeOnStreetList()
+        observeStreetList()
     }
 
-    private fun subscribeOnStreetList() {
+    private fun observeStreetList() {
         streetInteractor.observeStreetList().launchOnEach { streetList ->
             this.streetList = streetList
         }

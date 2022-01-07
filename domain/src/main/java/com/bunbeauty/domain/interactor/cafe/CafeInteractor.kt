@@ -22,8 +22,8 @@ class CafeInteractor @Inject constructor(
 ) : ICafeInteractor {
 
     override fun observeCafeList(): Flow<List<CafePreview>> {
-        return cafeRepo.observeCafeList().map { observedCafeList ->
-            observedCafeList.map { cafe ->
+        return cafeRepo.observeCafeList().map { cafeList ->
+            cafeList.map { cafe ->
                 CafePreview(
                     uuid = cafe.uuid,
                     fromTime = getCafeTime(cafe.fromTime),
@@ -36,10 +36,21 @@ class CafeInteractor @Inject constructor(
         }
     }
 
+    override fun observeCafeAddressList(): Flow<List<CafeAddress>> {
+        return cafeRepo.observeCafeList().map { cafeList ->
+            cafeList.map { cafe ->
+                CafeAddress(
+                    cafeUuid = cafe.uuid,
+                    address = cafe.address
+                )
+            }
+        }
+    }
+
     override fun observeSelectedCafeAddress(): Flow<CafeAddress> {
         return observeCafe().map { cafe ->
             CafeAddress(
-                cafeUuid = cafe?.uuid,
+                cafeUuid = cafe?.uuid ?: "",
                 address = cafe?.address ?: ""
             )
         }
