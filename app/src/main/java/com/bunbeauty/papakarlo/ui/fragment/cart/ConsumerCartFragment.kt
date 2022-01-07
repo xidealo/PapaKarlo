@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
@@ -81,7 +80,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
                 if (state is State.Success) {
                     cartProductAdapter.submitList(state.data)
                 }
-            }.startedLaunch(viewLifecycleOwner)
+            }.startedLaunch()
         }
     }
 

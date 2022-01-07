@@ -7,4 +7,6 @@ interface IProductInteractor {
     fun getNewTotalCost(productList: List<ProductPosition>): Int
     fun getOldTotalCost(productList: List<ProductPosition>): Int?
     suspend fun getDeliveryCost(productList: List<ProductPosition>): Int
+    fun getProductPositionNewCost(productPosition: ProductPosition): Int
+    fun getProductPositionOldCost(productPosition: ProductPosition): Int?
 }

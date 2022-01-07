@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.MenuProductRepo
-import com.bunbeauty.domain.util.product.IProductHelper
 import com.bunbeauty.papakarlo.presentation.base.CartViewModel
 import com.bunbeauty.papakarlo.ui.model.MenuProductUI
 import com.bunbeauty.presentation.util.string.IStringUtil
@@ -16,8 +15,7 @@ import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
     @Api private val menuProductRepo: MenuProductRepo,
-    private val  stringUtil: IStringUtil,
-    private val  productHelper: IProductHelper,
+    private val stringUtil: IStringUtil
 ) : CartViewModel() {
 
     private val mutableMenuProduct: MutableStateFlow<MenuProductUI?> = MutableStateFlow(null)

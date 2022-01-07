@@ -166,7 +166,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(viewDataBinding.activityMainTbToolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
         viewDataBinding.activityMainClCart.setOnClickListener {
-            router.navigate(globalToNavCart())
+            if (router.checkPrevious(R.id.consumerCartFragment)) {
+                router.navigateUp()
+            } else {
+                router.navigate(globalToNavCart())
+            }
         }
         viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()

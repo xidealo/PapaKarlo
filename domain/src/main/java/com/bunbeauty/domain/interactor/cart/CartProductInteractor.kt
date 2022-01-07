@@ -1,9 +1,12 @@
 package com.bunbeauty.domain.interactor.cart
 
 import com.bunbeauty.domain.interactor.product.IProductInteractor
+import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.product.LightCartProduct
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
+import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -11,8 +14,27 @@ import javax.inject.Inject
 
 class CartProductInteractor @Inject constructor(
     @Api private val cartProductRepo: CartProductRepo,
+    private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,
 ) : ICartProductInteractor {
+
+    override fun observeCartProductList(): Flow<List<LightCartProduct>> {
+        return cartProductRepo.observeCartProductList().map { cartProductList ->
+            cartProductList.map { cartProduct ->
+                LightCartProduct(
+                    uuid = cartProduct.uuid,
+                    name = cartProduct.product.name,
+                    newCost = productInteractor.getProductPositionNewCost(cartProduct),
+                    oldCost = productInteractor.getProductPositionOldCost(cartProduct),
+                    photoLink = cartProduct.product.photoLink,
+                    count = cartProduct.count,
+                    menuProductUuid = cartProduct.product.uuid,
+                )
+            }.sortedBy { cartProduct ->
+                cartProduct.name
+            }
+        }
+    }
 
     override fun observeTotalCartCount(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
@@ -26,10 +48,20 @@ class CartProductInteractor @Inject constructor(
         }
     }
 
+    override fun observeOldTotalCartCost(): Flow<Int?> {
+        return cartProductRepo.observeCartProductList().map { cartProductList ->
+            productInteractor.getOldTotalCost(cartProductList)
+        }
+    }
+
     override fun observeDeliveryCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getDeliveryCost(cartProductList)
         }
+    }
+
+    override fun observeDelivery(): Flow<Delivery> {
+        return dataStoreRepo.delivery
     }
 
     override fun observeAmountToPay(): Flow<Int> {

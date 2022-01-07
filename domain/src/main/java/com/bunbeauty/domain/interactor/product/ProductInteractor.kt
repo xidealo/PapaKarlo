@@ -12,7 +12,9 @@ class ProductInteractor @Inject constructor(private val dataStoreRepo: DataStore
     }
 
     override fun getOldTotalCost(productList: List<ProductPosition>): Int? {
-        val oldCost = productList.sumOf(::getPositionOldCost)
+        val oldCost = productList.sumOf { productPosition ->
+            getProductPositionOldCost(productPosition) ?: getProductPositionNewCost(productPosition)
+        }
         return if (oldCost == getNewTotalCost(productList)) {
             null
         } else {
@@ -29,11 +31,11 @@ class ProductInteractor @Inject constructor(private val dataStoreRepo: DataStore
         }
     }
 
-    fun getProductPositionNewCost(productPosition: ProductPosition): Int {
+    override fun getProductPositionNewCost(productPosition: ProductPosition): Int {
         return productPosition.product.newPrice * productPosition.count
     }
 
-    fun getPositionOldCost(productPosition: ProductPosition): Int {
+    override fun getProductPositionOldCost(productPosition: ProductPosition): Int? {
         return (productPosition.product.oldPrice ?: productPosition.product.newPrice) *
                 productPosition.count
     }

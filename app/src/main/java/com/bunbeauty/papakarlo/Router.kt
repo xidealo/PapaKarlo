@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.bunbeauty.common.Logger.NAV_TAG
@@ -34,25 +35,36 @@ class Router @Inject constructor() : CoroutineScope {
         this.navHostId = navHostId
     }
 
+    fun checkPrevious(destinationId: Int): Boolean {
+        val backQueue = findNavController()?.backQueue
+        return if (backQueue != null && backQueue.size > 1) {
+            backQueue[backQueue.lastIndex - 1].destination.id == destinationId
+        } else {
+            false
+        }
+    }
+
     fun navigateUp() {
-        navHostId?.let { navHostId ->
-            launch(Main) {
-                activity?.get()?.findNavController(navHostId)?.navigateUp()
-                Log.d(NAV_TAG, "navigateUp")
-            }
+        launch(Main) {
+            findNavController()?.navigateUp()
+            Log.d(NAV_TAG, "navigateUp")
         }
     }
 
     fun navigate(navDirections: NavDirections) {
-        navHostId?.let { navHostId ->
-            val handler = CoroutineExceptionHandler { _, exception ->
-                exception.printStackTrace()
-                Log.d(NAV_TAG, "exception " + exception.message)
-            }
-            launch(Main + handler) {
-                activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
-                Log.d(NAV_TAG, "navigate $navDirections")
-            }
+        val handler = CoroutineExceptionHandler { _, exception ->
+            exception.printStackTrace()
+            Log.d(NAV_TAG, "exception " + exception.message)
+        }
+        launch(Main + handler) {
+            findNavController()?.navigate(navDirections)
+            Log.d(NAV_TAG, "navigate $navDirections")
+        }
+    }
+
+    private fun findNavController(): NavController? {
+        return navHostId?.let { navHostId ->
+            activity?.get()?.findNavController(navHostId)
         }
     }
 

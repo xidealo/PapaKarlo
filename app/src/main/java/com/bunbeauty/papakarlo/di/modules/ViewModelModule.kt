@@ -19,7 +19,6 @@ import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
 import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
-import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModel
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
 import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
 import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
@@ -38,11 +37,6 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun provideViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ProductTabViewModel::class)
-    internal abstract fun provideProductTabViewModel(productTabViewModel: ProductTabViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -165,13 +159,6 @@ fun viewModelModule() = module {
             )
     }
     viewModel {
-        ProductTabViewModel(
-            menuProductRepo = get(),
-            stringUtil = get(),
-            productHelper = get(),
-        )
-    }
-    viewModel {
         MenuViewModel(
             categoryInteractor = get(),
             menuProductInteractor = get(),
@@ -188,12 +175,10 @@ fun viewModelModule() = module {
     }
     viewModel {
         ConsumerCartViewModel(
-            cartProductRepo = get(),
             resourcesProvider = get(),
-            dataStoreRepo = get(),
             stringUtil = get(),
-            productHelper = get(),
             userInteractor = get(),
+            cartProductInteractor = get(),
         )
     }
     viewModel {
@@ -285,8 +270,7 @@ fun viewModelModule() = module {
     viewModel {
         ProductViewModel(
             menuProductRepo = get(),
-            stringUtil = get(),
-            productHelper = get(),
+            stringUtil = get()
         )
     }
     viewModel {

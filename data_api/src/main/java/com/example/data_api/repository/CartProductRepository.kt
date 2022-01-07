@@ -7,10 +7,7 @@ import com.example.domain_api.mapper.ICartProductMapper
 import com.example.domain_api.model.entity.product.CartProductCount
 import com.example.domain_api.model.entity.product.CartProductEntity
 import com.example.domain_api.model.entity.product.CartProductWithMenuProduct
-import kotlinx.coroutines.Dispatchers.Default
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.util.*
 import javax.inject.Inject
@@ -21,11 +18,9 @@ class CartProductRepository @Inject constructor(
 ) : CartProductRepo {
 
     override fun observeCartProductList(): Flow<List<CartProduct>> {
-        return cartProductDao.observeCartProductList()
-            .flowOn(IO)
-            .map { cartProductList ->
-                cartProductList.toCartProductList()
-            }.flowOn(Default)
+        return cartProductDao.observeCartProductList().map { cartProductList ->
+            cartProductList.toCartProductList()
+        }
     }
 
     override suspend fun getCartProductList(): List<CartProduct> {
@@ -69,9 +64,10 @@ class CartProductRepository @Inject constructor(
     }
 
     override suspend fun deleteAllCartProducts() {
-        val cartProductList = cartProductDao.getCartProductList().map { cartProductWithMenuProduct ->
-            cartProductWithMenuProduct.cartProductEntity
-        }
+        val cartProductList =
+            cartProductDao.getCartProductList().map { cartProductWithMenuProduct ->
+                cartProductWithMenuProduct.cartProductEntity
+            }
         cartProductDao.delete(cartProductList)
     }
 

@@ -19,7 +19,6 @@ import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.menu.MenuFragment
 import com.bunbeauty.papakarlo.ui.fragment.menu.ProductFragment
-import com.bunbeauty.papakarlo.ui.fragment.menu.ProductTabFragment
 import com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.PaymentBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment
@@ -43,7 +42,6 @@ interface ViewModelComponent {
     fun inject(mainActivity: MainActivity)
 
     // fragments
-    fun inject(productTabFragment: ProductTabFragment)
     fun inject(productFragment: ProductFragment)
     fun inject(menuFragment: MenuFragment)
     fun inject(consumerCartFragment: ConsumerCartFragment)

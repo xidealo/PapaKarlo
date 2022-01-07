@@ -105,6 +105,7 @@ fun interactorModule() = module {
     single {
         CartProductInteractor(
             cartProductRepo = get(),
+            dataStoreRepo = get(),
             productInteractor = get(),
         )
     } bind ICartProductInteractor::class
