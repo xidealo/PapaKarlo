@@ -35,11 +35,9 @@ class CartProductAdapter @Inject constructor() :
 
             (binding as ElementCartProductBinding).run {
                 elementCartProductTvName.text = item.name
-                elementCartProductTvOldCost.text = item.oldCost
+                setCountAndCost(item)
                 elementCartProductTvOldCost.strikeOutText()
                 elementCartProductTvOldCost.toggleVisibility(item.oldCost != null)
-                elementCartProductTvNewCost.text = item.newCost
-                elementCartProductCpCount.count = item.count
                 elementCartProductIvPhoto.setPhoto(
                     item.photoReference,
                     item.photoLink
@@ -47,10 +45,6 @@ class CartProductAdapter @Inject constructor() :
                     item.photoReference = SoftReference(drawable)
                 }
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
-                elementCartProductClMain.setOnClickListener {
-                    onItemClicked(item)
-                }
-                elementCartProductLlCount.setOnClickListener {}
             }
         }
 
@@ -58,15 +52,16 @@ class CartProductAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                (binding as ElementCartProductBinding).run {
-                    elementCartProductTvOldCost.text = item.oldCost
-                    elementCartProductTvNewCost.text = item.newCost
-                    elementCartProductCpCount.count = item.count
-                    elementCartProductClMain.setOnClickListener {
-                        onItemClicked(item)
-                    }
-                    elementCartProductLlCount.setOnClickListener {}
-                }
+                (binding as ElementCartProductBinding).setCountAndCost(item)
+            }
+        }
+
+        private fun ElementCartProductBinding.setCountAndCost(item: CartProductItem) {
+            elementCartProductTvOldCost.text = item.oldCost
+            elementCartProductTvNewCost.text = item.newCost
+            elementCartProductCpCount.count = item.count
+            elementCartProductClMain.setOnClickListener {
+                onItemClicked(item)
             }
         }
 
