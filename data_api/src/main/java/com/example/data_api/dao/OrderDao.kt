@@ -4,6 +4,7 @@ import androidx.room.*
 import com.bunbeauty.data.BaseDao
 import com.example.domain_api.model.entity.user.order.OrderEntity
 import com.example.domain_api.model.entity.user.order.OrderProductEntity
+import com.example.domain_api.model.entity.user.order.OrderStatusUpdate
 import com.example.domain_api.model.entity.user.order.OrderWithProducts
 import kotlinx.coroutines.flow.Flow
 
@@ -29,6 +30,9 @@ abstract class OrderDao : BaseDao<OrderEntity> {
         insert(orderWithProducts.order)
         insertOrderProductList(orderWithProducts.orderProductList)
     }
+
+    @Update(entity = OrderEntity::class)
+    abstract suspend fun updateOrderStatus(orderStatusUpdate: OrderStatusUpdate)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards

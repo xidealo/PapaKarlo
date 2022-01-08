@@ -38,6 +38,18 @@ class OrderRepository @Inject constructor(
         return null
     }
 
+    override fun observeOrderUpdates(token: String): Flow<Order> {
+        return flow { }
+    }
+
+    override suspend fun updateOrderStatus(order: Order) {
+
+    }
+
+    override suspend fun stopCheckOrderUpdates() {
+
+    }
+
     // EXTENSIONS
 
     private fun Flow<OrderWithProducts?>.mapOrder(): Flow<Order?> {

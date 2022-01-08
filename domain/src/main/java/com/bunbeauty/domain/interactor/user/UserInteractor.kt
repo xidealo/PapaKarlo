@@ -46,6 +46,16 @@ class UserInteractor @Inject constructor(
                 (dataStoreRepo.getUserUuid() != null)
     }
 
+    override fun observeIsUserAuthorize(): Flow<Boolean> {
+        return authRepo.observeIsAuthorize().flatMapLatest { isAuthorize ->
+            dataStoreRepo.token.flatMapLatest { token ->
+                dataStoreRepo.userUuid.map { userUuid ->
+                    isAuthorize && token != null && userUuid != null
+                }
+            }
+        }
+    }
+
     override fun observeUser(): Flow<User?> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             userRepo.observeUserByUuid(userUuid ?: "")

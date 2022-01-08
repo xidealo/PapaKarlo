@@ -10,6 +10,7 @@ interface IUserInteractor {
     suspend fun logout()
     suspend fun isUserAuthorize(): Boolean
 
+    fun observeIsUserAuthorize(): Flow<Boolean>
     fun observeUser(): Flow<User?>
     fun observeLightProfile(): Flow<LightProfile?>
     suspend fun updateUserEmail(email: String): User?

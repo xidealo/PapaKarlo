@@ -9,6 +9,7 @@ import com.example.data_api.dao.OrderDao
 import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OrderRepository @Inject constructor(
@@ -34,5 +35,19 @@ class OrderRepository @Inject constructor(
 
                 orderMapper.toModel(order)
             }
+    }
+
+    override fun observeOrderUpdates(token: String): Flow<Order> {
+        return apiRepo.subscribeOnOrderUpdates(token).map { orderServer ->
+            orderMapper.toModel(orderServer)
+        }
+    }
+
+    override suspend fun updateOrderStatus(order: Order) {
+        orderDao.updateOrderStatus(orderMapper.toOrderStatusUpdate(order))
+    }
+
+    override suspend fun stopCheckOrderUpdates() {
+        apiRepo.unsubscribeOnOrderUpdates()
     }
 }

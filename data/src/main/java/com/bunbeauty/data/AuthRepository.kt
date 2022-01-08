@@ -22,9 +22,9 @@ class AuthRepository @Inject constructor(
     override val firebaseUserPhone: String?
         get() = firebaseAuth.currentUser?.phoneNumber
 
-    override fun observeFirebaseUserUuid(): Flow<String?> = callbackFlow {
+    override fun observeIsAuthorize(): Flow<Boolean> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { auth ->
-            trySend(auth.currentUser?.uid)
+            trySend(auth.currentUser != null)
         }
         firebaseAuth.addAuthStateListener(listener)
         awaitClose {

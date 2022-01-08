@@ -8,6 +8,6 @@ interface AuthRepo {
     val firebaseUserUuid: String?
     val firebaseUserPhone: String?
 
-    fun observeFirebaseUserUuid(): Flow<String?>
+    fun observeIsAuthorize(): Flow<Boolean>
     fun signOut()
 }

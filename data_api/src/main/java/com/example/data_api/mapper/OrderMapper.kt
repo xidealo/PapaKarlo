@@ -6,6 +6,7 @@ import com.bunbeauty.domain.model.order.Order
 import com.example.domain_api.mapper.IOrderMapper
 import com.example.domain_api.mapper.IOrderProductMapper
 import com.example.domain_api.model.entity.user.order.OrderEntity
+import com.example.domain_api.model.entity.user.order.OrderStatusUpdate
 import com.example.domain_api.model.entity.user.order.OrderWithProducts
 import com.example.domain_api.model.server.order.get.OrderServer
 import com.example.domain_api.model.server.order.post.OrderPostServer
@@ -29,6 +30,13 @@ class OrderMapper @Inject constructor(
                 userUuid = order.clientUserUuid,
             ),
             orderProductList = order.oderProductList.map(orderProductMapper::toEntityModel)
+        )
+    }
+
+    override fun toOrderStatusUpdate(order: Order): OrderStatusUpdate {
+        return OrderStatusUpdate(
+            uuid = order.uuid,
+            status = order.status,
         )
     }
 

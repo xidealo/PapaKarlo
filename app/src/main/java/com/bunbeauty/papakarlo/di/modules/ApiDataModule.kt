@@ -7,12 +7,13 @@ import com.example.data_api.ApiLocalDatabase
 import dagger.Module
 import dagger.Provides
 import io.ktor.client.*
-import io.ktor.client.engine.android.*
+import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.client.features.observer.*
+import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
@@ -25,7 +26,7 @@ class ApiDataModule {
 
     @Singleton
     @Provides
-    fun provideKtorHttpClient() = HttpClient(Android) {
+    fun provideKtorHttpClient() = HttpClient(OkHttp) {
         val timeout = 60_000
         install(JsonFeature) {
             serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
@@ -33,12 +34,9 @@ class ApiDataModule {
                 isLenient = true
                 ignoreUnknownKeys = true
             })
-
-            engine {
-                connectTimeout = timeout
-                socketTimeout = timeout
-            }
         }
+
+        install(WebSockets)
 
         install(Logging) {
             logger = object : Logger {

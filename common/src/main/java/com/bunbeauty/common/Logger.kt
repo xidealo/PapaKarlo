@@ -21,6 +21,7 @@ object Logger {
     const val CATEGORY_TAG = "categoryTag"
     const val AUTH_TAG = "authTag"
     const val DELIVERY_TAG = "deliveryTag"
+    const val WEB_SOCKET_TAG = "webSocketTag"
 
     fun logD(tag: String, message: Any) {
         if (isWorkerTag(tag)) {

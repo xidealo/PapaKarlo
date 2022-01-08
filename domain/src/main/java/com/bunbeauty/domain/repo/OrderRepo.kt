@@ -11,4 +11,10 @@ interface OrderRepo {
     fun observeOrderByUuid(orderUuid: String): Flow<Order?>
 
     suspend fun createOrder(token: String, createdOrder: CreatedOrder): Order?
+
+    fun observeOrderUpdates(token: String): Flow<Order>
+
+    suspend fun updateOrderStatus(order: Order)
+
+    suspend fun stopCheckOrderUpdates()
 }

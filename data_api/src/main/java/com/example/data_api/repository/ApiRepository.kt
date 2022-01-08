@@ -8,6 +8,9 @@ import com.bunbeauty.common.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Constants.COMPANY_UUID_PARAMETER
 import com.bunbeauty.common.Constants.UUID_PARAMETER
+import com.bunbeauty.common.Logger.WEB_SOCKET_TAG
+import com.bunbeauty.common.Logger.logD
+import com.bunbeauty.common.Logger.logE
 import com.example.domain_api.model.server.*
 import com.example.domain_api.model.server.login.AuthResponseServer
 import com.example.domain_api.model.server.login.LoginPostServer
@@ -18,8 +21,13 @@ import com.example.domain_api.model.server.profile.patch.PatchUserServer
 import com.example.domain_api.repo.ApiRepo
 import io.ktor.client.*
 import io.ktor.client.features.*
+import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.http.cio.websocket.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -28,6 +36,8 @@ class ApiRepository @Inject constructor(
     private val client: HttpClient,
     private val json: Json
 ) : ApiRepo {
+
+    private var webSocketSession: DefaultClientWebSocketSession? = null
 
     // GET
 
@@ -142,7 +152,50 @@ class ApiRepository @Inject constructor(
         )
     }
 
+    // WEB_SOCKET
+
+    override fun subscribeOnOrderUpdates(token: String): Flow<OrderServer> {
+        return subscribeOnWebSocket(
+            path = "client/order/subscribe",
+            serializer = OrderServer.serializer(),
+            token
+        )
+    }
+
+    override suspend fun unsubscribeOnOrderUpdates() {
+        if (webSocketSession != null) {
+            webSocketSession?.close(CloseReason(CloseReason.Codes.NORMAL, "User logout"))
+            webSocketSession = null
+            logD(WEB_SOCKET_TAG, "webSocketSession closed")
+        }
+    }
+
     // COMMON
+
+    fun <S> subscribeOnWebSocket(path: String, serializer: KSerializer<S>, token: String): Flow<S> {
+        return flow {
+            try {
+                client.webSocket(
+                    HttpMethod.Get,
+                    path = path,
+                    request = {
+                        header(AUTHORIZATION_HEADER, BEARER + token)
+                    }
+                ) {
+                    webSocketSession = this
+                    while (true) {
+                        val message = incoming.receive() as? Frame.Text ?: continue
+                        val serverModel = json.decodeFromString(serializer, message.readText())
+                        emit(serverModel)
+                        logD(WEB_SOCKET_TAG, "Message: ${message.readText()}")
+                    }
+                }
+            } catch (e: Exception) {
+                logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
+                unsubscribeOnOrderUpdates()
+            }
+        }
+    }
 
     suspend fun <T> getDataWithAuth(
         path: String,

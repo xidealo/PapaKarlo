@@ -82,6 +82,8 @@ fun interactorModule() = module {
             menuProductWorkerUtil = get(),
             deliveryWorkerUtil = get(),
             userWorkerUtil = get(),
+            orderRepo = get(),
+            userInteractor = get(),
             dataStoreRepo = get(),
         )
     } bind IMainInteractor::class

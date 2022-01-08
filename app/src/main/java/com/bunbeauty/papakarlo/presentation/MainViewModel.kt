@@ -31,6 +31,7 @@ class MainViewModel @Inject constructor(
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
+        checkOrderUpdates()
     }
 
     private fun refreshData() {
@@ -55,5 +56,9 @@ class MainViewModel @Inject constructor(
         networkUtil.observeIsOnline().onEach { isOnline ->
             mutableIsOnline.value = isOnline
         }.launchIn(viewModelScope)
+    }
+
+    private fun checkOrderUpdates() {
+        mainInteractor.checkOrderUpdates()
     }
 }

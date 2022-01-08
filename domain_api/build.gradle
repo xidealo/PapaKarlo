@@ -49,4 +49,7 @@ dependencies {
     //ktor
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.jsonVersion"
 
+    //Сoroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.corountinesVersion"
+
 }

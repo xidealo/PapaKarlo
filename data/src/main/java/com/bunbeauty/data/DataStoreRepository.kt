@@ -21,10 +21,12 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
     private val Context.deferredTimeDataStore: DataStore<Preferences> by preferencesDataStore(name = DEFERRED_TIME_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
 
+    override val token: Flow<String?> = context.tokenDataStore.data.map {
+        it[TOKEN_KEY]
+    }
+
     override suspend fun getToken(): String? {
-        return context.tokenDataStore.data.map {
-            it[TOKEN_KEY]
-        }.first()
+        return token.first()
     }
 
     override suspend fun saveToken(token: String) {

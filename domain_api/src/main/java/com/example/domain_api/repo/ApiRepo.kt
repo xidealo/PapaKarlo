@@ -8,6 +8,7 @@ import com.example.domain_api.model.server.order.get.OrderServer
 import com.example.domain_api.model.server.order.post.OrderPostServer
 import com.example.domain_api.model.server.profile.get.ProfileServer
 import com.example.domain_api.model.server.profile.patch.PatchUserServer
+import kotlinx.coroutines.flow.Flow
 
 interface ApiRepo {
 
@@ -35,5 +36,8 @@ interface ApiRepo {
         userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
+
+    fun subscribeOnOrderUpdates(token: String): Flow<OrderServer>
+    suspend fun unsubscribeOnOrderUpdates()
 
 }
