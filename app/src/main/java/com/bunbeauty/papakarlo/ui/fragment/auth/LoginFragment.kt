@@ -36,11 +36,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         viewDataBinding.run {
             val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
             fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
-            fragmentLoginEtPhone.focusAndShowKeyboard()
+
             fragmentLoginBtnLogin.setOnClickListener {
                 hideKeyboard()
                 viewModel.onNextClicked(fragmentLoginEtPhone.text.toString())
             }
+
+            fragmentLoginEtPhone.focusAndShowKeyboard()
         }
 
         viewModel.phoneCheckedEvent.onEach { phoneCheckedEvent ->

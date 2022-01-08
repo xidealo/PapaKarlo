@@ -8,14 +8,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCategoryBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
-import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
+import com.bunbeauty.papakarlo.ui.adapter.diff_util.CategoryDiffCallback
 import com.bunbeauty.presentation.item.CategoryItem
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import javax.inject.Inject
 
 class CategoryAdapter @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(
-        DefaultDiffCallback()
+        CategoryDiffCallback()
     ) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CategoryViewHolder {
@@ -33,6 +33,20 @@ class CategoryAdapter @Inject constructor(private val resourcesProvider: IResour
 
             (binding as ElementCategoryBinding).run {
                 elementCategoryChipMain.text = item.name
+                updateSelected(item)
+            }
+        }
+
+        override fun onBind(item: CategoryItem, payloads: List<Any>) {
+            super.onBind(item, payloads)
+
+            if (payloads.last() as Boolean) {
+                (binding as ElementCategoryBinding).updateSelected(item)
+            }
+        }
+
+        private fun ElementCategoryBinding.updateSelected(item: CategoryItem) {
+            (binding as ElementCategoryBinding).run {
                 if (item.isSelected) {
                     elementCategoryChipMain.isClickable = false
                     elementCategoryChipMain.chipBackgroundColor =

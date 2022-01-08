@@ -27,6 +27,7 @@
     <dimen name="small_margin">4dp</dimen>
     <dimen name="very_small_margin">2dp</dimen>
     <dimen name="order_status_margin">64dp</dimen>
+    <dimen name="address_margin">40dp</dimen>
 
     <!-- PADDING -->
     <dimen name="large_padding">16dp</dimen>

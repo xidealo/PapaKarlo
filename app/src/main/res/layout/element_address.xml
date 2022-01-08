@@ -12,6 +12,7 @@
         <TextView
             android:id="@+id/element_address_tv_address"
             style="@style/LargeRegularWrapContentText"
+            android:layout_marginEnd="@dimen/address_margin"
             tools:text="Address" />
     </com.google.android.material.card.MaterialCardView>
 </layout>

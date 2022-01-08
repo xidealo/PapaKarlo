@@ -10,7 +10,9 @@
 
         <TextView
             android:id="@+id/fragment_orders_tv_empty_orders"
-            style="@style/MediumRegularWrapContentText"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:layout_margin="@dimen/medium_margin"
+            android:textAlignment="center"
             android:text="@string/msg_orders_empty"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
