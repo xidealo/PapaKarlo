@@ -19,6 +19,8 @@ class MenuViewModel @Inject constructor(
     private val stringUtil: IStringUtil,
 ) : CartViewModel() {
 
+    private var selectedCategoryUuid: String? = null
+
     private var categoryItemList: List<CategoryItem> = emptyList()
     private val mutableCategoryList: MutableStateFlow<List<CategoryItem>> =
         MutableStateFlow(categoryItemList)
@@ -41,6 +43,16 @@ class MenuViewModel @Inject constructor(
     }
 
     fun onCategorySelected(categoryUuid: String) {
+        setCategory(categoryUuid)
+        mutableMenuPosition.value =
+            menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
+    }
+
+    fun setCategory(categoryUuid: String) {
+        if (selectedCategoryUuid == categoryUuid) {
+            return
+        }
+        selectedCategoryUuid = categoryUuid
         categoryItemList = categoryItemList.mapIndexed { index, categoryItem ->
             if (categoryUuid == categoryItem.uuid) {
                 mutableCategoryPosition.value = index
@@ -52,13 +64,11 @@ class MenuViewModel @Inject constructor(
             )
         }
         mutableCategoryList.value = categoryItemList
-        mutableMenuPosition.value =
-            menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
     }
 
     fun checkSelectedCategory(menuPosition: Int) {
         categoryInteractor.getCurrentCategory(menuPosition, menuModelList)?.let { section ->
-            onCategorySelected(section.category.uuid)
+            setCategory(section.category.uuid)
         }
     }
 

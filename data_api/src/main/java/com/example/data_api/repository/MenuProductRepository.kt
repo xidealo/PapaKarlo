@@ -1,7 +1,6 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.product.MenuProduct
@@ -64,10 +63,6 @@ class MenuProductRepository @Inject constructor(
                         categoryEntity.uuid == localCategoryEntity.uuid
                     }
                 }.onEach { outdatedCategory ->
-                    logD(
-                        "testTag",
-                        "deleteCategoryReference " + menuProductWithCategory.menuProduct.name + " - " + outdatedCategory.name
-                    )
                     val categoryReference = MenuProductCategoryReference(
                         menuProductUuid = menuProductWithCategory.menuProduct.uuid,
                         categoryUuid = outdatedCategory.uuid
@@ -80,10 +75,6 @@ class MenuProductRepository @Inject constructor(
                             categoryEntity.uuid == localCategoryEntity.uuid
                         }
                     }.map { newCategory ->
-                        logD(
-                            "testTag",
-                            "insertCategoryReference " + menuProductWithCategory.menuProduct.name + " - " + newCategory.name
-                        )
                         MenuProductCategoryReference(
                             menuProductUuid = menuProductWithCategory.menuProduct.uuid,
                             categoryUuid = newCategory.uuid
