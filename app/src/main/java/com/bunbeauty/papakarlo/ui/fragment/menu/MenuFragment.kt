@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import com.bunbeauty.papakarlo.extensions.scrollToPositionWithOffset
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.ui.MainActivity
 import com.bunbeauty.papakarlo.ui.adapter.CategoryAdapter
@@ -40,7 +41,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        disableBackPressedCallback()
+        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewDataBinding.run {
@@ -60,9 +61,12 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
 
             categoryAdapter.setOnItemClickListener { categoryItem ->
                 viewModel.onCategorySelected(categoryItem.uuid)
-                (fragmentMenuRvProducts.layoutManager as LinearLayoutManager)
-                    .scrollToPositionWithOffset(viewModel.getMenuPosition(categoryItem), 0)
             }
+            viewModel.menuPosition.onEach { menuPosition ->
+                if (menuPosition != null) {
+                    fragmentMenuRvProducts.scrollToPositionWithOffset(menuPosition, 0)
+                }
+            }.startedLaunch()
 
             fragmentMenuRvProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

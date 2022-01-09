@@ -19,8 +19,6 @@ class MenuViewModel @Inject constructor(
     private val stringUtil: IStringUtil,
 ) : CartViewModel() {
 
-    private var selectedCategoryUuid: String? = null
-
     private var categoryItemList: List<CategoryItem> = emptyList()
     private val mutableCategoryList: MutableStateFlow<List<CategoryItem>> =
         MutableStateFlow(categoryItemList)
@@ -34,34 +32,34 @@ class MenuViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val menuList: StateFlow<List<MenuItem>> = mutableMenuList.asStateFlow()
 
+    private val mutableMenuPosition: MutableStateFlow<Int?> = MutableStateFlow(null)
+    val menuPosition: StateFlow<Int?> = mutableMenuPosition.asStateFlow()
+
     init {
         observeCategoryList()
         observeMenuList()
     }
 
-    fun onCategorySelected(categoryItemUuid: String) {
-        selectedCategoryUuid = categoryItemUuid
+    fun onCategorySelected(categoryUuid: String) {
         categoryItemList = categoryItemList.mapIndexed { index, categoryItem ->
-            if (selectedCategoryUuid == categoryItem.uuid) {
+            if (categoryUuid == categoryItem.uuid) {
                 mutableCategoryPosition.value = index
             }
             CategoryItem(
                 uuid = categoryItem.uuid,
                 name = categoryItem.name,
-                isSelected = (selectedCategoryUuid == categoryItem.uuid)
+                isSelected = (categoryUuid == categoryItem.uuid)
             )
         }
         mutableCategoryList.value = categoryItemList
+        mutableMenuPosition.value =
+            menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
     }
 
     fun checkSelectedCategory(menuPosition: Int) {
         categoryInteractor.getCurrentCategory(menuPosition, menuModelList)?.let { section ->
             onCategorySelected(section.category.uuid)
         }
-    }
-
-    fun getMenuPosition(currentCategoryItem: CategoryItem): Int {
-        return menuProductInteractor.getCurrentMenuPosition(currentCategoryItem.uuid, menuModelList)
     }
 
     fun onMenuItemClicked(menuItem: MenuItem) {
@@ -76,9 +74,7 @@ class MenuViewModel @Inject constructor(
 
     private fun observeCategoryList() {
         categoryInteractor.observeCategoryList().launchOnEach { categoryList ->
-            if (selectedCategoryUuid == null && categoryList.isNotEmpty()) {
-                selectedCategoryUuid = categoryList.first().uuid
-            }
+            val selectedCategoryUuid = categoryList.firstOrNull()?.uuid
             categoryItemList = categoryList.map { category ->
                 CategoryItem(
                     uuid = category.uuid,

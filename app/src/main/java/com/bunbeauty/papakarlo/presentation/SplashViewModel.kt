@@ -14,6 +14,10 @@ class SplashViewModel @Inject constructor(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
+    init {
+        checkIsUpdated()
+    }
+
     fun checkIsUpdated() {
         viewModelScope.launch {
             val isUpdated = updateInteractor.checkIsUpdated(BuildConfig.VERSION_CODE)

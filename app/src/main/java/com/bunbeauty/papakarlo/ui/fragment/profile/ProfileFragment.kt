@@ -22,7 +22,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        disableBackPressedCallback()
+        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         setupLastOrder()

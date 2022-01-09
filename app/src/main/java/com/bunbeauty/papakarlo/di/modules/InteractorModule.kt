@@ -143,7 +143,7 @@ fun interactorModule() = module {
     }
     single<ICategoryInteractor> {
         CategoryInteractor(
-            categoryRepo = get(),
+            categoryRepo = get()
         )
     }
     single<IMenuProductInteractor> {

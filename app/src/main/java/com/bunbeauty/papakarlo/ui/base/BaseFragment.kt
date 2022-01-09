@@ -38,7 +38,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     val viewDataBinding: B
         get() = checkNotNull(mutableViewDataBinding)
 
-    var isBackPressedDisabled = false
+    var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onAttach(context: Context) {
@@ -91,21 +91,23 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        if (isBackPressedDisabled) {
-            onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {}
+        if (isBackPressedOverridden) {
+            onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {
+                activity?.moveTaskToBack(true)
+            }
         }
     }
 
     override fun onStop() {
-        if (isBackPressedDisabled) {
+        if (isBackPressedOverridden) {
             onBackPressedCallback?.remove()
         }
 
         super.onStop()
     }
 
-    protected fun disableBackPressedCallback() {
-        isBackPressedDisabled = true
+    protected fun overrideBackPressedCallback() {
+        isBackPressedOverridden = true
     }
 
     protected fun hideKeyboard() {

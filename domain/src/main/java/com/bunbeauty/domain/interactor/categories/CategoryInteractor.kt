@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CategoryInteractor @Inject constructor(@Api private val categoryRepo: CategoryRepo) :
-    ICategoryInteractor {
+class CategoryInteractor @Inject constructor(
+    @Api private val categoryRepo: CategoryRepo
+) : ICategoryInteractor {
 
     override fun observeCategoryList(): Flow<List<Category>> {
         return categoryRepo.observeCategoryList().map { categoryList ->
@@ -29,4 +30,5 @@ class CategoryInteractor @Inject constructor(@Api private val categoryRepo: Cate
                 menuPosition >= position
             }
     }
+
 }
