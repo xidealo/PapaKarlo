@@ -1,6 +1,7 @@
 package com.example.data_api.repository
 
 import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
+import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.product.MenuProduct
@@ -9,6 +10,7 @@ import com.example.data_api.dao.MenuProductDao
 import com.example.data_api.handleListResult
 import com.example.domain_api.mapper.IMenuProductMapper
 import com.example.domain_api.model.entity.product_with_category.MenuProductCategoryReference
+import com.example.domain_api.model.entity.product_with_category.MenuProductWithCategory
 import com.example.domain_api.repo.ApiRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -31,19 +33,7 @@ class MenuProductRepository @Inject constructor(
                         }
                     menuProductDao.insertAll(menuProductList)
 
-                    menuProductWithCategoryList.forEach { menuProductWithCategory ->
-                        menuProductDao.deleteCategoryReferenceByMenuProductUuid(
-                            menuProductWithCategory.menuProduct.uuid
-                        )
-                        val categoryReferenceList =
-                            menuProductWithCategory.categoryList.map { category ->
-                                MenuProductCategoryReference(
-                                    menuProductUuid = menuProductWithCategory.menuProduct.uuid,
-                                    categoryUuid = category.uuid,
-                                )
-                            }
-                        menuProductDao.insertAllCategoryReference(categoryReferenceList)
-                    }
+                    compareMenuProductCategoryReferenceWithLocal(menuProductWithCategoryList)
                 }
             }
     }
@@ -61,6 +51,48 @@ class MenuProductRepository @Inject constructor(
         val menuProduct = menuProductDao.getMenuProductByUuid(menuProductUuid)
         return menuProduct?.let {
             menuProductMapper.toModel(menuProduct)
+        }
+    }
+
+    suspend fun compareMenuProductCategoryReferenceWithLocal(menuProductWithCategoryList: List<MenuProductWithCategory>) {
+        menuProductWithCategoryList.forEach { menuProductWithCategory ->
+            val localMenuProductWithCategory =
+                menuProductDao.getMenuProductWithCategoryByUuid(menuProductWithCategory.menuProduct.uuid)
+            if (localMenuProductWithCategory != null) {
+                localMenuProductWithCategory.categoryList.filter { localCategoryEntity ->
+                    menuProductWithCategory.categoryList.none { categoryEntity ->
+                        categoryEntity.uuid == localCategoryEntity.uuid
+                    }
+                }.onEach { outdatedCategory ->
+                    logD(
+                        "testTag",
+                        "deleteCategoryReference " + menuProductWithCategory.menuProduct.name + " - " + outdatedCategory.name
+                    )
+                    val categoryReference = MenuProductCategoryReference(
+                        menuProductUuid = menuProductWithCategory.menuProduct.uuid,
+                        categoryUuid = outdatedCategory.uuid
+                    )
+                    menuProductDao.deleteCategoryReference(categoryReference)
+                }
+                val menuProductCategoryReferenceList =
+                    menuProductWithCategory.categoryList.filter { categoryEntity ->
+                        localMenuProductWithCategory.categoryList.none { localCategoryEntity ->
+                            categoryEntity.uuid == localCategoryEntity.uuid
+                        }
+                    }.map { newCategory ->
+                        logD(
+                            "testTag",
+                            "insertCategoryReference " + menuProductWithCategory.menuProduct.name + " - " + newCategory.name
+                        )
+                        MenuProductCategoryReference(
+                            menuProductUuid = menuProductWithCategory.menuProduct.uuid,
+                            categoryUuid = newCategory.uuid
+                        )
+                    }
+                menuProductDao.insertCategoryReferenceList(
+                    menuProductCategoryReferenceList
+                )
+            }
         }
     }
 }

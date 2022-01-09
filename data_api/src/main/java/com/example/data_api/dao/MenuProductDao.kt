@@ -1,9 +1,6 @@
 package com.example.data_api.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.bunbeauty.data.BaseDao
 import com.example.domain_api.model.entity.product.MenuProductEntity
 import com.example.domain_api.model.entity.product_with_category.MenuProductCategoryReference
@@ -22,6 +19,9 @@ interface MenuProductDao: BaseDao<MenuProductEntity> {
     @Query("SELECT * FROM MenuProductEntity WHERE uuid = :uuid AND visible = 1")
     suspend fun getMenuProductByUuid(uuid: String): MenuProductEntity?
 
+    @Query("SELECT * FROM MenuProductEntity WHERE uuid = :uuid AND visible = 1")
+    suspend fun getMenuProductWithCategoryByUuid(uuid: String): MenuProductWithCategory?
+
     // MenuProductCategoryReference
 
     @Query("DELETE FROM MenuProductCategoryReference WHERE menuProductUuid = :menuProductUuid")
@@ -29,5 +29,8 @@ interface MenuProductDao: BaseDao<MenuProductEntity> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @JvmSuppressWildcards
-    suspend fun insertAllCategoryReference(objects: List<MenuProductCategoryReference>)
+    suspend fun insertCategoryReferenceList(categoryReferenceList: List<MenuProductCategoryReference>)
+
+    @Delete
+    suspend fun deleteCategoryReference(menuProductCategoryReference: MenuProductCategoryReference)
 }
