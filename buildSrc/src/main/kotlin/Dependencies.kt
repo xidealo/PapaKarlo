@@ -1,34 +1,34 @@
 object Versions {
-    const val kotlin = "1.5.31"
+
     const val gradle = "7.0.2"
+    const val kotlin = "1.6.10"
+    const val googleServices = "4.3.10"
+    const val crashlytics = "2.8.1"
+    const val navigation = "2.4.0-rc01"
+
     const val kotlinCoroutines = "1.5.2-native-mt"
     const val ktor = "1.6.5"
     const val kotlinxSerialization = "1.3.0"
     const val koin = "3.1.2"
-    const val sqlDelight = "1.5.0"
 
+    const val sqlDelight = "1.5.0"
     const val slf4j = "1.7.30"
+
     const val constraintLayout = "2.1.1"
 
+    const val dagger = "2.40.1"
+
+    const val room = "2.4.0-rc01"
     const val junit = "4.13"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
     const val appCompact = "1.3.1"
     const val coil = "1.4.0"
-    const val leakCanaryVersion = "2.7"
-    const val dataStorePreferencesVersion = "1.0.0"
+    const val timePicker = "4.2.3"
 
-    const val analytics = "20.0.0"
-    const val crashlytics = "18.2.5"
-    const val firestore = "23.0.3"
-    const val dynamicLinks = "20.1.1"
+    const val dataStorePreferences = "1.0.0"
 
-    const val googleServices = "4.3.10"
-    const val crashlyticsClassPath = "2.8.1"
 
-    const val navigation = "2.4.0-rc01"
-
-    const val firebaseBom = "28.4.0"
     const val grpc = "1.40.0"
 
     const val accompanistVersion = "0.17.0"
@@ -38,7 +38,6 @@ object Versions {
     const val activity = "1.4.0"
     const val fragment = "1.4.0"
     const val lifecycle = "2.4.0"
-    const val livedata = "2.4.0"
 
     const val googleMap = "17.0.1"
     const val googleMapUtils = "2.2.3"
@@ -47,6 +46,12 @@ object Versions {
     const val jobaTime = "2.10.13"
 
     const val workManagerVersion = "2.7.1"
+
+    const val leakcanary = "2.8.1"
+
+    const val firebase = "29.0.3"
+
+    const val pinEntryEditText = "2.0.6"
 }
 
 object Application {
@@ -66,15 +71,16 @@ object AndroidSdk {
 }
 
 object ClassPath {
-    const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
-    const val buildTool = "com.android.tools.build:gradle:${Versions.gradle}"
-    const val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
-    const val crashlytics =
-        "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlyticsClassPath}"
     const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
-    const val navigationServices =
+    const val firebaseCrashlyticsGradle =
+        "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlytics}"
+    const val navigationSafeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+
+    const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 }
 
 object Plugin {
@@ -87,9 +93,7 @@ object Plugin {
     const val kapt = "kotlin-kapt"
     const val navigation = "androidx.navigation.safeargs"
     const val multiplatform = "multiplatform"
-    const val nativeCocoapods = "native.cocoapods"
     const val googleService = "com.google.gms.google-services"
-    const val firebasePerf = "com.google.firebase.firebase-perf"
     const val crashlytics = "com.google.firebase.crashlytics"
 }
 
@@ -102,39 +106,25 @@ object AndroidX {
 
 object Google {
     const val material = "com.google.android.material:material:${Versions.material}"
-    const val playServices = "com.google.android.gms:play-services-maps:${Versions.googleMap}"
     const val androidMaps = "com.google.maps.android:android-maps-utils:${Versions.googleMapUtils}"
-    const val mapsUtils = "com.google.maps.android:maps-utils-ktx:${Versions.googleMapUtilsKTX}"
 }
 
-object Accompanist {
-    const val navigationAnimation =
-        "com.google.accompanist:accompanist-navigation-animation:${Versions.accompanistVersion}"
+object Dagger {
+    const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
+    const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    const val android = "com.google.dagger:dagger-android:${Versions.dagger}"
+    const val androidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
 }
 
-object SquareUp {
-    const val leakCanary =
-        "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanaryVersion}"
+object Room {
+    const val runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 }
 
 object Test {
     const val junit = "junit:junit:${Versions.junit}"
 }
-
-/*object Compose {
-    const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-    const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
-    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
-    const val material = "androidx.compose.material:material:${Versions.compose}"
-    const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
-    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
-    const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
-    const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
-    const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintCompose}"
-    const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
-}*/
 
 object Koin {
     const val core = "io.insert-koin:koin-core:${Versions.koin}"
@@ -159,25 +149,22 @@ object Navigation {
 }
 
 object Ktor {
-    const val clientCore = "io.ktor:ktor-client-core:${Versions.ktor}"
-    const val clientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
     const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     const val clientSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
-    const val clientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
     const val clientWebsockets = "io.ktor:ktor-client-websockets:${Versions.ktor}"
     const val clientOkhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
-
-    const val clientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
-    const val clientIos = "io.ktor:ktor-client-ios:${Versions.ktor}"
-    const val slf4j = "org.slf4j:slf4j-simple:${Versions.slf4j}"
 }
 
 object Coil {
-    const val coilAccompanist = "io.coil-kt:coil:${Versions.coil}"
+    const val coil = "io.coil-kt:coil:${Versions.coil}"
 }
 
-object JobaTime {
-    const val jobaTime = "joda-time:joda-time:${Versions.jobaTime}"
+object TimePicker {
+    const val timePicker = "com.wdullaer:materialdatetimepicker:${Versions.timePicker}"
+}
+
+object JodaTime {
+    const val jodaTime = "joda-time:joda-time:${Versions.jobaTime}"
 }
 
 object WorkManager {
@@ -187,7 +174,7 @@ object WorkManager {
 
 object DataStore {
     const val dataStorePreferences =
-        "androidx.datastore:datastore-preferences:${Versions.dataStorePreferencesVersion}"
+        "androidx.datastore:datastore-preferences:${Versions.dataStorePreferences}"
 }
 
 object Grpc {
@@ -200,13 +187,17 @@ object Serialization {
 }
 
 object Firebase {
-    const val analytics = "com.google.firebase:firebase-analytics:${Versions.analytics}"
-    const val perf = "com.google.firebase:firebase-perf:${Versions.analytics}"
-    const val crashlytics = "com.google.firebase:firebase-crashlytics:${Versions.crashlytics}"
-    const val firestore = "com.google.firebase:firebase-firestore-ktx:${Versions.firestore}"
-    const val dynamicLink =
-        "com.google.firebase:firebase-dynamic-links-ktx:${Versions.dynamicLinks}"
-    const val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val bom = "com.google.firebase:firebase-bom:${Versions.firebase}"
+    const val crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
+    const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
+    const val auth = "com.google.firebase:firebase-auth"
+    const val authKtx = "com.google.firebase:firebase-auth-ktx"
+}
+
+object PinEntryEditText {
+    const val pinEntryEditText = "com.alimuzaffar.lib:pinentryedittext:${Versions.pinEntryEditText}"
+    const val group = "androidx.appcompat"
+    const val module = "appcompat"
 }
 
 object SqlDelight {
@@ -222,16 +213,33 @@ object SqlDelight {
 }
 
 object Coroutine {
-    const val coroutineCore =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
+    const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
 }
 
 object Lifecycle {
-    const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
-    const val lifecycleViewModel =
-        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
+    const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
+    const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
     const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
-    const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.livedata}"
+    const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 }
+
+object Leakcanary {
+    const val android = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
+}
+
+/*object Compose {
+    const val ui = "androidx.compose.ui:ui:${Versions.compose}"
+    const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
+    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
+    const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
+    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+    const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
+    const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintCompose}"
+    const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
+}*/

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.modules
+package com.example.domain_firebase
 
 import com.bunbeauty.data_firebase.Firebase
 import com.bunbeauty.data_firebase.repository.*

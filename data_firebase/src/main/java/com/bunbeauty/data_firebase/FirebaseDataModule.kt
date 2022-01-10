@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.modules
+package com.bunbeauty.data_firebase
 
 import android.content.Context
 import androidx.room.Room

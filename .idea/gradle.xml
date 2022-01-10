@@ -16,10 +16,8 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data_api" />
-            <option value="$PROJECT_DIR$/data_firebase" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain_api" />
-            <option value="$PROJECT_DIR$/domain_firebase" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/shared" />
           </set>
