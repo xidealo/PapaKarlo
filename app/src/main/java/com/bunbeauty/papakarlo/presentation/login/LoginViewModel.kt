@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(
             }
         } else {
             mutableIsLoading.value = false
-            showError(resourcesProvider.getString(R.string.error_login_phone))
+            showError(resourcesProvider.getString(R.string.error_login_phone), true)
         }
     }
 
@@ -69,7 +69,7 @@ class LoginViewModel @Inject constructor(
                 R.string.error_login_something_went_wrong
             }
         }
-        showError(resourcesProvider.getString(errorResourceId))
+        showError(resourcesProvider.getString(errorResourceId), true)
     }
 
     fun onCodeSent(

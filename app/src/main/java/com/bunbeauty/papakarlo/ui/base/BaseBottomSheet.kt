@@ -69,10 +69,15 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
         val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
         viewModel.message.onEach { message ->
-            viewDataBinding.root.showSnackbar(message, colorOnPrimary, colorPrimary)
+            viewDataBinding.root.showSnackbar(
+                message.message,
+                colorOnPrimary,
+                colorPrimary,
+                message.isTop
+            )
         }.startedLaunch()
         viewModel.error.onEach { error ->
-            viewDataBinding.root.showSnackbar(error, colorOnError, colorError)
+            viewDataBinding.root.showSnackbar(error.message, colorOnError, colorError, error.isTop)
         }.startedLaunch()
     }
 

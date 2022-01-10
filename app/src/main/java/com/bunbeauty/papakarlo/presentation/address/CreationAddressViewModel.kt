@@ -78,9 +78,9 @@ class CreationAddressViewModel @Inject constructor(
                 floor,
             )
             if (userAddress == null) {
-                showError(resourcesProvider.getString(R.string.error_create_address_fail))
+                showError(resourcesProvider.getString(R.string.error_create_address_fail), false)
             } else {
-                showMessage(resourcesProvider.getString(R.string.msg_create_address_created))
+                showMessage(resourcesProvider.getString(R.string.msg_create_address_created), false)
             }
             goBack()
         }

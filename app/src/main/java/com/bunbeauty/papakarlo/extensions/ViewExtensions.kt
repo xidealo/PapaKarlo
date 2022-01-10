@@ -49,18 +49,28 @@ fun View.toggleVisibilityInvisibility(isVisible: Boolean): View {
     return this
 }
 
-fun View.showSnackbar(errorMessage: String, textColor: Int, backgroundColor: Int) {
+fun View.showSnackbar(errorMessage: String, textColor: Int, backgroundColor: Int, isTop: Boolean) {
     val snack = Snackbar.make(this, errorMessage, Snackbar.LENGTH_SHORT)
         .setBackgroundTint(backgroundColor)
         .setTextColor(textColor)
         .setActionTextColor(textColor)
-    val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-        gravity = Gravity.TOP
-        setMargins(getPixels(context, 16), getPixels(context, 72), getPixels(context, 16), 0)
-    }
+
     snack.run {
-        view.layoutParams = layoutParams
-        view.findViewById<TextView>(R.id.snackbar_text).textAlignment = View.TEXT_ALIGNMENT_CENTER
+        if (isTop) {
+            view.layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
+                gravity = Gravity.TOP
+                setMargins(
+                    getPixels(context, 16),
+                    getPixels(context, 64),
+                    getPixels(context, 16),
+                    0
+                )
+            }
+        } else {
+            setAnchorView(R.id.activity_main_bnv_bottom_navigation)
+        }
+        view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
+            View.TEXT_ALIGNMENT_CENTER
         show()
     }
 }

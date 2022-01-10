@@ -22,7 +22,7 @@ open class CartViewModel : BaseViewModel() {
         viewModelScope.launch {
             val cartProduct = baseCartProductInteractor.addProductToCart(menuProductUuid)
             if (cartProduct == null) {
-                showError(baseResourcesProvider.getString(R.string.error_consumer_cart_full))
+                showError(baseResourcesProvider.getString(R.string.error_consumer_cart_full), true)
             }
         }
     }

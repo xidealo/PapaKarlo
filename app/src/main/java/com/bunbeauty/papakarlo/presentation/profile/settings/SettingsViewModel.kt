@@ -64,10 +64,10 @@ class SettingsViewModel @Inject constructor(
             val user = userInteractor.updateUserEmail(email ?: "")
             if (user == null) {
                 mutableUserState.value = userValue.toSuccessOrEmpty()
-                showError(resourcesProvider.getString(R.string.error_settings_email))
+                showError(resourcesProvider.getString(R.string.error_settings_email), false)
             } else {
                 mutableUserState.value = user.toStateSuccess()
-                showMessage(resourcesProvider.getString(R.string.msg_settings_email_updated))
+                showMessage(resourcesProvider.getString(R.string.msg_settings_email_updated), false)
             }
         }
     }

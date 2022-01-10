@@ -65,7 +65,7 @@ class ConfirmViewModel @Inject constructor(
                 R.string.error_confirm_something_went_wrong
             }
         }
-        showError(resourcesProvider.getString(errorResourceId))
+        showError(resourcesProvider.getString(errorResourceId), true)
         logD(AUTH_TAG, error)
     }
 

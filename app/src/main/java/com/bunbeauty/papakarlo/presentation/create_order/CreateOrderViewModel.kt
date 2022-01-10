@@ -136,14 +136,14 @@ class CreateOrderViewModel @Inject constructor(
             || (!isDelivery && (selectedCafeUuid == null))
             || selectedAddress == null
         ) {
-            showError(resourcesProvider.getString(R.string.error_create_order_address))
+            showError(resourcesProvider.getString(R.string.error_create_order_address), false)
             mutableIsLoading.value = false
             return
         }
 
         viewModelScope.launch {
             if (!userInteractor.isUserAuthorize()) {
-                showError(resourcesProvider.getString(R.string.error_create_order_user))
+                showError(resourcesProvider.getString(R.string.error_create_order_user), false)
                 goBack()
                 return@launch
             }
@@ -160,12 +160,14 @@ class CreateOrderViewModel @Inject constructor(
 
             if (order == null) {
                 showError(
-                    resourcesProvider.getString(R.string.error_create_order_something_went_wrong)
+                    resourcesProvider.getString(R.string.error_create_order_something_went_wrong),
+                    false
                 )
                 mutableIsLoading.value = false
             } else {
                 showMessage(
-                    resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code
+                    resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code,
+                    false
                 )
                 router.navigate(toProfileFragment())
             }

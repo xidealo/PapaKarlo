@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.presentation.model.FieldError
+import com.bunbeauty.presentation.model.Message
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -18,24 +19,34 @@ abstract class BaseViewModel : ViewModel() {
 
     var bundle: Bundle? = null
 
-    private val mutableMessage: MutableSharedFlow<String> = MutableSharedFlow(replay = 0)
-    val message: SharedFlow<String> = mutableMessage.asSharedFlow()
+    private val mutableMessage: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
+    val message: SharedFlow<Message> = mutableMessage.asSharedFlow()
 
-    private val mutableError: MutableSharedFlow<String> = MutableSharedFlow(replay = 0)
-    val error: SharedFlow<String> = mutableError.asSharedFlow()
+    private val mutableError: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
+    val error: SharedFlow<Message> = mutableError.asSharedFlow()
 
     private val mutableFieldError = MutableSharedFlow<FieldError>(0)
     val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
 
-    fun showMessage(message: String) {
+    fun showMessage(message: String, isTop: Boolean) {
         viewModelScope.launch {
-            mutableMessage.emit(message)
+            mutableMessage.emit(
+                Message(
+                    message = message,
+                    isTop = isTop
+                )
+            )
         }
     }
 
-    fun showError(error: String) {
+    fun showError(error: String, isTop: Boolean) {
         viewModelScope.launch {
-            mutableError.emit(error)
+            mutableError.emit(
+                Message(
+                    message = error,
+                    isTop = isTop
+                )
+            )
         }
     }
 

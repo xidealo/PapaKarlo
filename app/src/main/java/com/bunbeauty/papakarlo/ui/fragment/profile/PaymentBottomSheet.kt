@@ -31,12 +31,18 @@ class PaymentBottomSheet : BaseBottomSheet<BottomSheetPaymentBinding>() {
             bottomSheetPaymentNcCardNumber.cardText = CARD_NUMBER
             bottomSheetPaymentNcCardNumber.setOnClickListener {
                 copyToBuffer(CARD_NUMBER_LABEL, CARD_NUMBER)
-                viewModel.showMessage(requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied))
+                viewModel.showMessage(
+                    requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied),
+                    true
+                )
             }
             bottomSheetPaymentNcPhoneNumber.cardText = PHONE_NUMBER
             bottomSheetPaymentNcPhoneNumber.setOnClickListener {
                 copyToBuffer(PHONE_NUMBER_LABEL, PHONE_NUMBER)
-                viewModel.showMessage(requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied))
+                viewModel.showMessage(
+                    requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied),
+                    true
+                )
             }
         }
     }
