@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/element_cafe_mcv_main"
+    style="@style/MatchParentCard">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/element_cafe_mcv_main"
-        style="@style/MatchParentCard">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/medium_padding">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/medium_padding">
+        <TextView
+            android:id="@+id/element_cafe_tv_address"
+            style="@style/LargeBoldWrapConstraintText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Address" />
 
-            <TextView
-                android:id="@+id/element_cafe_tv_address"
-                style="@style/LargeBoldWrapConstraintText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Address" />
+        <TextView
+            android:id="@+id/element_cafe_tv_work_time"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:layout_marginTop="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_address"
+            tools:text="10:00 - 20:00" />
 
-            <TextView
-                android:id="@+id/element_cafe_tv_work_time"
-                style="@style/MediumRegularWrapConstraintsText"
-                android:layout_marginTop="@dimen/medium_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_address"
-                tools:text="10:00 - 20:00" />
+        <TextView
+            android:id="@+id/element_cafe_tv_time_status"
+            style="@style/MediumRegularWrapConstraintsText"
+            android:layout_marginTop="@dimen/very_small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_work_time"
+            tools:text="Закрыто" />
 
-            <TextView
-                android:id="@+id/element_cafe_tv_time_status"
-                style="@style/MediumRegularWrapConstraintsText"
-                android:layout_marginTop="@dimen/very_small_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/element_cafe_tv_work_time"
-                tools:text="Закрыто" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-</layout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
 
 
 

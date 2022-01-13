@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment.auth
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,12 +18,13 @@ import com.bunbeauty.presentation.enums.SuccessLoginDirection
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>() {
+class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @Inject
     lateinit var phoneVerificationUtil: IPhoneVerificationUtil
 
     override val viewModel: LoginViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentLoginBinding::bind)
 
     private val successLoginDirection: SuccessLoginDirection by argument()
 
@@ -33,7 +36,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.onViewCreated()
-        viewDataBinding.run {
+        viewBinding.run {
             val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
             fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
 
@@ -52,8 +55,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             )
         }.startedLaunch()
         viewModel.isLoading.onEach { isLoading ->
-            viewDataBinding.fragmentLoginGroupMain.toggleVisibility(!isLoading)
-            viewDataBinding.fragmentLoginPbLoading.toggleVisibility(isLoading)
+            viewBinding.fragmentLoginGroupMain.toggleVisibility(!isLoading)
+            viewBinding.fragmentLoginPbLoading.toggleVisibility(isLoading)
         }.startedLaunch()
         phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->
             viewModel.onCodeSent(

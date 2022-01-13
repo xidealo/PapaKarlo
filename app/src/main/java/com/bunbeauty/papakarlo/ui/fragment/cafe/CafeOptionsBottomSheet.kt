@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.common.Constants.MAPS_LINK
 import com.bunbeauty.common.Constants.PHONE_LINK
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,9 +18,10 @@ import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 import kotlinx.coroutines.flow.onEach
 
-class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() {
+class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_options) {
 
     override val viewModel: CafeOptionsViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetCafeOptionsBinding::bind)
 
     private val cafeUuid: String by argument()
 
@@ -31,7 +34,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet<BottomSheetCafeOptionsBinding>() 
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCafe(cafeUuid)
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.cafeOptions.onEach { cafeOptions ->
                 cafeOptions ?: return@onEach
 

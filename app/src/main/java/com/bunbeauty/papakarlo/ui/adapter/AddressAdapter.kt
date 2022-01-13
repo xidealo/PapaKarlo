@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
@@ -20,16 +18,16 @@ class AddressAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(viewGroup.context)
         val binding = ElementAddressBinding.inflate(inflater, viewGroup, false)
 
-        return AddressViewHolder(binding.root)
+        return AddressViewHolder(binding)
     }
 
-    inner class AddressViewHolder(view: View) :
-        BaseViewHolder<AddressItem>(DataBindingUtil.bind(view)!!) {
+    inner class AddressViewHolder(private val elementAddressBinding: ElementAddressBinding) :
+        BaseViewHolder<AddressItem>(elementAddressBinding) {
 
         override fun onBind(item: AddressItem) {
             super.onBind(item)
 
-            (binding as ElementAddressBinding).run {
+            elementAddressBinding.run {
                 elementAddressTvAddress.text = item.address
                 if (hasItemClickListener) {
                     elementAddressMcvMain.setOnClickListener {

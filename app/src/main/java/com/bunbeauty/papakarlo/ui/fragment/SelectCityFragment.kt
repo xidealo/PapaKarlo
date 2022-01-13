@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -11,9 +13,10 @@ import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 
-class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
+class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
 
     override val viewModel: SelectCityViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentSelectCityBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -22,7 +25,7 @@ class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.cityList.onEach { cityList ->
                 fragmentSelectCityPbLoading.toggleVisibility(cityList == null)
                 if (cityList != null) {
@@ -32,13 +35,12 @@ class SelectCityFragment : BaseFragment<FragmentSelectCityBinding>() {
                             layoutInflater,
                             fragmentSelectCityLlCityList,
                             true
-                        )
-                            .apply {
-                                elementCityTvName.text = city.name
-                                root.setOnClickListener {
-                                    viewModel.onCitySelected(city)
-                                }
+                        ).apply {
+                            elementCityTvName.text = city.name
+                            root.setOnClickListener {
+                                viewModel.onCitySelected(city)
                             }
+                        }
                     }
                 }
             }.startedLaunch()

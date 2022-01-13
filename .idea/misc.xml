@@ -73,7 +73,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_deferred_time.xml" value="0.4395040615647713" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_logout.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/bottom_sheet_one_line_action.xml" value="0.7107969151670951" />
+        <entry key="app/src/main/res/layout/bottom_sheet_one_line_action.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bottom_sheet_select_city.xml" value="0.39791666666666664" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_addresses.xml" value="0.5250255362614913" />
@@ -102,7 +102,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_select_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.5265577119509703" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.5178217821782178" />
         <entry key="app/src/main/res/layout/fragment_start.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.33541666666666664" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.45740740740740743" />

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.papakarlo.R
@@ -13,9 +14,10 @@ import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 
-class CreateAddressFragment : BaseFragment<FragmentCreateAddressBinding>() {
+class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
 
     override val viewModel: CreationAddressViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentCreateAddressBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -24,7 +26,7 @@ class CreateAddressFragment : BaseFragment<FragmentCreateAddressBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             textInputMap[STREET_ERROR_KEY] = fragmentCreateAddressTilStreet
             textInputMap[HOUSE_ERROR_KEY] = fragmentCreateAddressTilHouse
 

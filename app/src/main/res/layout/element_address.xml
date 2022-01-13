@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/element_address_mcv_main"
+    style="@style/MatchParentShadowlessCard"
+    app:contentPadding="@dimen/large_padding">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/element_address_mcv_main"
-        style="@style/MatchParentShadowlessCard"
-        app:contentPadding="@dimen/large_padding">
-
-        <TextView
-            android:id="@+id/element_address_tv_address"
-            style="@style/LargeRegularWrapContentText"
-            android:layout_marginEnd="@dimen/address_margin"
-            tools:text="Address" />
-    </com.google.android.material.card.MaterialCardView>
-</layout>
+    <TextView
+        android:id="@+id/element_address_tv_address"
+        style="@style/LargeRegularWrapContentText"
+        android:layout_marginEnd="@dimen/address_margin"
+        tools:text="Address" />
+</com.google.android.material.card.MaterialCardView>

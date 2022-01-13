@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.CARD_NUMBER
 import com.bunbeauty.common.Constants.CARD_NUMBER_LABEL
 import com.bunbeauty.common.Constants.PHONE_NUMBER
@@ -16,9 +17,10 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 
-class PaymentBottomSheet : BaseBottomSheet<BottomSheetPaymentBinding>() {
+class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
 
     override val viewModel: EmptyViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetPaymentBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -27,7 +29,7 @@ class PaymentBottomSheet : BaseBottomSheet<BottomSheetPaymentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             bottomSheetPaymentNcCardNumber.cardText = CARD_NUMBER
             bottomSheetPaymentNcCardNumber.setOnClickListener {
                 copyToBuffer(CARD_NUMBER_LABEL, CARD_NUMBER)

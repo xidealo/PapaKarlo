@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -14,9 +16,10 @@ import com.bunbeauty.papakarlo.presentation.state.State
 import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 
-class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
+class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override val viewModel: SettingsViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentSettingsBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -25,7 +28,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.userState.onEach { state ->
                 fragmentSettingsGroupMain.toggleVisibility(state is State.Success)
                 fragmentSettingsPbLoading.toggleVisibility(state !is State.Success)

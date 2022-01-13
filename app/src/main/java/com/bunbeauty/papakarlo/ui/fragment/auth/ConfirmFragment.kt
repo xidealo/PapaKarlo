@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment.auth
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -17,12 +19,13 @@ import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
+class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
 
     @Inject
     lateinit var phoneVerificationUtil: IPhoneVerificationUtil
 
     override val viewModel: ConfirmViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentConfirmBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -37,7 +40,7 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.startResendTimer()
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentConfirmTvPhoneInformation.text = viewModel.getPhoneInfo(phone)
             fragmentConfirmEtCode.focus()
             fragmentConfirmEtCode.setOnPinEnteredListener { code ->
@@ -73,8 +76,8 @@ class ConfirmFragment : BaseFragment<FragmentConfirmBinding>() {
                     hideKeyboard()
                     fragmentConfirmEtCode.clearFocus()
                 }
-                viewDataBinding.fragmentConfirmPbLoading.toggleVisibility(isLoading)
-                viewDataBinding.fragmentConfirmEtCode.toggleVisibilityInvisibility(!isLoading)
+                viewBinding.fragmentConfirmPbLoading.toggleVisibility(isLoading)
+                viewBinding.fragmentConfirmEtCode.toggleVisibilityInvisibility(!isLoading)
                 fragmentConfirmTvResendSecondsInfo.toggleVisibility(viewModel.isTimerRun.value && !isLoading)
                 fragmentConfirmTvResendCode.toggleVisibility(!viewModel.isTimerRun.value && !isLoading)
                 if (!isLoading) {

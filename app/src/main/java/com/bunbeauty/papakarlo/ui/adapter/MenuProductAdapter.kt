@@ -1,9 +1,8 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.databinding.ElementCategorySectionBinding
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
@@ -16,9 +15,7 @@ import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class MenuProductAdapter @Inject constructor() :
-    BaseListAdapter<MenuItem, MenuProductAdapter.MenuProductViewHolder>(
-        DefaultDiffCallback()
-    ) {
+    BaseListAdapter<MenuItem, MenuProductAdapter.MenuProductViewHolder>(DefaultDiffCallback()) {
 
     private var btnItemClickListener: ((MenuItem.MenuProductItem) -> Unit)? = null
 
@@ -41,7 +38,7 @@ class MenuProductAdapter @Inject constructor() :
             else -> throw Exception("The type has to be ONE or TWO")
         }
 
-        return MenuProductViewHolder(binding.root)
+        return MenuProductViewHolder(binding)
     }
 
     companion object {
@@ -49,19 +46,19 @@ class MenuProductAdapter @Inject constructor() :
         private const val TYPE_TWO = 2
     }
 
-    inner class MenuProductViewHolder(view: View) :
-        BaseViewHolder<MenuItem>(DataBindingUtil.bind(view)!!) {
+    inner class MenuProductViewHolder(private val viewBinding: ViewBinding) :
+        BaseViewHolder<MenuItem>(viewBinding) {
 
         override fun onBind(item: MenuItem) {
             super.onBind(item)
 
             when (item) {
                 is MenuItem.CategorySectionItem -> {
-                    (binding as ElementCategorySectionBinding).elementCategorySectionTvTitle.text =
-                        item.name
+                    (viewBinding as? ElementCategorySectionBinding)
+                        ?.elementCategorySectionTvTitle?.text = item.name
                 }
                 is MenuItem.MenuProductItem -> {
-                    (binding as ElementMenuProductBinding).run {
+                    (viewBinding as? ElementMenuProductBinding)?.run {
                         elementMenuProductTvTitle.text = item.name
                         elementMenuProductTvNewPrice.text = item.newPrice
                         elementMenuProductTvOldPrice.text = item.oldPrice

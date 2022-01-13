@@ -1,100 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    tools:context=".ui.fragment.auth.ConfirmFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorSurface"
-        tools:context=".ui.fragment.auth.ConfirmFragment">
+    <TextView
+        android:id="@+id/fragment_confirm_tv_information"
+        style="@style/MediumRegularWrapConstraintsText"
+        android:layout_margin="@dimen/small_margin"
+        android:gravity="center"
+        android:text="@string/msg_confirm_enter_code"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_tv_phone_information"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/fragment_confirm_tv_phone_information"
+        style="@style/MediumRegularWrapConstraintsText"
+        android:layout_margin="@dimen/medium_margin"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_et_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Код был отправлен на номер +7 (999) 999-99-99" />
+
+    <com.alimuzaffar.lib.pin.PinEntryEditText
+        android:id="@+id/fragment_confirm_et_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:maxLength="6"
+        android:textAppearance="@style/LargeRegularTextAppearance"
+        android:textIsSelectable="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5"
+        app:pinAnimationType="fromBottom"
+        app:pinLineColors="?attr/colorPin"
+        app:pinLineStroke="2dp"
+        tools:text="123456" />
+
+    <LinearLayout
+        android:id="@+id/fragment_confirm_ll_resend_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/large_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_et_code">
 
         <TextView
-            android:id="@+id/fragment_confirm_tv_information"
-            style="@style/MediumRegularWrapConstraintsText"
-            android:layout_margin="@dimen/small_margin"
+            android:id="@+id/fragment_confirm_tv_resend_seconds_info"
+            style="@style/SecondaryMediumRegularWrapContentText"
             android:gravity="center"
-            android:text="@string/msg_confirm_enter_code"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_tv_phone_information"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            tools:text="Получить повторно код можно через 60 секунд" />
 
         <TextView
-            android:id="@+id/fragment_confirm_tv_phone_information"
-            style="@style/MediumRegularWrapConstraintsText"
-            android:layout_margin="@dimen/medium_margin"
+            android:id="@+id/fragment_confirm_tv_resend_code"
+            style="@style/SecondaryMediumRegularWrapContentText"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_confirm_et_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Код был отправлен на номер +7 (999) 999-99-99" />
+            android:text="@string/action_confirm_resend_code" />
+    </LinearLayout>
 
-        <com.alimuzaffar.lib.pin.PinEntryEditText
-            android:id="@+id/fragment_confirm_et_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:digits="1234567890"
-            android:inputType="number"
-            android:maxLength="6"
-            android:textAppearance="@style/LargeRegularTextAppearance"
-            android:textIsSelectable="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.5"
-            app:pinAnimationType="fromBottom"
-            app:pinLineColors="?attr/colorPin"
-            app:pinLineStroke="2dp"
-            tools:text="123456" />
+    <LinearLayout
+        android:id="@+id/fragment_confirm_ll_change_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
-            android:id="@+id/fragment_confirm_ll_resend_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/large_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_confirm_et_code">
+        <TextView
+            android:id="@+id/fragment_confirm_tv_change_phone"
+            style="@style/SecondaryMediumRegularWrapContentText"
+            android:text="@string/action_confirm_change_phone" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/fragment_confirm_tv_resend_seconds_info"
-                style="@style/SecondaryMediumRegularWrapContentText"
-                android:gravity="center"
-                tools:text="Получить повторно код можно через 60 секунд" />
+    <ProgressBar
+        android:id="@+id/fragment_confirm_pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/fragment_confirm_tv_resend_code"
-                style="@style/SecondaryMediumRegularWrapContentText"
-                android:gravity="center"
-                android:text="@string/action_confirm_resend_code" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fragment_confirm_ll_change_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/large_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/fragment_confirm_tv_change_phone"
-                style="@style/SecondaryMediumRegularWrapContentText"
-                android:text="@string/action_confirm_change_phone" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/fragment_confirm_pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

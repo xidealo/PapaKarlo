@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
+import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.getBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -29,20 +29,20 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
     lateinit var resourcesProvider: IResourcesProvider
 
     abstract val viewModel: BaseViewModel
-
-    private var mutableViewDataBinding: B? = null
-    val viewDataBinding: B
-        get() = checkNotNull(mutableViewDataBinding)
+    abstract val viewBinding: ViewBinding
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        setStyle(STYLE_NORMAL, R.style.BottomSheetTheme)
 
         val viewModelComponent =
             (requireActivity().application as PapaKarloApplication).appComponent
                 .getViewModelComponent()
                 .create(this)
         inject(viewModelComponent)
+    }
+
+    override fun getTheme(): Int {
+        return R.style.BottomSheetTheme
     }
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
@@ -52,15 +52,11 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mutableViewDataBinding = getBinding(requireActivity().layoutInflater, container)
-        return viewDataBinding.root
+        return inflater.inflate(layoutId, container, true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.executePendingBindings()
 
         viewModel.bundle = arguments
 
@@ -69,7 +65,7 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
         val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
         viewModel.message.onEach { message ->
-            viewDataBinding.root.showSnackbar(
+            viewBinding.root.showSnackbar(
                 message.message,
                 colorOnPrimary,
                 colorPrimary,
@@ -77,7 +73,7 @@ abstract class BaseBottomSheet<B : ViewDataBinding> : BottomSheetDialogFragment(
             )
         }.startedLaunch()
         viewModel.error.onEach { error ->
-            viewDataBinding.root.showSnackbar(error.message, colorOnError, colorError, error.isTop)
+            viewBinding.root.showSnackbar(error.message, colorOnError, colorError, error.isTop)
         }.startedLaunch()
     }
 

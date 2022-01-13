@@ -61,7 +61,6 @@ android {
 
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
 }
 
@@ -92,6 +91,8 @@ dependencies {
     implementation(Lifecycle.fragment)
     implementation(Lifecycle.runtime)
     implementation(Lifecycle.livedate)
+
+    implementation(ViewBindingDelegate.viewBindingDelegate)
 
     implementation(Dagger.dagger)
     annotationProcessor(Dagger.compiler)

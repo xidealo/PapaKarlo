@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -20,9 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class MenuFragment : BaseFragment<FragmentMenuBinding>() {
+class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     override val viewModel: MenuViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentMenuBinding::bind)
 
     @Inject
     lateinit var categoryAdapter: CategoryAdapter
@@ -44,7 +46,7 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>() {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentMenuRvCategories.layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             fragmentMenuRvCategories.addItemDecoration(marginItemHorizontalDecoration)

@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.fragment.menu
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
@@ -17,12 +18,13 @@ import com.bunbeauty.presentation.util.string.IStringUtil
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ProductFragment : BaseFragment<FragmentProductBinding>() {
+class ProductFragment : BaseFragment(R.layout.fragment_product) {
 
     @Inject
     lateinit var stringUtil: IStringUtil
 
     override val viewModel: ProductViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentProductBinding::bind)
 
     private val menuProductUuid: String by argument()
     private val photoLink: String by argument()
@@ -35,7 +37,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.menuProduct.onEach { menuProduct ->
-            viewDataBinding.run {
+            viewBinding.run {
                 val isLoading = menuProduct == null
                 fragmentProductPbLoading.toggleVisibility(isLoading)
                 fragmentProductCvMain.toggleVisibility(!isLoading)
@@ -59,7 +61,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
             }
         }.startedLaunch()
         viewModel.getMenuProduct(menuProductUuid)
-        viewDataBinding.fragmentProductBtnAdd.setOnClickListener {
+        viewBinding.fragmentProductBtnAdd.setOnClickListener {
             viewModel.addProductToCart(menuProductUuid)
         }
     }

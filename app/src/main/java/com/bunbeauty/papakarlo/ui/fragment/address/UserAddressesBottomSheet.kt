@@ -5,8 +5,10 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.common.Constants.USER_ADDRESS_REQUEST_KEY
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressesBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -17,7 +19,7 @@ import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding>() {
+class UserAddressesBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_addresses) {
 
     @Inject
     lateinit var addressAdapter: AddressAdapter
@@ -26,6 +28,7 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
     lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: UserAddressesViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetUserAddressesBinding::bind)
 
     private val isClickable: Boolean by argument()
 
@@ -36,7 +39,7 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             bottomSheetUserAddressesBtnCreateAddress.setOnClickListener {
                 viewModel.onCreateAddressClicked()
             }
@@ -55,11 +58,5 @@ class UserAddressesBottomSheet : BaseBottomSheet<BottomSheetUserAddressesBinding
             bottomSheetUserAddressesRvResult.adapter = addressAdapter
             bottomSheetUserAddressesRvResult.addItemDecoration(marginItemVerticalDecoration)
         }
-    }
-
-    override fun onDestroyView() {
-        viewDataBinding.bottomSheetUserAddressesRvResult.adapter = null
-
-        super.onDestroyView()
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.CAFE_ADDRESS_REQUEST_KEY
 import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
 import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
@@ -14,6 +15,7 @@ import com.bunbeauty.common.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.common.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.domain.util.validator.ITextValidator
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -23,12 +25,13 @@ import com.bunbeauty.papakarlo.ui.custom.CustomSwitcher
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
+class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     @Inject
     lateinit var textValidator: ITextValidator
 
     override val viewModel: CreateOrderViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -44,7 +47,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
         setupDeferredTime()
         setupBottomPrices()
 
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentCreateOrderBtnCreateOrder.setOnClickListener {
                 viewModel.onCreateOrderClicked()
             }
@@ -61,7 +64,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     }
 
     private fun setupPickupMethod() {
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentCreateOrderCsDelivery.switchListener = object : CustomSwitcher.SwitchListener {
                 override fun onSwitched(isLeft: Boolean) {
                     viewModel.onIsDeliveryChanged(isLeft)
@@ -76,7 +79,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     }
 
     private fun setupAddress() {
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.addressHint.onEach { addressHint ->
                 fragmentCreateOrderNcAddAddress.cardText = addressHint
                 fragmentCreateOrderTcAddress.hintText = addressHint
@@ -106,7 +109,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     }
 
     private fun setupComment() {
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.comment.onEach { comment ->
                 fragmentCreateOrderNcAddComment.toggleVisibility(comment == null)
                 fragmentCreateOrderTcComment.toggleVisibility(comment != null)
@@ -128,7 +131,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     }
 
     private fun setupDeferredTime() {
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.deferredTimeHint.onEach { deferredTimeHint ->
                 fragmentCreateOrderTcDeferredTime.hintText = deferredTimeHint
             }.startedLaunch()
@@ -147,7 +150,7 @@ class CreateOrderFragment : BaseFragment<FragmentCreateOrderBinding>() {
     }
 
     private fun setupBottomPrices() {
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.totalCost.onEach { totalCost ->
                 fragmentCreateOrderTvTotalValue.text = totalCost
             }.startedLaunch()

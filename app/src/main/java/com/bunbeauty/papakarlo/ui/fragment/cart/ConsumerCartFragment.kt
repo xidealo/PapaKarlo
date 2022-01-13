@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment.cart
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.strikeOutText
@@ -16,7 +18,7 @@ import com.bunbeauty.presentation.item.CartProductItem
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
+class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
     @Inject
     lateinit var cartProductAdapter: CartProductAdapter
@@ -25,6 +27,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
     lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: ConsumerCartViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentConsumerCartBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -34,7 +37,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         setupProductList()
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentConsumerCartBtnMenu.setOnClickListener {
                 viewModel.onMenuClicked()
             }
@@ -68,7 +71,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
         cartProductAdapter.setOnItemClickListener { cartProductItem ->
             viewModel.onProductClicked(cartProductItem)
         }
-        viewDataBinding.run {
+        viewBinding.run {
             fragmentConsumerCartRvResult.addItemDecoration(marginItemVerticalDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter
 
@@ -85,7 +88,7 @@ class ConsumerCartFragment : BaseFragment<FragmentConsumerCartBinding>() {
     }
 
     override fun onDestroyView() {
-        viewDataBinding.fragmentConsumerCartRvResult.adapter = null
+        viewBinding.fragmentConsumerCartRvResult.adapter = null
 
         super.onDestroyView()
     }

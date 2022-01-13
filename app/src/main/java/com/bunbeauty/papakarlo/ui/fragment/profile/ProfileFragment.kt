@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.fragment.profile
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -13,9 +14,10 @@ import com.bunbeauty.papakarlo.ui.base.BaseFragment
 import kotlinx.coroutines.flow.onEach
 
 
-class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
+class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     override val viewModel: ProfileViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentProfileBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -27,7 +29,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
         setupLastOrder()
         setupAddresses()
-        viewDataBinding.run {
+        viewBinding.run {
             viewModel.profileState.onEach { state ->
                 fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
                 fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
@@ -56,7 +58,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun setupLastOrder() {
         viewModel.lastOrder.onEach { orderItem ->
-            viewDataBinding.fragmentProfileItemLastOrder.run {
+            viewBinding.fragmentProfileItemLastOrder.run {
                 root.toggleVisibility(orderItem != null)
                 if (orderItem != null) {
                     elementOrderTvCode.text = orderItem.code
@@ -73,7 +75,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun setupAddresses() {
         viewModel.hasAddresses.onEach { hasAddresses ->
-            viewDataBinding.fragmentProfileNcAddresses.run {
+            viewBinding.fragmentProfileNcAddresses.run {
                 if (hasAddresses) {
                     cardText = resourcesProvider.getString(R.string.action_profile_your_addresses)
                     icon = resourcesProvider.getDrawable(R.drawable.ic_address)

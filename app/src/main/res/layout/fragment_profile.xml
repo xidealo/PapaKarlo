@@ -1,144 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.profile.ProfileFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.fragment.profile.ProfileFragment">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_order_details_gl_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_order_details_gl_left"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/medium_margin" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_order_details_gl_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/medium_margin" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/fragment_order_details_gl_right"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/medium_margin" />
+    <include
+        android:id="@+id/fragment_profile_item_last_order"
+        layout="@layout/element_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            android:id="@+id/fragment_profile_item_last_order"
-            layout="@layout/element_order"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toTopOf="parent" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_profile_nc_settings"
+        style="@style/NavigationCard"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:icon="@drawable/ic_settings"
+        android:text="@string/action_profile_settings"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_item_last_order" />
 
-        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-            android:id="@+id/fragment_profile_nc_settings"
-            style="@style/NavigationCard"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:icon="@drawable/ic_settings"
-            android:text="@string/action_profile_settings"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_item_last_order" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_profile_nc_addresses"
+        style="@style/NavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_settings"
+        tools:icon="@drawable/ic_add"
+        tools:text="Добавить адрес" />
 
-        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-            android:id="@+id/fragment_profile_nc_addresses"
-            style="@style/NavigationCard"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_settings"
-            tools:icon="@drawable/ic_add"
-            tools:text="Добавить адрес" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_profile_nc_orders"
+        style="@style/NavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:icon="@drawable/ic_history"
+        android:text="@string/action_profile_orders"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_addresses" />
 
-        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-            android:id="@+id/fragment_profile_nc_orders"
-            style="@style/NavigationCard"
-            android:layout_marginTop="@dimen/small_margin"
-            android:icon="@drawable/ic_history"
-            android:text="@string/action_profile_orders"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_addresses" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_profile_nc_payment"
+        style="@style/NavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:icon="@drawable/ic_payment"
+        android:text="@string/action_profile_payment"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_orders" />
 
-        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-            android:id="@+id/fragment_profile_nc_payment"
-            style="@style/NavigationCard"
-            android:layout_marginTop="@dimen/small_margin"
-            android:icon="@drawable/ic_payment"
-            android:text="@string/action_profile_payment"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_orders" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_profile_nc_feedback"
+        style="@style/NavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:icon="@drawable/ic_feedback"
+        android:text="@string/action_profile_feedback"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_payment" />
 
-        <com.bunbeauty.papakarlo.ui.custom.NavigationCard
-            android:id="@+id/fragment_profile_nc_feedback"
-            style="@style/NavigationCard"
-            android:layout_marginTop="@dimen/small_margin"
-            android:icon="@drawable/ic_feedback"
-            android:text="@string/action_profile_feedback"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_payment" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/fragment_profile_group_has_profile"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:constraint_referenced_ids="
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_profile_group_has_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="
             fragment_profile_nc_settings,
             fragment_profile_nc_addresses,
             fragment_profile_nc_orders,
             fragment_profile_nc_payment,
             fragment_profile_nc_feedback" />
 
-        <TextView
-            android:id="@+id/fragment_profile_tv_no_profile"
-            style="@style/MediumRegularWrapConstraintsText"
-            android:gravity="center"
-            android:text="@string/title_profile_no_profile"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
+    <TextView
+        android:id="@+id/fragment_profile_tv_no_profile"
+        style="@style/MediumRegularWrapConstraintsText"
+        android:gravity="center"
+        android:text="@string/title_profile_no_profile"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_profile_iv_no_profile" />
 
-        <ImageView
-            android:id="@+id/fragment_profile_iv_no_profile"
-            android:layout_width="@dimen/empty_profile_img_size"
-            android:layout_height="@dimen/empty_profile_img_size"
-            android:adjustViewBounds="true"
-            android:src="@drawable/empty_profile_papa_karlo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/fragment_profile_iv_no_profile"
+        android:layout_width="@dimen/empty_profile_img_size"
+        android:layout_height="@dimen/empty_profile_img_size"
+        android:adjustViewBounds="true"
+        android:src="@drawable/empty_profile_papa_karlo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_profile_btn_login"
-            style="@style/MainButton"
-            android:layout_marginBottom="@dimen/medium_margin"
-            android:text="@string/action_profile_login"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fragment_profile_btn_login"
+        style="@style/MainButton"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:text="@string/action_profile_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_order_details_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/fragment_profile_group_no_profile"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:constraint_referenced_ids="
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_profile_group_no_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="
             fragment_profile_tv_no_profile,
             fragment_profile_iv_no_profile,
             fragment_profile_btn_login" />
 
-        <ProgressBar
-            android:id="@+id/fragment_profile_pb_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/fragment_profile_pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment.cafe
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
@@ -12,7 +14,7 @@ import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
+class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
 
     @Inject
     lateinit var cafeAdapter: CafeAdapter
@@ -20,6 +22,9 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
     @Inject
     lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
+    override val viewBinding by viewBinding(FragmentCafeListBinding::bind) { viewBinding: FragmentCafeListBinding ->
+        viewBinding.fragmentCafeListRvCafeList.adapter = null
+    }
     override val viewModel: CafeListViewModel by viewModels { viewModelFactory }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
@@ -29,20 +34,13 @@ class CafeListFragment : BaseFragment<FragmentCafeListBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
-
-        viewDataBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemVerticalDecoration)
+        viewBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemVerticalDecoration)
         cafeAdapter.setOnItemClickListener { cafeItem ->
             viewModel.onCafeCardClicked(cafeItem)
         }
-        viewDataBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
+        viewBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
         viewModel.cafeItemList.onEach { cafeItemList ->
             cafeAdapter.submitList(cafeItemList)
         }.startedLaunch()
-    }
-
-    override fun onDestroyView() {
-        viewDataBinding.fragmentCafeListRvCafeList.adapter = null
-
-        super.onDestroyView()
     }
 }

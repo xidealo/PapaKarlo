@@ -27,13 +27,13 @@ class CartProductAdapter @Inject constructor() :
         return CartProductViewHolder(binding)
     }
 
-    inner class CartProductViewHolder(binding: ElementCartProductBinding) :
-        BaseViewHolder<CartProductItem>(binding) {
+    inner class CartProductViewHolder(private val elementCartProductBinding: ElementCartProductBinding) :
+        BaseViewHolder<CartProductItem>(elementCartProductBinding) {
 
         override fun onBind(item: CartProductItem) {
             super.onBind(item)
 
-            (binding as ElementCartProductBinding).run {
+            elementCartProductBinding.run {
                 elementCartProductTvName.text = item.name
                 setCountAndCost(item)
                 elementCartProductTvOldCost.strikeOutText()
@@ -52,7 +52,7 @@ class CartProductAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                (binding as ElementCartProductBinding).setCountAndCost(item)
+                elementCartProductBinding.setCountAndCost(item)
             }
         }
 

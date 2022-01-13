@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -18,7 +20,7 @@ import com.bunbeauty.papakarlo.ui.decorator.MarginItemVerticalDecoration
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
+class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
 
     @Inject
     lateinit var orderProductAdapter: OrderProductAdapter
@@ -27,6 +29,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
 
     override val viewModel: OrderDetailsViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(FragmentOrderDetailsBinding::bind)
 
     private val orderUuid: String by argument()
 
@@ -40,16 +43,16 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
 
         viewModel.getOrder(orderUuid)
         viewModel.orderState.onEach { state ->
-            viewDataBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
-            viewDataBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
-            viewDataBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
-            viewDataBinding.fragmentOrderDetailsClBottomCost.toggleVisibility(state is State.Success)
-            viewDataBinding.fragmentOrderDetailsPbLoading.toggleVisibility(state !is State.Success)
+            viewBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
+            viewBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
+            viewBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
+            viewBinding.fragmentOrderDetailsClBottomCost.toggleVisibility(state is State.Success)
+            viewBinding.fragmentOrderDetailsPbLoading.toggleVisibility(state !is State.Success)
 
             if (state is State.Success) {
                 val order = state.data
 
-                viewDataBinding.run {
+                viewBinding.run {
                     fragmentOrderDetailsPsvStatus.currentStep = order.stepCount
                     fragmentOrderDetailsChipStatus.text = order.status
                     fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(order.orderStatusBackground)
@@ -84,7 +87,7 @@ class OrderDetailsFragment : BaseFragment<FragmentOrderDetailsBinding>() {
     }
 
     override fun onDestroyView() {
-        viewDataBinding.fragmentOrderDetailsRvProductList.adapter = null
+        viewBinding.fragmentOrderDetailsRvProductList.adapter = null
 
         super.onDestroyView()
     }

@@ -25,13 +25,13 @@ class OrderProductAdapter @Inject constructor() :
         return OrderProductViewHolder(binding)
     }
 
-    inner class OrderProductViewHolder(binding: ElementOrderProductBinding) :
-        BaseViewHolder<OrderProductItem>(binding) {
+    inner class OrderProductViewHolder(private val elementOrderProductBinding: ElementOrderProductBinding) :
+        BaseViewHolder<OrderProductItem>(elementOrderProductBinding) {
 
         override fun onBind(item: OrderProductItem) {
             super.onBind(item)
 
-            (binding as ElementOrderProductBinding).run {
+            elementOrderProductBinding.run {
                 elementOrderProductTvName.text = item.name
                 elementOrderProductTvCount.text = item.count
                 elementOrderProductTvOldCost.text = item.oldCost

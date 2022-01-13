@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.papakarlo.R
@@ -15,9 +16,10 @@ import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 
-class DeferredTimeBottomSheet : BaseBottomSheet<BottomSheetDeferredTimeBinding>() {
+class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_time) {
 
     override val viewModel: DeferredTimeViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetDeferredTimeBinding::bind)
 
     private val selectedHour by argument<Int>()
     private val selectedMinute by argument<Int>()
@@ -30,7 +32,7 @@ class DeferredTimeBottomSheet : BaseBottomSheet<BottomSheetDeferredTimeBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             bottomSheetDeferredTimeTvTitle.text = title
             bottomSheetDeferredTimeMcvAsap.setOnClickListener {
                 sendResult(null)

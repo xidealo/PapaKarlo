@@ -7,8 +7,10 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OneLineActionType
 import com.bunbeauty.domain.model.OneLineActionModel
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetOneLineActionBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -16,9 +18,10 @@ import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.presentation.EmptyViewModel
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 
-class OneLineActionBottomSheet : BaseBottomSheet<BottomSheetOneLineActionBinding>() {
+class OneLineActionBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_one_line_action) {
 
     override val viewModel: EmptyViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetOneLineActionBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -29,7 +32,7 @@ class OneLineActionBottomSheet : BaseBottomSheet<BottomSheetOneLineActionBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewDataBinding.run {
+        viewBinding.run {
             bottomSheetOneLineActionTvTitle.text = oneLineActionModel.title
             if (oneLineActionModel.infoText == null) {
                 bottomSheetOneLineActionTvInfo.gone()

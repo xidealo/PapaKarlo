@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.NavMainDirections.*
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
@@ -24,12 +25,13 @@ import com.bunbeauty.presentation.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private var mutableViewDataBinding: ActivityMainBinding? = null
-    private val viewDataBinding: ActivityMainBinding by lazy {
-        checkNotNull(mutableViewDataBinding)
-    }
+    private val viewBinding: ActivityMainBinding by viewBinding(
+        ActivityMainBinding::bind,
+        R.id.activity_main_cl_main
+    )
+
     private val toolbarFragmentIdList = listOf(
         R.id.cafeListFragment,
         R.id.confirmFragment,
@@ -80,14 +82,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+        viewBinding.root
 
         (application as PapaKarloApplication).appComponent
             .getViewModelComponent()
             .create(this)
             .inject(this)
-
-        mutableViewDataBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(viewDataBinding.root)
+        setContentView(viewBinding.root)
 
         viewModel = ViewModelProvider(this, modelFactory)[MainViewModel::class.java]
 
@@ -129,7 +130,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         router.detach()
-        mutableViewDataBinding = null
 
         super.onDestroy()
     }
@@ -145,14 +145,14 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination !is FloatingWindow) {
                 val isToolbarVisible = destination.id in toolbarFragmentIdList
-                viewDataBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
+                viewBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
                 val isLogoVisible = destination.id in logoFragmentIdList
-                viewDataBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
+                viewBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
                 val isCartVisible = destination.id in cartFragmentIdList
-                viewDataBinding.activityMainClCart.toggleVisibility(isCartVisible)
-                viewDataBinding.activityMainIvCart.toggleVisibility(isCartVisible)
+                viewBinding.activityMainClCart.toggleVisibility(isCartVisible)
+                viewBinding.activityMainIvCart.toggleVisibility(isCartVisible)
                 val isBottomNavigationVisible = destination.id in bottomNavigationFragmentIdList
-                viewDataBinding.activityMainBnvBottomNavigation.toggleVisibility(
+                viewBinding.activityMainBnvBottomNavigation.toggleVisibility(
                     isBottomNavigationVisible
                 )
             }
@@ -163,39 +163,39 @@ class MainActivity : AppCompatActivity() {
         navController: NavController,
         appBarConfiguration: AppBarConfiguration
     ) {
-        setSupportActionBar(viewDataBinding.activityMainTbToolbar)
+        setSupportActionBar(viewBinding.activityMainTbToolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        viewDataBinding.activityMainClCart.setOnClickListener {
+        viewBinding.activityMainClCart.setOnClickListener {
             if (router.checkPrevious(R.id.consumerCartFragment)) {
                 router.navigateUp()
             } else {
                 router.navigate(globalConsumerCartFragment())
             }
         }
-        viewDataBinding.activityMainTbToolbar.setNavigationOnClickListener {
+        viewBinding.activityMainTbToolbar.setNavigationOnClickListener {
             router.navigateUp()
         }
     }
 
     private fun setupBottomNavigationBar(navController: NavController) {
-        viewDataBinding.activityMainBnvBottomNavigation.setupWithNavController(navController)
-        viewDataBinding.activityMainBnvBottomNavigation.setOnItemReselectedListener {}
+        viewBinding.activityMainBnvBottomNavigation.setupWithNavController(navController)
+        viewBinding.activityMainBnvBottomNavigation.setOnItemReselectedListener {}
     }
 
     private fun observeCart() {
         viewModel?.run {
             cartCost.onEach { cartCost ->
-                viewDataBinding.activityMainTvCart.text = cartCost
+                viewBinding.activityMainTvCart.text = cartCost
             }.startedLaunch(this@MainActivity)
             cartProductCount.onEach { cartProductCount ->
-                viewDataBinding.activityMainTvCartCount.text = cartProductCount
+                viewBinding.activityMainTvCartCount.text = cartProductCount
             }.startedLaunch(this@MainActivity)
         }
     }
 
     private fun observeIsOnline() {
         viewModel?.isOnline?.onEach { isOnline ->
-            viewDataBinding.activityMainTvInternetWarning.toggleVisibility(!isOnline)
+            viewBinding.activityMainTvInternetWarning.toggleVisibility(!isOnline)
         }?.startedLaunch(this)
     }
 }

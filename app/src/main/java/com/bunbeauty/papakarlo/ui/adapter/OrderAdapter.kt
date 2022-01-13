@@ -19,13 +19,13 @@ class OrderAdapter @Inject constructor() :
         return OrderViewHolder(binding)
     }
 
-    inner class OrderViewHolder(binding: ElementOrderBinding) :
-        BaseViewHolder<OrderItem>(binding) {
+    inner class OrderViewHolder(private val elementOrderBinding: ElementOrderBinding) :
+        BaseViewHolder<OrderItem>(elementOrderBinding) {
 
         override fun onBind(item: OrderItem) {
             super.onBind(item)
 
-            (binding as ElementOrderBinding).run {
+            elementOrderBinding.run {
                 elementOrderTvCode.text = item.code
                 elementOrderTvTime.text = item.dateTime
                 elementOrderChipStatus.text = item.orderStatus
@@ -41,7 +41,7 @@ class OrderAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                (binding as ElementOrderBinding).run {
+                elementOrderBinding.run {
                     elementOrderChipStatus.text = item.orderStatus
                     elementOrderChipStatus.setChipBackgroundColorResource(item.orderColorResource)
 

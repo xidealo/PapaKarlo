@@ -3,6 +3,8 @@ package com.bunbeauty.papakarlo.ui.fragment.profile.settings
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.BottomSheetCitySelectionBinding
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
@@ -10,9 +12,10 @@ import com.bunbeauty.papakarlo.presentation.profile.settings.CitySelectionViewMo
 import com.bunbeauty.papakarlo.ui.base.BaseBottomSheet
 import kotlinx.coroutines.flow.onEach
 
-class CitySelectionBottomSheet : BaseBottomSheet<BottomSheetCitySelectionBinding>() {
+class CitySelectionBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_city_selection) {
 
     override val viewModel: CitySelectionViewModel by viewModels { viewModelFactory }
+    override val viewBinding by viewBinding(BottomSheetCitySelectionBinding::bind)
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -25,7 +28,7 @@ class CitySelectionBottomSheet : BaseBottomSheet<BottomSheetCitySelectionBinding
             cityList.onEach { city ->
                 ElementCityBinding.inflate(
                     layoutInflater,
-                    viewDataBinding.bottomSheetSelectCityLlCityList,
+                    viewBinding.bottomSheetSelectCityLlCityList,
                     true
                 ).apply {
                     elementCityTvName.text = city.name
@@ -35,7 +38,7 @@ class CitySelectionBottomSheet : BaseBottomSheet<BottomSheetCitySelectionBinding
                     }
                 }
             }
-            viewDataBinding.bottomSheetSelectCityLlCityList
+            viewBinding.bottomSheetSelectCityLlCityList
         }.startedLaunch()
     }
 }

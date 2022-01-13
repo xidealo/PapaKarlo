@@ -39,6 +39,8 @@ object Versions {
     const val fragment = "1.4.0"
     const val lifecycle = "2.4.0"
 
+    const val viewBindingDelegate = "1.5.3"
+
     const val googleMap = "17.0.1"
     const val googleMapUtils = "2.2.3"
     const val googleMapUtilsKTX = "3.1.0"
@@ -223,6 +225,11 @@ object Lifecycle {
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+}
+
+object ViewBindingDelegate {
+    const val viewBindingDelegate =
+        "com.github.kirich1409:viewbindingpropertydelegate:${Versions.viewBindingDelegate}"
 }
 
 object Leakcanary {

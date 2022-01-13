@@ -9,9 +9,8 @@ import com.bunbeauty.domain.model.BaseItem
 import com.bunbeauty.papakarlo.R
 import java.lang.ref.SoftReference
 
-abstract class BaseViewHolder<I : BaseItem>(
-    val binding: ViewBinding
-) : RecyclerView.ViewHolder(binding.root) {
+abstract class BaseViewHolder<I : BaseItem>(viewBinding: ViewBinding) :
+    RecyclerView.ViewHolder(viewBinding.root) {
 
     lateinit var item: I
 

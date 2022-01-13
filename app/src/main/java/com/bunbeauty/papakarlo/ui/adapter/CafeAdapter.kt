@@ -1,9 +1,7 @@
 package com.bunbeauty.papakarlo.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
@@ -18,16 +16,16 @@ class CafeAdapter @Inject constructor() :
         val inflater = LayoutInflater.from(parent.context)
         val binding = ElementCafeBinding.inflate(inflater, parent, false)
 
-        return CafeViewHolder(binding.root)
+        return CafeViewHolder(binding)
     }
 
-    inner class CafeViewHolder(view: View) :
-        BaseViewHolder<CafeItem>(DataBindingUtil.bind(view)!!) {
+    inner class CafeViewHolder(private val elementCafeBinding: ElementCafeBinding) :
+        BaseViewHolder<CafeItem>(elementCafeBinding) {
 
         override fun onBind(item: CafeItem) {
             super.onBind(item)
 
-            (binding as ElementCafeBinding).run {
+            elementCafeBinding.run {
                 elementCafeTvAddress.text = item.address
                 elementCafeTvWorkTime.text = item.workingHours
                 elementCafeTvTimeStatus.text = item.isOpenMessage
