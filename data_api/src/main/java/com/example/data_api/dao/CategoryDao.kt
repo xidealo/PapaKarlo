@@ -9,6 +9,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CategoryDao : BaseDao<CategoryEntity> {
 
-    @Query("SELECT * FROM CategoryEntity")
+    @Query(
+        """SELECT * FROM CategoryEntity
+        WHERE (SELECT COUNT(*) FROM MenuProductCategoryReference
+            WHERE CategoryEntity.uuid = MenuProductCategoryReference.categoryUuid) > 0"""
+    )
     fun observeCategoryList(): Flow<List<CategoryEntity>>
 }
