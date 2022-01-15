@@ -48,5 +48,7 @@
         <item name="android:indeterminateTint">@color/orange</item>
 
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
     </style>
 </resources>

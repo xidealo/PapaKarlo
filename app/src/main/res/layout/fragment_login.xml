@@ -15,26 +15,30 @@
         android:src="?attr/logo_login"
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_tv_information"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/fragment_login_tv_information"
-        style="@style/MediumRegularWrapContentText"
+        style="@style/MediumRegularWrapConstraintsText"
         android:layout_margin="@dimen/medium_margin"
         android:text="@string/title_login_info"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_til_phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_iv_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_login_til_phone"
         style="@style/MaterialInputLayout"
         android:layout_margin="@dimen/medium_margin"
         android:hint="@string/title_login_phone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_login_btn_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_login_tv_information"
         app:startIconDrawable="@drawable/ic_plus_7"
         app:startIconTint="?attr/colorOnSurface">
 
@@ -50,6 +54,7 @@
         style="@style/MainButton"
         android:layout_margin="@dimen/medium_margin"
         android:text="@string/action_login_continue"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_login_til_phone" />
