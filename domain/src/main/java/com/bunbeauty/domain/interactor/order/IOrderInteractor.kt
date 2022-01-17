@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface IOrderInteractor {
 
     suspend fun observeOrderList(): Flow<List<LightOrder>>
+    suspend fun getOrderByUuid(orderUuid: String): OrderDetails?
     fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?>
     suspend fun createOrder(
         isDelivery: Boolean,

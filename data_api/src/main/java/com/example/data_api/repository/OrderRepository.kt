@@ -22,6 +22,10 @@ class OrderRepository @Inject constructor(
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toModel)
     }
 
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
+        return orderDao.getOrderByUuid(orderUuid)?.let(orderMapper::toModel)
+    }
+
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toModel)
     }

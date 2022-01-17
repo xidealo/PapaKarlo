@@ -8,6 +8,8 @@ interface OrderRepo {
 
     fun observeOrderListByUserUuid(userUuid: String): Flow<List<Order>>
 
+    suspend fun getOrderByUuid(orderUuid: String): Order?
+
     fun observeOrderByUuid(orderUuid: String): Flow<Order?>
 
     suspend fun createOrder(token: String, createdOrder: CreatedOrder): Order?

@@ -15,6 +15,9 @@ abstract class OrderDao : BaseDao<OrderEntity> {
     abstract fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderWithProducts>>
 
     @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")
+    abstract suspend fun getOrderByUuid(uuid: String): OrderWithProducts?
+
+    @Query("SELECT * FROM OrderEntity WHERE uuid = :uuid")
     abstract fun observeOrderByUuid(uuid: String): Flow<OrderWithProducts?>
 
     @Query(

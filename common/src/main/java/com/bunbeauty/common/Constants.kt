@@ -6,11 +6,15 @@ object Constants {
 
     const val COMPANY_UUID = "ed85ea4c-23f2-48d7-adc5-3d64d2dcc348"
 
-    // PARAMETER
+    // API PARAMETER
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
     const val CITY_UUID_PARAMETER = "cityUuid"
     const val UUID_PARAMETER = "uuid"
+
+    // NAV PARAMETER
+
+    const val ORDER_UUID = "orderUuid"
 
     // HEADER
 

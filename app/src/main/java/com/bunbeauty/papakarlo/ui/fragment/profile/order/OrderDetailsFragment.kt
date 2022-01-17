@@ -42,20 +42,20 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getOrder(orderUuid)
-        viewModel.orderState.onEach { state ->
-            viewBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
-            viewBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
-            viewBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
-            viewBinding.fragmentOrderDetailsClBottomCost.toggleVisibility(state is State.Success)
-            viewBinding.fragmentOrderDetailsPbLoading.toggleVisibility(state !is State.Success)
 
-            if (state is State.Success) {
-                val order = state.data
+        viewBinding.run {
+            fragmentOrderDetailsRvProductList.addItemDecoration(marginItemVerticalDecoration)
+            fragmentOrderDetailsRvProductList.adapter = orderProductAdapter
 
-                viewBinding.run {
-                    fragmentOrderDetailsPsvStatus.currentStep = order.stepCount
-                    fragmentOrderDetailsChipStatus.text = order.status
-                    fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(order.orderStatusBackground)
+            viewModel.orderState.onEach { state ->
+                viewBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
+                viewBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
+                viewBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
+                viewBinding.fragmentOrderDetailsClBottomCost.toggleVisibility(state is State.Success)
+                viewBinding.fragmentOrderDetailsPbLoading.toggleVisibility(state !is State.Success)
+
+                if (state is State.Success) {
+                    val order = state.data
                     fragmentOrderDetailsTvTimeValue.text = order.dateTime
                     fragmentOrderDetailsTvPickupMethodValue.text = order.pickupMethod
                     fragmentOrderDetailsTvDeferredTimeValue.text = order.deferredTime
@@ -65,8 +65,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     fragmentOrderDetailsTvOrderOldTotalCost.text = order.oldTotalCost
                     fragmentOrderDetailsTvOrderOldTotalCost.strikeOutText()
                     fragmentOrderDetailsTvOrderNewTotalCost.text = order.newTotalCost
-                    fragmentOrderDetailsRvProductList.addItemDecoration(marginItemVerticalDecoration)
-                    fragmentOrderDetailsRvProductList.adapter = orderProductAdapter
+
                     orderProductAdapter.submitList(order.orderProductList)
 
                     if (order.deferredTime.isNullOrEmpty()) {
@@ -82,8 +81,15 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                         fragmentOrderDetailsTvDeliveryCost.gone()
                     }
                 }
-            }
-        }.startedLaunch()
+            }.startedLaunch()
+            viewModel.orderStatus.onEach { orderUI ->
+                if (orderUI != null) {
+                    fragmentOrderDetailsPsvStatus.currentStep = orderUI.stepCount
+                    fragmentOrderDetailsChipStatus.text = orderUI.status
+                    fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(orderUI.orderStatusBackground)
+                }
+            }.startedLaunch()
+        }
     }
 
     override fun onDestroyView() {

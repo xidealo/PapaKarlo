@@ -58,8 +58,6 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.bundle = arguments
-
         val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
         val colorOnPrimary = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary)
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)

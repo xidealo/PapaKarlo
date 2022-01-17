@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.presentation.base
 
-import android.os.Bundle
-import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.Router
@@ -16,8 +14,6 @@ abstract class BaseViewModel : ViewModel() {
 
     @Inject
     lateinit var router: Router
-
-    var bundle: Bundle? = null
 
     private val mutableMessage: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
     val message: SharedFlow<Message> = mutableMessage.asSharedFlow()
@@ -60,19 +56,20 @@ abstract class BaseViewModel : ViewModel() {
         router.navigateUp()
     }
 
-    protected inline fun <reified T> getNavArg(key: String): T? {
-        return when {
-            Parcelable::class.java.isAssignableFrom(T::class.java) -> {
-                bundle?.getParcelable(key) as? T
-            }
-            T::class.java == Boolean::class.java -> {
-                bundle?.getBoolean(key) as T
-            }
-            T::class.java == String::class.java -> {
-                bundle?.getString(key) as T
-            }
-            else -> null
-        }
+    protected inline fun <reified T> getNavArg(savedStateHandlekey: String): T? {
+        return null ///savedStateHandle.get(key)
+//        return when {
+//            Parcelable::class.java.isAssignableFrom(T::class.java) -> {
+//                 bundle?.getParcelable(key) as? T
+//            }
+//            T::class == Boolean::class -> {
+//                bundle?.getBoolean(key) as T
+//            }
+//            T::class == String::class -> {
+//                bundle?.getString(key) as T
+//            }
+//            else -> null
+//        }
     }
 
     protected fun <T> Flow<T>.launchOnEach(block: (T) -> Unit): Job {

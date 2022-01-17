@@ -34,6 +34,25 @@ class OrderInteractor @Inject constructor(
         }
     }
 
+    override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {
+        return orderRepo.getOrderByUuid(orderUuid)?.let { order ->
+            OrderDetails(
+                code = order.code,
+                stepCount = getOrderStepCount(order.status),
+                status = order.status,
+                dateTime = getTimeDDMMMMHHMM(order.time),
+                isDelivery = order.isDelivery,
+                deferredTime = getTimeHHMM(order.deferredTime),
+                address = order.address,
+                comment = order.comment,
+                deliveryCost = productInteractor.getDeliveryCost(order.orderProductList),
+                oldTotalCost = productInteractor.getOldTotalCost(order.orderProductList),
+                newTotalCost = productInteractor.getNewTotalCost(order.orderProductList),
+                orderProductList = order.orderProductList,
+            )
+        }
+    }
+
     override fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?> {
         return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
             OrderDetails(
