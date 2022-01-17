@@ -156,7 +156,6 @@ class CreateOrderViewModel @Inject constructor(
                 comment = comment.value,
                 deferredTime = deferredTimeValue,
             )
-            cartProductInteractor.removeAllProductsFromCart()
 
             if (order == null) {
                 showError(
@@ -165,6 +164,7 @@ class CreateOrderViewModel @Inject constructor(
                 )
                 mutableIsLoading.value = false
             } else {
+                cartProductInteractor.removeAllProductsFromCart()
                 showMessage(
                     resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code,
                     false
@@ -197,7 +197,7 @@ class CreateOrderViewModel @Inject constructor(
         cartProductInteractor.observeDeliveryCost().launchOnEach { deliveryCost ->
             mutableDeliveryCost.value = stringUtil.getCostString(deliveryCost)
         }
-        cartProductInteractor.observeAmountToPay().launchOnEach { amountToPay ->
+        cartProductInteractor.observeAmountToPay(isDelivery).launchOnEach { amountToPay ->
             mutableAmountToPay.value = stringUtil.getCostString(amountToPay)
         }
     }

@@ -64,10 +64,16 @@ class CartProductInteractor @Inject constructor(
         return dataStoreRepo.delivery
     }
 
-    override fun observeAmountToPay(): Flow<Int> {
+    override fun observeAmountToPay(isDeliveryFlow: Flow<Boolean>): Flow<Int> {
         return observeNewTotalCartCost().flatMapLatest { newTotalCost ->
-            observeDeliveryCost().map { deliveryCost ->
-                newTotalCost + deliveryCost
+            observeDeliveryCost().flatMapLatest { deliveryCost ->
+                isDeliveryFlow.map { isDelivery ->
+                    if (isDelivery) {
+                        newTotalCost + deliveryCost
+                    } else {
+                        newTotalCost
+                    }
+                }
             }
         }
     }
