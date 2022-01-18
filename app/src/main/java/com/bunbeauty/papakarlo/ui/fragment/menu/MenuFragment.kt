@@ -65,9 +65,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 viewModel.onCategorySelected(categoryItem.uuid)
             }
             viewModel.menuPosition.onEach { menuPosition ->
-                if (menuPosition != null) {
-                    fragmentMenuRvProducts.scrollToPositionWithOffset(menuPosition, 0)
-                }
+                fragmentMenuRvProducts.scrollToPositionWithOffset(menuPosition, 0)
             }.startedLaunch()
 
             fragmentMenuRvProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -76,7 +74,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     if (dy != 0) {
                         val position =
                             (fragmentMenuRvProducts.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                        viewModel.checkSelectedCategory(position)
+                        viewModel.onMenuPositionChanged(position)
                     }
                 }
             })

@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.presentation.menu
 
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.MenuModel
@@ -8,9 +9,8 @@ import com.bunbeauty.papakarlo.ui.fragment.menu.MenuFragmentDirections.toProduct
 import com.bunbeauty.presentation.item.CategoryItem
 import com.bunbeauty.presentation.item.MenuItem
 import com.bunbeauty.presentation.util.string.IStringUtil
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MenuViewModel @Inject constructor(
@@ -34,8 +34,8 @@ class MenuViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val menuList: StateFlow<List<MenuItem>> = mutableMenuList.asStateFlow()
 
-    private val mutableMenuPosition: MutableStateFlow<Int?> = MutableStateFlow(null)
-    val menuPosition: StateFlow<Int?> = mutableMenuPosition.asStateFlow()
+    private val mutableMenuPosition: MutableSharedFlow<Int> = MutableSharedFlow(replay = 0)
+    val menuPosition: SharedFlow<Int> = mutableMenuPosition.asSharedFlow()
 
     init {
         observeCategoryList()
@@ -44,8 +44,11 @@ class MenuViewModel @Inject constructor(
 
     fun onCategorySelected(categoryUuid: String) {
         setCategory(categoryUuid)
-        mutableMenuPosition.value =
-            menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
+        viewModelScope.launch {
+            val menuPosition =
+                menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
+            mutableMenuPosition.emit(menuPosition)
+        }
     }
 
     fun setCategory(categoryUuid: String) {
@@ -66,7 +69,7 @@ class MenuViewModel @Inject constructor(
         mutableCategoryList.value = categoryItemList
     }
 
-    fun checkSelectedCategory(menuPosition: Int) {
+    fun onMenuPositionChanged(menuPosition: Int) {
         categoryInteractor.getCurrentCategory(menuPosition, menuModelList)?.let { section ->
             setCategory(section.category.uuid)
         }
