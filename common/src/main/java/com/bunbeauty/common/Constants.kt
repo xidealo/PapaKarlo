@@ -4,7 +4,7 @@ object Constants {
 
     // UUID
 
-    const val COMPANY_UUID = "ed85ea4c-23f2-48d7-adc5-3d64d2dcc348"
+    const val COMPANY_UUID = "0a4040c2-284b-49cf-8d7b-610d3915cfc5"
 
     // API PARAMETER
 
