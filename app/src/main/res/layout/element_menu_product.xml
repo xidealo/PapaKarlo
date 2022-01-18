@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/element_menu_product_tv_title"
-            style="@style/MediumBoldWrapConstraintsText"
+            style="@style/SmallBoldWrapConstraintsText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintEnd_toStartOf="@+id/element_menu_product_btn_want"
             app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/element_menu_product_tv_old_price"
-            style="@style/SecondaryMediumRegularWrapContentText"
+            style="@style/SecondarySmallRegularWrapContentText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@id/element_menu_product_iv_photo"
             app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/element_menu_product_tv_new_price"
-            style="@style/MediumRegularWrapContentText"
+            style="@style/SmallRegularWrapContentText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintStart_toEndOf="@id/element_menu_product_tv_old_price"
             app:layout_constraintTop_toBottomOf="@+id/element_menu_product_tv_title"

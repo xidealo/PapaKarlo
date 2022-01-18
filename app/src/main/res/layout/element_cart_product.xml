@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/element_cart_product_tv_name"
-            style="@style/MediumBoldWrapConstraintsText"
+            style="@style/SmallBoldWrapConstraintsText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintEnd_toStartOf="@+id/element_cart_product_cp_count"
             app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/element_cart_product_tv_old_cost"
-            style="@style/SecondaryMediumRegularWrapContentText"
+            style="@style/SecondarySmallRegularWrapContentText"
             android:layout_margin="@dimen/small_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/element_cart_product_iv_photo"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/element_cart_product_tv_new_cost"
-            style="@style/MediumRegularWrapContentText"
+            style="@style/SmallRegularWrapContentText"
             android:layout_marginStart="@dimen/very_small_margin"
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
