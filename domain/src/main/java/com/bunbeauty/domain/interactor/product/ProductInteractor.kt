@@ -36,7 +36,7 @@ class ProductInteractor @Inject constructor(private val dataStoreRepo: DataStore
     }
 
     override fun getProductPositionOldCost(productPosition: ProductPosition): Int? {
-        return (productPosition.product.oldPrice ?: productPosition.product.newPrice) *
-                productPosition.count
+        val oldPrice = productPosition.product.oldPrice ?: return null
+        return oldPrice * productPosition.count
     }
 }
