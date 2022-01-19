@@ -23,11 +23,27 @@ class MenuProductInteractor @Inject constructor(
                 }
                 .forEach { category ->
                     menuList.add(MenuModel.Section(category))
-                    val categoryMenuProductList = menuProductList.filter { menuProduct ->
+                    val filteredMenuProductList = menuProductList.filter { menuProduct ->
                         menuProduct.categoryList.contains(category)
-                    }.sortedWith(compareBy(MenuProduct::newPrice, MenuProduct::name))
-                        .reversed()
-                        .map { menuProduct ->
+                    }
+                    val categoryMenuProductList =
+                        filteredMenuProductList.sortedWith(
+                            compareBy(
+                                { comparableMenuProduct ->
+                                    val price = filteredMenuProductList.filter { menuProduct ->
+                                        comparableMenuProduct.name.split(" ")[0] ==
+                                                menuProduct.name.split(" ")[0]
+                                    }.maxOf { menuProduct ->
+                                        menuProduct.newPrice
+                                    }
+                                    1.0 / price
+                                },
+                                { comparableMenuProduct ->
+                                    1.0 / comparableMenuProduct.newPrice
+                                },
+                                MenuProduct::name
+                            )
+                        ).map { menuProduct ->
                             MenuModel.Product(menuProduct)
                         }
                     menuList.addAll(categoryMenuProductList)
