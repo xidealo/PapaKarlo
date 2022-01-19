@@ -23,6 +23,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.run {

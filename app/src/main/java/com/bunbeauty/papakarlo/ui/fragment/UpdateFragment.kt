@@ -23,6 +23,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentUpdateBtnUpdate.setOnClickListener {
