@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
+import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
@@ -10,7 +11,6 @@ import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.CartProductDiffCallback
 import com.bunbeauty.papakarlo.ui.custom.CountPicker
 import com.bunbeauty.presentation.item.CartProductItem
-import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class CartProductAdapter @Inject constructor() :
@@ -38,12 +38,7 @@ class CartProductAdapter @Inject constructor() :
                 setCountAndCost(item)
                 elementCartProductTvOldCost.strikeOutText()
                 elementCartProductTvOldCost.toggleVisibility(item.oldCost != null)
-                elementCartProductIvPhoto.setPhoto(
-                    item.photoReference,
-                    item.photoLink
-                ) { drawable ->
-                    item.photoReference = SoftReference(drawable)
-                }
+                elementCartProductIvPhoto.setPhoto(item.photoLink)
                 elementCartProductCpCount.countChangeListener = getCountChangeListener(item)
             }
         }

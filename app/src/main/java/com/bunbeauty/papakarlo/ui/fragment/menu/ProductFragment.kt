@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
-import coil.load
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.databinding.FragmentProductBinding
 import com.bunbeauty.papakarlo.delegates.argument
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
@@ -44,9 +44,7 @@ class ProductFragment : BaseFragment(R.layout.fragment_product) {
                 fragmentProductBtnAdd.toggleVisibility(!isLoading)
 
                 if (menuProduct != null) {
-                    fragmentProductIvPhoto.load(photoLink) {
-                        placeholder(resourcesProvider.getDrawable(R.drawable.placeholder_large))
-                    }
+                    fragmentProductIvPhoto.setPhoto(photoLink)
                     fragmentProductTvName.text = menuProduct.name
                     fragmentProductTvSize.text = menuProduct.size
                     if (menuProduct.oldPrice == null) {

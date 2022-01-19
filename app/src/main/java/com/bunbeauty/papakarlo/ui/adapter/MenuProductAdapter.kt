@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.databinding.ElementCategorySectionBinding
 import com.bunbeauty.papakarlo.databinding.ElementMenuProductBinding
+import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseListAdapter
 import com.bunbeauty.papakarlo.ui.adapter.base.BaseViewHolder
 import com.bunbeauty.papakarlo.ui.adapter.diff_util.DefaultDiffCallback
 import com.bunbeauty.presentation.item.MenuItem
-import java.lang.ref.SoftReference
 import javax.inject.Inject
 
 class MenuProductAdapter @Inject constructor() :
@@ -64,12 +64,7 @@ class MenuProductAdapter @Inject constructor() :
                         elementMenuProductTvOldPrice.text = item.oldPrice
                         elementMenuProductTvOldPrice.strikeOutText()
                         elementMenuProductTvOldPrice.toggleVisibility(item.oldPrice.isNotEmpty())
-                        elementMenuProductIvPhoto.setPhoto(
-                            item.photoReference,
-                            item.photoLink
-                        ) { drawable ->
-                            item.photoReference = SoftReference(drawable)
-                        }
+                        elementMenuProductIvPhoto.setPhoto(item.photoLink)
 
                         elementMenuProductMcvMain.setOnClickListener {
                             onItemClicked(item)

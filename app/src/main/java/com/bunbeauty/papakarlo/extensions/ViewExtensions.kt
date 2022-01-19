@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -108,4 +110,11 @@ fun View.focusAndShowKeyboard() {
 
 fun RecyclerView.scrollToPositionWithOffset(position: Int, offset: Int) {
     (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, offset)
+}
+
+fun ImageView.setPhoto(photoLink: String) {
+    load(photoLink) {
+        crossfade(true)
+        placeholder(R.drawable.placeholder)
+    }
 }

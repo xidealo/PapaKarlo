@@ -1,8 +1,6 @@
 package com.bunbeauty.presentation.item
 
-import android.graphics.drawable.Drawable
 import com.bunbeauty.domain.model.BaseItem
-import java.lang.ref.SoftReference
 
 sealed class MenuItem : BaseItem() {
 
@@ -17,8 +15,6 @@ sealed class MenuItem : BaseItem() {
         val newPrice: String,
         val oldPrice: String,
         val photoLink: String
-    ) : MenuItem() {
-        var photoReference: SoftReference<Drawable?> = SoftReference(null)
-    }
+    ) : MenuItem()
 
 }
