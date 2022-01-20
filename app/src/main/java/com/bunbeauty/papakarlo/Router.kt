@@ -46,6 +46,7 @@ class Router @Inject constructor() : CoroutineScope {
 
     fun navigateUp() {
         launch(Main) {
+            hideKeyboard()
             findNavController()?.navigateUp()
             Log.d(NAV_TAG, "navigateUp")
         }
@@ -57,6 +58,7 @@ class Router @Inject constructor() : CoroutineScope {
             Log.d(NAV_TAG, "exception " + exception.message)
         }
         launch(Main + handler) {
+            hideKeyboard()
             findNavController()?.navigate(navDirections)
             Log.d(NAV_TAG, "navigate $navDirections")
         }
@@ -73,9 +75,9 @@ class Router @Inject constructor() : CoroutineScope {
         navHostId = null
     }
 
-    private fun hideKeyboard(activity: AppCompatActivity?) {
-        activity?.currentFocus?.also { view ->
-            val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+    private fun hideKeyboard() {
+        activity?.get()?.currentFocus?.also { view ->
+            val imm = activity?.get()?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
