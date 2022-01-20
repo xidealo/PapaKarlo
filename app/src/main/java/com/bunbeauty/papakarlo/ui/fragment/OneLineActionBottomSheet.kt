@@ -50,6 +50,7 @@ class OneLineActionBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_one_line_
                     bottomSheetOneLineActionEtData.inputType = TYPE_TEXT_FLAG_MULTI_LINE
                 }
             }
+            bottomSheetOneLineActionEtData.requestFocus()
             bottomSheetOneLineActionBtnSave.setOnClickListener {
                 val result = bottomSheetOneLineActionEtData.text.toString()
                 setFragmentResult(
