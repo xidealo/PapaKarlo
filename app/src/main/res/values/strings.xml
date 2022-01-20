@@ -154,7 +154,8 @@
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
     <string name="error_login_something_went_wrong">Что-то пошло не так</string>
-    <string name="error_login_too_many_requests">Пренвышен лимит на отправку кодов, попробуйте позже</string>
+    <string name="error_login_something_try_later">Ошибка. Попробуйте позже</string>
+    <string name="error_login_too_many_requests">Превышен лимит на отправку кодов, попробуйте позже</string>
 
     <!-- CONFIRM  -->
     <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
@@ -185,7 +186,7 @@
 
     <!-- ORDERS -->
     <string name="title_orders">История заказов</string>
-    <string name="msg_orders_empty">Здесь будет отбражаться история ваших заказов</string>
+    <string name="msg_orders_empty">Здесь будет отображаться история ваших заказов</string>
 
     <!-- ONE LINE ACTON-->
     <string name="error_one_line_action_email">Введите корректную почту</string>

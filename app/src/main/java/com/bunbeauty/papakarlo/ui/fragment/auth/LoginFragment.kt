@@ -35,7 +35,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.onViewCreated()
         viewBinding.run {
             val phoneTextWatcher = PhoneTextWatcher(fragmentLoginEtPhone)
             fragmentLoginEtPhone.addTextChangedListener(phoneTextWatcher)
@@ -72,6 +71,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         phoneVerificationUtil.authSuccessEvent.onEach {
             viewModel.onSuccessVerified(successLoginDirection)
         }.startedLaunch()
+    }
+
+    override fun onStop() {
+        viewModel.stopLoading()
+        super.onStop()
     }
 
 }

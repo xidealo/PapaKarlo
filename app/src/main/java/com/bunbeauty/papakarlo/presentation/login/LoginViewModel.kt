@@ -31,10 +31,6 @@ class LoginViewModel @Inject constructor(
     private val mutablePhoneCheckedEvent: Channel<PhoneCheckedEvent> = Channel()
     val phoneCheckedEvent: Flow<PhoneCheckedEvent> = mutablePhoneCheckedEvent.receiveAsFlow()
 
-    fun onViewCreated() {
-        mutableIsLoading.value = false
-    }
-
     fun onNextClicked(phone: String) {
         mutableIsLoading.value = true
         if (textValidator.isFieldContentCorrect(phone, PHONE_LENGTH, PHONE_LENGTH)) {
@@ -66,7 +62,7 @@ class LoginViewModel @Inject constructor(
                 R.string.error_login_too_many_requests
             }
             else -> {
-                R.string.error_login_something_went_wrong
+                R.string.error_login_something_try_later
             }
         }
         showError(resourcesProvider.getString(errorResourceId), true)
@@ -86,6 +82,10 @@ class LoginViewModel @Inject constructor(
                 successLoginDirection
             )
         )
+    }
+
+    fun stopLoading() {
+        mutableIsLoading.value = false
     }
 
     companion object {

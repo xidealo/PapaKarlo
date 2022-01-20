@@ -7,18 +7,6 @@
     android:background="?attr/colorSurface"
     tools:context=".ui.fragment.auth.LoginFragment">
 
-    <ImageView
-        android:id="@+id/fragment_login_iv_logo"
-        android:layout_width="@dimen/login_img_size"
-        android:layout_height="@dimen/login_img_size"
-        android:layout_margin="@dimen/large_margin"
-        android:src="?attr/logo_login"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_login_tv_information"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
     <TextView
         android:id="@+id/fragment_login_tv_information"
         style="@style/MediumRegularWrapConstraintsText"
@@ -28,7 +16,8 @@
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_til_phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_login_iv_logo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fragment_login_til_phone"
@@ -63,8 +52,7 @@
         android:id="@+id/fragment_login_group_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:constraint_referenced_ids="fragment_login_iv_logo,
-            fragment_login_tv_information,
+        app:constraint_referenced_ids="fragment_login_tv_information,
             fragment_login_til_phone,
             fragment_login_btn_login" />
 
