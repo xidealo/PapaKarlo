@@ -8,7 +8,7 @@ You can download app from [Google Play](https://play.google.com/store/apps/detai
 - Kotlin
 - Dagger2
 - Kotlin Coroutines
-- OkHttp + Retrofit
+- KTor
 - Android Jetpack
 - Firebase
 - Coil
