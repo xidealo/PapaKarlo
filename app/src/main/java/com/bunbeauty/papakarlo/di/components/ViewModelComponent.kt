@@ -19,6 +19,7 @@ import com.bunbeauty.papakarlo.ui.fragment.create_order.CreateOrderFragment
 import com.bunbeauty.papakarlo.ui.fragment.create_order.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.menu.MenuFragment
 import com.bunbeauty.papakarlo.ui.fragment.menu.ProductFragment
+import com.bunbeauty.papakarlo.ui.fragment.profile.AboutAppBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.PaymentBottomSheet
 import com.bunbeauty.papakarlo.ui.fragment.profile.ProfileFragment
@@ -68,4 +69,5 @@ interface ViewModelComponent {
     fun inject(citySelectionBottomSheet: CitySelectionBottomSheet)
     fun inject(cafeAddressesBottomSheet: CafeAddressesBottomSheet)
     fun inject(logoutBottomSheet: LogoutBottomSheet)
+    fun inject(aboutAppBottomSheet: AboutAppBottomSheet)
 }

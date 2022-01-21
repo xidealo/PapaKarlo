@@ -142,8 +142,9 @@
     <string name="action_profile_your_addresses">Ваши адерса</string>
     <string name="action_profile_orders">История заказов</string>
     <string name="action_profile_payment">Оплата</string>
-    <string name="action_profile_feedback">Отзывы о приложении</string>
-    <string name="title_profile_no_profile">В профиле будут отбражаться бонусны, адреса и история ваших заказов</string>
+    <string name="action_profile_feedback">Отзывы</string>
+    <string name="action_profile_about_app">О приложении</string>
+    <string name="title_profile_no_profile">В профиле будут отбражаться адреса для доставки и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
 
     <!-- LOGIN  -->
@@ -196,10 +197,15 @@
     <string name="msg_payment_description">Вы можете оплатить заказ наличным, а также переводом по номеру карты или телефона</string>
 
     <!-- FEEDBACK -->
-    <string name="title_feedback">Отзывы о приложении</string>
+    <string name="title_feedback">Отзывы</string>
     <string name="action_feedback_vk">Вконтакте</string>
     <string name="action_feedback_instagram">Instagram</string>
     <string name="action_feedback_play_market">Play Маркет</string>
+
+    <!-- ABOUT APP -->
+    <string name="title_about_app">О приложении</string>
+    <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
+    <string name="msg_about_app_version">Версия&#160;</string>
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>

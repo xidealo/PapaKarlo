@@ -30,7 +30,7 @@
 
     <com.bunbeauty.papakarlo.ui.custom.NavigationCard
         android:id="@+id/bottom_sheet_feedback_nc_vk"
-        style="@style/ShadowlessNavigationCard"
+        style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/medium_margin"
         android:icon="@drawable/ic_vk"
         android:text="@string/action_feedback_vk"
@@ -40,7 +40,7 @@
 
     <com.bunbeauty.papakarlo.ui.custom.NavigationCard
         android:id="@+id/bottom_sheet_feedback_nc_instagram"
-        style="@style/ShadowlessNavigationCard"
+        style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
         android:icon="@drawable/ic_inst"
         android:text="@string/action_feedback_instagram"
@@ -50,7 +50,7 @@
 
     <com.bunbeauty.papakarlo.ui.custom.NavigationCard
         android:id="@+id/bottom_sheet_feedback_nc_play_market"
-        style="@style/ShadowlessNavigationCard"
+        style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
         android:layout_marginBottom="@dimen/medium_margin"
         android:icon="@drawable/ic_google_play"

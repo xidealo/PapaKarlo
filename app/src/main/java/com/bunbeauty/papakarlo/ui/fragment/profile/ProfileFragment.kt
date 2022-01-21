@@ -34,6 +34,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
                 fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
                 fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)
+                fragmentProfileGroupInfo.toggleVisibility(state !is State.Loading)
             }.startedLaunch()
             fragmentProfileNcSettings.setOnClickListener {
                 viewModel.onSettingsClicked()
@@ -49,6 +50,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             }
             fragmentProfileNcFeedback.setOnClickListener {
                 viewModel.onFeedbackClicked()
+            }
+            fragmentProfileNcAboutApp.setOnClickListener {
+                viewModel.onAboutAppClicked()
             }
             fragmentProfileBtnLogin.setOnClickListener {
                 viewModel.onLoginClicked()

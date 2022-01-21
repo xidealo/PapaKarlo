@@ -27,7 +27,6 @@ class ApiDataModule {
     @Singleton
     @Provides
     fun provideKtorHttpClient() = HttpClient(OkHttp) {
-        val timeout = 60_000
         install(JsonFeature) {
             serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
                 prettyPrint = true

@@ -129,6 +129,9 @@
             android:id="@+id/to_feedbackBottomSheet"
             app:destination="@id/feedbackBottomSheet" />
         <action
+            android:id="@+id/to_aboutAppBottomSheet"
+            app:destination="@id/aboutAppBottomSheet" />
+        <action
             android:id="@+id/to_loginFragment"
             app:destination="@id/nav_login">
             <argument
@@ -198,6 +201,12 @@
         android:name="com.bunbeauty.papakarlo.ui.fragment.profile.FeedbackBottomSheet"
         android:label="FeedbackBottomSheet"
         tools:layout="@layout/bottom_sheet_feedback" />
+
+    <dialog
+        android:id="@+id/aboutAppBottomSheet"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.profile.AboutAppBottomSheet"
+        android:label="AboutAppBottomSheet"
+        tools:layout="@layout/bottom_sheet_about_app" />
 
     <include app:graph="@navigation/nav_login" />
 

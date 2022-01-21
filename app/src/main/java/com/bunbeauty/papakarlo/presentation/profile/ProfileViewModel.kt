@@ -65,6 +65,10 @@ class ProfileViewModel @Inject constructor(
         router.navigate(toFeedbackBottomSheet())
     }
 
+    fun onAboutAppClicked() {
+        router.navigate(toAboutAppBottomSheet())
+    }
+
     fun onLoginClicked() {
         router.navigate(toLoginFragment(BACK_TO_PROFILE))
     }

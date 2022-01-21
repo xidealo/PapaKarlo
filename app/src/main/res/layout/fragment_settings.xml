@@ -32,7 +32,7 @@
 
     <com.bunbeauty.papakarlo.ui.custom.NavigationCard
         android:id="@+id/fragment_settings_nc_add_email"
-        style="@style/NavigationCard"
+        style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
         android:icon="@drawable/ic_add"
         android:text="@string/action_settings_add_email"

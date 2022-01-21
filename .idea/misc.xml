@@ -38,6 +38,7 @@
         <entry key="app/src/main/res/drawable/ic_google_play.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/ic_history.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_in_oven.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_info.xml" value="0.5572916666666666" />
         <entry key="app/src/main/res/drawable/ic_inst.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2" />
@@ -58,6 +59,7 @@
         <entry key="app/src/main/res/drawable/ic_right_arrow.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/ic_save.xml" value="0.14479166666666668" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1175925925925926" />
+        <entry key="app/src/main/res/drawable/ic_smartphone.xml" value="0.5572916666666666" />
         <entry key="app/src/main/res/drawable/ic_spice.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_vk.xml" value="0.333" />
         <entry key="app/src/main/res/drawable/loading_screen.xml" value="0.338" />
@@ -65,6 +67,7 @@
         <entry key="app/src/main/res/drawable/logo_top.xml" value="0.1535" />
         <entry key="app/src/main/res/drawable/switcher_thumb.xml" value="0.2085" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/bottom_sheet_about_app.xml" value="0.5" />
         <entry key="app/src/main/res/layout/bottom_sheet_addresses.xml" value="0.5250255362614913" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_addresses.xml" value="0.4" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.5250255362614913" />

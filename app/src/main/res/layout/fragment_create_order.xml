@@ -46,7 +46,7 @@
 
             <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                 android:id="@+id/fragment_create_order_nc_add_address"
-                style="@style/NavigationCard"
+                style="@style/MonochromeNavigationCard"
                 android:layout_marginTop="@dimen/small_margin"
                 android:icon="@drawable/ic_add"
                 android:text="@string/hint_create_order_delivery_address"
@@ -67,7 +67,7 @@
 
             <com.bunbeauty.papakarlo.ui.custom.NavigationCard
                 android:id="@+id/fragment_create_order_nc_add_comment"
-                style="@style/NavigationCard"
+                style="@style/MonochromeNavigationCard"
                 android:layout_marginTop="@dimen/small_margin"
                 android:icon="@drawable/ic_add"
                 android:text="@string/action_create_order_comment"
