@@ -36,39 +36,13 @@ class OrderInteractor @Inject constructor(
 
     override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {
         return orderRepo.getOrderByUuid(orderUuid)?.let { order ->
-            OrderDetails(
-                code = order.code,
-                stepCount = getOrderStepCount(order.status),
-                status = order.status,
-                dateTime = getTimeDDMMMMHHMM(order.time),
-                isDelivery = order.isDelivery,
-                deferredTime = getTimeHHMM(order.deferredTime),
-                address = order.address,
-                comment = order.comment,
-                deliveryCost = productInteractor.getDeliveryCost(order.orderProductList),
-                oldTotalCost = productInteractor.getOldTotalCost(order.orderProductList),
-                newTotalCost = productInteractor.getNewTotalCost(order.orderProductList),
-                orderProductList = order.orderProductList,
-            )
+            toOrderDetails(order)
         }
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?> {
         return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
-            OrderDetails(
-                code = order.code,
-                stepCount = getOrderStepCount(order.status),
-                status = order.status,
-                dateTime = getTimeDDMMMMHHMM(order.time),
-                isDelivery = order.isDelivery,
-                deferredTime = getTimeHHMM(order.deferredTime),
-                address = order.address,
-                comment = order.comment,
-                deliveryCost = productInteractor.getDeliveryCost(order.orderProductList),
-                oldTotalCost = productInteractor.getOldTotalCost(order.orderProductList),
-                newTotalCost = productInteractor.getNewTotalCost(order.orderProductList),
-                orderProductList = order.orderProductList,
-            )
+            toOrderDetails(order)
         }
     }
 
@@ -98,6 +72,33 @@ class OrderInteractor @Inject constructor(
         )
 
         return orderRepo.createOrder(token, createdOrder)
+    }
+
+    suspend fun toOrderDetails(order: Order): OrderDetails {
+        val oldTotalCost = if (order.isDelivery) {
+            productInteractor.getOldAmountToPayWithDelivery(order.orderProductList)
+        } else {
+            productInteractor.getOldAmountToPay(order.orderProductList)
+        }
+        val newTotalCost = if (order.isDelivery) {
+            productInteractor.getNewAmountToPayWithDelivery(order.orderProductList)
+        } else {
+            productInteractor.getNewAmountToPay(order.orderProductList)
+        }
+        return OrderDetails(
+            code = order.code,
+            stepCount = getOrderStepCount(order.status),
+            status = order.status,
+            dateTime = getTimeDDMMMMHHMM(order.time),
+            isDelivery = order.isDelivery,
+            deferredTime = getTimeHHMM(order.deferredTime),
+            address = order.address,
+            comment = order.comment,
+            deliveryCost = productInteractor.getDeliveryCost(order.orderProductList),
+            oldTotalCost = oldTotalCost,
+            newTotalCost = newTotalCost,
+            orderProductList = order.orderProductList,
+        )
     }
 
     fun getOrderStepCount(status: OrderStatus): Int {
