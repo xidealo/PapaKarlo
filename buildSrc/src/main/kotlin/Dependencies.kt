@@ -58,8 +58,8 @@ object Versions {
 
 object Application {
     const val versionMajor = 1
-    const val versionMinor = 1
-    const val versionPatch = 3
+    const val versionMinor = 2
+    const val versionPatch = 0
 
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
