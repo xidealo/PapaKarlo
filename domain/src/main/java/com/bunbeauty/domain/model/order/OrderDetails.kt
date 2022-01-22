@@ -12,7 +12,7 @@ data class OrderDetails(
     val deferredTime: String?,
     val address: String,
     val comment: String?,
-    val deliveryCost: Int,
+    val deliveryCost: Int?,
     val oldTotalCost: Int?,
     val newTotalCost: Int,
     val orderProductList: List<OrderProduct>

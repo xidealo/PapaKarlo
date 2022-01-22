@@ -15,6 +15,7 @@ class Order(
     val time: Long,
     val code: String,
     val status: OrderStatus,
+    val deliveryCost: Int?,
     val orderProductList: List<OrderProduct>,
     val userUuid: String,
     val addressUuid: String?,

@@ -31,21 +31,13 @@ class ProductInteractor @Inject constructor(private val dataStoreRepo: DataStore
         }
     }
 
-    override fun getOldAmountToPay(productList: List<ProductPosition>): Int? {
-        return getOldTotalCost(productList)
+    override fun getOldAmountToPay(productList: List<ProductPosition>, deliveryCost: Int?): Int? {
+        val oldAmountToPay = getOldTotalCost(productList) ?: return null
+        return (deliveryCost ?: 0) + oldAmountToPay
     }
 
-    override suspend fun getOldAmountToPayWithDelivery(productList: List<ProductPosition>): Int? {
-        val oldAmountToPay = getOldAmountToPay(productList) ?: return null
-        return getDeliveryCost(productList) + oldAmountToPay
-    }
-
-    override fun getNewAmountToPay(productList: List<ProductPosition>): Int {
-        return getNewTotalCost(productList)
-    }
-
-    override suspend fun getNewAmountToPayWithDelivery(productList: List<ProductPosition>): Int {
-        return getDeliveryCost(productList) + getNewAmountToPay(productList)
+    override fun getNewAmountToPay(productList: List<ProductPosition>, deliveryCost: Int?): Int {
+        return (deliveryCost ?: 0) + getNewTotalCost(productList)
     }
 
     override fun getProductPositionNewCost(productPosition: ProductPosition): Int {

@@ -14,6 +14,7 @@ data class OrderEntity(
     val code: String,
     val address: String,
     val comment: String?,
+    val deliveryCost: Int?,
     val deferredTime: Long?,
     val userUuid: String,
 )

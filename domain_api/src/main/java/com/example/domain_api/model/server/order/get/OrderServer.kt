@@ -30,6 +30,9 @@ data class OrderServer(
     @SerialName("comment")
     val comment: String?,
 
+    @SerialName("deliveryCost")
+    val deliveryCost: Int?,
+
     @SerialName("clientUserUuid")
     val clientUserUuid: String,
 

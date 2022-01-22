@@ -74,17 +74,15 @@ class OrderInteractor @Inject constructor(
         return orderRepo.createOrder(token, createdOrder)
     }
 
-    suspend fun toOrderDetails(order: Order): OrderDetails {
-        val oldTotalCost = if (order.isDelivery) {
-            productInteractor.getOldAmountToPayWithDelivery(order.orderProductList)
-        } else {
-            productInteractor.getOldAmountToPay(order.orderProductList)
-        }
-        val newTotalCost = if (order.isDelivery) {
-            productInteractor.getNewAmountToPayWithDelivery(order.orderProductList)
-        } else {
-            productInteractor.getNewAmountToPay(order.orderProductList)
-        }
+    fun toOrderDetails(order: Order): OrderDetails {
+        val oldTotalCost = productInteractor.getOldAmountToPay(
+            order.orderProductList,
+            order.deliveryCost
+        )
+        val newTotalCost = productInteractor.getNewAmountToPay(
+            order.orderProductList,
+            order.deliveryCost
+        )
         return OrderDetails(
             code = order.code,
             stepCount = getOrderStepCount(order.status),
@@ -94,7 +92,7 @@ class OrderInteractor @Inject constructor(
             deferredTime = getTimeHHMM(order.deferredTime),
             address = order.address,
             comment = order.comment,
-            deliveryCost = productInteractor.getDeliveryCost(order.orderProductList),
+            deliveryCost = order.deliveryCost,
             oldTotalCost = oldTotalCost,
             newTotalCost = newTotalCost,
             orderProductList = order.orderProductList,
