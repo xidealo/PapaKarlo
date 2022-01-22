@@ -33,7 +33,7 @@
     </style>
 
     <style name="MonochromeNavigationCard" parent="BaseNavigationCard">
-        <item name="iconColor">?attr/colorOnSurface</item>
+        <item name="iconColor">?attr/colorOnSurfaceVariant</item>
     </style>
 
     <style name="ShadowlessMonochromeNavigationCard" parent="MonochromeNavigationCard">
@@ -48,7 +48,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="cardBackgroundColor">?attr/colorSurface</item>
-        <item name="textCardIconColor">?attr/colorOnSurface</item>
+        <item name="textCardIconColor">?attr/colorOnSurfaceVariant</item>
         <item name="android:padding">@dimen/medium_padding</item>
         <item name="cardCornerRadius">@dimen/medium_radius</item>
         <item name="innerMargin">@dimen/very_small_margin</item>
