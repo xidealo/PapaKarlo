@@ -5,6 +5,10 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.common.Constants.COMMENT_ERROR_KEY
+import com.bunbeauty.common.Constants.ENTRANCE_ERROR_KEY
+import com.bunbeauty.common.Constants.FLAT_ERROR_KEY
+import com.bunbeauty.common.Constants.FLOOR_ERROR_KEY
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.papakarlo.R
@@ -29,6 +33,10 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
         viewBinding.run {
             textInputMap[STREET_ERROR_KEY] = fragmentCreateAddressTilStreet
             textInputMap[HOUSE_ERROR_KEY] = fragmentCreateAddressTilHouse
+            textInputMap[FLAT_ERROR_KEY] = fragmentCreateAddressTilFlat
+            textInputMap[ENTRANCE_ERROR_KEY] = fragmentCreateAddressTilEntrance
+            textInputMap[FLOOR_ERROR_KEY] = fragmentCreateAddressTilFloor
+            textInputMap[COMMENT_ERROR_KEY] = fragmentCreateAddressTilComment
 
             viewModel.streetNameList.onEach { streetNameList ->
                 val arrayAdapter = ArrayAdapter(

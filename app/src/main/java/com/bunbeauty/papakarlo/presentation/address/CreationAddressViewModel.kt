@@ -1,6 +1,10 @@
 package com.bunbeauty.papakarlo.presentation.address
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.common.Constants.COMMENT_ERROR_KEY
+import com.bunbeauty.common.Constants.ENTRANCE_ERROR_KEY
+import com.bunbeauty.common.Constants.FLAT_ERROR_KEY
+import com.bunbeauty.common.Constants.FLOOR_ERROR_KEY
 import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
@@ -50,9 +54,7 @@ class CreationAddressViewModel @Inject constructor(
         floor: String
     ) {
         val incorrectStreetSelected = streetList.none { street -> street.name == streetName }
-        if (!textValidator.isRequiredFieldContentCorrect(streetName, maxLength = 50) ||
-            incorrectStreetSelected
-        ) {
+        if (incorrectStreetSelected) {
             sendFieldError(
                 STREET_ERROR_KEY,
                 resourcesProvider.getString(R.string.error_create_address_street)
@@ -60,10 +62,50 @@ class CreationAddressViewModel @Inject constructor(
             return
         }
 
-        if (!textValidator.isRequiredFieldContentCorrect(house, maxLength = 5)) {
+        if (house.isEmpty()) {
             sendFieldError(
                 HOUSE_ERROR_KEY,
                 resourcesProvider.getString(R.string.error_create_address_house)
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(house, maxLength = 5)) {
+            sendFieldError(
+                HOUSE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(flat, maxLength = 5)) {
+            sendFieldError(
+                FLAT_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(entrance, maxLength = 5)) {
+            sendFieldError(
+                ENTRANCE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(floor, maxLength = 5)) {
+            sendFieldError(
+                FLOOR_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(comment, maxLength = 100)) {
+            sendFieldError(
+                COMMENT_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 100
             )
             return
         }

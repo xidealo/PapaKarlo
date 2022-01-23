@@ -109,6 +109,10 @@ object Constants {
 
     const val STREET_ERROR_KEY = "street error key"
     const val HOUSE_ERROR_KEY = "house error key"
+    const val FLAT_ERROR_KEY = "flat error key"
+    const val ENTRANCE_ERROR_KEY = "entrance error key"
+    const val FLOOR_ERROR_KEY = "floor error key"
+    const val COMMENT_ERROR_KEY = "comment error key"
 
     // REMOTE CONFIG KEY
 

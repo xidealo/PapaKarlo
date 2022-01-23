@@ -132,7 +132,6 @@
                     android:hint="@string/hint_create_address_comment"
                     app:counterEnabled="true"
                     app:counterMaxLength="100"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
                     app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_entrance">
@@ -140,7 +139,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_create_address_et_comment"
                         style="@style/MaterialInput"
-                        android:inputType="textCapSentences" />
+                        android:inputType="textCapSentences|textAutoCorrect|textImeMultiLine|textMultiLine"
+                        android:maxLines="5" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
