@@ -1,77 +1,103 @@
 package com.bunbeauty.papakarlo.presentation.cart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.data.mapper.adapter.CartProductAdapterMapper
-import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.resources.IResourcesProvider
-import com.bunbeauty.domain.util.string_helper.IStringHelper
+import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.domain.model.product.LightCartProduct
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.ConsumerCartFragmentDirections
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toSuccessOrEmpty
+import com.bunbeauty.papakarlo.ui.fragment.cart.ConsumerCartFragmentDirections.*
+import com.bunbeauty.presentation.enums.SuccessLoginDirection.TO_CREATE_ORDER
+import com.bunbeauty.presentation.item.CartProductItem
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.bunbeauty.presentation.util.string.IStringUtil
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConsumerCartViewModel @Inject constructor(
-    private val dataStoreRepo: DataStoreRepo,
-    private val stringHelper: IStringHelper,
-    private val cartProductRepo: CartProductRepo,
-    private val productHelper: IProductHelper,
     private val resourcesProvider: IResourcesProvider,
-    private val cartProductAdapterMapper: CartProductAdapterMapper
-) : BaseViewModel() {
+    private val stringUtil: IStringUtil,
+    private val userInteractor: IUserInteractor,
+    private val cartProductInteractor: ICartProductInteractor,
+) : CartViewModel() {
 
-    val cartProductList = cartProductRepo.getCartProductListFlow()
-        .map { productList ->
-            productList.sortedBy { cartProduct ->
-                cartProduct.menuProduct.name
-            }.map { cartProduct ->
-                cartProductAdapterMapper.from(cartProduct)
-            }
-        }
+    private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
+        MutableStateFlow(State.Loading())
+    val orderProductListState: StateFlow<State<List<CartProductItem>>> =
+        mutableCartProductListState.asStateFlow()
 
-    val deliveryStringFlow by lazy {
-        dataStoreRepo.delivery.flatMapLatest { delivery ->
-            cartProductRepo.getCartProductListFlow().map { productList ->
-                val differenceString = productHelper.getDifferenceBeforeFreeDeliveryString(
-                    productList,
-                    delivery.forFree
-                )
-                if (differenceString.isEmpty()) {
-                    resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery)
-                } else {
-                    resourcesProvider.getString(R.string.part_consumer_cart_free_delivery_from) +
-                            stringHelper.getCostString(delivery.forFree) +
-                            resourcesProvider.getString(R.string.part_consumer_cart_difference_before_free_delivery) +
-                            differenceString
-                }
-            }
-        }
-    }
+    private val mutableDeliveryInfo: MutableStateFlow<String> = MutableStateFlow("")
+    val deliveryInfo: StateFlow<String> = mutableDeliveryInfo.asStateFlow()
 
-    fun updateCartProduct(cartProductUuid: String, count: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if (count > 0) {
-                cartProductRepo.update(
-                    cartProductRepo.getCartProduct(cartProductUuid).also { it?.count = count }
-                        ?: return@launch)
-            } else {
-                val cartProduct = cartProductRepo.getCartProduct(cartProductUuid) ?: return@launch
-                cartProductRepo.delete(cartProduct)
-            }
-        }
+    private val mutableOldTotalCost: MutableStateFlow<String> = MutableStateFlow("")
+    val oldTotalCost: StateFlow<String> = mutableOldTotalCost.asStateFlow()
+
+    private val mutableNewTotalCost: MutableStateFlow<String> = MutableStateFlow("")
+    val newTotalCost: StateFlow<String> = mutableNewTotalCost.asStateFlow()
+
+    init {
+        observeCartProducts()
+        observeDelivery()
     }
 
     fun onMenuClicked() {
-        router.navigate(ConsumerCartFragmentDirections.backToMenuFragment())
+        router.navigate(toMenuFragment())
     }
 
     fun onCreateOrderClicked() {
-        router.navigate(ConsumerCartFragmentDirections.toCreationOrder())
+        viewModelScope.launch {
+            if (userInteractor.isUserAuthorize()) {
+                router.navigate(toCreateOrderFragment())
+            } else {
+                router.navigate(toLoginFragment(TO_CREATE_ORDER))
+            }
+        }
     }
 
+    fun onProductClicked(cartProductItem: CartProductItem) {
+        router.navigate(
+            toProductFragment(
+                cartProductItem.menuProductUuid,
+                cartProductItem.name,
+                cartProductItem.photoLink
+            )
+        )
+    }
+
+    private fun observeCartProducts() {
+        cartProductInteractor.observeCartProductList().launchOnEach { cartProductList ->
+            mutableCartProductListState.value = cartProductList.map(::toItem).toSuccessOrEmpty()
+        }
+        cartProductInteractor.observeOldTotalCartCost().launchOnEach { oldTotalCost ->
+            mutableOldTotalCost.value = stringUtil.getCostString(oldTotalCost)
+        }
+        cartProductInteractor.observeNewTotalCartCost().launchOnEach { newTotalCost ->
+            mutableNewTotalCost.value = stringUtil.getCostString(newTotalCost)
+        }
+    }
+
+    private fun observeDelivery() {
+        cartProductInteractor.observeDelivery().launchOnEach { delivery ->
+            mutableDeliveryInfo.value =
+                resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery_from) +
+                        stringUtil.getCostString(delivery.forFree)
+        }
+    }
+
+    private fun toItem(lightCartProduct: LightCartProduct): CartProductItem {
+        return CartProductItem(
+            uuid = lightCartProduct.uuid,
+            name = lightCartProduct.name,
+            newCost = stringUtil.getCostString(lightCartProduct.newCost),
+            oldCost = stringUtil.getCostString(lightCartProduct.oldCost),
+            photoLink = lightCartProduct.photoLink,
+            count = lightCartProduct.count,
+            menuProductUuid = lightCartProduct.menuProductUuid
+        )
+    }
 }

@@ -1,17 +1,29 @@
 package com.bunbeauty.papakarlo
 
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
+import com.bunbeauty.common.Logger.NAV_TAG
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Singleton
-class Router @Inject constructor() {
+class Router @Inject constructor() : CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = Job()
 
     private var activity: WeakReference<AppCompatActivity>? = null
 
@@ -23,23 +35,38 @@ class Router @Inject constructor() {
         this.navHostId = navHostId
     }
 
-    fun navigateUp() {
-        if (navHostId == null) return
+    fun checkPrevious(destinationId: Int): Boolean {
+        val backQueue = findNavController()?.backQueue
+        return if (backQueue != null && backQueue.size > 1) {
+            backQueue[backQueue.lastIndex - 1].destination.id == destinationId
+        } else {
+            false
+        }
+    }
 
-        activity?.let { activity ->
-            hideKeyboard(activity.get())
-            activity.get()?.findNavController(navHostId!!)?.navigateUp()
+    fun navigateUp() {
+        launch(Main) {
+            hideKeyboard()
+            findNavController()?.navigateUp()
+            Log.d(NAV_TAG, "navigateUp")
         }
     }
 
     fun navigate(navDirections: NavDirections) {
-        val navHostId = navHostId ?: return
-
-        try {
-            hideKeyboard(activity?.get())
-            activity?.get()?.findNavController(navHostId)?.navigate(navDirections)
-        } catch (exception: Exception) {
+        val handler = CoroutineExceptionHandler { _, exception ->
             exception.printStackTrace()
+            Log.d(NAV_TAG, "exception " + exception.message)
+        }
+        launch(Main + handler) {
+            hideKeyboard()
+            findNavController()?.navigate(navDirections)
+            Log.d(NAV_TAG, "navigate $navDirections")
+        }
+    }
+
+    private fun findNavController(): NavController? {
+        return navHostId?.let { navHostId ->
+            activity?.get()?.findNavController(navHostId)
         }
     }
 
@@ -48,9 +75,9 @@ class Router @Inject constructor() {
         navHostId = null
     }
 
-    private fun hideKeyboard(activity: AppCompatActivity?) {
-        activity?.currentFocus?.also { view ->
-            val imm = activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+    private fun hideKeyboard() {
+        activity?.get()?.currentFocus?.also { view ->
+            val imm = activity?.get()?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }

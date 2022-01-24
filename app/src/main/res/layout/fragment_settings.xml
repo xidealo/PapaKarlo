@@ -1,96 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.profile.settings.SettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultPage"
-        tools:context=".ui.profile.SettingsFragment">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_settings_gl_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_settings_mcv_phone"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/fragment_settings_gl_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/medium_margin" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <com.bunbeauty.papakarlo.ui.custom.TextCard
+        android:id="@+id/fragment_settings_tc_phone"
+        style="@style/TextCard"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:hint="@string/hint_settings_phone"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="+7 (900) 900-90-90" />
 
-                <TextView
-                    android:id="@+id/fragment_settings_tv_phone_value"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:drawablePadding="@dimen/large_padding"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="8 (910) 000-00-00" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/fragment_settings_nc_add_email"
+        style="@style/MonochromeNavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:icon="@drawable/ic_add"
+        android:text="@string/action_settings_add_email"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tc_phone" />
 
-                <ImageView
-                    android:id="@+id/fragment_profile_iv_select_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_logout"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+    <com.bunbeauty.papakarlo.ui.custom.TextCard
+        android:id="@+id/fragment_settings_tc_email"
+        style="@style/TextCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:hint="@string/hint_settings_email"
+        android:icon="@drawable/ic_right_arrow"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_nc_add_email"
+        tools:text="name@email.com" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <com.bunbeauty.papakarlo.ui.custom.TextCard
+        android:id="@+id/fragment_settings_tc_city"
+        style="@style/TextCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:hint="@string/hint_settings_city"
+        android:icon="@drawable/ic_right_arrow"
+        app:layout_constraintEnd_toEndOf="@+id/fragment_settings_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tc_email"
+        tools:text="Москва" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/fragment_settings_mcv_email"
-            style="@style/DefaultMaterialCard"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_settings_mcv_phone">
+    <ProgressBar
+        android:id="@+id/fragment_settings_pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/fragment_settings_group_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="fragment_settings_tc_phone,
+            fragment_settings_nc_add_email,
+            fragment_settings_tc_email,
+            fragment_settings_tc_city" />
 
-                <TextView
-                    android:id="@+id/fragment_settings_tv_email"
-                    style="@style/MainText"
-                    android:layout_margin="@dimen/medium_margin"
-                    android:drawablePadding="@dimen/large_padding"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="shav.ma@a.com" />
-
-                <ImageView
-                    android:id="@+id/fragment_settings_iv_edit_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_edit"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/fragment_settings_iv_add_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/medium_margin"
-                    android:contentDescription="Description"
-                    android:src="@drawable/ic_add"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

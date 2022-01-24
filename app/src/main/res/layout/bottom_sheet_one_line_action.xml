@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheet"
+    tools:context=".ui.fragment.OneLineActionBottomSheet">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultBottomSheet"
-        tools:context=".ui.OneLineActionBottomSheet">
+    <TextView
+        android:id="@+id/bottom_sheet_one_line_action_tv_title"
+        style="@style/LargeBoldWrapContentText"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_one_line_action_tv_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Заголовок" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottom_sheet_one_line_action_gl_left"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/small_margin" />
+    <TextView
+        android:id="@+id/bottom_sheet_one_line_action_tv_info"
+        style="@style/MediumRegularWrapConstraintsText"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_one_line_action_til_data"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_one_line_action_tv_title"
+        tools:text="Информация" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottom_sheet_one_line_action_gl_right"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/small_margin" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/bottom_sheet_one_line_action_til_data"
+        style="@style/MaterialInputLayout"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginEnd="@dimen/medium_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_one_line_action_btn_save"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_one_line_action_tv_info"
+        tools:hint="Введите текст">
 
-        <TextView
-            android:id="@+id/bottom_sheet_one_line_action_tv_title"
-            style="@style/MainTitle"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_one_line_action_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_one_line_action_gl_left"
-            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottom_sheet_one_line_action_et_data"
+            style="@style/MaterialInput" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bottom_sheet_one_line_action_til_data"
-            style="@style/MaterialInputLayout"
-            android:layout_margin="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_one_line_action_tv_title">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bottom_sheet_one_line_action_btn_save"
+        style="@style/MainButton"
+        android:layout_margin="@dimen/medium_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_one_line_action_til_data" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bottom_sheet_one_line_action_et_data"
-                style="@style/MaterialInput" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_sheet_one_line_action_btn_save"
-            style="@style/MainButton"
-            android:backgroundTint="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_one_line_action_til_data"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

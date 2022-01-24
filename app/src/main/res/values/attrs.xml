@@ -1,42 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="colorOnSurfaceVariant" format="reference|color" />
+    <attr name="colorStroke" format="reference|color" />
+    <attr name="colorPin" format="reference|color" />
+    <attr name="colorNavigation" format="reference|color" />
+    <attr name="colorOpen" format="reference|color" />
+    <attr name="colorCloseSoon" format="reference|color" />
+    <attr name="colorClosed" format="reference|color" />
+
+    <attr name="logo_top" format="reference" />
+    <attr name="logo_start" format="reference" />
+    <attr name="logo_login" format="reference" />
+    <attr name="empty_profile" format="reference" />
+    <attr name="empty_cart" format="reference" />
+
     <declare-styleable name="ProgressButton">
-        <attr name="android:text" />
-        <attr name="android:enabled" />
-        <attr name="android:layout_width" />
-        <attr name="android:layout_height" />
-        <attr name="android:fontFamily" />
-        <attr name="android:textAllCaps" />
-        <attr name="android:layout_marginStart" />
-        <attr name="android:layout_marginEnd" />
-        <attr name="android:layout_marginTop" />
-        <attr name="android:layout_marginBottom" />
-        <attr name="android:backgroundTint" />
-        <attr name="cornerRadius" />
+        <attr name="buttonText" format="string" />
+        <attr name="buttonTextAllCaps" format="boolean" />
+        <attr name="buttonCornerRadius" format="dimension" />
+        <attr name="progressButtonColor" format="color" />
+        <attr name="progressButtonForegroundColor" format="color" />
+        <attr name="progressButtonDisableColor" format="color" />
+        <attr name="progressButtonDisableForegroundColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="CountPicker">
-        <attr name="elementSize" format="dimension" />
-        <attr name="buttonColor" format="color" />
+        <attr name="pickerHeight" format="dimension" />
+        <attr name="pickerWidth" format="dimension" />
+        <attr name="pickerColor" format="color" />
         <attr name="buttonTextColor" format="color" />
         <attr name="count" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="CustomSwitcher">
-        <!--<attr name="backgroundWidth" format="dimension" />
-        <attr name="backgroundHeight" format="dimension" />-->
-        <attr name="backgroundRadius" format="dimension" />
-        <attr name="switcherColor" format="color" />
-        <attr name="switcherPadding" format="dimension" />
-        <attr name="isLeft" format="boolean" />
-        <attr name="buttonWidth" format="dimension" />
-        <attr name="buttonHeight" format="dimension" />
-        <attr name="buttonRadius" format="dimension" />
-        <attr name="buttonTextSize" format="dimension" />
-        <attr name="activeTextColor" format="color" />
-        <attr name="inactiveTextColor" format="color" />
-        <attr name="activeColor" format="color" />
-        <attr name="rightButtonText" format="string" />
+        <attr name="backgroundColor" format="reference|color" />
+        <attr name="buttonColor" format="reference|color" />
+        <attr name="switcherMainTextColor" format="reference|color" />
+        <attr name="switcherAlternativeTextColor" format="reference|color" />
         <attr name="leftButtonText" format="string" />
+        <attr name="rightButtonText" format="string" />
+        <attr name="switcherHeight" format="dimension" />
+        <attr name="switcherButtonMargin" format="dimension" />
+        <attr name="switcherButtonRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="NavigationCard">
+        <attr name="android:text" />
+        <attr name="android:icon" />
+        <attr name="iconColor" format="color" />
+        <attr name="android:padding" />
+    </declare-styleable>
+
+    <declare-styleable name="TextCard">
+        <attr name="android:hint" />
+        <attr name="android:text" />
+        <attr name="android:icon" />
+        <attr name="textCardIconColor" format="color" />
+        <attr name="android:padding" />
+        <attr name="android:textColor" />
+        <attr name="hintTextColor" format="color" />
+        <attr name="innerMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ProcessScaleView">
+        <attr name="activeColor" format="color" />
+        <attr name="inactiveColor" format="color" />
+        <attr name="stepCount" format="integer" />
     </declare-styleable>
 </resources>

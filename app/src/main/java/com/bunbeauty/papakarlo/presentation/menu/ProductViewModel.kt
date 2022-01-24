@@ -1,34 +1,39 @@
 package com.bunbeauty.papakarlo.presentation.menu
 
-import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateNullableSuccess
-import com.bunbeauty.domain.model.local.MenuProduct
-import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.util.product.IProductHelper
-import com.bunbeauty.domain.util.string_helper.IStringHelper
-import com.bunbeauty.papakarlo.presentation.base.TopbarCartViewModel
-import kotlinx.coroutines.flow.*
+import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
+import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.papakarlo.presentation.base.CartViewModel
+import com.bunbeauty.papakarlo.ui.model.MenuProductUI
+import com.bunbeauty.presentation.util.string.IStringUtil
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 class ProductViewModel @Inject constructor(
-    val stringHelper: IStringHelper,
-    cartProductRepo: CartProductRepo,
-    stringUtil: IStringHelper,
-    productHelper: IProductHelper,
-) : TopbarCartViewModel(cartProductRepo, stringUtil, productHelper) {
+    private val menuProductInteractor: IMenuProductInteractor,
+    private val stringUtil: IStringUtil
+) : CartViewModel() {
 
-    private val _menuProductState: MutableStateFlow<State<MenuProduct?>> =
-        MutableStateFlow(State.Loading())
-    val menuProductState: StateFlow<State<MenuProduct?>>
-        get() = _menuProductState.asStateFlow()
+    private val mutableMenuProduct: MutableStateFlow<MenuProductUI?> = MutableStateFlow(null)
+    val menuProduct: StateFlow<MenuProductUI?> = mutableMenuProduct.asStateFlow()
 
     fun getMenuProduct(menuProductUuid: String) {
-        menuProductRepo.getMenuProductAsFlow(menuProductUuid).onEach { menuProduct ->
-            if (menuProduct != null)
-                _menuProductState.value = menuProduct.toStateNullableSuccess()
-            else
-                _menuProductState.value = State.Empty()
-        }.launchIn(viewModelScope)
+        menuProductInteractor.observeMenuProductByUuid(menuProductUuid)
+            .launchOnEach { menuProduct ->
+                mutableMenuProduct.value = menuProduct?.toUI()
+            }
+    }
+
+    private fun MenuProduct.toUI(): MenuProductUI {
+        return MenuProductUI(
+            name = name,
+            size = "$nutrition $utils",
+            oldPrice = oldPrice?.let { price ->
+                stringUtil.getCostString(price)
+            },
+            newPrice = stringUtil.getCostString(newPrice),
+            description = description,
+        )
     }
 }

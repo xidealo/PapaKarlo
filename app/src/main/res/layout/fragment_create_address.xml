@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.address.CreateAddressFragment">
+
+    <ScrollView
+        android:id="@+id/fragment_create_address_sv_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_create_address_btn_create_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.fragment.address.CreateAddressFragment">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/fragment_create_address_mcv_address"
+            style="@style/MatchParentCard"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/fragment_create_address_gl_left"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/medium_margin" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/fragment_create_address_gl_right"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/medium_margin" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_street"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/medium_margin"
+                    android:hint="@string/hint_create_address_street"
+                    app:endIconMode="dropdown_menu"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/fragment_create_address_et_street"
+                        style="@style/MaterialInput"
+                        android:padding="@dimen/large_padding" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_house"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    android:hint="@string/hint_create_address_house"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_create_address_til_flat"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_street">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_create_address_et_house"
+                        style="@style/MaterialInput"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_flat"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:hint="@string/hint_create_address_flat"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
+                    app:layout_constraintStart_toEndOf="@+id/fragment_create_address_til_house"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_street">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_create_address_et_flat"
+                        style="@style/MaterialInput"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_entrance"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/small_margin"
+                    android:hint="@string/hint_create_address_entrance"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toStartOf="@+id/fragment_create_address_til_floor"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_house">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_create_address_et_entrance"
+                        style="@style/MaterialInput"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_floor"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:hint="@string/hint_create_address_floor"
+                    android:maxLength="5"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
+                    app:layout_constraintStart_toEndOf="@+id/fragment_create_address_til_entrance"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_house">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_create_address_et_floor"
+                        style="@style/MaterialInput"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_create_address_til_comment"
+                    style="@style/MaterialInputLayout"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginBottom="@dimen/medium_margin"
+                    android:hint="@string/hint_create_address_comment"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="100"
+                    app:layout_constraintEnd_toEndOf="@+id/fragment_create_address_gl_right"
+                    app:layout_constraintStart_toStartOf="@+id/fragment_create_address_gl_left"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_til_entrance">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_create_address_et_comment"
+                        style="@style/MaterialInput"
+                        android:inputType="textCapSentences|textAutoCorrect|textImeMultiLine|textMultiLine"
+                        android:maxLines="5" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fragment_create_address_btn_create_address"
+        style="@style/MainButton"
+        android:layout_margin="@dimen/medium_margin"
+        android:text="@string/action_create_address_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_create_address_sv_main"
+        app:layout_constraintVertical_bias="1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

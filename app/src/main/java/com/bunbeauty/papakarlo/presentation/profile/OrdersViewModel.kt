@@ -1,55 +1,49 @@
 package com.bunbeauty.papakarlo.presentation.profile
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.State
-import com.bunbeauty.common.extensions.toStateSuccess
-import com.bunbeauty.data.mapper.adapter.OrderAdapterMapper
-import com.bunbeauty.domain.model.adapter.OrderAdapterModel
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.domain.interactor.order.IOrderInteractor
+import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.bunbeauty.papakarlo.ui.profile.OrdersFragmentDirections
+import com.bunbeauty.papakarlo.presentation.state.State
+import com.bunbeauty.papakarlo.presentation.state.toStateSuccess
+import com.bunbeauty.papakarlo.ui.fragment.profile.order.OrdersFragmentDirections.toOrderDetailsFragment
+import com.bunbeauty.presentation.item.OrderItem
+import com.bunbeauty.presentation.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class OrdersViewModel @Inject constructor(
-    private val orderRepo: OrderRepo,
-    private val orderAdapterMapper: OrderAdapterMapper
+    private val orderUIMapper: IOrderUIMapper,
+    private val orderInteractor: IOrderInteractor,
+    private val userInteractor: IUserInteractor,
 ) : BaseViewModel() {
 
-    private val _ordersState: MutableStateFlow<State<List<OrderAdapterModel?>>> =
+    init {
+        observeOrders()
+    }
+
+    private val mutableOrdersState: MutableStateFlow<State<List<OrderItem>>> =
         MutableStateFlow(State.Loading())
-    val ordersState: StateFlow<State<List<OrderAdapterModel?>>>
-        get() = _ordersState.asStateFlow()
+    val ordersState: StateFlow<State<List<OrderItem>>> = mutableOrdersState.asStateFlow()
 
-
-    fun getOrders(userId: String) {
-        if (userId.isNotEmpty())
-            orderRepo.getOrdersWithCartProductsByUserId(userId)
-                .onEach { orderWithCartProducts ->
-                    if (orderWithCartProducts.isEmpty())
-                        _ordersState.value = State.Empty()
-                    else
-                        _ordersState.value =
-                            orderWithCartProducts.sortedByDescending { it.orderEntity.time }
-                                .map { orderAdapterMapper.from(it) }.toStateSuccess()
-
+    private fun observeOrders() {
+        viewModelScope.launch {
+            if (userInteractor.isUserAuthorize()) {
+                orderInteractor.observeOrderList().onEach { orderList ->
+                    if (orderList.isEmpty()) {
+                        mutableOrdersState.value = State.Empty()
+                    } else {
+                        mutableOrdersState.value =
+                            orderList.map(orderUIMapper::toItem).toStateSuccess()
+                    }
                 }.launchIn(viewModelScope)
-        else
-            orderRepo.getOrdersWithCartProductsWithEmptyUserId()
-                .onEach { orderWithCartProducts ->
-                    if (orderWithCartProducts.isEmpty())
-                        _ordersState.value = State.Empty()
-                    else
-                        _ordersState.value =
-                            orderWithCartProducts.sortedByDescending { it.orderEntity.time }
-                                .map { orderAdapterMapper.from(it) }.toStateSuccess()
-
-                }.launchIn(viewModelScope)
+            }
+        }
     }
 
-
-    fun onOrderClicked(orderAdapterModel: OrderAdapterModel) {
-        router.navigate(OrdersFragmentDirections.toOrderBottomSheet(orderAdapterModel.uuid))
+    fun onOrderClicked(orderItem: OrderItem) {
+        router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
+
 }

@@ -1,13 +1,28 @@
 package com.bunbeauty.domain.repo
 
-import androidx.lifecycle.LiveData
-import com.bunbeauty.domain.model.local.cafe.Cafe
-import com.bunbeauty.domain.model.local.cafe.CafeEntity
+import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.cafe.Cafe
 import kotlinx.coroutines.flow.Flow
 
 interface CafeRepo {
-    val cafeEntityListFlow: Flow<List<Cafe>>
-    suspend fun refreshCafeList()
-    fun getCafeById(cafeId: String): LiveData<Cafe>
-    suspend fun getCafeEntityByDistrict(districtId: String): CafeEntity
+
+    suspend fun refreshCafeList(selectedCityUuid: String)
+    suspend fun saveSelectedCafeUuid(
+        userUuid: String,
+        selectedCityUuid: String,
+        cafeUuid: String
+    )
+
+    suspend fun getCafeList(): List<Cafe>
+    suspend fun getCafeByUuid(cafeUuid: String): Cafe?
+
+    fun observeSelectedCafeByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Flow<Cafe?>
+
+    fun observeFirstCafeCityUuid(cityUuid: String): Flow<Cafe?>
+    fun observeCafeList(): Flow<List<Cafe>>
+    fun observeCafeAddressList(): Flow<List<CafeAddress>>
+    fun observeCafeAddressByUuid(cafeUuid: String): Flow<CafeAddress?>
 }

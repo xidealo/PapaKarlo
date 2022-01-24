@@ -1,18 +1,23 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.local.CartProduct
+import com.bunbeauty.domain.model.product.CartProduct
 import kotlinx.coroutines.flow.Flow
 
 interface CartProductRepo {
-    suspend fun insertToLocal(cartProduct: CartProduct): CartProduct
 
-    fun getCartProductListFlow(): Flow<List<CartProduct>>
+    fun observeCartProductList(): Flow<List<CartProduct>>
 
     suspend fun getCartProductList(): List<CartProduct>
 
-    suspend fun getCartProduct(cartProductUuid: String): CartProduct?
+    suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProduct?
 
-    suspend fun update(cartProduct: CartProduct)
+    suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct?
 
-    suspend fun delete(cartProduct: CartProduct)
+    suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct?
+
+    suspend fun deleteCartProduct(cartProduct: CartProduct)
+
+    suspend fun deleteCartProductList(cartProductList: List<CartProduct>)
+
+    suspend fun deleteAllCartProducts()
 }

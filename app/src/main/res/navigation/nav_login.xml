@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_login"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.LoginFragment"
+        android:label=""
+        tools:layout="@layout/fragment_login">
+        <argument
+            android:name="successLoginDirection"
+            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        <action
+            android:id="@+id/to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+        <action
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_createOrderFragment"
+            app:destination="@id/createOrderFragment"
+            app:popUpTo="@+id/nav_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmFragment"
+        android:name="com.bunbeauty.papakarlo.ui.fragment.auth.ConfirmFragment"
+        android:label=""
+        tools:layout="@layout/fragment_confirm">
+        <argument
+            android:name="phone"
+            app:argType="string" />
+        <argument
+            android:name="verificationId"
+            app:argType="string" />
+        <argument
+            android:name="resendToken"
+            app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
+        <argument
+            android:name="successLoginDirection"
+            app:argType="com.bunbeauty.presentation.enums.SuccessLoginDirection" />
+        <action
+            android:id="@+id/back_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/to_createOrderFragment"
+            app:destination="@id/createOrderFragment"
+            app:popUpTo="@+id/nav_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+</navigation>

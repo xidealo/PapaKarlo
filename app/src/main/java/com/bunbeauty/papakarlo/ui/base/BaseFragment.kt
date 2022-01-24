@@ -2,46 +2,43 @@ package com.bunbeauty.papakarlo.ui.base
 
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.TEXT_ALIGNMENT_CENTER
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.databinding.ViewDataBinding
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
+import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import com.bunbeauty.papakarlo.extensions.getBinding
+import com.bunbeauty.papakarlo.extensions.clearErrorFocus
+import com.bunbeauty.papakarlo.extensions.setErrorFocus
+import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import com.google.android.material.snackbar.Snackbar
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
+abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     @Inject
-    lateinit var modelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
+
+    abstract val viewBinding: ViewBinding
     abstract val viewModel: BaseViewModel
 
-    private var mutableViewDataBinding: B? = null
-    val viewDataBinding: B
-        get() = checkNotNull(mutableViewDataBinding)
+    protected val textInputMap = HashMap<String, TextInputLayout>()
 
-    open val isToolbarVisible = true
-    open val isLogoVisible = false
-    open val isCartVisible = false
-    open val isBottomBarVisible = false
+    var isBackPressedOverridden = false
+    var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,54 +52,60 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     abstract fun inject(viewModelComponent: ViewModelComponent)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mutableViewDataBinding = getBinding(inflater, container)
-        return viewDataBinding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? IBottomNavigationBar)?.setupBottomNavigationBar(isBottomBarVisible)
-        (activity as? IToolbar)?.setToolbarConfiguration(
-            isToolbarVisible,
-            isLogoVisible,
-            isCartVisible
-        )
+        activity?.invalidateOptionsMenu()
 
-        viewDataBinding.lifecycleOwner = this
-        viewDataBinding.executePendingBindings()
-
+        val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
+        val colorOnPrimary = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary)
+        val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
+        val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
         viewModel.message.onEach { message ->
-            showSnackbar(message, R.color.white, R.color.colorPrimary)
-        }.startedLaunch(viewLifecycleOwner)
+            viewBinding.root.showSnackbar(message.message, colorOnPrimary, colorPrimary, false)
+        }.startedLaunch()
         viewModel.error.onEach { error ->
-            showSnackbar(error, R.color.white, R.color.errorColor)
-        }.startedLaunch(viewLifecycleOwner)
+            viewBinding.root.showSnackbar(error.message, colorOnError, colorError, true)
+        }.startedLaunch()
+        viewModel.fieldError.onEach { fieldError ->
+            textInputMap.values.forEach { textInput ->
+                textInput.clearErrorFocus()
+            }
+            textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
+        }.startedLaunch()
     }
 
-    @Deprecated("use flow")
-    protected fun <T> subscribe(liveData: LiveData<T>, observer: (T) -> Unit) {
-        liveData.observe(viewLifecycleOwner, observer::invoke)
+    override fun onStart() {
+        super.onStart()
+
+        if (isBackPressedOverridden) {
+            onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {
+                activity?.moveTaskToBack(true)
+            }
+        }
     }
 
-    private fun showSnackbar(errorMessage: String, textColorId: Int, backgroundColorId: Int) {
-        val snack = Snackbar.make(viewDataBinding.root, errorMessage, Snackbar.LENGTH_SHORT)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), backgroundColorId))
-            .setTextColor(ContextCompat.getColor(requireContext(), textColorId))
-            .setActionTextColor(ContextCompat.getColor(requireContext(), textColorId))
-        val layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-            gravity = Gravity.TOP
-            setMargins(16, 16, 16, 0)
+    override fun onStop() {
+        if (isBackPressedOverridden) {
+            onBackPressedCallback?.remove()
         }
-        with(snack) {
-            view.layoutParams = layoutParams
-            view.findViewById<TextView>(R.id.snackbar_text).textAlignment = TEXT_ALIGNMENT_CENTER
-            show()
+
+        super.onStop()
+    }
+
+    protected fun overrideBackPressedCallback() {
+        isBackPressedOverridden = true
+    }
+
+    protected fun hideKeyboard() {
+        activity?.currentFocus?.let { currentFocus ->
+            val inputMethodManager =
+                context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
+    }
+
+    protected fun Flow<*>.startedLaunch() {
+        startedLaunch(viewLifecycleOwner)
     }
 }

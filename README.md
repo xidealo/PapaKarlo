@@ -7,12 +7,13 @@ You can download app from [Google Play](https://play.google.com/store/apps/detai
 ### Stack
 - Kotlin
 - Dagger2
-- Coroutines
-- Single Activity
-- Navigation Component
+- Kotlin Coroutines
+- KTor
+- Android Jetpack
 - Firebase
-- Room
-- Picasso
+- Coil
+- MVVM
+- Single Activity
 
-#### Screens
-![1-2-3](https://user-images.githubusercontent.com/36783631/125836146-e0b6aaad-ed01-40cc-9b80-0c3e64fa02d4.jpg)
+### Screens
+![1-2-3](https://user-images.githubusercontent.com/36783631/139852691-f6566b13-5a1c-4dcd-a9fc-e72613ae8f91.jpg)

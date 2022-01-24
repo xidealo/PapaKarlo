@@ -1,43 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/element_address_mcv_main"
+    style="@style/MatchParentShadowlessCard"
+    app:contentPadding="@dimen/large_padding">
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="context"
-            type="android.content.Context" />
-
-        <variable
-            name="address"
-            type="com.bunbeauty.domain.model.local.address.Address" />
-
-        <variable
-            name="iStringHelper"
-            type="com.bunbeauty.domain.util.string_helper.IStringHelper" />
-    </data>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/element_address_mcv_main"
-        style="@style/DefaultMaterialCard"
-        app:cardCornerRadius="0dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                style="@style/LargeMainText"
-                android:layout_width="match_parent"
-                android:padding="@dimen/large_padding"
-                android:text="@{iStringHelper.toString(address)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-</layout>
+    <TextView
+        android:id="@+id/element_address_tv_address"
+        style="@style/LargeRegularWrapContentText"
+        android:layout_marginEnd="@dimen/address_margin"
+        tools:text="Address" />
+</com.google.android.material.card.MaterialCardView>

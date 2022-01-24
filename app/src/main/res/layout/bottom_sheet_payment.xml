@@ -1,70 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheet"
+    tools:context=".ui.fragment.profile.PaymentBottomSheet">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/DefaultBottomSheet"
-        tools:context=".ui.PaymentBottomSheet">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_sheet_payment_gl_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/medium_margin" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottom_sheet_payment_gl_left"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/small_margin" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_sheet_payment_gl_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/medium_margin" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/bottom_sheet_payment_gl_right"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/small_margin" />
+    <TextView
+        android:id="@+id/bottom_sheet_payment_tv_title"
+        style="@style/LargeBoldWrapContentText"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/title_payment"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/bottom_sheet_payment_tv_title"
-            style="@style/MainTitle"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:gravity="center"
-            android:text="@string/title_payment_payment"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
-            app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/bottom_sheet_payment_tv_description"
+        style="@style/MediumRegularWrapConstraintsText"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/msg_payment_description"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_sheet_payment_btn_card_number"
-            style="@style/OutLineButton"
-            android:layout_width="0dp"
-            android:text="@string/pay_data_card_number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title" />
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/bottom_sheet_payment_nc_card_number"
+        style="@style/ShadowlessMonochromeNavigationCard"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:icon="@drawable/ic_copy"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_description"
+        tools:text="4279 3800 2260 1191" />
 
-        <ImageView
-            android:id="@+id/bottom_sheet_payment_iv_copy_card_number"
-            style="@style/IconImageView"
-            android:src="@drawable/ic_copy"
-            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_payment_btn_card_number"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_btn_card_number"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_payment_btn_card_number" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bottom_sheet_payment_btn_phone_number"
-            style="@style/OutLineButton"
-            android:layout_width="0dp"
-            android:text="@string/pay_data_phone_number"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bottom_sheet_payment_btn_card_number" />
-
-        <ImageView
-            android:id="@+id/bottom_sheet_payment_iv_copy_phone_number"
-            style="@style/IconImageView"
-            android:src="@drawable/ic_copy"
-            app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_payment_btn_phone_number"
-            app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_btn_phone_number"
-            app:layout_constraintTop_toTopOf="@+id/bottom_sheet_payment_btn_phone_number" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/bottom_sheet_payment_nc_phone_number"
+        style="@style/ShadowlessMonochromeNavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:icon="@drawable/ic_copy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_payment_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_nc_card_number"
+        tools:text="+7 (903) 801-55-52" />
+</androidx.constraintlayout.widget.ConstraintLayout>

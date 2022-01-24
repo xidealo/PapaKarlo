@@ -1,32 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="colorPrimary">#ff6900</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorPrimaryLight">#FFD2B0</color>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="orange">#FF6900</color>
+    <color name="light_grey">#F2F1F6</color>
+    <color name="grey">#A7A5A5</color>
+    <color name="red">#B1021D</color>
 
-    <color name="black" tools:override="true">#000000</color>
-    <color name="white" tools:override="true">#FFFFFF</color>
-    <color name="grey">#A6A8AC</color>
-
-    <color name="light_green">#44AF49</color>
+    <color name="green">#44AF49</color>
     <color name="light_red">#FF6B60</color>
+    <color name="yellow">#E8A700</color>
 
-    <!-- BACKGROUND -->
-    <color name="backgroundPage">#242526</color>
-    <color name="backgroundComponent">#3C3D40</color>
-    <color name="cardViewBackground">#2B2C2E</color>
-    <color name="tabLayoutBackground">#2B2C2E</color>
-    <color name="actionChipBackground">#F3F2F3</color>
-    <color name="backgroundRed">#47140D</color>
-    <color name="backgroundYellow">#614201</color>
-
-    <!-- TEXT -->
-    <color name="mainTextColor" tools:override="true">#FFFFFF</color>
-    <color name="secondaryTextColor">#A7A5A5</color>
-    <color name="buttonTextColor" >#FFFFFF</color>
-    <color name="hintColor">#93969A</color>
-    <color name="iconTintColor">#93969A</color>
-
-    <!-- SPECIAL -->
-    <color name="errorColor">#B1021D</color>
 </resources>

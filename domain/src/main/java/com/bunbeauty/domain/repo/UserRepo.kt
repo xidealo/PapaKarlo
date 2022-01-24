@@ -1,18 +1,20 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.firebase.UserFirebase
-import com.bunbeauty.domain.model.local.user.User
+import com.bunbeauty.domain.model.profile.Profile
+import com.bunbeauty.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepo {
-    suspend fun insert(user: User)
-    suspend fun insertToLocal(user: User)
-    suspend fun insert(userFirebase: UserFirebase, userId: String)
-    suspend fun update(user: User)
-    suspend fun insertToBonusList(user: User)
-    fun getUserWithBonuses(userId: String): Flow<User?>
-    fun getUser(userId: String): User?
-    fun getUserAsFlow(userId: String): Flow<User?>
-    fun getUserAsFlowFromFirebase(userId: String): Flow<User?>
-    fun getUserFirebaseAsFlow(userId: String): Flow<UserFirebase?>
+
+    suspend fun login(userUuid: String, userPhone: String): String?
+
+    suspend fun refreshUser(token: String)
+
+    suspend fun getUserByUuid(userUuid: String): Profile?
+
+    fun observeUserByUuid(userUuid: String): Flow<User?>
+
+    fun observeProfileByUuid(userUuid: String): Flow<Profile?>
+
+    suspend fun updateUserEmail(token: String, userUuid: String, email: String): User?
 }

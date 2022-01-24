@@ -1,84 +1,64 @@
 package com.bunbeauty.papakarlo.presentation
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.repo.DeliveryRepo
-import com.bunbeauty.domain.repo.MenuProductRepo
-import com.bunbeauty.domain.repo.OrderRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.domain.interactor.main.IMainInteractor
+import com.bunbeauty.papakarlo.network.INetworkUtil
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import com.bunbeauty.presentation.util.string.IStringUtil
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val cafeRepo: CafeRepo,
-    private val deliveryRepo: DeliveryRepo,
-    private val userRepo: UserRepo,
-    private val addressRepo: UserAddressRepo,
-    private val orderRepo: OrderRepo,
-    private val menuProductRepo: MenuProductRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val cartProductInteractor: ICartProductInteractor,
+    private val mainInteractor: IMainInteractor,
+    private val stringUtil: IStringUtil,
+    private val networkUtil: INetworkUtil
 ) : BaseViewModel() {
 
-    fun refreshCafeList() {
-        viewModelScope.launch(IO) {
-            cafeRepo.refreshCafeList()
-        }
+    private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
+    val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
+
+    private val mutableCartProductCount: MutableStateFlow<String> = MutableStateFlow("")
+    val cartProductCount: StateFlow<String> = mutableCartProductCount.asStateFlow()
+
+    private val mutableIsOnline: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isOnline: StateFlow<Boolean> = mutableIsOnline.asStateFlow()
+
+    init {
+        refreshData()
+        observeTotalCartCount()
+        observeTotalCartCost()
+        observeNetworkConnection()
+        checkOrderUpdates()
     }
 
-    fun refreshMenuProducts() {
-        viewModelScope.launch(IO) {
-            menuProductRepo.getMenuProductRequest()
-        }
-    }
-
-    fun refreshDeliveryInfo() {
-        viewModelScope.launch(IO) {
-            deliveryRepo.refreshDeliveryCost()
-        }
-    }
-
-    fun refreshUserInfo() {
-        viewModelScope.launch(IO) {
-            val userId = dataStoreRepo.userId.first()
-            userRepo.getUserFirebaseAsFlow(userId).onEach { userFirebase ->
-                if (userFirebase != null) {
-                    userRepo.insert(userFirebase, userId)
-                    addressRepo.insert(userFirebase.addresses, userId)
-                    orderRepo.loadOrders(userFirebase.orders)
-                }
-            }.launchIn(viewModelScope)
-        }
-    }
-
-    /* Uploading menu products to FB
-    fun saveMenu(productList: List<String>) {
+    private fun refreshData() {
         viewModelScope.launch {
-            val menuRef = FirebaseDatabase.getInstance()
-                .getReference("COMPANY")
-                .child(BuildConfig.APP_ID)
-                .child(MenuProduct.MENU_PRODUCTS)
-            val productList = productList.mapIndexed { i, str ->
-                val prodFieldList = str.split(";")
-
-                val prod = MenuProductFB(
-                    name = prodFieldList[1],
-                    cost = prodFieldList[4].toInt(),
-                    weight = prodFieldList[3].toInt(),
-                    description = prodFieldList[5],
-                    photoLink = prodFieldList[6],
-                    productCode = ProductCode.valueOf(prodFieldList[2]),
-                    barcode = prodFieldList[0].toInt()
-                )
-
-                menuRef.child("-$i").setValue(prod)
-            }
+            mainInteractor.refreshData()
         }
-    }*/
+    }
+
+    private fun observeTotalCartCount() {
+        cartProductInteractor.observeTotalCartCount().onEach { count ->
+            mutableCartProductCount.value = count.toString()
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeTotalCartCost() {
+        cartProductInteractor.observeNewTotalCartCost().onEach { cost ->
+            mutableCartCost.value = stringUtil.getCostString(cost)
+        }.launchIn(viewModelScope)
+    }
+
+    private fun observeNetworkConnection() {
+        networkUtil.observeIsOnline().onEach { isOnline ->
+            mutableIsOnline.value = isOnline
+        }.launchIn(viewModelScope)
+    }
+
+    private fun checkOrderUpdates() {
+        mainInteractor.checkOrderUpdates()
+    }
 }

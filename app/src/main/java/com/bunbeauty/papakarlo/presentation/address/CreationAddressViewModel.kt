@@ -1,67 +1,130 @@
 package com.bunbeauty.papakarlo.presentation.address
 
-import androidx.databinding.ObservableField
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.model.local.Street
-import com.bunbeauty.domain.model.local.address.UserAddress
-import com.bunbeauty.domain.repo.UserAddressRepo
-import com.bunbeauty.domain.repo.StreetRepo
-import com.bunbeauty.domain.util.resources.IResourcesProvider
+import com.bunbeauty.common.Constants.COMMENT_ERROR_KEY
+import com.bunbeauty.common.Constants.ENTRANCE_ERROR_KEY
+import com.bunbeauty.common.Constants.FLAT_ERROR_KEY
+import com.bunbeauty.common.Constants.FLOOR_ERROR_KEY
+import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
+import com.bunbeauty.common.Constants.STREET_ERROR_KEY
+import com.bunbeauty.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.domain.interactor.street.IStreetInteractor
+import com.bunbeauty.domain.model.Street
+import com.bunbeauty.domain.util.validator.ITextValidator
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.presentation.base.BaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
+import com.bunbeauty.presentation.util.resources.IResourcesProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.util.*
 import javax.inject.Inject
 
 class CreationAddressViewModel @Inject constructor(
-    private val userAddressRepo: UserAddressRepo,
-    private val dataStoreRepo: DataStoreRepo,
-    private val streetRepo: StreetRepo,
     private val resourcesProvider: IResourcesProvider,
+    private val textValidator: ITextValidator,
+    private val streetInteractor: IStreetInteractor,
+    private val addressInteractor: IAddressInteractor,
 ) : BaseViewModel() {
 
-    var streets = listOf<Street>()
-    var streetNamesFiled = ObservableField<List<String>>()
+    private var streetList: List<Street> = emptyList()
+    private val mutableStreetNameList: MutableStateFlow<List<String>> =
+        MutableStateFlow(emptyList())
+    val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
 
-    fun getStreets() {
+    init {
+        observeStreetList()
+    }
+
+    private fun observeStreetList() {
+        streetInteractor.observeStreetList().launchOnEach { streetList ->
+            this.streetList = streetList
+        }
+        streetInteractor.observeStreetNameList().launchOnEach { streetNameList ->
+            mutableStreetNameList.value = streetNameList
+        }
+    }
+
+    fun onCreateAddressClicked(
+        streetName: String,
+        house: String,
+        flat: String,
+        entrance: String,
+        comment: String,
+        floor: String
+    ) {
+        val incorrectStreetSelected = streetList.none { street -> street.name == streetName }
+        if (incorrectStreetSelected) {
+            sendFieldError(
+                STREET_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_street)
+            )
+            return
+        }
+
+        if (house.isEmpty()) {
+            sendFieldError(
+                HOUSE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_house)
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(house, maxLength = 5)) {
+            sendFieldError(
+                HOUSE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(flat, maxLength = 5)) {
+            sendFieldError(
+                FLAT_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(entrance, maxLength = 5)) {
+            sendFieldError(
+                ENTRANCE_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(floor, maxLength = 5)) {
+            sendFieldError(
+                FLOOR_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 5
+            )
+            return
+        }
+
+        if (!textValidator.isFieldContentCorrect(comment, maxLength = 100)) {
+            sendFieldError(
+                COMMENT_ERROR_KEY,
+                resourcesProvider.getString(R.string.error_create_address_max_length) + 100
+            )
+            return
+        }
+
         viewModelScope.launch {
-            streetRepo.getStreets().collect { streetsFlow ->
-                streetNamesFiled.set(streetsFlow.map { it.name })
-                streets = streetsFlow
-            }
-        }
-    }
-
-    fun onCreateAddressClicked(userAddress: UserAddress) {
-        viewModelScope.launch(Dispatchers.IO) {
-            userAddress.userId = dataStoreRepo.userId.first()
-            val uuid = if (!userAddress.userId.isNullOrEmpty()) {
-                userAddressRepo.insert("token", userAddress).uuid
+            val userAddress = addressInteractor.createAddress(
+                streetName,
+                house,
+                flat,
+                entrance,
+                comment,
+                floor,
+            )
+            if (userAddress == null) {
+                showError(resourcesProvider.getString(R.string.error_create_address_fail), false)
             } else {
-                userAddress.uuid = UUID.randomUUID().toString()
-                userAddressRepo.insert(userAddress)
-                userAddress.uuid
+                showMessage(resourcesProvider.getString(R.string.msg_create_address_created), false)
             }
-            dataStoreRepo.saveDeliveryAddressId(uuid)
-            withContext(Dispatchers.Main) {
-                showMessage(resourcesProvider.getString(R.string.msg_creation_address_created_address))
-                router.navigateUp()
-            }
+            goBack()
         }
-    }
-
-    fun isCorrectFieldContent(text: String, isRequired: Boolean, maxLength: Int): Boolean {
-        if (text.isEmpty() && isRequired) {
-            return false
-        }
-        if (text.length > maxLength) {
-            return false
-        }
-        return true
     }
 }

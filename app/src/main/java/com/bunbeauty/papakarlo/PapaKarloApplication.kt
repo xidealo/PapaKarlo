@@ -3,8 +3,8 @@ package com.bunbeauty.papakarlo
 import android.app.Application
 import com.bunbeauty.papakarlo.di.components.AppComponent
 import com.bunbeauty.papakarlo.di.components.DaggerAppComponent
-import com.instacart.library.truetime.TrueTime
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
 class PapaKarloApplication : Application(), CoroutineScope {
@@ -12,19 +12,13 @@ class PapaKarloApplication : Application(), CoroutineScope {
     override val coroutineContext: CoroutineContext = Job()
 
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(this)
+        DaggerAppComponent.factory().create(applicationContext)
     }
 
     override fun onCreate() {
+        setTheme(R.style.AppTheme)
         super.onCreate()
 
         appComponent.inject(this)
-        launch(Dispatchers.IO) {
-            try {
-                TrueTime.build().initialize()
-            }catch (exception:Exception){
-                //try reconnect
-            }
-        }
     }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BottomSheet"
+    tools:context=".ui.fragment.profile.AboutAppBottomSheet">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_sheet_about_app_gl_left"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/medium_margin" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom_sheet_about_app_gl_right"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/medium_margin" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_about_app_tv_title"
+        style="@style/LargeBoldWrapContentText"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:text="@string/title_about_app"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_about_app_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/bottom_sheet_about_app_nc_developer"
+        style="@style/ShadowlessNavigationCard"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:icon="@drawable/ic_bb_logo"
+        android:text="@string/msg_about_app_developer"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_about_app_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_about_app_tv_title" />
+
+    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+        android:id="@+id/bottom_sheet_about_app_nc_version"
+        style="@style/ShadowlessMonochromeNavigationCard"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:icon="@drawable/ic_smartphone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_about_app_gl_right"
+        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_about_app_nc_developer"
+        tools:text="@string/msg_about_app_version" />
+</androidx.constraintlayout.widget.ConstraintLayout>

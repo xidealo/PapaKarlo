@@ -2,34 +2,41 @@ package com.bunbeauty.papakarlo.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bunbeauty.papakarlo.di.ViewModelKey
-import com.bunbeauty.papakarlo.presentation.*
-import com.bunbeauty.papakarlo.presentation.address.AddressesViewModelImpl
+import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
+import com.bunbeauty.papakarlo.presentation.EmptyViewModel
+import com.bunbeauty.papakarlo.presentation.MainViewModel
+import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
+import com.bunbeauty.papakarlo.presentation.SplashViewModel
+import com.bunbeauty.papakarlo.presentation.address.CafeAddressesViewModel
 import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
+import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
 import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
-import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModelImpl
+import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
+import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
 import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
 import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
-import com.bunbeauty.papakarlo.presentation.menu.ProductTabViewModelImpl
 import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
-import com.bunbeauty.papakarlo.presentation.profile.*
+import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
+import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
+import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.CitySelectionViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.LogoutViewModel
+import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 @Module
 abstract class ViewModelModule {
 
     @Binds
     internal abstract fun provideViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(ProductTabViewModelImpl::class)
-    internal abstract fun provideProductTabViewModel(productTabViewModelImpl: ProductTabViewModelImpl): ViewModel
 
     @Binds
     @IntoMap
@@ -48,8 +55,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreationOrderViewModelImpl::class)
-    internal abstract fun provideCreationOrderViewModelImpl(creationOrderViewModelImpl: CreationOrderViewModelImpl): ViewModel
+    @ViewModelKey(CreateOrderViewModel::class)
+    internal abstract fun provideCreationOrderViewModelImpl(creationOrderViewModel: CreateOrderViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -68,8 +75,13 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AddressesViewModelImpl::class)
-    internal abstract fun provideAddressesViewModelImpl(addressesViewModelImpl: AddressesViewModelImpl): ViewModel
+    @ViewModelKey(UserAddressesViewModel::class)
+    internal abstract fun provideUserAddressesViewModel(userAddressesViewModel: UserAddressesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CafeAddressesViewModel::class)
+    internal abstract fun provideCafeAddressesViewModel(cafeAddressesViewModel: CafeAddressesViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -89,7 +101,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
-    internal abstract fun provideProfileViewModel(profileViewModelImpl: ProfileViewModelImpl): ViewModel
+    internal abstract fun provideProfileViewModel(profileViewModel: ProfileViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -98,8 +110,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ConfirmViewModelImpl::class)
-    internal abstract fun provideConfirmViewModel(confirmViewModelImpl: ConfirmViewModelImpl): ViewModel
+    @ViewModelKey(ConfirmViewModel::class)
+    internal abstract fun provideConfirmViewModel(confirmViewModel: ConfirmViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -113,6 +125,178 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(OneLineActionViewModel::class)
-    internal abstract fun provideOneLineActionViewModel(oneLineActionViewModel: OneLineActionViewModel): ViewModel
+    @ViewModelKey(DeferredTimeViewModel::class)
+    internal abstract fun provideDeferredTimeViewModel(deferredTimeViewModel: DeferredTimeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SelectCityViewModel::class)
+    internal abstract fun provideSelectCityViewModel(selectCityViewModel: SelectCityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CitySelectionViewModel::class)
+    internal abstract fun provideCitySelectionViewModel(citySelectionViewModel: CitySelectionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LogoutViewModel::class)
+    internal abstract fun provideLogoutViewModel(logoutViewModel: LogoutViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    internal abstract fun provideSplashViewModel(splashViewModel: SplashViewModel): ViewModel
+}
+
+fun viewModelModule() = module {
+    viewModel {
+        LoginViewModel(
+            textValidator = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+
+            )
+    }
+    viewModel {
+        MenuViewModel(
+            categoryInteractor = get(),
+            menuProductInteractor = get(),
+            stringUtil = get()
+        )
+    }
+    viewModel {
+        MainViewModel(
+            cartProductInteractor = get(),
+            mainInteractor = get(),
+            stringUtil = get(),
+            networkUtil = get()
+        )
+    }
+    viewModel {
+        ConsumerCartViewModel(
+            resourcesProvider = get(),
+            stringUtil = get(),
+            userInteractor = get(),
+            cartProductInteractor = get(),
+        )
+    }
+    viewModel {
+        CreateOrderViewModel(
+            addressInteractor = get(),
+            cartProductInteractor = get(),
+            orderInteractor = get(),
+            cafeInteractor = get(),
+            userInteractor = get(),
+            deferredTimeInteractor = get(),
+            stringUtil = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        CafeListViewModel(
+
+            cafeInteractor = get(),
+            resourcesProvider = get(),
+            stringUtil = get(),
+        )
+    }
+    viewModel {
+        OrdersViewModel(
+            orderUIMapper = get(),
+            orderInteractor = get(),
+            userInteractor = get(),
+        )
+    }
+    viewModel {
+        CreationAddressViewModel(
+            resourcesProvider = get(),
+            textValidator = get(),
+            streetInteractor = get(),
+            addressInteractor = get()
+        )
+    }
+    viewModel {
+        UserAddressesViewModel(
+            addressInteractor = get(),
+            stringUtil = get()
+        )
+    }
+    viewModel {
+        CafeAddressesViewModel(
+            cafeInteractor = get(),
+        )
+    }
+    viewModel {
+        CafeOptionsViewModel(
+            resourcesProvider = get(),
+            cafeInteractor = get(),
+        )
+    }
+    viewModel { EmptyViewModel() }
+    viewModel {
+        OrderDetailsViewModel(
+            orderInteractor = get(),
+            orderUIMapper = get(),
+        )
+    }
+    viewModel {
+        ProfileViewModel(
+            userInteractor = get(),
+            orderUIMapper = get(),
+        )
+    }
+    viewModel {
+        LoginViewModel(
+            textValidator = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        ConfirmViewModel(
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        SettingsViewModel(
+            cityInteractor = get(),
+            userInteractor = get(),
+            resourcesProvider = get(),
+        )
+    }
+    viewModel {
+        ProductViewModel(
+            menuProductInteractor = get(),
+            stringUtil = get()
+        )
+    }
+    viewModel {
+        DeferredTimeViewModel(
+            deferredTimeInteractor = get(),
+        )
+    }
+    viewModel {
+        SelectCityViewModel(
+            cityInteractor = get()
+        )
+    }
+    viewModel {
+        CitySelectionViewModel(
+            cityInteractor = get(),
+        )
+    }
+    viewModel {
+        LogoutViewModel(
+            userInteractor = get(),
+        )
+    }
+    viewModel {
+        SplashViewModel(
+            updateInteractor = get(),
+            cityInteractor = get(),
+        )
+    }
+
 }

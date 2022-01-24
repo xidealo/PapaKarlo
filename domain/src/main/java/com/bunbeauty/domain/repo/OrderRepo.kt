@@ -1,16 +1,22 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.local.order.Order
-import com.bunbeauty.domain.model.local.order.UserOrder
+import com.bunbeauty.domain.model.order.CreatedOrder
+import com.bunbeauty.domain.model.order.Order
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
-    suspend fun insert(order: Order): String
-    suspend fun loadOrders(userOrderList: List<UserOrder>)
-    fun getOrdersWithCartProducts(): Flow<List<Order>>
-    fun getOrdersWithCartProductsWithEmptyUserId(): Flow<List<Order>>
-    fun getOrdersWithCartProductsByUserId(userId: String): Flow<List<Order>>
-    fun getOrderWithCartProducts(orderUuid: String): Flow<Order?>
 
-    //suspend fun deleteAll(orderList: List<OrderWithCartProducts>)
+    fun observeOrderListByUserUuid(userUuid: String): Flow<List<Order>>
+
+    suspend fun getOrderByUuid(orderUuid: String): Order?
+
+    fun observeOrderByUuid(orderUuid: String): Flow<Order?>
+
+    suspend fun createOrder(token: String, createdOrder: CreatedOrder): Order?
+
+    fun observeOrderUpdates(token: String): Flow<Order>
+
+    suspend fun updateOrderStatus(order: Order)
+
+    suspend fun stopCheckOrderUpdates()
 }

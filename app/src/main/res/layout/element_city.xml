@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParentCard"
+    android:layout_marginStart="@dimen/medium_margin"
+    android:layout_marginTop="@dimen/very_small_margin"
+    android:layout_marginEnd="@dimen/medium_margin"
+    android:layout_marginBottom="@dimen/very_small_margin"
+    app:contentPadding="@dimen/medium_padding">
+
+    <TextView
+        android:id="@+id/element_city_tv_name"
+        style="@style/MediumRegularWrapContentText"
+        android:layout_gravity="center"
+        tools:text="City" />
+</com.google.android.material.card.MaterialCardView>
