@@ -1,20 +1,19 @@
 object Versions {
-
     const val gradle = "7.0.2"
     const val kotlin = "1.6.10"
     const val googleServices = "4.3.10"
     const val crashlytics = "2.8.1"
-    const val navigation = "2.4.0-rc01"
+    const val navigation = "2.4.0"
 
-    const val kotlinCoroutines = "1.5.2-native-mt"
+    const val kotlinCoroutines = "1.6.0-native-mt"
     const val ktor = "1.6.5"
-    const val kotlinxSerialization = "1.3.0"
-    const val koin = "3.1.2"
+    const val kotlinxSerialization = "1.3.2"
+    const val koin = "3.1.5"
 
     const val sqlDelight = "1.5.0"
     const val slf4j = "1.7.30"
 
-    const val constraintLayout = "2.1.1"
+    const val constraintLayout = "2.1.3"
 
     const val dagger = "2.40.1"
 
@@ -22,12 +21,11 @@ object Versions {
     const val junit = "4.13"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
-    const val appCompact = "1.3.1"
+    const val appCompact = "1.4.1"
     const val coil = "1.4.0"
     const val timePicker = "4.2.3"
 
     const val dataStorePreferences = "1.0.0"
-
 
     const val grpc = "1.40.0"
 
@@ -59,11 +57,11 @@ object Versions {
 object Application {
     const val versionMajor = 1
     const val versionMinor = 2
-    const val versionPatch = 0
+    const val versionPatch = 2
 
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
-    const val versionCode = 120
+    const val versionCode = 122
 }
 
 object AndroidSdk {
