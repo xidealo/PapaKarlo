@@ -19,13 +19,13 @@ class OrdersViewModel @Inject constructor(
     private val userInteractor: IUserInteractor,
 ) : BaseViewModel() {
 
-    init {
-        observeOrders()
-    }
-
     private val mutableOrdersState: MutableStateFlow<State<List<OrderItem>>> =
         MutableStateFlow(State.Loading())
     val ordersState: StateFlow<State<List<OrderItem>>> = mutableOrdersState.asStateFlow()
+
+    init {
+        observeOrders()
+    }
 
     private fun observeOrders() {
         viewModelScope.launch {
