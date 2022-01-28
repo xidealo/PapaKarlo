@@ -12,6 +12,8 @@
     <!--CAFE-->
     <string name="msg_cafe_open">Открыто</string>
     <string name="msg_cafe_close_soon">Открыто. Закроется через&#160;</string>
+    <string name="msg_cafe_minute">&#160;минуту</string>
+    <string name="msg_cafe_minutes_234">&#160;минуты</string>
     <string name="msg_cafe_minutes">&#160;минут</string>
     <string name="msg_cafe_closed">Закрыто</string>
 </resources>

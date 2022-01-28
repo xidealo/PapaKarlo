@@ -47,13 +47,11 @@ class CafeListViewModel @Inject constructor(
             resourcesProvider.getColorByAttr(R.attr.colorClosed)
         }
         val isOpenMessage = if (cafePreview.isOpen) {
-            if (cafePreview.closeIn == null) {
-                resourcesProvider.getString(R.string.msg_cafe_open)
-            } else {
+            cafePreview.closeIn?.let { closeIn ->
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                        cafePreview.closeIn +
-                        resourcesProvider.getString(R.string.msg_cafe_minutes)
-            }
+                        closeIn +
+                        getMinuteString(closeIn)
+            } ?: resourcesProvider.getString(R.string.msg_cafe_open)
         } else {
             resourcesProvider.getString(R.string.msg_cafe_closed)
         }
@@ -65,5 +63,15 @@ class CafeListViewModel @Inject constructor(
             isOpenMessage = isOpenMessage,
             isOpenColor = isOpenColor
         )
+    }
+
+    fun getMinuteString(closeIn: Int): String {
+        val minuteStringId = when {
+            (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
+            (closeIn % 10 == 1) -> R.string.msg_cafe_minute
+            (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
+            else -> R.string.msg_cafe_minutes
+        }
+        return resourcesProvider.getString(minuteStringId)
     }
 }

@@ -34,11 +34,13 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
+
         viewBinding.fragmentCafeListRvCafeList.addItemDecoration(marginItemVerticalDecoration)
-        cafeAdapter.setOnItemClickListener { cafeItem ->
-            viewModel.onCafeCardClicked(cafeItem)
+        viewBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter.apply {
+            setOnItemClickListener { cafeItem ->
+                viewModel.onCafeCardClicked(cafeItem)
+            }
         }
-        viewBinding.fragmentCafeListRvCafeList.adapter = cafeAdapter
         viewModel.cafeItemList.onEach { cafeItemList ->
             cafeAdapter.submitList(cafeItemList)
         }.startedLaunch()
