@@ -1,5 +1,7 @@
 package com.bunbeauty.papakarlo.presentation
 
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.main.IMainInteractor
@@ -15,7 +17,7 @@ class MainViewModel @Inject constructor(
     private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,
     private val networkUtil: INetworkUtil
-) : BaseViewModel() {
+) : BaseViewModel(), DefaultLifecycleObserver {
 
     private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
     val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
@@ -26,12 +28,24 @@ class MainViewModel @Inject constructor(
     private val mutableIsOnline: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val isOnline: StateFlow<Boolean> = mutableIsOnline.asStateFlow()
 
+    private val mutableIsStarted: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     init {
         refreshData()
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
-        checkOrderUpdates()
+        checkOrderUpdates(mutableIsStarted)
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        mutableIsStarted.value = true
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        mutableIsStarted.value = false
     }
 
     private fun refreshData() {
@@ -58,7 +72,7 @@ class MainViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun checkOrderUpdates() {
-        mainInteractor.checkOrderUpdates()
+    private fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
+        mainInteractor.checkOrderUpdates(isStartedFlow)
     }
 }
