@@ -22,10 +22,19 @@ import com.bunbeauty.papakarlo.presentation.MainViewModel
 import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
 import com.bunbeauty.papakarlo.ui.fragment.profile.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
+
+    @Inject
+    lateinit var modelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     private val viewBinding: ActivityMainBinding by viewBinding(
         ActivityMainBinding::bind,
@@ -59,16 +68,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         R.id.profileFragment,
     )
 
-    private var viewModel: MainViewModel? = null
+    private var mutableViewModel: MainViewModel? = null
+    private val viewModel: MainViewModel
+        get() = checkNotNull(mutableViewModel)
 
-    @Inject
-    lateinit var modelFactory: ViewModelFactory
-
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     private val appBarConfiguration = AppBarConfiguration(
         topLevelDestinationIds = setOf(
@@ -90,7 +93,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             .inject(this)
         setContentView(viewBinding.root)
 
-        viewModel = ViewModelProvider(this, modelFactory)[MainViewModel::class.java]
+        mutableViewModel = ViewModelProvider(this, modelFactory)[MainViewModel::class.java]
+        lifecycle.addObserver(viewModel)
 
         val navController = getNavController()
 
@@ -183,19 +187,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun observeCart() {
-        viewModel?.run {
-            cartCost.onEach { cartCost ->
-                viewBinding.activityMainTvCart.text = cartCost
-            }.startedLaunch(this@MainActivity)
-            cartProductCount.onEach { cartProductCount ->
-                viewBinding.activityMainTvCartCount.text = cartProductCount
-            }.startedLaunch(this@MainActivity)
+        viewModel.cartCost.startedLaunch { cartCost ->
+            viewBinding.activityMainTvCart.text = cartCost
+        }
+        viewModel.cartProductCount.startedLaunch { cartProductCount ->
+            viewBinding.activityMainTvCartCount.text = cartProductCount
         }
     }
 
     private fun observeIsOnline() {
-        viewModel?.isOnline?.onEach { isOnline ->
+        viewModel.isOnline.startedLaunch { isOnline ->
             viewBinding.activityMainTvInternetWarning.toggleVisibility(!isOnline)
-        }?.startedLaunch(this)
+        }
     }
+
+    private inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
+        startedLaunch(this@MainActivity, block)
+    }
+
+
 }

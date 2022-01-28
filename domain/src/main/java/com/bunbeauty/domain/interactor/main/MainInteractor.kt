@@ -7,10 +7,7 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.worker.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -34,22 +31,25 @@ class MainInteractor @Inject constructor(
         categoryWorkerUtil.refreshCategoryList()
         menuProductWorkerUtil.refreshMenuProductList()
 
-        val token = dataStoreRepo.getToken()
-        if (token != null) {
+        if (userInteractor.isUserAuthorize()) {
+            val token = dataStoreRepo.getToken() ?: ""
             userWorkerUtil.refreshUser(token)
         }
     }
 
-    override fun checkOrderUpdates() {
-        userInteractor.observeIsUserAuthorize().flatMapLatest { isUserAuthorize ->
-            if (isUserAuthorize) {
-                val token = dataStoreRepo.getToken() ?: ""
-                orderRepo.observeOrderUpdates(token).onEach { order ->
-                    orderRepo.updateOrderStatus(order)
+    override fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
+        isStartedFlow.flatMapLatest { isStarted ->
+            userInteractor.observeIsUserAuthorize().flatMapLatest { isUserAuthorize ->
+                if (isStarted && isUserAuthorize) {
+                    val token = dataStoreRepo.getToken() ?: ""
+                    userWorkerUtil.refreshUser(token)
+                    orderRepo.observeOrderUpdates(token).onEach { order ->
+                        orderRepo.updateOrderStatus(order)
+                    }
+                } else {
+                    orderRepo.stopCheckOrderUpdates()
+                    flow { }
                 }
-            } else {
-                orderRepo.stopCheckOrderUpdates()
-                flow { }
             }
         }.launchIn(this)
     }
