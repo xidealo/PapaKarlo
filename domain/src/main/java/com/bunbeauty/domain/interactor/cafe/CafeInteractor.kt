@@ -9,6 +9,7 @@ import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -22,16 +23,18 @@ class CafeInteractor @Inject constructor(
 ) : ICafeInteractor {
 
     override fun observeCafeList(): Flow<List<CafePreview>> {
-        return cafeRepo.observeCafeList().map { cafeList ->
-            cafeList.map { cafe ->
-                CafePreview(
-                    uuid = cafe.uuid,
-                    fromTime = getCafeTime(cafe.fromTime),
-                    toTime = getCafeTime(cafe.toTime),
-                    address = cafe.address,
-                    isOpen = isOpen(cafe.fromTime, cafe.toTime),
-                    closeIn = getCloseIn(cafe.toTime),
-                )
+        return cafeRepo.observeCafeList().flatMapLatest { cafeList ->
+            observeMinutesOfDay().map { minutesOfDay ->
+                cafeList.map { cafe ->
+                    CafePreview(
+                        uuid = cafe.uuid,
+                        fromTime = getCafeTime(cafe.fromTime),
+                        toTime = getCafeTime(cafe.toTime),
+                        address = cafe.address,
+                        isOpen = isOpen(cafe.fromTime, cafe.toTime, minutesOfDay),
+                        closeIn = getCloseIn(cafe.toTime, minutesOfDay),
+                    )
+                }
             }
         }
     }
@@ -69,6 +72,14 @@ class CafeInteractor @Inject constructor(
         }
     }
 
+    fun observeMinutesOfDay(): Flow<Int> = flow {
+        while (true) {
+            val now = DateTime.now()
+            emit(now.minuteOfDay)
+            delay((60 - now.secondOfMinute) * 1_000L)
+        }
+    }
+
     fun observeCafe(): Flow<Cafe?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
             cafeRepo.observeSelectedCafeByUserAndCityUuid(
@@ -98,15 +109,15 @@ class CafeInteractor @Inject constructor(
         return "$hours$TIME_DIVIDER$minutesString"
     }
 
-    fun isOpen(fromTime: Int, toTime: Int): Boolean {
-        val beforeStart = getMinutesFromNowToTime(fromTime)
-        val beforeEnd = getMinutesFromNowToTime(toTime)
+    fun isOpen(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
+        val beforeStart = getMinutesFromNowToTime(fromTime, minutesOfDay)
+        val beforeEnd = getMinutesFromNowToTime(toTime, minutesOfDay)
 
         return beforeStart < 0 && beforeEnd > 0
     }
 
-    fun getCloseIn(toTime: Int): Int? {
-        val beforeEnd = getMinutesFromNowToTime(toTime)
+    fun getCloseIn(toTime: Int, minutesOfDay: Int): Int? {
+        val beforeEnd = getMinutesFromNowToTime(toTime, minutesOfDay)
 
         return if (beforeEnd in 1 until 60) {
             beforeEnd % 60
@@ -115,9 +126,8 @@ class CafeInteractor @Inject constructor(
         }
     }
 
-    fun getMinutesFromNowToTime(daySeconds: Int): Int {
+    fun getMinutesFromNowToTime(daySeconds: Int, minutesOfDay: Int): Int {
         val minutes = daySeconds / SECONDS_IN_MINUTE
-        val nowMinutes = DateTime.now().minuteOfDay
-        return minutes - nowMinutes
+        return minutes - minutesOfDay
     }
 }
