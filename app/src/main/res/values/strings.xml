@@ -10,6 +10,23 @@
     description — описание для iv
     -->
 
+    <!--COMMON-->
+    <string name="msg_comma">,&#160;</string>
+
+    <!--ADDRESS-->
+    <string name="msg_address_house_short">д.&#160;</string>
+    <string name="msg_address_flat_short">кв.&#160;</string>
+    <string name="msg_address_entrance_short">&#160;подъезд</string>
+    <string name="msg_address_floor_short">&#160;этаж</string>
+
+    <!--CAFE-->
+    <string name="msg_cafe_open">Открыто</string>
+    <string name="msg_cafe_close_soon">Открыто. Закроется через&#160;</string>
+    <string name="msg_cafe_minute">&#160;минуту</string>
+    <string name="msg_cafe_minutes_234">&#160;минуты</string>
+    <string name="msg_cafe_minutes">&#160;минут</string>
+    <string name="msg_cafe_closed">Закрыто</string>
+
     <string name="msg_ruble">&#160;₽</string>
     <string name="error_no_internet">Нет подключения к интернету</string>
 
@@ -208,8 +225,8 @@
     <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
     <string name="msg_about_app_version">Версия&#160;</string>
 
-    <!-- SELECT CITY -->
-    <string name="title_select_city">Выберите город</string>
+    <!-- CHANGE CITY -->
+    <string name="title_select_city">Изменение города</string>
 
     <!-- LOGOUT -->
     <string name="title_logout">Выйти из профиля?</string>

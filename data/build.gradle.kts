@@ -3,6 +3,7 @@ plugins {
     id(Plugin.androidLibrary)
     id(Plugin.kapt)
     id(Plugin.kotlinAndroid)
+    id(Plugin.kotlinSerialization)
 }
 
 android {
@@ -52,4 +53,10 @@ dependencies {
     implementation(Firebase.authKtx)
 
     implementation(JodaTime.jodaTime)
+
+    implementation(Serialization.json)
+    implementation(Ktor.clientSerialization)
+    implementation(Ktor.clientLogging)
+    implementation(Ktor.clientWebsockets)
+    implementation(Ktor.clientOkhttp)
 }

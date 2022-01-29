@@ -1,7 +1,6 @@
 package com.bunbeauty.domain.interactor.main
 
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.worker.*
@@ -17,7 +16,7 @@ class MainInteractor @Inject constructor(
     private val menuProductWorkerUtil: IMenuProductWorkerUtil,
     private val deliveryWorkerUtil: IDeliveryWorkerUtil,
     private val userWorkerUtil: IUserWorkerUtil,
-    @Api private val orderRepo: OrderRepo,
+    private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
     private val dataStoreRepo: DataStoreRepo
 ) : IMainInteractor, CoroutineScope {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".ui.fragment.profile.AboutAppBottomSheet">
+    tools:context=".feature.profile.about_app.AboutAppBottomSheet">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottom_sheet_about_app_gl_left"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_about_app_nc_developer"
         style="@style/ShadowlessNavigationCard"
         android:layout_marginTop="@dimen/medium_margin"
@@ -38,7 +38,7 @@
         app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_about_app_tv_title" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_about_app_nc_version"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"

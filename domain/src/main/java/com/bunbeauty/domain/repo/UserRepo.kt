@@ -1,5 +1,6 @@
 package com.bunbeauty.domain.repo
 
+import com.bunbeauty.domain.model.profile.LightProfile
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +15,7 @@ interface UserRepo {
 
     fun observeUserByUuid(userUuid: String): Flow<User?>
 
-    fun observeProfileByUuid(userUuid: String): Flow<Profile?>
+    fun observeProfileByUuid(userUuid: String): Flow<LightProfile?>
 
     suspend fun updateUserEmail(token: String, userUuid: String, email: String): User?
 }

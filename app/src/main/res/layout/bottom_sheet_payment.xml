@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".ui.fragment.profile.PaymentBottomSheet">
+    tools:context=".feature.profile.payment.PaymentBottomSheet">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottom_sheet_payment_gl_left"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="@+id/bottom_sheet_payment_gl_left"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_title" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_payment_nc_card_number"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/medium_margin"
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_payment_tv_description"
         tools:text="4279 3800 2260 1191" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_payment_nc_phone_number"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"

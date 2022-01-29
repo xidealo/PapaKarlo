@@ -1,12 +1,13 @@
 package com.bunbeauty.domain.repo
 
 import com.bunbeauty.domain.model.order.CreatedOrder
+import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import kotlinx.coroutines.flow.Flow
 
 interface OrderRepo {
 
-    fun observeOrderListByUserUuid(userUuid: String): Flow<List<Order>>
+    fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>>
 
     suspend fun getOrderByUuid(orderUuid: String): Order?
 

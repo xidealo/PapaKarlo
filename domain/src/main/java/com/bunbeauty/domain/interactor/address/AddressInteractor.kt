@@ -5,7 +5,6 @@ import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.domain.repo.UserAddressRepo
@@ -16,8 +15,8 @@ import javax.inject.Inject
 
 class AddressInteractor @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
-    @Api private val streetRepo: StreetRepo,
-    @Api private val userAddressRepo: UserAddressRepo,
+    private val streetRepo: StreetRepo,
+    private val userAddressRepo: UserAddressRepo,
     private val userInteractor: IUserInteractor
 ) : IAddressInteractor {
 

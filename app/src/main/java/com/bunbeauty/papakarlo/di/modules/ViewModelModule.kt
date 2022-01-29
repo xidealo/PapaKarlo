@@ -2,30 +2,30 @@ package com.bunbeauty.papakarlo.di.modules
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
+import com.bunbeauty.papakarlo.common.view_model.ViewModelFactory
 import com.bunbeauty.papakarlo.di.annotation.ViewModelKey
-import com.bunbeauty.papakarlo.presentation.EmptyViewModel
-import com.bunbeauty.papakarlo.presentation.MainViewModel
-import com.bunbeauty.papakarlo.presentation.SelectCityViewModel
-import com.bunbeauty.papakarlo.presentation.SplashViewModel
-import com.bunbeauty.papakarlo.presentation.address.CafeAddressesViewModel
-import com.bunbeauty.papakarlo.presentation.address.CreationAddressViewModel
-import com.bunbeauty.papakarlo.presentation.address.UserAddressesViewModel
-import com.bunbeauty.papakarlo.presentation.base.ViewModelFactory
-import com.bunbeauty.papakarlo.presentation.cafe.CafeListViewModel
-import com.bunbeauty.papakarlo.presentation.cafe.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.presentation.cart.ConsumerCartViewModel
-import com.bunbeauty.papakarlo.presentation.create_order.CreateOrderViewModel
-import com.bunbeauty.papakarlo.presentation.create_order.DeferredTimeViewModel
-import com.bunbeauty.papakarlo.presentation.login.ConfirmViewModel
-import com.bunbeauty.papakarlo.presentation.login.LoginViewModel
-import com.bunbeauty.papakarlo.presentation.menu.MenuViewModel
-import com.bunbeauty.papakarlo.presentation.menu.ProductViewModel
-import com.bunbeauty.papakarlo.presentation.profile.OrderDetailsViewModel
-import com.bunbeauty.papakarlo.presentation.profile.OrdersViewModel
-import com.bunbeauty.papakarlo.presentation.profile.ProfileViewModel
-import com.bunbeauty.papakarlo.presentation.profile.settings.CitySelectionViewModel
-import com.bunbeauty.papakarlo.presentation.profile.settings.LogoutViewModel
-import com.bunbeauty.papakarlo.presentation.profile.settings.SettingsViewModel
+import com.bunbeauty.papakarlo.feature.address.cafe_address_list.CafeAddressListViewModel
+import com.bunbeauty.papakarlo.feature.address.create_address.CreateAddressViewModel
+import com.bunbeauty.papakarlo.feature.address.user_address_list.UserAddressListViewModel
+import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmViewModel
+import com.bunbeauty.papakarlo.feature.auth.login.LoginViewModel
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListViewModel
+import com.bunbeauty.papakarlo.feature.cafe.cafe_options.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.feature.create_order.CreateOrderViewModel
+import com.bunbeauty.papakarlo.feature.create_order.deferred_time.DeferredTimeViewModel
+import com.bunbeauty.papakarlo.feature.main.MainViewModel
+import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
+import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
+import com.bunbeauty.papakarlo.feature.profile.ProfileViewModel
+import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderDetailsViewModel
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListViewModel
+import com.bunbeauty.papakarlo.feature.profile.settings.SettingsViewModel
+import com.bunbeauty.papakarlo.feature.profile.settings.change_city.ChangeCityViewModel
+import com.bunbeauty.papakarlo.feature.profile.settings.logout.LogoutViewModel
+import com.bunbeauty.papakarlo.feature.select_city.SelectCityViewModel
+import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -65,23 +65,23 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(OrdersViewModel::class)
-    internal abstract fun provideOrdersViewModel(ordersViewModel: OrdersViewModel): ViewModel
+    @ViewModelKey(OrderListViewModel::class)
+    internal abstract fun provideOrdersViewModel(orderListViewModel: OrderListViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreationAddressViewModel::class)
-    internal abstract fun provideCreationAddressViewModel(creationAddressViewModel: CreationAddressViewModel): ViewModel
+    @ViewModelKey(CreateAddressViewModel::class)
+    internal abstract fun provideCreationAddressViewModel(createAddressViewModel: CreateAddressViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(UserAddressesViewModel::class)
-    internal abstract fun provideUserAddressesViewModel(userAddressesViewModel: UserAddressesViewModel): ViewModel
+    @ViewModelKey(UserAddressListViewModel::class)
+    internal abstract fun provideUserAddressesViewModel(userAddressListViewModel: UserAddressListViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(CafeAddressesViewModel::class)
-    internal abstract fun provideCafeAddressesViewModel(cafeAddressesViewModel: CafeAddressesViewModel): ViewModel
+    @ViewModelKey(CafeAddressListViewModel::class)
+    internal abstract fun provideCafeAddressesViewModel(cafeAddressListViewModel: CafeAddressListViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -120,8 +120,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ProductViewModel::class)
-    internal abstract fun provideProductViewModel(productViewModel: ProductViewModel): ViewModel
+    @ViewModelKey(ProductDetailsViewModel::class)
+    internal abstract fun provideProductViewModel(productDetailsViewModel: ProductDetailsViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -135,8 +135,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(CitySelectionViewModel::class)
-    internal abstract fun provideCitySelectionViewModel(citySelectionViewModel: CitySelectionViewModel): ViewModel
+    @ViewModelKey(ChangeCityViewModel::class)
+    internal abstract fun provideCitySelectionViewModel(changeCityViewModel: ChangeCityViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -202,14 +202,14 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        OrdersViewModel(
+        OrderListViewModel(
             orderUIMapper = get(),
             orderInteractor = get(),
             userInteractor = get(),
         )
     }
     viewModel {
-        CreationAddressViewModel(
+        CreateAddressViewModel(
             resourcesProvider = get(),
             textValidator = get(),
             streetInteractor = get(),
@@ -217,13 +217,13 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        UserAddressesViewModel(
+        UserAddressListViewModel(
             addressInteractor = get(),
             stringUtil = get()
         )
     }
     viewModel {
-        CafeAddressesViewModel(
+        CafeAddressListViewModel(
             cafeInteractor = get(),
         )
     }
@@ -267,7 +267,7 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        ProductViewModel(
+        ProductDetailsViewModel(
             menuProductInteractor = get(),
             stringUtil = get()
         )
@@ -283,7 +283,7 @@ fun viewModelModule() = module {
         )
     }
     viewModel {
-        CitySelectionViewModel(
+        ChangeCityViewModel(
             cityInteractor = get(),
         )
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.UpdateFragment">
+    tools:context=".feature.update.UpdateFragment">
 
     <TextView
         android:id="@+id/fragment_update_tv_update_app"

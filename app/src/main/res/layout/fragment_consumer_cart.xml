@@ -5,7 +5,7 @@
     android:id="@+id/fragment_consumer_cart_cl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.cart.ConsumerCartFragment">
+    tools:context=".feature.consumer_cart.ConsumerCartFragment">
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/fragment_consumer_cart_group_empty_cart"
