@@ -94,12 +94,13 @@ class CreateOrderViewModel @Inject constructor(
     }
 
     fun onDeferredTimeSelected(deferredTimeMillis: Long) {
-        deferredTimeValue = deferredTimeMillis
         if (deferredTimeMillis == -1L) {
+            deferredTimeValue = null
             selectedTimeHour = -1
             selectedTimeMinute = -1
             mutableDeferredTime.value = asap
         } else {
+            deferredTimeValue = deferredTimeMillis
             selectedTimeHour = deferredTimeInteractor.getDeferredTimeHours(deferredTimeMillis)
             selectedTimeMinute = deferredTimeInteractor.getDeferredTimeMinutes(deferredTimeMillis)
             mutableDeferredTime.value =
