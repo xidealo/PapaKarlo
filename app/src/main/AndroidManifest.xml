@@ -21,7 +21,7 @@
         <activity
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
-            android:name="com.bunbeauty.papakarlo.ui.MainActivity"
+            android:name="com.bunbeauty.papakarlo.feature.main.MainActivity"
             android:theme="@style/LoadingAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

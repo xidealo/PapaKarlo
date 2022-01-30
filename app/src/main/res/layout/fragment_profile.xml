@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.profile.ProfileFragment">
+    tools:context=".feature.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_order_details_gl_left"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
         app:layout_constraintTop_toTopOf="@+id/fragment_order_details_gl_top" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_settings"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/medium_margin"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_item_last_order" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_addresses"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -57,7 +57,7 @@
         tools:icon="@drawable/ic_add"
         tools:text="Добавить адрес" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_orders"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -67,7 +67,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_addresses" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_payment"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -77,7 +77,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_orders" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_feedback"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -87,7 +87,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_order_details_gl_left"
         app:layout_constraintTop_toBottomOf="@id/fragment_profile_nc_payment" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_profile_nc_about_app"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"

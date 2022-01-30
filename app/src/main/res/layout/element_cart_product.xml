@@ -54,7 +54,7 @@
             app:layout_constraintVertical_bias="0"
             tools:text="90₽" />
 
-        <com.bunbeauty.papakarlo.ui.custom.CountPicker
+        <com.bunbeauty.papakarlo.feature.consumer_cart.CountPicker
             android:id="@+id/element_cart_product_cp_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

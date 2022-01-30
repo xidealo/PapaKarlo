@@ -6,7 +6,6 @@ import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafeAddress
 import com.bunbeauty.domain.model.cafe.CafePreview
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.delay
@@ -18,7 +17,7 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeInteractor @Inject constructor(
-    @Api private val cafeRepo: CafeRepo,
+    private val cafeRepo: CafeRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : ICafeInteractor {
 

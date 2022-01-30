@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".ui.fragment.profile.settings.LogoutBottomSheet">
+    tools:context=".feature.profile.settings.logout.LogoutBottomSheet">
 
     <TextView
         android:id="@+id/bottom_sheet_logout_tv_title"

@@ -1,55 +1,59 @@
 package com.bunbeauty.papakarlo.di.modules
 
-import com.bunbeauty.data.AuthRepository
-import com.bunbeauty.data.DataStoreRepository
-import com.bunbeauty.domain.repo.AuthRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.VersionRepo
-import com.bunbeauty.domain.util.validator.ITextValidator
-import com.bunbeauty.domain.util.validator.TextValidator
-import com.bunbeauty.papakarlo.ResourcesProvider
-import com.bunbeauty.presentation.util.network.INetworkHelper
-import com.bunbeauty.presentation.util.network.NetworkHelper
-import com.bunbeauty.presentation.util.resources.IResourcesProvider
-import com.example.data_api.repository.VersionRepository
+import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.phone_verification.PhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
+import com.bunbeauty.papakarlo.feature.main.network.NetworkUtil
+import com.bunbeauty.papakarlo.util.color.ColorUtil
+import com.bunbeauty.papakarlo.util.color.IColorUtil
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
+import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.papakarlo.util.string.StringUtil
+import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
+import com.bunbeauty.papakarlo.util.text_validator.TextValidator
 import dagger.Binds
 import dagger.Module
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.bind
 import org.koin.dsl.module
-import javax.inject.Singleton
 
 @Module
 interface UtilModule {
-
-    @Singleton
-    @Binds
-    fun bindDataStoreRepository(dataStoreRepository: DataStoreRepository): DataStoreRepo
-
-    @Singleton
-    @Binds
-    fun bindRemoteConfigRepository(remoteConfigRepository: VersionRepository): VersionRepo
-
-    // HELPERS
 
     @Binds
     fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
 
     @Binds
-    fun bindNetworkHelper(networkHelper: NetworkHelper): INetworkHelper
+    fun bindColorUtil(colorUtil: ColorUtil): IColorUtil
 
     @Binds
-    fun bindFieldHelper(fieldHelper: TextValidator): ITextValidator
+    fun bindStringUtil(stringHelper: StringUtil): IStringUtil
 
     @Binds
-    fun bindAuthUtil(authRepository: AuthRepository): AuthRepo
+    fun bindTextValidator(textValidator: TextValidator): ITextValidator
+
+    @Binds
+    fun bindPhoneVerificationUtil(phoneVerificationUtil: PhoneVerificationUtil): IPhoneVerificationUtil
+
+    @Binds
+    fun bindNetworkUtil(networkUtil: NetworkUtil): INetworkUtil
 }
 
 fun utilModule() = module {
-    single { DataStoreRepository(androidContext()) } bind DataStoreRepo::class
-    single<VersionRepo> { VersionRepository(get()) }
     single { ResourcesProvider(androidContext()) } bind IResourcesProvider::class
     single { TextValidator() } bind ITextValidator::class
-    single { AuthRepository(firebaseAuth = get()) } bind AuthRepo::class
 
+    single<IPhoneVerificationUtil> { PhoneVerificationUtil() }
+    single<INetworkUtil> {
+        NetworkUtil(
+            connectivityManager = get()
+        )
+    }
+    single<IStringUtil> {
+        StringUtil(
+            resourcesProvider = get(),
+        )
+    }
+    single<IColorUtil> { ColorUtil() }
 }

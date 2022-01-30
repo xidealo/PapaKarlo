@@ -9,6 +9,6 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    tools:context=".ui.fragment.cafe.CafeListFragment"
+    tools:context=".feature.cafe.cafe_list.CafeListFragment"
     tools:itemCount="2"
     tools:listitem="@layout/element_cafe" />
