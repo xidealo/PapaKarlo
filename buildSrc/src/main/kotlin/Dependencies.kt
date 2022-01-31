@@ -45,6 +45,8 @@ object Versions {
 
     const val jobaTime = "2.10.13"
 
+    const val kotlinxDateTime = "0.3.2"
+
     const val workManagerVersion = "2.7.1"
 
     const val leakcanary = "2.8.1"
@@ -165,6 +167,10 @@ object TimePicker {
 
 object JodaTime {
     const val jodaTime = "joda-time:joda-time:${Versions.jobaTime}"
+}
+
+object KotlinxDateTime {
+    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
 }
 
 object WorkManager {

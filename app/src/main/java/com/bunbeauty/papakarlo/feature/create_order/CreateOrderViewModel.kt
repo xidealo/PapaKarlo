@@ -149,7 +149,7 @@ class CreateOrderViewModel @Inject constructor(
                 return@launch
             }
 
-            val order = orderInteractor.createOrder(
+            val orderCode = orderInteractor.createOrder(
                 isDelivery = isDelivery,
                 userAddressUuid = selectedUserAddressUuid,
                 cafeUuid = selectedCafeUuid,
@@ -158,7 +158,7 @@ class CreateOrderViewModel @Inject constructor(
                 deferredTime = deferredTimeValue,
             )
 
-            if (order == null) {
+            if (orderCode == null) {
                 showError(
                     resourcesProvider.getString(R.string.error_create_order_something_went_wrong),
                     false
@@ -167,7 +167,7 @@ class CreateOrderViewModel @Inject constructor(
             } else {
                 cartProductInteractor.removeAllProductsFromCart()
                 showMessage(
-                    resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code,
+                    resourcesProvider.getString(R.string.msg_create_order_order_code) + orderCode.code,
                     false
                 )
                 router.navigate(toProfileFragment())

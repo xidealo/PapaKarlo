@@ -1,49 +1,40 @@
 package com.bunbeauty.domain.interactor.deferred_time
 
-import com.bunbeauty.common.Constants.HH_MM_PATTERN
 import com.bunbeauty.common.Constants.MIN_DEFERRED_HOURS_ADDITION
 import com.bunbeauty.common.Constants.MIN_DEFERRED_MINUTES_ADDITION
-import org.joda.time.DateTime
+import com.bunbeauty.domain.util.IDateTimeUtil
 import javax.inject.Inject
 
-class DeferredTimeInteractor @Inject constructor() : IDeferredTimeInteractor {
+class DeferredTimeInteractor @Inject constructor(private val dateTimeUtil: IDateTimeUtil) :
+    IDeferredTimeInteractor {
 
     override fun getMinTimeHours(): Int {
-        return getTimeHourIn(
+        return dateTimeUtil.getTimeIn(
             MIN_DEFERRED_HOURS_ADDITION,
             MIN_DEFERRED_MINUTES_ADDITION
         ).hourOfDay
     }
 
     override fun getMinTimeMinutes(): Int {
-        return getTimeHourIn(
+        return dateTimeUtil.getTimeIn(
             MIN_DEFERRED_HOURS_ADDITION,
             MIN_DEFERRED_MINUTES_ADDITION
         ).minuteOfHour
     }
 
     override fun getDeferredTimeMillis(hours: Int, minutes: Int): Long {
-        return DateTime.now()
-            .withHourOfDay(hours)
-            .withMinuteOfHour(minutes)
-            .millis
+        return dateTimeUtil.getMillisByHourAndMinute(hours, minutes)
     }
 
     override fun getDeferredTimeHours(deferredTimeMillis: Long): Int {
-        return DateTime(deferredTimeMillis).hourOfDay
+        return dateTimeUtil.toTime(deferredTimeMillis).hourOfDay
     }
 
     override fun getDeferredTimeMinutes(deferredTimeMillis: Long): Int {
-        return DateTime(deferredTimeMillis).minuteOfHour
+        return dateTimeUtil.toTime(deferredTimeMillis).minuteOfHour
     }
 
     override fun getDeferredTimeHHMM(deferredTimeMillis: Long): String {
-        return DateTime(deferredTimeMillis).toString(HH_MM_PATTERN)
-    }
-
-    fun getTimeHourIn(hours: Int, minutes: Int): DateTime {
-        return DateTime.now()
-            .plusHours(hours)
-            .plusMinutes(minutes)
+        return dateTimeUtil.toHHMM(deferredTimeMillis)
     }
 }

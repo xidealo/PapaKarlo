@@ -5,9 +5,9 @@ import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.LightProfile
 import com.bunbeauty.papakarlo.common.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
+import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.feature.profile.ProfileFragmentDirections.*
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import kotlinx.coroutines.flow.*

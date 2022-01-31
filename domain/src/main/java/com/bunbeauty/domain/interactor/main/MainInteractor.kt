@@ -6,7 +6,10 @@ import com.bunbeauty.domain.repo.OrderRepo
 import com.bunbeauty.domain.worker.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -42,9 +45,7 @@ class MainInteractor @Inject constructor(
                 if (isStarted && isUserAuthorize) {
                     val token = dataStoreRepo.getToken() ?: ""
                     userWorkerUtil.refreshUser(token)
-                    orderRepo.observeOrderUpdates(token).onEach { order ->
-                        orderRepo.updateOrderStatus(order)
-                    }
+                    orderRepo.observeOrderUpdates(token)
                 } else {
                     orderRepo.stopCheckOrderUpdates()
                     flow { }

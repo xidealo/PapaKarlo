@@ -5,8 +5,8 @@ import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.common.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.state.toStateSuccess
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragmentDirections.toOrderDetailsFragment
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

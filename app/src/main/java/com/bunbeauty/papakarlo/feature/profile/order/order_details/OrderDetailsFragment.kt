@@ -38,7 +38,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getOrder(orderUuid)
+        viewModel.observeOrder(orderUuid)
 
         viewBinding.run {
             fragmentOrderDetailsRvProductList.addItemDecoration(marginItemVerticalDecoration)
@@ -59,9 +59,6 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     fragmentOrderDetailsTvAddressValue.text = order.address
                     fragmentOrderDetailsTvCommentValue.text = order.comment
                     fragmentOrderDetailsTvDeliveryCostValue.text = order.deliveryCost
-                    fragmentOrderDetailsTvOrderOldTotalCost.text = order.oldTotalCost
-                    fragmentOrderDetailsTvOrderOldTotalCost.strikeOutText()
-                    fragmentOrderDetailsTvOrderNewTotalCost.text = order.newTotalCost
 
                     orderProductAdapter.submitList(order.orderProductList)
 
@@ -79,12 +76,19 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     }
                 }
             }
-            viewModel.orderStatus.startedLaunch { orderUI ->
-                if (orderUI != null) {
-                    fragmentOrderDetailsPsvStatus.currentStep = orderUI.stepCount
-                    fragmentOrderDetailsChipStatus.text = orderUI.status
-                    fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(orderUI.orderStatusBackground)
+            viewModel.orderStatus.startedLaunch { orderStatusUI ->
+                if (orderStatusUI != null) {
+                    fragmentOrderDetailsPsvStatus.currentStep = orderStatusUI.stepCount
+                    fragmentOrderDetailsChipStatus.text = orderStatusUI.name
+                    fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(orderStatusUI.background)
                 }
+            }
+            viewModel.oldAmountToPay.startedLaunch { oldAmountToPay ->
+                fragmentOrderDetailsTvOrderOldTotalCost.text = oldAmountToPay
+                fragmentOrderDetailsTvOrderOldTotalCost.strikeOutText()
+            }
+            viewModel.newAmountToPay.startedLaunch { newAmountToPay ->
+                fragmentOrderDetailsTvOrderNewTotalCost.text = newAmountToPay
             }
         }
     }

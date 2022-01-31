@@ -12,7 +12,6 @@ import com.bunbeauty.data.network.model.login.LoginPostServer
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.profile.LightProfile
-import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
@@ -41,12 +40,6 @@ class UserRepository @Inject constructor(
     override suspend fun refreshUser(token: String) {
         apiRepo.getProfile(token).handleResult(USER_TAG) { profile ->
             saveProfileLocally(profile)
-        }
-    }
-
-    override suspend fun getUserByUuid(userUuid: String): Profile? {
-        return userDao.getUserByUuid(userUuid)?.let { user ->
-            profileMapper.toModel(user)
         }
     }
 

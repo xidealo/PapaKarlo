@@ -1,6 +1,5 @@
 package com.bunbeauty.data.mapper.order
 
-import com.bunbeauty.common.Constants
 import com.bunbeauty.data.database.entity.user.order.OrderEntity
 import com.bunbeauty.data.database.entity.user.order.OrderStatusUpdate
 import com.bunbeauty.data.database.entity.user.order.OrderWithProducts
@@ -10,12 +9,14 @@ import com.bunbeauty.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.Order
-import org.joda.time.DateTime
+import com.bunbeauty.domain.model.order.OrderCode
+import com.bunbeauty.domain.model.order.OrderDetails
+import com.bunbeauty.domain.util.IDateTimeUtil
 import javax.inject.Inject
 
 class OrderMapper @Inject constructor(
-    private val orderProductMapper: IOrderProductMapper
+    private val orderProductMapper: IOrderProductMapper,
+    private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
 
     override fun toEntityModel(order: OrderServer): OrderWithProducts {
@@ -36,66 +37,59 @@ class OrderMapper @Inject constructor(
         )
     }
 
-    override fun toLightOrder(order: Order): LightOrder {
-        return LightOrder(
-            uuid = order.uuid,
-            status = order.status,
-            code = order.code,
-            dateTime = getOrderDateTime(order.time)
-        )
-    }
-
     override fun toLightOrder(order: OrderWithProducts): LightOrder {
         return LightOrder(
             uuid = order.order.uuid,
             status = order.order.status,
             code = order.order.code,
-            dateTime = getOrderDateTime(order.order.time)
+            dateTime = dateTimeUtil.toDDMMMMHHMM(order.order.time)
         )
     }
 
-    fun getOrderDateTime(time: Long): String {
-        return DateTime(time).toString(Constants.DD_MMMM_HH_MM_PATTERN)
-    }
-
-    override fun toOrderStatusUpdate(order: Order): OrderStatusUpdate {
+    override fun toOrderStatusUpdate(order: OrderServer): OrderStatusUpdate {
         return OrderStatusUpdate(
             uuid = order.uuid,
-            status = order.status,
+            status = OrderStatus.valueOf(order.status),
         )
     }
 
-    override fun toModel(order: OrderWithProducts): Order {
-        return Order(
+    override fun toOrderCode(order: OrderServer): OrderCode {
+        return OrderCode(
+            code = order.code
+        )
+    }
+
+    override fun toOrderDetails(order: OrderWithProducts): OrderDetails {
+        return OrderDetails(
             uuid = order.order.uuid,
-            isDelivery = order.order.isDelivery,
-            address = order.order.address,
-            comment = order.order.comment,
-            deferredTime = order.order.deferredTime,
-            time = order.order.time,
             code = order.order.code,
             status = order.order.status,
+            dateTime = dateTimeUtil.toDDMMMMHHMM(order.order.time),
+            isDelivery = order.order.isDelivery,
+            deferredTime = dateTimeUtil.toHHMM(order.order.deferredTime),
+            address = order.order.address,
+            comment = order.order.comment,
             deliveryCost = order.order.deliveryCost,
+            oldTotalCost = 0,
+            newTotalCost = 0,
             orderProductList = order.orderProductList.map(orderProductMapper::toModel),
-            userUuid = order.order.userUuid,
-            addressUuid = null,
         )
     }
 
-    override fun toModel(order: OrderServer): Order {
-        return Order(
+    override fun toOrderDetails(order: OrderServer): OrderDetails {
+        return OrderDetails(
             uuid = order.uuid,
-            isDelivery = order.isDelivery,
-            address = order.addressDescription,
-            comment = order.comment,
-            deferredTime = order.deferredTime,
-            time = order.time,
             code = order.code,
             status = OrderStatus.valueOf(order.status),
+            dateTime = dateTimeUtil.toDDMMMMHHMM(order.time),
+            isDelivery = order.isDelivery,
+            deferredTime = dateTimeUtil.toHHMM(order.deferredTime),
+            address = order.addressDescription,
+            comment = order.comment,
             deliveryCost = order.deliveryCost,
+            oldTotalCost = 0,
+            newTotalCost = 0,
             orderProductList = order.oderProductList.map(orderProductMapper::toModel),
-            userUuid = order.clientUserUuid,
-            addressUuid = null,
         )
     }
 

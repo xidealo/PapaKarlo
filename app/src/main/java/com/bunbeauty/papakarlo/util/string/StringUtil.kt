@@ -114,7 +114,7 @@ class StringUtil @Inject constructor(
         return "x $count"
     }
 
-    override fun getOrderStatusString(orderStatus: OrderStatus): String {
+    override fun getOrderStatusName(orderStatus: OrderStatus): String {
         return when (orderStatus) {
             NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
             ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)

@@ -52,7 +52,7 @@ dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.authKtx)
 
-    implementation(JodaTime.jodaTime)
+    //implementation(JodaTime.jodaTime)
 
     implementation(Serialization.json)
     implementation(Ktor.clientSerialization)

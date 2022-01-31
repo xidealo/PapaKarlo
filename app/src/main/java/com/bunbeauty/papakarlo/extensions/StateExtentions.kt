@@ -1,4 +1,6 @@
-package com.bunbeauty.papakarlo.common.state
+package com.bunbeauty.papakarlo.extensions
+
+import com.bunbeauty.papakarlo.common.state.State
 
 fun <T : Any> T.toStateSuccess(): State.Success<T> {
     return State.Success(this)

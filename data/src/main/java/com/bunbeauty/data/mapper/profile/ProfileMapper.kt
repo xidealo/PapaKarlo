@@ -6,7 +6,6 @@ import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.model.profile.LightProfile
-import com.bunbeauty.domain.model.profile.Profile
 import javax.inject.Inject
 
 class ProfileMapper @Inject constructor(
@@ -20,14 +19,6 @@ class ProfileMapper @Inject constructor(
             user = userMapper.toEntityModel(profile),
             userAddressList = profile.addresses.map(userAddressMapper::toEntityModel),
             orderList = profile.orders.map(orderMapper::toEntityModel)
-        )
-    }
-
-    override fun toModel(profile: ProfileEntity): Profile {
-        return Profile(
-            user = userMapper.toModel(profile.user),
-            addressList = profile.userAddressList.map(userAddressMapper::toModel),
-            orderList = profile.orderList.map(orderMapper::toModel),
         )
     }
 

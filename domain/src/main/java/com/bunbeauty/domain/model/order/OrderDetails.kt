@@ -4,8 +4,8 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.product.OrderProduct
 
 data class OrderDetails(
+    val uuid: String,
     val code: String,
-    val stepCount: Int,
     val status: OrderStatus,
     val dateTime: String,
     val isDelivery: Boolean,

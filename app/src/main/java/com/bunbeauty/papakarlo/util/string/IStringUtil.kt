@@ -20,6 +20,6 @@ interface IStringUtil {
     fun getCodeString(code: String): String
     fun getSizeString(weight: Int?): String
     fun getCountString(count: Int): String
-    fun getOrderStatusString(orderStatus: OrderStatus): String
+    fun getOrderStatusName(orderStatus: OrderStatus): String
     fun getPickupMethodString(isDelivery: Boolean): String
 }
