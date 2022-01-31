@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.extensions.focusAndShowKeyboard
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
@@ -45,30 +44,30 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             fragmentLoginEtPhone.focusAndShowKeyboard()
         }
 
-        viewModel.phoneCheckedEvent.onEach { phoneCheckedEvent ->
+        viewModel.phoneCheckedEvent.startedLaunch { phoneCheckedEvent ->
             phoneVerificationUtil.sendVerificationCode(
                 phone = phoneCheckedEvent.phone,
                 activity = requireActivity()
             )
-        }.startedLaunch()
-        viewModel.isLoading.onEach { isLoading ->
+        }
+        viewModel.isLoading.startedLaunch { isLoading ->
             viewBinding.fragmentLoginGroupMain.toggleVisibility(!isLoading)
             viewBinding.fragmentLoginPbLoading.toggleVisibility(isLoading)
-        }.startedLaunch()
-        phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->
+        }
+        phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
             viewModel.onCodeSent(
                 codeSentEvent.phone,
                 codeSentEvent.verificationId,
                 codeSentEvent.token,
                 successLoginDirection
             )
-        }.startedLaunch()
-        phoneVerificationUtil.authErrorEvent.onEach { authErrorEvent ->
+        }
+        phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
             viewModel.onVerificationError(authErrorEvent.error)
-        }.startedLaunch()
-        phoneVerificationUtil.authSuccessEvent.onEach {
+        }
+        phoneVerificationUtil.authSuccessEvent.startedLaunch {
             viewModel.onSuccessVerified(successLoginDirection)
-        }.startedLaunch()
+        }
     }
 
     override fun onStop() {

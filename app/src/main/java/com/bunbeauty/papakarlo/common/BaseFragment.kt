@@ -21,7 +21,6 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
@@ -61,18 +60,18 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
         val colorOnPrimary = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary)
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
         val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
-        viewModel.message.onEach { message ->
+        viewModel.message.startedLaunch { message ->
             viewBinding.root.showSnackbar(message.message, colorOnPrimary, colorPrimary, false)
-        }.startedLaunch()
-        viewModel.error.onEach { error ->
+        }
+        viewModel.error.startedLaunch { error ->
             viewBinding.root.showSnackbar(error.message, colorOnError, colorError, true)
-        }.startedLaunch()
-        viewModel.fieldError.onEach { fieldError ->
+        }
+        viewModel.fieldError.startedLaunch { fieldError ->
             textInputMap.values.forEach { textInput ->
                 textInput.clearErrorFocus()
             }
             textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
-        }.startedLaunch()
+        }
     }
 
     override fun onStart() {
@@ -105,7 +104,7 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
         }
     }
 
-    protected fun Flow<*>.startedLaunch() {
-        startedLaunch(viewLifecycleOwner)
+    protected inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
+        startedLaunch(viewLifecycleOwner, block)
     }
 }

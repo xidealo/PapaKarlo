@@ -15,7 +15,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import kotlinx.coroutines.flow.onEach
 
 class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
 
@@ -37,14 +36,14 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
             textInputMap[FLOOR_ERROR_KEY] = fragmentCreateAddressTilFloor
             textInputMap[COMMENT_ERROR_KEY] = fragmentCreateAddressTilComment
 
-            viewModel.streetNameList.onEach { streetNameList ->
+            viewModel.streetNameList.startedLaunch { streetNameList ->
                 val arrayAdapter = ArrayAdapter(
                     requireContext(),
                     R.layout.support_simple_spinner_dropdown_item,
                     streetNameList
                 )
                 fragmentCreateAddressEtStreet.setAdapter(arrayAdapter)
-            }.startedLaunch()
+            }
 
             fragmentCreateAddressBtnCreateAddress.setOnClickListener {
                 viewModel.onCreateAddressClicked(

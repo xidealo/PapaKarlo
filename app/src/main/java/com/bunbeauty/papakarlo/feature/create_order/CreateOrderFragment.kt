@@ -19,7 +19,6 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
@@ -44,7 +43,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             fragmentCreateOrderBtnCreateOrder.setOnClickListener {
                 viewModel.onCreateOrderClicked()
             }
-            viewModel.isLoading.onEach { isLoading ->
+            viewModel.isLoading.startedLaunch { isLoading ->
                 fragmentCreateOrderBtnCreateOrder.toggleLoading(isLoading)
                 fragmentCreateOrderBtnCreateOrder.toggleEnabling(!isLoading)
                 fragmentCreateOrderCsDelivery.isSwitcherEnabled = !isLoading
@@ -52,7 +51,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 fragmentCreateOrderNcAddComment.isClickable = !isLoading
                 fragmentCreateOrderTcComment.isClickable = !isLoading
                 fragmentCreateOrderTcDeferredTime.isClickable = !isLoading
-            }.startedLaunch()
+            }
         }
     }
 
@@ -63,25 +62,25 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     viewModel.onIsDeliveryChanged(isLeft)
                 }
             }
-            viewModel.isDelivery.onEach { isDelivery ->
+            viewModel.isDelivery.startedLaunch { isDelivery ->
                 fragmentCreateOrderCsDelivery.isLeft = isDelivery
                 fragmentCreateOrderTvDelivery.toggleVisibility(isDelivery)
                 fragmentCreateOrderTvDeliveryValue.toggleVisibility(isDelivery)
-            }.startedLaunch()
+            }
         }
     }
 
     private fun setupAddress() {
         viewBinding.run {
-            viewModel.addressHint.onEach { addressHint ->
+            viewModel.addressHint.startedLaunch { addressHint ->
                 fragmentCreateOrderNcAddAddress.cardText = addressHint
                 fragmentCreateOrderTcAddress.hintText = addressHint
-            }.startedLaunch()
-            viewModel.address.onEach { address ->
+            }
+            viewModel.address.startedLaunch { address ->
                 fragmentCreateOrderNcAddAddress.toggleVisibility(address == null)
                 fragmentCreateOrderTcAddress.toggleVisibility(address != null)
                 fragmentCreateOrderTcAddress.cardText = address ?: ""
-            }.startedLaunch()
+            }
             fragmentCreateOrderNcAddAddress.setOnClickListener {
                 viewModel.onAddAddressClicked()
             }
@@ -103,11 +102,11 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     private fun setupComment() {
         viewBinding.run {
-            viewModel.comment.onEach { comment ->
+            viewModel.comment.startedLaunch { comment ->
                 fragmentCreateOrderNcAddComment.toggleVisibility(comment == null)
                 fragmentCreateOrderTcComment.toggleVisibility(comment != null)
                 fragmentCreateOrderTcComment.cardText = comment ?: ""
-            }.startedLaunch()
+            }
             fragmentCreateOrderNcAddComment.setOnClickListener {
                 viewModel.onAddCommentClicked()
             }
@@ -125,12 +124,12 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     private fun setupDeferredTime() {
         viewBinding.run {
-            viewModel.deferredTimeHint.onEach { deferredTimeHint ->
+            viewModel.deferredTimeHint.startedLaunch { deferredTimeHint ->
                 fragmentCreateOrderTcDeferredTime.hintText = deferredTimeHint
-            }.startedLaunch()
-            viewModel.deferredTime.onEach { deferredTime ->
+            }
+            viewModel.deferredTime.startedLaunch { deferredTime ->
                 fragmentCreateOrderTcDeferredTime.cardText = deferredTime
-            }.startedLaunch()
+            }
             fragmentCreateOrderTcDeferredTime.setOnClickListener {
                 viewModel.onDeferredTimeClicked()
             }
@@ -144,15 +143,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     private fun setupBottomPrices() {
         viewBinding.run {
-            viewModel.totalCost.onEach { totalCost ->
+            viewModel.totalCost.startedLaunch { totalCost ->
                 fragmentCreateOrderTvTotalValue.text = totalCost
-            }.startedLaunch()
-            viewModel.deliveryCost.onEach { deliveryCost ->
+            }
+            viewModel.deliveryCost.startedLaunch { deliveryCost ->
                 fragmentCreateOrderTvDeliveryValue.text = deliveryCost
-            }.startedLaunch()
-            viewModel.amountToPay.onEach { newAmountToPay ->
+            }
+            viewModel.amountToPay.startedLaunch { newAmountToPay ->
                 fragmentCreateOrderTvAmountToPayValue.text = newAmountToPay
-            }.startedLaunch()
+            }
         }
     }
 }

@@ -17,7 +17,6 @@ import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomSheetDialogFragment() {
@@ -62,20 +61,20 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
         val colorOnPrimary = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary)
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
         val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
-        viewModel.message.onEach { message ->
+        viewModel.message.startedLaunch { message ->
             viewBinding.root.showSnackbar(
                 message.message,
                 colorOnPrimary,
                 colorPrimary,
                 message.isTop
             )
-        }.startedLaunch()
-        viewModel.error.onEach { error ->
+        }
+        viewModel.error.startedLaunch { error ->
             viewBinding.root.showSnackbar(error.message, colorOnError, colorError, error.isTop)
-        }.startedLaunch()
+        }
     }
 
-    protected fun Flow<*>.startedLaunch() {
-        startedLaunch(viewLifecycleOwner)
+    protected inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
+        startedLaunch(viewLifecycleOwner, block)
     }
 }

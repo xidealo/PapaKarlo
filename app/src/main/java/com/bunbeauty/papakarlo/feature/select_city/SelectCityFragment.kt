@@ -10,7 +10,6 @@ import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 
 class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
 
@@ -26,7 +25,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.run {
-            viewModel.cityList.onEach { cityList ->
+            viewModel.cityList.startedLaunch { cityList ->
                 fragmentSelectCityPbLoading.toggleVisibility(cityList == null)
                 if (cityList != null) {
                     fragmentSelectCityLlCityList.removeAllViews()
@@ -43,7 +42,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
                         }
                     }
                 }
-            }.startedLaunch()
+            }
         }
     }
 }

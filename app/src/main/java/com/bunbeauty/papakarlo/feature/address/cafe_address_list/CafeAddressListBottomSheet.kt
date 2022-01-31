@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeAddressListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.feature.address.AddressAdapter
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_address_list) {
@@ -35,9 +34,9 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.cafeAddressList.onEach { cafeAddressList ->
+        viewModel.cafeAddressList.startedLaunch { cafeAddressList ->
             addressAdapter.submitList(cafeAddressList)
-        }.startedLaunch()
+        }
         addressAdapter.setOnItemClickListener { address ->
             setFragmentResult(
                 CAFE_ADDRESS_REQUEST_KEY,

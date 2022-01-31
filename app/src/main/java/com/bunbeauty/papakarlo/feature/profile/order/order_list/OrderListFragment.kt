@@ -11,7 +11,6 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
@@ -36,7 +35,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
             fragmentOrderListRvResult.addItemDecoration(marginItemVerticalDecoration)
             fragmentOrderListRvResult.adapter = orderAdapter
 
-            viewModel.ordersState.onEach { state ->
+            viewModel.ordersState.startedLaunch { state ->
                 fragmentOrderListPbLoading.toggleVisibility(state is State.Loading)
                 fragmentOrderListRvResult.toggleVisibility(state is State.Success)
                 fragmentOrderListTvEmptyOrders.toggleVisibility(state is State.Empty)
@@ -44,7 +43,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                 if (state is State.Success) {
                     orderAdapter.submitList(state.data)
                 }
-            }.startedLaunch()
+            }
         }
 
         orderAdapter.setOnItemClickListener { order ->

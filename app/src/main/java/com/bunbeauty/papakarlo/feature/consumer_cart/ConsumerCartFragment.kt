@@ -12,7 +12,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
@@ -42,15 +41,15 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 viewModel.onCreateOrderClicked()
             }
             fragmentConsumerCartTvOldTotalCost.strikeOutText()
-            viewModel.deliveryInfo.onEach { deliveryString ->
+            viewModel.deliveryInfo.startedLaunch { deliveryString ->
                 fragmentConsumerCartTvDeliveryInfo.text = deliveryString
-            }.startedLaunch()
-            viewModel.oldTotalCost.onEach { oldTotalCost ->
+            }
+            viewModel.oldTotalCost.startedLaunch { oldTotalCost ->
                 fragmentConsumerCartTvOldTotalCost.text = oldTotalCost
-            }.startedLaunch()
-            viewModel.newTotalCost.onEach { newTotalCost ->
+            }
+            viewModel.newTotalCost.startedLaunch { newTotalCost ->
                 fragmentConsumerCartTvNewTotalCost.text = newTotalCost
-            }.startedLaunch()
+            }
         }
     }
 
@@ -72,7 +71,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
             fragmentConsumerCartRvResult.addItemDecoration(marginItemVerticalDecoration)
             fragmentConsumerCartRvResult.adapter = cartProductAdapter
 
-            viewModel.orderProductListState.onEach { state ->
+            viewModel.orderProductListState.startedLaunch { state ->
                 fragmentConsumerCartGroupEmptyCart.toggleVisibility(state is State.Empty)
                 fragmentConsumerCartGroupNotEmptyCart.toggleVisibility(state is State.Success)
                 fragmentConsumerCartPbLoading.toggleVisibility(state is State.Loading)
@@ -80,7 +79,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 if (state is State.Success) {
                     cartProductAdapter.submitList(state.data)
                 }
-            }.startedLaunch()
+            }
         }
     }
 

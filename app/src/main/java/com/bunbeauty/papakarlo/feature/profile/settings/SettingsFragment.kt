@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
@@ -28,7 +27,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.run {
-            viewModel.userState.onEach { state ->
+            viewModel.userState.startedLaunch { state ->
                 fragmentSettingsGroupMain.toggleVisibility(state is State.Success)
                 fragmentSettingsPbLoading.toggleVisibility(state !is State.Success)
                 if (state is State.Success) {
@@ -38,10 +37,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                     fragmentSettingsTcEmail.toggleVisibility(!email.isNullOrEmpty())
                     fragmentSettingsTcEmail.cardText = email ?: ""
                 }
-            }.startedLaunch()
-            viewModel.cityName.onEach { cityName ->
+            }
+            viewModel.cityName.startedLaunch { cityName ->
                 fragmentSettingsTcCity.cardText = cityName
-            }.startedLaunch()
+            }
 
             fragmentSettingsNcAddEmail.setOnClickListener {
                 viewModel.onEmailClicked()

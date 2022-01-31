@@ -17,7 +17,6 @@ import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.papakarlo.feature.menu.category.CategoryAdapter
 import com.bunbeauty.papakarlo.feature.menu.menu_product.MenuProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class MenuFragment : BaseFragment(R.layout.fragment_menu) {
@@ -63,9 +62,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             categoryAdapter.setOnItemClickListener { categoryItem ->
                 viewModel.onCategorySelected(categoryItem.uuid)
             }
-            viewModel.menuPosition.onEach { menuPosition ->
+            viewModel.menuPosition.startedLaunch { menuPosition ->
                 fragmentMenuRvProducts.scrollToPositionWithOffset(menuPosition, 0)
-            }.startedLaunch()
+            }
 
             fragmentMenuRvProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -83,15 +82,15 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     fragmentMenuRvProducts.smoothScrollToPosition(0)
                 }
 
-            viewModel.categoryList.onEach { categoryList ->
+            viewModel.categoryList.startedLaunch { categoryList ->
                 categoryAdapter.submitList(categoryList)
-            }.startedLaunch()
-            viewModel.menuList.onEach { menuList ->
+            }
+            viewModel.menuList.startedLaunch { menuList ->
                 menuProductAdapter.submitList(menuList)
-            }.startedLaunch()
-            viewModel.categoryPosition.onEach { categoryPosition ->
+            }
+            viewModel.categoryPosition.startedLaunch { categoryPosition ->
                 fragmentMenuRvCategories.scrollToPosition(categoryPosition)
-            }.startedLaunch()
+            }
         }
     }
 }

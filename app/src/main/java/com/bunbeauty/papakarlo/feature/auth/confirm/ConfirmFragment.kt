@@ -15,7 +15,6 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibilityInvisibility
 import com.bunbeauty.papakarlo.extensions.underlineText
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
@@ -63,14 +62,14 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                 viewModel.onChangePhoneClicked()
             }
 
-            viewModel.resendSecondsInfo.onEach { resendSecondsInfo ->
+            viewModel.resendSecondsInfo.startedLaunch { resendSecondsInfo ->
                 fragmentConfirmTvResendSecondsInfo.text = resendSecondsInfo
-            }.startedLaunch()
-            viewModel.isTimerRun.onEach { isTimerRun ->
+            }
+            viewModel.isTimerRun.startedLaunch { isTimerRun ->
                 fragmentConfirmTvResendSecondsInfo.toggleVisibility(isTimerRun && !viewModel.isLoading.value)
                 fragmentConfirmTvResendCode.toggleVisibility(!isTimerRun && !viewModel.isLoading.value)
-            }.startedLaunch()
-            viewModel.isLoading.onEach { isLoading ->
+            }
+            viewModel.isLoading.startedLaunch { isLoading ->
                 if (isLoading) {
                     hideKeyboard()
                     fragmentConfirmEtCode.clearFocus()
@@ -83,18 +82,18 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     fragmentConfirmEtCode.setText("")
                     fragmentConfirmEtCode.focus()
                 }
-            }.startedLaunch()
+            }
 
-            phoneVerificationUtil.codeSentEvent.onEach { codeSentEvent ->
+            phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
                 verificationId = codeSentEvent.verificationId
                 resendToken = codeSentEvent.token
-            }.startedLaunch()
-            phoneVerificationUtil.authErrorEvent.onEach { authErrorEvent ->
+            }
+            phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
                 viewModel.onVerificationError(authErrorEvent.error)
-            }.startedLaunch()
-            phoneVerificationUtil.authSuccessEvent.onEach {
+            }
+            phoneVerificationUtil.authSuccessEvent.startedLaunch {
                 viewModel.onSuccessVerified(successLoginDirection)
-            }.startedLaunch()
+            }
         }
     }
 }

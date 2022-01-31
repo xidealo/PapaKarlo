@@ -15,7 +15,6 @@ import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import kotlinx.coroutines.flow.onEach
 
 class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_options) {
 
@@ -34,8 +33,8 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
 
         viewModel.getCafe(cafeUuid)
         viewBinding.run {
-            viewModel.cafeOptions.onEach { cafeOptions ->
-                cafeOptions ?: return@onEach
+            viewModel.cafeOptions.startedLaunch { cafeOptions ->
+                cafeOptions ?: return@startedLaunch
 
                 bottomSheetCafeOptionsNcCall.cardText = cafeOptions.callToCafe
                 bottomSheetCafeOptionsNcShowMap.cardText = cafeOptions.showOnMap
@@ -48,7 +47,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
                         Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
                     goByUri(uri, Intent.ACTION_VIEW)
                 }
-            }.startedLaunch()
+            }
         }
     }
 

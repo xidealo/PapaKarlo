@@ -9,7 +9,6 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
@@ -39,8 +38,8 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
                 viewModel.onCafeCardClicked(cafeItem)
             }
         }
-        viewModel.cafeItemList.onEach { cafeItemList ->
+        viewModel.cafeItemList.startedLaunch { cafeItemList ->
             cafeAdapter.submitList(cafeItemList)
-        }.startedLaunch()
+        }
     }
 }

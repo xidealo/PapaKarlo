@@ -15,7 +15,6 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.feature.address.AddressAdapter
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_address_list) {
@@ -42,9 +41,9 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
             bottomSheetUserAddressesBtnCreateAddress.setOnClickListener {
                 viewModel.onCreateAddressClicked()
             }
-            viewModel.userAddressList.onEach { userAddressList ->
+            viewModel.userAddressList.startedLaunch { userAddressList ->
                 addressAdapter.submitList(userAddressList)
-            }.startedLaunch()
+            }
             if (isClickable) {
                 addressAdapter.setOnItemClickListener { address ->
                     setFragmentResult(

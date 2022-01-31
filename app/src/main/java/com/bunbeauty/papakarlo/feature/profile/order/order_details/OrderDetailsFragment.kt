@@ -15,7 +15,6 @@ import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
@@ -45,7 +44,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
             fragmentOrderDetailsRvProductList.addItemDecoration(marginItemVerticalDecoration)
             fragmentOrderDetailsRvProductList.adapter = orderProductAdapter
 
-            viewModel.orderState.onEach { state ->
+            viewModel.orderState.startedLaunch { state ->
                 viewBinding.fragmentOrderDetailsMcvOrderDetails.toggleVisibility(state is State.Success)
                 viewBinding.fragmentOrderDetailsRvProductList.toggleVisibility(state is State.Success)
                 viewBinding.fragmentOrderDetailsVBlur.toggleVisibility(state is State.Success)
@@ -79,14 +78,14 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                         fragmentOrderDetailsTvDeliveryCost.gone()
                     }
                 }
-            }.startedLaunch()
-            viewModel.orderStatus.onEach { orderUI ->
+            }
+            viewModel.orderStatus.startedLaunch { orderUI ->
                 if (orderUI != null) {
                     fragmentOrderDetailsPsvStatus.currentStep = orderUI.stepCount
                     fragmentOrderDetailsChipStatus.text = orderUI.status
                     fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(orderUI.orderStatusBackground)
                 }
-            }.startedLaunch()
+            }
         }
     }
 

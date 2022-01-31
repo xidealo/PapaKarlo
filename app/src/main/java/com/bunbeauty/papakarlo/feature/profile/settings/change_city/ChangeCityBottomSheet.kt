@@ -9,7 +9,6 @@ import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.databinding.BottomSheetChangeCityBinding
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import kotlinx.coroutines.flow.onEach
 
 class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city) {
 
@@ -23,7 +22,7 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.cityList.onEach { cityList ->
+        viewModel.cityList.startedLaunch { cityList ->
             cityList.onEach { city ->
                 ElementCityBinding.inflate(
                     layoutInflater,
@@ -38,6 +37,6 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
                 }
             }
             viewBinding.bottomSheetChangeCityLlCityList
-        }.startedLaunch()
+        }
     }
 }

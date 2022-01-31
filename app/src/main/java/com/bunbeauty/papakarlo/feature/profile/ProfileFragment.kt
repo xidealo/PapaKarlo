@@ -10,7 +10,6 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import kotlinx.coroutines.flow.onEach
 
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -29,12 +28,12 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         setupLastOrder()
         setupAddresses()
         viewBinding.run {
-            viewModel.profileState.onEach { state ->
+            viewModel.profileState.startedLaunch { state ->
                 fragmentProfilePbLoading.toggleVisibility(state is State.Loading)
                 fragmentProfileGroupHasProfile.toggleVisibility(state is State.Success)
                 fragmentProfileGroupNoProfile.toggleVisibility(state is State.Empty)
                 fragmentProfileGroupInfo.toggleVisibility(state !is State.Loading)
-            }.startedLaunch()
+            }
             fragmentProfileNcSettings.setOnClickListener {
                 viewModel.onSettingsClicked()
             }
@@ -60,7 +59,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     private fun setupLastOrder() {
-        viewModel.lastOrder.onEach { orderItem ->
+        viewModel.lastOrder.startedLaunch { orderItem ->
             viewBinding.fragmentProfileItemLastOrder.run {
                 root.toggleVisibility(orderItem != null)
                 if (orderItem != null) {
@@ -73,11 +72,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     }
                 }
             }
-        }.startedLaunch()
+        }
     }
 
     private fun setupAddresses() {
-        viewModel.hasAddresses.onEach { hasAddresses ->
+        viewModel.hasAddresses.startedLaunch { hasAddresses ->
             viewBinding.fragmentProfileNcAddresses.run {
                 if (hasAddresses) {
                     cardText = resourcesProvider.getString(R.string.action_profile_your_addresses)
@@ -87,6 +86,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     icon = resourcesProvider.getDrawable(R.drawable.ic_add)
                 }
             }
-        }.startedLaunch()
+        }
     }
 }

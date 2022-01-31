@@ -14,7 +14,6 @@ import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
@@ -35,7 +34,7 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.menuProduct.onEach { menuProduct ->
+        viewModel.menuProduct.startedLaunch { menuProduct ->
             viewBinding.run {
                 val isLoading = menuProduct == null
                 fragmentProductDetailsPbLoading.toggleVisibility(isLoading)
@@ -56,7 +55,7 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                     fragmentProductDetailsTvDescription.text = menuProduct.description
                 }
             }
-        }.startedLaunch()
+        }
         viewModel.getMenuProduct(menuProductUuid)
         viewBinding.fragmentProductDetailsBtnAdd.setOnClickListener {
             viewModel.addProductToCart(menuProductUuid)
