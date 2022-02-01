@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.mapper.order
+package com.bunbeauty.papakarlo.mapper.order
 
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.order.LightOrder
@@ -19,8 +19,8 @@ class OrderUIMapper @Inject constructor(
     override fun toItem(order: LightOrder): OrderItem {
         return OrderItem(
             uuid = order.uuid,
-            orderStatus = stringUtil.getOrderStatusName(order.status),
-            orderColorResource = colorUtil.getOrderStatusColor(order.status),
+            statusName = stringUtil.getOrderStatusName(order.status),
+            statusColorResource = colorUtil.getOrderStatusColor(order.status),
             code = order.code,
             dateTime = stringUtil.getDateTimeString(order.dateTime)
         )

@@ -11,7 +11,7 @@ import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.model.login.LoginPostServer
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.model.profile.LightProfile
+import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
@@ -47,8 +47,8 @@ class UserRepository @Inject constructor(
         return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toModel)
     }
 
-    override fun observeProfileByUuid(userUuid: String): Flow<LightProfile?> {
-        return userDao.observeProfileByUuid(userUuid).mapFlow(profileMapper::toLightProfile)
+    override fun observeProfileByUuid(userUuid: String): Flow<Profile?> {
+        return userDao.observeProfileByUuid(userUuid).mapFlow(profileMapper::toProfile)
     }
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
@@ -63,7 +63,7 @@ class UserRepository @Inject constructor(
     suspend fun saveProfileLocally(profile: ProfileServer?) {
         if (profile != null) {
             dataStoreRepo.saveUserUuid(profile.uuid)
-            userDao.insertProfile(profileMapper.toEntityModel(profile))
+            userDao.insertProfile(profileMapper.toProfileEntity(profile))
         }
     }
 }

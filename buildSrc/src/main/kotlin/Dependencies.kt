@@ -43,8 +43,6 @@ object Versions {
     const val googleMapUtils = "2.2.3"
     const val googleMapUtilsKTX = "3.1.0"
 
-    const val jobaTime = "2.10.13"
-
     const val kotlinxDateTime = "0.3.2"
 
     const val workManagerVersion = "2.7.1"
@@ -163,10 +161,6 @@ object Coil {
 
 object TimePicker {
     const val timePicker = "com.wdullaer:materialdatetimepicker:${Versions.timePicker}"
-}
-
-object JodaTime {
-    const val jodaTime = "joda-time:joda-time:${Versions.jobaTime}"
 }
 
 object KotlinxDateTime {

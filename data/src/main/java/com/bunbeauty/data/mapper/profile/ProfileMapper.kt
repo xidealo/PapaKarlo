@@ -5,7 +5,7 @@ import com.bunbeauty.data.mapper.order.IOrderMapper
 import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
-import com.bunbeauty.domain.model.profile.LightProfile
+import com.bunbeauty.domain.model.profile.Profile
 import javax.inject.Inject
 
 class ProfileMapper @Inject constructor(
@@ -14,23 +14,23 @@ class ProfileMapper @Inject constructor(
     private val userMapper: IUserMapper,
 ) : IProfileMapper {
 
-    override fun toEntityModel(profile: ProfileServer): ProfileEntity {
+    override fun toProfileEntity(profileServer: ProfileServer): ProfileEntity {
         return ProfileEntity(
-            user = userMapper.toEntityModel(profile),
-            userAddressList = profile.addresses.map(userAddressMapper::toEntityModel),
-            orderEntityList = profile.orders.map(orderMapper::toOrderEntityWithProducts)
+            user = userMapper.toEntityModel(profileServer),
+            userAddressList = profileServer.addresses.map(userAddressMapper::toEntityModel),
+            orderEntityList = profileServer.orders.map(orderMapper::toOrderEntityWithProducts)
         )
     }
 
-    override fun toLightProfile(profile: ProfileEntity): LightProfile {
-        val lastOrderItem = profile.orderEntityList.maxByOrNull { order ->
+    override fun toProfile(profileEntity: ProfileEntity): Profile {
+        val lastOrderItem = profileEntity.orderEntityList.maxByOrNull { order ->
             order.orderEntity.time
         }?.let { order ->
             orderMapper.toLightOrder(order)
         }
-        return LightProfile(
-            userUuid = profile.user.uuid,
-            hasAddresses = profile.userAddressList.isNotEmpty(),
+        return Profile(
+            userUuid = profileEntity.user.uuid,
+            hasAddresses = profileEntity.userAddressList.isNotEmpty(),
             lastOrder = lastOrderItem
         )
     }

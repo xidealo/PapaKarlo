@@ -45,7 +45,5 @@ dependencies {
 
     implementation(Coroutine.core)
 
-    //implementation(JodaTime.jodaTime)
-
     implementation(KotlinxDateTime.dateTime)
 }

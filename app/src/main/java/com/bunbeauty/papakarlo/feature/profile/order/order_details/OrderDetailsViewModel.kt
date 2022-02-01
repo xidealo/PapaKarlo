@@ -3,10 +3,10 @@ package com.bunbeauty.papakarlo.feature.profile.order.order_details
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.product.IProductInteractor
-import com.bunbeauty.papakarlo.common.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
+import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

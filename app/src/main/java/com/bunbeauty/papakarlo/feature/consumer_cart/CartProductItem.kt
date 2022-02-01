@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 import com.bunbeauty.papakarlo.common.BaseItem
 
 data class CartProductItem(
-    override var uuid: String,
+    override val uuid: String,
     val name: String,
     val newCost: String,
     val oldCost: String?,

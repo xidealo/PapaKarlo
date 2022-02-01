@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.mapper.order
+package com.bunbeauty.papakarlo.mapper.order
 
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.order.LightOrder
