@@ -3,10 +3,10 @@ package com.bunbeauty.data.database.entity.user.order
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class OrderWithProducts(
+data class OrderEntityWithProducts(
 
     @Embedded
-    val order: OrderEntity,
+    val orderEntity: OrderEntity,
 
     @Relation(parentColumn = "uuid", entityColumn = "orderUuid")
     val orderProductList: List<OrderProductEntity>

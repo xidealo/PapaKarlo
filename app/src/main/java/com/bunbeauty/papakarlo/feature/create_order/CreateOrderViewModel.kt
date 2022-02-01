@@ -103,8 +103,9 @@ class CreateOrderViewModel @Inject constructor(
             deferredTimeValue = deferredTimeMillis
             selectedTimeHour = deferredTimeInteractor.getDeferredTimeHours(deferredTimeMillis)
             selectedTimeMinute = deferredTimeInteractor.getDeferredTimeMinutes(deferredTimeMillis)
-            mutableDeferredTime.value =
+            mutableDeferredTime.value = stringUtil.getTimeString(
                 deferredTimeInteractor.getDeferredTimeHHMM(deferredTimeMillis)
+            )
         }
     }
 

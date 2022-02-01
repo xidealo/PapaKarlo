@@ -31,8 +31,8 @@ abstract class UserDao : BaseDao<UserEntity> {
     open suspend fun insertProfile(profileEntity: ProfileEntity) {
         insert(profileEntity.user)
         insertUserAddressList(profileEntity.userAddressList)
-        profileEntity.orderList.forEach { order ->
-            insertOrder(order.order)
+        profileEntity.orderEntityList.forEach { order ->
+            insertOrder(order.orderEntity)
             insertOrderProductList(order.orderProductList)
         }
     }

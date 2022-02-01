@@ -4,8 +4,8 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
+import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
-import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
@@ -24,7 +24,7 @@ class OrderInteractor @Inject constructor(
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
     }
 
-    override fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?> {
+    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderRepo.observeOrderByUuid(orderUuid)
     }
 
@@ -34,7 +34,7 @@ class OrderInteractor @Inject constructor(
         }
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
         return orderRepo.getOrderByUuid(orderUuid)
     }
 

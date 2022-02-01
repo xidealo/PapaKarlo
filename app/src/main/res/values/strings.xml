@@ -242,68 +242,34 @@
     <string name="description_inst">inst image</string>
     <string name="description_google_play">google play image</string>
 
-    <string-array name="menu_arr">
-        <item>224;Бургер MINI с говядиной;BURGER;200;100;Сочная котлета из говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/224.jpg?alt=media&amp;token=9de6a6b4-1ed4-4671-ac40-a288289c0e6f</item>
-        <item>222;Бургер MINI с курицей;BURGER;200;69;Сочная куриная котлета, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/222.jpg?alt=media&amp;token=fcd575b3-874e-4e23-a8c5-4a15b29b1ce6</item>
-        <item>225;Бургер MINI Mix;BURGER;200;99;Сочная котлета из свинины и говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/225.jpg?alt=media&amp;token=1f2979be-06ed-49cf-8d80-433060e0082d</item>
-        <item>223;Бургер MINI со свининой;BURGER;200;99;Сочная котлета из свинины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/223.jpg?alt=media&amp;token=1b2e30fc-4ccb-4f8b-84df-ba7ab16e4e92</item>
-        <item>166;Бургер MIX;BURGER;330;180;Сочная котлета из свинины и говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/166.jpg?alt=media&amp;token=eed358a6-636b-4cda-8dfe-043987bbe50b</item>
-        <item>40;Бургер с говядиной;BURGER;330;200;Сочная котлета из говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/40.jpg?alt=media&amp;token=0d76a2d0-4f23-4be8-bed8-0bac31cd5d75</item>
-        <item>37;Бургер с курицей;BURGER;330;120;Сочная куриная котлета, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/37.jpg?alt=media&amp;token=231a1a0a-b579-4c19-8c06-6b37408aa207</item>
-        <item>146;Бургер со свининой;BURGER;330;180;Сочная котлета из свинины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, булочка с кунжутом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/146.jpg?alt=media&amp;token=2e424079-4e6f-40ff-b8c8-8dc631ab03af</item>
-        <item>229;Пит-бургер MINI Mix;BURGER;200;99;Сочная котлета из свинины и говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/229.jpg?alt=media&amp;token=83f13b93-af8e-49b0-a6d6-bf7c5c0387c8</item>
-        <item>228;Пит-бургер MINI с говядиной;BURGER;200;100;Сочная котлета из говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/228.jpg?alt=media&amp;token=6bd1523c-7545-4e73-bdb3-93dd4141cf43</item>
-        <item>226;Пит-бургер MINI с курицей;BURGER;200;69;Сочная куриная котлета, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/226.jpg?alt=media&amp;token=6ba1f7b5-db9b-4321-a80b-c27e24432f7d</item>
-        <item>227;Пит-бургер MINI со свининой;BURGER;200;99;Сочная котлета из свинины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/227.jpg?alt=media&amp;token=16a3ad97-b686-4d50-8695-f0b717863483</item>
-        <item>38;Пит-Бургер MIX;BURGER;330;180;Сочная котлета из свинины и говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/38.jpg?alt=media&amp;token=1a64916b-4c10-4a32-b4e2-883d6fe6712a</item>
-        <item>174;Пит-Бургер Говяжий;BURGER;330;200;Сочная котлета из говядины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/174.jpg?alt=media&amp;token=4b9a8e29-d63a-4863-b32c-35b80b80178e</item>
-        <item>169;Пит-Бургер Куриный;BURGER;330;120;Сочная куриная котлета, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/169.jpg?alt=media&amp;token=6f665ea6-59b2-4b59-b9fb-d45065b2fe99</item>
-        <item>170;Пит-Бургер со свининой;BURGER;330;180;Сочная котлета из свинины, сыр Чедр, маринованный огурчик, помидор, красный лук, салат, фирменный соус, пита;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/170.jpg?alt=media&amp;token=820b201a-6efd-4666-9e1b-0b4352e1352b</item>
-        <item>100;Пит-Шаурма;BURGER;340;130;Обжаренное на гриле куриное мясо в пите с фирменным чесночным и томатным соусами, хрустящей капустой, свежими огурцами и помидорами;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/100.jpg?alt=media&amp;token=9c942987-041d-4614-9812-96f6e6847519</item>
-        <item>44;Шаурма MINI;BURGER;300;100;Обжаренное на гриле куриное мясо в лаваше с фирменным чесночным и томатным соусами, хрустящей капустой, свежими огурцами и помидорами;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/44.jpg?alt=media&amp;token=8d44b5b1-e07f-4f25-b8f3-fc3f22276d61</item>
-        <item>45;Шаурма MIX;BURGER;450;160;Обжаренные на гриле свинина и говядина в лаваше с фирменным чесночным и томатным соусами, хрустящей капустой, свежими огурцами и помидорами;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/45.jpg?alt=media&amp;token=2dff7d2c-6e7f-48c0-885a-ba05e7de5271</item>
-        <item>90;Шаурма с курицей;BURGER;450;150;Обжаренное на гриле куриное мясо в лаваше с фирменным чесночным и томатным соусами, хрустящей капустой, свежими огурцами и помидорами;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/90.jpg?alt=media&amp;token=3afb3fe1-1391-414a-8ece-b0c033a9ba55</item>
-        <item>91;Шаурма со свининой;BURGER;450;180;Обжаренная на гриле свинина в лаваше с фирменным чесночным и томатным соусами, хрустящей капустой, свежими огурцами и помидорами;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/91.jpg?alt=media&amp;token=a8765762-648f-44b6-809d-8efee1fb23e3</item>
-        <item>111;Соус "Heinz" карри;SPICE;25;20;Соус с мягким пряным вкусом индийского карри;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/111.jpg?alt=media&amp;token=44a1544a-1d2d-481f-bda3-4ed3436928bc</item>
-        <item>168;Соус "Heinz" барбекю;SPICE;25;20;Соус с пикантным вкусом сочных томатов и душистым ароматом приправ;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/168.jpg?alt=media&amp;token=902571ac-edf0-4878-8ff0-4b11bf218ba5</item>
-        <item>99;Соус "Папа Карло" острый;SPICE;25;20;Фирменный соус "Папа Карло", для тех кто хочет добавить остринку;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/99.jpg?alt=media&amp;token=3a124780-57dc-4499-8b4c-73fc27fc6f24</item>
-        <item>134;Соус "Heinz" терияки;SPICE;25;20;Соус с кисло-сладким вкусом, лёгким оттенком имбиря и ароматными специями на основе соевого соуса;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/134.jpg?alt=media&amp;token=b2c7217e-1faf-4e32-a242-04e328477dea</item>
-        <item>117;Соус "Папа Карло" томатный;SPICE;25;20;Фирменный соус "Папа Карло", отлично подходит для шашлыка и других мясных блюд;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/117.jpg?alt=media&amp;token=1ece705d-bf32-4d06-879c-06c2a78dcbf7</item>
-        <item>116;Соус "Папа Карло" чесночный;SPICE;25;20;Фирменный соус "Папа Карло" с добавлением кусочков молодого чеснока, обладает нежной сливочной консистенцией и гармоничным вкусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/116.jpg?alt=media&amp;token=378d970f-2c87-4eaa-b2f1-e5bd0ad54925</item>
-        <item>113;Соус "Heinz" сырный;SPICE;25;20;Соус с насыщенным пикантным ароматом и мягким сливочно-сырным вкусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/113.jpg?alt=media&amp;token=8bd62118-7e0d-4230-8a3e-1c426369a64f</item>
-        <item>112;Соус "Heinz" кисло-сладкий;SPICE;25;20;Пикантный ароматный соус, отлично сочетается с блюдами из мяса и картофеля;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/112.jpg?alt=media&amp;token=d82f7f5e-a6b6-46f8-b708-a08407ba7441</item>
-        <item>110;Соус "Heinz" кетчуп;SPICE;25;20;Классический томатный кетчуп идеально дополнит практически любое блюдо;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/110.jpg?alt=media&amp;token=4faccbb6-83fb-43b9-b494-b7b48fa9ecfd</item>
-        <item>238;Домашнее пиво;DRINK;1000;129;Фирменное пиво и натуральных ингредиентов: вода, солод и хмель. Ничего лишнего;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/238.jpg?alt=media&amp;token=6a361d99-fbea-47d0-b707-810d741e4b22</item>
-        <item>129;Кофе зерновой;DRINK;30;50;Горячий, ароматный и бодрящий напиток из классического эспрессо;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/129.jpg?alt=media&amp;token=6fde5442-eaec-49b7-9692-283744063f6f</item>
-        <item>130;Кофе растворимый;DRINK;30;20;Горячий, ароматный и бодрящий напиток из сублимированного кофе;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/130.jpg?alt=media&amp;token=f43dbdfd-de0d-4f60-985c-6da3308f180a</item>
-        <item>251;Морс клюквенный;DRINK;30;69;Освежающий напиток из лесной клюквы, сохраняющий полезные свойства ягоды;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/251.jpg?alt=media&amp;token=23055dfd-d5d0-46bd-a156-3bffe654ae32</item>
-        <item>253;ТАН;DRINK;500;69;Кисломолочный напиток на основе свежего коровьего молока, закваски, чистой воды и соли;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/253.jpg?alt=media&amp;token=2b82345c-8aa3-46b5-8ce2-c35a29d71bb7</item>
-        <item>128;Чай черный;DRINK;40;20;Горячий Классический напиток с насыщенным вкусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/128.jpg?alt=media&amp;token=75be654e-7b5d-4e16-a12b-028471d75a5f</item>
-        <item>4;Картофель запеченный;POTATO;120;80;Безумно вкусная и ароматная картошка, запеченная с салом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/4.jpg?alt=media&amp;token=09b7297e-5381-4bf1-bbfe-a79fc5a8be56</item>
-        <item>3;Картофель по-деревенски;POTATO;120;60;Картофель с золотистой хрустящей корочкой, приправленный ароматными специями ;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/3.jpg?alt=media&amp;token=c1d1431a-2519-4a2b-853b-4b27ceaf3f8a</item>
-        <item>2;Картофель фри;POTATO;120;60;Румяные кусочки картофеля, обжаренные во фритюре;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/2.jpg?alt=media&amp;token=af1f5561-fe26-495a-9a48-1b4b8a1708be</item>
-        <item>131;Лаваш обычный;BAKERY;50;10;Свежий тонкий Классический лаваш из пшеничной муки;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/131.jpg?alt=media&amp;token=99eb2fa5-3248-4141-80cb-3690b82a4fdc</item>
-        <item>132;Лаваш сырный;BAKERY;50;10;Свежий тонкий Классический лаваш из пшеничной муки с необычным мягким сырным вкусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/132.jpg?alt=media&amp;token=241644cf-50cb-49ca-892d-56afbc7d7653</item>
-        <item>133;Лаваш тандырный;BAKERY;50;10;Свежий тонкий лаваш приготовленный в тандырной печи;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/133.jpg?alt=media&amp;token=8134272b-95f4-4fe0-b09d-301b16693658</item>
-        <item>255;Ламаджо;OVEN;320;100;Горячие лепёшки с начинкой из мясного фарша, прямо из печи;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/255.jpg?alt=media&amp;token=a084e42f-4579-405a-bff5-a0e19964c08e</item>
-        <item>0;Хачапури по-аджарски;OVEN;150;150;Румяное тесто с Моцареллой, сыром Чанах и яйцом, прямо из печи;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/0.jpg?alt=media&amp;token=d37136c4-c4e1-475e-98a8-1cebbf207741</item>
-        <item>114;Люля-кебаб;BARBECUE;90;120;Сочное и нежное блюдо на основе куриного фарша, приготовленное на углях. Подаётся с лавашом и томатным соусом.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/114.jpg?alt=media&amp;token=dc6f65dc-6b3b-4a34-b065-a4222b4d6476</item>
-        <item>198;Люля-кебаб из свинины;BARBECUE;90;150;Сочное и нежное блюдо на основе фарша из свинины, приготовленное на углях. Подаётся с лавашом и томатным соусом.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/198.jpg?alt=media&amp;token=f26347b1-4842-4b2c-9af7-1859187da3f5</item>
-        <item>186;Люля-кебаб из телятины;BARBECUE;90;160;Сочное и нежное блюдо на основе фарша из говядины, приготовленное на углях. Подаётся с лавашом и томатным соусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/186.jpg?alt=media&amp;token=0534b02c-18eb-46cf-9ca5-b15cf649813f</item>
-        <item>107;Цыпленок табака;BARBECUE;700;300;Молодой нежнейший цыплёнок зажаренный с чесноком и специями;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/107.jpg?alt=media&amp;token=1f091037-a9a4-4820-84de-eeac769cb6e6</item>
-        <item>97;Шашлык;BARBECUE;120;160;Снаружи — румяная и поджаристая, а внутри — нежная и сочная свиная шейка зажаренная на углях, подаётся с лавашом, луком, зеленью и фирменным томатным соусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/97.jpg?alt=media&amp;token=8e474b3e-8b70-4ec5-b963-f61180ecc5ee</item>
-        <item>201;Шашлык куриный;BARBECUE;120;130;Снаружи — румяные и поджаристые, а внутри — нежные и сочные кусочки куриного мяса зажаренные на углях, подаются с лавашом и фирменным томатным соусом;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/201.jpg?alt=media&amp;token=1cbee79d-085c-43d8-8499-9fbffd0a20f6</item>
-        <item>32;Пицца "Бастурма";PIZZA;450;350;Тесто из итальянской муки, в меру острая пицца с бастурмой, томатным соусом и моцареллой.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/32.jpg?alt=media&amp;token=25a9b934-e1f1-4b73-9dc7-fbd422965f8f</item>
-        <item>28;Пицца "Веджитириана";PIZZA;530;350;Томатный соус, шампиньоны, корнишоны, болгарский перец, свежие томаты, лук красный, маслины и сыр "Моцарелла".;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/28.jpg?alt=media&amp;token=41a414c8-842b-442f-993d-8b4d27b8dad6</item>
-        <item>31;Пицца "Жульен";PIZZA;510;300;Неповторимое сочетание нашего фирменного сливочного соуса, жаренных шампиньонов, моцареллы и репчатого лука.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/31.jpg?alt=media&amp;token=efb0ae6e-36c5-46db-8eac-87d09b2c9f3c</item>
-        <item>30;Пицца "Кватро-Формаджи" 30 см.;PIZZA;460;400;Классическая с четырями сортами сыра:"Чеддер", "Моцарелла", "Пармезан".Дорблю и томатный соус.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/30.jpg?alt=media&amp;token=644c7b35-efdb-4cdb-aebe-54132cbb4b58</item>
-        <item>27;Пицца "Маргарита" 30 см.;PIZZA;450;300;Самая популярная пицца в мире, включает в себя свежие помидоры, моцарелла и томатный соус.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/27.jpg?alt=media&amp;token=81d8e525-8a00-48d3-90a1-066b2e9cd0f7</item>
-        <item>33;Пицца "Мясная" 30 см.;PIZZA;560;450;Четыре мясных ингредиента: филе куриное, бекон, салями, ветчина в сочетании с томатным соусом, сырами "Чедер" и "Моцарелла".;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/33.jpg?alt=media&amp;token=d136b2c0-d17e-4a14-9f24-3f001da85859</item>
-        <item>34;Пицца "Охота" 30 см.;PIZZA;530;400;Идеально сбалансированное сочетание охотничьих колбасок, корнишон, маслин томатного соуса, красного лука и моцареллы. ;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/34.jpg?alt=media&amp;token=a12dc41e-08f7-496b-b7e7-16b6ea312c69</item>
-        <item>58;Пицца "Пеперонни" 30 см.;PIZZA;450;300;Идеально сбалансированное сочетание охотничьих колбасок, корнишон, маслин, томатного соуса, красного лука и сыра Моцарелла;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/58.jpeg?alt=media&amp;token=0c23c8e0-7249-448e-b8c1-2ea62f73642f</item>
-        <item>9;Пицца "Прошуто-фунги" 30 см.;PIZZA;490;350;Тесто из итальянской муки, ветчина, свежие шампиньоны, сливочный соус и сыр моцарелла.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/9.jpg?alt=media&amp;token=0a8197f9-b42e-415d-9903-6b661eee67d6</item>
-        <item>29;Пицца "Салями" 30 см.;PIZZA;450;300;Тесто из итальянской муки, томатный соус, салями, моцарелла.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/29.jpg?alt=media&amp;token=f69989b2-a21e-4b05-8ad0-997b76d477d9</item>
-        <item>35;Пицца "Шашлык" 30 см.;PIZZA;570;400;Удивительное сочетание шашлыка, нашего фирменного сливочного соуса, жареных шампиньонов, каперсов, красного лука и моцареллы.;https://firebasestorage.googleapis.com/v0/b/fooddelivery-ce2ef.appspot.com/o/35.jpg?alt=media&amp;token=96e3fba8-0188-4b1b-b034-ea0a0ec4d3fc</item>
-    </string-array>
+    <!-- MONTHS -->
+    <!--
+    JANUARY
+    FEBRUARY
+    MARCH
+    APRIL
+    MAY
+    JUNE
+    JULY
+    AUGUST
+    SEPTEMBER
+    OCTOBER
+    NOVEMBER
+    DECEMBER
+        -->
+
+    <string name="month_january">января</string>
+    <string name="month_february">февраля</string>
+    <string name="month_march">марта</string>
+    <string name="month_april">апреля</string>
+    <string name="month_may">мая</string>
+    <string name="month_june">июня</string>
+    <string name="month_july">июля</string>
+    <string name="month_august">августа</string>
+    <string name="month_september">сентября</string>
+    <string name="month_october">октября</string>
+    <string name="month_november">ноября</string>
+    <string name="month_december">декабря</string>
+    <string name="month_unknown">\???</string>
 
 </resources>

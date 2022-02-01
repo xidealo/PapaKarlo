@@ -7,8 +7,8 @@ import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
+import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
-import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,15 +25,15 @@ class OrderRepository @Inject constructor(
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)
     }
 
-    override fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?> {
-        return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toOrderDetails)
+    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
+        return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toOrder)
     }
 
-    override fun observeOrderUpdates(token: String): Flow<OrderDetails> {
+    override fun observeOrderUpdates(token: String): Flow<Order> {
         return apiRepo.subscribeOnOrderUpdates(token).onEach { orderServer ->
             orderDao.updateOrderStatus(orderMapper.toOrderStatusUpdate(orderServer))
         }.map { orderServer ->
-            orderMapper.toOrderDetails(orderServer)
+            orderMapper.toOrder(orderServer)
         }
     }
 
@@ -41,14 +41,14 @@ class OrderRepository @Inject constructor(
         apiRepo.unsubscribeOnOrderUpdates()
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {
-        return orderDao.getOrderByUuid(orderUuid)?.let(orderMapper::toOrderDetails)
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
+        return orderDao.getOrderByUuid(orderUuid)?.let(orderMapper::toOrder)
     }
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
-        val orderPostServer = orderMapper.toPostServerModel(createdOrder)
+        val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return apiRepo.postOrder(token, orderPostServer).handleResultAndReturn { oderServer ->
-            orderDao.insertOrder(orderMapper.toEntityModel(oderServer))
+            orderDao.insertOrder(orderMapper.toOrderEntityWithProducts(oderServer))
             orderMapper.toOrderCode(oderServer)
         }
     }

@@ -1,34 +1,24 @@
 package com.bunbeauty.domain.util
 
-import com.bunbeauty.domain.model.Time
+import com.bunbeauty.domain.model.datee_time.Date
+import com.bunbeauty.domain.model.datee_time.DateTime
+import com.bunbeauty.domain.model.datee_time.MinuteSecond
+import com.bunbeauty.domain.model.datee_time.Time
 import kotlinx.datetime.*
 import javax.inject.Inject
 
 class DateTimeUtil @Inject constructor() : IDateTimeUtil {
 
+    override fun toDateTime(millis: Long): DateTime {
+        return getLocalDateTime(millis).dateTime()
+    }
+
     override fun toTime(millis: Long): Time {
         return getLocalDateTime(millis).time()
     }
 
-    override fun toDDMMMMHHMM(millis: Long): String {
-        return getLocalDateTime(millis).run {
-            "$dayOfMonth ${monthName()} ${hour()}:${minute()}"
-        }
-    }
-
-    override fun toHHMM(millis: Long): String {
-        return getLocalDateTime(millis).run {
-            "${hour()}:${minute()}"
-        }
-    }
-
-    override fun toHHMM(millis: Long?): String? {
-        millis ?: return null
-        return toHHMM(millis)
-    }
-
-    override fun getCurrentTime(): Time {
-        return getCurrentLocalDateTime().time()
+    override fun getCurrentMinuteSecond(): MinuteSecond {
+        return getCurrentLocalDateTime().minuteSecond()
     }
 
     override fun getTimeIn(hour: Int, minute: Int): Time {
@@ -84,8 +74,20 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
 
     fun LocalDateTime.time() = Time(
         hourOfDay = hour,
-        minuteOfDay = minute + hour * 60,
         minuteOfHour = minute,
+    )
+
+    fun LocalDateTime.dateTime() = DateTime(
+        time = time(),
+        date = Date(
+            datOfMonth = dayOfMonth,
+            monthNumber = monthNumber,
+            year = year
+        )
+    )
+
+    fun LocalDateTime.minuteSecond() = MinuteSecond(
+        minuteOfDay = minute + hour * 60,
         secondOfMinute = second
     )
 

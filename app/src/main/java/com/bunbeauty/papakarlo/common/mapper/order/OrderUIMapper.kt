@@ -2,16 +2,18 @@ package com.bunbeauty.papakarlo.common.mapper.order
 
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.OrderDetails
+import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItem
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderStatusUI
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.util.color.IColorUtil
+import com.bunbeauty.papakarlo.util.string.IStringUtil
 import javax.inject.Inject
 
 class OrderUIMapper @Inject constructor(
-    private val stringUtil: com.bunbeauty.papakarlo.util.string.IStringUtil,
-    private val colorUtil: com.bunbeauty.papakarlo.util.color.IColorUtil,
+    private val stringUtil: IStringUtil,
+    private val colorUtil: IColorUtil,
 ) : IOrderUIMapper {
 
     override fun toItem(order: LightOrder): OrderItem {
@@ -20,20 +22,22 @@ class OrderUIMapper @Inject constructor(
             orderStatus = stringUtil.getOrderStatusName(order.status),
             orderColorResource = colorUtil.getOrderStatusColor(order.status),
             code = order.code,
-            dateTime = order.dateTime
+            dateTime = stringUtil.getDateTimeString(order.dateTime)
         )
     }
 
-    override fun toOrderUI(orderDetails: OrderDetails): OrderUI {
+    override fun toOrderUI(order: Order): OrderUI {
         return OrderUI(
-            code = orderDetails.code,
-            dateTime = orderDetails.dateTime,
-            pickupMethod = stringUtil.getPickupMethodString(orderDetails.isDelivery),
-            deferredTime = orderDetails.deferredTime,
-            address = orderDetails.address,
-            comment = orderDetails.comment,
-            deliveryCost = stringUtil.getCostString(orderDetails.deliveryCost),
-            orderProductList = orderDetails.orderProductList.map { orderProduct ->
+            code = order.code,
+            dateTime = stringUtil.getDateTimeString(order.dateTime),
+            pickupMethod = stringUtil.getPickupMethodString(order.isDelivery),
+            deferredTime = order.deferredTime?.let { deferredTime ->
+                stringUtil.getTimeString(deferredTime)
+            },
+            address = order.address,
+            comment = order.comment,
+            deliveryCost = stringUtil.getCostString(order.deliveryCost),
+            orderProductList = order.orderProductList.map { orderProduct ->
                 OrderProductItem(
                     uuid = orderProduct.uuid,
                     name = orderProduct.product.name,
@@ -43,7 +47,7 @@ class OrderUIMapper @Inject constructor(
                     count = stringUtil.getCountString(orderProduct.count),
                 )
             },
-            isDelivery = orderDetails.isDelivery,
+            isDelivery = order.isDelivery,
         )
     }
 

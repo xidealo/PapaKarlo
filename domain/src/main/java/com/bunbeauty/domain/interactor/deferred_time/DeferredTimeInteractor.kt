@@ -2,6 +2,7 @@ package com.bunbeauty.domain.interactor.deferred_time
 
 import com.bunbeauty.common.Constants.MIN_DEFERRED_HOURS_ADDITION
 import com.bunbeauty.common.Constants.MIN_DEFERRED_MINUTES_ADDITION
+import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.domain.util.IDateTimeUtil
 import javax.inject.Inject
 
@@ -34,7 +35,7 @@ class DeferredTimeInteractor @Inject constructor(private val dateTimeUtil: IDate
         return dateTimeUtil.toTime(deferredTimeMillis).minuteOfHour
     }
 
-    override fun getDeferredTimeHHMM(deferredTimeMillis: Long): String {
-        return dateTimeUtil.toHHMM(deferredTimeMillis)
+    override fun getDeferredTimeHHMM(deferredTimeMillis: Long): Time {
+        return dateTimeUtil.toTime(deferredTimeMillis)
     }
 }

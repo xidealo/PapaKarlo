@@ -18,13 +18,13 @@ class ProfileMapper @Inject constructor(
         return ProfileEntity(
             user = userMapper.toEntityModel(profile),
             userAddressList = profile.addresses.map(userAddressMapper::toEntityModel),
-            orderList = profile.orders.map(orderMapper::toEntityModel)
+            orderEntityList = profile.orders.map(orderMapper::toOrderEntityWithProducts)
         )
     }
 
     override fun toLightProfile(profile: ProfileEntity): LightProfile {
-        val lastOrderItem = profile.orderList.maxByOrNull { order ->
-            order.order.time
+        val lastOrderItem = profile.orderEntityList.maxByOrNull { order ->
+            order.orderEntity.time
         }?.let { order ->
             orderMapper.toLightOrder(order)
         }

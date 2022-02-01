@@ -1,14 +1,13 @@
 package com.bunbeauty.papakarlo.util.string
 
 import com.bunbeauty.common.Constants.ADDRESS_DIVIDER
-import com.bunbeauty.common.Constants.TIME_DIVIDER
 import com.bunbeauty.common.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
-import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafePreview
+import com.bunbeauty.domain.model.datee_time.DateTime
+import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import javax.inject.Inject
@@ -23,14 +22,6 @@ class StringUtil @Inject constructor(
         } else {
             cost.toString() + resourcesProvider.getString(R.string.part_ruble)
         }
-    }
-
-    override fun getCafeAddressString(cafeAddress: CafeAddress?): String {
-        return cafeAddress?.address ?: ""
-    }
-
-    override fun getCafeAddressString(cafe: Cafe?): String? {
-        return cafe?.address
     }
 
     override fun getUserAddressString(userAddress: UserAddress?): String? {
@@ -50,24 +41,33 @@ class StringUtil @Inject constructor(
         }
     }
 
+    override fun getDateTimeString(dateTime: DateTime): String {
+        val monthName = when (dateTime.date.monthNumber) {
+            1 -> R.string.month_january
+            2 -> R.string.month_february
+            3 -> R.string.month_march
+            4 -> R.string.month_april
+            5 -> R.string.month_may
+            6 -> R.string.month_june
+            7 -> R.string.month_july
+            8 -> R.string.month_august
+            9 -> R.string.month_september
+            10 -> R.string.month_october
+            11 -> R.string.month_november
+            12 -> R.string.month_december
+            else -> R.string.month_unknown
+        }.let { monthResourceId ->
+            resourcesProvider.getString(monthResourceId)
+        }
+        return "${dateTime.date.datOfMonth} $monthName ${getTimeString(dateTime.time)}"
+    }
+
+    override fun getTimeString(time: Time): String {
+        return "${addFirstZero(time.hourOfDay)}:${addFirstZero(time.minuteOfHour)}"
+    }
+
     override fun getWorkingHoursString(cafe: CafePreview): String {
         return cafe.fromTime + WORKING_HOURS_DIVIDER + cafe.toTime
-    }
-
-    override fun getAddedToCartString(productName: String): String {
-        return productName + resourcesProvider.getString(R.string.msg_cart_product_added)
-    }
-
-    override fun getRemovedFromCartString(productName: String): String {
-        return productName + resourcesProvider.getString(R.string.msg_cart_product_removed)
-    }
-
-    override fun getDeliveryCostString(deliveryCost: Int): String {
-        return if (deliveryCost == 0) {
-            resourcesProvider.getString(R.string.msg_order_details_delivery_free)
-        } else {
-            getCostString(deliveryCost)
-        }
     }
 
     fun getStringPart(divider: String, description: String, data: Any?): String {
@@ -91,22 +91,6 @@ class StringUtil @Inject constructor(
             "0$number"
         } else {
             number.toString()
-        }
-    }
-
-    override fun getTimeString(hour: Int, minute: Int): String {
-        return hour.toString() + TIME_DIVIDER + addFirstZero(minute)
-    }
-
-    override fun getCodeString(code: String): String {
-        return code
-    }
-
-    override fun getSizeString(weight: Int?): String {
-        return if (weight == null) {
-            ""
-        } else {
-            "$weight г"
         }
     }
 
