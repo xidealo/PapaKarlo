@@ -1,9 +1,12 @@
 package com.bunbeauty.papakarlo
 
-import com.bunbeauty.domain.model.address.CafeAddress
+import com.bunbeauty.domain.model.datee_time.Date
+import com.bunbeauty.domain.model.datee_time.DateTime
+import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.util.DateTimeUtil
+import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,33 +14,86 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
 
+    lateinit var dateTimeUtil: DateTimeUtil
 
-    @Test
-    fun addition_isCorrectAddressWithFlat() {
-        val address = CafeAddress(4, "Держиснкого", "5a", "54")
-        assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54", address.addressString())
+    @Before
+    fun setup() {
+        dateTimeUtil = DateTimeUtil()
     }
 
     @Test
-    fun addition_isCorrectAddressWithEntrance() {
-        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4")
-        assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4", address.addressString())
+    fun convertingMillisToDateTime() {
+        val millis = 1643673840000
+        val expectedDateTime = DateTime(
+            date = Date(
+                datOfMonth = 1,
+                monthNumber = 2,
+                year = 2022
+            ),
+            time = Time(
+                hourOfDay = 3,
+                minuteOfHour = 4
+            )
+        )
+
+        val dateTime = dateTimeUtil.toDateTime(millis)
+
+        assertEquals(expectedDateTime, dateTime)
     }
 
     @Test
-    fun addition_isCorrectAddressWithIntercom() {
-        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4", "23")
-        assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4, Домофон:23", address.addressString())
+    fun convertingMillisToTime() {
+        val millis = 1640988120000
+        val expectedTime = Time(
+            hourOfDay = 1,
+            minuteOfHour = 2
+        )
+
+        val time = dateTimeUtil.toTime(millis)
+
+        assertEquals(expectedTime, time)
     }
 
     @Test
-    fun addition_isCorrectAddressWithFloor() {
-        val address = CafeAddress(4, "Держиснкого", "5a", "54", "4", "23", "3")
-        assertEquals("Улица:Держиснкого, Дом:5a, Квартира:54, Подъезд:4, Домофон:23, Этаж:3", address.addressString())
+    fun convertingZeroMillisToTime() {
+        val millis = 0L
+        val expectedTime = Time(
+            hourOfDay = 3,
+            minuteOfHour = 0
+        )
+
+        val time = dateTimeUtil.toTime(millis)
+
+        assertEquals(expectedTime, time)
     }
+
+    @Test
+    fun gettingTimeIn() {
+        val currentMillis = 1640988120000 // 01:02
+        val hour = 1
+        val minute = 2
+        val expectedTime = Time(
+            hourOfDay = 2,
+            minuteOfHour = 4
+        )
+
+        val time = dateTimeUtil.getTimeIn(currentMillis, hour, minute)
+
+        assertEquals(expectedTime, time)
+    }
+
+    @Test
+    fun gettingMillisByHourAndMinute() {
+        val currentMillis = 1640988120000 // 01:02
+        val hour = 3
+        val minute = 4
+        val expectedMillis = 1640995440000
+
+        val millis = dateTimeUtil.getMillisByHourAndMinute(currentMillis, hour, minute)
+
+        assertEquals(expectedMillis, millis)
+    }
+
+
 }

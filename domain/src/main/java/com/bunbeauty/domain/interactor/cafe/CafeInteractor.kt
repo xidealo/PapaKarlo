@@ -74,7 +74,7 @@ class CafeInteractor @Inject constructor(
 
     fun observeMinutesOfDay(): Flow<Int> = flow {
         while (true) {
-            val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond()
+            val currentMinuteSecond = dataTimeUtil.currentMinuteSecond
             emit(currentMinuteSecond.minuteOfDay)
             delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
         }

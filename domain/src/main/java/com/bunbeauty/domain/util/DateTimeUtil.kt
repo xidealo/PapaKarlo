@@ -9,28 +9,40 @@ import javax.inject.Inject
 
 class DateTimeUtil @Inject constructor() : IDateTimeUtil {
 
+    override val currentMinuteSecond: MinuteSecond
+        get() = getLocalDateTime(currentMillis).minuteSecond
+
+    private val timeZone = TimeZone.of("UTC+3")
+
+    private val currentMillis: Long
+        get() = Clock.System.now().toEpochMilliseconds()
+
     override fun toDateTime(millis: Long): DateTime {
-        return getLocalDateTime(millis).dateTime()
+        return getLocalDateTime(millis).dateTime
     }
 
     override fun toTime(millis: Long): Time {
-        return getLocalDateTime(millis).time()
-    }
-
-    override fun getCurrentMinuteSecond(): MinuteSecond {
-        return getCurrentLocalDateTime().minuteSecond()
+        return getLocalDateTime(millis).time
     }
 
     override fun getTimeIn(hour: Int, minute: Int): Time {
+        return getTimeIn(currentMillis, hour, minute)
+    }
+
+    override fun getMillisByHourAndMinute(hour: Int, minute: Int): Long {
+        return getMillisByHourAndMinute(currentMillis, hour, minute)
+    }
+
+    fun getTimeIn(currentMillis: Long, hour: Int, minute: Int): Time {
         return toTime(
-            getCurrentInstant().plus(hour, DateTimeUnit.HOUR)
+            getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
                 .plus(minute, DateTimeUnit.MINUTE)
                 .toEpochMilliseconds()
         )
     }
 
-    override fun getMillisByHourAndMinute(hour: Int, minute: Int): Long {
-        val currentLocalDateTime = getCurrentLocalDateTime()
+    fun getMillisByHourAndMinute(currentMillis: Long, hour: Int, minute: Int): Long {
+        val currentLocalDateTime = getLocalDateTime(currentMillis)
         return LocalDateTime(
             year = currentLocalDateTime.year,
             monthNumber = currentLocalDateTime.monthNumber,
@@ -39,63 +51,37 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
             minute = minute,
             second = 0,
             nanosecond = 0
-        ).let { localDateTime ->
-            getMillis(localDateTime)
-        }
+        ).toInstant(timeZone)
+            .toEpochMilliseconds()
     }
 
-    fun getMillis(localDateTime: LocalDateTime): Long {
-        return localDateTime.toInstant(TimeZone.of("UTC+3")).toEpochMilliseconds()
+    private fun getLocalDateTime(millis: Long): LocalDateTime {
+        return getInstant(millis).toLocalDateTime(timeZone)
     }
 
-    fun getInstant(millis: Long): Instant {
+    private fun getInstant(millis: Long): Instant {
         return Instant.fromEpochMilliseconds(millis)
     }
 
-    fun getLocalDateTime(millis: Long): LocalDateTime {
-        return getInstant(millis).toLocalDateTime(TimeZone.of("UTC+3"))
-    }
-
-    fun getCurrentInstant(): Instant {
-        val currentEpoch = Clock.System.now().toEpochMilliseconds()
-        return getInstant(currentEpoch)
-    }
-
-    fun getCurrentLocalDateTime(): LocalDateTime {
-        val currentEpoch = Clock.System.now().toEpochMilliseconds()
-        return getLocalDateTime(currentEpoch)
-    }
-
-    fun LocalDateTime.monthName() = month.name
-
-    fun LocalDateTime.hour() = checkFirstZero(hour)
-
-    fun LocalDateTime.minute() = checkFirstZero(minute)
-
-    fun LocalDateTime.time() = Time(
-        hourOfDay = hour,
-        minuteOfHour = minute,
-    )
-
-    fun LocalDateTime.dateTime() = DateTime(
-        time = time(),
-        date = Date(
-            datOfMonth = dayOfMonth,
-            monthNumber = monthNumber,
-            year = year
+    private val LocalDateTime.time
+        get() = Time(
+            hourOfDay = hour,
+            minuteOfHour = minute,
         )
-    )
 
-    fun LocalDateTime.minuteSecond() = MinuteSecond(
-        minuteOfDay = minute + hour * 60,
-        secondOfMinute = second
-    )
+    private val LocalDateTime.dateTime
+        get() = DateTime(
+            time = time,
+            date = Date(
+                datOfMonth = dayOfMonth,
+                monthNumber = monthNumber,
+                year = year
+            )
+        )
 
-    fun checkFirstZero(number: Int): String {
-        return if (number < 10) {
-            "0$number"
-        } else {
-            number.toString()
-        }
-    }
+    private val LocalDateTime.minuteSecond
+        get() = MinuteSecond(
+            minuteOfDay = minute + hour * 60,
+            secondOfMinute = second
+        )
 }
