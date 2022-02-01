@@ -12,7 +12,7 @@ class UserWorkerUtil @Inject constructor() : BaseWorkerUtil(), IUserWorkerUtil {
         val data = workDataOf(
             TOKEN_WORK_KEY to token
         )
-        RefreshUserWorker::class.startWithReplace(data)
+        RefreshUserWorker::class.start(data)
     }
 
     override suspend fun refreshUserBlocking(token: String) {
