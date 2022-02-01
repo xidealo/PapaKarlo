@@ -3,8 +3,13 @@ package com.bunbeauty.papakarlo.di.components
 import android.content.Context
 import com.bunbeauty.data.di.DataModule
 import com.bunbeauty.data.di.MapperModule
+import com.bunbeauty.data.di.RepositoryModule
+import com.bunbeauty.domain.di.InteractorModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
-import com.bunbeauty.papakarlo.di.modules.*
+import com.bunbeauty.papakarlo.di.modules.AppModule
+import com.bunbeauty.papakarlo.di.modules.UIMapperModule
+import com.bunbeauty.papakarlo.di.modules.UtilModule
+import com.bunbeauty.papakarlo.di.modules.WorkerModule
 import com.bunbeauty.papakarlo.worker.cafe.RefreshCafeWorker
 import com.bunbeauty.papakarlo.worker.category.RefreshCategoryWorker
 import com.bunbeauty.papakarlo.worker.city.RefreshCityWorker
@@ -19,15 +24,12 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        ApiDataModule::class,
-        ApiMapperModule::class,
-        ApiRepositoryModule::class,
         AppModule::class,
         UtilModule::class,
         UIMapperModule::class,
-        AppUtilModule::class,
-        DataModule::class,
         WorkerModule::class,
+        RepositoryModule::class,
+        DataModule::class,
         InteractorModule::class,
         MapperModule::class,
     ]

@@ -4,14 +4,11 @@ import com.bunbeauty.common.Constants
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.mapListFlow
-import com.bunbeauty.domain.mapper.IOrderMapper
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderDetails
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
@@ -20,18 +17,15 @@ import org.joda.time.DateTime
 import javax.inject.Inject
 
 class OrderInteractor @Inject constructor(
-    @Api private val orderRepo: OrderRepo,
-    @Api private val cartProductRepo: CartProductRepo,
+    private val orderRepo: OrderRepo,
+    private val cartProductRepo: CartProductRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val orderMapper: IOrderMapper,
     private val productInteractor: IProductInteractor,
 ) : IOrderInteractor {
 
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
         val userUuid = dataStoreRepo.getUserUuid()
-        return orderRepo.observeOrderListByUserUuid(userUuid ?: "").mapListFlow { order ->
-            orderMapper.toLightOrder(order)
-        }
+        return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
     }
 
     override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {

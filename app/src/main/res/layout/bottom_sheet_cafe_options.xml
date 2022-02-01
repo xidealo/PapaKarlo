@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".ui.fragment.cafe.CafeOptionsBottomSheet">
+    tools:context=".feature.cafe.cafe_options.CafeOptionsBottomSheet">
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_cafe_options_nc_call"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_margin="@dimen/medium_margin"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Позвонить: +7 (900) 900-90-90" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_cafe_options_nc_show_map"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_margin="@dimen/medium_margin"

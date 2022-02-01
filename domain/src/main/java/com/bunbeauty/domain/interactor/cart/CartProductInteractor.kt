@@ -4,7 +4,6 @@ import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.model.product.LightCartProduct
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CartProductInteractor @Inject constructor(
-    @Api private val cartProductRepo: CartProductRepo,
+    private val cartProductRepo: CartProductRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,
 ) : ICartProductInteractor {

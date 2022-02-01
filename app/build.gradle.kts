@@ -7,6 +7,7 @@ plugins {
     id(Plugin.kapt)
     id(Plugin.navigation)
     id(Plugin.googleService)
+    id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
 }
 
@@ -66,10 +67,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
-    implementation(project(":domain_api"))
-    implementation(project(":data_api"))
     implementation(project(":common"))
-    implementation(project(":presentation"))
     implementation(project(":data"))
 
     implementation(Google.material)
@@ -118,8 +116,6 @@ dependencies {
     implementation(Room.runtime)
     implementation(Room.roomKtx)
     kapt(Room.compiler)
-
-    implementation(JodaTime.jodaTime)
 
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)

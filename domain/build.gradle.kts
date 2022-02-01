@@ -43,10 +43,6 @@ dependencies {
     kapt(Dagger.compiler)
     kapt(Dagger.androidProcessor)
 
-    implementation(Room.runtime)
-    implementation(Room.roomKtx)
-    kapt(Room.compiler)
-
     implementation(Coroutine.core)
 
     implementation(JodaTime.jodaTime)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.profile.settings.SettingsFragment">
+    tools:context=".feature.profile.settings.SettingsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_settings_gl_left"
@@ -20,7 +20,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/medium_margin" />
 
-    <com.bunbeauty.papakarlo.ui.custom.TextCard
+    <com.bunbeauty.papakarlo.common.custom_view.TextCard
         android:id="@+id/fragment_settings_tc_phone"
         style="@style/TextCard"
         android:layout_marginTop="@dimen/medium_margin"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="+7 (900) 900-90-90" />
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/fragment_settings_nc_add_email"
         style="@style/MonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="@+id/fragment_settings_gl_left"
         app:layout_constraintTop_toBottomOf="@+id/fragment_settings_tc_phone" />
 
-    <com.bunbeauty.papakarlo.ui.custom.TextCard
+    <com.bunbeauty.papakarlo.common.custom_view.TextCard
         android:id="@+id/fragment_settings_tc_email"
         style="@style/TextCard"
         android:layout_marginTop="@dimen/small_margin"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_settings_nc_add_email"
         tools:text="name@email.com" />
 
-    <com.bunbeauty.papakarlo.ui.custom.TextCard
+    <com.bunbeauty.papakarlo.common.custom_view.TextCard
         android:id="@+id/fragment_settings_tc_city"
         style="@style/TextCard"
         android:layout_marginTop="@dimen/small_margin"

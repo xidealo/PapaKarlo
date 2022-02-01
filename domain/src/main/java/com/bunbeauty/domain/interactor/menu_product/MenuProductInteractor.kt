@@ -2,14 +2,13 @@ package com.bunbeauty.domain.interactor.menu_product
 
 import com.bunbeauty.domain.model.MenuModel
 import com.bunbeauty.domain.model.product.MenuProduct
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MenuProductInteractor @Inject constructor(
-    @Api private val menuProductRepo: MenuProductRepo,
+    private val menuProductRepo: MenuProductRepo,
 ) : IMenuProductInteractor {
 
     override fun observeMenuList(): Flow<List<MenuModel>> {

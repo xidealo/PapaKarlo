@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".ui.fragment.create_order.DeferredTimeBottomSheet">
+    tools:context=".feature.create_order.deferred_time.DeferredTimeBottomSheet">
 
     <TextView
         android:id="@+id/bottom_sheet_deferred_time_tv_title"
@@ -29,7 +29,7 @@
             android:text="@string/msg_deferred_time_asap" />
     </com.google.android.material.card.MaterialCardView>
 
-    <com.bunbeauty.papakarlo.ui.custom.NavigationCard
+    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
         android:id="@+id/bottom_sheet_deferred_time_nc_select_time"
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginStart="@dimen/medium_margin"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.profile.order.OrderDetailsFragment">
+    tools:context=".feature.profile.order.order_details.OrderDetailsFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fragment_order_details_gl_left"
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Готов" />
 
-            <com.bunbeauty.papakarlo.ui.custom.ProcessScaleView
+            <com.bunbeauty.papakarlo.feature.profile.order.order_details.ProcessScaleView
                 android:id="@+id/fragment_order_details_psv_status"
                 android:layout_width="0dp"
                 android:layout_height="8dp"

@@ -1,7 +1,6 @@
 package com.bunbeauty.domain.interactor.city
 
 import com.bunbeauty.domain.model.City
-import com.bunbeauty.domain.repo.Api
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.worker.ICafeWorkerUtil
@@ -12,7 +11,7 @@ import javax.inject.Inject
 
 class CityInteractor @Inject constructor(
     private val dataStoreRepo: DataStoreRepo,
-    @Api private val cityRepo: CityRepo,
+    private val cityRepo: CityRepo,
     private val cafeWorkerUtil: ICafeWorkerUtil,
     private val streetWorkerUtil: IStreetWorkerUtil
 ) : ICityInteractor {
