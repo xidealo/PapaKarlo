@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.worker
 
+import android.util.Log
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import kotlinx.coroutines.flow.Flow
@@ -34,7 +35,8 @@ abstract class BaseWorkerUtil {
         val workRequest = getOneTimeWork(workDataOf)
         workManager.enqueueUniqueWork(java.simpleName, ExistingWorkPolicy.REPLACE, workRequest)
         workManager.observe(workRequest).transformWhile<WorkInfo, Unit> { workInfo ->
-            !workInfo.isFinished()
+            Log.d("testTag", "workInfo $workInfo")
+            (workInfo != null && !workInfo.state.isFinished)
         }.collect()
     }
 
@@ -52,12 +54,6 @@ abstract class BaseWorkerUtil {
             setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.MILLISECONDS)
             addTag(COMMON_WORKER_TAG)
         }.build()
-    }
-
-    private fun WorkInfo.isFinished(): Boolean {
-        return state == WorkInfo.State.SUCCEEDED
-                || state == WorkInfo.State.FAILED
-                || state == WorkInfo.State.CANCELLED
     }
 
     private fun WorkManager.observe(work: OneTimeWorkRequest): Flow<WorkInfo> {
