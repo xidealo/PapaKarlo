@@ -6,6 +6,6 @@ import com.bunbeauty.domain.model.City
 
 interface ICityMapper {
 
-    fun toEntityModel(city: CityServer): CityEntity
-    fun toModel(city: CityEntity): City
+    fun toCityEntity(cityServer: CityServer): CityEntity
+    fun toCity(cityEntity: CityEntity): City
 }

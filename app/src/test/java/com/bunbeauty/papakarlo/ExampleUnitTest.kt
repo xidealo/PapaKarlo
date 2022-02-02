@@ -25,6 +25,7 @@ class ExampleUnitTest {
     @Test
     fun convertingMillisToDateTime() {
         val millis = 1643673840000
+        val timeZone = "UTC+3"
         val expectedDateTime = DateTime(
             date = Date(
                 datOfMonth = 1,
@@ -37,7 +38,7 @@ class ExampleUnitTest {
             )
         )
 
-        val dateTime = dateTimeUtil.toDateTime(millis)
+        val dateTime = dateTimeUtil.toDateTime(millis, timeZone)
 
         assertEquals(expectedDateTime, dateTime)
     }
@@ -45,12 +46,13 @@ class ExampleUnitTest {
     @Test
     fun convertingMillisToTime() {
         val millis = 1640988120000
+        val timeZone = "UTC+3"
         val expectedTime = Time(
             hourOfDay = 1,
             minuteOfHour = 2
         )
 
-        val time = dateTimeUtil.toTime(millis)
+        val time = dateTimeUtil.toTime(millis, timeZone)
 
         assertEquals(expectedTime, time)
     }
@@ -58,12 +60,13 @@ class ExampleUnitTest {
     @Test
     fun convertingZeroMillisToTime() {
         val millis = 0L
+        val timeZone = "UTC+3"
         val expectedTime = Time(
             hourOfDay = 3,
             minuteOfHour = 0
         )
 
-        val time = dateTimeUtil.toTime(millis)
+        val time = dateTimeUtil.toTime(millis, timeZone)
 
         assertEquals(expectedTime, time)
     }
@@ -73,12 +76,13 @@ class ExampleUnitTest {
         val currentMillis = 1640988120000 // 01:02
         val hour = 1
         val minute = 2
+        val timeZone = "UTC+3"
         val expectedTime = Time(
             hourOfDay = 2,
             minuteOfHour = 4
         )
 
-        val time = dateTimeUtil.getTimeIn(currentMillis, hour, minute)
+        val time = dateTimeUtil.getTimeIn(currentMillis, hour, minute, timeZone)
 
         assertEquals(expectedTime, time)
     }
@@ -88,9 +92,10 @@ class ExampleUnitTest {
         val currentMillis = 1640988120000 // 01:02
         val hour = 3
         val minute = 4
+        val timeZone = "UTC+3"
         val expectedMillis = 1640995440000
 
-        val millis = dateTimeUtil.getMillisByHourAndMinute(currentMillis, hour, minute)
+        val millis = dateTimeUtil.getMillisByHourAndMinute(currentMillis, hour, minute, timeZone)
 
         assertEquals(expectedMillis, millis)
     }

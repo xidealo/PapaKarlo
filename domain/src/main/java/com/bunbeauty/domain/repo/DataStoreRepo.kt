@@ -20,12 +20,11 @@ interface DataStoreRepo {
     suspend fun getDelivery(): Delivery
     suspend fun saveDelivery(delivery: Delivery)
 
-    val deferredTime: Flow<String?>
-    suspend fun saveDeferredTime(deferredTime: String)
-
     val selectedCityUuid: Flow<String?>
-    suspend fun saveSelectedCityUuid(cityUuid: String)
+    val selectedCityTimeZone: Flow<String>
+    suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String)
     suspend fun getSelectedCityUuid(): String?
+    suspend fun getSelectedCityTimeZone(): String
 
     fun observeUserAndCityUuid(): Flow<UserCityUuid>
     suspend fun getUserAndCityUuid(): UserCityUuid

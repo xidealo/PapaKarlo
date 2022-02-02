@@ -27,7 +27,7 @@ class CityInteractor @Inject constructor(
     }
 
     override suspend fun saveSelectedCity(city: City) {
-        dataStoreRepo.saveSelectedCityUuid(city.uuid)
+        dataStoreRepo.saveSelectedCityUuid(city.uuid, city.timeZone)
         cafeWorkerUtil.refreshCafeList(city.uuid)
         streetWorkerUtil.refreshStreetList(city.uuid)
     }

@@ -6,10 +6,9 @@ import com.bunbeauty.domain.model.datee_time.Time
 
 interface IDateTimeUtil {
 
-    val currentMinuteSecond: MinuteSecond
-
-    fun toDateTime(millis: Long): DateTime
-    fun toTime(millis: Long): Time
-    fun getTimeIn(hour: Int, minute: Int): Time
-    fun getMillisByHourAndMinute(hour: Int, minute: Int): Long
+    fun toDateTime(millis: Long, timeZone: String): DateTime
+    fun toTime(millis: Long, timeZone: String): Time
+    fun getCurrentMinuteSecond(timeZone: String): MinuteSecond
+    fun getTimeIn(hour: Int, minute: Int, timeZone: String): Time
+    fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long
 }

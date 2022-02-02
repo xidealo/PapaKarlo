@@ -9,40 +9,45 @@ import javax.inject.Inject
 
 class DateTimeUtil @Inject constructor() : IDateTimeUtil {
 
-    override val currentMinuteSecond: MinuteSecond
-        get() = getLocalDateTime(currentMillis).minuteSecond
-
-    private val timeZone = TimeZone.of("UTC+3")
-
     private val currentMillis: Long
         get() = Clock.System.now().toEpochMilliseconds()
 
-    override fun toDateTime(millis: Long): DateTime {
-        return getLocalDateTime(millis).dateTime
+    override fun toDateTime(millis: Long, timeZone: String): DateTime {
+        return getLocalDateTime(millis, timeZone).dateTime
     }
 
-    override fun toTime(millis: Long): Time {
-        return getLocalDateTime(millis).time
+    override fun toTime(millis: Long, timeZone: String): Time {
+        return getLocalDateTime(millis, timeZone).time
     }
 
-    override fun getTimeIn(hour: Int, minute: Int): Time {
-        return getTimeIn(currentMillis, hour, minute)
+    override fun getCurrentMinuteSecond(timeZone: String): MinuteSecond {
+        return getLocalDateTime(currentMillis, timeZone).minuteSecond
     }
 
-    override fun getMillisByHourAndMinute(hour: Int, minute: Int): Long {
-        return getMillisByHourAndMinute(currentMillis, hour, minute)
+    override fun getTimeIn(hour: Int, minute: Int, timeZone: String): Time {
+        return getTimeIn(currentMillis, hour, minute, timeZone)
     }
 
-    fun getTimeIn(currentMillis: Long, hour: Int, minute: Int): Time {
-        return toTime(
-            getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
-                .plus(minute, DateTimeUnit.MINUTE)
-                .toEpochMilliseconds()
-        )
+    override fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long {
+        return getMillisByHourAndMinute(currentMillis, hour, minute, timeZone)
     }
 
-    fun getMillisByHourAndMinute(currentMillis: Long, hour: Int, minute: Int): Long {
-        val currentLocalDateTime = getLocalDateTime(currentMillis)
+    fun getTimeIn(currentMillis: Long, hour: Int, minute: Int, timeZone: String): Time {
+        return getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
+            .plus(minute, DateTimeUnit.MINUTE)
+            .toEpochMilliseconds()
+            .let { millis ->
+                toTime(millis, timeZone)
+            }
+    }
+
+    fun getMillisByHourAndMinute(
+        currentMillis: Long,
+        hour: Int,
+        minute: Int,
+        timeZone: String
+    ): Long {
+        val currentLocalDateTime = getLocalDateTime(currentMillis, timeZone)
         return LocalDateTime(
             year = currentLocalDateTime.year,
             monthNumber = currentLocalDateTime.monthNumber,
@@ -51,12 +56,12 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
             minute = minute,
             second = 0,
             nanosecond = 0
-        ).toInstant(timeZone)
+        ).toInstant(TimeZone.of(timeZone))
             .toEpochMilliseconds()
     }
 
-    private fun getLocalDateTime(millis: Long): LocalDateTime {
-        return getInstant(millis).toLocalDateTime(timeZone)
+    private fun getLocalDateTime(millis: Long, timeZone: String): LocalDateTime {
+        return getInstant(millis).toLocalDateTime(TimeZone.of(timeZone))
     }
 
     private fun getInstant(millis: Long): Instant {

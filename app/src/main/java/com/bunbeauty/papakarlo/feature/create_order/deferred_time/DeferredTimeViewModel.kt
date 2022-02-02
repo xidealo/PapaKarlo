@@ -1,20 +1,56 @@
 package com.bunbeauty.papakarlo.feature.create_order.deferred_time
 
+import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
+import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DeferredTimeViewModel @Inject constructor(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
 ) : BaseViewModel() {
 
-    val minTimeHour: Int
-        get() = deferredTimeInteractor.getMinTimeHours()
+    private val mutableDeferredTimeState: MutableStateFlow<DeferredTimeState> =
+        MutableStateFlow(DeferredTimeState.Default)
+    val deferredTimeState: StateFlow<DeferredTimeState> = mutableDeferredTimeState.asStateFlow()
 
-    val minTimeMinute: Int
-        get() = deferredTimeInteractor.getMinTimeMinutes()
+    private var selectedTime: Time? = null
 
-    fun getSelectedMillis(hour: Int, minute: Int): Long {
-        return deferredTimeInteractor.getDeferredTimeMillis(hour, minute)
+    fun setSelectedTime(selectedHour: Int, selectedMinute: Int) {
+        selectedTime = if (selectedHour != -1 && selectedMinute != -1) {
+            Time(selectedHour, selectedMinute)
+        } else {
+            null
+        }
+    }
+
+    fun onSelectTimeClicked() {
+        viewModelScope.launch {
+            val minTime = deferredTimeInteractor.getMinTime()
+            mutableDeferredTimeState.value = DeferredTimeState.SelectTime(
+                minTime = minTime,
+                selectedTime = selectedTime ?: minTime
+            )
+        }
+    }
+
+    fun onSelectTimeCanceled() {
+        mutableDeferredTimeState.value = DeferredTimeState.Default
+    }
+
+    fun onTimeSelected(hour: Int, minute: Int) {
+        viewModelScope.launch {
+            deferredTimeInteractor.getDeferredTimeMillis(hour, minute).let { selectedTimeMillis ->
+                mutableDeferredTimeState.value = DeferredTimeState.TimeSelected(selectedTimeMillis)
+            }
+        }
+    }
+
+    fun onTimeSelectedAsap() {
+        mutableDeferredTimeState.value = DeferredTimeState.TimeSelected(null)
     }
 }

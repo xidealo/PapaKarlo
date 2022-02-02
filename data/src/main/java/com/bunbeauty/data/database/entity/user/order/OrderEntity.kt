@@ -11,6 +11,7 @@ data class OrderEntity(
     val status: OrderStatus,
     val isDelivery: Boolean,
     val time: Long,
+    val timeZone: String,
     val code: String,
     val address: String,
     val comment: String?,

@@ -15,7 +15,5 @@ data class Order(
     val address: String,
     val comment: String?,
     val deliveryCost: Int?,
-    val oldTotalCost: Int?,
-    val newTotalCost: Int,
     val orderProductList: List<OrderProduct>
 )

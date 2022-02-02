@@ -26,6 +26,7 @@ class OrderMapper @Inject constructor(
                 status = OrderStatus.valueOf(orderServer.status),
                 isDelivery = orderServer.isDelivery,
                 time = orderServer.time,
+                timeZone = orderServer.timeZone,
                 code = orderServer.code,
                 address = orderServer.addressDescription,
                 comment = orderServer.comment,
@@ -38,12 +39,15 @@ class OrderMapper @Inject constructor(
     }
 
     override fun toLightOrder(orderEntityWithProducts: OrderEntityWithProducts): LightOrder {
-        return LightOrder(
-            uuid = orderEntityWithProducts.orderEntity.uuid,
-            status = orderEntityWithProducts.orderEntity.status,
-            code = orderEntityWithProducts.orderEntity.code,
-            dateTime = dateTimeUtil.toDateTime(orderEntityWithProducts.orderEntity.time)
-        )
+        return orderEntityWithProducts.orderEntity.run {
+            LightOrder(
+                uuid = uuid,
+                status = status,
+                code = code,
+                dateTime = dateTimeUtil.toDateTime(time, timeZone)
+            )
+        }
+
     }
 
     override fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate {
@@ -60,22 +64,22 @@ class OrderMapper @Inject constructor(
     }
 
     override fun toOrder(orderEntityWithProducts: OrderEntityWithProducts): Order {
-        return Order(
-            uuid = orderEntityWithProducts.orderEntity.uuid,
-            code = orderEntityWithProducts.orderEntity.code,
-            status = orderEntityWithProducts.orderEntity.status,
-            dateTime = dateTimeUtil.toDateTime(orderEntityWithProducts.orderEntity.time),
-            isDelivery = orderEntityWithProducts.orderEntity.isDelivery,
-            deferredTime = orderEntityWithProducts.orderEntity.deferredTime?.let { millis ->
-                dateTimeUtil.toTime(millis)
-            },
-            address = orderEntityWithProducts.orderEntity.address,
-            comment = orderEntityWithProducts.orderEntity.comment,
-            deliveryCost = orderEntityWithProducts.orderEntity.deliveryCost,
-            oldTotalCost = 0,
-            newTotalCost = 0,
-            orderProductList = orderEntityWithProducts.orderProductList.map(orderProductMapper::toModel),
-        )
+        return orderEntityWithProducts.run {
+            Order(
+                uuid = orderEntity.uuid,
+                code = orderEntity.code,
+                status = orderEntity.status,
+                dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone),
+                isDelivery = orderEntity.isDelivery,
+                deferredTime = orderEntity.deferredTime?.let { millis ->
+                    dateTimeUtil.toTime(millis, orderEntity.timeZone)
+                },
+                address = orderEntity.address,
+                comment = orderEntity.comment,
+                deliveryCost = orderEntity.deliveryCost,
+                orderProductList = orderProductList.map(orderProductMapper::toModel),
+            )
+        }
     }
 
     override fun toOrder(orderServer: OrderServer): Order {
@@ -83,16 +87,14 @@ class OrderMapper @Inject constructor(
             uuid = orderServer.uuid,
             code = orderServer.code,
             status = OrderStatus.valueOf(orderServer.status),
-            dateTime = dateTimeUtil.toDateTime(orderServer.time),
+            dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone),
             isDelivery = orderServer.isDelivery,
             deferredTime = orderServer.deferredTime?.let { millis ->
-                dateTimeUtil.toTime(millis)
+                dateTimeUtil.toTime(millis, orderServer.timeZone)
             },
             address = orderServer.addressDescription,
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
-            oldTotalCost = 0,
-            newTotalCost = 0,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toModel),
         )
     }

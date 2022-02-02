@@ -79,24 +79,18 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         }
     }
 
-    override val deferredTime: Flow<String?> = context.deferredTimeDataStore.data.map {
-        it[DEFERRED_TIME_KEY]
-    }
-
-    override suspend fun saveDeferredTime(deferredTime: String) {
-        context.deferredTimeDataStore.edit {
-            it[DEFERRED_TIME_KEY] = deferredTime
-        }
-    }
-
     override val selectedCityUuid: Flow<String?> = context.selectedCityDataStore.data.map {
         it[SELECTED_CITY_UUID_KEY]
     }
 
-    override suspend fun saveSelectedCityUuid(cityUuid: String) {
+    override val selectedCityTimeZone: Flow<String> = context.selectedCityDataStore.data.map {
+        it[SELECTED_CITY_TIME_ZONE_KEY] ?: DEFAULT_TIME_ZONE
+    }
 
+    override suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String) {
         context.selectedCityDataStore.edit {
             it[SELECTED_CITY_UUID_KEY] = cityUuid
+            it[SELECTED_CITY_TIME_ZONE_KEY] = cityTimeZone
         }
     }
 
@@ -104,6 +98,12 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         return context.selectedCityDataStore.data.map {
             it[SELECTED_CITY_UUID_KEY]
         }.firstOrNull()
+    }
+
+    override suspend fun getSelectedCityTimeZone(): String {
+        return context.selectedCityDataStore.data.map {
+            it[SELECTED_CITY_TIME_ZONE_KEY]
+        }.firstOrNull() ?: DEFAULT_TIME_ZONE
     }
 
     override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
@@ -137,6 +137,7 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private const val DEFERRED_TIME = "deferred time"
         private const val SELECTED_CITY_UUID = "selected city uuid"
+        private const val SELECTED_CITY_TIME_ZONE = "selected city time zone"
 
         private val TOKEN_KEY = stringPreferencesKey(TOKEN)
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
@@ -144,8 +145,10 @@ class DataStoreRepository @Inject constructor(private val context: Context) : Da
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
         private val DEFERRED_TIME_KEY = stringPreferencesKey(DEFERRED_TIME)
         private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
+        private val SELECTED_CITY_TIME_ZONE_KEY = stringPreferencesKey(SELECTED_CITY_TIME_ZONE)
 
         private const val DEFAULT_DELIVERY_COST = 0
         private const val DEFAULT_FOR_FREE_DELIVERY = 0
+        private const val DEFAULT_TIME_ZONE = "UTC+3"
     }
 }

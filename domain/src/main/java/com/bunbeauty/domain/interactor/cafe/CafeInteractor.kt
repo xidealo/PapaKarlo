@@ -72,13 +72,16 @@ class CafeInteractor @Inject constructor(
         }
     }
 
-    fun observeMinutesOfDay(): Flow<Int> = flow {
-        while (true) {
-            val currentMinuteSecond = dataTimeUtil.currentMinuteSecond
-            emit(currentMinuteSecond.minuteOfDay)
-            delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
+    fun observeMinutesOfDay(): Flow<Int> =
+        dataStoreRepo.selectedCityTimeZone.flatMapLatest { timeZone ->
+            flow {
+                while (true) {
+                    val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond(timeZone)
+                    emit(currentMinuteSecond.minuteOfDay)
+                    delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
+                }
+            }
         }
-    }
 
     fun observeCafe(): Flow<Cafe?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->

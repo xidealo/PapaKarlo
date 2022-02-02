@@ -9,5 +9,11 @@ data class CityServer(
     val uuid: String,
 
     @SerialName("name")
-    val name: String
+    val name: String,
+
+    @SerialName("timeZone")
+    val timeZone: String,
+
+    @SerialName("isVisible")
+    val isVisible: Boolean,
 )
