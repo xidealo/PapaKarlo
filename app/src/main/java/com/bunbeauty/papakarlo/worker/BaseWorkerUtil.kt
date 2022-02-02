@@ -36,7 +36,7 @@ abstract class BaseWorkerUtil {
         workManager.enqueueUniqueWork(java.simpleName, ExistingWorkPolicy.REPLACE, workRequest)
         workManager.observe(workRequest).transformWhile<WorkInfo, Unit> { workInfo ->
             Log.d("testTag", "workInfo $workInfo")
-            (workInfo != null && !workInfo.state.isFinished)
+            !workInfo.state.isFinished
         }.collect()
     }
 
