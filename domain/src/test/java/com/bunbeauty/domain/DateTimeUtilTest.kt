@@ -2,6 +2,7 @@ package com.bunbeauty.domain
 
 import com.bunbeauty.domain.model.datee_time.Date
 import com.bunbeauty.domain.model.datee_time.DateTime
+import com.bunbeauty.domain.model.datee_time.MinuteSecond
 import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.domain.util.DateTimeUtil
 import org.junit.Assert.assertEquals
@@ -19,7 +20,7 @@ class DateTimeUtilTest {
 
     @Test
     fun convertingMillisToDateTime() {
-        val millis = 1643673840000
+        val millis = 1_643_673_840_000
         val timeZone = "UTC+3"
         val expectedDateTime = DateTime(
             date = Date(
@@ -40,7 +41,7 @@ class DateTimeUtilTest {
 
     @Test
     fun convertingMillisToTime() {
-        val millis = 1640988120000
+        val millis = 1_640_988_120_000 // 1.01.22 01:02
         val timeZone = "UTC+3"
         val expectedTime = Time(
             hourOfDay = 1,
@@ -67,19 +68,54 @@ class DateTimeUtilTest {
     }
 
     @Test
+    fun gettingCurrentMinuteSecond() {
+        val currentMillis = 1_640_988_150_000 // 1.01.22 01:02:30
+        val timeZone = "UTC+3"
+        val expectedTime = MinuteSecond(
+            minuteOfDay = 62,
+            secondOfMinute = 30
+        )
+
+        val minuteSecond = dateTimeUtil.getCurrentMinuteSecond(currentMillis, timeZone)
+
+        assertEquals(expectedTime, minuteSecond)
+    }
+
+    @Test
+    fun gettingCurrentDateTime() {
+        val currentMillis = 1_640_988_150_000 // 1.01.22 01:02:30
+        val timeZone = "UTC+3"
+        val expectedTime = MinuteSecond(
+            minuteOfDay = 62,
+            secondOfMinute = 30
+        )
+
+        val minuteSecond = dateTimeUtil.getCurrentMinuteSecond(currentMillis, timeZone)
+
+        assertEquals(expectedTime, minuteSecond)
+    }
+
+    @Test
     fun gettingTimeIn() {
-        val currentMillis = 1640988120000 // 01:02
+        val currentMillis = 1_640_988_120_000 // 1.01.22 01:02
         val hour = 1
         val minute = 2
         val timeZone = "UTC+3"
-        val expectedTime = Time(
-            hourOfDay = 2,
-            minuteOfHour = 4
+        val expectedDateTime = DateTime(
+            date = Date(
+                datOfMonth = 1,
+                monthNumber = 1,
+                year = 2022
+            ),
+            time = Time(
+                hourOfDay = 2,
+                minuteOfHour = 4
+            )
         )
 
         val time = dateTimeUtil.getDateTimeIn(currentMillis, hour, minute, timeZone)
 
-        assertEquals(expectedTime, time)
+        assertEquals(expectedDateTime, time)
     }
 
     @Test
