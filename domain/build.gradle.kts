@@ -46,4 +46,6 @@ dependencies {
     implementation(Coroutine.core)
 
     implementation(KotlinxDateTime.dateTime)
+
+    implementation(Test.junit)
 }

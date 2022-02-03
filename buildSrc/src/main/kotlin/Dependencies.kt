@@ -18,7 +18,7 @@ object Versions {
     const val dagger = "2.40.1"
 
     const val room = "2.4.0-rc01"
-    const val junit = "4.13"
+    const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
     const val appCompact = "1.4.1"
