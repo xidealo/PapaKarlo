@@ -276,6 +276,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         DeferredTimeViewModel(
+            resourcesProvider = get(),
             deferredTimeInteractor = get(),
         )
     }

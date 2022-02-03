@@ -4,6 +4,7 @@ import com.bunbeauty.domain.model.datee_time.Time
 
 interface IDeferredTimeInteractor {
 
+    suspend fun isDeferredTimeAvailable(): Boolean
     suspend fun getMinTime(): Time
     suspend fun getDeferredTimeMillis(hours: Int, minutes: Int): Long
     suspend fun getDeferredTimeHours(deferredTimeMillis: Long): Int

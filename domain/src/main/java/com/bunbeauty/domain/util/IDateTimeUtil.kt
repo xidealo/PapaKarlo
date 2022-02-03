@@ -9,6 +9,7 @@ interface IDateTimeUtil {
     fun toDateTime(millis: Long, timeZone: String): DateTime
     fun toTime(millis: Long, timeZone: String): Time
     fun getCurrentMinuteSecond(timeZone: String): MinuteSecond
-    fun getTimeIn(hour: Int, minute: Int, timeZone: String): Time
+    fun getCurrentDateTime(timeZone: String): DateTime
+    fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime
     fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long
 }

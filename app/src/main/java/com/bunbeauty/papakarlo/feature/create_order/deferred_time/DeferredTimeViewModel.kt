@@ -3,7 +3,9 @@ package com.bunbeauty.papakarlo.feature.create_order.deferred_time
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class DeferredTimeViewModel @Inject constructor(
+    private val resourcesProvider: IResourcesProvider,
     private val deferredTimeInteractor: IDeferredTimeInteractor,
 ) : BaseViewModel() {
 
@@ -30,11 +33,18 @@ class DeferredTimeViewModel @Inject constructor(
 
     fun onSelectTimeClicked() {
         viewModelScope.launch {
-            val minTime = deferredTimeInteractor.getMinTime()
-            mutableDeferredTimeState.value = DeferredTimeState.SelectTime(
-                minTime = minTime,
-                selectedTime = selectedTime ?: minTime
-            )
+            if (deferredTimeInteractor.isDeferredTimeAvailable()) {
+                val minTime = deferredTimeInteractor.getMinTime()
+                mutableDeferredTimeState.value = DeferredTimeState.SelectTime(
+                    minTime = minTime,
+                    selectedTime = selectedTime ?: minTime
+                )
+            } else {
+                showError(
+                    resourcesProvider.getString(R.string.error_deferred_time_not_available),
+                    true
+                )
+            }
         }
     }
 

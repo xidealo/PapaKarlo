@@ -21,23 +21,35 @@ class DateTimeUtil @Inject constructor() : IDateTimeUtil {
     }
 
     override fun getCurrentMinuteSecond(timeZone: String): MinuteSecond {
-        return getLocalDateTime(currentMillis, timeZone).minuteSecond
+        return getCurrentMinuteSecond(currentMillis, timeZone)
     }
 
-    override fun getTimeIn(hour: Int, minute: Int, timeZone: String): Time {
-        return getTimeIn(currentMillis, hour, minute, timeZone)
+    override fun getCurrentDateTime(timeZone: String): DateTime {
+        return getCurrentDateTime(currentMillis, timeZone)
+    }
+
+    override fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime {
+        return getDateTimeIn(currentMillis, hour, minute, timeZone)
     }
 
     override fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long {
         return getMillisByHourAndMinute(currentMillis, hour, minute, timeZone)
     }
 
-    fun getTimeIn(currentMillis: Long, hour: Int, minute: Int, timeZone: String): Time {
+    fun getCurrentMinuteSecond(currentMillis: Long, timeZone: String): MinuteSecond {
+        return getLocalDateTime(currentMillis, timeZone).minuteSecond
+    }
+
+    fun getCurrentDateTime(currentMillis: Long, timeZone: String): DateTime {
+        return getLocalDateTime(currentMillis, timeZone).dateTime
+    }
+
+    fun getDateTimeIn(currentMillis: Long, hour: Int, minute: Int, timeZone: String): DateTime {
         return getInstant(currentMillis).plus(hour, DateTimeUnit.HOUR)
             .plus(minute, DateTimeUnit.MINUTE)
             .toEpochMilliseconds()
             .let { millis ->
-                toTime(millis, timeZone)
+                toDateTime(millis, timeZone)
             }
     }
 

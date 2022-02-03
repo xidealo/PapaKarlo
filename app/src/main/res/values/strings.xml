@@ -93,6 +93,7 @@
     <string name="msg_deferred_time_asap">Как можно скорее</string>
     <string name="action_deferred_time_select_time">Выбрать время</string>
     <string name="title_deferred_time_select_time">Выберите время</string>
+    <string name="error_deferred_time_not_available">Уже поздно. Отложенное время недоступно</string>
 
     <!-- CREATE ADDRESS -->
     <string name="title_create_address">Добавление адресa</string>

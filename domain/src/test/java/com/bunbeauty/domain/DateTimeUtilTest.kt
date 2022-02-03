@@ -77,7 +77,7 @@ class DateTimeUtilTest {
             minuteOfHour = 4
         )
 
-        val time = dateTimeUtil.getTimeIn(currentMillis, hour, minute, timeZone)
+        val time = dateTimeUtil.getDateTimeIn(currentMillis, hour, minute, timeZone)
 
         assertEquals(expectedTime, time)
     }
