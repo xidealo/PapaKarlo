@@ -99,7 +99,7 @@
     <string name="title_create_address">Добавление адресa</string>
     <string name="hint_create_address_street">Улица*</string>
     <string name="hint_create_address_house">Дом*</string>
-    <string name="hint_create_address_flat">Квартира</string>
+    <string name="hint_create_address_flat">Квартира/Офис</string>
     <string name="hint_create_address_entrance">Подъезд</string>
     <string name="hint_create_address_floor">Этаж</string>
     <string name="hint_create_address_comment">Комментарий для курьера</string>

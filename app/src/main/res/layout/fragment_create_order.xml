@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".feature.create_order.CreateOrderFragment">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/fragment_create_order_sv_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/fragment_create_order_cl_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +101,7 @@
                 tools:text="Как можно скорее" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         style="@style/Blur"

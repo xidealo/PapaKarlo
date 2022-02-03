@@ -165,10 +165,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_order_details_rv_product_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        style="@style/WrapConstraintRecycleView"
         app:layout_constraintBottom_toTopOf="@+id/fragment_order_details_cl_bottom_cost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

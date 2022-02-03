@@ -19,9 +19,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_order_list_rv_result"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        style="@style/WrapConstraintRecycleView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

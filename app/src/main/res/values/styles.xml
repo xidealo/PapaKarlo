@@ -65,6 +65,33 @@
 
     <!-- INPUT LAYOUT -->
 
+    <style name="BaseRecycleView">
+        <item name="android:overScrollMode">never</item>
+        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
+    </style>
+
+    <style name="WrapContentRecycleView" parent="BaseRecycleView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WrapConstraintRecycleView" parent="BaseRecycleView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+
+    <style name="MatchParentRecycleView" parent="BaseRecycleView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="HorizontalRecycleView" parent="BaseRecycleView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- INPUT LAYOUT -->
+
     <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

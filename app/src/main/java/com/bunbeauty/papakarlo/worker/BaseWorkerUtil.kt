@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.worker
 
-import android.util.Log
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import kotlinx.coroutines.flow.Flow
@@ -35,7 +34,6 @@ abstract class BaseWorkerUtil {
         val workRequest = getOneTimeWork(workDataOf)
         workManager.enqueueUniqueWork(java.simpleName, ExistingWorkPolicy.REPLACE, workRequest)
         workManager.observe(workRequest).transformWhile<WorkInfo, Unit> { workInfo ->
-            Log.d("testTag", "workInfo $workInfo")
             !workInfo.state.isFinished
         }.collect()
     }

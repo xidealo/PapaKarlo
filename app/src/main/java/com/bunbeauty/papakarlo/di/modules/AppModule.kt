@@ -18,9 +18,6 @@ import org.koin.dsl.module
 class AppModule {
 
     @Provides
-    fun provideLinearLayoutManager(context: Context) = LinearLayoutManager(context)
-
-    @Provides
     fun provideResources(context: Context): Resources = context.resources
 
     @Provides

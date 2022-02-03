@@ -45,51 +45,53 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.run {
-            fragmentMenuRvCategories.layoutManager =
-                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            fragmentMenuRvCategories.addItemDecoration(marginItemHorizontalDecoration)
-            fragmentMenuRvCategories.adapter = categoryAdapter
-
-            fragmentMenuRvProducts.addItemDecoration(marginItemVerticalDecoration)
-            fragmentMenuRvProducts.adapter = menuProductAdapter
-            menuProductAdapter.setOnItemClickListener { menuItem ->
-                viewModel.onMenuItemClicked(menuItem)
-            }
-            menuProductAdapter.setOnButtonClickListener { menuProductItem ->
-                viewModel.onAddProductClicked(menuProductItem)
-            }
-
-            categoryAdapter.setOnItemClickListener { categoryItem ->
-                viewModel.onCategorySelected(categoryItem.uuid)
-            }
-            viewModel.menuPosition.startedLaunch { menuPosition ->
-                fragmentMenuRvProducts.scrollToPositionWithOffset(menuPosition, 0)
-            }
-
-            fragmentMenuRvProducts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (dy != 0) {
-                        val position =
-                            (fragmentMenuRvProducts.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                        viewModel.onMenuPositionChanged(position)
+            fragmentMenuRvCategories.run {
+                layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+                addItemDecoration(marginItemHorizontalDecoration)
+                adapter = categoryAdapter.apply {
+                    setOnItemClickListener { categoryItem ->
+                        viewModel.onCategorySelected(categoryItem.uuid)
                     }
                 }
-            })
-
-            (activity as? MainActivity)?.findViewById<BottomNavigationView>(R.id.activity_main_bnv_bottom_navigation)
-                ?.setOnItemReselectedListener {
-                    fragmentMenuRvProducts.smoothScrollToPosition(0)
+                viewModel.categoryPosition.startedLaunch { categoryPosition ->
+                    scrollToPosition(categoryPosition)
                 }
+            }
+
+            fragmentMenuRvProducts.run {
+                addItemDecoration(marginItemVerticalDecoration)
+                adapter = menuProductAdapter.apply {
+                    setOnItemClickListener { menuItem ->
+                        viewModel.onMenuItemClicked(menuItem)
+                    }
+                    setOnButtonClickListener { menuProductItem ->
+                        viewModel.onAddProductClicked(menuProductItem)
+                    }
+                }
+                viewModel.menuPosition.startedLaunch { menuPosition ->
+                    scrollToPositionWithOffset(menuPosition, 0)
+                }
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy != 0) {
+                            val position =
+                                (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                            viewModel.onMenuPositionChanged(position)
+                        }
+                    }
+                })
+                (activity as? MainActivity)?.findViewById<BottomNavigationView>(R.id.activity_main_bnv_bottom_navigation)
+                    ?.setOnItemReselectedListener {
+                        smoothScrollToPosition(0)
+                    }
+            }
 
             viewModel.categoryList.startedLaunch { categoryList ->
                 categoryAdapter.submitList(categoryList)
             }
             viewModel.menuList.startedLaunch { menuList ->
                 menuProductAdapter.submitList(menuList)
-            }
-            viewModel.categoryPosition.startedLaunch { categoryPosition ->
-                fragmentMenuRvCategories.scrollToPosition(categoryPosition)
             }
         }
     }
