@@ -2,14 +2,14 @@ package com.bunbeauty.papakarlo.feature.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.profile.LightProfile
-import com.bunbeauty.papakarlo.common.mapper.order.IOrderUIMapper
+import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
+import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.feature.profile.ProfileFragmentDirections.*
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -19,9 +19,9 @@ class ProfileViewModel @Inject constructor(
 ) : CartViewModel() {
 
     private var userUuid: String? = null
-    private val mutableProfileState: MutableStateFlow<State<LightProfile>> =
+    private val mutableProfileState: MutableStateFlow<State<Profile>> =
         MutableStateFlow(State.Loading())
-    val profileState: StateFlow<State<LightProfile>> = mutableProfileState.asStateFlow()
+    val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
 
     private val mutableLastOrder: MutableStateFlow<OrderItem?> = MutableStateFlow(null)
     val lastOrder: StateFlow<OrderItem?> = mutableLastOrder.asStateFlow()

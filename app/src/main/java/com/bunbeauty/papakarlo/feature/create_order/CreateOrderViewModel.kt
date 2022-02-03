@@ -9,6 +9,7 @@ import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
@@ -58,9 +59,8 @@ class CreateOrderViewModel @Inject constructor(
     private val mutableAddressHint: MutableStateFlow<String> = MutableStateFlow(deliveryAddressHint)
     val addressHint: StateFlow<String> = mutableAddressHint.asStateFlow()
 
-    private var selectedTimeHour: Int = -1
-    private var selectedTimeMinute: Int = -1
-    private var deferredTimeValue: Long? = null
+    private var selectedDeferredTime: Time? = null
+    private var selectedDeferredTimeMillis: Long? = null
     private val asap = resourcesProvider.getString(R.string.msg_deferred_time_asap)
     private val mutableDeferredTime: MutableStateFlow<String> = MutableStateFlow(asap)
     val deferredTime: StateFlow<String> = mutableDeferredTime.asStateFlow()
@@ -95,16 +95,17 @@ class CreateOrderViewModel @Inject constructor(
 
     fun onDeferredTimeSelected(deferredTimeMillis: Long) {
         if (deferredTimeMillis == -1L) {
-            deferredTimeValue = null
-            selectedTimeHour = -1
-            selectedTimeMinute = -1
+            selectedDeferredTimeMillis = null
+            selectedDeferredTime = null
             mutableDeferredTime.value = asap
         } else {
-            deferredTimeValue = deferredTimeMillis
-            selectedTimeHour = deferredTimeInteractor.getDeferredTimeHours(deferredTimeMillis)
-            selectedTimeMinute = deferredTimeInteractor.getDeferredTimeMinutes(deferredTimeMillis)
-            mutableDeferredTime.value =
-                deferredTimeInteractor.getDeferredTimeHHMM(deferredTimeMillis)
+            selectedDeferredTimeMillis = deferredTimeMillis
+            viewModelScope.launch {
+                selectedDeferredTime = deferredTimeInteractor.getDeferredTime(deferredTimeMillis)
+                mutableDeferredTime.value = stringUtil.getTimeString(
+                    deferredTimeInteractor.getDeferredTime(deferredTimeMillis)
+                )
+            }
         }
     }
 
@@ -149,16 +150,16 @@ class CreateOrderViewModel @Inject constructor(
                 return@launch
             }
 
-            val order = orderInteractor.createOrder(
+            val orderCode = orderInteractor.createOrder(
                 isDelivery = isDelivery,
                 userAddressUuid = selectedUserAddressUuid,
                 cafeUuid = selectedCafeUuid,
                 addressDescription = selectedAddress,
                 comment = comment.value,
-                deferredTime = deferredTimeValue,
+                deferredTime = selectedDeferredTimeMillis,
             )
 
-            if (order == null) {
+            if (orderCode == null) {
                 showError(
                     resourcesProvider.getString(R.string.error_create_order_something_went_wrong),
                     false
@@ -167,7 +168,7 @@ class CreateOrderViewModel @Inject constructor(
             } else {
                 cartProductInteractor.removeAllProductsFromCart()
                 showMessage(
-                    resourcesProvider.getString(R.string.msg_create_order_order_code) + order.code,
+                    resourcesProvider.getString(R.string.msg_create_order_order_code) + orderCode.code,
                     false
                 )
                 router.navigate(toProfileFragment())
@@ -219,8 +220,8 @@ class CreateOrderViewModel @Inject constructor(
         router.navigate(
             toDeferredTimeBottomSheet(
                 deferredTimeHint.value,
-                selectedTimeHour,
-                selectedTimeMinute
+                selectedDeferredTime?.hourOfDay ?: -1,
+                selectedDeferredTime?.minuteOfHour ?: -1
             )
         )
     }

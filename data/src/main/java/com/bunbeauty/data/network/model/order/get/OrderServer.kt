@@ -18,6 +18,9 @@ data class OrderServer(
     @SerialName("time")
     val time: Long,
 
+    @SerialName("timeZone")
+    val timeZone: String,
+
     @SerialName("isDelivery")
     val isDelivery: Boolean,
 

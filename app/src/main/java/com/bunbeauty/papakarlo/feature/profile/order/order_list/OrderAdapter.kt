@@ -26,8 +26,8 @@ class OrderAdapter @Inject constructor() :
             elementOrderBinding.run {
                 elementOrderTvCode.text = item.code
                 elementOrderTvTime.text = item.dateTime
-                elementOrderChipStatus.text = item.orderStatus
-                elementOrderChipStatus.setChipBackgroundColorResource(item.orderColorResource)
+                elementOrderChipStatus.text = item.statusName
+                elementOrderChipStatus.setChipBackgroundColorResource(item.statusColorResource)
 
                 elementOrderMvcMain.setOnClickListener {
                     onItemClicked(item)
@@ -40,8 +40,8 @@ class OrderAdapter @Inject constructor() :
 
             if (payloads.last() as Boolean) {
                 elementOrderBinding.run {
-                    elementOrderChipStatus.text = item.orderStatus
-                    elementOrderChipStatus.setChipBackgroundColorResource(item.orderColorResource)
+                    elementOrderChipStatus.text = item.statusName
+                    elementOrderChipStatus.setChipBackgroundColorResource(item.statusColorResource)
 
                     elementOrderMvcMain.setOnClickListener {
                         onItemClicked(item)

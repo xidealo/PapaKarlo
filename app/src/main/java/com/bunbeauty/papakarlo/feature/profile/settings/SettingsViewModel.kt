@@ -8,9 +8,9 @@ import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.state.toStateSuccess
-import com.bunbeauty.papakarlo.common.state.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet

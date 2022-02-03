@@ -9,7 +9,7 @@ import android.view.View
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.custom_view.Customizable
 
-class ProcessScaleView @JvmOverloads constructor(
+class StepView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null
 ) : View(context, attributeSet), Customizable {

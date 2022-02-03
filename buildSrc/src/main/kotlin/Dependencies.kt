@@ -18,7 +18,7 @@ object Versions {
     const val dagger = "2.40.1"
 
     const val room = "2.4.0-rc01"
-    const val junit = "4.13"
+    const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
     const val appCompact = "1.4.1"
@@ -43,7 +43,7 @@ object Versions {
     const val googleMapUtils = "2.2.3"
     const val googleMapUtilsKTX = "3.1.0"
 
-    const val jobaTime = "2.10.13"
+    const val kotlinxDateTime = "0.3.2"
 
     const val workManagerVersion = "2.7.1"
 
@@ -163,8 +163,8 @@ object TimePicker {
     const val timePicker = "com.wdullaer:materialdatetimepicker:${Versions.timePicker}"
 }
 
-object JodaTime {
-    const val jodaTime = "joda-time:joda-time:${Versions.jobaTime}"
+object KotlinxDateTime {
+    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
 }
 
 object WorkManager {

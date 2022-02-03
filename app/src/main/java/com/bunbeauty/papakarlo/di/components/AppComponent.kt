@@ -5,10 +5,11 @@ import com.bunbeauty.data.di.DataModule
 import com.bunbeauty.data.di.MapperModule
 import com.bunbeauty.data.di.RepositoryModule
 import com.bunbeauty.domain.di.InteractorModule
+import com.bunbeauty.domain.di.UtilModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.di.modules.AppModule
+import com.bunbeauty.papakarlo.di.modules.AppUtilModule
 import com.bunbeauty.papakarlo.di.modules.UIMapperModule
-import com.bunbeauty.papakarlo.di.modules.UtilModule
 import com.bunbeauty.papakarlo.di.modules.WorkerModule
 import com.bunbeauty.papakarlo.worker.cafe.RefreshCafeWorker
 import com.bunbeauty.papakarlo.worker.category.RefreshCategoryWorker
@@ -25,12 +26,13 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        UtilModule::class,
+        AppUtilModule::class,
         UIMapperModule::class,
         WorkerModule::class,
         RepositoryModule::class,
         DataModule::class,
         InteractorModule::class,
+        UtilModule::class,
         MapperModule::class,
     ]
 )

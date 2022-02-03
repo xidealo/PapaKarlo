@@ -7,17 +7,20 @@ import javax.inject.Inject
 
 class CityMapper @Inject constructor() : ICityMapper {
 
-    override fun toEntityModel(city: CityServer): CityEntity {
+    override fun toCityEntity(cityServer: CityServer): CityEntity {
         return CityEntity(
-            uuid = city.uuid,
-            name = city.name,
+            uuid = cityServer.uuid,
+            name = cityServer.name,
+            timeZone = cityServer.timeZone,
+            isVisible = cityServer.isVisible
         )
     }
 
-    override fun toModel(city: CityEntity): City {
+    override fun toCity(cityEntity: CityEntity): City {
         return City(
-            uuid = city.uuid,
-            name = city.name,
+            uuid = cityEntity.uuid,
+            name = cityEntity.name,
+            timeZone = cityEntity.timeZone,
         )
     }
 }

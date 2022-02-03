@@ -8,17 +8,18 @@ import com.bunbeauty.domain.model.cafe.CafeAddress
 import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.util.IDateTimeUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import org.joda.time.DateTime
 import javax.inject.Inject
 
 class CafeInteractor @Inject constructor(
     private val cafeRepo: CafeRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
+    private val dataTimeUtil: IDateTimeUtil
 ) : ICafeInteractor {
 
     override fun observeCafeList(): Flow<List<CafePreview>> {
@@ -71,13 +72,16 @@ class CafeInteractor @Inject constructor(
         }
     }
 
-    fun observeMinutesOfDay(): Flow<Int> = flow {
-        while (true) {
-            val now = DateTime.now()
-            emit(now.minuteOfDay)
-            delay((60 - now.secondOfMinute) * 1_000L)
+    fun observeMinutesOfDay(): Flow<Int> =
+        dataStoreRepo.selectedCityTimeZone.flatMapLatest { timeZone ->
+            flow {
+                while (true) {
+                    val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond(timeZone)
+                    emit(currentMinuteSecond.minuteOfDay)
+                    delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
+                }
+            }
         }
-    }
 
     fun observeCafe(): Flow<Cafe?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->

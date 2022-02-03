@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
+import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
@@ -20,9 +21,13 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
     override val viewModel: DeferredTimeViewModel by viewModels { viewModelFactory }
     override val viewBinding by viewBinding(BottomSheetDeferredTimeBinding::bind)
 
-    private val selectedHour by argument<Int>()
-    private val selectedMinute by argument<Int>()
-    private val title by argument<String>()
+    private val selectedHour: Int by argument()
+    private val selectedMinute: Int by argument()
+    private val title: String by argument()
+
+    private val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, minute, _ ->
+        viewModel.onTimeSelected(hour, minute)
+    }
 
     override fun inject(viewModelComponent: ViewModelComponent) {
         viewModelComponent.inject(this)
@@ -31,37 +36,47 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.setSelectedTime(selectedHour, selectedMinute)
         viewBinding.run {
             bottomSheetDeferredTimeTvTitle.text = title
             bottomSheetDeferredTimeMcvAsap.setOnClickListener {
-                sendResult(null)
+                viewModel.onTimeSelectedAsap()
             }
             bottomSheetDeferredTimeNcSelectTime.setOnClickListener {
-                showTimePicker()
+                viewModel.onSelectTimeClicked()
+            }
+        }
+        viewModel.deferredTimeState.startedLaunch { deferredTimeState ->
+            when (deferredTimeState) {
+                is DeferredTimeState.Default -> Unit
+                is DeferredTimeState.SelectTime -> {
+                    showTimePicker(deferredTimeState.minTime, deferredTimeState.selectedTime)
+                }
+                is DeferredTimeState.TimeSelected -> {
+                    sendResult(deferredTimeState.selectedTimeMillis)
+                }
             }
         }
     }
 
-    private val timeListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute, _ ->
-        val selectedTimeMillis = viewModel.getSelectedMillis(hourOfDay, minute)
-        sendResult(selectedTimeMillis)
-    }
-
-    private fun showTimePicker() {
-        val hour = if (selectedHour == -1) {
-            viewModel.minTimeHour
-        } else {
-            selectedHour
-        }
-        val minute = if (selectedMinute == -1) {
-            viewModel.minTimeMinute
-        } else {
-            selectedMinute
-        }
-        val timePicker = TimePickerDialog.newInstance(timeListener, hour, minute, true).apply {
+    private fun showTimePicker(minTime: Time, selectedTime: Time) {
+        val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
+        val colorOnSurfaceVariant = resourcesProvider.getColorByAttr(R.attr.colorOnSurfaceVariant)
+        val colorOnSurface = resourcesProvider.getColorByAttr(R.attr.colorOnSurface)
+        val timePicker = TimePickerDialog.newInstance(
+            timeListener,
+            selectedTime.hourOfDay,
+            selectedTime.minuteOfHour,
+            true
+        ).apply {
             title = this@DeferredTimeBottomSheet.title
-            accentColor = resourcesProvider.getColorById(R.color.orange)
-            setMinTime(viewModel.minTimeHour, viewModel.minTimeMinute, 0)
+            accentColor = colorPrimary
+            setCancelColor(colorOnSurfaceVariant)
+            setOkColor(colorOnSurface)
+            setMinTime(minTime.hourOfDay, minTime.minuteOfHour, 0)
+            setOnCancelListener {
+                viewModel.onSelectTimeCanceled()
+            }
         }
         timePicker.show(childFragmentManager, null)
     }

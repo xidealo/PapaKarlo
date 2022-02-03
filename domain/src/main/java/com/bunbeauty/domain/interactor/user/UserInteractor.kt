@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.user
 
-import com.bunbeauty.domain.model.profile.LightProfile
+import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
@@ -59,7 +59,7 @@ class UserInteractor @Inject constructor(
         }
     }
 
-    override fun observeLightProfile(): Flow<LightProfile?> {
+    override fun observeLightProfile(): Flow<Profile?> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             userRepo.observeProfileByUuid(userUuid ?: "")
         }

@@ -19,7 +19,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 @Module
-interface UtilModule {
+interface AppUtilModule {
 
     @Binds
     fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider

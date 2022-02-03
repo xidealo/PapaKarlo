@@ -15,9 +15,6 @@ data class CafeServer(
     @SerialName("toTime")
     val toTime: Int,
 
-    @SerialName("offset")
-    val offset: Int,
-
     @SerialName("phone")
     val phone: String,
 

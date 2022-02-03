@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Готов" />
 
-            <com.bunbeauty.papakarlo.feature.profile.order.order_details.ProcessScaleView
+            <com.bunbeauty.papakarlo.feature.profile.order.order_details.StepView
                 android:id="@+id/fragment_order_details_psv_status"
                 android:layout_width="0dp"
                 android:layout_height="8dp"

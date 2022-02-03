@@ -21,17 +21,17 @@ class CityRepository @Inject constructor(
     override suspend fun refreshCityList() {
         apiRepo.getCityList().handleListResult(CITY_TAG) { cityList ->
             if (cityList != null) {
-                val cityEntityList = cityList.map(cityMapper::toEntityModel)
+                val cityEntityList = cityList.map(cityMapper::toCityEntity)
                 cityDao.insertAll(cityEntityList)
             }
         }
     }
 
     override fun observeCityList(): Flow<List<City>> {
-        return cityDao.observeCityList().mapListFlow(cityMapper::toModel)
+        return cityDao.observeCityList().mapListFlow(cityMapper::toCity)
     }
 
     override fun observeCityByUuid(cityUuid: String): Flow<City?> {
-        return cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toModel)
+        return cityDao.observeCityByUuid(cityUuid).mapFlow(cityMapper::toCity)
     }
 }

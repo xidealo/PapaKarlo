@@ -3,7 +3,7 @@ package com.bunbeauty.data.database.entity.user
 import androidx.room.Embedded
 import androidx.room.Relation
 import com.bunbeauty.data.database.entity.user.order.OrderEntity
-import com.bunbeauty.data.database.entity.user.order.OrderWithProducts
+import com.bunbeauty.data.database.entity.user.order.OrderEntityWithProducts
 
 data class ProfileEntity(
 
@@ -14,5 +14,5 @@ data class ProfileEntity(
     val userAddressList: List<UserAddressEntity>,
 
     @Relation(parentColumn = "uuid", entityColumn = "userUuid", entity = OrderEntity::class)
-    val orderList: List<OrderWithProducts>
+    val orderEntityList: List<OrderEntityWithProducts>
 )

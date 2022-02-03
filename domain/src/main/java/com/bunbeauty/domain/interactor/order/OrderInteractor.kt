@@ -1,26 +1,22 @@
 package com.bunbeauty.domain.interactor.order
 
-import com.bunbeauty.common.Constants
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderDetails
+import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
-import org.joda.time.DateTime
 import javax.inject.Inject
 
 class OrderInteractor @Inject constructor(
     private val orderRepo: OrderRepo,
     private val cartProductRepo: CartProductRepo,
-    private val dataStoreRepo: DataStoreRepo,
-    private val productInteractor: IProductInteractor,
+    private val dataStoreRepo: DataStoreRepo
 ) : IOrderInteractor {
 
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
@@ -28,16 +24,18 @@ class OrderInteractor @Inject constructor(
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): OrderDetails? {
-        return orderRepo.getOrderByUuid(orderUuid)?.let { order ->
-            toOrderDetails(order)
+    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
+        return orderRepo.observeOrderByUuid(orderUuid)
+    }
+
+    override fun observeOrderStatusByUuid(orderUuid: String): Flow<OrderStatus?> {
+        return orderRepo.observeOrderByUuid(orderUuid).mapFlow { orderDetails ->
+            orderDetails.status
         }
     }
 
-    override fun observeOrderByUuid(orderUuid: String): Flow<OrderDetails?> {
-        return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
-            toOrderDetails(order)
-        }
+    override suspend fun getOrderByUuid(orderUuid: String): Order? {
+        return orderRepo.getOrderByUuid(orderUuid)
     }
 
     override suspend fun createOrder(
@@ -47,7 +45,7 @@ class OrderInteractor @Inject constructor(
         addressDescription: String,
         comment: String?,
         deferredTime: Long?
-    ): Order? {
+    ): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
         val cartProductList = cartProductRepo.getCartProductList()
         val createdOrder = CreatedOrder(
@@ -66,55 +64,6 @@ class OrderInteractor @Inject constructor(
         )
 
         return orderRepo.createOrder(token, createdOrder)
-    }
-
-    fun toOrderDetails(order: Order): OrderDetails {
-        val oldTotalCost = productInteractor.getOldAmountToPay(
-            order.orderProductList,
-            order.deliveryCost
-        )
-        val newTotalCost = productInteractor.getNewAmountToPay(
-            order.orderProductList,
-            order.deliveryCost
-        )
-        return OrderDetails(
-            code = order.code,
-            stepCount = getOrderStepCount(order.status),
-            status = order.status,
-            dateTime = getTimeDDMMMMHHMM(order.time),
-            isDelivery = order.isDelivery,
-            deferredTime = getTimeHHMM(order.deferredTime),
-            address = order.address,
-            comment = order.comment,
-            deliveryCost = order.deliveryCost,
-            oldTotalCost = oldTotalCost,
-            newTotalCost = newTotalCost,
-            orderProductList = order.orderProductList,
-        )
-    }
-
-    fun getOrderStepCount(status: OrderStatus): Int {
-        return when (status) {
-            OrderStatus.NOT_ACCEPTED -> 1
-            OrderStatus.ACCEPTED -> 1
-            OrderStatus.PREPARING -> 2
-            OrderStatus.SENT_OUT -> 3
-            OrderStatus.DONE -> 3
-            OrderStatus.DELIVERED -> 4
-            OrderStatus.CANCELED -> 0
-        }
-    }
-
-    fun getTimeDDMMMMHHMM(millis: Long): String {
-        return DateTime(millis).toString(Constants.DD_MMMM_HH_MM_PATTERN)
-    }
-
-    fun getTimeHHMM(millis: Long?): String? {
-        return if (millis == null) {
-            null
-        } else {
-            DateTime(millis).toString(Constants.HH_MM_PATTERN)
-        }
     }
 
 }
