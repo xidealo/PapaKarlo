@@ -43,7 +43,7 @@
         style="@style/ShadowlessMonochromeNavigationCard"
         android:layout_marginTop="@dimen/small_margin"
         android:layout_marginBottom="@dimen/medium_margin"
-        android:icon="@drawable/ic_smartphone"
+        android:icon="@drawable/ic_version"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_about_app_gl_right"
         app:layout_constraintStart_toStartOf="@+id/bottom_sheet_about_app_gl_left"
