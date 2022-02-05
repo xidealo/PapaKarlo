@@ -37,6 +37,9 @@
         android:layout_marginEnd="@dimen/medium_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:endIconDrawable="@drawable/ic_clear"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorOnSurfaceVariant"
         app:layout_constraintBottom_toTopOf="@+id/bottom_sheet_one_line_action_btn_save"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_one_line_action_tv_info"
         tools:hint="Введите текст">

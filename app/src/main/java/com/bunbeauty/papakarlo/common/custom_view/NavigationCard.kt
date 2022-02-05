@@ -9,14 +9,20 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.core.widget.TextViewCompat
+import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.android.material.card.MaterialCardView
+import javax.inject.Inject
 
 class NavigationCard @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attributeSet, defStyleAttr), Customizable {
+
+    @Inject
+    lateinit var resourcesProvider: IResourcesProvider
 
     var cardText = getString(
         context,
@@ -57,6 +63,10 @@ class NavigationCard @JvmOverloads constructor(
         DEFAULT_PADDING
     )
 
+    init {
+        (context.applicationContext as PapaKarloApplication).appComponent.inject(this)
+    }
+
     private val imageViewId = generateViewId()
     private var textView: TextView = createTextView(context)
     private var imageView: ImageView = createImageView(context)
@@ -79,7 +89,10 @@ class NavigationCard @JvmOverloads constructor(
     private fun createImageView(context: Context): ImageView {
         return ImageView(context).apply {
             id = imageViewId
-            layoutParams = ConstraintLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply {
+            layoutParams = ConstraintLayout.LayoutParams(
+                WRAP_CONTENT,
+                resourcesProvider.getDimensionPixelOffset(R.dimen.icon_height)
+            ).apply {
                 topToTop = PARENT_ID
                 bottomToBottom = PARENT_ID
                 endToEnd = PARENT_ID

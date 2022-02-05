@@ -7,6 +7,8 @@ import com.bunbeauty.data.di.RepositoryModule
 import com.bunbeauty.domain.di.InteractorModule
 import com.bunbeauty.domain.di.UtilModule
 import com.bunbeauty.papakarlo.PapaKarloApplication
+import com.bunbeauty.papakarlo.common.custom_view.NavigationCard
+import com.bunbeauty.papakarlo.common.custom_view.TextCard
 import com.bunbeauty.papakarlo.di.modules.AppModule
 import com.bunbeauty.papakarlo.di.modules.AppUtilModule
 import com.bunbeauty.papakarlo.di.modules.UIMapperModule
@@ -56,4 +58,8 @@ interface AppComponent {
     fun inject(refreshMenuProductWorker: RefreshMenuProductWorker)
     fun inject(refreshUserWorker: RefreshUserWorker)
     fun inject(refreshCategoryWorker: RefreshCategoryWorker)
+
+    // View
+    fun inject(textCard: TextCard)
+    fun inject(navigationCard: NavigationCard)
 }
