@@ -39,11 +39,11 @@ interface WorkerModule {
 }
 
 fun workerModule() = module {
-    single { CafeWorkerUtil() } bind ICafeWorkerUtil::class
-    single { StreetWorkerUtil() } bind IStreetWorkerUtil::class
-    single { CityWorkerUtil() } bind ICityWorkerUtil::class
-    single { DeliveryWorkerUtil() } bind IDeliveryWorkerUtil::class
-    single { MenuProductWorkerUtil() } bind IMenuProductWorkerUtil::class
-    single { UserWorkerUtil() } bind IUserWorkerUtil::class
+    single<ICafeWorkerUtil> { CafeWorkerUtil() }
+    single<IStreetWorkerUtil> { StreetWorkerUtil() }
+    single<ICityWorkerUtil> { CityWorkerUtil() }
+    single<IDeliveryWorkerUtil> { DeliveryWorkerUtil() }
+    single<IMenuProductWorkerUtil> { MenuProductWorkerUtil() }
+    single<IUserWorkerUtil> { UserWorkerUtil() }
     single<ICategoryWorkerUtil> { CategoryWorkerUtil() }
 }

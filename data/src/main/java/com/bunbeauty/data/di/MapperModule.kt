@@ -24,6 +24,7 @@ import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.mapper.user_address.UserAddressMapper
 import dagger.Binds
 import dagger.Module
+import org.koin.dsl.module
 
 @Module
 interface MapperModule {
@@ -62,26 +63,26 @@ interface MapperModule {
     fun bindCategoryMapper(categoryMapper: CategoryMapper): ICategoryMapper
 }
 
-//fun mapperModule() = module {
-//    single { CafeMapper() } bind ICafeMapper::class
-//    single<IMenuProductMapper> {
-//        MenuProductMapper(
-//            categoryMapper = get(),
-//        )
-//    }
-//    single { CartProductMapper(menuProductMapper = get()) } bind ICartProductMapper::class
-//    single {
-//        ProfileMapper(
-//            userAddressMapper = get(),
-//            orderMapper = get(),
-//            userMapper = get(),
-//        )
-//    } bind IProfileMapper::class
-//    single<IUserMapper> { UserMapper() }
-//    single { UserAddressMapper(streetMapper = get()) } bind IUserAddressMapper::class
-//    single { StreetMapper() } bind IStreetMapper::class
-//    single { CityMapper() } bind ICityMapper::class
-//    single { OrderMapper(orderProductMapper = get()) } bind IOrderMapper::class
-//    single { OrderProductMapper() } bind IOrderProductMapper::class
-//    single<ICategoryMapper> { CategoryMapper() }
-//}
+fun mapperModule() = module {
+    single<ICafeMapper> { CafeMapper() }
+    single<IMenuProductMapper> {
+        MenuProductMapper(
+            categoryMapper = get(),
+        )
+    }
+    single<ICartProductMapper> { CartProductMapper(menuProductMapper = get()) }
+    single<IProfileMapper> {
+        ProfileMapper(
+            userAddressMapper = get(),
+            orderMapper = get(),
+            userMapper = get(),
+        )
+    }
+    single<IUserMapper> { UserMapper() }
+    single<IUserAddressMapper> { UserAddressMapper(streetMapper = get()) }
+    single<IStreetMapper> { StreetMapper() }
+    single<ICityMapper> { CityMapper() }
+    single<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
+    single<IOrderProductMapper> { OrderProductMapper() }
+    single<ICategoryMapper> { CategoryMapper() }
+}

@@ -4,7 +4,6 @@ import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.mapper.order.OrderUIMapper
 import dagger.Binds
 import dagger.Module
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
 @Module
@@ -15,10 +14,10 @@ interface UIMapperModule {
 }
 
 fun uiMapperModule() = module {
-    single {
+    single<IOrderUIMapper> {
         OrderUIMapper(
             stringUtil = get(),
             colorUtil = get(),
         )
-    } bind IOrderUIMapper::class
+    }
 }

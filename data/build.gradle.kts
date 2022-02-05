@@ -57,4 +57,9 @@ dependencies {
     implementation(Ktor.clientLogging)
     implementation(Ktor.clientWebsockets)
     implementation(Ktor.clientOkhttp)
+
+    implementation(Koin.core)
+    implementation(Koin.android)
+    implementation(Koin.test)
+
 }

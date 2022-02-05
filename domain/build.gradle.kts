@@ -48,4 +48,9 @@ dependencies {
     implementation(KotlinxDateTime.dateTime)
 
     implementation(Test.junit)
+
+    implementation(Koin.core)
+    implementation(Koin.android)
+    implementation(Koin.test)
+
 }

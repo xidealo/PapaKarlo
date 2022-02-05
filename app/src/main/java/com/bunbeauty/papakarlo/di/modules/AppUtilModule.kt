@@ -41,8 +41,8 @@ interface AppUtilModule {
 }
 
 fun utilModule() = module {
-    single { ResourcesProvider(androidContext()) } bind IResourcesProvider::class
-    single { TextValidator() } bind ITextValidator::class
+    single<IResourcesProvider> { ResourcesProvider(androidContext()) }
+    single<ITextValidator> { TextValidator() }
 
     single<IPhoneVerificationUtil> { PhoneVerificationUtil() }
     single<INetworkUtil> {

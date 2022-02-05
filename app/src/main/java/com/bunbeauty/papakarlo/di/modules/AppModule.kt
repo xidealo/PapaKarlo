@@ -37,7 +37,6 @@ class AppModule {
 }
 
 fun appModule() = module {
-    single { LinearLayoutManager(androidContext()) }
     single { androidContext().resources }
     single { androidContext().imageLoader }
     single { ImageRequest.Builder(androidContext()) }

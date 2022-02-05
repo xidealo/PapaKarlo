@@ -28,6 +28,7 @@ import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.interactor.user.UserInteractor
 import dagger.Binds
 import dagger.Module
+import org.koin.dsl.module
 
 @Module
 interface InteractorModule {
@@ -72,82 +73,90 @@ interface InteractorModule {
     fun bindsProductInteractor(productInteractor: ProductInteractor): IProductInteractor
 }
 
-//fun interactorModule() = module {
-//    single {
-//        MainInteractor(
-//            cityWorkerUtil = get(),
-//            categoryWorkerUtil = get(),
-//            menuProductWorkerUtil = get(),
-//            deliveryWorkerUtil = get(),
-//            userWorkerUtil = get(),
-//            orderRepo = get(),
-//            userInteractor = get(),
-//            dataStoreRepo = get(),
-//        )
-//    } bind IMainInteractor::class
-//    single {
-//        UserInteractor(
-//            userRepo = get(),
-//            userWorkerUtil = get(),
-//            dataStoreRepo = get(),
-//            authRepo = get(),
-//        )
-//    } bind IUserInteractor::class
-//    single {
-//        CityInteractor(
-//            dataStoreRepo = get(),
-//            cityRepo = get(),
-//            cafeWorkerUtil = get(),
-//            streetWorkerUtil = get(),
-//        )
-//    } bind ICityInteractor::class
-//    single {
-//        CartProductInteractor(
-//            cartProductRepo = get(),
-//            dataStoreRepo = get(),
-//            productInteractor = get(),
-//        )
-//    } bind ICartProductInteractor::class
-//    single<ICafeInteractor> {
-//        CafeInteractor(
-//            cafeRepo = get(),
-//            dataStoreRepo = get(),
-//        )
-//    }
-//    single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
-//    single<IOrderInteractor> {
-//        OrderInteractor(
-//            orderRepo = get(),
-//            cartProductRepo = get(),
-//            dataStoreRepo = get(),
-//            productInteractor = get()
-//        )
-//    }
-//    single<IAddressInteractor> {
-//        AddressInteractor(
-//            dataStoreRepo = get(),
-//            streetRepo = get(),
-//            userAddressRepo = get(),
-//            userInteractor = get(),
-//        )
-//    }
-//    single<IStreetInteractor> {
-//        StreetInteractor(
-//            streetRepo = get(),
-//            dataStoreRepo = get(),
-//        )
-//    }
-//    single<ICategoryInteractor> {
-//        CategoryInteractor(
-//            categoryRepo = get()
-//        )
-//    }
-//    single<IMenuProductInteractor> {
-//        MenuProductInteractor(
-//            menuProductRepo = get(),
-//        )
-//    }
-//    single<IDeferredTimeInteractor> {
-//        DeferredTimeInteractor()
-//    }
-//}
+fun interactorModule() = module {
+    single<IMainInteractor> {
+        MainInteractor(
+            cityWorkerUtil = get(),
+            categoryWorkerUtil = get(),
+            menuProductWorkerUtil = get(),
+            deliveryWorkerUtil = get(),
+            userWorkerUtil = get(),
+            orderRepo = get(),
+            userInteractor = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<IUserInteractor> {
+        UserInteractor(
+            userRepo = get(),
+            userWorkerUtil = get(),
+            dataStoreRepo = get(),
+            authRepo = get(),
+        )
+    }
+    single<ICityInteractor> {
+        CityInteractor(
+            dataStoreRepo = get(),
+            cityRepo = get(),
+            cafeWorkerUtil = get(),
+            streetWorkerUtil = get(),
+        )
+    }
+    single<ICartProductInteractor> {
+        CartProductInteractor(
+            cartProductRepo = get(),
+            dataStoreRepo = get(),
+            productInteractor = get(),
+        )
+    }
+    single<ICafeInteractor> {
+        CafeInteractor(
+            cafeRepo = get(),
+            dataStoreRepo = get(),
+            dataTimeUtil = get()
+        )
+    }
+    single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
+    single<IOrderInteractor> {
+        OrderInteractor(
+            orderRepo = get(),
+            cartProductRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<IAddressInteractor> {
+        AddressInteractor(
+            dataStoreRepo = get(),
+            streetRepo = get(),
+            userAddressRepo = get(),
+            userInteractor = get(),
+        )
+    }
+    single<IStreetInteractor> {
+        StreetInteractor(
+            streetRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<ICategoryInteractor> {
+        CategoryInteractor(
+            categoryRepo = get()
+        )
+    }
+    single<IMenuProductInteractor> {
+        MenuProductInteractor(
+            menuProductRepo = get(),
+        )
+    }
+    single<IDeferredTimeInteractor> {
+        DeferredTimeInteractor(
+            dateTimeUtil = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<IProductInteractor> {
+        ProductInteractor(
+            dataStoreRepo = get(),
+        )
+    }
+}

@@ -8,6 +8,7 @@ import com.bunbeauty.data.repository.*
 import com.bunbeauty.domain.repo.*
 import dagger.Binds
 import dagger.Module
+import org.koin.dsl.module
 import javax.inject.Singleton
 
 @Module
@@ -58,87 +59,87 @@ interface RepositoryModule {
     fun bindVersionRepository(versionRepository: VersionRepository): VersionRepo
 }
 
-//fun apiRepositoryModule() = module {
-//    single {
-//        ApiRepository(
-//            client = get(),
-//            json = get()
-//        )
-//    } bind ApiRepo::class
-//    single {
-//        CartProductRepository(
-//            cartProductDao = get(),
-//            cartProductMapper = get(),
-//        )
-//    } bind CartProductRepo::class
-//    single {
-//        OrderRepository(
-//            orderDao = get(),
-//            apiRepo = get(),
-//            orderMapper = get(),
-//        )
-//    } bind OrderRepo::class
-//    single {
-//        MenuProductRepository(
-//            apiRepository = get(),
-//            menuProductDao = get(),
-//            menuProductMapper = get(),
-//        )
-//    } bind MenuProductRepo::class
-//    single {
-//        UserAddressRepository(
-//            apiRepo = get(),
-//            userAddressDao = get(),
-//            userAddressMapper = get(),
-//        )
-//    } bind UserAddressRepo::class
-//    single {
-//        CafeRepository(
-//            apiRepo = get(),
-//            dataStoreRepo = get(),
-//            cafeDao = get(),
-//            cafeMapper = get(),
-//            authRepo = get(),
-//        )
-//    } bind CafeRepo::class
-//    single {
-//        StreetRepository(
-//            apiRepo = get(),
-//            streetDao = get(),
-//            dataStoreRepo = get(),
-//            streetMapper = get(),
-//        )
-//    } bind StreetRepo::class
-//    single {
-//        DeliveryRepository(
-//            apiRepo = get(),
-//            dataStoreRepo = get(),
-//        )
-//    } bind DeliveryRepo::class
-//    single {
-//        UserRepository(
-//            apiRepo = get(),
-//            profileMapper = get(),
-//            userMapper = get(),
-//            userDao = get(),
-//            dataStoreRepo = get(),
-//        )
-//    } bind UserRepo::class
-//    single {
-//        CityRepository(
-//            apiRepo = get(),
-//            cityDao = get(),
-//            cityMapper = get(),
-//        )
-//    } bind CityRepo::class
-//    single<CategoryRepo> {
-//        CategoryRepository(
-//            apiRepository = get(),
-//            categoryMapper = get(),
-//            categoryDao = get()
-//        )
-//    }
-//
-//}
+fun apiRepositoryModule() = module {
+    single<ApiRepo> {
+        ApiRepository(
+            client = get(),
+            json = get()
+        )
+    }
+    single<CartProductRepo> {
+        CartProductRepository(
+            cartProductDao = get(),
+            cartProductMapper = get(),
+        )
+    }
+    single<OrderRepo> {
+        OrderRepository(
+            orderDao = get(),
+            apiRepo = get(),
+            orderMapper = get(),
+        )
+    }
+    single<MenuProductRepo> {
+        MenuProductRepository(
+            apiRepository = get(),
+            menuProductDao = get(),
+            menuProductMapper = get(),
+        )
+    }
+    single<UserAddressRepo> {
+        UserAddressRepository(
+            apiRepo = get(),
+            userAddressDao = get(),
+            userAddressMapper = get(),
+        )
+    }
+    single<CafeRepo> {
+        CafeRepository(
+            apiRepo = get(),
+            dataStoreRepo = get(),
+            cafeDao = get(),
+            cafeMapper = get(),
+            authRepo = get(),
+        )
+    }
+    single<StreetRepo> {
+        StreetRepository(
+            apiRepo = get(),
+            streetDao = get(),
+            dataStoreRepo = get(),
+            streetMapper = get(),
+        )
+    }
+    single<DeliveryRepo> {
+        DeliveryRepository(
+            apiRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<UserRepo> {
+        UserRepository(
+            apiRepo = get(),
+            profileMapper = get(),
+            userMapper = get(),
+            userDao = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    single<CityRepo> {
+        CityRepository(
+            apiRepo = get(),
+            cityDao = get(),
+            cityMapper = get(),
+        )
+    }
+    single<CategoryRepo> {
+        CategoryRepository(
+            apiRepository = get(),
+            categoryMapper = get(),
+            categoryDao = get()
+        )
+    }
+
+}
 
 

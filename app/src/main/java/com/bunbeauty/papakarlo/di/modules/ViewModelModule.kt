@@ -61,7 +61,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(CafeListViewModel::class)
-    internal abstract fun provideContactsViewModel(cafeListViewModel: CafeListViewModel): ViewModel
+    internal abstract fun provideCafeListViewModel(cafeListViewModel: CafeListViewModel): ViewModel
 
     @Binds
     @IntoMap
@@ -150,14 +150,7 @@ abstract class ViewModelModule {
 }
 
 fun viewModelModule() = module {
-    viewModel {
-        LoginViewModel(
-            textValidator = get(),
-            userInteractor = get(),
-            resourcesProvider = get(),
 
-            )
-    }
     viewModel {
         MenuViewModel(
             categoryInteractor = get(),
