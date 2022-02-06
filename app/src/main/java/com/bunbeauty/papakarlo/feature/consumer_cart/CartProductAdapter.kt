@@ -44,16 +44,18 @@ class CartProductAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                elementCartProductBinding.setCountAndCost(item)
+                setCountAndCost(item)
             }
         }
 
-        private fun ElementCartProductBinding.setCountAndCost(item: CartProductItem) {
-            elementCartProductTvOldCost.text = item.oldCost
-            elementCartProductTvNewCost.text = item.newCost
-            elementCartProductCpCount.count = item.count
-            elementCartProductClMain.setOnClickListener {
-                onItemClicked(item)
+        private fun setCountAndCost(item: CartProductItem) {
+            elementCartProductBinding.run {
+                elementCartProductTvOldCost.text = item.oldCost
+                elementCartProductTvNewCost.text = item.newCost
+                elementCartProductCpCount.count = item.count
+                elementCartProductClMain.setOnClickListener {
+                    onItemClicked(item)
+                }
             }
         }
 
