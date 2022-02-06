@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import javax.inject.Inject
 
-class OrderAdapter @Inject constructor() :
+class OrderAdapter @Inject constructor(private val resourcesProvider: IResourcesProvider) :
     BaseListAdapter<OrderItem, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
@@ -26,12 +27,7 @@ class OrderAdapter @Inject constructor() :
             elementOrderBinding.run {
                 elementOrderTvCode.text = item.code
                 elementOrderTvTime.text = item.dateTime
-                elementOrderChipStatus.text = item.statusName
-                elementOrderChipStatus.setChipBackgroundColorResource(item.statusColorResource)
-
-                elementOrderMvcMain.setOnClickListener {
-                    onItemClicked(item)
-                }
+                setStatus(item)
             }
         }
 
@@ -39,13 +35,18 @@ class OrderAdapter @Inject constructor() :
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
-                elementOrderBinding.run {
-                    elementOrderChipStatus.text = item.statusName
-                    elementOrderChipStatus.setChipBackgroundColorResource(item.statusColorResource)
+                setStatus(item)
+            }
+        }
 
-                    elementOrderMvcMain.setOnClickListener {
-                        onItemClicked(item)
-                    }
+        private fun setStatus(item: OrderItem) {
+            elementOrderBinding.run {
+                elementOrderChipStatus.text = item.statusName
+                elementOrderChipStatus.chipBackgroundColor =
+                    resourcesProvider.getColorStateListByAttr(item.statusColorResource)
+
+                elementOrderMvcMain.setOnClickListener {
+                    onItemClicked(item)
                 }
             }
         }

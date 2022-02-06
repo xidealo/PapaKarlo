@@ -80,7 +80,8 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                 if (orderStatusUI != null) {
                     fragmentOrderDetailsPsvStatus.currentStep = orderStatusUI.stepCount
                     fragmentOrderDetailsChipStatus.text = orderStatusUI.name
-                    fragmentOrderDetailsChipStatus.setChipBackgroundColorResource(orderStatusUI.background)
+                    fragmentOrderDetailsChipStatus.chipBackgroundColor =
+                        resourcesProvider.getColorStateListByAttr(orderStatusUI.background)
                 }
             }
             viewModel.oldAmountToPay.startedLaunch { oldAmountToPay ->

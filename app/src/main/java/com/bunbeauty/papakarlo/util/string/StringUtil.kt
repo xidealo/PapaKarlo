@@ -100,7 +100,7 @@ class StringUtil @Inject constructor(
 
     override fun getOrderStatusName(orderStatus: OrderStatus): String {
         return when (orderStatus) {
-            NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
+            NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
             ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
             PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
             SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)

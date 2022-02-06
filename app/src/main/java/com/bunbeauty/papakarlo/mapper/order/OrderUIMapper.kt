@@ -20,7 +20,7 @@ class OrderUIMapper @Inject constructor(
         return OrderItem(
             uuid = order.uuid,
             statusName = stringUtil.getOrderStatusName(order.status),
-            statusColorResource = colorUtil.getOrderStatusColor(order.status),
+            statusColorResource = colorUtil.getOrderStatusColorAttr(order.status),
             code = order.code,
             dateTime = stringUtil.getDateTimeString(order.dateTime)
         )
@@ -55,7 +55,7 @@ class OrderUIMapper @Inject constructor(
         return OrderStatusUI(
             name = stringUtil.getOrderStatusName(orderStatus),
             stepCount = toOrderStepCount(orderStatus),
-            background = colorUtil.getOrderStatusColor(orderStatus)
+            background = colorUtil.getOrderStatusColorAttr(orderStatus)
         )
     }
 

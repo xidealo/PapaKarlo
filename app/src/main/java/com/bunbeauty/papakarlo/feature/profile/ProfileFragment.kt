@@ -65,7 +65,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 if (orderItem != null) {
                     elementOrderTvCode.text = orderItem.code
                     elementOrderChipStatus.text = orderItem.statusName
-                    elementOrderChipStatus.setChipBackgroundColorResource(orderItem.statusColorResource)
+                    elementOrderChipStatus.chipBackgroundColor =
+                        resourcesProvider.getColorStateListByAttr(orderItem.statusColorResource)
                     elementOrderTvTime.text = orderItem.dateTime
                     elementOrderMvcMain.setOnClickListener {
                         viewModel.onLastOrderClicked()

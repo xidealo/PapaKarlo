@@ -12,6 +12,7 @@
 
     <!--COMMON-->
     <string name="msg_comma">,&#160;</string>
+    <string name="part_ruble">&#160;₽</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -131,6 +132,19 @@
     <!-- BOTTOM SHEET ADDRESSES -->
     <string name="title_user_addresses">Ваши адреса</string>
     <string name="title_cafe_addresses">Адреса ресторанов</string>
+
+    <!-- ORDER STATUS-->
+    <string name="msg_status_not_accepted">Обрабатывается</string>
+    <string name="msg_status_accepted">Принят</string>
+    <string name="msg_status_preparing">Готовится</string>
+    <string name="msg_status_sent_out">В пути</string>
+    <string name="msg_status_delivered">Выдан</string>
+    <string name="msg_status_done">Готов</string>
+    <string name="msg_status_canceled">Отменен</string>
+
+    <!-- IS DELIVERY -->
+    <string name="msg_delivery">Доставка</string>
+    <string name="msg_pickup">Самовывоз</string>
 
     <!-- ORDER DETAILS -->
     <string name="msg_order_details_order">Заказ&#160;</string>
