@@ -22,7 +22,23 @@ kotlin {
     }
     
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting  {
+            dependencies {
+                Ktor.run {
+                    implementation(clientSerialization)
+                    implementation(clientLogging)
+                    implementation(clientWebsockets)
+                    implementation(clientOkhttp)
+                }
+
+                implementation(Coroutine.core)
+
+                implementation(Serialization.json)
+                // koin
+                implementation(Koin.core)
+                api(Koin.test)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))

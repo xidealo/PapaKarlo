@@ -3,9 +3,8 @@ package com.bunbeauty.data.mapper.city
 import com.bunbeauty.data.database.entity.CityEntity
 import com.bunbeauty.data.network.model.CityServer
 import com.bunbeauty.domain.model.City
-import javax.inject.Inject
 
-class CityMapper @Inject constructor() : ICityMapper {
+class CityMapper  constructor() : ICityMapper {
 
     override fun toCityEntity(cityServer: CityServer): CityEntity {
         return CityEntity(

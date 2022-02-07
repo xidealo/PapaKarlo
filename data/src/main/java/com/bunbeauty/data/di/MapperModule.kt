@@ -22,46 +22,7 @@ import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.mapper.user.UserMapper
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.mapper.user_address.UserAddressMapper
-import dagger.Binds
-import dagger.Module
 import org.koin.dsl.module
-
-@Module
-interface MapperModule {
-
-    @Binds
-    fun bindMenuProductMapper(menuProductMapper: MenuProductMapper): IMenuProductMapper
-
-    @Binds
-    fun bindCartProductMapper(cartProductMapper: CartProductMapper): ICartProductMapper
-
-    @Binds
-    fun bindCafeMapper(cafeMapper: CafeMapper): ICafeMapper
-
-    @Binds
-    fun bindProfileMapper(profileMapper: ProfileMapper): IProfileMapper
-
-    @Binds
-    fun bindUserMapper(userMapper: UserMapper): IUserMapper
-
-    @Binds
-    fun bindUserAddressMapper(userAddressMapper: UserAddressMapper): IUserAddressMapper
-
-    @Binds
-    fun bindStreetMapper(streetMapper: StreetMapper): IStreetMapper
-
-    @Binds
-    fun bindCityMapper(cityMapper: CityMapper): ICityMapper
-
-    @Binds
-    fun bindOrderMapper(orderMapper: OrderMapper): IOrderMapper
-
-    @Binds
-    fun bindOrderProductMapper(orderProductMapper: OrderProductMapper): IOrderProductMapper
-
-    @Binds
-    fun bindCategoryMapper(categoryMapper: CategoryMapper): ICategoryMapper
-}
 
 fun mapperModule() = module {
     single<ICafeMapper> { CafeMapper() }

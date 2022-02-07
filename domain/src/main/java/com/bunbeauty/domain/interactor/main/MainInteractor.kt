@@ -10,10 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class MainInteractor @Inject constructor(
+class MainInteractor  constructor(
     private val cityWorkerUtil: ICityWorkerUtil,
     private val categoryWorkerUtil: ICategoryWorkerUtil,
     private val menuProductWorkerUtil: IMenuProductWorkerUtil,

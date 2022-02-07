@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class CafeOptionsViewModel @Inject constructor(
+class CafeOptionsViewModel  constructor(
     private val resourcesProvider: IResourcesProvider,
     private val cafeInteractor: ICafeInteractor
 ) : BaseViewModel() {

@@ -10,9 +10,8 @@ import com.bunbeauty.domain.model.datee_time.DateTime
 import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import javax.inject.Inject
 
-class StringUtil @Inject constructor(
+class StringUtil  constructor(
     private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 

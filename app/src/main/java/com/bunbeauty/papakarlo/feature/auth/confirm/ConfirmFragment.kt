@@ -8,26 +8,21 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.extensions.toggleVisibilityInvisibility
 import com.bunbeauty.papakarlo.extensions.underlineText
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.google.firebase.auth.PhoneAuthProvider
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
 
-    @Inject
-    lateinit var phoneVerificationUtil: IPhoneVerificationUtil
+    val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
-    override val viewModel: ConfirmViewModel by viewModels { viewModelFactory }
+    override val viewModel: ConfirmViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentConfirmBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     private val phone: String by argument()
     private var verificationId: String by argument()

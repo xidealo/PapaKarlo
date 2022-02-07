@@ -5,9 +5,8 @@ import com.bunbeauty.data.database.entity.user.UserEntity
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.domain.model.profile.User
-import javax.inject.Inject
 
-class UserMapper @Inject constructor() : IUserMapper {
+class UserMapper  constructor() : IUserMapper {
 
     override fun toEntityModel(profile: ProfileServer): UserEntity {
         return UserEntity(

@@ -9,25 +9,18 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
-    @Inject
-    lateinit var cartProductAdapter: CartProductAdapter
+    val cartProductAdapter: CartProductAdapter by inject()
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
-
-    override val viewModel: ConsumerCartViewModel by viewModels { viewModelFactory }
+    override val viewModel: ConsumerCartViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentConsumerCartBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

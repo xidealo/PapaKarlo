@@ -5,18 +5,16 @@ import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.core.component.inject
 
 /**
  * Base class for each viewModel which has top bar cart or can add product to cart
  */
 open class CartViewModel : BaseViewModel() {
 
-    @Inject
-    lateinit var baseCartProductInteractor: ICartProductInteractor
+    val baseCartProductInteractor: ICartProductInteractor by inject()
 
-    @Inject
-    lateinit var baseResourcesProvider: IResourcesProvider
+    val baseResourcesProvider: IResourcesProvider by inject()
 
     fun addProductToCart(menuProductUuid: String) {
         viewModelScope.launch {

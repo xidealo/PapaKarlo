@@ -16,9 +16,8 @@ import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepository  constructor(
     private val apiRepo: ApiRepo,
     private val profileMapper: IProfileMapper,
     private val userMapper: IUserMapper,

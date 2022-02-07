@@ -2,9 +2,8 @@ package com.bunbeauty.domain.interactor.product
 
 import com.bunbeauty.domain.model.product.ProductPosition
 import com.bunbeauty.domain.repo.DataStoreRepo
-import javax.inject.Inject
 
-class ProductInteractor @Inject constructor(private val dataStoreRepo: DataStoreRepo) :
+class ProductInteractor  constructor(private val dataStoreRepo: DataStoreRepo) :
     IProductInteractor {
 
     override fun getNewTotalCost(productList: List<ProductPosition>): Int {

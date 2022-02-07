@@ -7,9 +7,8 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.select_city.SelectCityFragmentDirections.toMenuFragment
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class SelectCityViewModel @Inject constructor(
+class SelectCityViewModel  constructor(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 

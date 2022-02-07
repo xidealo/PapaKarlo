@@ -9,9 +9,8 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
-class UserAddressListViewModel @Inject constructor(
+class UserAddressListViewModel  constructor(
     private val addressInteractor: IAddressInteractor,
     private val stringUtil: IStringUtil,
 ) : BaseViewModel() {

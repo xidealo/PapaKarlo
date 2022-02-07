@@ -10,9 +10,8 @@ import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementOrderProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import javax.inject.Inject
 
-class OrderProductAdapter @Inject constructor() :
+class OrderProductAdapter  constructor() :
     BaseListAdapter<OrderProductItem, OrderProductAdapter.OrderProductViewHolder>(
         DefaultDiffCallback()
     ) {

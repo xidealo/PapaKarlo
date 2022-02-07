@@ -10,9 +10,8 @@ import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class OrderDetailsViewModel @Inject constructor(
+class OrderDetailsViewModel  constructor(
     private val orderInteractor: IOrderInteractor,
     private val productInteractor: IProductInteractor,
     private val stringUtil: IStringUtil,

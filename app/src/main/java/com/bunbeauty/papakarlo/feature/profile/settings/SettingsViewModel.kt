@@ -18,9 +18,8 @@ import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirectio
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class SettingsViewModel @Inject constructor(
+class SettingsViewModel  constructor(
     private val cityInteractor: ICityInteractor,
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider,

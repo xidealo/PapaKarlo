@@ -8,9 +8,8 @@ import com.bunbeauty.papakarlo.databinding.ElementCartProductBinding
 import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import javax.inject.Inject
 
-class CartProductAdapter @Inject constructor() :
+class CartProductAdapter  constructor() :
     BaseListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(
         CartProductDiffCallback()
     ) {

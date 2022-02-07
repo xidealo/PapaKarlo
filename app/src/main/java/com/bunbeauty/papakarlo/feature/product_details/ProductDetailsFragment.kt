@@ -8,28 +8,25 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
 
-    @Inject
-    lateinit var stringUtil: IStringUtil
 
-    override val viewModel: ProductDetailsViewModel by viewModels { viewModelFactory }
+    val stringUtil: IStringUtil by inject()
+
+    override val viewModel: ProductDetailsViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentProductDetailsBinding::bind)
 
     private val menuProductUuid: String by argument()
     private val photoLink: String by argument()
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

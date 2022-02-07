@@ -5,9 +5,8 @@ import com.bunbeauty.domain.model.datee_time.DateTime
 import com.bunbeauty.domain.model.datee_time.MinuteSecond
 import com.bunbeauty.domain.model.datee_time.Time
 import kotlinx.datetime.*
-import javax.inject.Inject
 
-class DateTimeUtil @Inject constructor() : IDateTimeUtil {
+class DateTimeUtil : IDateTimeUtil {
 
     private val currentMillis: Long
         get() = Clock.System.now().toEpochMilliseconds()

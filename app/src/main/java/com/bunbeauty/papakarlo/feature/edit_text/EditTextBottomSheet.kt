@@ -13,17 +13,13 @@ import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.BottomSheetEditTextBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
 
-    override val viewModel: EmptyViewModel by viewModels { viewModelFactory }
+    override val viewModel: EmptyViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetEditTextBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     private val editTextSettings: EditTextSettings by argument()
 

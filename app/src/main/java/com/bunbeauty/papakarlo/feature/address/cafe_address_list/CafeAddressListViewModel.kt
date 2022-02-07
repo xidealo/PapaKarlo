@@ -7,9 +7,8 @@ import com.bunbeauty.papakarlo.feature.address.AddressItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
-class CafeAddressListViewModel @Inject constructor(
+class CafeAddressListViewModel  constructor(
     private val cafeInteractor: ICafeInteractor,
 ) : BaseViewModel() {
 

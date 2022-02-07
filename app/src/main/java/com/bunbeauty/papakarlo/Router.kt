@@ -15,12 +15,11 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
-import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Singleton
-class Router @Inject constructor() : CoroutineScope {
+class Router  constructor() : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job()

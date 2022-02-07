@@ -5,7 +5,6 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.papakarlo.PapaKarloApplication
-import com.bunbeauty.papakarlo.di.components.AppComponent
 
 abstract class BaseWorker(private val appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
@@ -14,9 +13,6 @@ abstract class BaseWorker(private val appContext: Context, workerParams: WorkerP
         javaClass.simpleName.substring(javaClass.simpleName.lastIndexOf('.') + 1)
 
     override suspend fun doWork(): Result {
-        val appComponent = (appContext as PapaKarloApplication).appComponent
-        inject(appComponent)
-
         return try {
             logD(tag, "Start")
             val result = onWork()
@@ -28,8 +24,6 @@ abstract class BaseWorker(private val appContext: Context, workerParams: WorkerP
             Result.failure()
         }
     }
-
-    abstract fun inject(appComponent: AppComponent)
 
     abstract suspend fun onWork(): Result
 }

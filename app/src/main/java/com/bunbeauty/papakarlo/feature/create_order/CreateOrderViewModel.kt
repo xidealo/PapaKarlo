@@ -20,9 +20,8 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class CreateOrderViewModel @Inject constructor(
+class CreateOrderViewModel  constructor(
     private val addressInteractor: IAddressInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val orderInteractor: IOrderInteractor,

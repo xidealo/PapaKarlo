@@ -10,9 +10,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class DeferredTimeViewModel @Inject constructor(
+class DeferredTimeViewModel  constructor(
     private val resourcesProvider: IResourcesProvider,
     private val deferredTimeInteractor: IDeferredTimeInteractor,
 ) : BaseViewModel() {

@@ -12,35 +12,10 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.papakarlo.util.string.StringUtil
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.bunbeauty.papakarlo.util.text_validator.TextValidator
-import dagger.Binds
-import dagger.Module
 import org.koin.android.ext.koin.androidContext
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
-@Module
-interface AppUtilModule {
-
-    @Binds
-    fun bindResourcesProvider(resourcesProvider: ResourcesProvider): IResourcesProvider
-
-    @Binds
-    fun bindColorUtil(colorUtil: ColorUtil): IColorUtil
-
-    @Binds
-    fun bindStringUtil(stringHelper: StringUtil): IStringUtil
-
-    @Binds
-    fun bindTextValidator(textValidator: TextValidator): ITextValidator
-
-    @Binds
-    fun bindPhoneVerificationUtil(phoneVerificationUtil: PhoneVerificationUtil): IPhoneVerificationUtil
-
-    @Binds
-    fun bindNetworkUtil(networkUtil: NetworkUtil): INetworkUtil
-}
-
-fun utilModule() = module {
+fun appUtilModule() = module {
     single<IResourcesProvider> { ResourcesProvider(androidContext()) }
     single<ITextValidator> { TextValidator() }
 

@@ -2,16 +2,7 @@ package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.papakarlo.mapper.order.OrderUIMapper
-import dagger.Binds
-import dagger.Module
 import org.koin.dsl.module
-
-@Module
-interface UIMapperModule {
-
-    @Binds
-    fun bindOrderUIMapper(orderUIMapper: OrderUIMapper): IOrderUIMapper
-}
 
 fun uiMapperModule() = module {
     single<IOrderUIMapper> {

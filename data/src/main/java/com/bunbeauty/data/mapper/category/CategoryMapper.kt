@@ -3,9 +3,8 @@ package com.bunbeauty.data.mapper.category
 import com.bunbeauty.data.database.entity.CategoryEntity
 import com.bunbeauty.data.network.model.CategoryServer
 import com.bunbeauty.domain.model.category.Category
-import javax.inject.Inject
 
-class CategoryMapper @Inject constructor() : ICategoryMapper {
+class CategoryMapper  constructor() : ICategoryMapper {
 
     override fun toModel(category: CategoryEntity): Category {
         return Category(

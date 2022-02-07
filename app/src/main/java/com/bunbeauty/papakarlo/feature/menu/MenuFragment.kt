@@ -11,34 +11,23 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.decorator.MarginItemHorizontalDecoration
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.scrollToPositionWithOffset
 import com.bunbeauty.papakarlo.feature.main.MainActivity
 import com.bunbeauty.papakarlo.feature.menu.category.CategoryAdapter
 import com.bunbeauty.papakarlo.feature.menu.menu_product.MenuProductAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
-    override val viewModel: MenuViewModel by viewModels { viewModelFactory }
+    override val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentMenuBinding::bind)
 
-    @Inject
-    lateinit var categoryAdapter: CategoryAdapter
-
-    @Inject
-    lateinit var menuProductAdapter: MenuProductAdapter
-
-    @Inject
-    lateinit var marginItemHorizontalDecoration: MarginItemHorizontalDecoration
-
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
+    val categoryAdapter: CategoryAdapter by inject()
+    val menuProductAdapter: MenuProductAdapter by inject()
+    val marginItemHorizontalDecoration: MarginItemHorizontalDecoration by inject()
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()

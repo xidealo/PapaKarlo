@@ -2,10 +2,9 @@ package com.bunbeauty.papakarlo.common.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import javax.inject.Inject
 import javax.inject.Provider
 
-class ViewModelFactory @Inject constructor(
+class ViewModelFactory  constructor(
     private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 

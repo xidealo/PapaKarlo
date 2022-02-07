@@ -6,9 +6,8 @@ import com.bunbeauty.domain.model.datee_time.DateTime
 import com.bunbeauty.domain.model.datee_time.Time
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.IDateTimeUtil
-import javax.inject.Inject
 
-class DeferredTimeInteractor @Inject constructor(
+class DeferredTimeInteractor  constructor(
     private val dateTimeUtil: IDateTimeUtil,
     private val dataStoreRepo: DataStoreRepo
 ) : IDeferredTimeInteractor {

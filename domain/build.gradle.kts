@@ -37,12 +37,6 @@ dependencies {
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
 
-    implementation(Dagger.dagger)
-    annotationProcessor(Dagger.compiler)
-    implementation(Dagger.android)
-    kapt(Dagger.compiler)
-    kapt(Dagger.androidProcessor)
-
     implementation(Coroutine.core)
 
     implementation(KotlinxDateTime.dateTime)

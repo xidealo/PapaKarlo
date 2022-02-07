@@ -7,9 +7,8 @@ import android.net.NetworkRequest
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import javax.inject.Inject
 
-class NetworkUtil @Inject constructor(private val connectivityManager: ConnectivityManager) :
+class NetworkUtil  constructor(private val connectivityManager: ConnectivityManager) :
     INetworkUtil {
 
     override fun observeIsOnline(): Flow<Boolean> = callbackFlow {

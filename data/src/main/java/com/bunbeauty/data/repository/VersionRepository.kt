@@ -4,9 +4,8 @@ import com.bunbeauty.common.Logger.VERSION_TAG
 import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.repo.VersionRepo
-import javax.inject.Inject
 
-class VersionRepository @Inject constructor(private val apiRepo: ApiRepo) : VersionRepo {
+class VersionRepository  constructor(private val apiRepo: ApiRepo) : VersionRepo {
 
     override suspend fun getForceUpdateVersion(): Int {
         return apiRepo.getForceUpdateVersion()

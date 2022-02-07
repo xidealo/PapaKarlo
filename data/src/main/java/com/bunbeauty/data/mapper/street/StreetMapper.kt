@@ -3,9 +3,8 @@ package com.bunbeauty.data.mapper.street
 import com.bunbeauty.data.database.entity.StreetEntity
 import com.bunbeauty.data.network.model.StreetServer
 import com.bunbeauty.domain.model.Street
-import javax.inject.Inject
 
-class StreetMapper @Inject constructor() : IStreetMapper {
+class StreetMapper : IStreetMapper {
 
     override fun toEntityModel(street: StreetServer): StreetEntity {
         return StreetEntity(

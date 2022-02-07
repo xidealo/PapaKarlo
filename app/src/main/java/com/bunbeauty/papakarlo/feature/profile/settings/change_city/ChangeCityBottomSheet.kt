@@ -8,16 +8,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.databinding.BottomSheetChangeCityBinding
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city) {
 
-    override val viewModel: ChangeCityViewModel by viewModels { viewModelFactory }
+    override val viewModel: ChangeCityViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetChangeCityBinding::bind)
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -18,9 +18,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class CreateAddressViewModel @Inject constructor(
+class CreateAddressViewModel  constructor(
     private val resourcesProvider: IResourcesProvider,
     private val textValidator: ITextValidator,
     private val streetInteractor: IStreetInteractor,

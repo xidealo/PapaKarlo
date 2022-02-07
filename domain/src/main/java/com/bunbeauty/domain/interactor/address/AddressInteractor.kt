@@ -11,9 +11,8 @@ import com.bunbeauty.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class AddressInteractor @Inject constructor(
+class AddressInteractor constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val streetRepo: StreetRepo,
     private val userAddressRepo: UserAddressRepo,

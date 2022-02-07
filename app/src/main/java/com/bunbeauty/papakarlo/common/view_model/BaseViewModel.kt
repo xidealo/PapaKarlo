@@ -8,12 +8,15 @@ import com.bunbeauty.papakarlo.common.model.Message
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import okhttp3.Route
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var router: Router
+    //TODO(Move to constructor)
+    val router: Router by inject()
 
     private val mutableMessage: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
     val message: SharedFlow<Message> = mutableMessage.asSharedFlow()

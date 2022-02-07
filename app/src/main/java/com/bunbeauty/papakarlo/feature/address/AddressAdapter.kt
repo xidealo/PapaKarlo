@@ -6,9 +6,8 @@ import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
-import javax.inject.Inject
 
-class AddressAdapter @Inject constructor() :
+class AddressAdapter:
     BaseListAdapter<AddressItem, AddressAdapter.AddressViewHolder>(
         DefaultDiffCallback()
     ) {

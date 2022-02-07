@@ -4,9 +4,8 @@ import com.bunbeauty.data.database.entity.product.CartProductEntity
 import com.bunbeauty.data.database.entity.product.CartProductWithMenuProduct
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.domain.model.product.CartProduct
-import javax.inject.Inject
 
-class CartProductMapper @Inject constructor(
+class CartProductMapper  constructor(
     private val menuProductMapper: IMenuProductMapper
 ) : ICartProductMapper {
 

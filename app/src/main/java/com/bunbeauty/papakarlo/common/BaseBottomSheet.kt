@@ -1,50 +1,31 @@
 package com.bunbeauty.papakarlo.common
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomSheetDialogFragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
+    val resourcesProvider: IResourcesProvider by inject()
 
     abstract val viewModel: BaseViewModel
     abstract val viewBinding: ViewBinding
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val viewModelComponent =
-            (requireActivity().application as PapaKarloApplication).appComponent
-                .getViewModelComponent()
-                .create(this)
-        inject(viewModelComponent)
-    }
 
     override fun getTheme(): Int {
         return R.style.BottomSheetTheme
     }
-
-    abstract fun inject(viewModelComponent: ViewModelComponent)
 
     override fun onCreateView(
         inflater: LayoutInflater,

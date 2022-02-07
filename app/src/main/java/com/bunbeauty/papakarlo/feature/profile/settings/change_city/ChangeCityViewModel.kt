@@ -6,9 +6,8 @@ import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ChangeCityViewModel @Inject constructor(
+class ChangeCityViewModel  constructor(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 

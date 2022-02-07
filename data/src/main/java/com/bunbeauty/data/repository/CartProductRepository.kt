@@ -10,9 +10,8 @@ import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
-import javax.inject.Inject
 
-class CartProductRepository @Inject constructor(
+class CartProductRepository  constructor(
     private val cartProductDao: CartProductDao,
     private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {

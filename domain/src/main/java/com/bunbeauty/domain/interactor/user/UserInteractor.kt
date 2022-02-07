@@ -9,9 +9,8 @@ import com.bunbeauty.domain.worker.IUserWorkerUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class UserInteractor @Inject constructor(
+class UserInteractor  constructor(
     private val userRepo: UserRepo,
     private val userWorkerUtil: IUserWorkerUtil,
     private val dataStoreRepo: DataStoreRepo,

@@ -5,9 +5,8 @@ import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.repo.CategoryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class CategoryInteractor @Inject constructor(
+class CategoryInteractor  constructor(
     private val categoryRepo: CategoryRepo
 ) : ICategoryInteractor {
 

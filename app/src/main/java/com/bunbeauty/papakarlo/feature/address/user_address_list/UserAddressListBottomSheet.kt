@@ -13,26 +13,20 @@ import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.feature.address.AddressAdapter
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_address_list) {
 
-    @Inject
-    lateinit var addressAdapter: AddressAdapter
+    val addressAdapter: AddressAdapter by inject()
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
-    override val viewModel: UserAddressListViewModel by viewModels { viewModelFactory }
+    override val viewModel: UserAddressListViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetUserAddressListBinding::bind)
 
     private val isClickable: Boolean by argument()
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -22,18 +22,17 @@ import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    @Inject
-    lateinit var modelFactory: ViewModelFactory
+    val router: Router by inject()
 
-    @Inject
-    lateinit var router: Router
+    val resourcesProvider: IResourcesProvider by inject()
 
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
+    val viewModel: MainViewModel by viewModel()
 
     private val viewBinding: ActivityMainBinding by viewBinding(
         ActivityMainBinding::bind,
@@ -67,11 +66,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         R.id.profileFragment,
     )
 
-    private var mutableViewModel: MainViewModel? = null
-    private val viewModel: MainViewModel
-        get() = checkNotNull(mutableViewModel)
-
-
     private val appBarConfiguration = AppBarConfiguration(
         topLevelDestinationIds = setOf(
             R.id.cafeListFragment,
@@ -86,13 +80,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         super.onCreate(savedInstanceState)
         viewBinding.root
 
-        (application as PapaKarloApplication).appComponent
-            .getViewModelComponent()
-            .create(this)
-            .inject(this)
-        setContentView(viewBinding.root)
-
-        mutableViewModel = ViewModelProvider(this, modelFactory)[MainViewModel::class.java]
         lifecycle.addObserver(viewModel)
 
         val navController = getNavController()

@@ -10,9 +10,8 @@ import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragmen
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class OrderListViewModel @Inject constructor(
+class OrderListViewModel  constructor(
     private val orderUIMapper: IOrderUIMapper,
     private val orderInteractor: IOrderInteractor,
     private val userInteractor: IUserInteractor,

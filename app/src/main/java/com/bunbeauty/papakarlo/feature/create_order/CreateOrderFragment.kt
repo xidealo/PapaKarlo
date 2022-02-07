@@ -17,17 +17,13 @@ import com.bunbeauty.common.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
-    override val viewModel: CreateOrderViewModel by viewModels { viewModelFactory }
+    override val viewModel: CreateOrderViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

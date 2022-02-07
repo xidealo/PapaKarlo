@@ -6,9 +6,8 @@ import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.DeliveryRepo
-import javax.inject.Inject
 
-class DeliveryRepository @Inject constructor(
+class DeliveryRepository  constructor(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : DeliveryRepo {

@@ -11,9 +11,8 @@ import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.UserCityUuid
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
-class DataStoreRepository @Inject constructor(private val context: Context) : DataStoreRepo {
+class DataStoreRepository constructor(private val context: Context) : DataStoreRepo {
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)

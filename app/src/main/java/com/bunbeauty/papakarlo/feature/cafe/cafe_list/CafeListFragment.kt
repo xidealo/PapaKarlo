@@ -8,25 +8,20 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
 
-    @Inject
-    lateinit var cafeAdapter: CafeAdapter
+    val cafeAdapter: CafeAdapter by inject()
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
     override val viewBinding by viewBinding(FragmentCafeListBinding::bind) { viewBinding: FragmentCafeListBinding ->
         viewBinding.fragmentCafeListRvCafeList.adapter = null
     }
-    override val viewModel: CafeListViewModel by viewModels { viewModelFactory }
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
+    override val viewModel: CafeListViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()

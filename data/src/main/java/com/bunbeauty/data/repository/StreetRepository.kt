@@ -10,9 +10,8 @@ import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class StreetRepository @Inject constructor(
+class StreetRepository  constructor(
     private val apiRepo: ApiRepo,
     private val streetDao: StreetDao,
     private val dataStoreRepo: DataStoreRepo,

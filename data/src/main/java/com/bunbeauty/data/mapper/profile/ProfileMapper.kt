@@ -6,9 +6,8 @@ import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.model.profile.Profile
-import javax.inject.Inject
 
-class ProfileMapper @Inject constructor(
+class ProfileMapper  constructor(
     private val userAddressMapper: IUserAddressMapper,
     private val orderMapper: IOrderMapper,
     private val userMapper: IUserMapper,

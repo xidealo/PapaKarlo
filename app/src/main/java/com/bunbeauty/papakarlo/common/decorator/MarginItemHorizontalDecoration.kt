@@ -5,9 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import javax.inject.Inject
 
-class MarginItemHorizontalDecoration @Inject constructor(
+class MarginItemHorizontalDecoration  constructor(
     private val resourcesProvider: IResourcesProvider
 ) : RecyclerView.ItemDecoration() {
 

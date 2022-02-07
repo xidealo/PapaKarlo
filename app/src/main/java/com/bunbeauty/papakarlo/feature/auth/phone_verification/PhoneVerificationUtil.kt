@@ -25,10 +25,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class PhoneVerificationUtil @Inject constructor() : IPhoneVerificationUtil, CoroutineScope {
+class PhoneVerificationUtil  constructor() : IPhoneVerificationUtil, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job()

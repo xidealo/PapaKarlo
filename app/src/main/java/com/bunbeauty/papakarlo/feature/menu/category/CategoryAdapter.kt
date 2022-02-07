@@ -7,9 +7,8 @@ import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.databinding.ElementCategoryBinding
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import javax.inject.Inject
 
-class CategoryAdapter @Inject constructor(private val resourcesProvider: IResourcesProvider) :
+class CategoryAdapter  constructor(private val resourcesProvider: IResourcesProvider) :
     BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CategoryViewHolder {

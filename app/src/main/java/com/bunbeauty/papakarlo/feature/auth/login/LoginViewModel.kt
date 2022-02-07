@@ -17,9 +17,8 @@ import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(
+class LoginViewModel  constructor(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider

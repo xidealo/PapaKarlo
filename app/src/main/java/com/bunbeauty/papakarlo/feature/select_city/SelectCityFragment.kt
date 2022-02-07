@@ -8,17 +8,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.ElementCityBinding
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
 
-    override val viewModel: SelectCityViewModel by viewModels { viewModelFactory }
+    override val viewModel: SelectCityViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentSelectCityBinding::bind)
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()

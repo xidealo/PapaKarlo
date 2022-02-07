@@ -11,28 +11,24 @@ import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.gone
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
 
-    @Inject
-    lateinit var orderProductAdapter: OrderProductAdapter
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
+    val orderProductAdapter: OrderProductAdapter by inject()
 
-    override val viewModel: OrderDetailsViewModel by viewModels { viewModelFactory }
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
+
+    override val viewModel: OrderDetailsViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentOrderDetailsBinding::bind)
 
     private val orderUuid: String by argument()
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

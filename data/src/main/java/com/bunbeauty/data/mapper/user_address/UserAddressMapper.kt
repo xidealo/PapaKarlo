@@ -6,9 +6,8 @@ import com.bunbeauty.data.network.model.AddressServer
 import com.bunbeauty.data.network.model.UserAddressPostServer
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
-import javax.inject.Inject
 
-class UserAddressMapper @Inject constructor(
+class UserAddressMapper  constructor(
     private val streetMapper: IStreetMapper
 ) : IUserAddressMapper {
 

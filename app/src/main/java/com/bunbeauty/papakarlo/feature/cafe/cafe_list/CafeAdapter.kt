@@ -6,9 +6,8 @@ import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
-import javax.inject.Inject
 
-class CafeAdapter @Inject constructor() :
+class CafeAdapter :
     BaseListAdapter<CafeItem, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {

@@ -13,9 +13,8 @@ import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
 
-class OrderRepository @Inject constructor(
+class OrderRepository  constructor(
     private val orderDao: OrderDao,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,

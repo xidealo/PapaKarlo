@@ -12,9 +12,8 @@ import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class MenuProductRepository @Inject constructor(
+class MenuProductRepository  constructor(
     private val apiRepository: ApiRepo,
     private val menuProductDao: MenuProductDao,
     private val menuProductMapper: IMenuProductMapper

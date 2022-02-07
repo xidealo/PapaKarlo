@@ -14,16 +14,12 @@ import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
+class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address){
 
-    override val viewModel: CreateAddressViewModel by viewModels { viewModelFactory }
+    override val viewModel: CreateAddressViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateAddressBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

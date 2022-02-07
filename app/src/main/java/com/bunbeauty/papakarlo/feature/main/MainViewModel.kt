@@ -10,9 +10,8 @@ import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainViewModel constructor(
     private val cartProductInteractor: ICartProductInteractor,
     private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,

@@ -12,24 +12,18 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeAddressListBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.feature.address.AddressAdapter
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_address_list) {
 
-    @Inject
-    lateinit var addressAdapter: AddressAdapter
+    val addressAdapter: AddressAdapter by inject()
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
-    override val viewModel: CafeAddressListViewModel by viewModels { viewModelFactory }
+    override val viewModel: CafeAddressListViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetCafeAddressListBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

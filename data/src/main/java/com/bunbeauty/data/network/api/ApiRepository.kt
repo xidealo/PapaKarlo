@@ -29,9 +29,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
 
-class ApiRepository @Inject constructor(
+class ApiRepository  constructor(
     private val client: HttpClient,
     private val json: Json
 ) : ApiRepo {

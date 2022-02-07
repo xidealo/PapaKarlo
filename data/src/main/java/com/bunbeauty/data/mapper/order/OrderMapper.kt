@@ -12,9 +12,8 @@ import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.util.IDateTimeUtil
-import javax.inject.Inject
 
-class OrderMapper @Inject constructor(
+class OrderMapper  constructor(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {

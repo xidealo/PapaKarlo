@@ -6,9 +6,8 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
-class StreetInteractor @Inject constructor(
+class StreetInteractor  constructor(
     private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : IStreetInteractor {

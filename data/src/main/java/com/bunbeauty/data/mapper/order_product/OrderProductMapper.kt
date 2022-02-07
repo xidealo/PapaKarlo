@@ -7,9 +7,8 @@ import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.domain.model.product.OrderMenuProduct
 import com.bunbeauty.domain.model.product.OrderProduct
-import javax.inject.Inject
 
-class OrderProductMapper @Inject constructor() : IOrderProductMapper {
+class OrderProductMapper  constructor() : IOrderProductMapper {
 
     override fun toEntityModel(orderProduct: OrderProductServer): OrderProductEntity {
         return OrderProductEntity(

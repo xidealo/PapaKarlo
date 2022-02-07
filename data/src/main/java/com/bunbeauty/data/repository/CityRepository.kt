@@ -10,9 +10,8 @@ import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class CityRepository @Inject constructor(
+class CityRepository  constructor(
     private val apiRepo: ApiRepo,
     private val cityDao: CityDao,
     private val cityMapper: ICityMapper,

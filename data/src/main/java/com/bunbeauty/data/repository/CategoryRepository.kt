@@ -9,9 +9,8 @@ import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.repo.CategoryRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class CategoryRepository @Inject constructor(
+class CategoryRepository  constructor(
     private val apiRepository: ApiRepo,
     private val categoryMapper: ICategoryMapper,
     private val categoryDao: CategoryDao

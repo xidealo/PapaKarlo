@@ -11,17 +11,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
-    override val viewModel: SettingsViewModel by viewModels { viewModelFactory }
+    override val viewModel: SettingsViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentSettingsBinding::bind)
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

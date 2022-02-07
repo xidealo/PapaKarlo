@@ -6,13 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.transformWhile
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlin.reflect.KClass
 
-abstract class BaseWorkerUtil {
-
-    @Inject
-    lateinit var workManager: WorkManager
+abstract class BaseWorkerUtil(private val workManager: WorkManager) {
 
     protected fun KClass<out ListenableWorker>.start(workDataOf: Data = workDataOf()) {
         workManager.enqueueUniqueWork(

@@ -3,9 +3,8 @@ package com.bunbeauty.papakarlo.util.color
 import com.bunbeauty.domain.R
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
-import javax.inject.Inject
 
-class ColorUtil @Inject constructor() : IColorUtil {
+class ColorUtil  constructor() : IColorUtil {
 
     override fun getOrderStatusColor(status: OrderStatus): Int {
         return when (status) {

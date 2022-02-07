@@ -8,42 +8,14 @@ import com.bunbeauty.papakarlo.worker.delivery.DeliveryWorkerUtil
 import com.bunbeauty.papakarlo.worker.menu_product.MenuProductWorkerUtil
 import com.bunbeauty.papakarlo.worker.street.StreetWorkerUtil
 import com.bunbeauty.papakarlo.worker.user.UserWorkerUtil
-import dagger.Binds
-import dagger.Module
-import org.koin.dsl.bind
 import org.koin.dsl.module
 
-@Module
-interface WorkerModule {
-
-    @Binds
-    fun bindsCafeWorkerUtil(cafeWorkerUtil: CafeWorkerUtil): ICafeWorkerUtil
-
-    @Binds
-    fun bindsStreetWorkerUtil(streetWorkerUtil: StreetWorkerUtil): IStreetWorkerUtil
-
-    @Binds
-    fun bindsCityWorkerUtil(cityWorkerUtil: CityWorkerUtil): ICityWorkerUtil
-
-    @Binds
-    fun bindsDeliveryWorkerUtil(deliveryWorkerUtil: DeliveryWorkerUtil): IDeliveryWorkerUtil
-
-    @Binds
-    fun bindsMenuProductWorkerUtil(menuProductWorkerUtil: MenuProductWorkerUtil): IMenuProductWorkerUtil
-
-    @Binds
-    fun bindsUserWorkerUtil(userWorkerUtil: UserWorkerUtil): IUserWorkerUtil
-
-    @Binds
-    fun bindsCategoryWorkerUtil(categoryWorkerUtil: CategoryWorkerUtil): ICategoryWorkerUtil
-}
-
 fun workerModule() = module {
-    single<ICafeWorkerUtil> { CafeWorkerUtil() }
-    single<IStreetWorkerUtil> { StreetWorkerUtil() }
-    single<ICityWorkerUtil> { CityWorkerUtil() }
-    single<IDeliveryWorkerUtil> { DeliveryWorkerUtil() }
-    single<IMenuProductWorkerUtil> { MenuProductWorkerUtil() }
-    single<IUserWorkerUtil> { UserWorkerUtil() }
-    single<ICategoryWorkerUtil> { CategoryWorkerUtil() }
+    single<ICafeWorkerUtil> { CafeWorkerUtil(workManager = get()) }
+    single<IStreetWorkerUtil> { StreetWorkerUtil(workManager = get()) }
+    single<ICityWorkerUtil> { CityWorkerUtil(workManager = get()) }
+    single<IDeliveryWorkerUtil> { DeliveryWorkerUtil(workManager = get()) }
+    single<IMenuProductWorkerUtil> { MenuProductWorkerUtil(workManager = get()) }
+    single<IUserWorkerUtil> { UserWorkerUtil(workManager = get()) }
+    single<ICategoryWorkerUtil> { CategoryWorkerUtil(workManager = get()) }
 }

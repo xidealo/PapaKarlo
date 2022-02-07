@@ -12,9 +12,8 @@ import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import com.bunbeauty.papakarlo.feature.menu.MenuItem
-import javax.inject.Inject
 
-class MenuProductAdapter @Inject constructor() :
+class MenuProductAdapter:
     BaseListAdapter<MenuItem, MenuProductAdapter.MenuProductViewHolder>(DefaultDiffCallback()) {
 
     private var btnItemClickListener: ((MenuItem.MenuProductItem) -> Unit)? = null

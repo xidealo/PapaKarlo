@@ -43,12 +43,6 @@ dependencies {
 
     implementation(DataStore.dataStorePreferences)
 
-    implementation(Dagger.dagger)
-    annotationProcessor(Dagger.compiler)
-    implementation(Dagger.android)
-    kapt(Dagger.compiler)
-    kapt(Dagger.androidProcessor)
-
     implementation(platform(Firebase.bom))
     implementation(Firebase.authKtx)
 

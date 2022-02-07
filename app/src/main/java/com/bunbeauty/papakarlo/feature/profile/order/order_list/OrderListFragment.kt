@@ -9,24 +9,19 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.decorator.MarginItemVerticalDecoration
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
 
-    @Inject
-    lateinit var orderAdapter: OrderAdapter
 
-    @Inject
-    lateinit var marginItemVerticalDecoration: MarginItemVerticalDecoration
+    val orderAdapter: OrderAdapter by inject()
+    val marginItemVerticalDecoration: MarginItemVerticalDecoration by inject()
 
-    override val viewModel: OrderListViewModel by viewModels { viewModelFactory }
+    override val viewModel: OrderListViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentOrderListBinding::bind)
 
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -4,9 +4,8 @@ import com.bunbeauty.data.database.entity.cafe.CafeEntity
 import com.bunbeauty.data.network.model.CafeServer
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
-import javax.inject.Inject
 
-class CafeMapper @Inject constructor() : ICafeMapper {
+class CafeMapper  constructor() : ICafeMapper {
 
     override fun toEntityModel(cafe: CafeServer): CafeEntity {
         return CafeEntity(

@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":data"))
+    implementation(project(":shared"))
 
     implementation(Google.material)
     implementation(AndroidX.appCompat)
@@ -91,12 +92,6 @@ dependencies {
     implementation(Lifecycle.livedate)
 
     implementation(ViewBindingDelegate.viewBindingDelegate)
-
-    implementation(Dagger.dagger)
-    annotationProcessor(Dagger.compiler)
-    implementation(Dagger.android)
-    kapt(Dagger.compiler)
-    kapt(Dagger.androidProcessor)
 
     implementation(Koin.core)
     implementation(Koin.android)

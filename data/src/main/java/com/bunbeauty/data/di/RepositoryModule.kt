@@ -6,64 +6,19 @@ import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.api.ApiRepository
 import com.bunbeauty.data.repository.*
 import com.bunbeauty.domain.repo.*
-import dagger.Binds
-import dagger.Module
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
-import javax.inject.Singleton
 
-@Module
-interface RepositoryModule {
-
-    @Singleton
-    @Binds
-    fun bindDataStoreRepository(dataStoreRepository: DataStoreRepository): DataStoreRepo
-
-    @Binds
-    fun bindApiRepository(apiRepository: ApiRepository): ApiRepo
-
-    @Binds
-    fun bindAuthRepository(authRepository: AuthRepository): AuthRepo
-
-    @Binds
-    fun bindCartProductRepository(cartProductRepository: CartProductRepository): CartProductRepo
-
-    @Binds
-    fun bindOrderRepository(orderRepository: OrderRepository): OrderRepo
-
-    @Binds
-    fun bindMenuProductRepository(menuProductRepository: MenuProductRepository): MenuProductRepo
-
-    @Binds
-    fun bindUserAddressRepository(userAddressRepository: UserAddressRepository): UserAddressRepo
-
-    @Binds
-    fun bindCafeRepository(cafeRepository: CafeRepository): CafeRepo
-
-    @Binds
-    fun bindStreetRepository(streetRepository: StreetRepository): StreetRepo
-
-    @Binds
-    fun bindDeliveryRepository(deliveryRepository: DeliveryRepository): DeliveryRepo
-
-    @Binds
-    fun bindUserRepository(userRepository: UserRepository): UserRepo
-
-    @Binds
-    fun bindCityRepository(cityRepository: CityRepository): CityRepo
-
-    @Binds
-    fun bindCategoryRepository(categoryRepository: CategoryRepository): CategoryRepo
-
-    @Singleton
-    @Binds
-    fun bindVersionRepository(versionRepository: VersionRepository): VersionRepo
-}
-
-fun apiRepositoryModule() = module {
+fun repositoryModule() = module {
     single<ApiRepo> {
         ApiRepository(
             client = get(),
             json = get()
+        )
+    }
+    single<DataStoreRepo> {
+        DataStoreRepository(
+            context = androidContext()
         )
     }
     single<CartProductRepo> {
@@ -137,6 +92,18 @@ fun apiRepositoryModule() = module {
             apiRepository = get(),
             categoryMapper = get(),
             categoryDao = get()
+        )
+    }
+
+    single<AuthRepo> {
+        AuthRepository(
+            firebaseAuth = get(),
+        )
+    }
+
+    single<VersionRepo> {
+        VersionRepository(
+            apiRepo = get(),
         )
     }
 

@@ -10,9 +10,8 @@ import com.bunbeauty.papakarlo.feature.menu.category.CategoryItem
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class MenuViewModel @Inject constructor(
+class MenuViewModel  constructor(
     private val categoryInteractor: ICategoryInteractor,
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,

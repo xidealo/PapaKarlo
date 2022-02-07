@@ -7,9 +7,8 @@ import com.bunbeauty.domain.worker.ICafeWorkerUtil
 import com.bunbeauty.domain.worker.IStreetWorkerUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
-class CityInteractor @Inject constructor(
+class CityInteractor  constructor(
     private val dataStoreRepo: DataStoreRepo,
     private val cityRepo: CityRepo,
     private val cafeWorkerUtil: ICafeWorkerUtil,

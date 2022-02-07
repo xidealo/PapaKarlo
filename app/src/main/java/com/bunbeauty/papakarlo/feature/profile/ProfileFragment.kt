@@ -8,18 +8,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
-    override val viewModel: ProfileViewModel by viewModels { viewModelFactory }
+    override val viewModel: ProfileViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentProfileBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()

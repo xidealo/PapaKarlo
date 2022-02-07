@@ -14,18 +14,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_options) {
 
-    override val viewModel: CafeOptionsViewModel by viewModels { viewModelFactory }
+    override val viewModel: CafeOptionsViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetCafeOptionsBinding::bind)
 
     private val cafeUuid: String by argument()
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

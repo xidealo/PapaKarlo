@@ -12,9 +12,8 @@ import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class UserAddressRepository @Inject constructor(
+class UserAddressRepository  constructor(
     private val apiRepo: ApiRepo,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper

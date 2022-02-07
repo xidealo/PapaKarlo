@@ -9,9 +9,8 @@ import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import com.bunbeauty.papakarlo.util.color.IColorUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import javax.inject.Inject
 
-class OrderUIMapper @Inject constructor(
+class OrderUIMapper  constructor(
     private val stringUtil: IStringUtil,
     private val colorUtil: IColorUtil,
 ) : IOrderUIMapper {

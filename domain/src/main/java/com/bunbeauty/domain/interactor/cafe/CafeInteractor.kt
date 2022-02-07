@@ -14,9 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class CafeInteractor @Inject constructor(
+class CafeInteractor constructor(
     private val cafeRepo: CafeRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val dataTimeUtil: IDateTimeUtil

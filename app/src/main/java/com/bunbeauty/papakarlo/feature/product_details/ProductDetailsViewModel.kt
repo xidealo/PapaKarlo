@@ -7,9 +7,8 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
-class ProductDetailsViewModel @Inject constructor(
+class ProductDetailsViewModel constructor(
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil
 ) : CartViewModel() {

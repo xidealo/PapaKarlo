@@ -11,9 +11,8 @@ import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class OrderInteractor @Inject constructor(
+class OrderInteractor  constructor(
     private val orderRepo: OrderRepo,
     private val cartProductRepo: CartProductRepo,
     private val dataStoreRepo: DataStoreRepo

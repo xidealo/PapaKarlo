@@ -17,9 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ConfirmViewModel @Inject constructor(
+class ConfirmViewModel  constructor(
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {

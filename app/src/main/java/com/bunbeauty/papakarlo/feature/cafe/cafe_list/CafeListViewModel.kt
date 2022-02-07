@@ -9,9 +9,8 @@ import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
-class CafeListViewModel @Inject constructor(
+class CafeListViewModel  constructor(
     private val cafeInteractor: ICafeInteractor,
     private val resourcesProvider: IResourcesProvider,
     private val stringUtil: IStringUtil

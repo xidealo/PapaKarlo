@@ -16,9 +16,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class ConsumerCartViewModel @Inject constructor(
+class ConsumerCartViewModel  constructor(
     private val resourcesProvider: IResourcesProvider,
     private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,

@@ -9,16 +9,12 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.BottomSheetAboutAppBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
 
-    override val viewModel: EmptyViewModel by viewModels { viewModelFactory }
+    override val viewModel: EmptyViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetAboutAppBinding::bind)
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

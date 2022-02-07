@@ -11,9 +11,8 @@ import com.bunbeauty.papakarlo.feature.profile.ProfileFragmentDirections.*
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
-import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(
+class ProfileViewModel  constructor(
     private val userInteractor: IUserInteractor,
     private val orderUIMapper: IOrderUIMapper,
 ) : CartViewModel() {

@@ -13,12 +13,12 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.databinding.BottomSheetDeferredTimeBinding
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_time) {
 
-    override val viewModel: DeferredTimeViewModel by viewModels { viewModelFactory }
+    override val viewModel: DeferredTimeViewModel by viewModel()
     override val viewBinding by viewBinding(BottomSheetDeferredTimeBinding::bind)
 
     private val selectedHour: Int by argument()
@@ -27,10 +27,6 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
 
     private val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, minute, _ ->
         viewModel.onTimeSelected(hour, minute)
-    }
-
-    override fun inject(viewModelComponent: ViewModelComponent) {
-        viewModelComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

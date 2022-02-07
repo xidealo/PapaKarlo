@@ -5,19 +5,14 @@ import androidx.work.WorkerParameters
 import com.bunbeauty.common.Constants.SELECTED_CITY_UUID
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.repo.StreetRepo
-import com.bunbeauty.papakarlo.di.components.AppComponent
 import com.bunbeauty.papakarlo.worker.BaseWorker
-import javax.inject.Inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class RefreshStreetWorker(appContext: Context, workerParams: WorkerParameters) :
-    BaseWorker(appContext, workerParams) {
+    BaseWorker(appContext, workerParams), KoinComponent {
 
-    @Inject
-    lateinit var streetRepo: StreetRepo
-
-    override fun inject(appComponent: AppComponent) {
-        appComponent.inject(this)
-    }
+    val streetRepo: StreetRepo by inject()
 
     override suspend fun onWork(): Result {
         val selectedCityUuid = inputData.getString(SELECTED_CITY_UUID)

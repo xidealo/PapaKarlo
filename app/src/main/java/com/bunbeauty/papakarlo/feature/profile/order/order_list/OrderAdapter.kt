@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
-import javax.inject.Inject
 
-class OrderAdapter @Inject constructor() :
+class OrderAdapter :
     BaseListAdapter<OrderItem, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {

@@ -26,52 +26,7 @@ import com.bunbeauty.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.interactor.user.UserInteractor
-import dagger.Binds
-import dagger.Module
 import org.koin.dsl.module
-
-@Module
-interface InteractorModule {
-
-    @Binds
-    fun bindsMainInteractor(mainInteractor: MainInteractor): IMainInteractor
-
-    @Binds
-    fun bindsUserInteractor(userInteractor: UserInteractor): IUserInteractor
-
-    @Binds
-    fun bindsCityInteractor(cityInteractor: CityInteractor): ICityInteractor
-
-    @Binds
-    fun bindsCartProductInteractor(cartProductInteractor: CartProductInteractor): ICartProductInteractor
-
-    @Binds
-    fun bindsCafeInteractor(cafeInteractor: CafeInteractor): ICafeInteractor
-
-    @Binds
-    fun bindsUpdateInteractor(updateInteractor: UpdateInteractor): IUpdateInteractor
-
-    @Binds
-    fun bindsOrderInteractor(orderInteractor: OrderInteractor): IOrderInteractor
-
-    @Binds
-    fun bindsStreetInteractor(streetInteractor: StreetInteractor): IStreetInteractor
-
-    @Binds
-    fun bindsAddressInteractor(addressInteractor: AddressInteractor): IAddressInteractor
-
-    @Binds
-    fun bindsCategoryInteractor(categoryInteractor: CategoryInteractor): ICategoryInteractor
-
-    @Binds
-    fun bindsMenuProductInteractor(menuProductInteractor: MenuProductInteractor): IMenuProductInteractor
-
-    @Binds
-    fun bindsDeferredTimeInteractor(deferredTimeInteractor: DeferredTimeInteractor): IDeferredTimeInteractor
-
-    @Binds
-    fun bindsProductInteractor(productInteractor: ProductInteractor): IProductInteractor
-}
 
 fun interactorModule() = module {
     single<IMainInteractor> {
@@ -116,7 +71,9 @@ fun interactorModule() = module {
             dataTimeUtil = get()
         )
     }
-    single<IUpdateInteractor> { UpdateInteractor(versionRepo = get()) }
+    single<IUpdateInteractor> {
+        UpdateInteractor(versionRepo = get())
+    }
     single<IOrderInteractor> {
         OrderInteractor(
             orderRepo = get(),

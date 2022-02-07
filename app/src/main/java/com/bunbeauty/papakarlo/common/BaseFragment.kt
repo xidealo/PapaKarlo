@@ -13,43 +13,26 @@ import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.di.components.ViewModelComponent
 import com.bunbeauty.papakarlo.extensions.clearErrorFocus
 import com.bunbeauty.papakarlo.extensions.setErrorFocus
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
-
     abstract val viewBinding: ViewBinding
     abstract val viewModel: BaseViewModel
+    val resourcesProvider: IResourcesProvider by inject()
 
     protected val textInputMap = HashMap<String, TextInputLayout>()
 
     var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        val viewModelComponent =
-            (requireActivity().application as PapaKarloApplication).appComponent
-                .getViewModelComponent()
-                .create(this)
-        inject(viewModelComponent)
-    }
-
-    abstract fun inject(viewModelComponent: ViewModelComponent)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

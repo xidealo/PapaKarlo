@@ -15,9 +15,8 @@ import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
-class CafeRepository @Inject constructor(
+class CafeRepository  constructor(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: CafeDao,

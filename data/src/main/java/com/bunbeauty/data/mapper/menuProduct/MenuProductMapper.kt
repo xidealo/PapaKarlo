@@ -5,9 +5,8 @@ import com.bunbeauty.data.database.entity.product_with_category.MenuProductWithC
 import com.bunbeauty.data.mapper.category.ICategoryMapper
 import com.bunbeauty.data.network.model.MenuProductServer
 import com.bunbeauty.domain.model.product.MenuProduct
-import javax.inject.Inject
 
-class MenuProductMapper @Inject constructor(private val categoryMapper: ICategoryMapper) :
+class MenuProductMapper constructor(private val categoryMapper: ICategoryMapper) :
     IMenuProductMapper {
 
     override fun toEntityModel(menuProduct: MenuProductServer): MenuProductWithCategory {
