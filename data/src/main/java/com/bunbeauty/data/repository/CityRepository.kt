@@ -1,9 +1,7 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.common.Logger
 import com.bunbeauty.common.Logger.CITY_TAG
 import com.bunbeauty.data.dao.city.ICityDao
-import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.handleListResultAndReturn
 import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.network.api.ApiRepo
@@ -34,15 +32,6 @@ class CityRepository(
                 }
             }
         )
-    }
-
-    override suspend fun refreshCityList() {
-        apiRepo.getCityList().handleListResult(CITY_TAG) { cityList ->
-            if (cityList != null) {
-                val cityEntityList = cityList.map(cityMapper::toCityEntity)
-                cityDao.insertCityList(cityEntityList)
-            }
-        }
     }
 
     override fun observeCityList(): Flow<List<City>> {

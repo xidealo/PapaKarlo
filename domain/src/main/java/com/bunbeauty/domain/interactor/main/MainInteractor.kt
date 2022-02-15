@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlin.coroutines.CoroutineContext
 
 class MainInteractor(
-    private val cityWorkerUtil: ICityWorkerUtil,
     private val deliveryWorkerUtil: IDeliveryWorkerUtil,
     private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
@@ -24,7 +23,6 @@ class MainInteractor(
         get() = Job()
 
     override suspend fun refreshData() {
-        //cityWorkerUtil.refreshCityList()
         deliveryWorkerUtil.refreshDelivery()
     }
 
