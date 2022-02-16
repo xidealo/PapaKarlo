@@ -13,7 +13,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.annotation.ExperimentalCoilApi
 import coil.load
+import coil.size.ViewSizeResolver
 import com.bunbeauty.papakarlo.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -112,9 +114,12 @@ fun RecyclerView.scrollToPositionWithOffset(position: Int, offset: Int) {
     (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, offset)
 }
 
+@ExperimentalCoilApi
 fun ImageView.setPhoto(photoLink: String) {
     load(photoLink) {
         crossfade(true)
         placeholder(R.drawable.placeholder)
+        error(R.drawable.placeholder)
+        size(ViewSizeResolver(this@setPhoto))
     }
 }

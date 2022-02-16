@@ -23,6 +23,7 @@ object Versions {
     const val material = "1.4.0"
     const val appCompact = "1.4.1"
     const val coil = "1.4.0"
+    const val glide = "4.13.0"
     const val timePicker = "4.2.3"
 
     const val dataStorePreferences = "1.0.0"
@@ -157,6 +158,11 @@ object Ktor {
 
 object Coil {
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+}
+
+object Glide {
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
 object TimePicker {
