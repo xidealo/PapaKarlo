@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/fragment_cafe_list.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.5369791666666667" />
-        <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.5369791666666667" />
+        <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.5369791666666667" />
