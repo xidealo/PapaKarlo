@@ -13,6 +13,7 @@
     <!--COMMON-->
     <string name="msg_comma">,&#160;</string>
     <string name="part_ruble">&#160;₽</string>
+    <string name="description_ic_next">Переход</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -173,12 +174,20 @@
     <string name="action_profile_bonuses">Бонусы</string>
     <string name="action_profile_create_address">Добавить адрес</string>
     <string name="action_profile_your_addresses">Ваши адерса</string>
-    <string name="action_profile_orders">История заказов</string>
+    <string name="action_profile_order_history">История заказов</string>
     <string name="action_profile_payment">Оплата</string>
     <string name="action_profile_feedback">Отзывы</string>
     <string name="action_profile_about_app">О приложении</string>
-    <string name="title_profile_no_profile">В профиле будут отбражаться адреса для доставки и история ваших заказов</string>
+    <string name="msg_profile_no_profile">В профиле будут отбражаться адреса для доставки и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
+    <string name="description_ic_settings">Настройки</string>
+    <string name="description_ic_create_address">Добавить адрес</string>
+    <string name="description_ic_your_addresses">Ваши адерса</string>
+    <string name="description_ic_order_history">История заказов</string>
+    <string name="description_ic_payment">Оплата</string>
+    <string name="description_ic_feedback">Отзывы</string>
+    <string name="description_ic_about">О приложении</string>
+    <string name="description_empty_profile">Пустой профиль</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>

@@ -3,6 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/compose-model-1645190562212.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1645191486567.xml" value="0.6185185185185185" />
+        <entry key="../../../../layout/compose-model-1645197315720.xml" value="0.6185185185185185" />
+        <entry key="../../../../layout/compose-model-1645359017166.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1645361549444.xml" value="0.4583333333333333" />
+        <entry key="../../../../layout/compose-model-1645361768341.xml" value="0.6157407407407407" />
+        <entry key="../../../../layout/compose-model-1645362427494.xml" value="0.45220282626766417" />
+        <entry key="../../../../layout/compose-model-1645364856783.xml" value="0.6157407407407407" />
+        <entry key="../../../../layout/compose-model-1645366001463.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1645371542248.xml" value="0.6157407407407407" />
+        <entry key="../../../../layout/compose-model-1645373369489.xml" value="0.6157407407407407" />
+        <entry key="../../../../layout/compose-model-1645373836480.xml" value="0.33" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_clear.xml" value="0.33541666666666664" />
@@ -13,6 +25,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_edit_text.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_address_list.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.32864583333333336" />
+        <entry key="app/src/main/res/layout/element_order.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_cafe_list.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
@@ -20,6 +33,7 @@
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.5369791666666667" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
       </map>
     </option>
   </component>

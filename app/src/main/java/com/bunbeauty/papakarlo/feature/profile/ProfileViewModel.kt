@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
@@ -18,43 +17,32 @@ class ProfileViewModel @Inject constructor(
     private val orderUIMapper: IOrderUIMapper,
 ) : CartViewModel() {
 
-    private var userUuid: String? = null
-    private val mutableProfileState: MutableStateFlow<State<Profile>> =
+    private val mutableProfileUIState: MutableStateFlow<State<ProfileUI>> =
         MutableStateFlow(State.Loading())
-    val profileState: StateFlow<State<Profile>> = mutableProfileState.asStateFlow()
-
-    private val mutableLastOrder: MutableStateFlow<OrderItem?> = MutableStateFlow(null)
-    val lastOrder: StateFlow<OrderItem?> = mutableLastOrder.asStateFlow()
-
-    private val mutableHasAddresses: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val hasAddresses: StateFlow<Boolean> = mutableHasAddresses.asStateFlow()
+    val profileUIState: StateFlow<State<ProfileUI>> = mutableProfileUIState.asStateFlow()
 
     init {
         subscribeOnProfile()
     }
 
-    fun onLastOrderClicked() {
-        mutableLastOrder.value?.let { orderItem ->
-            router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
-        }
+    fun onLastOrderClicked(orderItem: OrderItem) {
+        router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 
     fun onSettingsClicked() {
         router.navigate(toSettingsFragment())
     }
 
-    fun onAddressClicked() {
-        if (mutableHasAddresses.value) {
-            router.navigate(toNavAddress(false))
-        } else {
-            router.navigate(toCreateAddressFragment())
-        }
+    fun onYourAddressesClicked() {
+        router.navigate(toNavAddress(false))
     }
 
-    fun onOrderListClicked() {
-        userUuid?.let { uuid ->
-            router.navigate(toOrdersFragment(uuid))
-        }
+    fun onAddAddressClicked() {
+        router.navigate(toCreateAddressFragment())
+    }
+
+    fun onOrderHistoryClicked(userUuid: String) {
+        router.navigate(toOrdersFragment(userUuid))
     }
 
     fun onPaymentClicked() {
@@ -74,13 +62,16 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun subscribeOnProfile() {
-        userInteractor.observeLightProfile().onEach { lightProfile ->
-            userUuid = lightProfile?.userUuid
-            mutableProfileState.value = lightProfile.toSuccessOrEmpty()
-            mutableLastOrder.value = lightProfile?.lastOrder?.let { lightOrder ->
-                orderUIMapper.toItem(lightOrder)
-            }
-            mutableHasAddresses.value = lightProfile?.hasAddresses ?: false
+        userInteractor.observeLightProfile().onEach { nullableProfile ->
+            mutableProfileUIState.value = nullableProfile?.let { profile ->
+                ProfileUI(
+                    userUuid = profile.userUuid,
+                    hasAddresses = profile.hasAddresses,
+                    lastOrderItem = profile.lastOrder?.let { lightOrder ->
+                        orderUIMapper.toItem(lightOrder)
+                    }
+                )
+            }.toSuccessOrEmpty()
         }.launchIn(viewModelScope)
     }
 }

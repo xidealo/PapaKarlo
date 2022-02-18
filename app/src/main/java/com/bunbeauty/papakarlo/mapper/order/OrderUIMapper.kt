@@ -19,8 +19,9 @@ class OrderUIMapper @Inject constructor(
     override fun toItem(order: LightOrder): OrderItem {
         return OrderItem(
             uuid = order.uuid,
+            status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),
-            statusColorResource = colorUtil.getOrderStatusColorAttr(order.status),
+            statusColorId = colorUtil.getOrderStatusColorAttr(order.status),
             code = order.code,
             dateTime = stringUtil.getDateTimeString(order.dateTime)
         )

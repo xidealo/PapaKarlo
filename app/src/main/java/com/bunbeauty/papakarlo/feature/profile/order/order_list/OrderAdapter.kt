@@ -43,7 +43,7 @@ class OrderAdapter @Inject constructor(private val resourcesProvider: IResources
             elementOrderBinding.run {
                 elementOrderChipStatus.text = item.statusName
                 elementOrderChipStatus.chipBackgroundColor =
-                    resourcesProvider.getColorStateListByAttr(item.statusColorResource)
+                    resourcesProvider.getColorStateListByAttr(item.statusColorId)
 
                 elementOrderMvcMain.setOnClickListener {
                     onItemClicked(item)
