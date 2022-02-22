@@ -18,8 +18,9 @@ class OrderUIMapper  constructor(
     override fun toItem(order: LightOrder): OrderItem {
         return OrderItem(
             uuid = order.uuid,
+            status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),
-            statusColorResource = colorUtil.getOrderStatusColor(order.status),
+            statusColorId = colorUtil.getOrderStatusColorAttr(order.status),
             code = order.code,
             dateTime = stringUtil.getDateTimeString(order.dateTime)
         )
@@ -54,7 +55,7 @@ class OrderUIMapper  constructor(
         return OrderStatusUI(
             name = stringUtil.getOrderStatusName(orderStatus),
             stepCount = toOrderStepCount(orderStatus),
-            background = colorUtil.getOrderStatusColor(orderStatus)
+            background = colorUtil.getOrderStatusColorAttr(orderStatus)
         )
     }
 

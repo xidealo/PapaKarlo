@@ -46,7 +46,6 @@ class OrderMapper  constructor(
                 dateTime = dateTimeUtil.toDateTime(time, timeZone)
             )
         }
-
     }
 
     override fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate {

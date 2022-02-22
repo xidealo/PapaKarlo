@@ -25,6 +25,14 @@
         <item name="colorCloseSoon">@color/yellow</item>
         <item name="colorClosed">@color/light_red</item>
 
+        <item name="colorNotAccepted">@color/purple</item>
+        <item name="colorAccepted">@color/lightBlue</item>
+        <item name="colorPreparing">@color/blue</item>
+        <item name="colorSentOut">@color/lightYellow</item>
+        <item name="colorDone">@color/lightGreen</item>
+        <item name="colorDelivered">@color/mint</item>
+        <item name="colorCanceled">@color/pink</item>
+
         <item name="logo_top">@drawable/logo_top_papa_karlo</item>
         <item name="logo_start">@drawable/logo_start_papa_karlo</item>
         <item name="logo_login">@drawable/logo_login_papa_karlo</item>

@@ -8,6 +8,14 @@
     <attr name="colorCloseSoon" format="reference|color" />
     <attr name="colorClosed" format="reference|color" />
 
+    <attr name="colorNotAccepted" format="reference|color" />
+    <attr name="colorAccepted" format="reference|color" />
+    <attr name="colorPreparing" format="reference|color" />
+    <attr name="colorSentOut" format="reference|color" />
+    <attr name="colorDone" format="reference|color" />
+    <attr name="colorDelivered" format="reference|color" />
+    <attr name="colorCanceled" format="reference|color" />
+
     <attr name="logo_top" format="reference" />
     <attr name="logo_start" format="reference" />
     <attr name="logo_login" format="reference" />

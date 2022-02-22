@@ -62,7 +62,18 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose
+    }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf(
+        "-Xopt-in=io.ktor.util.KtorExperimentalAPI"
+    )
 }
 
 dependencies {
@@ -75,6 +86,13 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.constraintLayout)
+
+    implementation(Lifecycle.activityCompose)
+    implementation(Compose.material)
+    implementation(Compose.animation)
+    implementation(Compose.ui)
+    implementation(Lifecycle.viewmodelCompose)
+    implementation(Compose.materialThemeAdapter)
 
     implementation(Navigation.navigationFragment)
     implementation(Navigation.navigationFragmentKtx)

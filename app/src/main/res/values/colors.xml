@@ -11,4 +11,12 @@
     <color name="light_red">#FF6B60</color>
     <color name="yellow">#E8A700</color>
 
+    <color name="purple">#AC92EC</color>
+    <color name="lightBlue">#4FC1E9</color>
+    <color name="blue">#5D9CEC</color>
+    <color name="lightYellow">#FFCE54</color>
+    <color name="lightGreen">#A0D451</color>
+    <color name="mint">#48CFAD</color>
+    <color name="pink">#EC87C0</color>
+
 </resources>

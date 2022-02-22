@@ -21,9 +21,12 @@ object Versions {
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
+    const val materialComposeThemeAdapter = "1.1.4"
     const val appCompact = "1.4.1"
     const val coil = "1.4.0"
+    const val glide = "4.13.0"
     const val timePicker = "4.2.3"
+    const val compose = "1.1.0"
 
     const val dataStorePreferences = "1.0.0"
 
@@ -32,7 +35,7 @@ object Versions {
     const val accompanistVersion = "0.17.0"
 
     const val extensions = "2.2.0"
-    const val viewmodel = "2.4.0"
+    const val viewmodel = "2.4.1"
     const val activity = "1.4.0"
     const val fragment = "1.4.0"
     const val lifecycle = "2.4.0"
@@ -109,6 +112,26 @@ object Google {
     const val androidMaps = "com.google.maps.android:android-maps-utils:${Versions.googleMapUtils}"
 }
 
+object Compose {
+    const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val animation = "androidx.compose.animation:animation:${Versions.compose}"
+    const val ui = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    const val materialThemeAdapter =
+        "com.google.android.material:compose-theme-adapter:${Versions.materialComposeThemeAdapter}"
+}
+
+object Lifecycle {
+    const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
+    const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
+    const val viewmodelCompose =
+        "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewmodel}"
+    const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
+    const val activityCompose = "androidx.activity:activity-compose:${Versions.activity}"
+    const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
+    const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+}
+
 object Dagger {
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
@@ -157,6 +180,11 @@ object Ktor {
 
 object Coil {
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+}
+
+object Glide {
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
 object TimePicker {
@@ -214,15 +242,6 @@ object SqlDelight {
 
 object Coroutine {
     const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
-}
-
-object Lifecycle {
-    const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
-    const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
-    const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
-    const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-    const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
-    const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 }
 
 object ViewBindingDelegate {
