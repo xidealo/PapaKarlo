@@ -6,7 +6,7 @@ You can download app from [Google Play](https://play.google.com/store/apps/detai
 
 ### Stack
 - Kotlin
-- Dagger2
+- Koin
 - Kotlin Coroutines
 - KTor
 - Android Jetpack
