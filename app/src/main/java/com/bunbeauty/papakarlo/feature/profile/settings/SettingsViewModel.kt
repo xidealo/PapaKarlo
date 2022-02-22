@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SettingsViewModel  constructor(
-    private val cityInteractor: ICityInteractor,
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider,
     private val settingsInteractor: ISettingsInteractor,

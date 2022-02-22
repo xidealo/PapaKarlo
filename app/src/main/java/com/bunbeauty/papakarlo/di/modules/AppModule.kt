@@ -28,7 +28,7 @@ fun appModule() = module {
     single { CategoryAdapter(resourcesProvider = get()) }
     single { MenuProductAdapter() }
     single { CartProductAdapter() }
-    single { OrderAdapter() }
+    single { OrderAdapter(resourcesProvider = get()) }
     single { OrderProductAdapter() }
     single { CafeAdapter() }
     single { AddressAdapter() }

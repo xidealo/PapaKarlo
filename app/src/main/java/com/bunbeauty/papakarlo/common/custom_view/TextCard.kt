@@ -9,20 +9,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import androidx.core.widget.TextViewCompat
-import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.android.material.card.MaterialCardView
-import javax.inject.Inject
 
 class TextCard @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : MaterialCardView(context, attributeSet, defStyleAttr), Customizable {
-
-    @Inject
-    lateinit var resourcesProvider: IResourcesProvider
 
     var hintText = getString(
         context,
@@ -83,10 +77,6 @@ class TextCard @JvmOverloads constructor(
         DEFAULT_PADDING
     )
 
-    init {
-        (context.applicationContext as PapaKarloApplication).appComponent.inject(this)
-    }
-
     private val hintTextViewId = generateViewId()
     private val imageViewId = generateViewId()
     private var hintTextView: TextView = createHintTextView(context, hintText)
@@ -107,7 +97,7 @@ class TextCard @JvmOverloads constructor(
             id = imageViewId
             layoutParams = ConstraintLayout.LayoutParams(
                 WRAP_CONTENT,
-                resourcesProvider.getDimensionPixelOffset(R.dimen.icon_height),
+                WRAP_CONTENT,
             ).apply {
                 topToTop = PARENT_ID
                 bottomToBottom = PARENT_ID

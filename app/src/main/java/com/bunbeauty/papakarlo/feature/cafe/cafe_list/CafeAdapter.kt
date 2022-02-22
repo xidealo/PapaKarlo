@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bunbeauty.papakarlo.common.BaseListAdapter
 import com.bunbeauty.papakarlo.common.BaseViewHolder
+import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 
 class CafeAdapter :

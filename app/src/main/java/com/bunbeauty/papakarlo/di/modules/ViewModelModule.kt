@@ -63,7 +63,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         CafeListViewModel(
-
             cafeInteractor = get(),
             resourcesProvider = get(),
             stringUtil = get(),

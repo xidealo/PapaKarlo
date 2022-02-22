@@ -118,4 +118,10 @@ fun interactorModule() = module {
             dataStoreRepo = get(),
         )
     }
+    single<ISettingsInteractor> {
+        SettingsInteractor(
+            cityInteractor = get(),
+            userInteractor = get(),
+        )
+    }
 }

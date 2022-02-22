@@ -2,8 +2,9 @@ package com.bunbeauty.papakarlo.util.color
 
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
+import com.bunbeauty.papakarlo.R
 
-class ColorUtil  constructor() : IColorUtil {
+class ColorUtil : IColorUtil {
 
     override fun getOrderStatusColorAttr(status: OrderStatus): Int {
         return when (status) {

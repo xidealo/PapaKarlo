@@ -6,9 +6,8 @@ import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.profile.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import javax.inject.Inject
 
-class SettingsInteractor @Inject constructor(
+class SettingsInteractor constructor(
     private val cityInteractor: ICityInteractor,
     private val userInteractor: IUserInteractor,
 ) : ISettingsInteractor {
