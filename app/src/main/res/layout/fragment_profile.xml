@@ -7,9 +7,9 @@
     tools:context=".feature.profile.ProfileFragment">
 
     <androidx.compose.ui.platform.ComposeView
-        android:id="@+id/fragment_profile_cv_cards"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/fragmentProfileCvMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

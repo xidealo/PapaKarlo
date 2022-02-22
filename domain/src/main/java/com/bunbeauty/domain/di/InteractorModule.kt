@@ -20,6 +20,8 @@ import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.order.OrderInteractor
 import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.interactor.product.ProductInteractor
+import com.bunbeauty.domain.interactor.settings.ISettingsInteractor
+import com.bunbeauty.domain.interactor.settings.SettingsInteractor
 import com.bunbeauty.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.domain.interactor.street.StreetInteractor
 import com.bunbeauty.domain.interactor.update.IUpdateInteractor
@@ -70,6 +72,9 @@ interface InteractorModule {
 
     @Binds
     fun bindsProductInteractor(productInteractor: ProductInteractor): IProductInteractor
+
+    @Binds
+    fun bindsSettingsInteractor(settingsInteractor: SettingsInteractor): ISettingsInteractor
 }
 
 //fun interactorModule() = module {

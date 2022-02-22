@@ -3,18 +3,18 @@ package com.bunbeauty.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-inline fun <MS, M> Flow<List<MS>>.mapListFlow(crossinline toModel: suspend ((MS) -> M)): Flow<List<M>> {
-    return map { userAddressList ->
-        userAddressList.map { modelServer ->
-            toModel(modelServer)
+inline fun <IM, OM> Flow<List<IM>>.mapListFlow(crossinline block: suspend ((IM) -> OM)): Flow<List<OM>> {
+    return map { inputModelList ->
+        inputModelList.map { inputModel ->
+            block(inputModel)
         }
     }
 }
 
-inline fun <MI, MO> Flow<MI?>.mapFlow(crossinline toModel: suspend ((MI) -> MO)): Flow<MO?> {
-    return map { modelServer ->
-        modelServer?.let {
-            toModel(modelServer)
+inline fun <IM, OM> Flow<IM?>.mapFlow(crossinline block: suspend ((IM) -> OM)): Flow<OM?> {
+    return map { inputModel ->
+        inputModel?.let {
+            block(inputModel)
         }
     }
 }

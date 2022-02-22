@@ -56,6 +56,7 @@ fun OrderItem(
                     .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                 style = FoodDeliveryTheme.typography.h1,
+                color = FoodDeliveryTheme.colors.onSurface
             )
             Surface(
                 modifier = Modifier

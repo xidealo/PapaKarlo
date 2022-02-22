@@ -22,7 +22,7 @@ data class AppTypography(
     val h3: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     val body1: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
@@ -32,7 +32,7 @@ data class AppTypography(
     val body2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 14.sp
     ),
     val button: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,

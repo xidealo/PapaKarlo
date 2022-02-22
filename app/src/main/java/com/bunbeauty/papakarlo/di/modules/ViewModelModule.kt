@@ -263,9 +263,9 @@ fun viewModelModule() = module {
     }
     viewModel {
         SettingsViewModel(
-            cityInteractor = get(),
             userInteractor = get(),
             resourcesProvider = get(),
+            settingsInteractor = get(),
         )
     }
     viewModel {

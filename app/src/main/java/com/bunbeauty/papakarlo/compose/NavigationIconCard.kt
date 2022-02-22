@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.compose
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -29,8 +30,10 @@ import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavigationCard(
+fun NavigationIconCard(
     modifier: Modifier = Modifier,
+    @DrawableRes iconId: Int,
+    @StringRes iconDescription: Int,
     @StringRes label: Int,
     onClick: () -> Unit
 ) {
@@ -54,9 +57,15 @@ fun NavigationCard(
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Icon(
+                    modifier = Modifier.icon(),
+                    imageVector = ImageVector.vectorResource(iconId),
+                    contentDescription = stringResource(iconDescription),
+                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                )
                 Text(
                     modifier = Modifier
-                        .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                         .weight(1f),
                     text = stringResource(label),
                     style = FoodDeliveryTheme.typography.body1,
@@ -71,12 +80,16 @@ fun NavigationCard(
             }
         }
     }
+
 }
 
+@ExperimentalMaterialApi
 @Preview
 @Composable
-fun NavigationCardPreview() {
-    NavigationCard(
+fun NavigationIconCardPreview() {
+    NavigationIconCard(
+        iconId = R.drawable.ic_info,
+        iconDescription = R.string.description_ic_about,
         label = R.string.title_about_app
     ) {}
 }

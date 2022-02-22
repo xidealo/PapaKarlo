@@ -3,10 +3,7 @@ package com.bunbeauty.papakarlo.compose
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -29,9 +26,10 @@ import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavigationCard(
+fun NavigationTextCard(
     modifier: Modifier = Modifier,
-    @StringRes label: Int,
+    @StringRes hint: Int,
+    label: String,
     onClick: () -> Unit
 ) {
     FoodDeliveryTheme {
@@ -54,14 +52,23 @@ fun NavigationCard(
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
+                Column(
                     modifier = Modifier
                         .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .weight(1f),
-                    text = stringResource(label),
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
+                        .weight(1f)
+                ) {
+                    Text(
+                        text = stringResource(hint),
+                        style = FoodDeliveryTheme.typography.body2,
+                        color = FoodDeliveryTheme.colors.onSurfaceVariant
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
+                        text = label,
+                        style = FoodDeliveryTheme.typography.body1,
+                        color = FoodDeliveryTheme.colors.onSurface
+                    )
+                }
                 Icon(
                     modifier = Modifier.smallIcon(),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
@@ -75,8 +82,9 @@ fun NavigationCard(
 
 @Preview
 @Composable
-fun NavigationCardPreview() {
-    NavigationCard(
-        label = R.string.title_about_app
+fun NavigationTextCardPreview() {
+    NavigationTextCard(
+        hint = R.string.hint_settings_phone,
+        label = "+7 999 000-00-00"
     ) {}
 }
