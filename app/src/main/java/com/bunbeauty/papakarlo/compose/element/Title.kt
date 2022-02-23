@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.compose.elements
+package com.bunbeauty.papakarlo.compose.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth

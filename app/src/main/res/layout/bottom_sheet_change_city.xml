@@ -5,24 +5,10 @@
     style="@style/BottomSheet"
     tools:context=".feature.profile.settings.change_city.ChangeCityBottomSheet">
 
-    <TextView
-        android:id="@+id/bottom_sheet_change_city_tv_title"
-        style="@style/LargeBoldWrapContentText"
-        android:layout_margin="@dimen/medium_margin"
-        android:text="@string/title_select_city"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/bottom_sheet_change_city_cv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/bottom_sheet_change_city_ll_city_list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_change_city_tv_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

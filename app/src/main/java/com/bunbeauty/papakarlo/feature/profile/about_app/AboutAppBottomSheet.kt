@@ -14,8 +14,8 @@ import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.compose.cards.IconCard
-import com.bunbeauty.papakarlo.compose.elements.Title
+import com.bunbeauty.papakarlo.compose.card.IconCard
+import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetAboutAppBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel

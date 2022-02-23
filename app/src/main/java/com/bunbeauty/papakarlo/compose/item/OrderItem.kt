@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.compose
+package com.bunbeauty.papakarlo.compose.item
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

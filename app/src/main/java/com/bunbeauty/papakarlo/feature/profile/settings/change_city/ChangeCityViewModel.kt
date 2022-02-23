@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ChangeCityViewModel  constructor(
@@ -26,8 +28,8 @@ class ChangeCityViewModel  constructor(
     }
 
     private fun subscribeOnCityList() {
-        cityInteractor.observeCityList().onEach { cityList ->
+        cityInteractor.observeCityList().launchOnEach { cityList ->
             mutableCityList.value = cityList
-        }.launchIn(viewModelScope)
+        }
     }
 }

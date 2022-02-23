@@ -255,7 +255,7 @@
     <string name="description_about_app_developer">Банбьюти</string>
 
     <!-- CHANGE CITY -->
-    <string name="title_select_city">Изменение города</string>
+    <string name="title_change_city">Изменение города</string>
 
     <!-- LOGOUT -->
     <string name="title_logout">Выйти из профиля?</string>

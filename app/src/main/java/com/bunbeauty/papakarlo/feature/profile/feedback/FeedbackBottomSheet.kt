@@ -18,8 +18,8 @@ import com.bunbeauty.common.Constants.VK_LINK
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.compose.cards.NavigationIconCard
-import com.bunbeauty.papakarlo.compose.elements.Title
+import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
+import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel

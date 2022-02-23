@@ -21,9 +21,9 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.compose.OrderItem
-import com.bunbeauty.papakarlo.compose.cards.NavigationIconCard
-import com.bunbeauty.papakarlo.compose.elements.CircularProgressBar
+import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
+import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
+import com.bunbeauty.papakarlo.compose.item.OrderItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding

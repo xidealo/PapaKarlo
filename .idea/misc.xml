@@ -47,6 +47,10 @@
         <entry key="../../../../layout/compose-model-1645625773298.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1645626149812.xml" value="0.5" />
         <entry key="../../../../layout/compose-model-1645626909791.xml" value="0.48333333333333334" />
+        <entry key="../../../../layout/compose-model-1645628446374.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1645628626869.xml" value="0.48333333333333334" />
+        <entry key="../../../../layout/compose-model-1645628675866.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1645629514895.xml" value="0.11276948590381426" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_bb_logo.xml" value="0.48333333333333334" />
@@ -55,6 +59,7 @@
         <entry key="app/src/main/res/drawable/ic_version.xml" value="0.5572916666666666" />
         <entry key="app/src/main/res/layout/bottom_sheet_about_app.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_address_list.xml" value="0.5369791666666667" />
+        <entry key="app/src/main/res/layout/bottom_sheet_change_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_edit_text.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.4351851851851852" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_address_list.xml" value="0.5369791666666667" />
