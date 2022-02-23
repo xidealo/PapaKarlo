@@ -5,7 +5,6 @@ import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -17,22 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.CircularProgressBar
-import com.bunbeauty.papakarlo.compose.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.OrderItem
+import com.bunbeauty.papakarlo.compose.cards.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
-import org.koin.androidx.viewmodel.ext.android.viewModel
-
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 

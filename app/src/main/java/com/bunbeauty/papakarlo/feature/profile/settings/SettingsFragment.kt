@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
@@ -24,12 +23,11 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.CircularProgressBar
-import com.bunbeauty.papakarlo.compose.NavigationCard
-import com.bunbeauty.papakarlo.compose.NavigationTextCard
-import com.bunbeauty.papakarlo.compose.TextCard
+import com.bunbeauty.papakarlo.compose.cards.NavigationCard
+import com.bunbeauty.papakarlo.compose.cards.NavigationTextCard
+import com.bunbeauty.papakarlo.compose.cards.TextCard
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {

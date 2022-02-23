@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.compose
+package com.bunbeauty.papakarlo.compose.cards
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column

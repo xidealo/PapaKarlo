@@ -248,6 +248,8 @@
     <string name="title_about_app">О приложении</string>
     <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
     <string name="msg_about_app_version">Версия&#160;</string>
+    <string name="description_about_app_version">Версия</string>
+    <string name="description_about_app_developer">Банбьюти</string>
 
     <!-- CHANGE CITY -->
     <string name="title_select_city">Изменение города</string>

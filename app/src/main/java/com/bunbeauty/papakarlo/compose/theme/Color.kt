@@ -18,6 +18,7 @@ val yellow = Color(0xFFECA441)
 val lightGreen = Color(0xFF86BD47)
 val green = Color(0xFF62BC71)
 val darkGrey = Color(0xFF7B7A80)
+val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
@@ -32,6 +33,7 @@ val LightColors = AppColors(
     done = lightGreen,
     delivered = green,
     canceled = darkGrey,
+    bunBeautyBrandColor = lightBlue,
     onPrimary = white,
     onSecondary = grey,
     onBackground = black,
@@ -55,6 +57,7 @@ val DarkColors = AppColors(
     done = lightGreen,
     delivered = green,
     canceled = darkGrey,
+    bunBeautyBrandColor = lightBlue,
     onPrimary = white,
     onSecondary = grey,
     onBackground = black,
@@ -81,6 +84,7 @@ class AppColors(
     done: Color,
     delivered: Color,
     canceled: Color,
+    bunBeautyBrandColor: Color,
     onPrimary: Color,
     onSecondary: Color,
     onBackground: Color,
@@ -113,6 +117,8 @@ class AppColors(
     var delivered by mutableStateOf(delivered)
         private set
     var canceled by mutableStateOf(canceled)
+        private set
+    var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
         private set
     var onPrimary by mutableStateOf(onPrimary)
         private set
@@ -167,6 +173,7 @@ class AppColors(
         done: Color = this.done,
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
+        bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
         onPrimary: Color = this.onPrimary,
         onSecondary: Color = this.onSecondary,
         onBackground: Color = this.onBackground,
@@ -188,6 +195,7 @@ class AppColors(
         done = done,
         delivered = delivered,
         canceled = canceled,
+        bunBeautyBrandColor = bunBeautyBrandColor,
         onPrimary = onPrimary,
         onSecondary = onSecondary,
         onBackground = onBackground,
@@ -211,6 +219,7 @@ class AppColors(
         done = other.done
         delivered = other.delivered
         canceled = other.canceled
+        bunBeautyBrandColor = other.bunBeautyBrandColor
         onPrimary = other.onPrimary
         onSecondary = other.onSecondary
         onBackground = other.onBackground
