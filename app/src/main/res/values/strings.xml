@@ -243,6 +243,9 @@
     <string name="action_feedback_vk">Вконтакте</string>
     <string name="action_feedback_instagram">Instagram</string>
     <string name="action_feedback_play_market">Play Маркет</string>
+    <string name="description_feedback_vk">Вконтакте</string>
+    <string name="description_feedback_instagram">Instagram</string>
+    <string name="description_feedback_play_market">Play Маркет</string>
 
     <!-- ABOUT APP -->
     <string name="title_about_app">О приложении</string>

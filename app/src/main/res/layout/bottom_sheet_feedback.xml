@@ -5,58 +5,10 @@
     style="@style/BottomSheet"
     tools:context=".feature.profile.feedback.FeedbackBottomSheet">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottom_sheet_feedback_gl_left"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/medium_margin" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottom_sheet_feedback_gl_right"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/medium_margin" />
-
-    <TextView
-        android:id="@+id/bottom_sheet_feedback_tv_title"
-        style="@style/LargeBoldWrapContentText"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:text="@string/title_feedback"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_feedback_gl_right"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_feedback_gl_left"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/bottom_sheet_feedback_cv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
-        android:id="@+id/bottom_sheet_feedback_nc_vk"
-        style="@style/ShadowlessMonochromeNavigationCard"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:icon="@drawable/ic_vk"
-        android:text="@string/action_feedback_vk"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_feedback_gl_right"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_feedback_gl_left"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_feedback_tv_title" />
-
-    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
-        android:id="@+id/bottom_sheet_feedback_nc_instagram"
-        style="@style/ShadowlessMonochromeNavigationCard"
-        android:layout_marginTop="@dimen/small_margin"
-        android:icon="@drawable/ic_inst"
-        android:text="@string/action_feedback_instagram"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_feedback_gl_right"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_feedback_gl_left"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_feedback_nc_vk" />
-
-    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
-        android:id="@+id/bottom_sheet_feedback_nc_play_market"
-        style="@style/ShadowlessMonochromeNavigationCard"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:icon="@drawable/ic_google_play"
-        android:text="@string/action_feedback_play_market"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/bottom_sheet_feedback_gl_right"
-        app:layout_constraintStart_toStartOf="@+id/bottom_sheet_feedback_gl_left"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_feedback_nc_instagram" />
 </androidx.constraintlayout.widget.ConstraintLayout>

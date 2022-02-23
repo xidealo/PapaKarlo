@@ -22,10 +22,10 @@ import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.compose.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.cards.NavigationCard
 import com.bunbeauty.papakarlo.compose.cards.NavigationTextCard
 import com.bunbeauty.papakarlo.compose.cards.TextCard
+import com.bunbeauty.papakarlo.compose.elements.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.compose
+package com.bunbeauty.papakarlo.compose.elements
 
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable

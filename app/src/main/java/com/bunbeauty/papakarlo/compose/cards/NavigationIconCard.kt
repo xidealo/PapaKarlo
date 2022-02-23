@@ -37,6 +37,7 @@ fun NavigationIconCard(
     @DrawableRes iconId: Int,
     @StringRes iconDescription: Int,
     @StringRes label: Int,
+    hasShadow: Boolean = true,
     onClick: () -> Unit
 ) {
     FoodDeliveryTheme {
@@ -44,7 +45,11 @@ fun NavigationIconCard(
             modifier = modifier
                 .fillMaxWidth()
                 .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .shadow(1.dp, mediumRoundedCornerShape)
+                .apply {
+                    if (hasShadow) {
+                        shadow(1.dp, mediumRoundedCornerShape)
+                    }
+                }
                 .clip(mediumRoundedCornerShape)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
