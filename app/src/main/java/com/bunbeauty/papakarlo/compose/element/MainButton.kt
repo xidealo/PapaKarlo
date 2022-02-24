@@ -20,7 +20,7 @@ fun MainButton(
     Button(
         modifier = modifier
             .fillMaxWidth()
-            .height(FoodDeliveryTheme.dimensions.buttonHeight),
+            .height(FoodDeliveryTheme.dimensions.buttonSize),
         colors = FoodDeliveryTheme.colors.buttonColors(),
         shape = mediumRoundedCornerShape,
         onClick = onClick

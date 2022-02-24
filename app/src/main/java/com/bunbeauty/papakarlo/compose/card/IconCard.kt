@@ -34,39 +34,37 @@ fun IconCard(
     @StringRes labelStringId: Int? = null,
     label: String = "",
 ) {
-    FoodDeliveryTheme {
-        Card(
-            modifier = modifier
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .clip(mediumRoundedCornerShape),
+        backgroundColor = FoodDeliveryTheme.colors.surface
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .clip(mediumRoundedCornerShape),
-            backgroundColor = FoodDeliveryTheme.colors.surface
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            val iconTint = iconColor ?: FoodDeliveryTheme.colors.onSurfaceVariant
+            Icon(
+                modifier = Modifier.icon(),
+                imageVector = ImageVector.vectorResource(iconId),
+                contentDescription = stringResource(iconDescriptionStringId),
+                tint = iconTint
+            )
+            val labelText = labelStringId?.let { id ->
+                stringResource(id)
+            } ?: label
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val iconTint = iconColor ?: FoodDeliveryTheme.colors.onSurfaceVariant
-                Icon(
-                    modifier = Modifier.icon(),
-                    imageVector = ImageVector.vectorResource(iconId),
-                    contentDescription = stringResource(iconDescriptionStringId),
-                    tint = iconTint
-                )
-                val labelText = labelStringId?.let { id ->
-                    stringResource(id)
-                } ?: label
-                Text(
-                    modifier = Modifier
-                        .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .weight(1f),
-                    text = labelText,
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-            }
+                    .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .weight(1f),
+                text = labelText,
+                style = FoodDeliveryTheme.typography.body1,
+                color = FoodDeliveryTheme.colors.onSurface
+            )
         }
     }
 }

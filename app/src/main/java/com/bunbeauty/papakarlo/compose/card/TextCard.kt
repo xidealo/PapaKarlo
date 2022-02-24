@@ -26,32 +26,30 @@ fun TextCard(
     @StringRes hint: Int,
     label: String
 ) {
-    FoodDeliveryTheme {
-        Card(
-            modifier = modifier
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .shadow(1.dp, mediumRoundedCornerShape)
+            .clip(mediumRoundedCornerShape),
+        backgroundColor = FoodDeliveryTheme.colors.surface
+    ) {
+        Column(
+            modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .shadow(1.dp, mediumRoundedCornerShape)
-                .clip(mediumRoundedCornerShape),
-            backgroundColor = FoodDeliveryTheme.colors.surface
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-            ) {
-                Text(
-                    text = stringResource(hint),
-                    style = FoodDeliveryTheme.typography.body2,
-                    color = FoodDeliveryTheme.colors.onSurfaceVariant
-                )
-                Text(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
-                    text = label,
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-            }
+            Text(
+                text = stringResource(hint),
+                style = FoodDeliveryTheme.typography.body2,
+                color = FoodDeliveryTheme.colors.onSurfaceVariant
+            )
+            Text(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
+                text = label,
+                style = FoodDeliveryTheme.typography.body1,
+                color = FoodDeliveryTheme.colors.onSurface
+            )
         }
     }
 }

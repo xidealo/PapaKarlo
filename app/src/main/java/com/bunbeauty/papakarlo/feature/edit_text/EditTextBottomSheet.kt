@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -22,6 +23,7 @@ import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetEditTextBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
@@ -34,11 +36,8 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetEditTextCvMain.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                EditTextScreen(editTextSettings)
-            }
+        viewBinding.bottomSheetEditTextCvMain.compose {
+            EditTextScreen(editTextSettings)
         }
     }
 
@@ -58,17 +57,25 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
                     text = editTextSettings.infoText
                 )
             }
-            var text by remember { mutableStateOf(editTextSettings.inputText ?: "") }
+            val inputText = editTextSettings.inputText ?: ""
+            var textFieldValue by remember {
+                mutableStateOf(
+                    TextFieldValue(
+                        text = inputText,
+                        selection = TextRange(inputText.length)
+                    )
+                )
+            }
             EditText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                startText = text,
+                initTextFieldValue = textFieldValue,
                 labelStringId = editTextSettings.labelStringId,
                 editTextType = editTextSettings.type,
                 focus = true
-            ) {
-                text = it
+            ) { value ->
+                textFieldValue = value
             }
             MainButton(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
@@ -76,7 +83,7 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
             ) {
                 setFragmentResult(
                     editTextSettings.requestKey,
-                    bundleOf(editTextSettings.resultKey to text)
+                    bundleOf(editTextSettings.resultKey to textFieldValue.text)
                 )
                 viewModel.goBack()
             }

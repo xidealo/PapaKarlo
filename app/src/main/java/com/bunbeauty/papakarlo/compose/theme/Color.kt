@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.compose.theme
 
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.TextFieldColors
@@ -139,6 +140,11 @@ class AppColors(
         private set
     var isLight by mutableStateOf(isLight)
         internal set
+
+    val textSelectionColors = TextSelectionColors(
+        handleColor = primary,
+        backgroundColor = primary.copy(alpha = 0.4f)
+    )
 
     @Composable
     fun buttonColors(): ButtonColors {

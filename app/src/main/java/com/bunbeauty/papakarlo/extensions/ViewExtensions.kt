@@ -11,12 +11,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.annotation.ExperimentalCoilApi
 import coil.load
 import coil.size.ViewSizeResolver
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
@@ -121,5 +125,14 @@ fun ImageView.setPhoto(photoLink: String) {
         placeholder(R.drawable.placeholder)
         error(R.drawable.placeholder)
         size(ViewSizeResolver(this@setPhoto))
+    }
+}
+
+fun ComposeView.compose(content: @Composable () -> Unit) {
+    setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+    setContent {
+        FoodDeliveryTheme {
+            content()
+        }
     }
 }

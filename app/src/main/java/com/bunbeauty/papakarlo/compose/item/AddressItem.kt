@@ -13,56 +13,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CityItem(
+fun AddressItem(
     modifier: Modifier = Modifier,
-    cityName: String,
-    hasShadow: Boolean = true,
-    onClick: () -> Unit
+    address: String,
+    isClickable: Boolean,
+    onClick: (() -> Unit)
 ) {
-    val elevation = if (hasShadow) {
-        1.dp
-    } else {
-        0.dp
-    }
     Card(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(
-                elevation = elevation,
-                shape = mediumRoundedCornerShape
-            )
             .clip(mediumRoundedCornerShape)
             .clickable(
+                enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        backgroundColor = FoodDeliveryTheme.colors.surface,
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            text = cityName,
+            text = address,
             style = FoodDeliveryTheme.typography.body1,
-            color = FoodDeliveryTheme.colors.onSurface,
-            textAlign = TextAlign.Center
+            color = FoodDeliveryTheme.colors.onSurface
         )
     }
 }
 
 @Preview
 @Composable
-fun CityItemPreview() {
-    CityItem(cityName = "Москва") {}
+fun AddressItemPreview() {
+    AddressItem(
+        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+        isClickable = false
+    ) {}
 }

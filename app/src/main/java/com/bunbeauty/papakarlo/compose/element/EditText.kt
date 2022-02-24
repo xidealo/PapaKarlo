@@ -3,13 +3,10 @@ package com.bunbeauty.papakarlo.compose.element
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.LocalTextSelectionColors
-import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -18,7 +15,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -31,12 +27,12 @@ import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 @Composable
 fun EditText(
     modifier: Modifier = Modifier,
-    startText: String = "",
+    initTextFieldValue: TextFieldValue = TextFieldValue(""),
     @StringRes labelStringId: Int,
     editTextType: EditTextType,
     maxLines: Int = 1,
     focus: Boolean = false,
-    onTextChanged: (String) -> Unit,
+    onTextChanged: (TextFieldValue) -> Unit,
 ) {
     val keyboardOptions = when (editTextType) {
         EditTextType.TEXT -> KeyboardOptions(
@@ -52,45 +48,35 @@ fun EditText(
     }
     val focusRequester = remember { FocusRequester() }
 
-    val customTextSelectionColors = TextSelectionColors(
-        handleColor = FoodDeliveryTheme.colors.primary,
-        backgroundColor = FoodDeliveryTheme.colors.primary.copy(alpha = 0.4f)
+    OutlinedTextField(
+        modifier = modifier.focusRequester(focusRequester),
+        value = initTextFieldValue,
+        onValueChange = { value ->
+            onTextChanged(value)
+        },
+        textStyle = FoodDeliveryTheme.typography.body1,
+        colors = FoodDeliveryTheme.colors.textFieldColors(),
+        label = {
+            Text(text = stringResource(labelStringId))
+        },
+        keyboardOptions = keyboardOptions,
+        maxLines = maxLines,
+        singleLine = maxLines == 1,
+        trailingIcon = {
+            Icon(
+                modifier = Modifier
+                    .smallIcon()
+                    .clickable {
+                        onTextChanged(TextFieldValue(""))
+                    },
+                imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
+                contentDescription = stringResource(R.string.description_ic_clear)
+            )
+        }
     )
-    val textFieldValue = TextFieldValue(
-        text = startText,
-        selection = TextRange(startText.length)
-    )
-    CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
-        OutlinedTextField(
-            modifier = modifier.focusRequester(focusRequester),
-            value = textFieldValue,
-            onValueChange = { value ->
-                onTextChanged(value.text)
-            },
-            textStyle = FoodDeliveryTheme.typography.body1,
-            colors = FoodDeliveryTheme.colors.textFieldColors(),
-            label = {
-                Text(text = stringResource(labelStringId))
-            },
-            keyboardOptions = keyboardOptions,
-            maxLines = maxLines,
-            singleLine = maxLines == 1,
-            trailingIcon = {
-                Icon(
-                    modifier = Modifier
-                        .smallIcon()
-                        .clickable {
-                            onTextChanged("")
-                        },
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_clear),
-                    contentDescription = stringResource(R.string.description_ic_clear)
-                )
-            }
-        )
-        if (focus) {
-            LaunchedEffect(Unit) {
-                focusRequester.requestFocus()
-            }
+    if (focus) {
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
         }
     }
 }
@@ -99,7 +85,7 @@ fun EditText(
 @Composable
 fun EditTextPreview() {
     EditText(
-        startText = "Нужно больше еды \n ...",
+        initTextFieldValue = TextFieldValue("Нужно больше еды \n ..."),
         labelStringId = R.string.hint_create_order_comment,
         editTextType = EditTextType.TEXT
     ) {

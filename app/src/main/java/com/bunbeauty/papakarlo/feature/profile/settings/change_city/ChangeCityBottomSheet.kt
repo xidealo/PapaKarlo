@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.model.City
@@ -19,6 +18,7 @@ import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.item.CityItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetChangeCityBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city) {
@@ -29,12 +29,9 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetChangeCityCvMain.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                val cityList: List<City> by viewModel.cityList.collectAsState()
-                ChangeCityScreen(cityList)
-            }
+        viewBinding.bottomSheetChangeCityCvMain.compose {
+            val cityList: List<City> by viewModel.cityList.collectAsState()
+            ChangeCityScreen(cityList)
         }
     }
 
