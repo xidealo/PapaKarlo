@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.R
@@ -41,7 +40,11 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
 
     @Composable
     private fun ChangeCityScreen(cityList: List<City>) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        ) {
             Title(textStringId = R.string.title_change_city)
             cityList.forEachIndexed { index, city ->
                 val topSpace = if (index == 0) {
@@ -49,17 +52,9 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
                 } else {
                     FoodDeliveryTheme.dimensions.smallSpace
                 }
-                val bottomSpace = if (index == cityList.lastIndex) {
-                    FoodDeliveryTheme.dimensions.mediumSpace
-                } else {
-                    0.dp
-                }
                 CityItem(
                     modifier = Modifier.padding(
-                        start = FoodDeliveryTheme.dimensions.mediumSpace,
-                        end = FoodDeliveryTheme.dimensions.mediumSpace,
-                        top = topSpace,
-                        bottom = bottomSpace,
+                        top = topSpace
                     ),
                     cityName = city.name,
                     hasShadow = false

@@ -76,14 +76,14 @@ class SettingsViewModel  constructor(
         showError(resourcesProvider.getString(R.string.error_settings_email), false)
     }
 
-    private fun navigateToEmail(@StringRes titleResourceId: Int, email: String?) {
+    private fun navigateToEmail(@StringRes titleStringId: Int, email: String?) {
         val oneLineActionModel = EditTextSettings(
-            title = resourcesProvider.getString(titleResourceId),
+            titleStringId = titleStringId,
             infoText = null,
-            hint = resourcesProvider.getString(R.string.hint_settings_email),
+            labelStringId = R.string.hint_settings_email,
             type = EditTextType.EMAIL,
             inputText = email,
-            buttonText = resourcesProvider.getString(R.string.action_settings_save),
+            buttonStringId = R.string.action_settings_save,
             requestKey = EMAIL_REQUEST_KEY,
             resultKey = RESULT_EMAIL_KEY,
         )

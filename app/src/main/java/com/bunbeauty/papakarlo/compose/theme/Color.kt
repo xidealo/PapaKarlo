@@ -1,6 +1,9 @@
 package com.bunbeauty.papakarlo.compose.theme
 
 import androidx.compose.material.ButtonColors
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.TextFieldColors
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 
@@ -137,27 +140,41 @@ class AppColors(
     var isLight by mutableStateOf(isLight)
         internal set
 
+    @Composable
     fun buttonColors(): ButtonColors {
-        return object : ButtonColors {
+        return ButtonDefaults.buttonColors(
+            backgroundColor = primary,
+            contentColor = onPrimary,
+            disabledBackgroundColor = primary.copy(alpha = 0.8f),
+            disabledContentColor = onPrimary.copy(alpha = 0.8f)
+        )
+    }
 
-            @Composable
-            override fun backgroundColor(enabled: Boolean): State<Color> {
-                return if (enabled) {
-                    rememberUpdatedState(primary)
-                } else {
-                    rememberUpdatedState(primary.copy(alpha = 0.8f))
-                }
-            }
-
-            @Composable
-            override fun contentColor(enabled: Boolean): State<Color> {
-                return if (enabled) {
-                    rememberUpdatedState(onPrimary)
-                } else {
-                    rememberUpdatedState(onPrimary.copy(alpha = 0.8f))
-                }
-            }
-        }
+    @Composable
+    fun textFieldColors(): TextFieldColors {
+        return TextFieldDefaults.textFieldColors(
+            textColor = onSurface,
+            disabledTextColor = onSurfaceVariant,
+            backgroundColor = surface,
+            cursorColor = primary,
+            errorCursorColor = error,
+            focusedIndicatorColor = primary,
+            unfocusedIndicatorColor = onSurfaceVariant,
+            disabledIndicatorColor = onSurfaceVariant,
+            errorIndicatorColor = error,
+            leadingIconColor = onSurfaceVariant,
+            disabledLeadingIconColor = onSurfaceVariant,
+            errorLeadingIconColor = error,
+            trailingIconColor = onSurfaceVariant,
+            disabledTrailingIconColor = onSurfaceVariant,
+            errorTrailingIconColor = error,
+            focusedLabelColor = primary,
+            unfocusedLabelColor = onSurfaceVariant,
+            disabledLabelColor = onSurfaceVariant,
+            errorLabelColor = error,
+            placeholderColor = onSurfaceVariant,
+            disabledPlaceholderColor = onSurfaceVariant
+        )
     }
 
     fun copy(

@@ -48,12 +48,14 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
 
     @Composable
     private fun FeedbackScreen() {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        ) {
             Title(textStringId = R.string.title_feedback)
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
                     top = FoodDeliveryTheme.dimensions.mediumSpace,
                 ),
                 iconId = R.drawable.ic_vk,
@@ -65,8 +67,6 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
             }
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
                     top = FoodDeliveryTheme.dimensions.smallSpace,
                 ),
                 iconId = R.drawable.ic_instagram,
@@ -78,10 +78,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
             }
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
-                    top = FoodDeliveryTheme.dimensions.smallSpace,
-                    bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    top = FoodDeliveryTheme.dimensions.smallSpace
                 ),
                 iconId = R.drawable.ic_play_market,
                 iconDescription = R.string.description_feedback_play_market,

@@ -28,7 +28,7 @@ kotlin {
                     implementation(clientSerialization)
                     implementation(clientLogging)
                     implementation(clientWebsockets)
-                    implementation(clientOkhttp)
+                    //implementation(clientOkhttp)
                 }
 
                 implementation(Coroutine.core)

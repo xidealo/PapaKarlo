@@ -14,6 +14,7 @@
     <string name="msg_comma">,&#160;</string>
     <string name="part_ruble">&#160;₽</string>
     <string name="description_ic_next">Переход</string>
+    <string name="description_ic_clear">Очистить</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -193,7 +194,6 @@
     <string name="title_login_registration">Регистрация</string>
     <string name="title_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="title_login_phone">Телефон*</string>
-    <string name="title_login_email">Email</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
     <string name="error_login_something_went_wrong">Что-то пошло не так</string>
