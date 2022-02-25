@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementAddressBinding
 
 class AddressAdapter:
-    BaseListAdapter<AddressItem, AddressAdapter.AddressViewHolder>(
+    BaseListAdapter<AddressItemModel, AddressAdapter.AddressViewHolder>(
         DefaultDiffCallback()
     ) {
 
@@ -20,16 +20,16 @@ class AddressAdapter:
     }
 
     inner class AddressViewHolder(private val elementAddressBinding: ElementAddressBinding) :
-        BaseViewHolder<AddressItem>(elementAddressBinding) {
+        BaseViewHolder<AddressItemModel>(elementAddressBinding) {
 
-        override fun onBind(item: AddressItem) {
-            super.onBind(item)
+        override fun onBind(itemModel: AddressItemModel) {
+            super.onBind(itemModel)
 
             elementAddressBinding.run {
-                elementAddressTvAddress.text = item.address
+                elementAddressTvAddress.text = itemModel.address
                 if (hasItemClickListener) {
                     elementAddressMcvMain.setOnClickListener {
-                        onItemClicked(item)
+                        onItemClicked(itemModel)
                     }
                 }
             }

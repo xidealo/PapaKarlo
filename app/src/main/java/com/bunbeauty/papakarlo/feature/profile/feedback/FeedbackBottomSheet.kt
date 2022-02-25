@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.INSTAGRAM_LINK
@@ -22,6 +21,7 @@ import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
@@ -32,11 +32,8 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetFeedbackCvMain.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                FeedbackScreen()
-            }
+        viewBinding.bottomSheetFeedbackCvMain.compose {
+            FeedbackScreen()
         }
     }
 
@@ -48,12 +45,14 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
 
     @Composable
     private fun FeedbackScreen() {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        ) {
             Title(textStringId = R.string.title_feedback)
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
                     top = FoodDeliveryTheme.dimensions.mediumSpace,
                 ),
                 iconId = R.drawable.ic_vk,
@@ -65,8 +64,6 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
             }
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
                     top = FoodDeliveryTheme.dimensions.smallSpace,
                 ),
                 iconId = R.drawable.ic_instagram,
@@ -78,10 +75,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
             }
             NavigationIconCard(
                 modifier = Modifier.padding(
-                    start = FoodDeliveryTheme.dimensions.mediumSpace,
-                    end = FoodDeliveryTheme.dimensions.mediumSpace,
-                    top = FoodDeliveryTheme.dimensions.smallSpace,
-                    bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    top = FoodDeliveryTheme.dimensions.smallSpace
                 ),
                 iconId = R.drawable.ic_play_market,
                 iconDescription = R.string.description_feedback_play_market,

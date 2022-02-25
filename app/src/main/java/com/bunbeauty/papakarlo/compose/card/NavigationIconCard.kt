@@ -40,54 +40,55 @@ fun NavigationIconCard(
     hasShadow: Boolean = true,
     onClick: () -> Unit
 ) {
-    FoodDeliveryTheme {
-        Card(
-            modifier = modifier
+    val elevation = if (hasShadow) {
+        1.dp
+    } else {
+        0.dp
+    }
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .shadow(
+                elevation = elevation,
+                shape = mediumRoundedCornerShape
+            )
+            .clip(mediumRoundedCornerShape)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = onClick
+            ),
+        backgroundColor = FoodDeliveryTheme.colors.surface
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .apply {
-                    if (hasShadow) {
-                        shadow(1.dp, mediumRoundedCornerShape)
-                    }
-                }
-                .clip(mediumRoundedCornerShape)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(),
-                    onClick = onClick
-                ),
-            backgroundColor = FoodDeliveryTheme.colors.surface
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Icon(
+                modifier = Modifier.icon(),
+                imageVector = ImageVector.vectorResource(iconId),
+                contentDescription = stringResource(iconDescription),
+                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+            )
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    modifier = Modifier.icon(),
-                    imageVector = ImageVector.vectorResource(iconId),
-                    contentDescription = stringResource(iconDescription),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .weight(1f),
-                    text = stringResource(label),
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-                Icon(
-                    modifier = Modifier.smallIcon(),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
-                    contentDescription = stringResource(R.string.description_ic_next),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
-                )
-            }
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .weight(1f),
+                text = stringResource(label),
+                style = FoodDeliveryTheme.typography.body1,
+                color = FoodDeliveryTheme.colors.onSurface
+            )
+            Icon(
+                modifier = Modifier.smallIcon(),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
+                contentDescription = stringResource(R.string.description_ic_next),
+                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+            )
         }
     }
-
 }
 
 @ExperimentalMaterialApi

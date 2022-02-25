@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.CAFE_ADDRESS_REQUEST_KEY
 import com.bunbeauty.common.Constants.RESULT_CAFE_ADDRESS_KEY
@@ -28,7 +27,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.cafeAddressList.startedLaunch { cafeAddressList ->
+        viewModel.cafeAddressListModel.startedLaunch { cafeAddressList ->
             addressAdapter.submitList(cafeAddressList)
         }
         addressAdapter.setOnItemClickListener { address ->

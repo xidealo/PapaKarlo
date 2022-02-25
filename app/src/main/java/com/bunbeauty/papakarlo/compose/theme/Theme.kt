@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.compose.theme
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -30,6 +31,7 @@ fun FoodDeliveryTheme(
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
+        LocalTextSelectionColors provides rememberedColors.textSelectionColors,
         content = content
     )
 }

@@ -227,12 +227,12 @@ class CreateOrderViewModel  constructor(
 
     fun onAddCommentClicked() {
         val oneLineActionModel = EditTextSettings(
-            title = resourcesProvider.getString(R.string.title_create_order_addition_comment),
+            titleStringId = R.string.title_create_order_addition_comment,
             infoText = null,
-            hint = resourcesProvider.getString(R.string.hint_create_order_comment),
+            labelStringId = R.string.hint_create_order_comment,
             type = EditTextType.TEXT,
             inputText = "",
-            buttonText = resourcesProvider.getString(R.string.action_create_order_save_comment),
+            buttonStringId = R.string.action_create_order_save_comment,
             requestKey = COMMENT_REQUEST_KEY,
             resultKey = RESULT_COMMENT_KEY
         )
@@ -241,12 +241,12 @@ class CreateOrderViewModel  constructor(
 
     fun onEditCommentClicked() {
         val oneLineActionModel = EditTextSettings(
-            title = resourcesProvider.getString(R.string.title_create_order_editing_comment),
+            titleStringId = R.string.title_create_order_editing_comment,
             infoText = null,
-            hint = resourcesProvider.getString(R.string.hint_create_order_comment),
+            labelStringId = R.string.hint_create_order_comment,
             type = EditTextType.TEXT,
             inputText = comment.value ?: "",
-            buttonText = resourcesProvider.getString(R.string.action_create_order_save_comment),
+            buttonStringId = R.string.action_create_order_save_comment,
             requestKey = COMMENT_REQUEST_KEY,
             resultKey = RESULT_COMMENT_KEY
         )

@@ -11,7 +11,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -28,6 +27,7 @@ import com.bunbeauty.papakarlo.compose.card.TextCard
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
@@ -39,12 +39,9 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentSettingsCvMain.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                val userState: State<Settings> by viewModel.settingsState.collectAsState()
-                SettingsScreen(userState)
-            }
+        viewBinding.fragmentSettingsCvMain.compose {
+            val userState: State<Settings> by viewModel.settingsState.collectAsState()
+            SettingsScreen(userState)
         }
         setFragmentResultListener(EMAIL_REQUEST_KEY) { _, bundle ->
             bundle.getString(RESULT_EMAIL_KEY)?.let { email ->

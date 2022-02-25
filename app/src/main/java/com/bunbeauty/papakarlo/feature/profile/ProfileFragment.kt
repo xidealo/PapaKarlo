@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,10 +21,11 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
+import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.OrderItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,12 +38,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentProfileCvMain.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                val state: State<ProfileUI> by viewModel.profileUIState.collectAsState()
-                ProfileScreen(state)
-            }
+        viewBinding.fragmentProfileCvMain.compose {
+            val state: State<ProfileUI> by viewModel.profileUIState.collectAsState()
+            ProfileScreen(state)
         }
     }
 
@@ -176,27 +172,17 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     textAlign = TextAlign.Center
                 )
             }
-            Button(
+            MainButton(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(FoodDeliveryTheme.dimensions.buttonHeight)
                     .align(Alignment.BottomCenter)
                     .padding(
                         start = FoodDeliveryTheme.dimensions.mediumSpace,
                         end = FoodDeliveryTheme.dimensions.mediumSpace,
                         bottom = FoodDeliveryTheme.dimensions.mediumSpace
                     ),
-                colors = FoodDeliveryTheme.colors.buttonColors(),
-                shape = mediumRoundedCornerShape,
-                onClick = {
-                    viewModel.onLoginClicked()
-                }
+                textStringId = R.string.action_profile_login
             ) {
-                Text(
-                    text = stringResource(id = R.string.action_profile_login).uppercase(),
-                    style = FoodDeliveryTheme.typography.button,
-                    color = FoodDeliveryTheme.colors.onPrimary
-                )
+                viewModel.onLoginClicked()
             }
         }
     }

@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.feature.address.cafe_address_list
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.model.cafe.CafeAddress
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.address.AddressItem
+import com.bunbeauty.papakarlo.feature.address.AddressItemModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,9 +12,10 @@ class CafeAddressListViewModel  constructor(
     private val cafeInteractor: ICafeInteractor,
 ) : BaseViewModel() {
 
-    private val mutableCafeAddressList: MutableStateFlow<List<AddressItem>> =
+    private val mutableCafeAddressListModel: MutableStateFlow<List<AddressItemModel>> =
         MutableStateFlow(emptyList())
-    val cafeAddressList: StateFlow<List<AddressItem>> = mutableCafeAddressList.asStateFlow()
+    val cafeAddressListModel: StateFlow<List<AddressItemModel>> =
+        mutableCafeAddressListModel.asStateFlow()
 
     init {
         observeCafeAddressList()
@@ -22,12 +23,12 @@ class CafeAddressListViewModel  constructor(
 
     private fun observeCafeAddressList() {
         cafeInteractor.observeCafeAddressList().launchOnEach { cafeAddressList ->
-            mutableCafeAddressList.value = cafeAddressList.map(::toItem)
+            mutableCafeAddressListModel.value = cafeAddressList.map(::toItem)
         }
     }
 
-    private fun toItem(cafeAddress: CafeAddress): AddressItem {
-        return AddressItem(
+    private fun toItem(cafeAddress: CafeAddress): AddressItemModel {
+        return AddressItemModel(
             uuid = cafeAddress.cafeUuid,
             address = cafeAddress.address
         )

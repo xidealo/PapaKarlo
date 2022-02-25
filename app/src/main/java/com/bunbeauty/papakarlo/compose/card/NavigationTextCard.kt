@@ -33,50 +33,48 @@ fun NavigationTextCard(
     label: String,
     onClick: () -> Unit
 ) {
-    FoodDeliveryTheme {
-        Card(
-            modifier = modifier
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .shadow(1.dp, mediumRoundedCornerShape)
+            .clip(mediumRoundedCornerShape)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = onClick
+            ),
+        backgroundColor = FoodDeliveryTheme.colors.surface
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .shadow(1.dp, mediumRoundedCornerShape)
-                .clip(mediumRoundedCornerShape)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(),
-                    onClick = onClick
-                ),
-            backgroundColor = FoodDeliveryTheme.colors.surface
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .weight(1f)
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(hint),
-                        style = FoodDeliveryTheme.typography.body2,
-                        color = FoodDeliveryTheme.colors.onSurfaceVariant
-                    )
-                    Text(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
-                        text = label,
-                        style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
-                }
-                Icon(
-                    modifier = Modifier.smallIcon(),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
-                    contentDescription = stringResource(R.string.description_ic_next),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                Text(
+                    text = stringResource(hint),
+                    style = FoodDeliveryTheme.typography.body2,
+                    color = FoodDeliveryTheme.colors.onSurfaceVariant
+                )
+                Text(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
+                    text = label,
+                    style = FoodDeliveryTheme.typography.body1,
+                    color = FoodDeliveryTheme.colors.onSurface
                 )
             }
+            Icon(
+                modifier = Modifier.smallIcon(),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
+                contentDescription = stringResource(R.string.description_ic_next),
+                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+            )
         }
     }
 }

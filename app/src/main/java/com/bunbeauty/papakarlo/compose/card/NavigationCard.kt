@@ -35,41 +35,39 @@ fun NavigationCard(
     @StringRes label: Int,
     onClick: () -> Unit
 ) {
-    FoodDeliveryTheme {
-        Card(
-            modifier = modifier
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .shadow(1.dp, mediumRoundedCornerShape)
+            .clip(mediumRoundedCornerShape)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = onClick
+            ),
+        backgroundColor = FoodDeliveryTheme.colors.surface
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
-                .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-                .shadow(1.dp, mediumRoundedCornerShape)
-                .clip(mediumRoundedCornerShape)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(),
-                    onClick = onClick
-                ),
-            backgroundColor = FoodDeliveryTheme.colors.surface
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .weight(1f),
-                    text = stringResource(label),
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-                Icon(
-                    modifier = Modifier.smallIcon(),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
-                    contentDescription = stringResource(R.string.description_ic_next),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
-                )
-            }
+                    .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .weight(1f),
+                text = stringResource(label),
+                style = FoodDeliveryTheme.typography.body1,
+                color = FoodDeliveryTheme.colors.onSurface
+            )
+            Icon(
+                modifier = Modifier.smallIcon(),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
+                contentDescription = stringResource(R.string.description_ic_next),
+                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+            )
         }
     }
 }
