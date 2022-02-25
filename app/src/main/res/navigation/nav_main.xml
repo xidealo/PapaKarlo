@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.bunbeauty.papakarlo.feature.update.UpdateFragment"
-        android:label="UpdateFragment"
+        android:label="@string/title_update_new_app_version"
         tools:layout="@layout/fragment_update" />
 
     <fragment

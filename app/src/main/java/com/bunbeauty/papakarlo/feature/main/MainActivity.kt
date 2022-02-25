@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     )
 
     private val toolbarFragmentIdList = listOf(
+        R.id.updateFragment,
         R.id.selectCityFragment,
         R.id.cafeListFragment,
         R.id.confirmFragment,
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val appBarConfiguration = AppBarConfiguration(
         topLevelDestinationIds = setOf(
+            R.id.updateFragment,
             R.id.selectCityFragment,
             R.id.cafeListFragment,
             R.id.menuFragment,

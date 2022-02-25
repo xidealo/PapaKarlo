@@ -39,8 +39,8 @@
     <string name="title_select_city">Выберите город</string>
 
     <!-- UPDATE -->
-    <string name="title_update_new_app_version">Новая версия приложения</string>
-    <string name="msg_update_new_app_version">Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет</string>
+    <string name="title_update_new_app_version">Новая версия</string>
+    <string name="msg_update_new_app_version">Пожалуйста, обновите приложение.\nНовая версия уже доступна в Play Маркет</string>
     <string name="action_update_update">Обновить</string>
 
     <!-- PRODUCT -->
