@@ -7,19 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0254657227C9209700337B98 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254657127C9209700337B98 /* CityItemView.swift */; };
+		0254657427C9238600337B98 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254657327C9238600337B98 /* CityItem.swift */; };
 		0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */; };
-		0287396827AC40D80020A919 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* ContentView.swift */; };
+		0287396827AC40D80020A919 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* SplashScreen.swift */; };
 		0287396A27AC40DB0020A919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396927AC40DB0020A919 /* Assets.xcassets */; };
 		0287396D27AC40DB0020A919 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396C27AC40DB0020A919 /* Preview Assets.xcassets */; };
+		02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0FF8E27C6A22E00BABD2B /* SelectCityView.swift */; };
+		02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0FF9227C6A27D00BABD2B /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0254657127C9209700337B98 /* CityItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityItemView.swift; sourceTree = "<group>"; };
+		0254657327C9238600337B98 /* CityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityItem.swift; sourceTree = "<group>"; };
 		0287396227AC40D80020A919 /* PapaKarloSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaKarloSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapaKarloSwiftApp.swift; sourceTree = "<group>"; };
-		0287396727AC40D80020A919 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0287396727AC40D80020A919 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		0287396927AC40DB0020A919 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0287396C27AC40DB0020A919 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Preview Assets.xcassets"; path = "Preview Content/Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0287396E27AC40DB0020A919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02E0FF8E27C6A22E00BABD2B /* SelectCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCityView.swift; sourceTree = "<group>"; };
+		02E0FF9227C6A27D00BABD2B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +41,76 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0254656327C918BB00337B98 /* consumer_cart */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = consumer_cart;
+			sourceTree = "<group>";
+		};
+		0254656427C918CE00337B98 /* address */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = address;
+			sourceTree = "<group>";
+		};
+		0254656527C918E200337B98 /* auth */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = auth;
+			sourceTree = "<group>";
+		};
+		0254656727C919A000337B98 /* create_order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = create_order;
+			sourceTree = "<group>";
+		};
+		0254656827C919B100337B98 /* edit_text */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = edit_text;
+			sourceTree = "<group>";
+		};
+		0254656927C919C800337B98 /* main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = main;
+			sourceTree = "<group>";
+		};
+		0254656B27C919DC00337B98 /* profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = profile;
+			sourceTree = "<group>";
+		};
+		0254656C27C919E900337B98 /* splash */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = splash;
+			sourceTree = "<group>";
+		};
+		0254656D27C919F100337B98 /* update */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = update;
+			sourceTree = "<group>";
+		};
+		0254656E27C91A1C00337B98 /* product_details */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = product_details;
+			sourceTree = "<group>";
+		};
 		0287395927AC40D80020A919 = {
 			isa = PBXGroup;
 			children = (
@@ -52,13 +130,75 @@
 		0287396427AC40D80020A919 /* PapaKarloSwift */ = {
 			isa = PBXGroup;
 			children = (
+				02E0FF8D27C6A20600BABD2B /* feature */,
 				0287396C27AC40DB0020A919 /* Preview Assets.xcassets */,
 				0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */,
-				0287396727AC40D80020A919 /* ContentView.swift */,
+				0287396727AC40D80020A919 /* SplashScreen.swift */,
 				0287396927AC40DB0020A919 /* Assets.xcassets */,
 				0287396E27AC40DB0020A919 /* Info.plist */,
 			);
 			path = PapaKarloSwift;
+			sourceTree = "<group>";
+		};
+		02E0FF8D27C6A20600BABD2B /* feature */ = {
+			isa = PBXGroup;
+			children = (
+				0254656427C918CE00337B98 /* address */,
+				0254656527C918E200337B98 /* auth */,
+				02E0FF9427C6A29A00BABD2B /* cafe */,
+				0254656327C918BB00337B98 /* consumer_cart */,
+				0254656727C919A000337B98 /* create_order */,
+				0254656827C919B100337B98 /* edit_text */,
+				0254656927C919C800337B98 /* main */,
+				02E0FF9127C6A26400BABD2B /* menu */,
+				0254656E27C91A1C00337B98 /* product_details */,
+				0254656B27C919DC00337B98 /* profile */,
+				02E0FF9027C6A23700BABD2B /* select_city */,
+				0254656C27C919E900337B98 /* splash */,
+				0254656D27C919F100337B98 /* update */,
+			);
+			path = feature;
+			sourceTree = "<group>";
+		};
+		02E0FF9027C6A23700BABD2B /* select_city */ = {
+			isa = PBXGroup;
+			children = (
+				02E0FF8E27C6A22E00BABD2B /* SelectCityView.swift */,
+				0254657127C9209700337B98 /* CityItemView.swift */,
+				0254657327C9238600337B98 /* CityItem.swift */,
+			);
+			path = select_city;
+			sourceTree = "<group>";
+		};
+		02E0FF9127C6A26400BABD2B /* menu */ = {
+			isa = PBXGroup;
+			children = (
+				02E0FF9227C6A27D00BABD2B /* MenuView.swift */,
+			);
+			path = menu;
+			sourceTree = "<group>";
+		};
+		02E0FF9427C6A29A00BABD2B /* cafe */ = {
+			isa = PBXGroup;
+			children = (
+				02E0FF9527C6A2A800BABD2B /* cafe_list */,
+				02E0FF9627C6A2B100BABD2B /* cafe_options */,
+			);
+			path = cafe;
+			sourceTree = "<group>";
+		};
+		02E0FF9527C6A2A800BABD2B /* cafe_list */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = cafe_list;
+			sourceTree = "<group>";
+		};
+		02E0FF9627C6A2B100BABD2B /* cafe_options */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = cafe_options;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,7 +283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -152,8 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0287396827AC40D80020A919 /* ContentView.swift in Sources */,
+				0287396827AC40D80020A919 /* SplashScreen.swift in Sources */,
+				02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */,
+				02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */,
 				0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */,
+				0254657227C9209700337B98 /* CityItemView.swift in Sources */,
+				0254657427C9238600337B98 /* CityItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,12 +24,12 @@ kotlin {
     sourceSets {
         val commonMain by getting  {
             dependencies {
-                Ktor.run {
-                    implementation(clientSerialization)
-                    implementation(clientLogging)
-                    implementation(clientWebsockets)
-                    implementation(clientOkhttp)
-                }
+//                Ktor.run {
+//                    implementation(clientSerialization)
+//                    implementation(clientLogging)
+//                    implementation(clientWebsockets)
+//                    implementation(clientOkhttp)
+//                }
 
                 implementation(Coroutine.core)
 
