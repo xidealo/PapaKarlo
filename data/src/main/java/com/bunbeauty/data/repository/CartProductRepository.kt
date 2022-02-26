@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 
-class CartProductRepository  constructor(
+class CartProductRepository(
     private val cartProductDao: CartProductDao,
     private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {

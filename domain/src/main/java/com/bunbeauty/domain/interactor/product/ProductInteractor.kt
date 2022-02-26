@@ -3,8 +3,9 @@ package com.bunbeauty.domain.interactor.product
 import com.bunbeauty.domain.model.product.ProductPosition
 import com.bunbeauty.domain.repo.DataStoreRepo
 
-class ProductInteractor  constructor(private val dataStoreRepo: DataStoreRepo) :
-    IProductInteractor {
+class ProductInteractor(
+    private val dataStoreRepo: DataStoreRepo
+) : IProductInteractor {
 
     override fun getNewTotalCost(productList: List<ProductPosition>): Int {
         return productList.sumOf(::getProductPositionNewCost)

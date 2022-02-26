@@ -16,7 +16,7 @@ import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.launch
 
-class LoginViewModel constructor(
+class LoginViewModel(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider,

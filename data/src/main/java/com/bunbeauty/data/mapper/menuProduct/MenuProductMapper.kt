@@ -6,8 +6,9 @@ import com.bunbeauty.data.mapper.category.ICategoryMapper
 import com.bunbeauty.data.network.model.MenuProductServer
 import com.bunbeauty.domain.model.product.MenuProduct
 
-class MenuProductMapper constructor(private val categoryMapper: ICategoryMapper) :
-    IMenuProductMapper {
+class MenuProductMapper(
+    private val categoryMapper: ICategoryMapper
+) : IMenuProductMapper {
 
     override fun toEntityModel(menuProduct: MenuProductServer): MenuProductWithCategory {
         return MenuProductWithCategory(

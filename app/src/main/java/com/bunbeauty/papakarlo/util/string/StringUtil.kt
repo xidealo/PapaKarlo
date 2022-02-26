@@ -11,7 +11,7 @@ import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
-class StringUtil  constructor(
+class StringUtil(
     private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 

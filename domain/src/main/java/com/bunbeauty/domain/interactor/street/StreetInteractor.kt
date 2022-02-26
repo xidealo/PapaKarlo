@@ -7,7 +7,7 @@ import com.bunbeauty.domain.repo.StreetRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class StreetInteractor  constructor(
+class StreetInteractor(
     private val streetRepo: StreetRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : IStreetInteractor {

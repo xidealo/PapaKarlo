@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 
-class CafeListViewModel constructor(
+class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val resourcesProvider: IResourcesProvider,
     private val stringUtil: IStringUtil

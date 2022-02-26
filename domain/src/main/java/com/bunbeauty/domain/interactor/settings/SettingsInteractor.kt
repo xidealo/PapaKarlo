@@ -7,7 +7,7 @@ import com.bunbeauty.domain.model.profile.Settings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class SettingsInteractor constructor(
+class SettingsInteractor(
     private val cityInteractor: ICityInteractor,
     private val userInteractor: IUserInteractor,
 ) : ISettingsInteractor {

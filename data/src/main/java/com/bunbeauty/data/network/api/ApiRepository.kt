@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 
-class ApiRepository  constructor(
+class ApiRepository(
     private val client: HttpClient,
     private val json: Json
 ) : ApiRepo {

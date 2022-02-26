@@ -6,7 +6,7 @@ import com.bunbeauty.domain.repo.CategoryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class CategoryInteractor  constructor(
+class CategoryInteractor(
     private val categoryRepo: CategoryRepo
 ) : ICategoryInteractor {
 

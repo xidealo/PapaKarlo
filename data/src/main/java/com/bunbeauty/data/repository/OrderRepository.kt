@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
-class OrderRepository  constructor(
+class OrderRepository(
     private val orderDao: OrderDao,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,

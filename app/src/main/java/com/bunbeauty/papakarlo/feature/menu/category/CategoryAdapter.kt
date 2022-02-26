@@ -8,8 +8,9 @@ import com.bunbeauty.papakarlo.common.BaseViewHolder
 import com.bunbeauty.papakarlo.databinding.ElementCategoryBinding
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
-class CategoryAdapter  constructor(private val resourcesProvider: IResourcesProvider) :
-    BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
+class CategoryAdapter(
+    private val resourcesProvider: IResourcesProvider
+) : BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CategoryViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)

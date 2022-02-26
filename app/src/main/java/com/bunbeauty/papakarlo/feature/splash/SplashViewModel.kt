@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.*
 import kotlinx.coroutines.launch
 
-class SplashViewModel  constructor(
+class SplashViewModel(
     private val updateInteractor: IUpdateInteractor,
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {

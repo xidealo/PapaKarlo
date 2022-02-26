@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class OrderDetailsViewModel constructor(
+class OrderDetailsViewModel(
     private val orderInteractor: IOrderInteractor,
     private val orderUIMapper: IOrderUIMapper
 ) : BaseViewModel() {

@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
-class MarginItemVerticalDecoration  constructor(private val resourcesProvider: IResourcesProvider) :
-    RecyclerView.ItemDecoration() {
+class MarginItemVerticalDecoration(
+    private val resourcesProvider: IResourcesProvider
+) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
         outRect: Rect,

@@ -13,7 +13,7 @@ import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 
-class UserAddressRepository  constructor(
+class UserAddressRepository(
     private val apiRepo: ApiRepo,
     private val userAddressDao: UserAddressDao,
     private val userAddressMapper: IUserAddressMapper

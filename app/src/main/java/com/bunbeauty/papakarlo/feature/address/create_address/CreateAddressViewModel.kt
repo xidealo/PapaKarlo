@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CreateAddressViewModel constructor(
+class CreateAddressViewModel(
     private val resourcesProvider: IResourcesProvider,
     private val textValidator: ITextValidator,
     private val streetInteractor: IStreetInteractor,

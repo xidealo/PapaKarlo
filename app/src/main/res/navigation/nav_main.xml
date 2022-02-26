@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/selectCityFragment"
         android:name="com.bunbeauty.papakarlo.feature.select_city.SelectCityFragment"
-        android:label="SelectCityFragment"
+        android:label="@string/title_select_city"
         tools:layout="@layout/fragment_select_city">
         <action
             android:id="@+id/to_menuFragment"

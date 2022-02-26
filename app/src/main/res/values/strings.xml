@@ -35,11 +35,13 @@
     <string name="msg_ruble">&#160;₽</string>
     <string name="error_no_internet">Нет подключения к интернету</string>
 
-    <!-- START -->
-    <string name="title_start_select_city">Выберите город</string>
-    <string name="title_start_new_app_version">Новая версия приложения</string>
-    <string name="msg_start_new_app_version">Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет</string>
-    <string name="action_start_update">Обновить</string>
+    <!-- SELECT CITY -->
+    <string name="title_select_city">Выберите город</string>
+
+    <!-- UPDATE -->
+    <string name="title_update_new_app_version">Новая версия приложения</string>
+    <string name="msg_update_new_app_version">Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет</string>
+    <string name="action_update_update">Обновить</string>
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>

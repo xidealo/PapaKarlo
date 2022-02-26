@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class CartProductInteractor constructor(
+class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,

@@ -5,7 +5,7 @@ import com.bunbeauty.data.database.entity.product.CartProductWithMenuProduct
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.domain.model.cart.CartProduct
 
-class CartProductMapper  constructor(
+class CartProductMapper(
     private val menuProductMapper: IMenuProductMapper
 ) : ICartProductMapper {
 

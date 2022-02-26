@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CafeOptionsViewModel  constructor(
+class CafeOptionsViewModel(
     private val resourcesProvider: IResourcesProvider,
     private val cafeInteractor: ICafeInteractor
 ) : BaseViewModel() {

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DeferredTimeViewModel constructor(
+class DeferredTimeViewModel(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ConsumerCartViewModel constructor(
+class ConsumerCartViewModel(
     private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
