@@ -1,10 +1,10 @@
 package com.bunbeauty.data.mapper.category
 
-import com.bunbeauty.data.database.entity.CategoryEntity
 import com.bunbeauty.data.network.model.CategoryServer
 import com.bunbeauty.domain.model.category.Category
+import database.CategoryEntity
 
-class CategoryMapper  constructor() : ICategoryMapper {
+class CategoryMapper : ICategoryMapper {
 
     override fun toModel(category: CategoryEntity): Category {
         return Category(

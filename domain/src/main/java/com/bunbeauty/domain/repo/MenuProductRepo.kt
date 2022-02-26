@@ -8,5 +8,4 @@ interface MenuProductRepo {
     suspend fun refreshMenuProductList()
     fun observeMenuProductList(): Flow<List<MenuProduct>>
     fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?>
-    suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct?
 }

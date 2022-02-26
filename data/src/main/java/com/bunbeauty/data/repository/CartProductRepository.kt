@@ -1,18 +1,17 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.data.database.dao.CartProductDao
-import com.bunbeauty.data.database.entity.product.CartProductCount
-import com.bunbeauty.data.database.entity.product.CartProductEntity
-import com.bunbeauty.data.database.entity.product.CartProductWithMenuProduct
 import com.bunbeauty.data.mapper.cart_product.ICartProductMapper
+import com.bunbeauty.data.sql_delight.dao.cart_product.ICartProductDao
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
+import database.CartProductEntity
+import database.CartProductWithMenuProductEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 
-class CartProductRepository  constructor(
-    private val cartProductDao: CartProductDao,
+class CartProductRepository constructor(
+    private val cartProductDao: ICartProductDao,
     private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {
 
@@ -37,17 +36,13 @@ class CartProductRepository  constructor(
             count = 1,
             menuProductUuid = menuProductUuid
         )
-        cartProductDao.insert(cartProductEntity)
+        cartProductDao.insertCartProduct(cartProductEntity)
 
         return cartProductDao.getCartProductByUuid(uuid).toCartProduct()
     }
 
     override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {
-        val cartProductCount = CartProductCount(
-            uuid = cartProductUuid,
-            count = count
-        )
-        cartProductDao.updateCartProductCount(cartProductCount)
+        cartProductDao.updateCartProductCountByUuid(cartProductUuid, count)
 
         return cartProductDao.getCartProductByUuid(cartProductUuid)?.let { updatedCartProduct ->
             cartProductMapper.toModel(updatedCartProduct)
@@ -55,31 +50,23 @@ class CartProductRepository  constructor(
     }
 
     override suspend fun deleteCartProduct(cartProduct: CartProduct) {
-        cartProductDao.delete(cartProductMapper.toEntityModel(cartProduct))
-    }
-
-    override suspend fun deleteCartProductList(cartProductList: List<CartProduct>) {
-        cartProductDao.delete(cartProductList.map(cartProductMapper::toEntityModel))
+        cartProductDao.deleteCartProductByUuid(cartProduct.uuid)
     }
 
     override suspend fun deleteAllCartProducts() {
-        val cartProductList =
-            cartProductDao.getCartProductList().map { cartProductWithMenuProduct ->
-                cartProductWithMenuProduct.cartProductEntity
-            }
-        cartProductDao.delete(cartProductList)
+        cartProductDao.deleteAllCartProducts()
     }
 
-    private fun List<CartProductWithMenuProduct>.toCartProductList(): List<CartProduct> {
+    private fun List<CartProductWithMenuProductEntity>.toCartProductList(): List<CartProduct> {
         return this.filter { cartProductWithMenuProduct ->
-            cartProductWithMenuProduct.menuProductEntity.visible
+            cartProductWithMenuProduct.visible
         }.map(cartProductMapper::toModel)
     }
 
-    private fun CartProductWithMenuProduct?.toCartProduct(): CartProduct? {
-        return this?.let { cartProductWithMenuProduct ->
-            if (cartProductWithMenuProduct.menuProductEntity.visible) {
-                cartProductMapper.toModel(cartProductWithMenuProduct)
+    private fun CartProductWithMenuProductEntity?.toCartProduct(): CartProduct? {
+        return this?.let { cartProductWithMenuProductEntity ->
+            if (cartProductWithMenuProductEntity.visible) {
+                cartProductMapper.toModel(cartProductWithMenuProductEntity)
             } else {
                 null
             }

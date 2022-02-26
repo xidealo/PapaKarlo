@@ -1,0 +1,20 @@
+CREATE TABLE cityEntity (
+   uuid TEXT NOT NULL PRIMARY KEY,
+   name TEXT NOT NULL,
+   timeZone TEXT NOT NULL,
+   isVisible INTEGER AS Boolean NOT NULL
+);
+
+insertCity:
+INSERT OR REPLACE
+INTO cityEntity
+VALUES (?, ?, ?, ?);
+
+getCityList:
+SELECT *
+FROM cityEntity;
+
+getCityByUuid:
+SELECT *
+FROM cityEntity
+WHERE uuid = :uuid;

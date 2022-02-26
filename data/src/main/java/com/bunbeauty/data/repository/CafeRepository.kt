@@ -1,11 +1,10 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.CAFE_TAG
-import com.bunbeauty.data.database.dao.CafeDao
-import com.bunbeauty.data.database.entity.cafe.SelectedCafeUuidEntity
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.data.network.api.ApiRepo
+import com.bunbeauty.data.sql_delight.dao.cafe.ICafeDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
@@ -13,13 +12,14 @@ import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import database.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class CafeRepository  constructor(
+class CafeRepository(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val cafeDao: CafeDao,
+    private val cafeDao: ICafeDao,
     private val cafeMapper: ICafeMapper,
     private val authRepo: AuthRepo,
 ) : CafeRepo {
@@ -27,7 +27,7 @@ class CafeRepository  constructor(
     override suspend fun refreshCafeList(selectedCityUuid: String) {
         apiRepo.getCafeListByCityUuid(selectedCityUuid).handleListResult(CAFE_TAG) { cafeList ->
             if (cafeList != null) {
-                cafeDao.insertAll(cafeList.map(cafeMapper::toEntityModel))
+                cafeDao.insertCafeList(cafeList.map(cafeMapper::toEntityModel))
             }
         }
     }

@@ -10,7 +10,7 @@ object Versions {
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
 
-    const val sqlDelight = "1.5.0"
+    const val sqlDelight = "1.5.3"
     const val slf4j = "1.7.30"
 
     const val constraintLayout = "2.1.3"
@@ -82,7 +82,6 @@ object ClassPath {
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlytics}"
     const val navigationSafeArgs =
         "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-
     const val sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 }
 
@@ -98,6 +97,7 @@ object Plugin {
     const val multiplatform = "multiplatform"
     const val googleService = "com.google.gms.google-services"
     const val crashlytics = "com.google.firebase.crashlytics"
+    const val sqldelight = "com.squareup.sqldelight"
 }
 
 object AndroidX {

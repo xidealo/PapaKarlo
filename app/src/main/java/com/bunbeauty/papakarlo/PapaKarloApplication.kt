@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo
 import android.app.Application
 import androidx.viewbinding.BuildConfig
 import com.bunbeauty.data.di.apiDataModule
+import com.bunbeauty.data.di.databaseModule
 import com.bunbeauty.data.di.mapperModule
 import com.bunbeauty.data.di.repositoryModule
 import com.bunbeauty.domain.di.interactorModule
@@ -35,6 +36,7 @@ class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
                 uiMapperModule(),
                 viewModelModule(),
                 workerModule(),
+                databaseModule(),
                 apiDataModule(),
                 mapperModule(),
                 repositoryModule(),

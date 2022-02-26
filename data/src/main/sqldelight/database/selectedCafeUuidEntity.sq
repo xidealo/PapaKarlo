@@ -1,0 +1,11 @@
+CREATE TABLE selectedCafeUuidEntity (
+    userUuid TEXT NOT NULL,
+    cityUuid TEXT NOT NULL,
+    cafeUuid TEXT NOT NULL,
+    PRIMARY KEY (userUuid, cityUuid)
+);
+
+insertSelectedCafeUuidEntity:
+INSERT OR REPLACE
+INTO selectedCafeUuidEntity
+VALUES (?, ?, ?);

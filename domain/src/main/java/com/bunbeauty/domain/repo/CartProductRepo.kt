@@ -17,7 +17,5 @@ interface CartProductRepo {
 
     suspend fun deleteCartProduct(cartProduct: CartProduct)
 
-    suspend fun deleteCartProductList(cartProductList: List<CartProduct>)
-
     suspend fun deleteAllCartProducts()
 }
