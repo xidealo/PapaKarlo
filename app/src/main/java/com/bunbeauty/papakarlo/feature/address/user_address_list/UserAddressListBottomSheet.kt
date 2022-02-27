@@ -81,7 +81,12 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
                 }
             }
             MainIconButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        end = FoodDeliveryTheme.dimensions.mediumSpace,
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    ),
                 iconId = R.drawable.ic_add,
                 iconDescriptionStringId = R.string.description_ic_add
             ) {

@@ -103,6 +103,18 @@
         <entry key="../../../../layout/compose-model-1646138286913.xml" value="0.6620370370370371" />
         <entry key="../../../../layout/compose-model-1646138313144.xml" value="0.6620370370370371" />
         <entry key="../../../../layout/compose-model-1646138355242.xml" value="0.10838870431893688" />
+        <entry key="../../../../layout/compose-model-1646141699284.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646142318037.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142426934.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1646142646291.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142664658.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142669044.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142681428.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142687595.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142690770.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646142715613.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646142746303.xml" value="0.6620370370370371" />
+        <entry key="../../../../layout/compose-model-1646143044306.xml" value="0.6620370370370371" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_bb_logo.xml" value="0.48333333333333334" />
@@ -114,6 +126,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_change_city.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_edit_text.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.4351851851851852" />
+        <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_address_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/element_menu_product.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/element_order.xml" value="0.5265577119509703" />

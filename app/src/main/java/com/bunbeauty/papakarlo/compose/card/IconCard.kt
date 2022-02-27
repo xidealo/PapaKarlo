@@ -2,6 +2,8 @@ package com.bunbeauty.papakarlo.compose.card
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +12,9 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,12 +37,20 @@ fun IconCard(
     iconColor: Color? = null,
     @StringRes labelStringId: Int? = null,
     label: String = "",
+    isClickable: Boolean,
+    onClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .clip(mediumRoundedCornerShape),
+            .clip(mediumRoundedCornerShape)
+            .clickable(
+                enabled = isClickable,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(),
+                onClick = onClick ?: {}
+            ),
         backgroundColor = FoodDeliveryTheme.colors.surface
     ) {
         Row(
@@ -76,7 +88,8 @@ fun IconCardPreview() {
     IconCard(
         iconId = R.drawable.ic_info,
         iconDescriptionStringId = R.string.description_ic_about,
-        labelStringId = R.string.title_about_app
+        labelStringId = R.string.title_about_app,
+        isClickable = false
     )
 }
 
@@ -89,5 +102,6 @@ fun OriginalColorIconCardPreview() {
         iconDescriptionStringId = R.string.description_ic_about,
         iconColor = FoodDeliveryTheme.colors.bunBeautyBrandColor,
         labelStringId = R.string.title_about_app,
+        isClickable = false
     )
 }

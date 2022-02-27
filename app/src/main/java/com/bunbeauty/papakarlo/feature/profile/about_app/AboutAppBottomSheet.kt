@@ -47,6 +47,7 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
                     iconDescriptionStringId = R.string.description_about_app_developer,
                     iconColor = FoodDeliveryTheme.colors.bunBeautyBrandColor,
                     labelStringId = R.string.msg_about_app_developer,
+                    isClickable = false
                 )
                 IconCard(
                     modifier = Modifier.padding(
@@ -56,6 +57,7 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
                     iconId = R.drawable.ic_version,
                     iconDescriptionStringId = R.string.description_about_app_developer,
                     label = resourcesProvider.getString(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
+                    isClickable = false
                 )
             }
         }
