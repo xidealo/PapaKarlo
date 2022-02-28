@@ -9,8 +9,6 @@ interface UserAddressRepo {
     suspend fun saveUserAddress(token: String, createdUserAddress: CreatedUserAddress): UserAddress?
     suspend fun saveSelectedUserAddress(addressUuid: String, userUuid: String, cityUuid: String)
 
-    suspend fun getUserAddressByUuid(userAddressUuid: String): UserAddress?
-
     fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
@@ -21,11 +19,8 @@ interface UserAddressRepo {
         cityUuid: String
     ): Flow<UserAddress?>
 
-    fun observeUserAddressByUuid(userAddressUuid: String): Flow<UserAddress?>
     fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddress>>
-
-    fun observeUnassignedUserAddressList(): Flow<List<UserAddress>>
 }

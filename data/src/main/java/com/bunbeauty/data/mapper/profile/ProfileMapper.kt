@@ -1,36 +1,50 @@
 package com.bunbeauty.data.mapper.profile
 
-import com.bunbeauty.data.database.entity.user.ProfileEntity
 import com.bunbeauty.data.mapper.order.IOrderMapper
-import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.model.profile.Profile
+import database.OrderEntity
+import database.OrderWithProductEntity
+import database.UserAddressEntity
+import database.UserEntity
 
-class ProfileMapper  constructor(
-    private val userAddressMapper: IUserAddressMapper,
+class ProfileMapper(
     private val orderMapper: IOrderMapper,
-    private val userMapper: IUserMapper,
+    private val userAddressMapper: IUserAddressMapper
 ) : IProfileMapper {
 
-    override fun toProfileEntity(profileServer: ProfileServer): ProfileEntity {
-        return ProfileEntity(
-            user = userMapper.toEntityModel(profileServer),
-            userAddressList = profileServer.addresses.map(userAddressMapper::toEntityModel),
-            orderEntityList = profileServer.orders.map(orderMapper::toOrderEntityWithProducts)
+    override fun toProfile(
+        userUuid: String,
+        userAddressCount: Long,
+        lastOrderEntity: OrderEntity?
+    ): Profile {
+        return Profile(
+            userUuid = userUuid,
+            hasAddresses = userAddressCount > 0,
+            lastOrder = lastOrderEntity?.let { orderEntity ->
+                orderMapper.toLightOrder(orderEntity)
+            }
         )
     }
 
-    override fun toProfile(profileEntity: ProfileEntity): Profile {
-        val lastOrderItem = profileEntity.orderEntityList.maxByOrNull { order ->
-            order.orderEntity.time
-        }?.let { order ->
-            orderMapper.toLightOrder(order)
-        }
-        return Profile(
-            userUuid = profileEntity.user.uuid,
-            hasAddresses = profileEntity.userAddressList.isNotEmpty(),
-            lastOrder = lastOrderItem
+    override fun toUserEntity(profileServer: ProfileServer): UserEntity {
+        return UserEntity(
+            uuid = profileServer.uuid,
+            phone = profileServer.phoneNumber,
+            email = profileServer.email,
         )
+    }
+
+    override fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity> {
+        return profileServer.addresses.map { addressServer ->
+            userAddressMapper.toUserAddressEntity(addressServer)
+        }
+    }
+
+    override fun toOrderWithProductEntityList(profileServer: ProfileServer): List<OrderWithProductEntity> {
+        return profileServer.orders.flatMap { orderServer ->
+            orderMapper.toOrderWithProductEntityList(orderServer)
+        }
     }
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class UserInteractor  constructor(
+class UserInteractor constructor(
     private val userRepo: UserRepo,
     private val userWorkerUtil: IUserWorkerUtil,
     private val dataStoreRepo: DataStoreRepo,
@@ -59,8 +59,11 @@ class UserInteractor  constructor(
     }
 
     override fun observeLightProfile(): Flow<Profile?> {
-        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-            userRepo.observeProfileByUuid(userUuid ?: "")
+        return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
+            userRepo.observeProfileByUserUuidAndCityUuid(
+                userCityUuid.userUuid,
+                userCityUuid.cityUuid
+            )
         }
     }
 

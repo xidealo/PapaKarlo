@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface StreetRepo {
     suspend fun refreshStreetList(selectedCityUuid: String)
-    suspend fun getStreets(): List<Street>
     suspend fun getStreetByNameAndCityUuid(name: String, cityUuid: String): Street?
     fun observeStreetListByCityUuid(cityUuid: String): Flow<List<Street>>
 }

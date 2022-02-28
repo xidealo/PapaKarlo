@@ -33,7 +33,7 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
     }
 
     override suspend fun insertSelectedCafeUuid(selectedCafeUuidEntity: SelectedCafeUuidEntity) {
-        selectedCafeUuidEntityQueries.insertSelectedCafeUuidEntity(
+        selectedCafeUuidEntityQueries.insertSelectedCafeUuid(
             userUuid = selectedCafeUuidEntity.userUuid,
             cityUuid = selectedCafeUuidEntity.cityUuid,
             cafeUuid = selectedCafeUuidEntity.cafeUuid,

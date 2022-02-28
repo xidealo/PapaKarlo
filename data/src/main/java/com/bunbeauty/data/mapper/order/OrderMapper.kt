@@ -12,8 +12,9 @@ import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.util.IDateTimeUtil
+import database.OrderWithProductEntity
 
-class OrderMapper  constructor(
+class OrderMapper constructor(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
@@ -37,6 +38,36 @@ class OrderMapper  constructor(
         )
     }
 
+    override fun toOrderWithProductEntityList(orderServer: OrderServer): List<OrderWithProductEntity> {
+        return orderServer.oderProductList.map { orderProductServer ->
+            OrderWithProductEntity(
+                uuid = orderServer.uuid,
+                status = orderServer.status,
+                isDelivery = orderServer.isDelivery,
+                time = orderServer.time,
+                timeZone = orderServer.timeZone,
+                code = orderServer.code,
+                address = orderServer.addressDescription,
+                comment = orderServer.comment,
+                deliveryCost = orderServer.deliveryCost,
+                deferredTime = orderServer.deferredTime,
+                userUuid = orderServer.clientUserUuid,
+                orderProductUuid = orderServer.uuid,
+                orderProductCount = orderProductServer.count,
+                orderProductName = orderProductServer.name,
+                orderProductNewPrice = orderProductServer.newPrice,
+                orderProductOldPrice = orderProductServer.oldPrice,
+                orderProductUtils = orderProductServer.utils,
+                orderProductNutrition = orderProductServer.nutrition,
+                orderProductDescription = orderProductServer.description,
+                orderProductComboDescription = orderProductServer.comboDescription,
+                orderProductPhotoLink = orderProductServer.photoLink,
+                orderProductBarcode = orderProductServer.barcode,
+                orderUuid = orderProductServer.uuid
+            )
+        }
+    }
+
     override fun toLightOrder(orderEntityWithProducts: OrderEntityWithProducts): LightOrder {
         return orderEntityWithProducts.orderEntity.run {
             LightOrder(
@@ -46,6 +77,15 @@ class OrderMapper  constructor(
                 dateTime = dateTimeUtil.toDateTime(time, timeZone)
             )
         }
+    }
+
+    override fun toLightOrder(orderEntity: database.OrderEntity): LightOrder? {
+        return LightOrder(
+            uuid = orderEntity.uuid,
+            status = OrderStatus.valueOf(orderEntity.status),
+            code = orderEntity.code,
+            dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone)
+        )
     }
 
     override fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate {

@@ -17,23 +17,6 @@ interface UserAddressDao : BaseDao<UserAddressEntity> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSelectedUserAddressUuid(selectedUserAddressUuid: SelectedUserAddressUuidEntity)
 
-    // GET
-
-    @Query("SELECT * FROM UserAddressEntity WHERE userUuid IS NULL")
-    suspend fun getUnassignedUserAddressList(): List<UserAddressEntity>
-
-    @Query(
-        "SELECT * FROM UserAddressEntity " +
-                "WHERE userUuid = :userUuid AND street_cityUuid = :cityUuid"
-    )
-    suspend fun getUserAddressListByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): List<UserAddressEntity>
-
-    @Query("SELECT * FROM UserAddressEntity WHERE uuid = :uuid")
-    suspend fun getUserAddressByUuid(uuid: String): UserAddressEntity?
-
     // OBSERVE
 
     @Query(
@@ -62,10 +45,4 @@ interface UserAddressDao : BaseDao<UserAddressEntity> {
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddressEntity>>
-
-    @Query("SELECT * FROM UserAddressEntity WHERE uuid = :uuid")
-    fun observeUserAddressByUuid(uuid: String): Flow<UserAddressEntity?>
-
-    @Query("SELECT * FROM UserAddressEntity WHERE userUuid IS NULL")
-    fun observeUnassignedUserAddressList(): Flow<List<UserAddressEntity>>
 }

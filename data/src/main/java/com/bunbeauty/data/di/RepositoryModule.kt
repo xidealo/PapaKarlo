@@ -62,7 +62,6 @@ fun repositoryModule() = module {
         StreetRepository(
             apiRepo = get(),
             streetDao = get(),
-            dataStoreRepo = get(),
             streetMapper = get(),
         )
     }
@@ -78,7 +77,9 @@ fun repositoryModule() = module {
             profileMapper = get(),
             userMapper = get(),
             userDao = get(),
-            dataStoreRepo = get(),
+            userAddressDao = get(),
+            orderDao = get(),
+            dataStoreRepo = get()
         )
     }
     single<CityRepo> {

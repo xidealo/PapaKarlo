@@ -31,8 +31,7 @@ fun mapperModule() = module {
     single<IProfileMapper> {
         ProfileMapper(
             userAddressMapper = get(),
-            orderMapper = get(),
-            userMapper = get(),
+            orderMapper = get()
         )
     }
     single<IUserMapper> { UserMapper() }
