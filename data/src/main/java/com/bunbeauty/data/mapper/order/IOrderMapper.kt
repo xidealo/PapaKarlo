@@ -13,13 +13,13 @@ import database.OrderWithProductEntity
 
 interface IOrderMapper {
 
-    fun toOrderEntityWithProducts(orderServer: OrderServer): OrderEntityWithProducts
     fun toOrderWithProductEntityList(orderServer: OrderServer): List<OrderWithProductEntity>
     fun toLightOrder(orderEntityWithProducts: OrderEntityWithProducts): LightOrder
-    fun toLightOrder(orderEntity: OrderEntity): LightOrder?
+    fun toLightOrder(orderEntity: OrderEntity): LightOrder
     fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate
     fun toOrderCode(orderServer: OrderServer): OrderCode
     fun toOrder(orderEntityWithProducts: OrderEntityWithProducts): Order
+    fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order?
     fun toOrder(orderServer: OrderServer): Order
     fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer
 }

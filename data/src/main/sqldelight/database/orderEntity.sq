@@ -45,6 +45,17 @@ SELECT *
 FROM orderWithProductEntity
 WHERE userUuid = :userUuid;
 
+getOrderListByUserUuid:
+SELECT *
+FROM orderEntity
+WHERE userUuid = :userUuid;
+
+
+getOrderWithProductByUuid:
+SELECT *
+FROM orderWithProductEntity
+WHERE uuid = :uuid;
+
 getLastOrderWithProductListByUserUuid:
 SELECT *
 FROM orderEntity
@@ -53,3 +64,8 @@ WHERE userUuid = :userUuid AND time = (
     FROM orderEntity
     WHERE userUuid = :userUuid
 );
+
+updateOrderStatusByUuid:
+UPDATE orderEntity
+SET status = :status
+WHERE uuid = :uuid;

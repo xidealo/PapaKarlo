@@ -7,8 +7,9 @@ import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.domain.model.product.OrderMenuProduct
 import com.bunbeauty.domain.model.product.OrderProduct
+import database.OrderWithProductEntity
 
-class OrderProductMapper  constructor() : IOrderProductMapper {
+class OrderProductMapper : IOrderProductMapper {
 
     override fun toEntityModel(orderProduct: OrderProductServer): OrderProductEntity {
         return OrderProductEntity(
@@ -27,7 +28,7 @@ class OrderProductMapper  constructor() : IOrderProductMapper {
         )
     }
 
-    override fun toModel(orderProduct: OrderProductEntity): OrderProduct {
+    override fun toOrderProduct(orderProduct: OrderProductEntity): OrderProduct {
         return OrderProduct(
             uuid = orderProduct.uuid,
             count = orderProduct.count,
@@ -44,7 +45,24 @@ class OrderProductMapper  constructor() : IOrderProductMapper {
         )
     }
 
-    override fun toModel(orderProduct: OrderProductServer): OrderProduct {
+    override fun toOrderProduct(orderWithProductEntity: OrderWithProductEntity): OrderProduct {
+        return OrderProduct(
+            uuid = orderWithProductEntity.orderProductUuid,
+            count = orderWithProductEntity.orderProductCount,
+            product = OrderMenuProduct(
+                name = orderWithProductEntity.orderProductName,
+                newPrice = orderWithProductEntity.orderProductNewPrice,
+                oldPrice = orderWithProductEntity.orderProductOldPrice,
+                utils = orderWithProductEntity.orderProductUtils,
+                nutrition = orderWithProductEntity.orderProductNutrition,
+                description = orderWithProductEntity.orderProductDescription,
+                comboDescription = orderWithProductEntity.orderProductComboDescription,
+                photoLink = orderWithProductEntity.orderProductPhotoLink,
+            ),
+        )
+    }
+
+    override fun toOrderProduct(orderProduct: OrderProductServer): OrderProduct {
         return OrderProduct(
             uuid = orderProduct.uuid,
             count = orderProduct.count,

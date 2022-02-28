@@ -56,8 +56,27 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
         return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid).asFlow().mapToList()
     }
 
+    override fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderEntity>> {
+        return orderEntityQueries.getOrderListByUserUuid(userUuid).asFlow().mapToList()
+    }
+
+    override fun observeOrderWithProductListByUuid(uuid: String): Flow<List<OrderWithProductEntity>> {
+        return orderEntityQueries.getOrderWithProductByUuid(uuid).asFlow().mapToList()
+    }
+
     override fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?> {
         return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid).asFlow()
             .mapToOneOrNull()
+    }
+
+    override fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {
+        return orderEntityQueries.getOrderWithProductByUuid(uuid).executeAsList()
+    }
+
+    override fun updateOrderStatusByUuid(uuid: String, status: String) {
+        orderEntityQueries.updateOrderStatusByUuid(
+            uuid = uuid,
+            status = status
+        )
     }
 }
