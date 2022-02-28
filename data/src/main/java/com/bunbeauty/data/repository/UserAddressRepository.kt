@@ -1,10 +1,10 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
+import com.bunbeauty.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.user_address.IUserAddressDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CreatedUserAddress

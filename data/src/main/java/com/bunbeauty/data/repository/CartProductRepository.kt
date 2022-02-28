@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
+import com.bunbeauty.data.dao.cart_product.ICartProductDao
 import com.bunbeauty.data.mapper.cart_product.ICartProductMapper
-import com.bunbeauty.data.sql_delight.dao.cart_product.ICartProductDao
 import com.bunbeauty.domain.model.product.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import database.CartProductEntity

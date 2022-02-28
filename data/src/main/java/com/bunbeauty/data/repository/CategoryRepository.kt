@@ -1,10 +1,10 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.CATEGORY_TAG
+import com.bunbeauty.data.dao.category.ICategoryDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.category.ICategoryMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.category.ICategoryDao
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.repo.CategoryRepo

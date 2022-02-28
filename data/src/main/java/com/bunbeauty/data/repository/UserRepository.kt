@@ -2,6 +2,9 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Logger.USER_TAG
+import com.bunbeauty.data.dao.order.IOrderDao
+import com.bunbeauty.data.dao.user.IUserDao
+import com.bunbeauty.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.data.handleResult
 import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.mapper.profile.IProfileMapper
@@ -9,9 +12,6 @@ import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.model.login.LoginPostServer
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
-import com.bunbeauty.data.sql_delight.dao.order.IOrderDao
-import com.bunbeauty.data.sql_delight.dao.user.IUserDao
-import com.bunbeauty.data.sql_delight.dao.user_address.IUserAddressDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User

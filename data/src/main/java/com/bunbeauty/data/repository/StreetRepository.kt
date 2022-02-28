@@ -1,10 +1,10 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.STREET_TAG
+import com.bunbeauty.data.dao.street.IStreetDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.street.IStreetMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.street.IStreetDao
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.Street
 import com.bunbeauty.domain.repo.StreetRepo

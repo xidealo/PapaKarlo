@@ -1,10 +1,10 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.CITY_TAG
+import com.bunbeauty.data.dao.city.ICityDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.city.ICityDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.City

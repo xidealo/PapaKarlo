@@ -1,8 +1,8 @@
 package com.bunbeauty.data.repository
 
+import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.mapper.order.IOrderMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.order.IOrderDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.order.CreatedOrder

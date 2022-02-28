@@ -1,6 +1,5 @@
 package com.bunbeauty.data.mapper.order_product
 
-import com.bunbeauty.data.database.entity.user.order.OrderProductEntity
 import com.bunbeauty.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.data.network.model.order.post.OrderProductPostServer
 import com.bunbeauty.domain.model.product.CartProduct
@@ -10,40 +9,6 @@ import com.bunbeauty.domain.model.product.OrderProduct
 import database.OrderWithProductEntity
 
 class OrderProductMapper : IOrderProductMapper {
-
-    override fun toEntityModel(orderProduct: OrderProductServer): OrderProductEntity {
-        return OrderProductEntity(
-            uuid = orderProduct.uuid,
-            count = orderProduct.count,
-            name = orderProduct.name,
-            newPrice = orderProduct.newPrice,
-            oldPrice = orderProduct.oldPrice,
-            utils = orderProduct.utils,
-            nutrition = orderProduct.nutrition,
-            description = orderProduct.description,
-            comboDescription = orderProduct.comboDescription,
-            photoLink = orderProduct.photoLink,
-            barcode = orderProduct.barcode,
-            orderUuid = orderProduct.orderUuid,
-        )
-    }
-
-    override fun toOrderProduct(orderProduct: OrderProductEntity): OrderProduct {
-        return OrderProduct(
-            uuid = orderProduct.uuid,
-            count = orderProduct.count,
-            product = OrderMenuProduct(
-                name = orderProduct.name,
-                newPrice = orderProduct.newPrice,
-                oldPrice = orderProduct.oldPrice,
-                utils = orderProduct.utils,
-                nutrition = orderProduct.nutrition,
-                description = orderProduct.description,
-                comboDescription = orderProduct.comboDescription,
-                photoLink = orderProduct.photoLink,
-            ),
-        )
-    }
 
     override fun toOrderProduct(orderWithProductEntity: OrderWithProductEntity): OrderProduct {
         return OrderProduct(

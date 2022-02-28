@@ -38,10 +38,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
 
-    implementation(Room.runtime)
-    implementation(Room.roomKtx)
-    kapt(Room.compiler)
-
     implementation(DataStore.dataStorePreferences)
 
     implementation(platform(Firebase.bom))

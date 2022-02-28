@@ -1,11 +1,11 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
+import com.bunbeauty.data.dao.menu_product.IMenuProductDao
+import com.bunbeauty.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.sql_delight.dao.menu_product.IMenuProductDao
-import com.bunbeauty.data.sql_delight.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo

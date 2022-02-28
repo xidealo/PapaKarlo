@@ -1,7 +1,5 @@
 package com.bunbeauty.data.mapper.order
 
-import com.bunbeauty.data.database.entity.user.order.OrderEntityWithProducts
-import com.bunbeauty.data.database.entity.user.order.OrderStatusUpdate
 import com.bunbeauty.data.mapper.order_product.IOrderProductMapper
 import com.bunbeauty.data.network.model.order.get.OrderServer
 import com.bunbeauty.data.network.model.order.post.OrderPostServer
@@ -11,9 +9,10 @@ import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.util.IDateTimeUtil
+import database.OrderEntity
 import database.OrderWithProductEntity
 
-class OrderMapper constructor(
+class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
@@ -48,18 +47,7 @@ class OrderMapper constructor(
         }
     }
 
-    override fun toLightOrder(orderEntityWithProducts: OrderEntityWithProducts): LightOrder {
-        return orderEntityWithProducts.orderEntity.run {
-            LightOrder(
-                uuid = uuid,
-                status = status,
-                code = code,
-                dateTime = dateTimeUtil.toDateTime(time, timeZone)
-            )
-        }
-    }
-
-    override fun toLightOrder(orderEntity: database.OrderEntity): LightOrder {
+    override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
         return LightOrder(
             uuid = orderEntity.uuid,
             status = OrderStatus.valueOf(orderEntity.status),
@@ -68,36 +56,10 @@ class OrderMapper constructor(
         )
     }
 
-    override fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate {
-        return OrderStatusUpdate(
-            uuid = orderServer.uuid,
-            status = OrderStatus.valueOf(orderServer.status),
-        )
-    }
-
     override fun toOrderCode(orderServer: OrderServer): OrderCode {
         return OrderCode(
             code = orderServer.code
         )
-    }
-
-    override fun toOrder(orderEntityWithProducts: OrderEntityWithProducts): Order {
-        return orderEntityWithProducts.run {
-            Order(
-                uuid = orderEntity.uuid,
-                code = orderEntity.code,
-                status = orderEntity.status,
-                dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone),
-                isDelivery = orderEntity.isDelivery,
-                deferredTime = orderEntity.deferredTime?.let { millis ->
-                    dateTimeUtil.toTime(millis, orderEntity.timeZone)
-                },
-                address = orderEntity.address,
-                comment = orderEntity.comment,
-                deliveryCost = orderEntity.deliveryCost,
-                orderProductList = orderProductList.map(orderProductMapper::toOrderProduct),
-            )
-        }
     }
 
     override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? {
