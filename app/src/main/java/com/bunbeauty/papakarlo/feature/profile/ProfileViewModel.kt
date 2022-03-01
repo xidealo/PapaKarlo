@@ -7,7 +7,7 @@ import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.feature.profile.ProfileFragmentDirections.*
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.*
 
@@ -24,7 +24,7 @@ class ProfileViewModel  constructor(
         subscribeOnProfile()
     }
 
-    fun onLastOrderClicked(orderItem: OrderItem) {
+    fun onLastOrderClicked(orderItem: OrderItemModel) {
         router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 

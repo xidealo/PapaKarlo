@@ -37,26 +37,27 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
 
     @Composable
     private fun ChangeCityScreen(cityList: List<City>) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Title(textStringId = R.string.title_change_city)
-            cityList.forEachIndexed { index, city ->
-                val topSpace = if (index == 0) {
-                    FoodDeliveryTheme.dimensions.mediumSpace
-                } else {
-                    FoodDeliveryTheme.dimensions.smallSpace
-                }
-                CityItem(
-                    modifier = Modifier.padding(
-                        top = topSpace
-                    ),
-                    cityName = city.name,
-                    hasShadow = false
-                ) {
-                    viewModel.onCitySelected(city)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = FoodDeliveryTheme.dimensions.mediumSpace,
+                        end = FoodDeliveryTheme.dimensions.mediumSpace,
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    )
+            ) {
+                cityList.forEachIndexed { i, city ->
+                    CityItem(
+                        modifier = Modifier.padding(
+                            top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                        ),
+                        cityName = city.name,
+                        hasShadow = false
+                    ) {
+                        viewModel.onCitySelected(city)
+                    }
                 }
             }
         }

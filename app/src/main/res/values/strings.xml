@@ -229,8 +229,8 @@
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
 
     <!-- ORDERS -->
-    <string name="title_orders">История заказов</string>
-    <string name="msg_orders_empty">Здесь будет отображаться история ваших заказов</string>
+    <string name="title_order_list">История заказов</string>
+    <string name="msg_order_list_empty">Здесь будет отображаться история ваших заказов</string>
 
     <!-- ONE LINE ACTON-->
     <string name="error_one_line_action_email">Введите корректную почту</string>

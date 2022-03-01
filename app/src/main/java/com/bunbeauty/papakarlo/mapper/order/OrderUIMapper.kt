@@ -6,7 +6,7 @@ import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItem
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderStatusUI
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 import com.bunbeauty.papakarlo.util.color.IColorUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
@@ -15,8 +15,8 @@ class OrderUIMapper  constructor(
     private val colorUtil: IColorUtil,
 ) : IOrderUIMapper {
 
-    override fun toItem(order: LightOrder): OrderItem {
-        return OrderItem(
+    override fun toItem(order: LightOrder): OrderItemModel {
+        return OrderItemModel(
             uuid = order.uuid,
             status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),

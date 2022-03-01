@@ -2,10 +2,7 @@ package com.bunbeauty.papakarlo.feature.address.user_address_list
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -14,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -56,25 +52,20 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
         addressItemModelList: List<AddressItemModel>,
         isClickable: Boolean
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
+        Box(modifier = Modifier.fillMaxWidth()) {
             Column {
                 Title(textStringId = R.string.title_user_addresses)
                 LazyColumn(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    contentPadding = PaddingValues(
+                        start = FoodDeliveryTheme.dimensions.mediumSpace,
+                        end = FoodDeliveryTheme.dimensions.mediumSpace,
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    )
                 ) {
                     itemsIndexed(addressItemModelList) { i, addressItemModel ->
-                        val topSpace = if (i == 0) {
-                            0.dp
-                        } else {
-                            FoodDeliveryTheme.dimensions.smallSpace
-                        }
                         AddressItem(
                             modifier = Modifier.padding(
-                                top = topSpace,
+                                top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i),
                                 end = FoodDeliveryTheme.dimensions.addressEndSpace
                             ),
                             address = addressItemModel.address,

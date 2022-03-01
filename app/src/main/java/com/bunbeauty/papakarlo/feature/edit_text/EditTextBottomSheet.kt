@@ -43,49 +43,49 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
 
     @Composable
     private fun EditTextScreen(editTextSettings: EditTextSettings) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Title(textStringId = editTextSettings.titleStringId)
-            if (editTextSettings.infoText != null) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = editTextSettings.infoText
-                )
-            }
-            val inputText = editTextSettings.inputText ?: ""
-            var textFieldValue by remember {
-                mutableStateOf(
-                    TextFieldValue(
-                        text = inputText,
-                        selection = TextRange(inputText.length)
-                    )
-                )
-            }
-            EditText(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                initTextFieldValue = textFieldValue,
-                labelStringId = editTextSettings.labelStringId,
-                editTextType = editTextSettings.type,
-                focus = true
-            ) { value ->
-                textFieldValue = value
-            }
-            MainButton(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_settings_save
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                setFragmentResult(
-                    editTextSettings.requestKey,
-                    bundleOf(editTextSettings.resultKey to textFieldValue.text)
-                )
-                viewModel.goBack()
+                if (editTextSettings.infoText != null) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
+                        text = editTextSettings.infoText
+                    )
+                }
+                val inputText = editTextSettings.inputText ?: ""
+                var textFieldValue by remember {
+                    mutableStateOf(
+                        TextFieldValue(
+                            text = inputText,
+                            selection = TextRange(inputText.length)
+                        )
+                    )
+                }
+                EditText(
+                    modifier = Modifier.fillMaxWidth(),
+                    initTextFieldValue = textFieldValue,
+                    labelStringId = editTextSettings.labelStringId,
+                    editTextType = editTextSettings.type,
+                    focus = true
+                ) { value ->
+                    textFieldValue = value
+                }
+                MainButton(
+                    modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
+                    textStringId = R.string.action_settings_save
+                ) {
+                    setFragmentResult(
+                        editTextSettings.requestKey,
+                        bundleOf(editTextSettings.resultKey to textFieldValue.text)
+                    )
+                    viewModel.goBack()
+                }
             }
         }
     }

@@ -22,13 +22,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.compose.theme.smallRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OrderItem(
     modifier: Modifier = Modifier,
-    orderItem: OrderItem,
+    orderItem: OrderItemModel,
     onClick: () -> Unit
 ) {
     Card(
@@ -107,7 +107,7 @@ private fun getOrderColor(orderStatus: OrderStatus): Color {
 @Composable
 fun OrderItemPreview() {
     OrderItem(
-        orderItem = OrderItem(
+        orderItem = OrderItemModel(
             uuid = "",
             status = OrderStatus.NOT_ACCEPTED,
             statusName = "Обрабатывается",
@@ -122,7 +122,7 @@ fun OrderItemPreview() {
 @Composable
 fun OrderItemLageFontPreview() {
     OrderItem(
-        orderItem = OrderItem(
+        orderItem = OrderItemModel(
             uuid = "",
             status = OrderStatus.NOT_ACCEPTED,
             statusName = "Обрабатывается",

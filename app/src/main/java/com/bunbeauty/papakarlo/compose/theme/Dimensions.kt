@@ -15,4 +15,12 @@ data class AppDimensions(
     val cardHeight: Dp = 40.dp,
     val buttonSize: Dp = 40.dp,
     val addressEndSpace: Dp = 32.dp,
-)
+) {
+    fun getTopItemSpaceByIndex(i: Int): Dp {
+        return if (i == 0) {
+            0.dp
+        } else {
+            smallSpace
+        }
+    }
+}

@@ -35,29 +35,29 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
 
     @Composable
     private fun AboutAppScreen() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Title(textStringId = R.string.title_about_app)
-            IconCard(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.mediumSpace,
-                ),
-                iconId = R.drawable.ic_bb_logo,
-                iconDescriptionStringId = R.string.description_about_app_developer,
-                iconColor = FoodDeliveryTheme.colors.bunBeautyBrandColor,
-                labelStringId = R.string.msg_about_app_developer,
-            )
-            IconCard(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.smallSpace,
-                ),
-                iconId = R.drawable.ic_version,
-                iconDescriptionStringId = R.string.description_about_app_developer,
-                label = resourcesProvider.getString(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+            ) {
+                IconCard(
+                    iconId = R.drawable.ic_bb_logo,
+                    iconDescriptionStringId = R.string.description_about_app_developer,
+                    iconColor = FoodDeliveryTheme.colors.bunBeautyBrandColor,
+                    labelStringId = R.string.msg_about_app_developer,
+                )
+                IconCard(
+                    modifier = Modifier.padding(
+                        top = FoodDeliveryTheme.dimensions.smallSpace,
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    ),
+                    iconId = R.drawable.ic_version,
+                    iconDescriptionStringId = R.string.description_about_app_developer,
+                    label = resourcesProvider.getString(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
+                )
+            }
         }
     }
 

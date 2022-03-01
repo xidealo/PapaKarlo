@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.compose.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +16,9 @@ fun Title(
     @StringRes textStringId: Int
 ) {
     Text(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         text = stringResource(textStringId),
         style = FoodDeliveryTheme.typography.h2,
         textAlign = TextAlign.Center

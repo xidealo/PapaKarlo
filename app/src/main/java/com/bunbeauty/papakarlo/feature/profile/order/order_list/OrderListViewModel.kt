@@ -17,9 +17,9 @@ class OrderListViewModel  constructor(
     private val userInteractor: IUserInteractor,
 ) : BaseViewModel() {
 
-    private val mutableOrdersState: MutableStateFlow<State<List<OrderItem>>> =
+    private val mutableOrderListState: MutableStateFlow<State<List<OrderItemModel>>> =
         MutableStateFlow(State.Loading())
-    val ordersState: StateFlow<State<List<OrderItem>>> = mutableOrdersState.asStateFlow()
+    val orderListState: StateFlow<State<List<OrderItemModel>>> = mutableOrderListState.asStateFlow()
 
     init {
         observeOrders()
@@ -30,9 +30,9 @@ class OrderListViewModel  constructor(
             if (userInteractor.isUserAuthorize()) {
                 orderInteractor.observeOrderList().onEach { orderList ->
                     if (orderList.isEmpty()) {
-                        mutableOrdersState.value = State.Empty()
+                        mutableOrderListState.value = State.Empty()
                     } else {
-                        mutableOrdersState.value =
+                        mutableOrderListState.value =
                             orderList.map(orderUIMapper::toItem).toStateSuccess()
                     }
                 }.launchIn(viewModelScope)
@@ -40,7 +40,7 @@ class OrderListViewModel  constructor(
         }
     }
 
-    fun onOrderClicked(orderItem: OrderItem) {
+    fun onOrderClicked(orderItem: OrderItemModel) {
         router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 
