@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.address.user_address_list
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -10,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -23,6 +25,7 @@ import com.bunbeauty.papakarlo.compose.element.MainIconButton
 import com.bunbeauty.papakarlo.compose.element.Title
 import com.bunbeauty.papakarlo.compose.item.AddressItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.compose.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.AddressItemModel
@@ -52,7 +55,12 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
         addressItemModelList: List<AddressItemModel>,
         isClickable: Boolean
     ) {
-        Box(modifier = Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(bottomSheetShape)
+                .background(FoodDeliveryTheme.colors.surface)
+        ) {
             Column {
                 Title(textStringId = R.string.title_user_addresses)
                 LazyColumn(
