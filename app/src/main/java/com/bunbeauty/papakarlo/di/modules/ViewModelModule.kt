@@ -104,8 +104,6 @@ fun viewModelModule() = module {
     viewModel {
         OrderDetailsViewModel(
             orderInteractor = get(),
-            productInteractor = get(),
-            stringUtil = get(),
             orderUIMapper = get(),
         )
     }

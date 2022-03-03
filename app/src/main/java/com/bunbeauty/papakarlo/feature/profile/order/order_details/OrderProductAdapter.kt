@@ -11,8 +11,8 @@ import com.bunbeauty.papakarlo.databinding.ElementOrderProductBinding
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 
-class OrderProductAdapter  constructor() :
-    BaseListAdapter<OrderProductItem, OrderProductAdapter.OrderProductViewHolder>(
+class OrderProductAdapter :
+    BaseListAdapter<OrderProductItemModel, OrderProductAdapter.OrderProductViewHolder>(
         DefaultDiffCallback()
     ) {
 
@@ -24,9 +24,9 @@ class OrderProductAdapter  constructor() :
     }
 
     inner class OrderProductViewHolder(private val elementOrderProductBinding: ElementOrderProductBinding) :
-        BaseViewHolder<OrderProductItem>(elementOrderProductBinding) {
+        BaseViewHolder<OrderProductItemModel>(elementOrderProductBinding) {
 
-        override fun onBind(item: OrderProductItem) {
+        override fun onBind(item: OrderProductItemModel) {
             super.onBind(item)
 
             elementOrderProductBinding.run {

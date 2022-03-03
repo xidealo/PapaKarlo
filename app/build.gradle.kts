@@ -137,6 +137,7 @@ dependencies {
     implementation(Firebase.authKtx)
 
     implementation(Coil.coil)
+    implementation(Coil.coilCompose)
 
     implementation(PinEntryEditText.pinEntryEditText) {
         exclude(group = PinEntryEditText.group, module = PinEntryEditText.module)

@@ -16,6 +16,7 @@
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_clear">Очистить</string>
     <string name="description_ic_add">Добавить</string>
+    <string name="description_product">Фото блюда</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -42,7 +43,6 @@
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
-    <string name="description_product">Изображение продукта</string>
 
     <!-- MENU -->
     <string name="title_menu">Меню</string>
@@ -151,11 +151,12 @@
 
     <!-- ORDER DETAILS -->
     <string name="msg_order_details_order">Заказ&#160;</string>
-    <string name="msg_order_details_order_time">Дата и время заказа</string>
+    <string name="msg_order_details_date_time">Дата и время заказа</string>
     <string name="msg_order_details_pickup_method">Способ получения</string>
     <string name="msg_order_details_delivery">Доставка</string>
     <string name="msg_order_details_pickup">Самовывоз</string>
-    <string name="msg_order_details_deferred_time">Ко времени</string>
+    <string name="msg_order_details_deferred_time_delivery">Ко времени</string>
+    <string name="msg_order_details_deferred_time_pickup">Ко времени</string>
     <string name="msg_order_details_address">Адрес</string>
     <string name="msg_order_details_comment">Комментарий</string>
     <string name="msg_order_details_order_status">Статус</string>
@@ -169,6 +170,7 @@
     <string name="msg_order_details_alert">Отменить заказ?</string>
     <string name="action_order_details_yes">Да</string>
     <string name="action_order_details_no">Нет</string>
+    <string name="description_order_details_done">Шаг выполнен</string>
 
     <!-- PROFILE  -->
     <string name="title_profile">Профиль</string>

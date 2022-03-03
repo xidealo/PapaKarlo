@@ -14,7 +14,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
@@ -30,7 +29,10 @@ fun TextCard(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(1.dp, mediumRoundedCornerShape)
+            .shadow(
+                elevation = FoodDeliveryTheme.dimensions.elevation,
+                shape = mediumRoundedCornerShape
+            )
             .clip(mediumRoundedCornerShape),
         backgroundColor = FoodDeliveryTheme.colors.surface
     ) {

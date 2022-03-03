@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.smallIcon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -37,7 +36,10 @@ fun NavigationTextCard(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(1.dp, mediumRoundedCornerShape)
+            .shadow(
+                elevation = FoodDeliveryTheme.dimensions.elevation,
+                shape = mediumRoundedCornerShape
+            )
             .clip(mediumRoundedCornerShape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },

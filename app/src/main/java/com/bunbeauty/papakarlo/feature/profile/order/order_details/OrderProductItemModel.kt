@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.order.order_details
 
 import com.bunbeauty.papakarlo.common.BaseItem
 
-class OrderProductItem(
+class OrderProductItemModel(
     override val uuid: String,
     val name: String,
     val newCost: String,

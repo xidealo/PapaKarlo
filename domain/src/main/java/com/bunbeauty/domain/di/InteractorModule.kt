@@ -81,6 +81,7 @@ fun interactorModule() = module {
             orderRepo = get(),
             cartProductRepo = get(),
             dataStoreRepo = get(),
+            productInteractor = get(),
         )
     }
     single<IAddressInteractor> {

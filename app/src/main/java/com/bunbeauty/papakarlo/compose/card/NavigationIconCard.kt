@@ -41,7 +41,7 @@ fun NavigationIconCard(
     onClick: () -> Unit
 ) {
     val elevation = if (hasShadow) {
-        1.dp
+        FoodDeliveryTheme.dimensions.elevation
     } else {
         0.dp
     }

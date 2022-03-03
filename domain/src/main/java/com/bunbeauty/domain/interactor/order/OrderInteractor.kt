@@ -1,21 +1,20 @@
 package com.bunbeauty.domain.interactor.order
 
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.model.order.CreatedOrder
-import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderCode
+import com.bunbeauty.domain.model.order.*
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 
-class OrderInteractor  constructor(
+class OrderInteractor constructor(
     private val orderRepo: OrderRepo,
     private val cartProductRepo: CartProductRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
+    private val productInteractor: IProductInteractor
 ) : IOrderInteractor {
 
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
@@ -33,8 +32,20 @@ class OrderInteractor  constructor(
         }
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): Order? {
-        return orderRepo.getOrderByUuid(orderUuid)
+    override suspend fun getOrderByUuid(orderUuid: String): OrderWithAmounts? {
+        return orderRepo.getOrderByUuid(orderUuid)?.let { order ->
+            OrderWithAmounts(
+                order = order,
+                oldAmountToPay = productInteractor.getOldAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+                newAmountToPay = productInteractor.getNewAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+            )
+        }
     }
 
     override suspend fun createOrder(
