@@ -128,7 +128,7 @@ fun ImageView.setPhoto(photoLink: String) {
     }
 }
 
-fun ComposeView.compose(content: @Composable () -> Unit) {
+inline fun ComposeView.compose(crossinline content: @Composable () -> Unit) {
     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
     setContent {
         FoodDeliveryTheme {

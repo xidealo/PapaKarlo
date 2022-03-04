@@ -18,6 +18,7 @@ data class AppDimensions(
     val productImageHeight: Dp = 72.dp,
     val productImageWidth: Dp = 108.dp,
     val blurHeight: Dp = 16.dp,
+    val autoCompleteListHeight: Dp = 160.dp,
 ) {
     fun getTopItemSpaceByIndex(i: Int): Dp {
         return if (i == 0) {

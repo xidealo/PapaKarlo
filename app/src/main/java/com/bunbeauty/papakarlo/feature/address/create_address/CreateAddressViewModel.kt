@@ -9,7 +9,6 @@ import com.bunbeauty.common.Constants.HOUSE_ERROR_KEY
 import com.bunbeauty.common.Constants.STREET_ERROR_KEY
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.street.IStreetInteractor
-import com.bunbeauty.domain.model.Street
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
@@ -19,17 +18,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CreateAddressViewModel  constructor(
+class CreateAddressViewModel constructor(
     private val resourcesProvider: IResourcesProvider,
     private val textValidator: ITextValidator,
     private val streetInteractor: IStreetInteractor,
     private val addressInteractor: IAddressInteractor,
 ) : BaseViewModel() {
 
-    private var streetList: List<Street> = emptyList()
-    private val mutableStreetNameList: MutableStateFlow<List<String>> =
+    private val mutableStreetList: MutableStateFlow<List<StreetItemModel>> =
         MutableStateFlow(emptyList())
-    val streetNameList: StateFlow<List<String>> = mutableStreetNameList.asStateFlow()
+    val streetList: StateFlow<List<StreetItemModel>> = mutableStreetList.asStateFlow()
 
     init {
         observeStreetList()
@@ -37,10 +35,13 @@ class CreateAddressViewModel  constructor(
 
     private fun observeStreetList() {
         streetInteractor.observeStreetList().launchOnEach { streetList ->
-            this.streetList = streetList
-        }
-        streetInteractor.observeStreetNameList().launchOnEach { streetNameList ->
-            mutableStreetNameList.value = streetNameList
+            mutableStreetList.value = streetList.map { street ->
+                StreetItemModel(
+                    uuid = street.uuid,
+                    name = street.name,
+                    cityUuid = street.cityUuid,
+                )
+            }
         }
     }
 
@@ -52,7 +53,8 @@ class CreateAddressViewModel  constructor(
         comment: String,
         floor: String
     ) {
-        val incorrectStreetSelected = streetList.none { street -> street.name == streetName }
+        val incorrectStreetSelected =
+            mutableStreetList.value.none { street -> street.name == streetName }
         if (incorrectStreetSelected) {
             sendFieldError(
                 STREET_ERROR_KEY,
