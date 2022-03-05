@@ -8,10 +8,8 @@ import com.bunbeauty.papakarlo.common.model.Message
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okhttp3.Route
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
@@ -26,6 +24,12 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     private val mutableFieldError = MutableSharedFlow<FieldError>(0)
     val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
+
+    protected fun <T> MutableSharedFlow<T>.launchEmit(value: T) {
+        viewModelScope.launch {
+            emit(value)
+        }
+    }
 
     fun showMessage(message: String, isTop: Boolean) {
         viewModelScope.launch {

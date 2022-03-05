@@ -6,8 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -26,54 +34,172 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     override val viewModel: CreateAddressViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateAddressBinding::bind)
 
+    @OptIn(ExperimentalComposeUiApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentCreateAddressCvMain.compose {
-            var streetText by remember {
-                mutableStateOf(TextFieldValue(text = ""))
+            val focusManager = LocalFocusManager.current
+            var streetText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
             }
-            var houseText by remember {
-                mutableStateOf(TextFieldValue(text = ""))
+            var streetError: Int? by rememberSaveable {
+                mutableStateOf(null)
+            }
+            var houseText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
+            }
+            var houseError: Int? by rememberSaveable {
+                mutableStateOf(null)
+            }
+            var flatText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
+            }
+            var flatError: Int? by rememberSaveable {
+                mutableStateOf(null)
+            }
+            var entranceText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
+            }
+            var entranceError: Int? by rememberSaveable {
+                mutableStateOf(null)
+            }
+            var floorText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
+            }
+            var floorError: Int? by rememberSaveable {
+                mutableStateOf(null)
+            }
+            var commentText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(TextFieldValue(""))
+            }
+            var commentError: Int? by rememberSaveable {
+                mutableStateOf(null)
             }
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .weight(1f)
+                ) {
                     val streetList by viewModel.streetList.collectAsState()
                     AutoCompleteEditText(
                         modifier = Modifier.fillMaxWidth(),
-                        initTextFieldValue = streetText,
+                        textFieldValue = streetText,
                         labelStringId = R.string.hint_create_address_street,
                         editTextType = EditTextType.TEXT,
                         focus = true,
+                        errorMessageId = streetError,
                         list = streetList,
-                    ) { value ->
-                        streetText = value
+                    ) { changedValue ->
+                        streetText = changedValue
                     }
                     EditText(
                         modifier = Modifier.fillMaxWidth(),
-                        initTextFieldValue = houseText,
+                        textFieldValue = houseText,
                         labelStringId = R.string.hint_create_address_house,
-                        editTextType = EditTextType.TEXT
-                    ) { value ->
-                        houseText = value
+                        editTextType = EditTextType.TEXT,
+                        errorMessageId = houseError,
+                    ) { changedValue ->
+                        houseText = changedValue
+                    }
+                    EditText(
+                        modifier = Modifier.fillMaxWidth(),
+                        textFieldValue = flatText,
+                        labelStringId = R.string.hint_create_address_flat,
+                        editTextType = EditTextType.TEXT,
+                        errorMessageId = flatError,
+                    ) { changedValue ->
+                        flatText = changedValue
+                    }
+                    EditText(
+                        modifier = Modifier.fillMaxWidth(),
+                        textFieldValue = entranceText,
+                        labelStringId = R.string.hint_create_address_entrance,
+                        editTextType = EditTextType.TEXT,
+                        errorMessageId = entranceError,
+                    ) { changedValue ->
+                        entranceText = changedValue
+                    }
+                    EditText(
+                        modifier = Modifier.fillMaxWidth(),
+                        textFieldValue = floorText,
+                        labelStringId = R.string.hint_create_address_floor,
+                        editTextType = EditTextType.TEXT,
+                        errorMessageId = floorError,
+                    ) { changedValue ->
+                        floorText = changedValue
+                    }
+                    EditText(
+                        modifier = Modifier.fillMaxWidth(),
+                        textFieldValue = commentText,
+                        labelStringId = R.string.hint_create_address_comment,
+                        editTextType = EditTextType.TEXT,
+                        isLast = true,
+                        maxLines = 5,
+                        errorMessageId = commentError,
+                    ) { changedValue ->
+                        commentText = changedValue
                     }
                 }
-                MainButton(textStringId = R.string.action_create_address_save) {
+
+                fun onSaveButtonClick() {
+                    streetError = null
+                    houseError = null
+                    flatError = null
+                    entranceError = null
+                    floorError = null
+                    commentError = null
+                    viewModel.checkStreetError(streetText.text)?.let { error ->
+                        streetError = error
+                        return
+                    }
+                    viewModel.checkHouseError(houseText.text)?.let { error ->
+                        houseError = error
+                        return
+                    }
+                    viewModel.checkHouseMaxLengthError(houseText.text)?.let { error ->
+                        houseError = error
+                        return
+                    }
+                    viewModel.checkFlatMaxLengthError(flatText.text)?.let { error ->
+                        flatError = error
+                        return
+                    }
+                    viewModel.checkEntranceMaxLengthError(entranceText.text)?.let { error ->
+                        entranceError = error
+                        return
+                    }
+                    viewModel.checkFloorMaxLengthError(floorText.text)?.let { error ->
+                        floorError = error
+                        return
+                    }
+                    viewModel.checkCommentMaxLengthError(commentText.text)?.let { error ->
+                        commentError = error
+                        return
+                    }
+                    focusManager.clearFocus()
                     viewModel.onCreateAddressClicked(
                         streetName = streetText.text,
                         house = houseText.text,
-                        flat = "",
-                        entrance = "",
-                        comment = "",
-                        floor = ""
+                        flat = flatText.text,
+                        entrance = entranceText.text,
+                        floor = floorText.text,
+                        comment = commentText.text,
                     )
                 }
+                MainButton(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    textStringId = R.string.action_create_address_save,
+                    onClick = ::onSaveButtonClick
+                )
             }
         }
+
 
 //        viewBinding.run {
 //            textInputMap[STREET_ERROR_KEY] = fragmentCreateAddressTilStreet

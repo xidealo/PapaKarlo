@@ -111,7 +111,11 @@
     <string name="error_create_address_fail">Не удалось создать адрес</string>
     <string name="error_create_address_street">Выберите название улицы из списка</string>
     <string name="error_create_address_house">Укажите номер дома</string>
-    <string name="error_create_address_max_length">Максимальная длинна для поля&#160;</string>
+    <string name="error_create_address_house_max_length">Максимальная длинна для поля 5</string>
+    <string name="error_create_address_flat_max_length">Максимальная длинна для поля 5</string>
+    <string name="error_create_address_entrance_max_length">Максимальная длинна для поля 5</string>
+    <string name="error_create_address_floor_max_length">Максимальная длинна для поля 5</string>
+    <string name="error_create_address_comment_max_length">Максимальная длинна для поля 100</string>
     <string name="action_create_address_save">Сохранить</string>
 
     <!-- BOTTOM PANEL -->

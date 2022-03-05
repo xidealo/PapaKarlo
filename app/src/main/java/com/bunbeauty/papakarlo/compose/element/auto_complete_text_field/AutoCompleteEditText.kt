@@ -4,8 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
@@ -17,11 +15,13 @@ import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 @Composable
 fun <T : AutoCompleteEntity> AutoCompleteEditText(
     modifier: Modifier = Modifier,
-    initTextFieldValue: TextFieldValue = TextFieldValue(""),
+    textFieldValue: TextFieldValue = TextFieldValue(""),
     @StringRes labelStringId: Int,
     editTextType: EditTextType,
+    isLast: Boolean = false,
     maxLines: Int = 1,
     focus: Boolean = false,
+    @StringRes errorMessageId: Int? = null,
     list: List<T>,
     onTextChanged: (TextFieldValue) -> Unit,
 ) {
@@ -29,43 +29,47 @@ fun <T : AutoCompleteEntity> AutoCompleteEditText(
     Column(modifier = modifier) {
         EditText(
             modifier = Modifier.fillMaxWidth(),
-            initTextFieldValue = initTextFieldValue,
+            textFieldValue = textFieldValue,
             labelStringId = labelStringId,
             editTextType = editTextType,
+            isLast = isLast,
             maxLines = maxLines,
             focus = focus,
-            onTextChanged = { value ->
-                onTextChanged(value)
-                listState = if (value.text.isEmpty()) {
+            errorMessageId = errorMessageId,
+            onTextChanged = { changedValue ->
+                onTextChanged(changedValue)
+                listState = if (changedValue.text.isEmpty()) {
                     emptyList()
                 } else {
                     list.filter { autoCompleteEntity ->
-                        autoCompleteEntity.filter(value.text)
+                        autoCompleteEntity.filter(changedValue.text)
                     }.take(3)
                 }
             }
         )
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
-            itemsIndexed(listState) { i, item ->
-                DropdownItem(
-                    modifier = Modifier.padding(
-                        top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
-                    ),
-                    text = item.value,
-                    onClick = {
-                        onTextChanged(
-                            TextFieldValue(
-                                text = item.value,
-                                selection = TextRange(item.value.length)
+        if (listState.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+            ) {
+                listState.forEachIndexed { i, item ->
+                    DropdownItem(
+                        modifier = Modifier.padding(
+                            top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                        ),
+                        text = item.value,
+                        onClick = {
+                            onTextChanged(
+                                TextFieldValue(
+                                    text = item.value,
+                                    selection = TextRange(item.value.length)
+                                )
                             )
-                        )
-                        listState = emptyList()
-                    }
-                )
+                            listState = emptyList()
+                        }
+                    )
+                }
             }
         }
     }

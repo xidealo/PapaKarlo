@@ -11,7 +11,10 @@ data class StreetItemModel(
     override val value: String = name
 
     override fun filter(query: String): Boolean {
-        return name.lowercase()
-            .contains(query.lowercase())
+        return query.lowercase().split(" ").all { queryPart ->
+            name.lowercase().split(" ").any { namePart ->
+                namePart.startsWith(queryPart)
+            }
+        }
     }
 }
