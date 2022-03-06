@@ -36,7 +36,8 @@ fun NavigationIconCard(
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
     @StringRes iconDescription: Int,
-    @StringRes label: Int,
+    @StringRes labelStringId: Int? = null,
+    label: String = "",
     hasShadow: Boolean = true,
     onClick: () -> Unit
 ) {
@@ -73,11 +74,14 @@ fun NavigationIconCard(
                 contentDescription = stringResource(iconDescription),
                 tint = FoodDeliveryTheme.colors.onSurfaceVariant
             )
+            val labelText = labelStringId?.let { id ->
+                stringResource(id)
+            } ?: label
             Text(
                 modifier = Modifier
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                     .weight(1f),
-                text = stringResource(label),
+                text = labelText,
                 style = FoodDeliveryTheme.typography.body1,
                 color = FoodDeliveryTheme.colors.onSurface
             )
@@ -98,6 +102,6 @@ fun NavigationIconCardPreview() {
     NavigationIconCard(
         iconId = R.drawable.ic_info,
         iconDescription = R.string.description_ic_about,
-        label = R.string.title_about_app
+        label = "Текст"
     ) {}
 }

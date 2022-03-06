@@ -220,6 +220,8 @@
     <!-- CAFE OPTIONS -->
     <string name="action_cafe_options_call">Позвонить:&#160;</string>
     <string name="action_cafe_options_show_map">На карте:&#160;</string>
+    <string name="description_cafe_options_call">Позвонить</string>
+    <string name="description_cafe_options_map">Карта</string>
 
     <!-- SETTINGS -->
     <string name="title_settings">Настройки</string>
