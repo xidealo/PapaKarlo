@@ -11,11 +11,17 @@ struct SelectCityView: View {
     let cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
     
     var body: some View {
-        List {
-            ForEach(cities){ city in
-                CityItemView(city: city)
-            }
-        }
+            VStack{
+                ScrollView {
+                    LazyVStack{
+                        ForEach(cities){ city in
+                            CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
+                    }
+                }.padding(.top, Diems.MEDIUM_PADDING)
+            }.background(Color("background")).navigationTitle(
+                Text(Strings.TITLE_SELECT_CITY_CITY)
+            )
     }
 }
 

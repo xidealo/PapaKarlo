@@ -11,11 +11,11 @@ struct CityItemView: View {
     var city: CityItem
 
     var body: some View {
-        Text(city.city).frame(maxWidth: .infinity).background(Color.white).cornerRadius(15)
+        Text(city.city).padding().frame(maxWidth: .infinity, alignment: .leading).background(Color.white).cornerRadius(15)
     }
 }
 
-struct CityItemView_Previews: PreviewProvider {
+class CityItemView_Previews: PreviewProvider {
     static var previews: some View {
         CityItemView(city:CityItem(city: "Kimry"))
     }
