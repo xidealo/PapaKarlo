@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02500A2327D4F72700DA641C /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500A2227D4F72700DA641C /* Diems.swift */; };
+		02500A2627D4F9DB00DA641C /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500A2527D4F9DB00DA641C /* Strings.swift */; };
 		0254657227C9209700337B98 /* CityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254657127C9209700337B98 /* CityItemView.swift */; };
 		0254657427C9238600337B98 /* CityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0254657327C9238600337B98 /* CityItem.swift */; };
 		0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02500A2227D4F72700DA641C /* Diems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diems.swift; sourceTree = "<group>"; };
+		02500A2527D4F9DB00DA641C /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		0254657127C9209700337B98 /* CityItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityItemView.swift; sourceTree = "<group>"; };
 		0254657327C9238600337B98 /* CityItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityItem.swift; sourceTree = "<group>"; };
 		0287396227AC40D80020A919 /* PapaKarloSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaKarloSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +45,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02500A2427D4F9B800DA641C /* resourse */ = {
+			isa = PBXGroup;
+			children = (
+				02500A2227D4F72700DA641C /* Diems.swift */,
+				02500A2527D4F9DB00DA641C /* Strings.swift */,
+			);
+			path = resourse;
+			sourceTree = "<group>";
+		};
 		0254656327C918BB00337B98 /* consumer_cart */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +143,7 @@
 		0287396427AC40D80020A919 /* PapaKarloSwift */ = {
 			isa = PBXGroup;
 			children = (
+				02500A2427D4F9B800DA641C /* resourse */,
 				02E0FF8D27C6A20600BABD2B /* feature */,
 				0287396C27AC40DB0020A919 /* Preview Assets.xcassets */,
 				0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */,
@@ -292,7 +306,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02500A2327D4F72700DA641C /* Diems.swift in Sources */,
 				0287396827AC40D80020A919 /* SplashScreen.swift in Sources */,
+				02500A2627D4F9DB00DA641C /* Strings.swift in Sources */,
 				02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */,
 				02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */,
 				0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */,

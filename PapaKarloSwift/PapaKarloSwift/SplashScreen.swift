@@ -8,16 +8,20 @@
 import SwiftUI
 import shared
 
-struct ContentView: View {
+struct SplashView: View {
     var body: some View {
         NavigationView{
-    
-        }
+            NavigationLink(
+                destination:SelectCityView(), isActive: .constant(true)
+            ){
+                
+            }
+        }.navigationBarBackButtonHidden(true)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        SplashView()
     }
 }
