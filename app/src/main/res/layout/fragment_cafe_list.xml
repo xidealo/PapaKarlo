@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_cafe_list_rv_cafe_list"
-    style="@style/MatchParentRecycleView"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:context=".feature.cafe.cafe_list.CafeListFragment"
-    tools:itemCount="2"
-    tools:listitem="@layout/element_cafe" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".feature.cafe.cafe_list.CafeListFragment">
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/fragmentCafeListCvMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

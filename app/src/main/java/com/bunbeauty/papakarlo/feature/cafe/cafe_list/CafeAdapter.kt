@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 import com.bunbeauty.papakarlo.databinding.ElementCafeBinding
 
 class CafeAdapter :
-    BaseListAdapter<CafeItem, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
+    BaseListAdapter<CafeItemModel, CafeAdapter.CafeViewHolder>(DefaultDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CafeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,9 +18,9 @@ class CafeAdapter :
     }
 
     inner class CafeViewHolder(private val elementCafeBinding: ElementCafeBinding) :
-        BaseViewHolder<CafeItem>(elementCafeBinding) {
+        BaseViewHolder<CafeItemModel>(elementCafeBinding) {
 
-        override fun onBind(item: CafeItem) {
+        override fun onBind(item: CafeItemModel) {
             super.onBind(item)
 
             elementCafeBinding.run {
@@ -30,7 +30,7 @@ class CafeAdapter :
             }
         }
 
-        override fun onBind(item: CafeItem, payloads: List<Any>) {
+        override fun onBind(item: CafeItemModel, payloads: List<Any>) {
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
@@ -41,7 +41,7 @@ class CafeAdapter :
         private fun setIsOpenMessage() {
             elementCafeBinding.run {
                 elementCafeTvTimeStatus.text = item.isOpenMessage
-                elementCafeTvTimeStatus.setTextColor(item.isOpenColor)
+                //elementCafeTvTimeStatus.setTextColor(item.isOpenColor)
                 elementCafeMcvMain.setOnClickListener {
                     onItemClicked(item)
                 }

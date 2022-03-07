@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.icon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
@@ -69,7 +69,7 @@ fun IconCard(
             val labelText = labelStringId?.let { id ->
                 stringResource(id)
             } ?: label
-            Text(
+            OverflowingText(
                 modifier = Modifier
                     .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
                     .weight(1f),
