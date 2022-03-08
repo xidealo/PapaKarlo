@@ -11,42 +11,4 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/bottom_sheet_deferred_time_tv_title"-->
-    <!--        style="@style/LargeBoldWrapContentText"-->
-    <!--        android:layout_margin="@dimen/medium_margin"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        tools:text="Время доставки" />-->
-
-    <!--    <com.google.android.material.card.MaterialCardView-->
-    <!--        android:id="@+id/bottom_sheet_deferred_time_mcv_asap"-->
-    <!--        style="@style/MatchConstraintsShadowlessCard"-->
-    <!--        android:layout_margin="@dimen/medium_margin"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_tv_title">-->
-
-    <!--        <TextView-->
-    <!--            style="@style/MediumRegularWrapContentText"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_margin="@dimen/medium_margin"-->
-    <!--            android:text="@string/msg_deferred_time_asap" />-->
-    <!--    </com.google.android.material.card.MaterialCardView>-->
-
-    <!--    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard-->
-    <!--        android:id="@+id/bottom_sheet_deferred_time_nc_select_time"-->
-    <!--        style="@style/ShadowlessMonochromeNavigationCard"-->
-    <!--        android:layout_marginStart="@dimen/medium_margin"-->
-    <!--        android:layout_marginTop="@dimen/small_margin"-->
-    <!--        android:layout_marginEnd="@dimen/medium_margin"-->
-    <!--        android:layout_marginBottom="@dimen/medium_margin"-->
-    <!--        android:icon="@drawable/ic_right_arrow"-->
-    <!--        android:text="@string/action_deferred_time_select_time"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_mcv_asap" />-->
-
 </LinearLayout>

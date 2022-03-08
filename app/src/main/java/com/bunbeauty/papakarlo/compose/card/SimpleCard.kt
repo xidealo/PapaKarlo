@@ -18,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -32,16 +31,11 @@ fun SimpleCard(
     hasShadow: Boolean = true,
     onClick: () -> Unit
 ) {
-    val elevation = if (hasShadow) {
-        FoodDeliveryTheme.dimensions.elevation
-    } else {
-        0.dp
-    }
     Card(
         modifier = modifier
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
             .shadow(
-                elevation = elevation,
+                elevation = FoodDeliveryTheme.dimensions.getEvaluation(hasShadow),
                 shape = mediumRoundedCornerShape
             )
             .clip(mediumRoundedCornerShape)

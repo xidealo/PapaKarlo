@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
-val grey = Color(0xFFC1C1C1)
+val grey = Color(0xFFBABABA)
 val lightGrey = Color(0xFFD6D6D6)
 val cream = Color(0xFFF2F1F6)
 val red = Color(0xFFB1021D)
@@ -29,7 +29,7 @@ val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
     error = red,
@@ -56,7 +56,7 @@ val LightColors = AppColors(
 
 val DarkColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
     error = red,
@@ -169,12 +169,22 @@ class AppColors(
     )
 
     @Composable
-    fun buttonColors(): ButtonColors {
+    fun mainButtonColors(): ButtonColors {
         return ButtonDefaults.buttonColors(
             backgroundColor = primary,
             contentColor = onPrimary,
             disabledBackgroundColor = primary.copy(alpha = 0.8f),
             disabledContentColor = onPrimary.copy(alpha = 0.8f)
+        )
+    }
+
+    @Composable
+    fun secondaryButtonColors(): ButtonColors {
+        return ButtonDefaults.buttonColors(
+            backgroundColor = secondary,
+            contentColor = onSecondary,
+            disabledBackgroundColor = secondary.copy(alpha = 0.8f),
+            disabledContentColor = onSecondary.copy(alpha = 0.8f)
         )
     }
 
