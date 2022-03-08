@@ -1,9 +1,9 @@
 package com.bunbeauty.domain
 
-import com.bunbeauty.domain.model.datee_time.Date
-import com.bunbeauty.domain.model.datee_time.DateTime
-import com.bunbeauty.domain.model.datee_time.MinuteSecond
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.Date
+import com.bunbeauty.domain.model.date_time.DateTime
+import com.bunbeauty.domain.model.date_time.MinuteSecond
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.domain.util.DateTimeUtil
 import org.junit.Assert.assertEquals
 import org.junit.Before

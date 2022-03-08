@@ -2,8 +2,8 @@ package com.bunbeauty.domain.interactor.deferred_time
 
 import com.bunbeauty.common.Constants.MIN_DEFERRED_HOURS_ADDITION
 import com.bunbeauty.common.Constants.MIN_DEFERRED_MINUTES_ADDITION
-import com.bunbeauty.domain.model.datee_time.DateTime
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.DateTime
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.IDateTimeUtil
 
@@ -22,10 +22,9 @@ class DeferredTimeInteractor  constructor(
         return getMinDateTime().time
     }
 
-    override suspend fun getDeferredTimeMillis(hours: Int, minutes: Int): Long {
-        return dateTimeUtil.getMillisByHourAndMinute(
-            hours,
-            minutes,
+    override suspend fun getDeferredTimeMillis(time: Time): Long {
+        return dateTimeUtil.getMillisByTime(
+            time,
             dataStoreRepo.getSelectedCityTimeZone()
         )
     }

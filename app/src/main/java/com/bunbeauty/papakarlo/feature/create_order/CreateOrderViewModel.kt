@@ -9,7 +9,7 @@ import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.domain.repo.*
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
@@ -21,7 +21,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class CreateOrderViewModel  constructor(
+class CreateOrderViewModel constructor(
     private val addressInteractor: IAddressInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val orderInteractor: IOrderInteractor,
@@ -92,18 +92,16 @@ class CreateOrderViewModel  constructor(
         }
     }
 
-    fun onDeferredTimeSelected(deferredTimeMillis: Long) {
-        if (deferredTimeMillis == -1L) {
+    fun onDeferredTimeSelected(deferredTime: Time?) {
+        selectedDeferredTime = deferredTime
+        if (deferredTime == null) {
             selectedDeferredTimeMillis = null
-            selectedDeferredTime = null
             mutableDeferredTime.value = asap
         } else {
-            selectedDeferredTimeMillis = deferredTimeMillis
             viewModelScope.launch {
-                selectedDeferredTime = deferredTimeInteractor.getDeferredTime(deferredTimeMillis)
-                mutableDeferredTime.value = stringUtil.getTimeString(
-                    deferredTimeInteractor.getDeferredTime(deferredTimeMillis)
-                )
+                selectedDeferredTimeMillis =
+                    deferredTimeInteractor.getDeferredTimeMillis(deferredTime)
+                mutableDeferredTime.value = stringUtil.getTimeString(deferredTime)
             }
         }
     }
@@ -216,13 +214,7 @@ class CreateOrderViewModel  constructor(
     }
 
     fun onDeferredTimeClicked() {
-        router.navigate(
-            toDeferredTimeBottomSheet(
-                deferredTimeHint.value,
-                selectedDeferredTime?.hourOfDay ?: -1,
-                selectedDeferredTime?.minuteOfHour ?: -1
-            )
-        )
+        router.navigate(toDeferredTimeBottomSheet(deferredTimeHint.value, selectedDeferredTime))
     }
 
     fun onAddCommentClicked() {

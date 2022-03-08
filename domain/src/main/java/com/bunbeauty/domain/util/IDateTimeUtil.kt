@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.util
 
-import com.bunbeauty.domain.model.datee_time.DateTime
-import com.bunbeauty.domain.model.datee_time.MinuteSecond
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.DateTime
+import com.bunbeauty.domain.model.date_time.MinuteSecond
+import com.bunbeauty.domain.model.date_time.Time
 
 interface IDateTimeUtil {
 
@@ -11,5 +11,5 @@ interface IDateTimeUtil {
     fun getCurrentMinuteSecond(timeZone: String): MinuteSecond
     fun getCurrentDateTime(timeZone: String): DateTime
     fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime
-    fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long
+    fun getMillisByTime(time: Time, timeZone: String): Long
 }

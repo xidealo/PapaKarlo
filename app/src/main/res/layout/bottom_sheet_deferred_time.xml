@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
     tools:context=".feature.create_order.deferred_time.DeferredTimeBottomSheet">
 
-    <TextView
-        android:id="@+id/bottom_sheet_deferred_time_tv_title"
-        style="@style/LargeBoldWrapContentText"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Время доставки" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/bottomSheetDeferredTimeCvMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bottom_sheet_deferred_time_mcv_asap"
-        style="@style/MatchConstraintsShadowlessCard"
-        android:layout_margin="@dimen/medium_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_tv_title">
+    <!--    <TextView-->
+    <!--        android:id="@+id/bottom_sheet_deferred_time_tv_title"-->
+    <!--        style="@style/LargeBoldWrapContentText"-->
+    <!--        android:layout_margin="@dimen/medium_margin"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:text="Время доставки" />-->
 
-        <TextView
-            style="@style/MediumRegularWrapContentText"
-            android:layout_width="wrap_content"
-            android:layout_margin="@dimen/medium_margin"
-            android:text="@string/msg_deferred_time_asap" />
-    </com.google.android.material.card.MaterialCardView>
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        android:id="@+id/bottom_sheet_deferred_time_mcv_asap"-->
+    <!--        style="@style/MatchConstraintsShadowlessCard"-->
+    <!--        android:layout_margin="@dimen/medium_margin"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_tv_title">-->
 
-    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard
-        android:id="@+id/bottom_sheet_deferred_time_nc_select_time"
-        style="@style/ShadowlessMonochromeNavigationCard"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/small_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:icon="@drawable/ic_right_arrow"
-        android:text="@string/action_deferred_time_select_time"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_mcv_asap" />
+    <!--        <TextView-->
+    <!--            style="@style/MediumRegularWrapContentText"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_margin="@dimen/medium_margin"-->
+    <!--            android:text="@string/msg_deferred_time_asap" />-->
+    <!--    </com.google.android.material.card.MaterialCardView>-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <com.bunbeauty.papakarlo.common.custom_view.NavigationCard-->
+    <!--        android:id="@+id/bottom_sheet_deferred_time_nc_select_time"-->
+    <!--        style="@style/ShadowlessMonochromeNavigationCard"-->
+    <!--        android:layout_marginStart="@dimen/medium_margin"-->
+    <!--        android:layout_marginTop="@dimen/small_margin"-->
+    <!--        android:layout_marginEnd="@dimen/medium_margin"-->
+    <!--        android:layout_marginBottom="@dimen/medium_margin"-->
+    <!--        android:icon="@drawable/ic_right_arrow"-->
+    <!--        android:text="@string/action_deferred_time_select_time"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_deferred_time_mcv_asap" />-->
+
+</LinearLayout>

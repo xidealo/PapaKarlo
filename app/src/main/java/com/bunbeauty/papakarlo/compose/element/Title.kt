@@ -13,13 +13,17 @@ import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 @Composable
 fun Title(
     modifier: Modifier = Modifier,
-    @StringRes textStringId: Int
+    @StringRes textStringId: Int? = null,
+    titleText: String = "",
 ) {
+    val text = textStringId?.let { id ->
+        stringResource(id)
+    } ?: titleText
     Text(
         modifier = modifier
             .fillMaxWidth()
             .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-        text = stringResource(textStringId),
+        text = text,
         style = FoodDeliveryTheme.typography.h2,
         textAlign = TextAlign.Center
     )

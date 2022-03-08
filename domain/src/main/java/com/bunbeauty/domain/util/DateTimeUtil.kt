@@ -1,9 +1,9 @@
 package com.bunbeauty.domain.util
 
-import com.bunbeauty.domain.model.datee_time.Date
-import com.bunbeauty.domain.model.datee_time.DateTime
-import com.bunbeauty.domain.model.datee_time.MinuteSecond
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.Date
+import com.bunbeauty.domain.model.date_time.DateTime
+import com.bunbeauty.domain.model.date_time.MinuteSecond
+import com.bunbeauty.domain.model.date_time.Time
 import kotlinx.datetime.*
 
 class DateTimeUtil : IDateTimeUtil {
@@ -31,8 +31,8 @@ class DateTimeUtil : IDateTimeUtil {
         return getDateTimeIn(currentMillis, hour, minute, timeZone)
     }
 
-    override fun getMillisByHourAndMinute(hour: Int, minute: Int, timeZone: String): Long {
-        return getMillisByHourAndMinute(currentMillis, hour, minute, timeZone)
+    override fun getMillisByTime(time: Time, timeZone: String): Long {
+        return getMillisByHourAndMinute(currentMillis, time, timeZone)
     }
 
     fun getCurrentMinuteSecond(currentMillis: Long, timeZone: String): MinuteSecond {
@@ -54,8 +54,7 @@ class DateTimeUtil : IDateTimeUtil {
 
     fun getMillisByHourAndMinute(
         currentMillis: Long,
-        hour: Int,
-        minute: Int,
+        time: Time,
         timeZone: String
     ): Long {
         val currentLocalDateTime = getLocalDateTime(currentMillis, timeZone)
@@ -63,8 +62,8 @@ class DateTimeUtil : IDateTimeUtil {
             year = currentLocalDateTime.year,
             monthNumber = currentLocalDateTime.monthNumber,
             dayOfMonth = currentLocalDateTime.dayOfMonth,
-            hour = hour,
-            minute = minute,
+            hour = time.hourOfDay,
+            minute = time.minuteOfHour,
             second = 0,
             nanosecond = 0
         ).toInstant(TimeZone.of(timeZone))

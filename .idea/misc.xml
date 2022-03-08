@@ -212,6 +212,17 @@
         <entry key="../../../../layout/compose-model-1646657036119.xml" value="0.33" />
         <entry key="../../../../layout/compose-model-1646657036472.xml" value="0.5" />
         <entry key="../../../../layout/compose-model-1646657239454.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1646657984393.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646657990878.xml" value="0.5092592592592593" />
+        <entry key="../../../../layout/compose-model-1646673406188.xml" value="0.5092592592592593" />
+        <entry key="../../../../layout/compose-model-1646673590718.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1646674186062.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1646675046450.xml" value="0.5092592592592593" />
+        <entry key="../../../../layout/compose-model-1646675158173.xml" value="0.5092592592592593" />
+        <entry key="../../../../layout/compose-model-1646675236967.xml" value="0.3223905723905724" />
+        <entry key="../../../../layout/compose-model-1646736172817.xml" value="0.5064814814814815" />
+        <entry key="../../../../layout/compose-model-1646739506715.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1646739525124.xml" value="0.25" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_bb_logo.xml" value="0.48333333333333334" />
@@ -222,6 +233,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_address_list.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_cafe_options.xml" value="0.4059787849566056" />
         <entry key="app/src/main/res/layout/bottom_sheet_change_city.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/bottom_sheet_deferred_time.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_edit_text.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/bottom_sheet_feedback.xml" value="0.4351851851851852" />
         <entry key="app/src/main/res/layout/bottom_sheet_payment.xml" value="0.5369791666666667" />

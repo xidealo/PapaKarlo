@@ -139,10 +139,10 @@ fun viewModelModule() = module {
             stringUtil = get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         DeferredTimeViewModel(
-            resourcesProvider = get(),
             deferredTimeInteractor = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {

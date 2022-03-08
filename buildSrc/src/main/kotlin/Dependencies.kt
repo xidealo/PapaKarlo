@@ -26,7 +26,7 @@ object Versions {
     const val coil = "2.0.0-rc01"
     const val glide = "4.13.0"
     const val timePicker = "4.2.3"
-    const val compose = "1.1.0"
+    const val compose = "1.2.0-alpha04"
 
     const val dataStorePreferences = "1.0.0"
 
