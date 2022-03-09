@@ -16,7 +16,6 @@
 		0256A04D27D8891C006811FE /* CafeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256A04C27D8891C006811FE /* CafeItemView.swift */; };
 		0256A04F27D890A7006811FE /* MenuProductUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256A04E27D890A7006811FE /* MenuProductUI.swift */; };
 		0256A05127D89117006811FE /* ProductDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0256A05027D89117006811FE /* ProductDetailsView.swift */; };
-		025C64F327D89B0400546F43 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C64F227D89B0400546F43 /* StringExtensions.swift */; };
 		0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */; };
 		0287396827AC40D80020A919 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* SplashScreen.swift */; };
 		0287396A27AC40DB0020A919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396927AC40DB0020A919 /* Assets.xcassets */; };
@@ -35,7 +34,6 @@
 		0256A04C27D8891C006811FE /* CafeItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeItemView.swift; sourceTree = "<group>"; };
 		0256A04E27D890A7006811FE /* MenuProductUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProductUI.swift; sourceTree = "<group>"; };
 		0256A05027D89117006811FE /* ProductDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsView.swift; sourceTree = "<group>"; };
-		025C64F227D89B0400546F43 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		0287396227AC40D80020A919 /* PapaKarloSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaKarloSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapaKarloSwiftApp.swift; sourceTree = "<group>"; };
 		0287396727AC40D80020A919 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				0287396727AC40D80020A919 /* SplashScreen.swift */,
 				0287396927AC40DB0020A919 /* Assets.xcassets */,
 				0287396E27AC40DB0020A919 /* Info.plist */,
-				025C64F227D89B0400546F43 /* StringExtensions.swift */,
 			);
 			path = PapaKarloSwift;
 			sourceTree = "<group>";
@@ -334,7 +331,6 @@
 				0254657227C9209700337B98 /* CityItemView.swift in Sources */,
 				0256A04927D8886A006811FE /* CafeListView.swift in Sources */,
 				0254657427C9238600337B98 /* CityItem.swift in Sources */,
-				025C64F327D89B0400546F43 /* StringExtensions.swift in Sources */,
 				0256A05127D89117006811FE /* ProductDetailsView.swift in Sources */,
 				0256A04F27D890A7006811FE /* MenuProductUI.swift in Sources */,
 				0256A04B27D888A8006811FE /* CafeItem.swift in Sources */,
