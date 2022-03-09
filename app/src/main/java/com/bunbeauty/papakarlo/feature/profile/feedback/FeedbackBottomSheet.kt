@@ -59,7 +59,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                 NavigationIconCard(
                     iconId = R.drawable.ic_vk,
                     iconDescription = R.string.description_feedback_vk,
-                    label = R.string.action_feedback_vk,
+                    labelStringId = R.string.action_feedback_vk,
                     hasShadow = false
                 ) {
                     goByLink(VK_LINK)
@@ -70,7 +70,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                     ),
                     iconId = R.drawable.ic_instagram,
                     iconDescription = R.string.description_feedback_instagram,
-                    label = R.string.action_feedback_instagram,
+                    labelStringId = R.string.action_feedback_instagram,
                     hasShadow = false
                 ) {
                     goByLink(INSTAGRAM_LINK)
@@ -82,7 +82,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                     ),
                     iconId = R.drawable.ic_play_market,
                     iconDescription = R.string.description_feedback_play_market,
-                    label = R.string.action_feedback_play_market,
+                    labelStringId = R.string.action_feedback_play_market,
                     hasShadow = false
                 ) {
                     goByLink(PLAY_MARKET_LINK)

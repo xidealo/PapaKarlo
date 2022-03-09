@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.CAFE_ADDRESS_REQUEST_KEY
 import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
@@ -14,6 +13,7 @@ import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.common.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.common.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.bunbeauty.common.Constants.USER_ADDRESS_REQUEST_KEY
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
@@ -132,8 +132,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
         }
 
         setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
-            val selectedDeferredTime = bundle.getLong(SELECTED_DEFERRED_TIME_KEY, -1)
-            viewModel.onDeferredTimeSelected(selectedDeferredTime)
+            bundle.getParcelable<Time>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
+                viewModel.onDeferredTimeSelected(selectedDeferredTime)
+            }
         }
     }
 

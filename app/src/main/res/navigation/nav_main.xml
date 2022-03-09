@@ -305,11 +305,9 @@
             android:name="title"
             app:argType="string" />
         <argument
-            android:name="selectedHour"
-            app:argType="integer" />
-        <argument
-            android:name="selectedMinute"
-            app:argType="integer" />
+            android:name="selectedTime"
+            app:argType="com.bunbeauty.domain.model.date_time.Time"
+            app:nullable="true" />
     </dialog>
 
     <dialog

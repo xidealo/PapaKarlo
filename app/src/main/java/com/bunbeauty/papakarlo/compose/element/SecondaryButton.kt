@@ -8,11 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @Composable
-fun MainButton(
+fun SecondaryButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int,
     hasShadow: Boolean = true,
@@ -22,15 +24,21 @@ fun MainButton(
         modifier = modifier
             .fillMaxWidth()
             .height(FoodDeliveryTheme.dimensions.buttonSize),
-        colors = FoodDeliveryTheme.colors.mainButtonColors(),
+        colors = FoodDeliveryTheme.colors.secondaryButtonColors(),
         shape = mediumRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
-        onClick = onClick
+        onClick = onClick,
     ) {
         Text(
             text = stringResource(textStringId).uppercase(),
             style = FoodDeliveryTheme.typography.button,
-            color = FoodDeliveryTheme.colors.onPrimary
+            color = FoodDeliveryTheme.colors.onSecondary
         )
     }
+}
+
+@Preview
+@Composable
+private fun SecondaryButtonPreview() {
+    SecondaryButton(textStringId = R.string.action_logout) {}
 }

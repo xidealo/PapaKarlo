@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,19 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
-import com.bunbeauty.papakarlo.compose.smallIcon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NavigationCard(
+fun SimpleCard(
     modifier: Modifier = Modifier,
     @StringRes label: Int,
     hasShadow: Boolean = true,
@@ -37,7 +33,6 @@ fun NavigationCard(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
             .shadow(
                 elevation = FoodDeliveryTheme.dimensions.getEvaluation(hasShadow),
@@ -53,23 +48,14 @@ fun NavigationCard(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OverflowingText(
-                modifier = Modifier
-                    .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
-                    .weight(1f),
+                modifier = Modifier.fillMaxWidth(),
                 text = stringResource(label),
                 style = FoodDeliveryTheme.typography.body1,
                 color = FoodDeliveryTheme.colors.onSurface
-            )
-            Icon(
-                modifier = Modifier.smallIcon(),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
-                contentDescription = stringResource(R.string.description_ic_next),
-                tint = FoodDeliveryTheme.colors.onSurfaceVariant
             )
         }
     }
@@ -77,8 +63,8 @@ fun NavigationCard(
 
 @Preview
 @Composable
-fun NavigationCardPreview() {
-    NavigationCard(
+fun SimpleCardPreview() {
+    SimpleCard(
         label = R.string.title_about_app
     ) {}
 }

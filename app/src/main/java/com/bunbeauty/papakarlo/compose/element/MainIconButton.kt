@@ -27,7 +27,7 @@ fun MainIconButton(
 ) {
     Button(
         modifier = modifier.size(FoodDeliveryTheme.dimensions.buttonSize),
-        colors = FoodDeliveryTheme.colors.buttonColors(),
+        colors = FoodDeliveryTheme.colors.mainButtonColors(),
         shape = mediumRoundedCornerShape,
         contentPadding = PaddingValues(0.dp),
         onClick = onClick

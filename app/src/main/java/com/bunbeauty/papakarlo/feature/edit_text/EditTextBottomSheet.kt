@@ -83,7 +83,8 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
                 }
                 MainButton(
                     modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
-                    textStringId = R.string.action_settings_save
+                    textStringId = R.string.action_settings_save,
+                    hasShadow = false
                 ) {
                     setFragmentResult(
                         editTextSettings.requestKey,

@@ -9,11 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus
 
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
-val grey = Color(0xFFC1C1C1)
+val grey = Color(0xFFBABABA)
 val lightGrey = Color(0xFFD6D6D6)
 val cream = Color(0xFFF2F1F6)
 val red = Color(0xFFB1021D)
@@ -28,7 +29,7 @@ val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
     error = red,
@@ -40,6 +41,9 @@ val LightColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
+    open = green,
+    closeSoon = yellow,
+    closed = lightRed,
     onPrimary = white,
     onSecondary = grey,
     onBackground = black,
@@ -52,7 +56,7 @@ val LightColors = AppColors(
 
 val DarkColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
     error = red,
@@ -64,6 +68,9 @@ val DarkColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
+    open = green,
+    closeSoon = yellow,
+    closed = lightRed,
     onPrimary = white,
     onSecondary = grey,
     onBackground = black,
@@ -91,6 +98,9 @@ class AppColors(
     delivered: Color,
     canceled: Color,
     bunBeautyBrandColor: Color,
+    open: Color,
+    closeSoon: Color,
+    closed: Color,
     onPrimary: Color,
     onSecondary: Color,
     onBackground: Color,
@@ -126,6 +136,12 @@ class AppColors(
         private set
     var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
         private set
+    var open by mutableStateOf(open)
+        private set
+    var closeSoon by mutableStateOf(closeSoon)
+        private set
+    var closed by mutableStateOf(closed)
+        private set
     var onPrimary by mutableStateOf(onPrimary)
         private set
     var onSecondary by mutableStateOf(onSecondary)
@@ -153,12 +169,22 @@ class AppColors(
     )
 
     @Composable
-    fun buttonColors(): ButtonColors {
+    fun mainButtonColors(): ButtonColors {
         return ButtonDefaults.buttonColors(
             backgroundColor = primary,
             contentColor = onPrimary,
             disabledBackgroundColor = primary.copy(alpha = 0.8f),
             disabledContentColor = onPrimary.copy(alpha = 0.8f)
+        )
+    }
+
+    @Composable
+    fun secondaryButtonColors(): ButtonColors {
+        return ButtonDefaults.buttonColors(
+            backgroundColor = secondary,
+            contentColor = onSecondary,
+            disabledBackgroundColor = secondary.copy(alpha = 0.8f),
+            disabledContentColor = onSecondary.copy(alpha = 0.8f)
         )
     }
 
@@ -201,6 +227,14 @@ class AppColors(
         }
     }
 
+    fun cafeStatusColor(cafeStatus: CafeStatus): Color {
+        return when (cafeStatus) {
+            CafeStatus.OPEN -> open
+            CafeStatus.CLOSE_SOON -> closeSoon
+            CafeStatus.CLOSED -> closed
+        }
+    }
+
     fun copy(
         primary: Color = this.primary,
         secondary: Color = this.secondary,
@@ -215,6 +249,9 @@ class AppColors(
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
         bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
+        open: Color = this.open,
+        closeSoon: Color = this.closeSoon,
+        closed: Color = this.closed,
         onPrimary: Color = this.onPrimary,
         onSecondary: Color = this.onSecondary,
         onBackground: Color = this.onBackground,
@@ -237,6 +274,9 @@ class AppColors(
         delivered = delivered,
         canceled = canceled,
         bunBeautyBrandColor = bunBeautyBrandColor,
+        open = open,
+        closeSoon = closeSoon,
+        closed = closed,
         onPrimary = onPrimary,
         onSecondary = onSecondary,
         onBackground = onBackground,
@@ -261,6 +301,9 @@ class AppColors(
         delivered = other.delivered
         canceled = other.canceled
         bunBeautyBrandColor = other.bunBeautyBrandColor
+        open = other.open
+        closeSoon = other.closeSoon
+        closed = other.closed
         onPrimary = other.onPrimary
         onSecondary = other.onSecondary
         onBackground = other.onBackground

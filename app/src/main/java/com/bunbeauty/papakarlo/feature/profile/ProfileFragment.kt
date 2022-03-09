@@ -83,7 +83,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         ),
                     iconId = R.drawable.ic_settings,
                     iconDescription = R.string.description_ic_settings,
-                    label = R.string.action_profile_settings
+                    labelStringId = R.string.action_profile_settings
                 ) {
                     viewModel.onSettingsClicked()
                 }
@@ -99,7 +99,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                             ),
                         iconId = R.drawable.ic_address,
                         iconDescription = R.string.description_ic_settings,
-                        label = R.string.action_profile_your_addresses
+                        labelStringId = R.string.action_profile_your_addresses
                     ) {
                         viewModel.onYourAddressesClicked()
                     }
@@ -114,7 +114,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                             ),
                         iconId = R.drawable.ic_add,
                         iconDescription = R.string.description_ic_create_address,
-                        label = R.string.action_profile_create_address
+                        labelStringId = R.string.action_profile_create_address
                     ) {
                         viewModel.onAddAddressClicked()
                     }
@@ -130,7 +130,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         ),
                     iconId = R.drawable.ic_history,
                     iconDescription = R.string.description_ic_order_history,
-                    label = R.string.action_profile_order_history
+                    labelStringId = R.string.action_profile_order_history
                 ) {
                     viewModel.onOrderHistoryClicked(profile.userUuid)
                 }
@@ -144,7 +144,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         ),
                     iconId = R.drawable.ic_payment,
                     iconDescription = R.string.description_ic_payment,
-                    label = R.string.action_profile_payment
+                    labelStringId = R.string.action_profile_payment
                 ) {
                     viewModel.onPaymentClicked()
                 }
@@ -212,7 +212,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     ),
                 iconId = R.drawable.ic_feedback,
                 iconDescription = R.string.description_ic_feedback,
-                label = R.string.title_feedback
+                labelStringId = R.string.title_feedback
             ) {
                 viewModel.onFeedbackClicked()
             }
@@ -227,7 +227,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                     ),
                 iconId = R.drawable.ic_info,
                 iconDescription = R.string.description_ic_about,
-                label = R.string.title_about_app
+                labelStringId = R.string.title_about_app
             ) {
                 viewModel.onAboutAppClicked()
             }
