@@ -5,7 +5,7 @@ import com.bunbeauty.data.database.entity.product.CartProductCount
 import com.bunbeauty.data.database.entity.product.CartProductEntity
 import com.bunbeauty.data.database.entity.product.CartProductWithMenuProduct
 import com.bunbeauty.data.mapper.cart_product.ICartProductMapper
-import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.cart.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

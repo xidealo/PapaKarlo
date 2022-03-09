@@ -2,9 +2,12 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 
 import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 
-class CartProductDiffCallback : DefaultDiffCallback<CartProductItem>() {
+class CartProductDiffCallback : DefaultDiffCallback<CartProductItemModel>() {
 
-    override fun getChangePayload(oldItem: CartProductItem, newItem: CartProductItem): Any? {
+    override fun getChangePayload(
+        oldItem: CartProductItemModel,
+        newItem: CartProductItemModel
+    ): Any? {
         return if (oldItem.count != newItem.count)
             true
         else

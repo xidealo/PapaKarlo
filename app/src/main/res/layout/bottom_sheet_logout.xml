@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
@@ -11,39 +11,4 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/bottom_sheet_logout_tv_title"-->
-    <!--        style="@style/LargeBoldWrapContentText"-->
-    <!--        android:layout_margin="@dimen/medium_margin"-->
-    <!--        android:text="@string/title_logout"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--    <com.google.android.material.button.MaterialButton-->
-    <!--        android:id="@+id/bottom_sheet_logout_btn_logout"-->
-    <!--        style="@style/MainButton"-->
-    <!--        android:layout_margin="@dimen/medium_margin"-->
-    <!--        android:text="@string/action_logout"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_logout_tv_title" />-->
-
-    <!--    <com.google.android.material.card.MaterialCardView-->
-    <!--        android:id="@+id/bottom_sheet_logout_cv_cancel"-->
-    <!--        style="@style/MatchConstraintsShadowlessCard"-->
-    <!--        android:layout_margin="@dimen/medium_margin"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_logout_btn_logout">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/bottom_sheet_logout_tv_cancel"-->
-    <!--            style="@style/SecondaryMediumRegularWrapContentCapsText"-->
-    <!--            android:layout_gravity="center"-->
-    <!--            android:layout_margin="@dimen/medium_margin"-->
-    <!--            android:text="@string/action_logout_cancel" />-->
-    <!--    </com.google.android.material.card.MaterialCardView>-->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

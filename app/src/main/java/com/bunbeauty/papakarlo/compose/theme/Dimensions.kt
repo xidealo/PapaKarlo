@@ -17,6 +17,7 @@ data class AppDimensions(
     val codeWidth: Dp = 56.dp,
     val cardHeight: Dp = 40.dp,
     val buttonSize: Dp = 40.dp,
+    val smallButtonSize: Dp = 32.dp,
     val addressEndSpace: Dp = 32.dp,
     val productImageHeight: Dp = 72.dp,
     val productImageWidth: Dp = 108.dp,
