@@ -19,7 +19,9 @@ struct SelectCityView: View {
                         }
                     }
                 }.padding(.top, Diems.MEDIUM_PADDING)
-            }.background(Color("background")).navigationTitle(
+            }
+            .background(Color("background"))
+            .navigationTitle(
                 Text(Strings.TITLE_SELECT_CITY_CITY)
             )
     }

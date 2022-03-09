@@ -8,5 +8,7 @@
 import Foundation
 
 class Strings{
-    static let TITLE_SELECT_CITY_CITY = "Город"
+    static let TITLE_SELECT_CITY_CITY = "Выбор города"
+    static let TITLE_CAFE_LIST = "Рестораны"
+
 }
