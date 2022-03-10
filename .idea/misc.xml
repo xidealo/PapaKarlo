@@ -248,6 +248,16 @@
         <entry key="../../../../layout/compose-model-1646838848722.xml" value="0.11297678275290216" />
         <entry key="../../../../layout/compose-model-1646839233239.xml" value="0.600925925925926" />
         <entry key="../../../../layout/compose-model-1646840108680.xml" value="0.5305555555555556" />
+        <entry key="../../../../layout/compose-model-1646900205064.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646900519437.xml" value="0.8428571428571429" />
+        <entry key="../../../../layout/compose-model-1646903536061.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1646913205916.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646915655196.xml" value="0.8428571428571429" />
+        <entry key="../../../../layout/compose-model-1646917766461.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1646918289817.xml" value="0.8428571428571429" />
+        <entry key="../../../../layout/compose-model-1646919371508.xml" value="0.600925925925926" />
+        <entry key="../../../../layout/compose-model-1646919446666.xml" value="0.8428571428571429" />
+        <entry key="../../../../layout/compose-model-1646941956659.xml" value="0.5" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/ic_bb_logo.xml" value="0.48333333333333334" />
@@ -272,6 +282,7 @@
         <entry key="app/src/main/res/layout/fragment_consumer_cart.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_address.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.5369791666666667" />

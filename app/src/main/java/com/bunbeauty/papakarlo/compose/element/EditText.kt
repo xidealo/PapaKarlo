@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.compose.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -24,8 +25,6 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.common.Logger.TEST_TAG
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.smallIcon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -60,6 +59,12 @@ fun EditText(
             capitalization = KeyboardCapitalization.None,
             autoCorrect = false,
             keyboardType = KeyboardType.Email,
+            imeAction = imeAction,
+        )
+        EditTextType.PHONE -> KeyboardOptions(
+            capitalization = KeyboardCapitalization.None,
+            autoCorrect = false,
+            keyboardType = KeyboardType.Phone,
             imeAction = imeAction,
         )
     }
@@ -101,6 +106,7 @@ fun EditText(
     )
     if (isError) {
         Text(
+            modifier = Modifier.fillMaxWidth(),
             text = errorMessageId?.let {
                 stringResource(errorMessageId)
             } ?: "",
@@ -108,7 +114,6 @@ fun EditText(
             color = FoodDeliveryTheme.colors.error
         )
     }
-    logD(TEST_TAG, "focus $focus isError $isError")
     if (focus) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()

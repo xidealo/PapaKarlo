@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
-class PhoneVerificationUtil  constructor() : IPhoneVerificationUtil, CoroutineScope {
+class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job()

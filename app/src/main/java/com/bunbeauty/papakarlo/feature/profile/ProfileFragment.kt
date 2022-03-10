@@ -46,12 +46,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Composable
     private fun ProfileScreen(profileState: State<ProfileUI>) {
-        FoodDeliveryTheme {
-            when (profileState) {
-                is State.Success -> SuccessProfileScreen(profileState.data)
-                is State.Empty -> EmptyProfileScreen()
-                is State.Loading -> LoadingProfileScreen()
-            }
+        when (profileState) {
+            is State.Success -> SuccessProfileScreen(profileState.data)
+            is State.Empty -> EmptyProfileScreen()
+            is State.Loading -> LoadingProfileScreen()
         }
     }
 
@@ -134,10 +132,13 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             ProfileInfoCards()
-            Column(modifier = Modifier.align(Alignment.Center)) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Image(
                     painter = painterResource(R.drawable.empty_profile_papa_karlo),
                     contentDescription = stringResource(R.string.description_empty_profile)
