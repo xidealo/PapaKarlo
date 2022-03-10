@@ -11,4 +11,7 @@ class Strings{
     static let TITLE_SELECT_CITY_CITY = "Выбор города"
     static let TITLE_CAFE_LIST = "Рестораны"
 
+    
+    static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
+
 }

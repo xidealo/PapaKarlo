@@ -26,28 +26,48 @@ struct ProductDetailsView: View {
     let menuProductUI:MenuProductUI
     var body: some View {
         VStack{
-            
             VStack{
-                    Image(uiImage: menuProductUI.imageLink.load())
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-
-                    HStack{
-                        
-                    }
-                    HStack{
-                        
-                    }
+                Image(uiImage: menuProductUI.imageLink.load())
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
+                
+                Group{
                     
-                    Text(menuProductUI.description)
+                    HStack{
+                        Text(menuProductUI.name).frame(maxWidth: .infinity, alignment: .leading).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
+                        Text(menuProductUI.size).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+                    }.padding(.top, Diems.MEDIUM_PADDING)
+                    
+                    HStack{
+                        if menuProductUI.oldPrice != nil{
+                            Text(menuProductUI.oldPrice ?? "").strikethrough().font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .thin, design: .default))
+                        }
+                        Text(menuProductUI.newPrice)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
+                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.SMALL_PADDING)
+                    
+                    Text(menuProductUI.description).frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.LARGE_PADDING).padding(.bottom, Diems.MEDIUM_PADDING)
+                    
+                }.padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             .background(Color("surface"))
             .padding(Diems.MEDIUM_PADDING)
             .cornerRadius(20.0)
-
-
-           
+            
+            Spacer()
+            
+            Button(action: {
+                print("button pressed")
+            }) {
+                Text(Strings.ACTION_PRODUCT_DETAILS_ADD).frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color("surface"))
+                    .background(Color("primary"))
+                    .cornerRadius(8)
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                
+            }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
@@ -59,6 +79,6 @@ struct ProductDetailsView: View {
 
 struct ProductDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetailsView(menuProductUI:MenuProductUI(name:  "Бургер", size: "200 г", oldPrice: nil, newPrice: "200", description: "Сочный пургер", imageLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
+        ProductDetailsView(menuProductUI:MenuProductUI(name:  "Бургер", size: "200 г", oldPrice: "250 P", newPrice: "200 Р", description: "Сочный пурге, с кртшка, с вкусный сыр, с вкусное мясцо", imageLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
     }
 }
