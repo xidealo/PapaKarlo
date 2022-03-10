@@ -61,13 +61,16 @@
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
-    <string name="action_consumer_cart_checkout">Оформить заказ</string>
+    <string name="action_consumer_cart_creeate_order">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавьте товар из \"Меню\"</string>
     <string name="msg_consumer_cart_free_delivery">Доставка бесплатно</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
     <string name="error_consumer_cart_full">Корзина переполнена</string>
+    <string name="description_consumer_cart_increase">Увеличить</string>
+    <string name="description_consumer_cart_decrease">Уменьшить</string>
+    <string name="description_consumer_cart_empty">Пустая корзина</string>
 
     <!-- CREATE ORDER -->
     <string name="title_create_order">Оформление заказа</string>

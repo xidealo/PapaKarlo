@@ -9,8 +9,8 @@ import com.bunbeauty.papakarlo.extensions.setPhoto
 import com.bunbeauty.papakarlo.extensions.strikeOutText
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
 
-class CartProductAdapter  constructor() :
-    BaseListAdapter<CartProductItem, CartProductAdapter.CartProductViewHolder>(
+class CartProductAdapter :
+    BaseListAdapter<CartProductItemModel, CartProductAdapter.CartProductViewHolder>(
         CartProductDiffCallback()
     ) {
 
@@ -24,9 +24,9 @@ class CartProductAdapter  constructor() :
     }
 
     inner class CartProductViewHolder(private val elementCartProductBinding: ElementCartProductBinding) :
-        BaseViewHolder<CartProductItem>(elementCartProductBinding) {
+        BaseViewHolder<CartProductItemModel>(elementCartProductBinding) {
 
-        override fun onBind(item: CartProductItem) {
+        override fun onBind(item: CartProductItemModel) {
             super.onBind(item)
 
             elementCartProductBinding.run {
@@ -39,7 +39,7 @@ class CartProductAdapter  constructor() :
             }
         }
 
-        override fun onBind(item: CartProductItem, payloads: List<Any>) {
+        override fun onBind(item: CartProductItemModel, payloads: List<Any>) {
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
@@ -47,7 +47,7 @@ class CartProductAdapter  constructor() :
             }
         }
 
-        private fun setCountAndCost(item: CartProductItem) {
+        private fun setCountAndCost(item: CartProductItemModel) {
             elementCartProductBinding.run {
                 elementCartProductTvOldCost.text = item.oldCost
                 elementCartProductTvNewCost.text = item.newCost
@@ -58,7 +58,7 @@ class CartProductAdapter  constructor() :
             }
         }
 
-        private fun getCountChangeListener(item: CartProductItem): CountPicker.CountChangeListener {
+        private fun getCountChangeListener(item: CartProductItemModel): CountPicker.CountChangeListener {
             return object : CountPicker.CountChangeListener {
                 override fun onCountIncreased() {
                     countChangeListener?.onItemCountIncreased(item)
@@ -72,7 +72,7 @@ class CartProductAdapter  constructor() :
     }
 
     interface ItemCountChangeListener {
-        fun onItemCountIncreased(item: CartProductItem)
-        fun onItemCountDecreased(item: CartProductItem)
+        fun onItemCountIncreased(item: CartProductItemModel)
+        fun onItemCountDecreased(item: CartProductItemModel)
     }
 }

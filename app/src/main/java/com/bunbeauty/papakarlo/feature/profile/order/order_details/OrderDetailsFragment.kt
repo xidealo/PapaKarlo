@@ -29,6 +29,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.custom.OrderStatusBar
+import com.bunbeauty.papakarlo.compose.element.BlurLine
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.item.OrderProductItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -109,13 +110,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                         )
                     }
                 }
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(FoodDeliveryTheme.dimensions.blurHeight)
-                        .background(FoodDeliveryTheme.colors.surfaceGradient)
-                        .align(BottomCenter)
-                )
+                BlurLine(modifier = Modifier.align(BottomCenter))
             }
             BottomAmountBar(orderUI)
         }

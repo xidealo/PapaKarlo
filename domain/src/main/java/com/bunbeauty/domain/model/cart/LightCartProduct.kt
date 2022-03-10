@@ -1,4 +1,4 @@
-package com.bunbeauty.domain.model.product
+package com.bunbeauty.domain.model.cart
 
 data class LightCartProduct(
     val uuid: String,
