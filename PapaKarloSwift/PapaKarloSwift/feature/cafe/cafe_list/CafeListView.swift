@@ -11,6 +11,7 @@ struct CafeListView: View {
     
     let cafes:[CafeItem]
     
+    
     var body: some View {
         VStack{
             ScrollView {

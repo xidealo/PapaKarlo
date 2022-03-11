@@ -29,4 +29,5 @@ class Diems {
     static let BUTTON_HEIGHT:CGFloat = 20
     static let BUTTON_WIDTH:CGFloat = 78
 
+
 }
