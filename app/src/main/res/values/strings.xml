@@ -59,6 +59,9 @@
     <string name="action_menu_want">Хочу!</string>
     <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
 
+    <!-- PRODUCT DETAILS -->
+    <string name="action_product_details_want">Хочу!</string>
+
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
     <string name="action_consumer_cart_creeate_order">Оформить заказ</string>

@@ -274,6 +274,13 @@
         <entry key="../../../../layout/compose-model-1646990439036.xml" value="0.6314814814814815" />
         <entry key="../../../../layout/compose-model-1646990443344.xml" value="0.6314814814814815" />
         <entry key="../../../../layout/compose-model-1646990572155.xml" value="0.6314814814814815" />
+        <entry key="../../../../layout/compose-model-1646991943627.xml" value="0.6314814814814815" />
+        <entry key="../../../../layout/compose-model-1646991977227.xml" value="0.6314814814814815" />
+        <entry key="../../../../layout/compose-model-1646992044752.xml" value="0.6314814814814815" />
+        <entry key="../../../../layout/compose-model-1646992305088.xml" value="0.150609080841639" />
+        <entry key="../../../../layout/compose-model-1646992337938.xml" value="0.6314814814814815" />
+        <entry key="../../../../layout/compose-model-1646992912798.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1646994463260.xml" value="0.5" />
         <entry key="../../../../layout/custom_preview.xml" value="0.55625" />
         <entry key="..\:/Users/user/Desktop/work/papakarlo/app/src/main/res/layout/fragment_create_order.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/empty_cart.xml" value="0.3890625" />
@@ -303,6 +310,7 @@
         <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.5369791666666667" />
         <entry key="app/src/main/res/layout/fragment_order_details.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.5369791666666667" />
+        <entry key="app/src/main/res/layout/fragment_product_details.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.28703703703703703" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.4583333333333333" />

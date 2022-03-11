@@ -19,8 +19,8 @@ data class AppDimensions(
     val buttonSize: Dp = 40.dp,
     val smallButtonSize: Dp = 32.dp,
     val addressEndSpace: Dp = 32.dp,
-    val productImageHeight: Dp = 72.dp,
-    val productImageWidth: Dp = 108.dp,
+    val productImageSmallHeight: Dp = 72.dp,
+    val productImageSmallWidth: Dp = 108.dp,
     val blurHeight: Dp = 16.dp,
     val autoCompleteListHeight: Dp = 160.dp,
 ) {

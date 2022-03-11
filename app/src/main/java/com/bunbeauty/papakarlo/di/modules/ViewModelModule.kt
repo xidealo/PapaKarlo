@@ -133,10 +133,11 @@ fun viewModelModule() = module {
             settingsInteractor = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         ProductDetailsViewModel(
             menuProductInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel { parameters ->

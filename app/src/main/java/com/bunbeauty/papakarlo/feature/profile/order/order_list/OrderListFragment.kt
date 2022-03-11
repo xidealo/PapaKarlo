@@ -78,6 +78,27 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
         }
     }
 
+    @Composable
+    private fun OrderListScreenEmpty() {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.empty_page),
+                    contentDescription = stringResource(R.string.description_empty_profile)
+                )
+                Text(
+                    modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = stringResource(R.string.msg_order_list_empty),
+                    textAlign = TextAlign.Center,
+                    style = FoodDeliveryTheme.typography.body1
+                )
+            }
+        }
+    }
+
     @Preview
     @Composable
     private fun OrderListScreenSuccessPreview() {
@@ -143,27 +164,6 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                 )
             )
         )
-    }
-
-    @Composable
-    private fun OrderListScreenEmpty() {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.empty_page),
-                    contentDescription = stringResource(R.string.description_empty_profile)
-                )
-                Text(
-                    modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(R.string.msg_order_list_empty),
-                    textAlign = TextAlign.Center,
-                    style = FoodDeliveryTheme.typography.body1
-                )
-            }
-        }
     }
 
     @Preview

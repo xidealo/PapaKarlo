@@ -6,8 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -43,7 +43,7 @@ fun IconCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
+            .height(FoodDeliveryTheme.dimensions.cardHeight)
             .clip(mediumRoundedCornerShape)
             .clickable(
                 enabled = isClickable,
