@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.profile
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -46,10 +47,16 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Composable
     private fun ProfileScreen(profileState: State<ProfileUI>) {
-        when (profileState) {
-            is State.Success -> SuccessProfileScreen(profileState.data)
-            is State.Empty -> EmptyProfileScreen()
-            is State.Loading -> LoadingProfileScreen()
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.background)
+        ) {
+            when (profileState) {
+                is State.Success -> SuccessProfileScreen(profileState.data)
+                is State.Empty -> EmptyProfileScreen()
+                is State.Loading -> LoadingProfileScreen()
+            }
         }
     }
 
@@ -84,7 +91,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                         iconId = R.drawable.ic_address,
                         iconDescription = R.string.description_ic_settings,
-                        labelStringId = R.string.action_profile_your_addresses
+                        labelStringId = R.string.action_profile_my_addresses
                     ) {
                         viewModel.onYourAddressesClicked()
                     }
@@ -105,8 +112,8 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         .fillMaxWidth()
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     iconId = R.drawable.ic_history,
-                    iconDescription = R.string.description_ic_order_history,
-                    labelStringId = R.string.action_profile_order_history
+                    iconDescription = R.string.description_ic_my_orders,
+                    labelStringId = R.string.action_profile_my_orders
                 ) {
                     viewModel.onOrderHistoryClicked(profile.userUuid)
                 }
@@ -140,7 +147,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(R.drawable.empty_profile_papa_karlo),
+                    painter = painterResource(R.drawable.empty_profile),
                     contentDescription = stringResource(R.string.description_empty_profile)
                 )
                 Text(

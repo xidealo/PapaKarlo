@@ -180,7 +180,7 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragment"
-        android:label="@string/title_order_list"
+        android:label="@string/title_my_orders"
         tools:layout="@layout/fragment_order_list">
         <argument
             android:name="userUuid"

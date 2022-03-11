@@ -152,7 +152,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(R.drawable.empty_cart_papa_karlo),
+                    painter = painterResource(R.drawable.empty_cart),
                     contentDescription = stringResource(R.string.description_consumer_cart_empty)
                 )
                 Text(

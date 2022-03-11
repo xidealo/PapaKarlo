@@ -62,7 +62,7 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
                 .background(FoodDeliveryTheme.colors.surface)
         ) {
             Column {
-                Title(textStringId = R.string.title_user_addresses)
+                Title(textStringId = R.string.title_my_addresses)
                 LazyColumn(
                     contentPadding = PaddingValues(
                         start = FoodDeliveryTheme.dimensions.mediumSpace,
