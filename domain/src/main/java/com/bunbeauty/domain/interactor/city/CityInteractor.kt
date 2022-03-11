@@ -8,7 +8,7 @@ import com.bunbeauty.domain.worker.IStreetWorkerUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class CityInteractor  constructor(
+class CityInteractor(
     private val dataStoreRepo: DataStoreRepo,
     private val cityRepo: CityRepo,
     private val cafeWorkerUtil: ICafeWorkerUtil,

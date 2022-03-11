@@ -7,7 +7,7 @@
     msg — сообщения или обычные текста на экранах;
     error — сообщения об ошибках;
     action — кнопки или какие-то действия.
-    description — описание для iv
+    description — описание для изображений и иконок
     -->
 
     <!--COMMON-->
@@ -35,11 +35,13 @@
     <string name="msg_ruble">&#160;₽</string>
     <string name="error_no_internet">Нет подключения к интернету</string>
 
-    <!-- START -->
-    <string name="title_start_select_city">Выберите город</string>
-    <string name="title_start_new_app_version">Новая версия приложения</string>
-    <string name="msg_start_new_app_version">Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет</string>
-    <string name="action_start_update">Обновить</string>
+    <!-- SELECT CITY -->
+    <string name="title_select_city">Выберите город</string>
+
+    <!-- UPDATE -->
+    <string name="title_update_new_app_version">Новая версия</string>
+    <string name="msg_update_new_app_version">Пожалуйста, обновите приложение.\nНовая версия уже доступна в Play Маркет</string>
+    <string name="action_update_update">Обновить</string>
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
@@ -58,6 +60,9 @@
     <string name="title_menu_oven">В печи</string>
     <string name="action_menu_want">Хочу!</string>
     <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
+
+    <!-- PRODUCT DETAILS -->
+    <string name="action_product_details_want">Хочу!</string>
 
     <!-- CONSUMER CART -->
     <string name="title_cart">Корзина</string>
@@ -141,7 +146,7 @@
     <string name="title_cafe_list_payment">Оплата</string>
 
     <!-- BOTTOM SHEET ADDRESSES -->
-    <string name="title_user_addresses">Ваши адреса</string>
+    <string name="title_my_addresses">Мои адреса</string>
     <string name="title_cafe_addresses">Адреса ресторанов</string>
 
     <!-- ORDER STATUS-->
@@ -185,8 +190,8 @@
     <string name="action_profile_settings">Настройки</string>
     <string name="action_profile_bonuses">Бонусы</string>
     <string name="action_profile_create_address">Добавить адрес</string>
-    <string name="action_profile_your_addresses">Ваши адерса</string>
-    <string name="action_profile_order_history">История заказов</string>
+    <string name="action_profile_my_addresses">Мои адерса</string>
+    <string name="action_profile_my_orders">Мои заказы</string>
     <string name="action_profile_payment">Оплата</string>
     <string name="action_profile_feedback">Отзывы</string>
     <string name="action_profile_about_app">О приложении</string>
@@ -194,8 +199,8 @@
     <string name="action_profile_login">Войти</string>
     <string name="description_ic_settings">Настройки</string>
     <string name="description_ic_create_address">Добавить адрес</string>
-    <string name="description_ic_your_addresses">Ваши адерса</string>
-    <string name="description_ic_order_history">История заказов</string>
+    <string name="description_ic_my_addresses">Мои адерса</string>
+    <string name="description_ic_my_orders">Мои заказы</string>
     <string name="description_ic_payment">Оплата</string>
     <string name="description_ic_feedback">Отзывы</string>
     <string name="description_ic_about">О приложении</string>
@@ -203,13 +208,14 @@
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>
-    <string name="title_login_info">Пожалуйста, введите номер вашего телефона</string>
-    <string name="title_login_phone">Телефон*</string>
+    <string name="hint_login_phone">Телефон*</string>
+    <string name="msg_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
     <string name="error_login_something_went_wrong">Что-то пошло не так</string>
     <string name="error_login_something_try_later">Ошибка. Попробуйте позже</string>
     <string name="error_login_too_many_requests">Превышен лимит на отправку кодов, попробуйте позже</string>
+    <string name="description_login_logo">Лого</string>
 
     <!-- CONFIRM  -->
     <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
@@ -241,7 +247,7 @@
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
 
     <!-- ORDERS -->
-    <string name="title_order_list">История заказов</string>
+    <string name="title_my_orders">Мои заказы</string>
     <string name="msg_order_list_empty">Здесь будет отображаться история ваших заказов</string>
 
     <!-- ONE LINE ACTON-->

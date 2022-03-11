@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class UserAddressListViewModel constructor(
+class UserAddressListViewModel(
     private val addressInteractor: IAddressInteractor,
     private val stringUtil: IStringUtil,
 ) : BaseViewModel() {

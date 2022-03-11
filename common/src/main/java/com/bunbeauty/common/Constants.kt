@@ -96,6 +96,9 @@ object Constants {
     const val COORDINATES_DIVIDER = ","
     const val ADDRESS_DIVIDER = ", "
 
+    // PHONE
+    const val PHONE_CODE = "+7"
+
     // LINK
 
     const val VK_LINK = "https://vk.com/papakarlokimry"

@@ -10,18 +10,16 @@ import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
-import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
-class CafeRepository  constructor(
+class CafeRepository(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: CafeDao,
     private val cafeMapper: ICafeMapper,
-    private val authRepo: AuthRepo,
 ) : CafeRepo {
 
     override suspend fun refreshCafeList(selectedCityUuid: String) {

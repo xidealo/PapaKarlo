@@ -6,7 +6,7 @@ import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.domain.model.profile.User
 
-class UserMapper  constructor() : IUserMapper {
+class UserMapper : IUserMapper {
 
     override fun toEntityModel(profile: ProfileServer): UserEntity {
         return UserEntity(

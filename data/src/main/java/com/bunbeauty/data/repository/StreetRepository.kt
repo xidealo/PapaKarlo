@@ -11,7 +11,7 @@ import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.StreetRepo
 import kotlinx.coroutines.flow.Flow
 
-class StreetRepository  constructor(
+class StreetRepository(
     private val apiRepo: ApiRepo,
     private val streetDao: StreetDao,
     private val dataStoreRepo: DataStoreRepo,

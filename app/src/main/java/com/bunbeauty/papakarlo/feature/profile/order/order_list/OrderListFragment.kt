@@ -2,10 +2,9 @@ package com.bunbeauty.papakarlo.feature.profile.order.order_list
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
@@ -14,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +45,11 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
 
     @Composable
     private fun OrderListScreen(orderListState: State<List<OrderItemModel>>) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.background)
+        ) {
             when (orderListState) {
                 is State.Success -> {
                     LazyColumn(
@@ -65,18 +69,32 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                     }
                 }
                 is State.Empty -> {
-                    Text(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = stringResource(R.string.msg_order_list_empty),
-                        textAlign = TextAlign.Center,
-                        style = FoodDeliveryTheme.typography.body1
-                    )
+                    OrderListScreenEmpty()
                 }
                 is State.Loading -> {
                     CircularProgressBar(modifier = Modifier.align(Alignment.Center))
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun OrderListScreenEmpty() {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.empty_page),
+                    contentDescription = stringResource(R.string.description_empty_profile)
+                )
+                Text(
+                    modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = stringResource(R.string.msg_order_list_empty),
+                    textAlign = TextAlign.Center,
+                    style = FoodDeliveryTheme.typography.body1
+                )
             }
         }
     }

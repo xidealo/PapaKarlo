@@ -7,7 +7,7 @@ import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.model.profile.Profile
 
-class ProfileMapper  constructor(
+class ProfileMapper(
     private val userAddressMapper: IUserAddressMapper,
     private val orderMapper: IOrderMapper,
     private val userMapper: IUserMapper,

@@ -21,7 +21,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class CreateOrderViewModel constructor(
+class CreateOrderViewModel(
     private val addressInteractor: IAddressInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val orderInteractor: IOrderInteractor,

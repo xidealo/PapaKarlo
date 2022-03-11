@@ -1,46 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".feature.update.UpdateFragment">
 
-    <TextView
-        android:id="@+id/fragment_update_tv_update_app"
-        style="@style/LargeBoldWrapConstraintText"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:gravity="center"
-        android:text="@string/title_start_new_app_version"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_update_tv_update_app_info"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/fragmentUpdateCvMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/fragment_update_tv_update_app_info"
-        style="@style/MediumRegularWrapConstraintsText"
-        android:layout_margin="@dimen/medium_margin"
-        android:gravity="center"
-        android:text="@string/msg_start_new_app_version"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_update_btn_update"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_update_tv_update_app"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fragment_update_btn_update"
-        style="@style/MainButton"
-        android:layout_marginStart="@dimen/medium_margin"
-        android:layout_marginTop="@dimen/large_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:text="@string/action_start_update"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_update_tv_update_app_info" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

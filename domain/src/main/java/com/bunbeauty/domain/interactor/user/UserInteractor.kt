@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class UserInteractor  constructor(
+class UserInteractor(
     private val userRepo: UserRepo,
     private val userWorkerUtil: IUserWorkerUtil,
     private val dataStoreRepo: DataStoreRepo,

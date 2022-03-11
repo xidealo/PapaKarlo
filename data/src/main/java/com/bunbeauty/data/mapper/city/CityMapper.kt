@@ -4,7 +4,7 @@ import com.bunbeauty.data.database.entity.CityEntity
 import com.bunbeauty.data.network.model.CityServer
 import com.bunbeauty.domain.model.City
 
-class CityMapper  constructor() : ICityMapper {
+class CityMapper : ICityMapper {
 
     override fun toCityEntity(cityServer: CityServer): CityEntity {
         return CityEntity(

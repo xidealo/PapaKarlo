@@ -7,7 +7,7 @@ import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.IDateTimeUtil
 
-class DeferredTimeInteractor  constructor(
+class DeferredTimeInteractor(
     private val dateTimeUtil: IDateTimeUtil,
     private val dataStoreRepo: DataStoreRepo
 ) : IDeferredTimeInteractor {

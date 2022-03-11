@@ -30,13 +30,13 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.bunbeauty.papakarlo.feature.update.UpdateFragment"
-        android:label="UpdateFragment"
+        android:label="@string/title_update_new_app_version"
         tools:layout="@layout/fragment_update" />
 
     <fragment
         android:id="@+id/selectCityFragment"
         android:name="com.bunbeauty.papakarlo.feature.select_city.SelectCityFragment"
-        android:label="SelectCityFragment"
+        android:label="@string/title_select_city"
         tools:layout="@layout/fragment_select_city">
         <action
             android:id="@+id/to_menuFragment"
@@ -180,7 +180,7 @@
     <fragment
         android:id="@+id/ordersFragment"
         android:name="com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragment"
-        android:label="@string/title_order_list"
+        android:label="@string/title_my_orders"
         tools:layout="@layout/fragment_order_list">
         <argument
             android:name="userUuid"

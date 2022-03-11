@@ -9,7 +9,7 @@ import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 import com.bunbeauty.papakarlo.util.color.IColorUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
-class OrderUIMapper constructor(
+class OrderUIMapper(
     private val stringUtil: IStringUtil,
     private val colorUtil: IColorUtil
 ) : IOrderUIMapper {

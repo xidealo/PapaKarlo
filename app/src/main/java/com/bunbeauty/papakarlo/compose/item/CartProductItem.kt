@@ -57,8 +57,8 @@ fun CartProductItem(
         Row {
             AsyncImage(
                 modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.productImageHeight)
-                    .width(FoodDeliveryTheme.dimensions.productImageWidth),
+                    .height(FoodDeliveryTheme.dimensions.productImageSmallHeight)
+                    .width(FoodDeliveryTheme.dimensions.productImageSmallWidth),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(cartProductItemModel.photoLink)
                     .crossfade(true)

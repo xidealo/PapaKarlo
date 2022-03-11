@@ -54,7 +54,6 @@ fun repositoryModule() = module {
             dataStoreRepo = get(),
             cafeDao = get(),
             cafeMapper = get(),
-            authRepo = get(),
         )
     }
     single<StreetRepo> {

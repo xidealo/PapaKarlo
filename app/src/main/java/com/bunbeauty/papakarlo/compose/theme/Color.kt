@@ -32,6 +32,7 @@ val LightColors = AppColors(
     secondary = white,
     background = cream,
     surface = white,
+    surfaceVariant = lightGrey,
     error = red,
     notAccepted = purple,
     accepted = blue,
@@ -59,6 +60,7 @@ val DarkColors = AppColors(
     secondary = white,
     background = cream,
     surface = white,
+    surfaceVariant = lightGrey,
     error = red,
     notAccepted = purple,
     accepted = blue,
@@ -89,6 +91,7 @@ class AppColors(
     secondary: Color,
     background: Color,
     surface: Color,
+    surfaceVariant: Color,
     error: Color,
     notAccepted: Color,
     accepted: Color,
@@ -117,6 +120,8 @@ class AppColors(
     var background by mutableStateOf(background)
         private set
     var surface by mutableStateOf(surface)
+        private set
+    var surfaceVariant by mutableStateOf(surfaceVariant)
         private set
     var error by mutableStateOf(error)
         private set
@@ -240,6 +245,7 @@ class AppColors(
         secondary: Color = this.secondary,
         background: Color = this.background,
         surface: Color = this.surface,
+        surfaceVariant: Color = this.surfaceVariant,
         error: Color = this.error,
         notAccepted: Color = this.notAccepted,
         accepted: Color = this.accepted,
@@ -265,6 +271,7 @@ class AppColors(
         secondary = secondary,
         background = background,
         surface = surface,
+        surfaceVariant = surfaceVariant,
         error = error,
         notAccepted = notAccepted,
         accepted = accepted,
@@ -292,6 +299,7 @@ class AppColors(
         secondary = other.secondary
         background = other.background
         surface = other.surface
+        surfaceVariant = other.surfaceVariant
         error = other.error
         notAccepted = other.notAccepted
         accepted = other.accepted

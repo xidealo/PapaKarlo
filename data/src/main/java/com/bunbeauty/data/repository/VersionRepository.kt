@@ -5,7 +5,7 @@ import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.repo.VersionRepo
 
-class VersionRepository  constructor(private val apiRepo: ApiRepo) : VersionRepo {
+class VersionRepository(private val apiRepo: ApiRepo) : VersionRepo {
 
     override suspend fun getForceUpdateVersion(): Int {
         return apiRepo.getForceUpdateVersion()

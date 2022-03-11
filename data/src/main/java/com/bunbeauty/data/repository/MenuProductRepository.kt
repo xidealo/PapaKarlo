@@ -13,7 +13,7 @@ import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 
-class MenuProductRepository  constructor(
+class MenuProductRepository(
     private val apiRepository: ApiRepo,
     private val menuProductDao: MenuProductDao,
     private val menuProductMapper: IMenuProductMapper

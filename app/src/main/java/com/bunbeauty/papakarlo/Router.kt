@@ -19,7 +19,7 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Singleton
-class Router  constructor() : CoroutineScope {
+class Router : CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job()

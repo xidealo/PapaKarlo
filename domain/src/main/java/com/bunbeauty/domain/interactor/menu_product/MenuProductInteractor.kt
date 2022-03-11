@@ -6,7 +6,7 @@ import com.bunbeauty.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MenuProductInteractor  constructor(
+class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,
 ) : IMenuProductInteractor {
 

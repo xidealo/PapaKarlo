@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class MenuViewModel  constructor(
+class MenuViewModel(
     private val categoryInteractor: ICategoryInteractor,
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,

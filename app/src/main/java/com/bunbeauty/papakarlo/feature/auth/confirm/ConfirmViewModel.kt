@@ -10,7 +10,8 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.*
+import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.backToProfileFragment
+import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ConfirmViewModel  constructor(
+class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val resourcesProvider: IResourcesProvider
 ) : BaseViewModel() {

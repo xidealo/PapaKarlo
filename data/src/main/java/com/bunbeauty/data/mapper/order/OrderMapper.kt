@@ -13,7 +13,7 @@ import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.util.IDateTimeUtil
 
-class OrderMapper  constructor(
+class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {

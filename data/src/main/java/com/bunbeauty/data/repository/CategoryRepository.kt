@@ -10,7 +10,7 @@ import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.repo.CategoryRepo
 import kotlinx.coroutines.flow.Flow
 
-class CategoryRepository  constructor(
+class CategoryRepository(
     private val apiRepository: ApiRepo,
     private val categoryMapper: ICategoryMapper,
     private val categoryDao: CategoryDao

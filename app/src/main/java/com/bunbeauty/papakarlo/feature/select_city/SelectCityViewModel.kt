@@ -8,7 +8,7 @@ import com.bunbeauty.papakarlo.feature.select_city.SelectCityFragmentDirections.
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class SelectCityViewModel  constructor(
+class SelectCityViewModel(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 

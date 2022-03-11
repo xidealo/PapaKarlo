@@ -5,7 +5,7 @@ import com.bunbeauty.data.network.model.CafeServer
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
 
-class CafeMapper  constructor() : ICafeMapper {
+class CafeMapper : ICafeMapper {
 
     override fun toEntityModel(cafe: CafeServer): CafeEntity {
         return CafeEntity(

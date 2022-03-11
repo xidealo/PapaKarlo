@@ -112,11 +112,12 @@ fun viewModelModule() = module {
             orderUIMapper = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         LoginViewModel(
             textValidator = get(),
             userInteractor = get(),
             resourcesProvider = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {
@@ -132,10 +133,11 @@ fun viewModelModule() = module {
             settingsInteractor = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         ProductDetailsViewModel(
             menuProductInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel { parameters ->
