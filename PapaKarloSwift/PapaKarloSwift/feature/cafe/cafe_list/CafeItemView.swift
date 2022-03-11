@@ -25,8 +25,12 @@ struct CafeItemView: View {
             HStack{
                 Text(cafeItem.workingHours)
                 Text(cafeItem.isOpenMessage).foregroundColor(cafeItem.isOpenColor)
-            }.padding(.horizontal, Diems.MEDIUM_PADDING).padding(.bottom, Diems.MEDIUM_PADDING).frame(maxWidth: .infinity, alignment: .leading)
-        }.background(Color.white).cornerRadius(15)
+            }
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            .padding(.bottom, Diems.MEDIUM_PADDING)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+        }.background(Color("surface")).cornerRadius(15)
        
     }
 }

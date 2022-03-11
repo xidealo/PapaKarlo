@@ -13,5 +13,6 @@ class Strings{
 
     
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
+    static let ACTION_MENU_PRODUCT_WANT = "Хочу"
 
 }

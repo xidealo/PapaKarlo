@@ -26,6 +26,7 @@ struct ProductDetailsView: View {
     let menuProductUI:MenuProductUI
     var body: some View {
         VStack{
+            
             VStack{
                 Image(uiImage: menuProductUI.imageLink.load())
                     .resizable()
@@ -33,7 +34,6 @@ struct ProductDetailsView: View {
                     .frame(maxWidth: .infinity)
                 
                 Group{
-                    
                     HStack{
                         Text(menuProductUI.name).frame(maxWidth: .infinity, alignment: .leading).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
                         Text(menuProductUI.size).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
@@ -41,7 +41,7 @@ struct ProductDetailsView: View {
                     
                     HStack{
                         if menuProductUI.oldPrice != nil{
-                            Text(menuProductUI.oldPrice ?? "").strikethrough().font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .thin, design: .default))
+                            StrikeText(text: menuProductUI.oldPrice ?? "")
                         }
                         Text(menuProductUI.newPrice)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
@@ -52,9 +52,9 @@ struct ProductDetailsView: View {
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             .background(Color("surface"))
+            .cornerRadius(Diems.MEDIUM_RADIUS)
             .padding(Diems.MEDIUM_PADDING)
-            .cornerRadius(20.0)
-            
+
             Spacer()
             
             Button(action: {

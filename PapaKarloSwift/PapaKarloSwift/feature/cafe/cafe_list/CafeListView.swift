@@ -16,7 +16,9 @@ struct CafeListView: View {
             ScrollView {
                 LazyVStack{
                     ForEach(cafes){ cafe in
-                        CafeItemView(cafeItem: cafe).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        CafeItemView(cafeItem: cafe)
+                            .padding(.bottom, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)

@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SelectCityView: View {
-    let cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
+    let cities : [CityItem]
     
+    init() {
+        cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
+    }
     var body: some View {
             VStack{
                 ScrollView {
