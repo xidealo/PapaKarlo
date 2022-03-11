@@ -29,7 +29,7 @@ val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
-    secondary = white,
+    secondary = lightGrey,
     background = cream,
     surface = white,
     error = red,
@@ -56,7 +56,7 @@ val LightColors = AppColors(
 
 val DarkColors = AppColors(
     primary = orange,
-    secondary = white,
+    secondary = lightGrey,
     background = cream,
     surface = white,
     error = red,
