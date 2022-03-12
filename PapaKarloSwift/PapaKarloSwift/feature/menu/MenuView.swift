@@ -30,15 +30,17 @@ struct MenuView: View {
                     ForEach(menuItems){ menuItem in
                         
                         switch menuItem {
-                            case .categorySectionItem:
-                                Text("Title")
-                            case .menuProductItem:
-                                Text("body")
+                            case .categorySectionItem(let categorySection):
+                                LargeHeaderText(text: categorySection.name)
+                            case .menuProductItem(let menuProductItem):
+                                MenuItemView(menuProductItem:menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                         
                     }
                 }
-            }.padding(.top, Diems.MEDIUM_PADDING)
+            }.padding(.top, Diems.MEDIUM_PADDING).navigationTitle(
+                Text(Strings.TITLE_MENU)
+            )
         }
         
         

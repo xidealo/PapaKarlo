@@ -10,10 +10,6 @@ import SwiftUI
 struct MenuItemView: View {
     
     let menuProductItem:MenuProductItem
-
-    init() {
-        menuProductItem = MenuProductItem(id: UUID(), name: "Burger", newPrice: "200 R", oldPrice: "250 R", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
-    }
     
     var body: some View {
         
@@ -55,7 +51,7 @@ struct MenuItemView: View {
 
 struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItemView()
+        MenuItemView(menuProductItem:MenuProductItem(id: UUID(), name: "Burger", newPrice: "200 R", oldPrice: "250 R", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
     }
 }
 
