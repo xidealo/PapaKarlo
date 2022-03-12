@@ -7,14 +7,15 @@
 
 import SwiftUI
 
-struct NavigationCardView: View {
+struct NavigationCardView<Content: View>: View {
     
     let icon:String
     let label:String
+    let destination:Content
     
     var body: some View {
             NavigationLink(
-                destination:SelectCityView()
+                destination:destination
             ){
                 HStack{
                     Image(systemName: icon)
@@ -27,6 +28,6 @@ struct NavigationCardView: View {
 
 struct NavigationCardView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationCardView(icon: "person", label: "О приложении")
+        NavigationCardView(icon: "person", label: "О приложении", destination: SplashView())
     }
 }
