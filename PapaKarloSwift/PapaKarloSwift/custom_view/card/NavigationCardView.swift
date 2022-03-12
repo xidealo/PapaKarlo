@@ -21,7 +21,11 @@ struct NavigationCardView<Content: View>: View {
                     Image(systemName: icon)
                     Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
                     Image(systemName:"chevron.right")
-                }.frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS).shadow(radius: 1)
+                }.frame(maxWidth:.infinity)
+                .padding(Diems.MEDIUM_PADDING)
+                .background(Color("surface"))
+                .cornerRadius(Diems.MEDIUM_RADIUS)
+                .shadow(radius: 1)
             }
     }
 }

@@ -25,7 +25,6 @@ class Diems {
     static let IMAGE_ELEMENT_WIDTH:CGFloat = 108
     static let IMAGE_ELEMENT_HEIGHT:CGFloat = 72
 
-    
     static let BUTTON_HEIGHT:CGFloat = 20
     static let BUTTON_WIDTH:CGFloat = 78
 

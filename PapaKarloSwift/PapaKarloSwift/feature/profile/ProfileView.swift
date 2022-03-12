@@ -14,22 +14,7 @@ struct ProfileView: View {
            
             //LoadingProfileView()
             
-            VStack{
-                NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: FeedbackView())
-                
-                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: AboutAppView())
-                
-                NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: FeedbackView())
-                
-                NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: AboutAppView())
-                
-                NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
-                
-                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
-                
-                Spacer()
-                
-            }.padding(Diems.MEDIUM_PADDING)
+            SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false, lastOrderItem: OrderItem(id: UUID(), status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
           
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
     }
@@ -77,5 +62,37 @@ struct LoadingProfileView: View {
         ProgressView()
             .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
             .scaleEffect(1.5)
+    }
+}
+
+struct SuccessProfileView: View {
+    let profileUI:ProfileUI
+    
+    var body: some View {
+        VStack{
+            
+            if(profileUI.lastOrderItem != nil){
+                OrderItemView(orderItem: profileUI.lastOrderItem!)
+            }
+       
+            NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: FeedbackView())
+            
+            if(profileUI.hasAddresses){
+                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: AboutAppView())
+            }else{
+                NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: AboutAppView())
+            }
+       
+            NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: FeedbackView())
+            
+            NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: AboutAppView())
+            
+            NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
+            
+            NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
+            
+            Spacer()
+            
+        }.padding(Diems.MEDIUM_PADDING)
     }
 }

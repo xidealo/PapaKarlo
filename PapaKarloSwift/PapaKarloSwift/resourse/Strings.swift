@@ -24,6 +24,7 @@ class Strings{
     
     static let TITLE_PROFILE_SETTINGS = "Настройки"
     static let TITLE_PROFILE_YOUR_ADDRESSES = "Ваши адреса"
+    static let TITLE_PROFILE_ADD_ADDRESSES = "Добавить адрес"
     static let TITLE_PROFILE_ORDER_HISTORY = "История заказов"
     static let TITLE_PROFILE_PAYMENT = "Оплата"
     static let TITLE_PROFILE_FEEDBACK = "Отзывы"
