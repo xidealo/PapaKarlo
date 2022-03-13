@@ -3,6 +3,7 @@ package com.bunbeauty.domain.interactor.cart
 import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.model.cart.CartProduct
+import com.bunbeauty.domain.model.cart.CartTotal
 import com.bunbeauty.domain.model.cart.ConsumerCart
 import com.bunbeauty.domain.model.cart.LightCartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
@@ -74,6 +75,26 @@ class CartProductInteractor(
 
     override fun observeDelivery(): Flow<Delivery> {
         return dataStoreRepo.delivery
+    }
+
+    override fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal> {
+        return cartProductRepo.observeCartProductList().flatMapLatest { cartProductList ->
+            val newTotalCost = productInteractor.getNewTotalCost(cartProductList)
+            observeDeliveryCost().flatMapLatest { deliveryCost ->
+                isDeliveryFlow.map { isDelivery ->
+                    val amountToPay = if (isDelivery) {
+                        newTotalCost + deliveryCost
+                    } else {
+                        newTotalCost
+                    }
+                    CartTotal(
+                        totalCost = newTotalCost,
+                        deliveryCost = productInteractor.getDeliveryCost(cartProductList),
+                        amountToPay = amountToPay
+                    )
+                }
+            }
+        }
     }
 
     override fun observeAmountToPay(isDeliveryFlow: Flow<Boolean>): Flow<Int> {

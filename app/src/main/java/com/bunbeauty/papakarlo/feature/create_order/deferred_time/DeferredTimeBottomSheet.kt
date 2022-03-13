@@ -129,7 +129,7 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
                 }
                 NavigationCard(
                     modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
-                    label = R.string.action_deferred_time_select_time,
+                    labelStringId = R.string.action_deferred_time_select_time,
                     hasShadow = false
                 ) {
                     showTimePicker(deferredTimeSettings)

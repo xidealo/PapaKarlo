@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 @Composable
 fun TextCard(
     modifier: Modifier = Modifier,
-    @StringRes hint: Int,
+    @StringRes hintStringId: Int,
     label: String
 ) {
     Card(
@@ -42,7 +42,7 @@ fun TextCard(
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Text(
-                text = stringResource(hint),
+                text = stringResource(hintStringId),
                 style = FoodDeliveryTheme.typography.body2,
                 color = FoodDeliveryTheme.colors.onSurfaceVariant
             )
@@ -60,7 +60,7 @@ fun TextCard(
 @Composable
 fun TextCardPreview() {
     TextCard(
-        hint = R.string.hint_settings_phone,
+        hintStringId = R.string.hint_settings_phone,
         label = "+7 999 000-00-00"
     )
 }

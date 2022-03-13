@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuView: View {
     
     let menuItems : [MenuItem]
-    
+
     init() {
         menuItems = [
             MenuItem(id: UUID(), categorySectionItem:  CategorySectionItem(

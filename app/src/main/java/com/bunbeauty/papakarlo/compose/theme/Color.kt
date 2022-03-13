@@ -184,12 +184,12 @@ class AppColors(
     }
 
     @Composable
-    fun secondaryButtonColors(): ButtonColors {
+    fun switcherButtonColors(): ButtonColors {
         return ButtonDefaults.buttonColors(
             backgroundColor = secondary,
             contentColor = onSecondary,
-            disabledBackgroundColor = secondary.copy(alpha = 0.8f),
-            disabledContentColor = onSecondary.copy(alpha = 0.8f)
+            disabledBackgroundColor = primary,
+            disabledContentColor = onPrimary
         )
     }
 
@@ -237,6 +237,22 @@ class AppColors(
             CafeStatus.OPEN -> open
             CafeStatus.CLOSE_SOON -> closeSoon
             CafeStatus.CLOSED -> closed
+        }
+    }
+
+    fun switcherButtonColor(enabled: Boolean): Color {
+        return if (enabled) {
+            secondary
+        } else {
+            primary
+        }
+    }
+
+    fun switcherButtonTextColor(enabled: Boolean): Color {
+        return if (enabled) {
+            onSecondary
+        } else {
+            onPrimary
         }
     }
 

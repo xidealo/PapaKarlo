@@ -213,13 +213,13 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                 ) {
                     Text(
                         text = stringResource(R.string.msg_order_details_delivery_cost),
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                     Text(
                         modifier = Modifier.weight(1f),
                         text = orderUI.deliveryCost,
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface,
                         textAlign = TextAlign.End
                     )
@@ -228,7 +228,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = stringResource(R.string.msg_order_details_order_cost),
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 Text(
@@ -236,14 +236,14 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                         .weight(1f)
                         .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                     text = orderUI.oldAmountToPay,
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurfaceVariant,
                     textDecoration = TextDecoration.LineThrough,
                     textAlign = TextAlign.End
                 )
                 Text(
                     text = orderUI.newAmountToPay,
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface,
                 )
             }

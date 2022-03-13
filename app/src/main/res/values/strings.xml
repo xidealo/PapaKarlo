@@ -81,7 +81,8 @@
     <string name="title_create_order">Оформление заказа</string>
     <string name="action_create_order_delivery">Доставка</string>
     <string name="action_create_order_pickup">Самовывоз</string>
-    <string name="action_create_order_phone">Номер телефона</string>
+    <string name="action_create_order_delivery_address">Адрес доставки</string>
+    <string name="action_create_order_cafe_address">Адрес ресторана</string>
     <string name="hint_create_order_delivery_time">Время доставки</string>
     <string name="hint_create_order_pickup_time">Время самовывоза</string>
     <string name="hint_create_order_delivery_address">Адрес доставки</string>
@@ -91,7 +92,7 @@
     <string name="title_create_order_addition_comment">Добавление комментария</string>
     <string name="title_create_order_editing_comment">Редактирование комментария</string>
     <string name="action_create_order_save_comment">Сохранить</string>
-    <string name="action_create_order_checkout">Оформить заказ</string>
+    <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_create_order_address">Не указан адрес</string>
     <string name="error_create_order_user">Пользователь не авторизован</string>
     <string name="error_create_order_time">Не выбрано время</string>
