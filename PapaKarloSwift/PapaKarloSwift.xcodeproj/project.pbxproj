@@ -26,6 +26,11 @@
 		025C6A5927DCA59A00AB2F17 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5827DCA59A00AB2F17 /* ProfileView.swift */; };
 		025C6A5C27DCD32D00AB2F17 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */; };
 		025C6A5E27DCD35000AB2F17 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */; };
+		02681E4C27DF89AD00D03834 /* UserAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4B27DF89AD00D03834 /* UserAddressListView.swift */; };
+		02681E4E27DF89EB00D03834 /* AddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4D27DF89EB00D03834 /* AddressItemView.swift */; };
+		02681E5027DF89FD00D03834 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4F27DF89FD00D03834 /* AddressItem.swift */; };
+		02681E5427DF8B5400D03834 /* ElementText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E5327DF8B5400D03834 /* ElementText.swift */; };
+		02681E5627DFAA0100D03834 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E5527DFAA0100D03834 /* OrderListView.swift */; };
 		026C536F27DD35F900CE3EF2 /* OrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C536E27DD35F900CE3EF2 /* OrderItemView.swift */; };
 		026C537327DD36F000CE3EF2 /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C537227DD36F000CE3EF2 /* OrderItem.swift */; };
 		026C537527DD3D3700CE3EF2 /* ProfileUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C537427DD3D3700CE3EF2 /* ProfileUI.swift */; };
@@ -57,6 +62,11 @@
 		025C6A5827DCA59A00AB2F17 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
+		02681E4B27DF89AD00D03834 /* UserAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressListView.swift; sourceTree = "<group>"; };
+		02681E4D27DF89EB00D03834 /* AddressItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItemView.swift; sourceTree = "<group>"; };
+		02681E4F27DF89FD00D03834 /* AddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
+		02681E5327DF8B5400D03834 /* ElementText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementText.swift; sourceTree = "<group>"; };
+		02681E5527DFAA0100D03834 /* OrderListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListView.swift; sourceTree = "<group>"; };
 		026C536E27DD35F900CE3EF2 /* OrderItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemView.swift; sourceTree = "<group>"; };
 		026C537227DD36F000CE3EF2 /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
 		026C537427DD3D3700CE3EF2 /* ProfileUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUI.swift; sourceTree = "<group>"; };
@@ -100,6 +110,7 @@
 		0254656427C918CE00337B98 /* address */ = {
 			isa = PBXGroup;
 			children = (
+				02681E4A27DF897F00D03834 /* user_address_list */,
 			);
 			path = address;
 			sourceTree = "<group>";
@@ -180,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				025C6A5627DCA4D700AB2F17 /* NavigationCardView.swift */,
-				026C536E27DD35F900CE3EF2 /* OrderItemView.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -190,8 +200,19 @@
 			children = (
 				025B505A27DBF1C000C71EA6 /* StrikeText.swift */,
 				025C6A5327DC9F4700AB2F17 /* LargeHeaderText.swift */,
+				02681E5327DF8B5400D03834 /* ElementText.swift */,
 			);
 			path = text;
+			sourceTree = "<group>";
+		};
+		02681E4A27DF897F00D03834 /* user_address_list */ = {
+			isa = PBXGroup;
+			children = (
+				02681E4B27DF89AD00D03834 /* UserAddressListView.swift */,
+				02681E4D27DF89EB00D03834 /* AddressItemView.swift */,
+				02681E4F27DF89FD00D03834 /* AddressItem.swift */,
+			);
+			path = user_address_list;
 			sourceTree = "<group>";
 		};
 		026C537027DD36D200CE3EF2 /* order */ = {
@@ -205,7 +226,9 @@
 		026C537127DD36DF00CE3EF2 /* order_list */ = {
 			isa = PBXGroup;
 			children = (
+				026C536E27DD35F900CE3EF2 /* OrderItemView.swift */,
 				026C537227DD36F000CE3EF2 /* OrderItem.swift */,
+				02681E5527DFAA0100D03834 /* OrderListView.swift */,
 			);
 			path = order_list;
 			sourceTree = "<group>";
@@ -408,16 +431,21 @@
 				026C537527DD3D3700CE3EF2 /* ProfileUI.swift in Sources */,
 				026C536F27DD35F900CE3EF2 /* OrderItemView.swift in Sources */,
 				02500A2627D4F9DB00DA641C /* Strings.swift in Sources */,
+				02681E4E27DF89EB00D03834 /* AddressItemView.swift in Sources */,
+				02681E5027DF89FD00D03834 /* AddressItem.swift in Sources */,
 				02131A3727DA361600DCF9F5 /* MenuProductItem.swift in Sources */,
 				02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */,
 				02131A3927DA3D7E00DCF9F5 /* MenuItemView.swift in Sources */,
 				025C6A5427DC9F4700AB2F17 /* LargeHeaderText.swift in Sources */,
+				02681E4C27DF89AD00D03834 /* UserAddressListView.swift in Sources */,
 				025C6A5C27DCD32D00AB2F17 /* FeedbackView.swift in Sources */,
 				02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */,
 				0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */,
+				02681E5627DFAA0100D03834 /* OrderListView.swift in Sources */,
 				02131A3327DA2D2F00DCF9F5 /* MenuItem.swift in Sources */,
 				025C6A5727DCA4D700AB2F17 /* NavigationCardView.swift in Sources */,
 				0254657227C9209700337B98 /* CityItemView.swift in Sources */,
+				02681E5427DF8B5400D03834 /* ElementText.swift in Sources */,
 				026C537327DD36F000CE3EF2 /* OrderItem.swift in Sources */,
 				0256A04927D8886A006811FE /* CafeListView.swift in Sources */,
 				0254657427C9238600337B98 /* CityItem.swift in Sources */,

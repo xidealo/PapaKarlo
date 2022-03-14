@@ -11,7 +11,7 @@ struct CityItemView: View {
     var city: CityItem
 
     var body: some View {
-        Text(city.city).padding().frame(maxWidth: .infinity, alignment: .leading).background(Color.white).cornerRadius(15)
+        ElementText(text: city.city)
     }
 }
 

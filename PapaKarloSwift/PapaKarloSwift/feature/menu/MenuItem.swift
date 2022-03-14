@@ -8,6 +8,6 @@
 import SwiftUI
 
 struct MenuItem: Identifiable {
-    var id : String { UUID().uuidString }
+    var id : UUID
     let categorySectionItem:CategorySectionItem
 }
