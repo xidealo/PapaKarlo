@@ -13,8 +13,6 @@ plugins {
 
 android {
 
-    compileSdk = AndroidSdk.compile
-
     signingConfigs {
         create("release") {
             storeFile = file("keystore")
@@ -27,6 +25,7 @@ android {
     defaultConfig {
         applicationId = Application.applicationId
         minSdk = AndroidSdk.min
+        compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
         versionCode = Application.versionCode
         versionName = Application.versionName
