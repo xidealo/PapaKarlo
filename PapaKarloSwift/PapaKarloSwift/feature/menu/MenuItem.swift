@@ -6,9 +6,8 @@
 //
 
 import SwiftUI
-enum MenuItem: Identifiable {
-    var id : String { UUID().uuidString }
 
-    case categorySectionItem(CategorySectionItem)
-    case menuProductItem(MenuProductItem)
+struct MenuItem: Identifiable {
+    var id : String { UUID().uuidString }
+    let categorySectionItem:CategorySectionItem
 }

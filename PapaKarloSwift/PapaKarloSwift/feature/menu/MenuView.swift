@@ -11,15 +11,19 @@ struct MenuView: View {
     
     let menuItems : [MenuItem]
     
-    
     init() {
         menuItems = [
-            .categorySectionItem(
-                CategorySectionItem(
-                    id: UUID(),
-                    name: "Burger"
-                )
-            )
+            MenuItem(categorySectionItem:  CategorySectionItem(
+                id: UUID(),
+                name: "Burger",
+                menuProdctItems: [
+                    MenuProductItem(id: UUID(),
+                                    name: "Burger",
+                                    newPrice: "200 R",
+                                    oldPrice: "250 R",
+                                    photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
+                ]
+            ))
         ]
     }
     
@@ -28,14 +32,11 @@ struct MenuView: View {
             ScrollView {
                 LazyVStack{
                     ForEach(menuItems){ menuItem in
-                        
-                        switch menuItem {
-                            case .categorySectionItem(let categorySection):
-                                LargeHeaderText(text: categorySection.name)
-                            case .menuProductItem(let menuProductItem):
-                                MenuItemView(menuProductItem:menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        Section(header: LargeHeaderText(text: menuItem.categorySectionItem.name)){
+                            ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
+                                MenuItemView(menuProductItem: menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                            }
                         }
-                        
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING).navigationTitle(
