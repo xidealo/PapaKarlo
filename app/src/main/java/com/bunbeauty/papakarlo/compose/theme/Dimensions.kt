@@ -22,7 +22,7 @@ data class AppDimensions(
     val productImageSmallHeight: Dp = 72.dp,
     val productImageSmallWidth: Dp = 108.dp,
     val blurHeight: Dp = 16.dp,
-    val autoCompleteListHeight: Dp = 160.dp,
+    val smallProgressBarSize: Dp = 24.dp,
 ) {
     fun getTopItemSpaceByIndex(i: Int): Dp {
         return if (i == 0) {

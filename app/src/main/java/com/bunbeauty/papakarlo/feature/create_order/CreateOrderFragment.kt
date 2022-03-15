@@ -32,7 +32,7 @@ import com.bunbeauty.papakarlo.compose.card.NavigationCard
 import com.bunbeauty.papakarlo.compose.card.TextNavigationCard
 import com.bunbeauty.papakarlo.compose.custom.Switcher
 import com.bunbeauty.papakarlo.compose.element.BlurLine
-import com.bunbeauty.papakarlo.compose.element.MainButton
+import com.bunbeauty.papakarlo.compose.element.LoadingButton
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -230,9 +230,10 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     )
                 }
             }
-            MainButton(
+            LoadingButton(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_create_order_create_order
+                textStringId = R.string.action_create_order_create_order,
+                isLoading = orderCreationUI.isLoading
             ) {
                 viewModel.onCreateOrderClicked(orderCreationUI)
             }
@@ -302,7 +303,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = false
+                isLoading = true
             )
         )
     }
