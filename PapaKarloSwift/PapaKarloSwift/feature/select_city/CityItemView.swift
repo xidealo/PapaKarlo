@@ -11,7 +11,7 @@ struct CityItemView: View {
     var city: CityItem
 
     var body: some View {
-        ElementText(text: city.city)
+        ElementCard(text: city.city)
     }
 }
 

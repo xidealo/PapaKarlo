@@ -21,7 +21,7 @@ class Strings{
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
     
-    
+    //PROFILE
     static let TITLE_PROFILE_SETTINGS = "Настройки"
     static let TITLE_PROFILE_YOUR_ADDRESSES = "Ваши адреса"
     static let TITLE_PROFILE_ADD_ADDRESSES = "Добавить адрес"
@@ -30,7 +30,20 @@ class Strings{
     static let TITLE_PROFILE_FEEDBACK = "Отзывы"
     static let TITLE_PROFILE_ABOUT_APP = "О приложении"
     
+    //SETTINGS
+    static let HINT_SETTINGS_PHONE = "Номер телефона"
+    static let HINT_SETTINGS_EMAIL = "Почта"
+    static let HINT_SETTINGS_CITY = "Город"
+
     static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отбражаться бонусны, адреса и история ваших заказов"
+    
+    //ADDRESS
+    static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отбражаться ваши адреса"
+    static let ACTION_ADDRESS_LIST_ADD = "Добавить адрес"
+
+    
+    //ORDERS
+    static let MSG_ORDER_LIST_EMPTY_ORDERS = "Здесь будет отбражаться история ваших заказов"
 
     static let ACTION_PROFILE_LOGIN = "Войти"
 

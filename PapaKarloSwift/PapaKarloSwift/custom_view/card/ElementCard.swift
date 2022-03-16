@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct ElementText: View {
+struct ElementCard: View {
     let text:String
     
     var body: some View {
-        Text(text).padding().frame(maxWidth: .infinity, alignment: .leading).background(Color.white).cornerRadius(Diems.MEDIUM_RADIUS)
+        Text(text).padding().frame(maxWidth: .infinity, alignment: .leading).background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS)
         
     }
 }
 
 struct ElementText_Previews: PreviewProvider {
     static var previews: some View {
-        ElementText(text: "Text")
+        ElementCard(text: "Text")
     }
 }

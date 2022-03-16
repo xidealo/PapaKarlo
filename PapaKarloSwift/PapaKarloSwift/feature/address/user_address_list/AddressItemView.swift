@@ -12,7 +12,7 @@ struct AddressItemView: View {
     let addressItem:AddressItem
     
     var body: some View {
-        ElementText(text: addressItem.address)
+        ElementCard(text: addressItem.address)
     }
 }
 

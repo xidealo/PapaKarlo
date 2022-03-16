@@ -10,13 +10,14 @@ import SwiftUI
 struct ProfileView: View {
     var body: some View {
         VStack{
-            //EmptyProfileView()
-           
+            EmptyProfileView()
+            
             //LoadingProfileView()
             
-            SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false, lastOrderItem: OrderItem(id: UUID(), status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
-          
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
+            //SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false,lastOrderItem: OrderItem(id: UUID(),status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
+            
+        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background")).navigationTitle(Text(Strings.TITLE_PROFILE)
+        )
     }
 }
 
@@ -72,9 +73,9 @@ struct SuccessProfileView: View {
         VStack{
             
             if(profileUI.lastOrderItem != nil){
-                OrderItemView(orderItem: profileUI.lastOrderItem!)
+                OrderItemView(orderItem: profileUI.lastOrderItem!, destination: OrderDetailsView())
             }
-       
+            
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: FeedbackView())
             
             if(profileUI.hasAddresses){
@@ -82,7 +83,7 @@ struct SuccessProfileView: View {
             }else{
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: AboutAppView())
             }
-       
+            
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: FeedbackView())
             
             NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: AboutAppView())

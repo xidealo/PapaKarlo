@@ -20,7 +20,7 @@ struct NavigationCardView<Content: View>: View {
                 HStack{
                     Image(systemName: icon)
                     Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
-                    Image(systemName:"chevron.right")
+                    Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
                 }.frame(maxWidth:.infinity)
                 .padding(Diems.MEDIUM_PADDING)
                 .background(Color("surface"))
