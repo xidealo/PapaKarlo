@@ -31,6 +31,11 @@ fun LoadingButton(
     onClick: () -> Unit,
 ) {
     Box(modifier = modifier.height(IntrinsicSize.Min)) {
+        val backgroundColor = if (isLoading) {
+            FoodDeliveryTheme.colors.primaryDisabled
+        } else {
+            FoodDeliveryTheme.colors.primary
+        }
         Card(
             modifier = Modifier
                 .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.buttonSize)
@@ -47,7 +52,7 @@ fun LoadingButton(
                     indication = rememberRipple(),
                     onClick = onClick
                 ),
-            backgroundColor = FoodDeliveryTheme.colors.primary,
+            backgroundColor = backgroundColor,
         ) {
             Box(
                 modifier = Modifier
@@ -62,7 +67,7 @@ fun LoadingButton(
                         modifier = Modifier
                             .size(FoodDeliveryTheme.dimensions.smallProgressBarSize)
                             .align(Alignment.Center),
-                        color = FoodDeliveryTheme.colors.onPrimary
+                        color = FoodDeliveryTheme.colors.onPrimaryDisabled
                     )
                 } else {
                     Text(
