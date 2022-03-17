@@ -120,10 +120,11 @@ fun viewModelModule() = module {
             savedStateHandle = parameters.get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         ConfirmViewModel(
             userInteractor = get(),
             resourcesProvider = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {

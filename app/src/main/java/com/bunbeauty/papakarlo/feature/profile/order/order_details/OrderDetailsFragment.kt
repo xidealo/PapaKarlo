@@ -104,7 +104,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     itemsIndexed(orderUI.orderProductList) { i, orderProductItemModel ->
                         OrderProductItem(
                             modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                             ),
                             orderProductItemModel = orderProductItemModel
                         )

@@ -225,7 +225,7 @@
     <string name="msg_confirm_seconds">&#160;секунд</string>
     <string name="error_confirm_wrong_code">Неправильный код</string>
     <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
-    <string name="action_confirm_resend_code">Отправить код повторно</string>
+    <string name="action_confirm_resend_code">Получить код</string>
     <string name="action_confirm_change_phone">Изменить номер</string>
 
     <!-- CAFE OPTIONS -->

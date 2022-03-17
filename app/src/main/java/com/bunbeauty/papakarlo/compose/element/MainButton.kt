@@ -24,6 +24,7 @@ fun MainButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int,
     hasShadow: Boolean = true,
+    isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Box(modifier = modifier.height(IntrinsicSize.Min)) {
@@ -38,11 +39,16 @@ fun MainButton(
                 )
                 .clip(mediumRoundedCornerShape)
                 .clickable(
+                    enabled = isEnabled,
                     interactionSource = remember { MutableInteractionSource() },
                     indication = rememberRipple(),
                     onClick = onClick
                 ),
-            backgroundColor = FoodDeliveryTheme.colors.primary
+            backgroundColor = if (isEnabled) {
+                FoodDeliveryTheme.colors.primary
+            } else {
+                FoodDeliveryTheme.colors.primaryDisabled
+            }
         ) {
             Box(
                 modifier = Modifier
@@ -56,7 +62,11 @@ fun MainButton(
                     modifier = Modifier.align(Alignment.Center),
                     text = stringResource(textStringId).uppercase(),
                     style = FoodDeliveryTheme.typography.button,
-                    color = FoodDeliveryTheme.colors.onPrimary
+                    color = if (isEnabled) {
+                        FoodDeliveryTheme.colors.onPrimary
+                    } else {
+                        FoodDeliveryTheme.colors.onPrimaryDisabled
+                    }
                 )
             }
         }
@@ -67,4 +77,13 @@ fun MainButton(
 @Composable
 private fun MainButtonPreview() {
     MainButton(textStringId = R.string.action_login_continue) {}
+}
+
+@Preview
+@Composable
+private fun MainButtonDisabledPreview() {
+    MainButton(
+        textStringId = R.string.action_login_continue,
+        isEnabled = false
+    ) {}
 }

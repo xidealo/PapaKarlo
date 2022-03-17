@@ -56,7 +56,7 @@ fun <T : AutoCompleteEntity> AutoCompleteEditText(
                 listState.forEachIndexed { i, item ->
                     DropdownItem(
                         modifier = Modifier.padding(
-                            top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                            top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
                         text = item.value,
                         onClick = {

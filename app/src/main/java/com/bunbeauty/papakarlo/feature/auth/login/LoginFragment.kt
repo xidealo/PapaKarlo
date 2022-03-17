@@ -5,7 +5,6 @@ import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
@@ -31,7 +30,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
@@ -46,41 +44,50 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
+        viewModel.setNotLoading()
         viewBinding.fragmentLoginCvMain.compose {
-            LoginScreen()
+            val isLoading by viewModel.isLoading.collectAsState()
+            LoginScreen(isLoading)
+        }
+        phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
+            viewModel.onCodeSent(
+                codeSentEvent.phone,
+                codeSentEvent.verificationId,
+                codeSentEvent.token
+            )
+        }
+        phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
+            viewModel.onVerificationError(authErrorEvent.error)
+        }
+        phoneVerificationUtil.authSuccessEvent.startedLaunch {
+            viewModel.onSuccessVerified()
         }
     }
 
     @Composable
-    private fun LoginScreen() {
+    private fun LoginScreen(isLoading: Boolean) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
-            var isLoading by remember { mutableStateOf(false) }
             val rememberScaffoldState = rememberScaffoldState()
             ErrorSnackbar(
                 modifier = Modifier.align(Alignment.TopCenter),
                 snackbarHostState = rememberScaffoldState.snackbarHostState
             )
-            ObservePhoneVerificationEvents(rememberScaffoldState) { changedIsLoading ->
-                isLoading = changedIsLoading
-            }
             if (isLoading) {
                 LoginLoadingScreen()
             } else {
-                LoginSuccessScreen { changedIsLoading ->
-                    isLoading = changedIsLoading
-                }
+                LoginSuccessScreen()
             }
         }
     }
 
     @Composable
-    private fun LoginSuccessScreen(onIsLoadingChanged: (Boolean) -> Unit) {
+    private fun LoginSuccessScreen() {
         var phoneText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
             mutableStateOf(
                 TextFieldValue(
@@ -140,7 +147,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                         phone = phoneText.text,
                         activity = requireActivity()
                     )
-                    onIsLoadingChanged(true)
+                    viewModel.onNextClick()
                 }
             }
         }
@@ -153,38 +160,16 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
     }
 
+    @Preview
     @Composable
-    private fun ObservePhoneVerificationEvents(
-        scaffoldState: ScaffoldState,
-        onIsLoadingChanged: (Boolean) -> Unit
-    ) {
-        val rememberCoroutineScope = rememberCoroutineScope()
-        LaunchedEffect(true) {
-            phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
-                viewModel.onCodeSent(
-                    codeSentEvent.phone,
-                    codeSentEvent.verificationId,
-                    codeSentEvent.token
-                )
-            }
-            phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
-                onIsLoadingChanged(false)
-                viewModel.checkVerificationError(authErrorEvent.error).let { errorMessage ->
-                    rememberCoroutineScope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(errorMessage)
-                    }
-                }
-            }
-            phoneVerificationUtil.authSuccessEvent.startedLaunch {
-                viewModel.onSuccessVerified()
-            }
-        }
+    private fun LoginScreenPreview() {
+        LoginScreen(false)
     }
 
     @Preview
     @Composable
-    private fun LoginScreenPreview() {
-        LoginScreen()
+    private fun LoginScreenLoadingPreview() {
+        LoginScreen(true)
     }
 
 }

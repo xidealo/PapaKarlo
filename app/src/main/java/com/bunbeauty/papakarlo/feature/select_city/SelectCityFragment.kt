@@ -57,7 +57,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
                     itemsIndexed(cityList) { i, city ->
                         CityItem(
                             modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                             ),
                             cityName = city.name
                         ) {

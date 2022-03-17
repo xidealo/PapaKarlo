@@ -82,7 +82,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     itemsIndexed(consumerCart.cartProductList) { i, cartProductItemModel ->
                         CartProductItem(
                             modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                             ),
                             cartProductItemModel = cartProductItemModel,
                             onCountIncreased = {

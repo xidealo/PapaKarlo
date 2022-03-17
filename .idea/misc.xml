@@ -12,7 +12,26 @@
         <entry key="../../../../layout/compose-model-1647347210419.xml" value="0.21" />
         <entry key="../../../../layout/compose-model-1647347210424.xml" value="0.11297678275290216" />
         <entry key="../../../../layout/compose-model-1647347544657.xml" value="0.6092592592592593" />
+        <entry key="../../../../layout/compose-model-1647351974037.xml" value="0.16" />
+        <entry key="../../../../layout/compose-model-1647351974041.xml" value="0.150609080841639" />
+        <entry key="../../../../layout/compose-model-1647352045143.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1647419411827.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1647419870219.xml" value="0.6351851851851852" />
+        <entry key="../../../../layout/compose-model-1647422063175.xml" value="0.8909090909090909" />
+        <entry key="../../../../layout/compose-model-1647422080276.xml" value="0.8909090909090909" />
+        <entry key="../../../../layout/compose-model-1647430613336.xml" value="0.33" />
+        <entry key="../../../../layout/compose-model-1647433591033.xml" value="0.6351851851851852" />
+        <entry key="../../../../layout/compose-model-1647434740252.xml" value="0.18" />
+        <entry key="../../../../layout/compose-model-1647511144294.xml" value="0.11918604651162791" />
+        <entry key="../../../../layout/compose-model-1647514249976.xml" value="0.6351851851851852" />
+        <entry key="../../../../layout/compose-model-1647524559920.xml" value="0.4583333333333333" />
+        <entry key="../../../../layout/compose-model-1647526224490.xml" value="0.179375" />
+        <entry key="app/src/main/res/layout/element_category.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/layout/element_category_title.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.5265577119509703" />
+        <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.5265577119509703" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.44427083333333334" />
       </map>
     </option>
   </component>

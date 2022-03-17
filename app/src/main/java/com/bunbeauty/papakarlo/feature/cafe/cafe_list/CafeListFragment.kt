@@ -65,7 +65,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
             itemsIndexed(cafeItemList) { i, cafeItem ->
                 CafeItem(
                     modifier = Modifier.padding(
-                        top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                        top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
                     cafeItem = cafeItem
                 ) {

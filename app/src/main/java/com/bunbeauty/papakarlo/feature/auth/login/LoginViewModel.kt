@@ -6,6 +6,7 @@ import com.bunbeauty.common.Constants.PHONE_CODE
 import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
@@ -14,6 +15,9 @@ import com.bunbeauty.papakarlo.feature.auth.login.LoginFragmentDirections.*
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -23,8 +27,15 @@ class LoginViewModel(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
+    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
+
     private val successLoginDirection: SuccessLoginDirection =
         savedStateHandle.get("successLoginDirection") ?: BACK_TO_PROFILE
+
+    fun setNotLoading() {
+        mutableIsLoading.value = false
+    }
 
     fun formatPhoneNumber(inputPhoneNumber: String): String {
         val numbers = inputPhoneNumber.run {
@@ -104,6 +115,10 @@ class LoginViewModel(
         }
     }
 
+    fun onNextClick() {
+        mutableIsLoading.value = true
+    }
+
     fun onSuccessVerified() {
         viewModelScope.launch {
             userInteractor.login()
@@ -115,7 +130,8 @@ class LoginViewModel(
         }
     }
 
-    fun checkVerificationError(error: String): String {
+    fun onVerificationError(error: String) {
+        mutableIsLoading.value = false
         val errorResId = when (error) {
             TOO_MANY_REQUESTS -> {
                 R.string.error_login_too_many_requests
@@ -124,7 +140,7 @@ class LoginViewModel(
                 R.string.error_login_something_try_later
             }
         }
-        return resourcesProvider.getString(errorResId)
+        showError(resourcesProvider.getString(errorResId), true)
     }
 
     fun onCodeSent(

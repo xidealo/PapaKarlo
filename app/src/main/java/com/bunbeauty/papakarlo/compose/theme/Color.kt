@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
-val grey = Color(0xFFBABABA)
+val grey = Color(0xFF989898)
 val lightGrey = Color(0xFFD6D6D6)
 val cream = Color(0xFFF2F1F6)
 val red = Color(0xFFB1021D)
@@ -29,6 +29,7 @@ val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
+    primaryDisabled = lightGrey,
     secondary = white,
     background = cream,
     surface = white,
@@ -46,6 +47,7 @@ val LightColors = AppColors(
     closeSoon = yellow,
     closed = lightRed,
     onPrimary = white,
+    onPrimaryDisabled = grey,
     onSecondary = grey,
     onBackground = black,
     onSurface = black,
@@ -57,6 +59,7 @@ val LightColors = AppColors(
 
 val DarkColors = AppColors(
     primary = orange,
+    primaryDisabled = lightGrey,
     secondary = white,
     background = cream,
     surface = white,
@@ -74,6 +77,7 @@ val DarkColors = AppColors(
     closeSoon = yellow,
     closed = lightRed,
     onPrimary = white,
+    onPrimaryDisabled = grey,
     onSecondary = grey,
     onBackground = black,
     onSurface = black,
@@ -88,6 +92,7 @@ val LocalAppColors = staticCompositionLocalOf { LightColors }
 @Stable
 class AppColors(
     primary: Color,
+    primaryDisabled: Color,
     secondary: Color,
     background: Color,
     surface: Color,
@@ -105,6 +110,7 @@ class AppColors(
     closeSoon: Color,
     closed: Color,
     onPrimary: Color,
+    onPrimaryDisabled: Color,
     onSecondary: Color,
     onBackground: Color,
     onSurface: Color,
@@ -114,6 +120,8 @@ class AppColors(
     isLight: Boolean
 ) {
     var primary by mutableStateOf(primary)
+        private set
+    var primaryDisabled by mutableStateOf(primaryDisabled)
         private set
     var secondary by mutableStateOf(secondary)
         private set
@@ -149,6 +157,8 @@ class AppColors(
         private set
     var onPrimary by mutableStateOf(onPrimary)
         private set
+    var onPrimaryDisabled by mutableStateOf(onPrimaryDisabled)
+        private set
     var onSecondary by mutableStateOf(onSecondary)
         private set
     var onBackground by mutableStateOf(onBackground)
@@ -167,6 +177,11 @@ class AppColors(
     val textSelectionColors = TextSelectionColors(
         handleColor = primary,
         backgroundColor = primary.copy(alpha = 0.4f)
+    )
+
+    val smsTextSelectionColors = TextSelectionColors(
+        handleColor = Color.Transparent,
+        backgroundColor = Color.Transparent
     )
 
     val surfaceGradient = Brush.verticalGradient(
@@ -200,6 +215,33 @@ class AppColors(
             disabledTextColor = onSurfaceVariant,
             backgroundColor = surface,
             cursorColor = primary,
+            errorCursorColor = error,
+            focusedIndicatorColor = primary,
+            unfocusedIndicatorColor = onSurfaceVariant,
+            disabledIndicatorColor = onSurfaceVariant,
+            errorIndicatorColor = error,
+            leadingIconColor = onSurfaceVariant,
+            disabledLeadingIconColor = onSurfaceVariant,
+            errorLeadingIconColor = error,
+            trailingIconColor = onSurfaceVariant,
+            disabledTrailingIconColor = onSurfaceVariant,
+            errorTrailingIconColor = error,
+            focusedLabelColor = primary,
+            unfocusedLabelColor = onSurfaceVariant,
+            disabledLabelColor = onSurfaceVariant,
+            errorLabelColor = error,
+            placeholderColor = onSurfaceVariant,
+            disabledPlaceholderColor = onSurfaceVariant
+        )
+    }
+
+    @Composable
+    fun smsTextFieldColors(): TextFieldColors {
+        return TextFieldDefaults.textFieldColors(
+            textColor = onSurface,
+            disabledTextColor = onSurfaceVariant,
+            backgroundColor = surface,
+            cursorColor = Color.Transparent,
             errorCursorColor = error,
             focusedIndicatorColor = primary,
             unfocusedIndicatorColor = onSurfaceVariant,
@@ -258,6 +300,7 @@ class AppColors(
 
     fun copy(
         primary: Color = this.primary,
+        primaryDisabled: Color = this.primaryDisabled,
         secondary: Color = this.secondary,
         background: Color = this.background,
         surface: Color = this.surface,
@@ -275,6 +318,7 @@ class AppColors(
         closeSoon: Color = this.closeSoon,
         closed: Color = this.closed,
         onPrimary: Color = this.onPrimary,
+        onPrimaryDisabled: Color = this.onPrimaryDisabled,
         onSecondary: Color = this.onSecondary,
         onBackground: Color = this.onBackground,
         onSurface: Color = this.onSurface,
@@ -284,6 +328,7 @@ class AppColors(
         isLight: Boolean = this.isLight,
     ) = AppColors(
         primary = primary,
+        primaryDisabled = primaryDisabled,
         secondary = secondary,
         background = background,
         surface = surface,
@@ -301,6 +346,7 @@ class AppColors(
         closeSoon = closeSoon,
         closed = closed,
         onPrimary = onPrimary,
+        onPrimaryDisabled = onPrimaryDisabled,
         onSecondary = onSecondary,
         onBackground = onBackground,
         onSurface = onSurface,
@@ -312,6 +358,7 @@ class AppColors(
 
     fun update(other: AppColors) {
         primary = other.primary
+        primaryDisabled = other.primaryDisabled
         secondary = other.secondary
         background = other.background
         surface = other.surface
@@ -329,6 +376,7 @@ class AppColors(
         closeSoon = other.closeSoon
         closed = other.closed
         onPrimary = other.onPrimary
+        onPrimaryDisabled = other.onPrimaryDisabled
         onSecondary = other.onSecondary
         onBackground = other.onBackground
         onSurface = other.onSurface

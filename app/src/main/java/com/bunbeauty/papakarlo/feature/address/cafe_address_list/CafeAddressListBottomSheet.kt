@@ -74,7 +74,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
                 itemsIndexed(cafeAddressList) { i, addressItem ->
                     AddressItem(
                         modifier = Modifier.padding(
-                            top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                            top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
                         address = addressItem.address,
                         isClickable = true

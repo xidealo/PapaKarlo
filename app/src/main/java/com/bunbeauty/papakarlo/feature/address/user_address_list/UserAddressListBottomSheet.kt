@@ -73,7 +73,7 @@ class UserAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_user_ad
                     itemsIndexed(addressItemModelList) { i, addressItemModel ->
                         AddressItem(
                             modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i),
+                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i),
                                 end = FoodDeliveryTheme.dimensions.addressEndSpace
                             ),
                             address = addressItemModel.address,

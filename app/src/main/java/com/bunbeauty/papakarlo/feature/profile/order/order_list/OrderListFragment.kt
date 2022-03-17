@@ -59,7 +59,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                         itemsIndexed(orderListState.data) { i, orderItemModel ->
                             OrderItem(
                                 modifier = Modifier.padding(
-                                    top = FoodDeliveryTheme.dimensions.getTopItemSpaceByIndex(i)
+                                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                                 ),
                                 orderItem = orderItemModel
                             ) {

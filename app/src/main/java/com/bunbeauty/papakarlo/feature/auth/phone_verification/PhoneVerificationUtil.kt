@@ -123,13 +123,13 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
     }
 
     fun sendError(error: String) {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableAuthErrorEvent.send(AuthErrorEvent(error))
         }
     }
 
     fun sendSuccess() {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableAuthSuccessEvent.send(AuthSuccessEvent())
         }
     }
@@ -139,7 +139,7 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
         verificationId: String,
         token: PhoneAuthProvider.ForceResendingToken
     ) {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableCodeSentEvent.send(CodeSentEvent(phone, verificationId, token))
         }
     }
