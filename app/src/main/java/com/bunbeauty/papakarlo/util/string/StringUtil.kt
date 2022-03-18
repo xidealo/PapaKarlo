@@ -15,12 +15,14 @@ class StringUtil(
     private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 
-    override fun getCostString(cost: Int?): String {
-        return if (cost == null) {
-            ""
-        } else {
-            cost.toString() + resourcesProvider.getString(R.string.part_ruble)
+    override fun getCostString(cost: Int?): String? {
+        return cost?.let {
+            getCostString(cost)
         }
+    }
+
+    override fun getCostString(cost: Int): String {
+        return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
     }
 
     override fun getUserAddressString(userAddress: UserAddress?): String? {
@@ -94,7 +96,7 @@ class StringUtil(
     }
 
     override fun getCountString(count: Int): String {
-        return "x $count"
+        return "× $count"
     }
 
     override fun getOrderStatusName(orderStatus: OrderStatus): String {

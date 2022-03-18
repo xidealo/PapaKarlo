@@ -8,6 +8,7 @@ import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.model.order.OrderWithAmounts
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
+import com.bunbeauty.domain.model.product.OrderProductWithCosts
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
@@ -34,7 +35,24 @@ class OrderInteractor(
     override fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?> {
         return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
             OrderWithAmounts(
-                order = order,
+                uuid = order.uuid,
+                code = order.code,
+                status = order.status,
+                dateTime = order.dateTime,
+                isDelivery = order.isDelivery,
+                deferredTime = order.deferredTime,
+                address = order.address,
+                comment = order.comment,
+                deliveryCost = order.deliveryCost,
+                orderProductList = order.orderProductList.map { orderProduct ->
+                    OrderProductWithCosts(
+                        uuid = orderProduct.uuid,
+                        count = orderProduct.count,
+                        newCost = productInteractor.getProductPositionNewCost(orderProduct),
+                        oldCost = productInteractor.getProductPositionOldCost(orderProduct),
+                        product = orderProduct.product
+                    )
+                },
                 oldAmountToPay = productInteractor.getOldAmountToPay(
                     order.orderProductList,
                     order.deliveryCost

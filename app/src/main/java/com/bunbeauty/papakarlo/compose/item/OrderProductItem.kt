@@ -68,28 +68,49 @@ fun OrderProductItem(
                     modifier = Modifier.fillMaxSize(),
                     verticalAlignment = Alignment.Bottom
                 ) {
-                    Text(
-                        text = orderProductItemModel.count,
-                        style = FoodDeliveryTheme.typography.body2,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
-                    orderProductItemModel.oldCost?.let {
+                    orderProductItemModel.oldPrice?.let {
                         Text(
                             modifier = Modifier
-                                .weight(1f)
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = orderProductItemModel.oldCost,
+                            text = orderProductItemModel.oldPrice,
                             style = FoodDeliveryTheme.typography.body2,
-                            textAlign = TextAlign.End,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )
                     }
                     Text(
-                        text = orderProductItemModel.newCost,
+                        modifier = Modifier
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        text = orderProductItemModel.newPrice,
                         style = FoodDeliveryTheme.typography.body2,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
+                    Text(
+                        modifier = Modifier
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        text = orderProductItemModel.count,
+                        style = FoodDeliveryTheme.typography.body2,
+                        color = FoodDeliveryTheme.colors.onSurface
+                    )
+                    Row(
+                        modifier = Modifier.weight(1f),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        orderProductItemModel.oldCost?.let {
+                            Text(
+                                modifier = Modifier.padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                text = orderProductItemModel.oldCost,
+                                style = FoodDeliveryTheme.typography.body2,
+                                textDecoration = TextDecoration.LineThrough,
+                                color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                            )
+                        }
+                        Text(
+                            text = orderProductItemModel.newCost,
+                            style = FoodDeliveryTheme.typography.body2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
                 }
             }
         }
@@ -103,10 +124,29 @@ private fun OrderProductItemPreview() {
         orderProductItemModel = OrderProductItemModel(
             uuid = "",
             name = "Бэргер с вкусной свинкой ням ням ням ням",
+            newPrice = "50 ₽",
+            oldPrice = "100 ₽",
             newCost = "100 ₽",
             oldCost = "200 ₽",
             photoLink = "",
-            count = "x 2"
+            count = "× 2"
+        )
+    )
+}
+
+@Preview
+@Composable
+private fun OrderProductItemWithoutOldPricePreview() {
+    OrderProductItem(
+        orderProductItemModel = OrderProductItemModel(
+            uuid = "",
+            name = "Бэргер с вкусной свинкой ням ням ням ням",
+            newPrice = "50 ₽",
+            oldPrice = null,
+            newCost = "100 ₽",
+            oldCost = null,
+            photoLink = "",
+            count = "× 2"
         )
     )
 }

@@ -27,33 +27,35 @@ class OrderUIMapper(
 
     override fun toOrderUI(orderWithAmounts: OrderWithAmounts): OrderUI {
         return OrderUI(
-            code = orderWithAmounts.order.code,
-            status = orderWithAmounts.order.status,
-            statusName = stringUtil.getOrderStatusName(orderWithAmounts.order.status),
-            dateTime = stringUtil.getDateTimeString(orderWithAmounts.order.dateTime),
-            pickupMethod = stringUtil.getPickupMethodString(orderWithAmounts.order.isDelivery),
-            deferredTimeHintStringId = if (orderWithAmounts.order.isDelivery) {
+            code = orderWithAmounts.code,
+            status = orderWithAmounts.status,
+            statusName = stringUtil.getOrderStatusName(orderWithAmounts.status),
+            dateTime = stringUtil.getDateTimeString(orderWithAmounts.dateTime),
+            pickupMethod = stringUtil.getPickupMethodString(orderWithAmounts.isDelivery),
+            deferredTimeHintStringId = if (orderWithAmounts.isDelivery) {
                 R.string.msg_order_details_deferred_time_delivery
             } else {
                 R.string.msg_order_details_deferred_time_pickup
             },
-            deferredTime = orderWithAmounts.order.deferredTime?.let { deferredTime ->
+            deferredTime = orderWithAmounts.deferredTime?.let { deferredTime ->
                 stringUtil.getTimeString(deferredTime)
             },
-            address = orderWithAmounts.order.address,
-            comment = orderWithAmounts.order.comment,
-            deliveryCost = stringUtil.getCostString(orderWithAmounts.order.deliveryCost),
-            orderProductList = orderWithAmounts.order.orderProductList.map { orderProduct ->
+            address = orderWithAmounts.address,
+            comment = orderWithAmounts.comment,
+            deliveryCost = stringUtil.getCostString(orderWithAmounts.deliveryCost),
+            orderProductList = orderWithAmounts.orderProductList.map { orderProduct ->
                 OrderProductItemModel(
                     uuid = orderProduct.uuid,
                     name = orderProduct.product.name,
-                    newCost = stringUtil.getCostString(orderProduct.product.newPrice),
-                    oldCost = stringUtil.getCostString(orderProduct.product.oldPrice),
+                    newPrice = stringUtil.getCostString(orderProduct.product.newPrice),
+                    oldPrice = stringUtil.getCostString(orderProduct.product.oldPrice),
+                    newCost = stringUtil.getCostString(orderProduct.newCost),
+                    oldCost = stringUtil.getCostString(orderProduct.oldCost),
                     photoLink = orderProduct.product.photoLink,
                     count = stringUtil.getCountString(orderProduct.count),
                 )
             },
-            isDelivery = orderWithAmounts.order.isDelivery,
+            isDelivery = orderWithAmounts.isDelivery,
             oldAmountToPay = stringUtil.getCostString(orderWithAmounts.oldAmountToPay),
             newAmountToPay = stringUtil.getCostString(orderWithAmounts.newAmountToPay),
         )

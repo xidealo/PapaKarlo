@@ -84,7 +84,6 @@ fun CartProductItem(
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                             text = cartProductItemModel.oldCost,
                             style = FoodDeliveryTheme.typography.body2,
-                            textAlign = TextAlign.End,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )

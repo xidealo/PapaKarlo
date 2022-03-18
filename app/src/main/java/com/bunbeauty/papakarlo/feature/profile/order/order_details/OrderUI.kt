@@ -13,9 +13,9 @@ data class OrderUI(
     val deferredTime: String?,
     val address: String,
     val comment: String?,
-    val deliveryCost: String,
+    val deliveryCost: String?,
     val orderProductList: List<OrderProductItemModel>,
     val isDelivery: Boolean,
-    val oldAmountToPay: String,
+    val oldAmountToPay: String?,
     val newAmountToPay: String,
 )

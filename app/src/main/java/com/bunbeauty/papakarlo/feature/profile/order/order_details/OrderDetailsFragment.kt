@@ -205,7 +205,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                 .background(FoodDeliveryTheme.colors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            if (orderUI.isDelivery) {
+            if (orderUI.isDelivery && orderUI.deliveryCost != null) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -231,21 +231,26 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                    text = orderUI.oldAmountToPay,
-                    style = FoodDeliveryTheme.typography.h2,
-                    color = FoodDeliveryTheme.colors.onSurfaceVariant,
-                    textDecoration = TextDecoration.LineThrough,
-                    textAlign = TextAlign.End
-                )
-                Text(
-                    text = orderUI.newAmountToPay,
-                    style = FoodDeliveryTheme.typography.h2,
-                    color = FoodDeliveryTheme.colors.onSurface,
-                )
+                Row(
+                    modifier = Modifier.weight(1f),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    orderUI.oldAmountToPay?.let {
+                        Text(
+                            modifier = Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                            text = orderUI.oldAmountToPay,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough
+                        )
+                    }
+                    Text(
+                        text = orderUI.newAmountToPay,
+                        style = FoodDeliveryTheme.typography.h2,
+                        color = FoodDeliveryTheme.colors.onSurface,
+                    )
+                }
             }
         }
     }
@@ -298,6 +303,8 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
     private val orderProductItemModel = OrderProductItemModel(
         uuid = "",
         name = "Бэргер с вкусной свинкой ням ням ням ням",
+        newPrice = "50 ₽",
+        oldPrice = "100 ₽",
         newCost = "100 ₽",
         oldCost = "200 ₽",
         photoLink = "",

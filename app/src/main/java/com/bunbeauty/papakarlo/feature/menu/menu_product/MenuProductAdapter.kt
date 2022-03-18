@@ -62,7 +62,7 @@ class MenuProductAdapter:
                         elementMenuProductTvNewPrice.text = item.newPrice
                         elementMenuProductTvOldPrice.text = item.oldPrice
                         elementMenuProductTvOldPrice.strikeOutText()
-                        elementMenuProductTvOldPrice.toggleVisibility(item.oldPrice.isNotEmpty())
+                        elementMenuProductTvOldPrice.toggleVisibility(!item.oldPrice.isNullOrEmpty())
                         elementMenuProductIvPhoto.setPhoto(item.photoLink)
 
                         elementMenuProductMcvMain.setOnClickListener {
