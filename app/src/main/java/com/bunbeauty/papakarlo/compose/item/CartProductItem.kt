@@ -75,7 +75,8 @@ fun CartProductItem(
                 OverflowingText(
                     text = cartProductItemModel.name,
                     style = FoodDeliveryTheme.typography.h3,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.onSurface,
+                    maxLines = 2
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                     cartProductItemModel.oldCost?.let {
@@ -113,7 +114,7 @@ private fun CartProductItemPreview() {
     CartProductItem(
         cartProductItemModel = CartProductItemModel(
             uuid = "",
-            name = "Бэргер",
+            name = "Бургер MINI с говядиной и плавленым сыром",
             newCost = "99 ₽",
             oldCost = "100 ₽",
             photoLink = "",
@@ -131,7 +132,7 @@ private fun CartProductItemWithoutOldCostPreview() {
     CartProductItem(
         cartProductItemModel = CartProductItemModel(
             uuid = "",
-            name = "Бэргер",
+            name = "Бургер MINI с говядиной и плавленым сыром",
             newCost = "99 ₽",
             oldCost = null,
             photoLink = "",

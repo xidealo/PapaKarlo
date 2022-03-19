@@ -38,7 +38,10 @@ fun CountPicker(
     ) {
         Card(
             modifier = Modifier
-                .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize)
+                .defaultMinSize(
+                    minWidth = FoodDeliveryTheme.dimensions.buttonSize,
+                    minHeight = FoodDeliveryTheme.dimensions.buttonSize
+                )
                 .fillMaxHeight()
                 .width(FoodDeliveryTheme.dimensions.smallButtonSize)
                 .clip(mediumRoundedCornerShape)
@@ -61,13 +64,17 @@ fun CountPicker(
             }
         }
         Text(
+            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.h3,
             color = FoodDeliveryTheme.colors.onPrimary,
         )
         Card(
             modifier = Modifier
-                .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize)
+                .defaultMinSize(
+                    minWidth = FoodDeliveryTheme.dimensions.buttonSize,
+                    minHeight = FoodDeliveryTheme.dimensions.buttonSize
+                )
                 .fillMaxHeight()
                 .width(FoodDeliveryTheme.dimensions.smallButtonSize)
                 .clip(mediumRoundedCornerShape)
