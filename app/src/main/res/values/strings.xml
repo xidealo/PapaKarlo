@@ -146,8 +146,10 @@
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="title_cafe_list_payment">Оплата</string>
 
-    <!-- BOTTOM SHEET ADDRESSES -->
+    <!-- USER ADDRESS LIST -->
     <string name="title_my_addresses">Мои адреса</string>
+    <string name="action_add_addresses">Добавить адрес</string>
+    <string name="msg_my_addresses_empty">Здесь будут отбражаться ваши адреса</string>
     <string name="title_cafe_addresses">Адреса ресторанов</string>
 
     <!-- ORDER STATUS-->

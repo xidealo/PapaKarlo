@@ -103,7 +103,8 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
 
     private val addressItemModel = AddressItemModel(
         uuid = "",
-        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж"
+        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+        isClickable = true
     )
 
     @Preview

@@ -121,7 +121,7 @@
         </action>
         <action
             android:id="@+id/to_ordersFragment"
-            app:destination="@id/ordersFragment" />
+            app:destination="@id/orderListFragment" />
         <action
             android:id="@+id/to_paymentBottomSheet"
             app:destination="@id/paymentBottomSheet" />
@@ -178,7 +178,7 @@
     <include app:graph="@navigation/nav_address" />
 
     <fragment
-        android:id="@+id/ordersFragment"
+        android:id="@+id/orderListFragment"
         android:name="com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragment"
         android:label="@string/title_my_orders"
         tools:layout="@layout/fragment_order_list">

@@ -46,9 +46,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         R.id.loginFragment,
         R.id.menuFragment,
         R.id.orderDetailsFragment,
-        R.id.ordersFragment,
+        R.id.orderListFragment,
         R.id.productFragment,
         R.id.profileFragment,
+        R.id.userAddressListFragment,
         R.id.settingsFragment
     )
     private val logoFragmentIdList = listOf(R.id.menuFragment)

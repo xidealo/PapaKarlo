@@ -29,7 +29,8 @@ class CafeAddressListViewModel(
     private fun toItem(cafeAddress: CafeAddress): AddressItemModel {
         return AddressItemModel(
             uuid = cafeAddress.cafeUuid,
-            address = cafeAddress.address
+            address = cafeAddress.address,
+            isClickable = true
         )
     }
 }

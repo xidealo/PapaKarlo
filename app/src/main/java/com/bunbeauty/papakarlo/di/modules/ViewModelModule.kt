@@ -82,10 +82,11 @@ fun viewModelModule() = module {
             addressInteractor = get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         UserAddressListViewModel(
             addressInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {

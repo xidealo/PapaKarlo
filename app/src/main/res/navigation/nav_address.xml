@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_address"
-    app:startDestination="@id/userAddressListBottomSheet">
+    app:startDestination="@id/userAddressListFragment">
 
-    <dialog
-        android:id="@+id/userAddressListBottomSheet"
-        android:name="com.bunbeauty.papakarlo.feature.address.user_address_list.UserAddressListBottomSheet"
-        android:label="UserAddressListBottomSheet"
+    <fragment
+        android:id="@+id/userAddressListFragment"
+        android:name="com.bunbeauty.papakarlo.feature.address.user_address_list.UserAddressListFragment"
+        android:label="@string/title_my_addresses"
         tools:layout="@layout/bottom_sheet_user_address_list">
         <argument
             android:name="isClickable"
@@ -16,7 +16,7 @@
         <action
             android:id="@+id/to_createAddressFragment"
             app:destination="@id/createAddressFragment" />
-    </dialog>
+    </fragment>
 
     <fragment
         android:id="@+id/createAddressFragment"

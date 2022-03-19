@@ -84,28 +84,15 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 ) {
                     viewModel.onSettingsClicked()
                 }
-                if (profile.hasAddresses) {
-                    NavigationIconCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                        iconId = R.drawable.ic_address,
-                        iconDescription = R.string.description_ic_settings,
-                        labelStringId = R.string.action_profile_my_addresses
-                    ) {
-                        viewModel.onYourAddressesClicked()
-                    }
-                } else {
-                    NavigationIconCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                        iconId = R.drawable.ic_add,
-                        iconDescription = R.string.description_ic_create_address,
-                        labelStringId = R.string.action_profile_create_address
-                    ) {
-                        viewModel.onAddAddressClicked()
-                    }
+                NavigationIconCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    iconId = R.drawable.ic_address,
+                    iconDescription = R.string.description_ic_my_addresses,
+                    labelStringId = R.string.action_profile_my_addresses
+                ) {
+                    viewModel.onYourAddressesClicked()
                 }
                 NavigationIconCard(
                     modifier = Modifier
