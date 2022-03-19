@@ -34,16 +34,14 @@ class UserAddressListViewModel(
 
     private fun observeUserAddressList() {
         addressInteractor.observeAddressList().launchOnEach { userAddressList ->
-            mutableAddressItemModelList.value = userAddressList.map { userAddress ->
-                userAddress.toItem()
-            }
+            mutableAddressItemModelList.value = userAddressList.map(::toItem)
         }
     }
 
-    private fun UserAddress.toItem(): AddressItemModel {
+    private fun toItem(userAddress: UserAddress): AddressItemModel {
         return AddressItemModel(
-            uuid = uuid,
-            address = stringUtil.getUserAddressString(this) ?: "",
+            uuid = userAddress.uuid,
+            address = stringUtil.getUserAddressString(userAddress) ?: "",
             isClickable = isClickable
         )
     }

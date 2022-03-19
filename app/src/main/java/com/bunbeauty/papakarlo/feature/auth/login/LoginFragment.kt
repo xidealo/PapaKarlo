@@ -35,7 +35,7 @@ import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
-    val phoneVerificationUtil: IPhoneVerificationUtil by inject()
+    private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
     override val viewModel: LoginViewModel by stateViewModel(state = {
         arguments ?: bundleOf()

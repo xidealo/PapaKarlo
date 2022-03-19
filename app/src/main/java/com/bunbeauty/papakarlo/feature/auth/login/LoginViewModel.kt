@@ -30,8 +30,9 @@ class LoginViewModel(
     private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
 
-    private val successLoginDirection: SuccessLoginDirection =
-        savedStateHandle.get("successLoginDirection") ?: BACK_TO_PROFILE
+    private val successLoginDirection: SuccessLoginDirection by lazy {
+        savedStateHandle["successLoginDirection"] ?: BACK_TO_PROFILE
+    }
 
     fun setNotLoading() {
         mutableIsLoading.value = false

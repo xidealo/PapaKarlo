@@ -81,7 +81,7 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
             MainButton(
                 textStringId = R.string.action_product_details_want
             ) {
-                viewModel.onWantClicked()
+                viewModel.onWantClicked(menuProductUI)
             }
         }
     }
@@ -159,6 +159,7 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
     private fun ProductDetailsSuccessScreenPreview() {
         ProductDetailsScreen(
             MenuProductUI(
+                uuid = "",
                 photoLink = "",
                 name = "Бэргер куриный Макс с экстра сырным соусом",
                 size = "300 г",

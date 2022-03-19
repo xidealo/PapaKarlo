@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.feature.product_details
 
 data class MenuProductUI(
+    val uuid: String,
     val photoLink: String,
     val name: String,
     val size: String,

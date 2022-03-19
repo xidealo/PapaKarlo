@@ -63,22 +63,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         router.navigateUp()
     }
 
-    protected inline fun <reified T> getNavArg(savedStateHandlekey: String): T? {
-        return null ///savedStateHandle.get(key)
-//        return when {
-//            Parcelable::class.java.isAssignableFrom(T::class.java) -> {
-//                 bundle?.getParcelable(key) as? T
-//            }
-//            T::class == Boolean::class -> {
-//                bundle?.getBoolean(key) as T
-//            }
-//            T::class == String::class -> {
-//                bundle?.getString(key) as T
-//            }
-//            else -> null
-//        }
-    }
-
     protected fun <T> Flow<T>.launchOnEach(block: (T) -> Unit): Job {
         return onEach { t ->
             block(t)

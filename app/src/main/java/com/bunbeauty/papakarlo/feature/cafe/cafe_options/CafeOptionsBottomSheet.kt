@@ -16,33 +16,32 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.common.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.common.Constants.MAPS_LINK
 import com.bunbeauty.common.Constants.PHONE_LINK
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
-import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_options) {
 
-    override val viewModel: CafeOptionsViewModel by viewModel()
+    override val viewModel: CafeOptionsViewModel by stateViewModel(state = {
+        arguments ?: bundleOf()
+    })
     override val viewBinding by viewBinding(BottomSheetCafeOptionsBinding::bind)
-
-    private val cafeUuid: String by argument()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getCafe(cafeUuid)
         viewBinding.bottomSheetCafeOptionsCvMain.compose {
             val cafeOptions by viewModel.cafeOptions.collectAsState()
             CafeOptionsScreen(cafeOptions)

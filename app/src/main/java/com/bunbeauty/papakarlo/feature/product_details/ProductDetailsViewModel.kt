@@ -15,17 +15,17 @@ class ProductDetailsViewModel(
     savedStateHandle: SavedStateHandle
 ) : CartViewModel() {
 
-    private val menuProductUuid: String = savedStateHandle["menuProductUuid"] ?: ""
-
     private val mutableMenuProduct: MutableStateFlow<MenuProductUI?> = MutableStateFlow(null)
     val menuProduct: StateFlow<MenuProductUI?> = mutableMenuProduct.asStateFlow()
 
     init {
-        observeMenuProduct(menuProductUuid)
+        savedStateHandle.get<String>("menuProductUuid")?.let { menuProductUuid ->
+            observeMenuProduct(menuProductUuid)
+        }
     }
 
-    fun onWantClicked() {
-        addProductToCart(menuProductUuid)
+    fun onWantClicked(menuProductUI: MenuProductUI) {
+        addProductToCart(menuProductUI.uuid)
     }
 
     private fun observeMenuProduct(menuProductUuid: String) {
@@ -37,6 +37,7 @@ class ProductDetailsViewModel(
 
     private fun MenuProduct.toUI(): MenuProductUI {
         return MenuProductUI(
+            uuid = uuid,
             photoLink = photoLink,
             name = name,
             size = "$nutrition $utils",

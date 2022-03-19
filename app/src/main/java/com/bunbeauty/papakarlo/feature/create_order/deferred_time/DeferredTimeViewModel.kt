@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.create_order.deferred_time
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class DeferredTimeViewModel(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     private val mutableDeferredTimeSettings: MutableStateFlow<DeferredTimeSettings?> =
@@ -20,16 +21,18 @@ class DeferredTimeViewModel(
         mutableDeferredTimeSettings.asStateFlow()
 
     init {
-        getDeferredTimeSettings()
+        val title: String = savedStateHandle["title"] ?: ""
+        val selectedTime: Time? = savedStateHandle["selectedTime"]
+        getDeferredTimeSettings(title, selectedTime)
     }
 
-    private fun getDeferredTimeSettings() {
+    private fun getDeferredTimeSettings(title: String, selectedTime: Time?) {
         viewModelScope.launch {
             val minTime = deferredTimeInteractor.getMinTime()
             mutableDeferredTimeSettings.value = DeferredTimeSettings(
-                title = savedStateHandle["title"] ?: "",
+                title = title,
                 minTime = minTime,
-                selectedTime = savedStateHandle["selectedTime"] ?: minTime
+                selectedTime = selectedTime ?: minTime
             )
         }
     }

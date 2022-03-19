@@ -28,10 +28,6 @@ class ConfirmViewModel(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val phone: String = savedStateHandle["phone"]!!
-    private val verificationId: String = savedStateHandle["verificationId"]!!
-    private val resendToken: PhoneAuthProvider.ForceResendingToken =
-        savedStateHandle["resendToken"]!!
     private val successLoginDirection: SuccessLoginDirection =
         savedStateHandle["successLoginDirection"]!!
 
@@ -43,10 +39,10 @@ class ConfirmViewModel(
     private val mutableConfirmState: MutableStateFlow<Confirmation> =
         MutableStateFlow(
             Confirmation(
-                phoneNumber = phone,
+                phoneNumber = savedStateHandle["phone"]!!,
+                resendToken =  savedStateHandle["resendToken"]!!,
+                verificationId = savedStateHandle["verificationId"]!!,
                 resendSeconds = timerSecondCount,
-                verificationId = verificationId,
-                resendToken = resendToken,
                 isCodeChecking = false
             )
         )

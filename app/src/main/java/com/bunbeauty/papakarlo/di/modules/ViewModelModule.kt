@@ -94,17 +94,19 @@ fun viewModelModule() = module {
             cafeInteractor = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         CafeOptionsViewModel(
             resourcesProvider = get(),
             cafeInteractor = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel { EmptyViewModel() }
-    viewModel {
+    viewModel { parameters ->
         OrderDetailsViewModel(
             orderInteractor = get(),
             orderUIMapper = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel {

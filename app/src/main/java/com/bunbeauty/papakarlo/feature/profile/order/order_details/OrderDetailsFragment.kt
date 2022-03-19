@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
@@ -36,20 +37,20 @@ import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
 
-    override val viewModel: OrderDetailsViewModel by viewModel()
+    override val viewModel: OrderDetailsViewModel by stateViewModel(state = {
+        arguments ?: bundleOf()
+    })
     override val viewBinding by viewBinding(FragmentOrderDetailsBinding::bind)
-
-    private val orderUuid: String by argument()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.observeOrder(orderUuid)
         viewBinding.fragmentOrderDetailsCvMain.compose {
             val orderState by viewModel.orderState.collectAsState()
             OrderDetailsScreen(orderState)
