@@ -4,7 +4,7 @@ import com.bunbeauty.data.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import com.squareup.sqldelight.runtime.coroutines.mapToOneNotNull
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import database.SelectedUserAddressUuidEntity
 import database.UserAddressEntity
 import kotlinx.coroutines.flow.Flow
@@ -50,32 +50,40 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         userUuid: String,
         cityUuid: String
     ): Flow<UserAddressEntity?> {
-        return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
-            .asFlow().mapToOneNotNull()
+        return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).asFlow().mapToOneOrNull()
     }
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<UserAddressEntity?> {
-        return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
-            .asFlow().mapToOneNotNull()
+        return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).asFlow().mapToOneOrNull()
     }
 
     override fun observeUserAddressListByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddressEntity>> {
-        return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(userUuid, cityUuid)
-            .asFlow().mapToList()
+        return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).asFlow().mapToList()
     }
 
     override fun observeUserAddressCountByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<Long> {
-        return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(userUuid, cityUuid)
-            .asFlow().mapToOne()
+        return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).asFlow().mapToOne()
     }
 
 }

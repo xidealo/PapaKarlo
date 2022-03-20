@@ -48,8 +48,8 @@ WHERE userUuid = :userUuid;
 getOrderListByUserUuid:
 SELECT *
 FROM orderEntity
-WHERE userUuid = :userUuid;
-
+WHERE userUuid = :userUuid
+ORDER BY time DESC;
 
 getOrderWithProductByUuid:
 SELECT *

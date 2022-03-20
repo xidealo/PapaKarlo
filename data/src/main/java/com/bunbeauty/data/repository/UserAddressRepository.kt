@@ -13,7 +13,7 @@ import com.bunbeauty.domain.repo.UserAddressRepo
 import database.SelectedUserAddressUuidEntity
 import kotlinx.coroutines.flow.Flow
 
-class UserAddressRepository  constructor(
+class UserAddressRepository constructor(
     private val apiRepo: ApiRepo,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: IUserAddressMapper
@@ -50,23 +50,29 @@ class UserAddressRepository  constructor(
         userUuid: String,
         cityUuid: String
     ): Flow<UserAddress?> {
-        return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
-            .mapFlow(userAddressMapper::toUserAddress)
+        return userAddressDao.observeSelectedUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).mapFlow(userAddressMapper::toUserAddress)
     }
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<UserAddress?> {
-        return userAddressDao.observeFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
-            .mapFlow(userAddressMapper::toUserAddress)
+        return userAddressDao.observeFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).mapFlow(userAddressMapper::toUserAddress)
     }
 
     override fun observeUserAddressListByUserUuidAndCityUuid(
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddress>> {
-        return userAddressDao.observeUserAddressListByUserAndCityUuid(userUuid, cityUuid)
-            .mapListFlow(userAddressMapper::toUserAddress)
+        return userAddressDao.observeUserAddressListByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).mapListFlow(userAddressMapper::toUserAddress)
     }
 }
