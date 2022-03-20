@@ -47,4 +47,10 @@ class Strings{
 
     static let ACTION_PROFILE_LOGIN = "Войти"
 
+    //LOGIN
+    static let MSG_LOGIN_ENTER_PHONE = "Пожалуйста, введите номер вашего телефона"
+    static let HINT_LOGIN_PHONE = "Номер телефона"
+    static let ACTION_LOGIN_LOGIN = "Продолжить"
+
+    
 }

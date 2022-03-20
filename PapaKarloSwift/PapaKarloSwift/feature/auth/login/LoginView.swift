@@ -16,7 +16,7 @@ struct LoginView: View {
         VStack{
             
             Spacer()
-
+ 
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
