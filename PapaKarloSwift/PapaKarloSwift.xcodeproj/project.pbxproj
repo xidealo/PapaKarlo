@@ -48,6 +48,7 @@
 		0287396827AC40D80020A919 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* SplashScreen.swift */; };
 		0287396A27AC40DB0020A919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396927AC40DB0020A919 /* Assets.xcassets */; };
 		0287396D27AC40DB0020A919 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396C27AC40DB0020A919 /* Preview Assets.xcassets */; };
+		02BEF69B27E74ADD00F18540 /* SmsTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BEF69A27E74ADD00F18540 /* SmsTextField.swift */; };
 		02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0FF8E27C6A22E00BABD2B /* SelectCityView.swift */; };
 		02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02E0FF9227C6A27D00BABD2B /* MenuView.swift */; };
 /* End PBXBuildFile section */
@@ -96,6 +97,7 @@
 		0287396927AC40DB0020A919 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0287396C27AC40DB0020A919 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Preview Assets.xcassets"; path = "Preview Content/Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0287396E27AC40DB0020A919 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02BEF69A27E74ADD00F18540 /* SmsTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmsTextField.swift; sourceTree = "<group>"; };
 		02E0FF8E27C6A22E00BABD2B /* SelectCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCityView.swift; sourceTree = "<group>"; };
 		02E0FF9227C6A27D00BABD2B /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +211,7 @@
 				025C6A5627DCA4D700AB2F17 /* NavigationCardView.swift */,
 				02727A1B27E1178E00C212E4 /* TextCard.swift */,
 				02727A2427E11F6E00C212E4 /* NavigationTextCard.swift */,
+				02BEF69A27E74ADD00F18540 /* SmsTextField.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				02681E5027DF89FD00D03834 /* AddressItem.swift in Sources */,
 				02131A3727DA361600DCF9F5 /* MenuProductItem.swift in Sources */,
 				02E0FF9327C6A27D00BABD2B /* MenuView.swift in Sources */,
+				02BEF69B27E74ADD00F18540 /* SmsTextField.swift in Sources */,
 				026E627B27E60E0200353E69 /* ConfirmView.swift in Sources */,
 				02131A3927DA3D7E00DCF9F5 /* MenuItemView.swift in Sources */,
 				025C6A5427DC9F4700AB2F17 /* LargeHeaderText.swift in Sources */,

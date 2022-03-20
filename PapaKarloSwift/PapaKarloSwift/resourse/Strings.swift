@@ -53,4 +53,8 @@ class Strings{
     static let ACTION_LOGIN_LOGIN = "Продолжить"
 
     
+    //CONFIRM
+    static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер +7 (999) 888-77-66"
+    static let ACTION_CONFIRM_GET_CODE = "Получить код"
+
 }

@@ -11,7 +11,7 @@ struct PlaceholderText: View {
     let text:String
     
     var body: some View {
-        Text(text).frame(maxWidth:.infinity, alignment: .leading).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+        Text(text).frame(maxWidth:.infinity).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
     }
 }
 

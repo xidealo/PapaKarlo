@@ -36,7 +36,7 @@ struct LoginView: View {
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
+                    .cornerRadius(8)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }
         }.padding(Diems.MEDIUM_PADDING)
