@@ -17,6 +17,7 @@ class Strings{
     static let TITLE_SETTINGS = "Настройки"
     static let TITLE_CART_PRODUCTS = "Корзина"
     static let TITLE_CREATION_ORDER = "Создание заказа"
+    static let TITLE_NEW_VERSION = "Новая версия"
 
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
@@ -56,5 +57,9 @@ class Strings{
     //CONFIRM
     static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер +7 (999) 888-77-66"
     static let ACTION_CONFIRM_GET_CODE = "Получить код"
-
+    
+    //NEW VERSION
+    static let ACTION_UPDATE_UPDATE = "Обновить"
+    static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет"
+    
 }

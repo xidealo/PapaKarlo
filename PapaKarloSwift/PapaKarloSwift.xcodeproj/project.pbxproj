@@ -26,6 +26,7 @@
 		025C6A5927DCA59A00AB2F17 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5827DCA59A00AB2F17 /* ProfileView.swift */; };
 		025C6A5C27DCD32D00AB2F17 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */; };
 		025C6A5E27DCD35000AB2F17 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */; };
+		025DC25D27E755B600521335 /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DC25C27E755B600521335 /* UpdateView.swift */; };
 		02681E4C27DF89AD00D03834 /* UserAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4B27DF89AD00D03834 /* UserAddressListView.swift */; };
 		02681E4E27DF89EB00D03834 /* AddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4D27DF89EB00D03834 /* AddressItemView.swift */; };
 		02681E5027DF89FD00D03834 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4F27DF89FD00D03834 /* AddressItem.swift */; };
@@ -73,6 +74,7 @@
 		025C6A5827DCA59A00AB2F17 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
+		025DC25C27E755B600521335 /* UpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
 		02681E4B27DF89AD00D03834 /* UserAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressListView.swift; sourceTree = "<group>"; };
 		02681E4D27DF89EB00D03834 /* AddressItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItemView.swift; sourceTree = "<group>"; };
 		02681E4F27DF89FD00D03834 /* AddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		0254656D27C919F100337B98 /* update */ = {
 			isa = PBXGroup;
 			children = (
+				025DC25C27E755B600521335 /* UpdateView.swift */,
 			);
 			path = update;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				025C6A5227DC9E6500AB2F17 /* StrikeText.swift in Sources */,
 				025C6A5927DCA59A00AB2F17 /* ProfileView.swift in Sources */,
 				026E627727E60DDD00353E69 /* LoginView.swift in Sources */,
+				025DC25D27E755B600521335 /* UpdateView.swift in Sources */,
 				0256A04B27D888A8006811FE /* CafeItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

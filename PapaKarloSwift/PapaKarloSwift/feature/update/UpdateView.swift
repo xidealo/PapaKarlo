@@ -14,13 +14,13 @@ struct UpdateView: View {
             
             Image("NewVersion").resizable().frame(width: 200, height: 200)
             
-            Text(Strings.MSG_NEW_VERSION).multilineTextAlignment(.center)
+            Text(Strings.MSG_UPDATE_GO_TO).multilineTextAlignment(.center)
             Spacer()
             //TODO make button
             NavigationLink(
                 destination:CreateAddressView()
             ){
-                Text(Strings.ACTION_NEW_VERSION_UPDATE).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_UPDATE_UPDATE).frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
