@@ -1,22 +1,21 @@
 package com.bunbeauty.papakarlo.mapper.order
 
-import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItem
-import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderStatusUI
+import com.bunbeauty.domain.model.order.OrderWithAmounts
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItemModel
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 import com.bunbeauty.papakarlo.util.color.IColorUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
-class OrderUIMapper  constructor(
+class OrderUIMapper(
     private val stringUtil: IStringUtil,
-    private val colorUtil: IColorUtil,
+    private val colorUtil: IColorUtil
 ) : IOrderUIMapper {
 
-    override fun toItem(order: LightOrder): OrderItem {
-        return OrderItem(
+    override fun toItem(order: LightOrder): OrderItemModel {
+        return OrderItemModel(
             uuid = order.uuid,
             status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),
@@ -26,48 +25,39 @@ class OrderUIMapper  constructor(
         )
     }
 
-    override fun toOrderUI(order: Order): OrderUI {
+    override fun toOrderUI(orderWithAmounts: OrderWithAmounts): OrderUI {
         return OrderUI(
-            code = order.code,
-            dateTime = stringUtil.getDateTimeString(order.dateTime),
-            pickupMethod = stringUtil.getPickupMethodString(order.isDelivery),
-            deferredTime = order.deferredTime?.let { deferredTime ->
+            code = orderWithAmounts.code,
+            status = orderWithAmounts.status,
+            statusName = stringUtil.getOrderStatusName(orderWithAmounts.status),
+            dateTime = stringUtil.getDateTimeString(orderWithAmounts.dateTime),
+            pickupMethod = stringUtil.getPickupMethodString(orderWithAmounts.isDelivery),
+            deferredTimeHintStringId = if (orderWithAmounts.isDelivery) {
+                R.string.msg_order_details_deferred_time_delivery
+            } else {
+                R.string.msg_order_details_deferred_time_pickup
+            },
+            deferredTime = orderWithAmounts.deferredTime?.let { deferredTime ->
                 stringUtil.getTimeString(deferredTime)
             },
-            address = order.address,
-            comment = order.comment,
-            deliveryCost = stringUtil.getCostString(order.deliveryCost),
-            orderProductList = order.orderProductList.map { orderProduct ->
-                OrderProductItem(
+            address = orderWithAmounts.address,
+            comment = orderWithAmounts.comment,
+            deliveryCost = stringUtil.getCostString(orderWithAmounts.deliveryCost),
+            orderProductList = orderWithAmounts.orderProductList.map { orderProduct ->
+                OrderProductItemModel(
                     uuid = orderProduct.uuid,
                     name = orderProduct.product.name,
-                    newCost = stringUtil.getCostString(orderProduct.product.newPrice),
-                    oldCost = stringUtil.getCostString(orderProduct.product.oldPrice),
+                    newPrice = stringUtil.getCostString(orderProduct.product.newPrice),
+                    oldPrice = stringUtil.getCostString(orderProduct.product.oldPrice),
+                    newCost = stringUtil.getCostString(orderProduct.newCost),
+                    oldCost = stringUtil.getCostString(orderProduct.oldCost),
                     photoLink = orderProduct.product.photoLink,
                     count = stringUtil.getCountString(orderProduct.count),
                 )
             },
-            isDelivery = order.isDelivery,
+            isDelivery = orderWithAmounts.isDelivery,
+            oldAmountToPay = stringUtil.getCostString(orderWithAmounts.oldAmountToPay),
+            newAmountToPay = stringUtil.getCostString(orderWithAmounts.newAmountToPay),
         )
-    }
-
-    override fun toOrderStatusUI(orderStatus: OrderStatus): OrderStatusUI {
-        return OrderStatusUI(
-            name = stringUtil.getOrderStatusName(orderStatus),
-            stepCount = toOrderStepCount(orderStatus),
-            background = colorUtil.getOrderStatusColorAttr(orderStatus)
-        )
-    }
-
-    fun toOrderStepCount(status: OrderStatus): Int {
-        return when (status) {
-            OrderStatus.NOT_ACCEPTED -> 1
-            OrderStatus.ACCEPTED -> 1
-            OrderStatus.PREPARING -> 2
-            OrderStatus.SENT_OUT -> 3
-            OrderStatus.DONE -> 3
-            OrderStatus.DELIVERED -> 4
-            OrderStatus.CANCELED -> 0
-        }
     }
 }

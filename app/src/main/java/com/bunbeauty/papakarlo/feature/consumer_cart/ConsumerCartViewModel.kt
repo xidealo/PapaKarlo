@@ -3,44 +3,30 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.product.LightCartProduct
-import com.bunbeauty.papakarlo.R
+import com.bunbeauty.domain.model.cart.LightCartProduct
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.*
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ConsumerCartViewModel  constructor(
-    private val resourcesProvider: IResourcesProvider,
+class ConsumerCartViewModel(
     private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
 ) : CartViewModel() {
 
-    private val mutableCartProductListState: MutableStateFlow<State<List<CartProductItem>>> =
+    private val mutableConsumerCartState: MutableStateFlow<State<ConsumerCartUI>> =
         MutableStateFlow(State.Loading())
-    val orderProductListState: StateFlow<State<List<CartProductItem>>> =
-        mutableCartProductListState.asStateFlow()
-
-    private val mutableDeliveryInfo: MutableStateFlow<String> = MutableStateFlow("")
-    val deliveryInfo: StateFlow<String> = mutableDeliveryInfo.asStateFlow()
-
-    private val mutableOldTotalCost: MutableStateFlow<String> = MutableStateFlow("")
-    val oldTotalCost: StateFlow<String> = mutableOldTotalCost.asStateFlow()
-
-    private val mutableNewTotalCost: MutableStateFlow<String> = MutableStateFlow("")
-    val newTotalCost: StateFlow<String> = mutableNewTotalCost.asStateFlow()
+    val consumerCartState: StateFlow<State<ConsumerCartUI>> = mutableConsumerCartState.asStateFlow()
 
     init {
-        observeCartProducts()
-        observeDelivery()
+        observeConsumerCart()
     }
 
     fun onMenuClicked() {
@@ -57,7 +43,7 @@ class ConsumerCartViewModel  constructor(
         }
     }
 
-    fun onProductClicked(cartProductItem: CartProductItem) {
+    fun onProductClicked(cartProductItem: CartProductItemModel) {
         router.navigate(
             toProductFragment(
                 cartProductItem.menuProductUuid,
@@ -67,32 +53,31 @@ class ConsumerCartViewModel  constructor(
         )
     }
 
-    private fun observeCartProducts() {
-        cartProductInteractor.observeCartProductList().launchOnEach { cartProductList ->
-            mutableCartProductListState.value = cartProductList.map(::toItem).toSuccessOrEmpty()
-        }
-        cartProductInteractor.observeOldTotalCartCost().launchOnEach { oldTotalCost ->
-            mutableOldTotalCost.value = stringUtil.getCostString(oldTotalCost)
-        }
-        cartProductInteractor.observeNewTotalCartCost().launchOnEach { newTotalCost ->
-            mutableNewTotalCost.value = stringUtil.getCostString(newTotalCost)
-        }
-    }
-
-    private fun observeDelivery() {
-        cartProductInteractor.observeDelivery().launchOnEach { delivery ->
-            mutableDeliveryInfo.value =
-                resourcesProvider.getString(R.string.msg_consumer_cart_free_delivery_from) +
-                        stringUtil.getCostString(delivery.forFree)
+    private fun observeConsumerCart() {
+        cartProductInteractor.observeConsumerCart().launchOnEach { consumerCart ->
+            mutableConsumerCartState.value = if (consumerCart.cartProductList.isEmpty()) {
+                State.Empty()
+            } else {
+                ConsumerCartUI(
+                    forFreeDelivery = stringUtil.getCostString(consumerCart.forFreeDelivery),
+                    cartProductList = consumerCart.cartProductList.map(::toItem),
+                    oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
+                        stringUtil.getCostString(oldTotalCost)
+                    },
+                    newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost),
+                ).toStateSuccess()
+            }
         }
     }
 
-    private fun toItem(lightCartProduct: LightCartProduct): CartProductItem {
-        return CartProductItem(
+    private fun toItem(lightCartProduct: LightCartProduct): CartProductItemModel {
+        return CartProductItemModel(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
             newCost = stringUtil.getCostString(lightCartProduct.newCost),
-            oldCost = stringUtil.getCostString(lightCartProduct.oldCost),
+            oldCost = lightCartProduct.oldCost?.let { oldCost ->
+                stringUtil.getCostString(oldCost)
+            },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid

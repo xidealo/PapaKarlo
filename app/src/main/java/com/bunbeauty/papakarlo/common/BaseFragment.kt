@@ -8,9 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.papakarlo.PapaKarloApplication
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.extensions.clearErrorFocus
@@ -18,7 +16,6 @@ import com.bunbeauty.papakarlo.extensions.setErrorFocus
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.android.inject
@@ -44,10 +41,20 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
         val colorError = resourcesProvider.getColorByAttr(R.attr.colorError)
         val colorOnError = resourcesProvider.getColorByAttr(R.attr.colorOnError)
         viewModel.message.startedLaunch { message ->
-            viewBinding.root.showSnackbar(message.message, colorOnPrimary, colorPrimary, false)
+            viewBinding.root.showSnackbar(
+                message.message,
+                colorOnPrimary,
+                colorPrimary,
+                message.isTop
+            )
         }
         viewModel.error.startedLaunch { error ->
-            viewBinding.root.showSnackbar(error.message, colorOnError, colorError, true)
+            viewBinding.root.showSnackbar(
+                error.message,
+                colorOnError,
+                colorError,
+                error.isTop
+            )
         }
         viewModel.fieldError.startedLaunch { fieldError ->
             textInputMap.values.forEach { textInput ->

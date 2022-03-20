@@ -1,65 +1,39 @@
 package com.bunbeauty.papakarlo.feature.create_order.deferred_time
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
-import com.bunbeauty.domain.model.datee_time.Time
-import com.bunbeauty.papakarlo.R
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DeferredTimeViewModel  constructor(
-    private val resourcesProvider: IResourcesProvider,
+class DeferredTimeViewModel(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val mutableDeferredTimeState: MutableStateFlow<DeferredTimeState> =
-        MutableStateFlow(DeferredTimeState.Default)
-    val deferredTimeState: StateFlow<DeferredTimeState> = mutableDeferredTimeState.asStateFlow()
+    private val mutableDeferredTimeSettings: MutableStateFlow<DeferredTimeSettings?> =
+        MutableStateFlow(null)
+    val deferredTimeSettings: StateFlow<DeferredTimeSettings?> =
+        mutableDeferredTimeSettings.asStateFlow()
 
-    private var selectedTime: Time? = null
-
-    fun setSelectedTime(selectedHour: Int, selectedMinute: Int) {
-        selectedTime = if (selectedHour != -1 && selectedMinute != -1) {
-            Time(selectedHour, selectedMinute)
-        } else {
-            null
-        }
+    init {
+        val title: String = savedStateHandle["title"] ?: ""
+        val selectedTime: Time? = savedStateHandle["selectedTime"]
+        getDeferredTimeSettings(title, selectedTime)
     }
 
-    fun onSelectTimeClicked() {
+    private fun getDeferredTimeSettings(title: String, selectedTime: Time?) {
         viewModelScope.launch {
-            if (deferredTimeInteractor.isDeferredTimeAvailable()) {
-                val minTime = deferredTimeInteractor.getMinTime()
-                mutableDeferredTimeState.value = DeferredTimeState.SelectTime(
-                    minTime = minTime,
-                    selectedTime = selectedTime ?: minTime
-                )
-            } else {
-                showError(
-                    resourcesProvider.getString(R.string.error_deferred_time_not_available),
-                    true
-                )
-            }
+            val minTime = deferredTimeInteractor.getMinTime()
+            mutableDeferredTimeSettings.value = DeferredTimeSettings(
+                title = title,
+                minTime = minTime,
+                selectedTime = selectedTime ?: minTime
+            )
         }
-    }
-
-    fun onSelectTimeCanceled() {
-        mutableDeferredTimeState.value = DeferredTimeState.Default
-    }
-
-    fun onTimeSelected(hour: Int, minute: Int) {
-        viewModelScope.launch {
-            deferredTimeInteractor.getDeferredTimeMillis(hour, minute).let { selectedTimeMillis ->
-                mutableDeferredTimeState.value = DeferredTimeState.TimeSelected(selectedTimeMillis)
-            }
-        }
-    }
-
-    fun onTimeSelectedAsap() {
-        mutableDeferredTimeState.value = DeferredTimeState.TimeSelected(null)
     }
 }

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -57,8 +58,13 @@ fun View.toggleVisibilityInvisibility(isVisible: Boolean): View {
     return this
 }
 
-fun View.showSnackbar(errorMessage: String, textColor: Int, backgroundColor: Int, isTop: Boolean) {
-    val snack = Snackbar.make(this, errorMessage, Snackbar.LENGTH_SHORT)
+fun View.showSnackbar(
+    message: String,
+    @ColorInt textColor: Int,
+    @ColorInt backgroundColor: Int,
+    isTop: Boolean
+) {
+    val snack = Snackbar.make(this, message, Snackbar.LENGTH_SHORT)
         .setBackgroundTint(backgroundColor)
         .setTextColor(textColor)
         .setActionTextColor(textColor)
@@ -128,7 +134,7 @@ fun ImageView.setPhoto(photoLink: String) {
     }
 }
 
-fun ComposeView.compose(content: @Composable () -> Unit) {
+inline fun ComposeView.compose(crossinline content: @Composable () -> Unit) {
     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
     setContent {
         FoodDeliveryTheme {

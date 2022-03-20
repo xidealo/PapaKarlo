@@ -43,7 +43,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         ConsumerCartViewModel(
-            resourcesProvider = get(),
             stringUtil = get(),
             userInteractor = get(),
             cartProductInteractor = get(),
@@ -83,10 +82,11 @@ fun viewModelModule() = module {
             addressInteractor = get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         UserAddressListViewModel(
             addressInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {
@@ -94,19 +94,19 @@ fun viewModelModule() = module {
             cafeInteractor = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         CafeOptionsViewModel(
             resourcesProvider = get(),
             cafeInteractor = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel { EmptyViewModel() }
-    viewModel {
+    viewModel { parameters ->
         OrderDetailsViewModel(
             orderInteractor = get(),
-            productInteractor = get(),
-            stringUtil = get(),
             orderUIMapper = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel {
@@ -115,17 +115,19 @@ fun viewModelModule() = module {
             orderUIMapper = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         LoginViewModel(
             textValidator = get(),
             userInteractor = get(),
             resourcesProvider = get(),
+            savedStateHandle = parameters.get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         ConfirmViewModel(
             userInteractor = get(),
             resourcesProvider = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {
@@ -135,16 +137,17 @@ fun viewModelModule() = module {
             settingsInteractor = get(),
         )
     }
-    viewModel {
+    viewModel { parameters ->
         ProductDetailsViewModel(
             menuProductInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            savedStateHandle = parameters.get()
         )
     }
-    viewModel {
+    viewModel { parameters ->
         DeferredTimeViewModel(
-            resourcesProvider = get(),
             deferredTimeInteractor = get(),
+            savedStateHandle = parameters.get()
         )
     }
     viewModel {

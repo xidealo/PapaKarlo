@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.repo
 
-import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.cart.CartProduct
 import kotlinx.coroutines.flow.Flow
 
 interface CartProductRepo {

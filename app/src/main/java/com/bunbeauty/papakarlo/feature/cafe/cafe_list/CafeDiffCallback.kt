@@ -2,9 +2,9 @@ package com.bunbeauty.papakarlo.feature.cafe.cafe_list
 
 import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 
-class CafeDiffCallback : DefaultDiffCallback<CafeItem>() {
+class CafeDiffCallback : DefaultDiffCallback<CafeItemModel>() {
 
-    override fun getChangePayload(oldItem: CafeItem, newItem: CafeItem): Any? {
+    override fun getChangePayload(oldItem: CafeItemModel, newItem: CafeItemModel): Any? {
         return if (oldItem.isOpenMessage != newItem.isOpenMessage)
             true
         else

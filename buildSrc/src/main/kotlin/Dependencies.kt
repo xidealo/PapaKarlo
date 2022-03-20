@@ -23,10 +23,10 @@ object Versions {
     const val material = "1.4.0"
     const val materialComposeThemeAdapter = "1.1.4"
     const val appCompact = "1.4.1"
-    const val coil = "1.4.0"
+    const val coil = "2.0.0-rc01"
     const val glide = "4.13.0"
     const val timePicker = "4.2.3"
-    const val compose = "1.1.0"
+    const val compose = "1.2.0-alpha04"
 
     const val dataStorePreferences = "1.0.0"
 
@@ -180,6 +180,7 @@ object Ktor {
 
 object Coil {
     const val coil = "io.coil-kt:coil:${Versions.coil}"
+    const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
 }
 
 object Glide {

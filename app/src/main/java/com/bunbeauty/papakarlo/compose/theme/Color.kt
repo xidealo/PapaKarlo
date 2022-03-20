@@ -6,13 +6,16 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus
 
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)
 val black = Color(0xFF000000)
-val grey = Color(0xFFA7A5A5)
-val lightGrey = Color(0xFFEFEFEF)
+val grey = Color(0xFF989898)
+val lightGrey = Color(0xFFD6D6D6)
 val cream = Color(0xFFF2F1F6)
 val red = Color(0xFFB1021D)
 val purple = Color(0xFF815FB1)
@@ -26,9 +29,11 @@ val lightBlue = Color(0xFF0AB9E8)
 
 val LightColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    primaryDisabled = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
+    surfaceVariant = lightGrey,
     error = red,
     notAccepted = purple,
     accepted = blue,
@@ -38,7 +43,11 @@ val LightColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
+    open = green,
+    closeSoon = yellow,
+    closed = lightRed,
     onPrimary = white,
+    onPrimaryDisabled = grey,
     onSecondary = grey,
     onBackground = black,
     onSurface = black,
@@ -50,9 +59,11 @@ val LightColors = AppColors(
 
 val DarkColors = AppColors(
     primary = orange,
-    secondary = lightGrey,
+    primaryDisabled = lightGrey,
+    secondary = white,
     background = cream,
     surface = white,
+    surfaceVariant = lightGrey,
     error = red,
     notAccepted = purple,
     accepted = blue,
@@ -62,7 +73,11 @@ val DarkColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
+    open = green,
+    closeSoon = yellow,
+    closed = lightRed,
     onPrimary = white,
+    onPrimaryDisabled = grey,
     onSecondary = grey,
     onBackground = black,
     onSurface = black,
@@ -77,9 +92,11 @@ val LocalAppColors = staticCompositionLocalOf { LightColors }
 @Stable
 class AppColors(
     primary: Color,
+    primaryDisabled: Color,
     secondary: Color,
     background: Color,
     surface: Color,
+    surfaceVariant: Color,
     error: Color,
     notAccepted: Color,
     accepted: Color,
@@ -89,7 +106,11 @@ class AppColors(
     delivered: Color,
     canceled: Color,
     bunBeautyBrandColor: Color,
+    open: Color,
+    closeSoon: Color,
+    closed: Color,
     onPrimary: Color,
+    onPrimaryDisabled: Color,
     onSecondary: Color,
     onBackground: Color,
     onSurface: Color,
@@ -100,11 +121,15 @@ class AppColors(
 ) {
     var primary by mutableStateOf(primary)
         private set
+    var primaryDisabled by mutableStateOf(primaryDisabled)
+        private set
     var secondary by mutableStateOf(secondary)
         private set
     var background by mutableStateOf(background)
         private set
     var surface by mutableStateOf(surface)
+        private set
+    var surfaceVariant by mutableStateOf(surfaceVariant)
         private set
     var error by mutableStateOf(error)
         private set
@@ -124,7 +149,15 @@ class AppColors(
         private set
     var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
         private set
+    var open by mutableStateOf(open)
+        private set
+    var closeSoon by mutableStateOf(closeSoon)
+        private set
+    var closed by mutableStateOf(closed)
+        private set
     var onPrimary by mutableStateOf(onPrimary)
+        private set
+    var onPrimaryDisabled by mutableStateOf(onPrimaryDisabled)
         private set
     var onSecondary by mutableStateOf(onSecondary)
         private set
@@ -146,13 +179,32 @@ class AppColors(
         backgroundColor = primary.copy(alpha = 0.4f)
     )
 
+    val smsTextSelectionColors = TextSelectionColors(
+        handleColor = Color.Transparent,
+        backgroundColor = Color.Transparent
+    )
+
+    val surfaceGradient = Brush.verticalGradient(
+        colors = listOf(Color.Transparent, surface)
+    )
+
     @Composable
-    fun buttonColors(): ButtonColors {
+    fun mainButtonColors(): ButtonColors {
         return ButtonDefaults.buttonColors(
             backgroundColor = primary,
             contentColor = onPrimary,
             disabledBackgroundColor = primary.copy(alpha = 0.8f),
             disabledContentColor = onPrimary.copy(alpha = 0.8f)
+        )
+    }
+
+    @Composable
+    fun switcherButtonColors(): ButtonColors {
+        return ButtonDefaults.buttonColors(
+            backgroundColor = secondary,
+            contentColor = onSecondary,
+            disabledBackgroundColor = primary,
+            disabledContentColor = onPrimary
         )
     }
 
@@ -183,11 +235,76 @@ class AppColors(
         )
     }
 
+    @Composable
+    fun smsTextFieldColors(): TextFieldColors {
+        return TextFieldDefaults.textFieldColors(
+            textColor = onSurface,
+            disabledTextColor = onSurfaceVariant,
+            backgroundColor = surface,
+            cursorColor = Color.Transparent,
+            errorCursorColor = error,
+            focusedIndicatorColor = primary,
+            unfocusedIndicatorColor = onSurfaceVariant,
+            disabledIndicatorColor = onSurfaceVariant,
+            errorIndicatorColor = error,
+            leadingIconColor = onSurfaceVariant,
+            disabledLeadingIconColor = onSurfaceVariant,
+            errorLeadingIconColor = error,
+            trailingIconColor = onSurfaceVariant,
+            disabledTrailingIconColor = onSurfaceVariant,
+            errorTrailingIconColor = error,
+            focusedLabelColor = primary,
+            unfocusedLabelColor = onSurfaceVariant,
+            disabledLabelColor = onSurfaceVariant,
+            errorLabelColor = error,
+            placeholderColor = onSurfaceVariant,
+            disabledPlaceholderColor = onSurfaceVariant
+        )
+    }
+
+    fun orderColor(orderStatus: OrderStatus): Color {
+        return when (orderStatus) {
+            OrderStatus.NOT_ACCEPTED -> notAccepted
+            OrderStatus.ACCEPTED -> accepted
+            OrderStatus.PREPARING -> preparing
+            OrderStatus.SENT_OUT -> sentOut
+            OrderStatus.DONE -> done
+            OrderStatus.DELIVERED -> delivered
+            OrderStatus.CANCELED -> canceled
+        }
+    }
+
+    fun cafeStatusColor(cafeStatus: CafeStatus): Color {
+        return when (cafeStatus) {
+            CafeStatus.OPEN -> open
+            CafeStatus.CLOSE_SOON -> closeSoon
+            CafeStatus.CLOSED -> closed
+        }
+    }
+
+    fun switcherButtonColor(enabled: Boolean): Color {
+        return if (enabled) {
+            secondary
+        } else {
+            primary
+        }
+    }
+
+    fun switcherButtonTextColor(enabled: Boolean): Color {
+        return if (enabled) {
+            onSecondary
+        } else {
+            onPrimary
+        }
+    }
+
     fun copy(
         primary: Color = this.primary,
+        primaryDisabled: Color = this.primaryDisabled,
         secondary: Color = this.secondary,
         background: Color = this.background,
         surface: Color = this.surface,
+        surfaceVariant: Color = this.surfaceVariant,
         error: Color = this.error,
         notAccepted: Color = this.notAccepted,
         accepted: Color = this.accepted,
@@ -197,7 +314,11 @@ class AppColors(
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
         bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
+        open: Color = this.open,
+        closeSoon: Color = this.closeSoon,
+        closed: Color = this.closed,
         onPrimary: Color = this.onPrimary,
+        onPrimaryDisabled: Color = this.onPrimaryDisabled,
         onSecondary: Color = this.onSecondary,
         onBackground: Color = this.onBackground,
         onSurface: Color = this.onSurface,
@@ -207,9 +328,11 @@ class AppColors(
         isLight: Boolean = this.isLight,
     ) = AppColors(
         primary = primary,
+        primaryDisabled = primaryDisabled,
         secondary = secondary,
         background = background,
         surface = surface,
+        surfaceVariant = surfaceVariant,
         error = error,
         notAccepted = notAccepted,
         accepted = accepted,
@@ -219,7 +342,11 @@ class AppColors(
         delivered = delivered,
         canceled = canceled,
         bunBeautyBrandColor = bunBeautyBrandColor,
+        open = open,
+        closeSoon = closeSoon,
+        closed = closed,
         onPrimary = onPrimary,
+        onPrimaryDisabled = onPrimaryDisabled,
         onSecondary = onSecondary,
         onBackground = onBackground,
         onSurface = onSurface,
@@ -231,9 +358,11 @@ class AppColors(
 
     fun update(other: AppColors) {
         primary = other.primary
+        primaryDisabled = other.primaryDisabled
         secondary = other.secondary
         background = other.background
         surface = other.surface
+        surfaceVariant = other.surfaceVariant
         error = other.error
         notAccepted = other.notAccepted
         accepted = other.accepted
@@ -243,7 +372,11 @@ class AppColors(
         delivered = other.delivered
         canceled = other.canceled
         bunBeautyBrandColor = other.bunBeautyBrandColor
+        open = other.open
+        closeSoon = other.closeSoon
+        closed = other.closed
         onPrimary = other.onPrimary
+        onPrimaryDisabled = other.onPrimaryDisabled
         onSecondary = other.onSecondary
         onBackground = other.onBackground
         onSurface = other.onSurface

@@ -2,7 +2,7 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.dao.cart_product.ICartProductDao
 import com.bunbeauty.data.mapper.cart_product.ICartProductMapper
-import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.cart.CartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import database.CartProductEntity
 import database.CartProductWithMenuProductEntity
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*
 
-class CartProductRepository constructor(
+class CartProductRepository(
     private val cartProductDao: ICartProductDao,
     private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {

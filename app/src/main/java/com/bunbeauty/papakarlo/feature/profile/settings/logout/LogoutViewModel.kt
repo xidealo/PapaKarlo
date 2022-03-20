@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.profile.settings.logout.LogoutBottomSheetDirections.backToProfileFragment
 import kotlinx.coroutines.launch
 
-class LogoutViewModel  constructor(
+class LogoutViewModel(
     private val userInteractor: IUserInteractor
 ) : BaseViewModel() {
 

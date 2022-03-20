@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 
-class AddressInteractor constructor(
+class AddressInteractor(
     private val dataStoreRepo: DataStoreRepo,
     private val streetRepo: StreetRepo,
     private val userAddressRepo: UserAddressRepo,

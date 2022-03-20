@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class UserRepository constructor(
+class UserRepository(
     private val apiRepo: ApiRepo,
     private val profileMapper: IProfileMapper,
     private val userMapper: IUserMapper,

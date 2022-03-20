@@ -1,11 +1,15 @@
 package com.bunbeauty.domain.interactor.cart
 
 import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.product.CartProduct
-import com.bunbeauty.domain.model.product.LightCartProduct
+import com.bunbeauty.domain.model.cart.CartProduct
+import com.bunbeauty.domain.model.cart.CartTotal
+import com.bunbeauty.domain.model.cart.ConsumerCart
+import com.bunbeauty.domain.model.cart.LightCartProduct
 import kotlinx.coroutines.flow.Flow
 
 interface ICartProductInteractor {
+
+    fun observeConsumerCart(): Flow<ConsumerCart>
 
     fun observeCartProductList(): Flow<List<LightCartProduct>>
 
@@ -18,6 +22,8 @@ interface ICartProductInteractor {
     fun observeDeliveryCost(): Flow<Int>
 
     fun observeDelivery(): Flow<Delivery>
+
+    fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal>
 
     fun observeAmountToPay(isDeliveryFlow: Flow<Boolean>): Flow<Int>
 

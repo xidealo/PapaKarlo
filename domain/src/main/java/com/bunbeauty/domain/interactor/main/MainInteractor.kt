@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlin.coroutines.CoroutineContext
 
-class MainInteractor  constructor(
+class MainInteractor(
     private val cityWorkerUtil: ICityWorkerUtil,
     private val categoryWorkerUtil: ICategoryWorkerUtil,
     private val menuProductWorkerUtil: IMenuProductWorkerUtil,

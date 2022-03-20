@@ -1,31 +1,30 @@
 package com.bunbeauty.domain.interactor.order
 
 import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
+import com.bunbeauty.domain.model.order.OrderWithAmounts
 import com.bunbeauty.domain.model.product.CreatedOrderProduct
+import com.bunbeauty.domain.model.product.OrderProductWithCosts
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class OrderInteractor  constructor(
+class OrderInteractor(
     private val orderRepo: OrderRepo,
     private val cartProductRepo: CartProductRepo,
-    private val dataStoreRepo: DataStoreRepo
+    private val dataStoreRepo: DataStoreRepo,
+    private val productInteractor: IProductInteractor
 ) : IOrderInteractor {
 
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
         val userUuid = dataStoreRepo.getUserUuid()
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
-    }
-
-    override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
-        return orderRepo.observeOrderByUuid(orderUuid)
     }
 
     override fun observeOrderStatusByUuid(orderUuid: String): Flow<OrderStatus?> {
@@ -34,8 +33,37 @@ class OrderInteractor  constructor(
         }
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): Order? {
-        return orderRepo.getOrderByUuid(orderUuid)
+    override fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?> {
+        return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
+            OrderWithAmounts(
+                uuid = order.uuid,
+                code = order.code,
+                status = order.status,
+                dateTime = order.dateTime,
+                isDelivery = order.isDelivery,
+                deferredTime = order.deferredTime,
+                address = order.address,
+                comment = order.comment,
+                deliveryCost = order.deliveryCost,
+                orderProductList = order.orderProductList.map { orderProduct ->
+                    OrderProductWithCosts(
+                        uuid = orderProduct.uuid,
+                        count = orderProduct.count,
+                        newCost = productInteractor.getProductPositionNewCost(orderProduct),
+                        oldCost = productInteractor.getProductPositionOldCost(orderProduct),
+                        product = orderProduct.product
+                    )
+                },
+                oldAmountToPay = productInteractor.getOldAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+                newAmountToPay = productInteractor.getNewAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+            )
+        }
     }
 
     override suspend fun createOrder(

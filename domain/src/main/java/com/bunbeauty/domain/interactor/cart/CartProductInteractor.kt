@@ -2,19 +2,34 @@ package com.bunbeauty.domain.interactor.cart
 
 import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.product.CartProduct
-import com.bunbeauty.domain.model.product.LightCartProduct
+import com.bunbeauty.domain.model.cart.CartProduct
+import com.bunbeauty.domain.model.cart.CartTotal
+import com.bunbeauty.domain.model.cart.ConsumerCart
+import com.bunbeauty.domain.model.cart.LightCartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
-class CartProductInteractor  constructor(
+class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,
 ) : ICartProductInteractor {
+
+    override fun observeConsumerCart(): Flow<ConsumerCart> {
+        return dataStoreRepo.delivery.flatMapLatest { delivery ->
+            cartProductRepo.observeCartProductList().map { cartProductList ->
+                ConsumerCart(
+                    forFreeDelivery = delivery.forFree,
+                    cartProductList = cartProductList.map(::toLightCartProduct),
+                    oldTotalCost = productInteractor.getOldTotalCost(cartProductList),
+                    newTotalCost = productInteractor.getNewTotalCost(cartProductList)
+                )
+            }
+        }
+    }
 
     override fun observeCartProductList(): Flow<List<LightCartProduct>> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
@@ -62,6 +77,26 @@ class CartProductInteractor  constructor(
         return dataStoreRepo.delivery
     }
 
+    override fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal> {
+        return cartProductRepo.observeCartProductList().flatMapLatest { cartProductList ->
+            val newTotalCost = productInteractor.getNewTotalCost(cartProductList)
+            observeDeliveryCost().flatMapLatest { deliveryCost ->
+                isDeliveryFlow.map { isDelivery ->
+                    val amountToPay = if (isDelivery) {
+                        newTotalCost + deliveryCost
+                    } else {
+                        newTotalCost
+                    }
+                    CartTotal(
+                        totalCost = newTotalCost,
+                        deliveryCost = productInteractor.getDeliveryCost(cartProductList),
+                        amountToPay = amountToPay
+                    )
+                }
+            }
+        }
+    }
+
     override fun observeAmountToPay(isDeliveryFlow: Flow<Boolean>): Flow<Int> {
         return observeNewTotalCartCost().flatMapLatest { newTotalCost ->
             observeDeliveryCost().flatMapLatest { deliveryCost ->
@@ -100,6 +135,18 @@ class CartProductInteractor  constructor(
 
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
+    }
+
+    fun toLightCartProduct(cartProduct: CartProduct): LightCartProduct {
+        return LightCartProduct(
+            uuid = cartProduct.uuid,
+            name = cartProduct.product.name,
+            newCost = productInteractor.getProductPositionNewCost(cartProduct),
+            oldCost = productInteractor.getProductPositionOldCost(cartProduct),
+            photoLink = cartProduct.product.photoLink,
+            count = cartProduct.count,
+            menuProductUuid = cartProduct.product.uuid,
+        )
     }
 
     suspend fun getTotalCartCount(): Int {

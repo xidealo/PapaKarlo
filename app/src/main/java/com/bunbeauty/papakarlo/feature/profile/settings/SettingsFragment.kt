@@ -61,7 +61,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                             end = FoodDeliveryTheme.dimensions.mediumSpace,
                             top = FoodDeliveryTheme.dimensions.mediumSpace,
                         ),
-                        hint = R.string.hint_settings_phone,
+                        hintStringId = R.string.hint_settings_phone,
                         label = userState.data.user.phone
                     )
                     val email = userState.data.user.email
@@ -72,7 +72,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
                                 end = FoodDeliveryTheme.dimensions.mediumSpace,
                                 top = FoodDeliveryTheme.dimensions.smallSpace,
                             ),
-                            label = R.string.action_settings_add_email
+                            labelStringId = R.string.action_settings_add_email
                         ) {
                             viewModel.onAddEmailClicked()
                         }

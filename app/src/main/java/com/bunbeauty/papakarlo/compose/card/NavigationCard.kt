@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -22,8 +21,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.smallIcon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
@@ -32,16 +31,22 @@ import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 @Composable
 fun NavigationCard(
     modifier: Modifier = Modifier,
-    @StringRes label: Int,
+    @StringRes labelStringId: Int,
+    hasShadow: Boolean = true,
+    isClickable: Boolean = true,
     onClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(1.dp, mediumRoundedCornerShape)
+            .shadow(
+                elevation = FoodDeliveryTheme.dimensions.getEvaluation(hasShadow),
+                shape = mediumRoundedCornerShape
+            )
             .clip(mediumRoundedCornerShape)
             .clickable(
+                enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
@@ -54,11 +59,11 @@ fun NavigationCard(
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+            OverflowingText(
                 modifier = Modifier
-                    .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                     .weight(1f),
-                text = stringResource(label),
+                text = stringResource(labelStringId),
                 style = FoodDeliveryTheme.typography.body1,
                 color = FoodDeliveryTheme.colors.onSurface
             )
@@ -76,6 +81,6 @@ fun NavigationCard(
 @Composable
 fun NavigationCardPreview() {
     NavigationCard(
-        label = R.string.title_about_app
+        labelStringId = R.string.title_about_app
     ) {}
 }

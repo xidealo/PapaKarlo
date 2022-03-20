@@ -8,14 +8,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class CafeAddressListViewModel  constructor(
+class CafeAddressListViewModel(
     private val cafeInteractor: ICafeInteractor,
 ) : BaseViewModel() {
 
-    private val mutableCafeAddressListModel: MutableStateFlow<List<AddressItemModel>> =
-        MutableStateFlow(emptyList())
-    val cafeAddressListModel: StateFlow<List<AddressItemModel>> =
-        mutableCafeAddressListModel.asStateFlow()
+    private val mutableCafeAddressList: MutableStateFlow<List<AddressItemModel>?> =
+        MutableStateFlow(null)
+    val cafeAddressList: StateFlow<List<AddressItemModel>?> = mutableCafeAddressList.asStateFlow()
 
     init {
         observeCafeAddressList()
@@ -23,14 +22,15 @@ class CafeAddressListViewModel  constructor(
 
     private fun observeCafeAddressList() {
         cafeInteractor.observeCafeAddressList().launchOnEach { cafeAddressList ->
-            mutableCafeAddressListModel.value = cafeAddressList.map(::toItem)
+            mutableCafeAddressList.value = cafeAddressList.map(::toItem)
         }
     }
 
     private fun toItem(cafeAddress: CafeAddress): AddressItemModel {
         return AddressItemModel(
             uuid = cafeAddress.cafeUuid,
-            address = cafeAddress.address
+            address = cafeAddress.address,
+            isClickable = true
         )
     }
 }

@@ -12,12 +12,11 @@ import com.bunbeauty.domain.model.UserCityUuid
 import com.bunbeauty.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.*
 
-class DataStoreRepository constructor(private val context: Context) : DataStoreRepo {
+class DataStoreRepository(private val context: Context) : DataStoreRepo {
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
-    private val Context.deferredTimeDataStore: DataStore<Preferences> by preferencesDataStore(name = DEFERRED_TIME_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
 
     override val token: Flow<String?> = context.tokenDataStore.data.map {
@@ -127,14 +126,12 @@ class DataStoreRepository constructor(private val context: Context) : DataStoreR
         private const val TOKEN_DATA_STORE = "token data store"
         private const val DELIVERY_DATA_STORE = "delivery data store"
         private const val USER_UUID_DATA_STORE = "user id data store"
-        private const val DEFERRED_TIME_DATA_STORE = "deferred time data store"
         private const val SELECTED_CITY_DATA_STORE = "selected city data store"
 
         private const val TOKEN = "token"
         private const val USER_UUID = "user uuid"
         private const val DELIVERY_COST = "delivery cost"
         private const val FOR_FREE_DELIVERY = "for free delivery"
-        private const val DEFERRED_TIME = "deferred time"
         private const val SELECTED_CITY_UUID = "selected city uuid"
         private const val SELECTED_CITY_TIME_ZONE = "selected city time zone"
 
@@ -142,7 +139,6 @@ class DataStoreRepository constructor(private val context: Context) : DataStoreR
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
-        private val DEFERRED_TIME_KEY = stringPreferencesKey(DEFERRED_TIME)
         private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
         private val SELECTED_CITY_TIME_ZONE_KEY = stringPreferencesKey(SELECTED_CITY_TIME_ZONE)
 

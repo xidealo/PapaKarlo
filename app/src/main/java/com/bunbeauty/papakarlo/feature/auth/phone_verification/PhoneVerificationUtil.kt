@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
-class PhoneVerificationUtil  constructor() : IPhoneVerificationUtil, CoroutineScope {
+class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Job()
@@ -123,13 +123,13 @@ class PhoneVerificationUtil  constructor() : IPhoneVerificationUtil, CoroutineSc
     }
 
     fun sendError(error: String) {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableAuthErrorEvent.send(AuthErrorEvent(error))
         }
     }
 
     fun sendSuccess() {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableAuthSuccessEvent.send(AuthSuccessEvent())
         }
     }
@@ -139,7 +139,7 @@ class PhoneVerificationUtil  constructor() : IPhoneVerificationUtil, CoroutineSc
         verificationId: String,
         token: PhoneAuthProvider.ForceResendingToken
     ) {
-        this@PhoneVerificationUtil.launch {
+        launch {
             mutableCodeSentEvent.send(CodeSentEvent(phone, verificationId, token))
         }
     }

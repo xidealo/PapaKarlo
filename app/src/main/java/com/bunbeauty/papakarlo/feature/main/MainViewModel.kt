@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class MainViewModel constructor(
+class MainViewModel(
     private val cartProductInteractor: ICartProductInteractor,
     private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,

@@ -36,8 +36,6 @@
         <item name="logo_top">@drawable/logo_top_papa_karlo</item>
         <item name="logo_start">@drawable/logo_start_papa_karlo</item>
         <item name="logo_login">@drawable/logo_login_papa_karlo</item>
-        <item name="empty_profile">@drawable/empty_profile_papa_karlo</item>
-        <item name="empty_cart">@drawable/empty_cart_papa_karlo</item>
     </style>
 
     <style name="LoadingAppTheme" parent="AppTheme">

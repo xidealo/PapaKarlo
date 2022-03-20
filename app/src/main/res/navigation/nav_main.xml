@@ -30,13 +30,13 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.bunbeauty.papakarlo.feature.update.UpdateFragment"
-        android:label="UpdateFragment"
+        android:label="@string/title_update_new_app_version"
         tools:layout="@layout/fragment_update" />
 
     <fragment
         android:id="@+id/selectCityFragment"
         android:name="com.bunbeauty.papakarlo.feature.select_city.SelectCityFragment"
-        android:label="SelectCityFragment"
+        android:label="@string/title_select_city"
         tools:layout="@layout/fragment_select_city">
         <action
             android:id="@+id/to_menuFragment"
@@ -121,7 +121,7 @@
         </action>
         <action
             android:id="@+id/to_ordersFragment"
-            app:destination="@id/ordersFragment" />
+            app:destination="@id/orderListFragment" />
         <action
             android:id="@+id/to_paymentBottomSheet"
             app:destination="@id/paymentBottomSheet" />
@@ -178,9 +178,9 @@
     <include app:graph="@navigation/nav_address" />
 
     <fragment
-        android:id="@+id/ordersFragment"
+        android:id="@+id/orderListFragment"
         android:name="com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderListFragment"
-        android:label="@string/title_orders"
+        android:label="@string/title_my_orders"
         tools:layout="@layout/fragment_order_list">
         <argument
             android:name="userUuid"
@@ -305,11 +305,9 @@
             android:name="title"
             app:argType="string" />
         <argument
-            android:name="selectedHour"
-            app:argType="integer" />
-        <argument
-            android:name="selectedMinute"
-            app:argType="integer" />
+            android:name="selectedTime"
+            app:argType="com.bunbeauty.domain.model.date_time.Time"
+            app:nullable="true" />
     </dialog>
 
     <dialog

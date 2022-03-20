@@ -46,43 +46,47 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
     @Composable
     private fun FeedbackScreen() {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+            modifier = Modifier.fillMaxWidth()
         ) {
             Title(textStringId = R.string.title_feedback)
-            NavigationIconCard(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.mediumSpace,
-                ),
-                iconId = R.drawable.ic_vk,
-                iconDescription = R.string.description_feedback_vk,
-                label = R.string.action_feedback_vk,
-                hasShadow = false
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = FoodDeliveryTheme.dimensions.mediumSpace
+                    )
             ) {
-                goByLink(VK_LINK)
-            }
-            NavigationIconCard(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.smallSpace,
-                ),
-                iconId = R.drawable.ic_instagram,
-                iconDescription = R.string.description_feedback_instagram,
-                label = R.string.action_feedback_instagram,
-                hasShadow = false
-            ) {
-                goByLink(INSTAGRAM_LINK)
-            }
-            NavigationIconCard(
-                modifier = Modifier.padding(
-                    top = FoodDeliveryTheme.dimensions.smallSpace
-                ),
-                iconId = R.drawable.ic_play_market,
-                iconDescription = R.string.description_feedback_play_market,
-                label = R.string.action_feedback_play_market,
-                hasShadow = false
-            ) {
-                goByLink(PLAY_MARKET_LINK)
+                NavigationIconCard(
+                    iconId = R.drawable.ic_vk,
+                    iconDescription = R.string.description_feedback_vk,
+                    labelStringId = R.string.action_feedback_vk,
+                    hasShadow = false
+                ) {
+                    goByLink(VK_LINK)
+                }
+                NavigationIconCard(
+                    modifier = Modifier.padding(
+                        top = FoodDeliveryTheme.dimensions.smallSpace,
+                    ),
+                    iconId = R.drawable.ic_instagram,
+                    iconDescription = R.string.description_feedback_instagram,
+                    labelStringId = R.string.action_feedback_instagram,
+                    hasShadow = false
+                ) {
+                    goByLink(INSTAGRAM_LINK)
+                }
+                NavigationIconCard(
+                    modifier = Modifier.padding(
+                        top = FoodDeliveryTheme.dimensions.smallSpace,
+                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
+                    ),
+                    iconId = R.drawable.ic_play_market,
+                    iconDescription = R.string.description_feedback_play_market,
+                    labelStringId = R.string.action_feedback_play_market,
+                    hasShadow = false
+                ) {
+                    goByLink(PLAY_MARKET_LINK)
+                }
             }
         }
     }

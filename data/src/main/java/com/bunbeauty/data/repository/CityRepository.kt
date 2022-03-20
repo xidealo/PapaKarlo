@@ -11,7 +11,7 @@ import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow
 
-class CityRepository constructor(
+class CityRepository(
     private val apiRepo: ApiRepo,
     private val cityDao: ICityDao,
     private val cityMapper: ICityMapper,

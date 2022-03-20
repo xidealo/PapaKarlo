@@ -50,22 +50,3 @@ object FoodDeliveryTheme {
         @ReadOnlyComposable
         get() = LocalAppDimensions.current
 }
-
-//@Composable
-//fun FoodDeliveryTheme(
-//    darkTheme: Boolean = isSystemInDarkTheme(),
-//    content: @Composable () -> Unit
-//) {
-//    val colors = if (darkTheme) {
-//        DarkColorPalette
-//    } else {
-//        LightColorPalette
-//    }
-//
-//    MaterialTheme(
-//        colors = colors,
-//        typography = foodDeliveryTypography,
-//        shapes = foodDeliveryShapes,
-//        content = content
-//    )
-//}

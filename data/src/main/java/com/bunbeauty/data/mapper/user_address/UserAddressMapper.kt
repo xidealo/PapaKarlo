@@ -7,7 +7,7 @@ import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
 import database.UserAddressEntity
 
-class UserAddressMapper constructor(
+class UserAddressMapper(
     private val streetMapper: IStreetMapper
 ) : IUserAddressMapper {
 

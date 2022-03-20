@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth.confirm
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
@@ -10,51 +11,64 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.*
+import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.backToProfileFragment
+import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ConfirmViewModel  constructor(
+class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
-    private val resourcesProvider: IResourcesProvider
+    private val resourcesProvider: IResourcesProvider,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val label = resourcesProvider.getString(R.string.msg_confirm_code_info)
-    private val seconds = resourcesProvider.getString(R.string.msg_confirm_seconds)
+    private val successLoginDirection: SuccessLoginDirection =
+        savedStateHandle["successLoginDirection"]!!
+
     private val timerSecondCount = 60
     private val timerIntervalMillis = 1000L
 
-    private val mutableResendSecondsInfo: MutableStateFlow<String> =
-        MutableStateFlow(label + timerSecondCount + seconds)
-    val resendSecondsInfo: StateFlow<String> = mutableResendSecondsInfo.asStateFlow()
+    private var timerJob: Job? = null
 
-    private val mutableIsTimerRun: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isTimerRun: StateFlow<Boolean> = mutableIsTimerRun.asStateFlow()
+    private val mutableConfirmState: MutableStateFlow<Confirmation> =
+        MutableStateFlow(
+            Confirmation(
+                phoneNumber = savedStateHandle["phone"]!!,
+                resendToken =  savedStateHandle["resendToken"]!!,
+                verificationId = savedStateHandle["verificationId"]!!,
+                resendSeconds = timerSecondCount,
+                isCodeChecking = false
+            )
+        )
+    val confirmState: StateFlow<Confirmation> = mutableConfirmState.asStateFlow()
 
-    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
-
-    fun onCodeEntered() {
-        mutableIsLoading.value = true
+    init {
+        startResendTimer()
     }
 
-    fun onSuccessVerified(successLoginDirection: SuccessLoginDirection) {
-        viewModelScope.launch {
-            userInteractor.login()
+    fun onCodeEntered() {
+        mutableConfirmState.value = mutableConfirmState.value.copy(isCodeChecking = true)
+    }
 
-            when (successLoginDirection) {
-                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
-                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
-            }
-        }
+    fun onResendCodeClicked() {
+        startResendTimer()
+    }
+
+    fun onCodeSent(verificationId: String, resendToken: PhoneAuthProvider.ForceResendingToken) {
+        mutableConfirmState.value = mutableConfirmState.value.copy(
+            verificationId = verificationId,
+            resendToken = resendToken
+        )
     }
 
     fun onVerificationError(error: String) {
-        mutableIsLoading.value = false
+        mutableConfirmState.value = mutableConfirmState.value.copy(isCodeChecking = false)
         val errorResourceId = when (error) {
             WRONG_CODE -> {
                 R.string.error_confirm_wrong_code
@@ -67,34 +81,28 @@ class ConfirmViewModel  constructor(
         logD(AUTH_TAG, error)
     }
 
-    fun getPhoneInfo(phone: String): String {
-        return resourcesProvider.getString(R.string.msg_confirm_phone_info) + phone
-    }
-
-    fun onChangePhoneClicked() {
-        goBack()
-    }
-
-    // Remove ' ', '(', ')', '-' symbols from "+X (XXX) XXX-XX-XX" phone format
-    fun formatPhone(phone: String): String {
-        return phone.replace(Regex("[\\s()-]"), "")
-    }
-
-    fun startResendTimer() {
-        if (mutableIsTimerRun.value) {
-            return
-        }
-        mutableIsTimerRun.value = true
-
-        var secondCount = timerSecondCount
+    fun onSuccessVerified() {
         viewModelScope.launch {
-            while (secondCount > 0) {
-                delay(timerIntervalMillis)
-                secondCount--
-                mutableResendSecondsInfo.value = label + secondCount + seconds
+            userInteractor.login()
+
+            when (successLoginDirection) {
+                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
+                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
             }
-            mutableIsTimerRun.value = false
-            mutableResendSecondsInfo.value = label + timerSecondCount + seconds
+        }
+    }
+
+    private fun startResendTimer() {
+        mutableConfirmState.value = mutableConfirmState.value.copy(resendSeconds = timerSecondCount)
+        timerJob = viewModelScope.launch {
+            while (mutableConfirmState.value.resendSeconds > 0) {
+                delay(timerIntervalMillis)
+                mutableConfirmState.value = mutableConfirmState.value.run {
+                    copy(resendSeconds = resendSeconds - 1)
+                }
+            }
+        }.apply {
+            start()
         }
     }
 }

@@ -9,7 +9,6 @@ import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
 import com.bunbeauty.domain.model.cafe.Cafe
-import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import database.SelectedCafeUuidEntity
@@ -21,7 +20,6 @@ class CafeRepository(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: ICafeDao,
     private val cafeMapper: ICafeMapper,
-    private val authRepo: AuthRepo,
 ) : CafeRepo {
 
     override suspend fun refreshCafeList(selectedCityUuid: String) {

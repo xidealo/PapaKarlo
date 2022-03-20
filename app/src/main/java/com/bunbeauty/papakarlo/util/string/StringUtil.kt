@@ -6,21 +6,23 @@ import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.domain.model.cafe.CafePreview
-import com.bunbeauty.domain.model.datee_time.DateTime
-import com.bunbeauty.domain.model.datee_time.Time
+import com.bunbeauty.domain.model.date_time.DateTime
+import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
-class StringUtil  constructor(
+class StringUtil(
     private val resourcesProvider: IResourcesProvider
 ) : IStringUtil {
 
-    override fun getCostString(cost: Int?): String {
-        return if (cost == null) {
-            ""
-        } else {
-            cost.toString() + resourcesProvider.getString(R.string.part_ruble)
+    override fun getCostString(cost: Int?): String? {
+        return cost?.let {
+            getCostString(cost)
         }
+    }
+
+    override fun getCostString(cost: Int): String {
+        return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
     }
 
     override fun getUserAddressString(userAddress: UserAddress?): String? {
@@ -94,7 +96,7 @@ class StringUtil  constructor(
     }
 
     override fun getCountString(count: Int): String {
-        return "x $count"
+        return "× $count"
     }
 
     override fun getOrderStatusName(orderStatus: OrderStatus): String {

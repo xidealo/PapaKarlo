@@ -13,7 +13,7 @@ sealed class MenuItem : BaseItem() {
         override val uuid: String,
         val name: String,
         val newPrice: String,
-        val oldPrice: String,
+        val oldPrice: String?,
         val photoLink: String
     ) : MenuItem()
 

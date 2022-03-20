@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.profile.order.order_list
 
-import android.content.res.loader.ResourcesProvider
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bunbeauty.papakarlo.common.BaseListAdapter
@@ -9,7 +8,7 @@ import com.bunbeauty.papakarlo.databinding.ElementOrderBinding
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
 class OrderAdapter(private val resourcesProvider: IResourcesProvider) :
-    BaseListAdapter<OrderItem, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
+    BaseListAdapter<OrderItemModel, OrderAdapter.OrderViewHolder>(OrderDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -19,9 +18,9 @@ class OrderAdapter(private val resourcesProvider: IResourcesProvider) :
     }
 
     inner class OrderViewHolder(private val elementOrderBinding: ElementOrderBinding) :
-        BaseViewHolder<OrderItem>(elementOrderBinding) {
+        BaseViewHolder<OrderItemModel>(elementOrderBinding) {
 
-        override fun onBind(item: OrderItem) {
+        override fun onBind(item: OrderItemModel) {
             super.onBind(item)
 
             elementOrderBinding.run {
@@ -31,7 +30,7 @@ class OrderAdapter(private val resourcesProvider: IResourcesProvider) :
             }
         }
 
-        override fun onBind(item: OrderItem, payloads: List<Any>) {
+        override fun onBind(item: OrderItemModel, payloads: List<Any>) {
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
@@ -39,7 +38,7 @@ class OrderAdapter(private val resourcesProvider: IResourcesProvider) :
             }
         }
 
-        private fun setStatus(item: OrderItem) {
+        private fun setStatus(item: OrderItemModel) {
             elementOrderBinding.run {
                 elementOrderChipStatus.text = item.statusName
                 elementOrderChipStatus.chipBackgroundColor =

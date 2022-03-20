@@ -7,7 +7,7 @@ import com.bunbeauty.domain.model.Delivery
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.DeliveryRepo
 
-class DeliveryRepository  constructor(
+class DeliveryRepository(
     private val apiRepo: ApiRepo,
     private val dataStoreRepo: DataStoreRepo
 ) : DeliveryRepo {

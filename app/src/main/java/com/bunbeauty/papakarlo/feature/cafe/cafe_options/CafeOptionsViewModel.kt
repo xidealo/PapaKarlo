@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.cafe.cafe_options
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.papakarlo.R
@@ -10,13 +11,20 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CafeOptionsViewModel  constructor(
+class CafeOptionsViewModel(
     private val resourcesProvider: IResourcesProvider,
-    private val cafeInteractor: ICafeInteractor
+    private val cafeInteractor: ICafeInteractor,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     private val mutableCafeOptions: MutableStateFlow<CafeOptions?> = MutableStateFlow(null)
     val cafeOptions: StateFlow<CafeOptions?> = mutableCafeOptions.asStateFlow()
+
+    init {
+        savedStateHandle.get<String>("cafeUuid")?.let { cafeUuid ->
+            getCafe(cafeUuid)
+        }
+    }
 
     fun getCafe(cafeUuid: String) {
         viewModelScope.launch {

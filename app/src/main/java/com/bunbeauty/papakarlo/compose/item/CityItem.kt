@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -29,7 +28,7 @@ fun CityItem(
     onClick: () -> Unit
 ) {
     val elevation = if (hasShadow) {
-        1.dp
+       FoodDeliveryTheme.dimensions.elevation
     } else {
         0.dp
     }
@@ -55,8 +54,7 @@ fun CityItem(
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             text = cityName,
             style = FoodDeliveryTheme.typography.body1,
-            color = FoodDeliveryTheme.colors.onSurface,
-            textAlign = TextAlign.Center
+            color = FoodDeliveryTheme.colors.onSurface
         )
     }
 }

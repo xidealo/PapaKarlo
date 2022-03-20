@@ -8,8 +8,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-class NetworkUtil  constructor(private val connectivityManager: ConnectivityManager) :
-    INetworkUtil {
+class NetworkUtil(
+    private val connectivityManager: ConnectivityManager
+) : INetworkUtil {
 
     override fun observeIsOnline(): Flow<Boolean> = callbackFlow {
 

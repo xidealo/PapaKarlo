@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.compose.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,11 +13,17 @@ import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 @Composable
 fun Title(
     modifier: Modifier = Modifier,
-    @StringRes textStringId: Int
+    @StringRes textStringId: Int? = null,
+    titleText: String = "",
 ) {
+    val text = textStringId?.let { id ->
+        stringResource(id)
+    } ?: titleText
     Text(
-        modifier = modifier.fillMaxWidth(),
-        text = stringResource(textStringId),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+        text = text,
         style = FoodDeliveryTheme.typography.h2,
         textAlign = TextAlign.Center
     )

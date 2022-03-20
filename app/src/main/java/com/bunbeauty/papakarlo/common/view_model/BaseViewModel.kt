@@ -8,10 +8,8 @@ import com.bunbeauty.papakarlo.common.model.Message
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okhttp3.Route
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
@@ -26,6 +24,12 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     private val mutableFieldError = MutableSharedFlow<FieldError>(0)
     val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
+
+    protected fun <T> MutableSharedFlow<T>.launchEmit(value: T) {
+        viewModelScope.launch {
+            emit(value)
+        }
+    }
 
     fun showMessage(message: String, isTop: Boolean) {
         viewModelScope.launch {
@@ -57,22 +61,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     fun goBack() {
         router.navigateUp()
-    }
-
-    protected inline fun <reified T> getNavArg(savedStateHandlekey: String): T? {
-        return null ///savedStateHandle.get(key)
-//        return when {
-//            Parcelable::class.java.isAssignableFrom(T::class.java) -> {
-//                 bundle?.getParcelable(key) as? T
-//            }
-//            T::class == Boolean::class -> {
-//                bundle?.getBoolean(key) as T
-//            }
-//            T::class == String::class -> {
-//                bundle?.getString(key) as T
-//            }
-//            else -> null
-//        }
     }
 
     protected fun <T> Flow<T>.launchOnEach(block: (T) -> Unit): Job {

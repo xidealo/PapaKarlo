@@ -5,44 +5,44 @@ import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections.*
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus.*
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
 
-class CafeListViewModel  constructor(
+class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val resourcesProvider: IResourcesProvider,
     private val stringUtil: IStringUtil
 ) : CartViewModel() {
 
-    private val mutableCafeItemList: MutableStateFlow<List<CafeItem>> =
-        MutableStateFlow(emptyList())
-    val cafeItemList: StateFlow<List<CafeItem>> = mutableCafeItemList.asStateFlow()
+    private val mutableCafeItemList: MutableStateFlow<List<CafeItemModel>?> = MutableStateFlow(null)
+    val cafeItemList: StateFlow<List<CafeItemModel>?> = mutableCafeItemList.asStateFlow()
 
     init {
         observeCafeList()
     }
 
-    fun observeCafeList() {
+    fun onCafeCardClicked(cafeItem: CafeItemModel) {
+        router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
+    }
+
+    private fun observeCafeList() {
         cafeInteractor.observeCafeList().onEach { cafePreviewList ->
             mutableCafeItemList.value = cafePreviewList.map(::toItemModel)
         }.launchIn(viewModelScope)
     }
 
-    fun onCafeCardClicked(cafeItem: CafeItem) {
-        router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
-    }
-
-    private fun toItemModel(cafePreview: CafePreview): CafeItem {
-        val isOpenColor = if (cafePreview.isOpen) {
+    private fun toItemModel(cafePreview: CafePreview): CafeItemModel {
+        val cafeStatus = if (cafePreview.isOpen) {
             if (cafePreview.closeIn == null) {
-                resourcesProvider.getColorByAttr(R.attr.colorOpen)
+                OPEN
             } else {
-                resourcesProvider.getColorByAttr(R.attr.colorCloseSoon)
+                CLOSE_SOON
             }
         } else {
-            resourcesProvider.getColorByAttr(R.attr.colorClosed)
+            CLOSED
         }
         val isOpenMessage = if (cafePreview.isOpen) {
             cafePreview.closeIn?.let { closeIn ->
@@ -54,16 +54,16 @@ class CafeListViewModel  constructor(
             resourcesProvider.getString(R.string.msg_cafe_closed)
         }
 
-        return CafeItem(
+        return CafeItemModel(
             uuid = cafePreview.uuid,
             address = cafePreview.address,
             workingHours = stringUtil.getWorkingHoursString(cafePreview),
             isOpenMessage = isOpenMessage,
-            isOpenColor = isOpenColor
+            cafeStatus = cafeStatus
         )
     }
 
-    fun getMinuteString(closeIn: Int): String {
+    private fun getMinuteString(closeIn: Int): String {
         val minuteStringId = when {
             (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
             (closeIn % 10 == 1) -> R.string.msg_cafe_minute
