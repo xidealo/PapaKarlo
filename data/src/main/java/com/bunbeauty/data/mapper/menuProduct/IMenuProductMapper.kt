@@ -1,13 +1,15 @@
 package com.bunbeauty.data.mapper.menuProduct
 
-import com.bunbeauty.data.database.entity.product.MenuProductEntity
-import com.bunbeauty.data.database.entity.product_with_category.MenuProductWithCategory
 import com.bunbeauty.data.network.model.MenuProductServer
 import com.bunbeauty.domain.model.product.MenuProduct
+import database.MenuProductCategoryReference
+import database.MenuProductEntity
+import database.MenuProductWithCategoryEntity
 
 interface IMenuProductMapper {
 
-    fun toEntityModel(menuProduct: MenuProductServer): MenuProductWithCategory
-    fun toModel(menuProduct: MenuProductEntity): MenuProduct
-    fun toModel(menuProduct: MenuProductWithCategory): MenuProduct
+    fun toMenuProductCategoryReference(menuProduct: MenuProductServer): List<MenuProductCategoryReference>
+    fun toMenuProductEntity(menuProduct: MenuProductServer): MenuProductEntity
+    fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct
+    fun toMenuProductList(menuProductWithCategoryEntityList: List<MenuProductWithCategoryEntity>): List<MenuProduct>
 }

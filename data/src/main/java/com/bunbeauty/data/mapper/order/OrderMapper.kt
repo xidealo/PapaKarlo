@@ -1,8 +1,5 @@
 package com.bunbeauty.data.mapper.order
 
-import com.bunbeauty.data.database.entity.user.order.OrderEntity
-import com.bunbeauty.data.database.entity.user.order.OrderEntityWithProducts
-import com.bunbeauty.data.database.entity.user.order.OrderStatusUpdate
 import com.bunbeauty.data.mapper.order_product.IOrderProductMapper
 import com.bunbeauty.data.network.model.order.get.OrderServer
 import com.bunbeauty.data.network.model.order.post.OrderPostServer
@@ -12,17 +9,19 @@ import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order
 import com.bunbeauty.domain.model.order.OrderCode
 import com.bunbeauty.domain.util.IDateTimeUtil
+import database.OrderEntity
+import database.OrderWithProductEntity
 
 class OrderMapper(
     private val orderProductMapper: IOrderProductMapper,
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
 
-    override fun toOrderEntityWithProducts(orderServer: OrderServer): OrderEntityWithProducts {
-        return OrderEntityWithProducts(
-            orderEntity = OrderEntity(
+    override fun toOrderWithProductEntityList(orderServer: OrderServer): List<OrderWithProductEntity> {
+        return orderServer.oderProductList.map { orderProductServer ->
+            OrderWithProductEntity(
                 uuid = orderServer.uuid,
-                status = OrderStatus.valueOf(orderServer.status),
+                status = orderServer.status,
                 isDelivery = orderServer.isDelivery,
                 time = orderServer.time,
                 timeZone = orderServer.timeZone,
@@ -32,26 +31,28 @@ class OrderMapper(
                 deliveryCost = orderServer.deliveryCost,
                 deferredTime = orderServer.deferredTime,
                 userUuid = orderServer.clientUserUuid,
-            ),
-            orderProductList = orderServer.oderProductList.map(orderProductMapper::toEntityModel)
-        )
-    }
-
-    override fun toLightOrder(orderEntityWithProducts: OrderEntityWithProducts): LightOrder {
-        return orderEntityWithProducts.orderEntity.run {
-            LightOrder(
-                uuid = uuid,
-                status = status,
-                code = code,
-                dateTime = dateTimeUtil.toDateTime(time, timeZone)
+                orderProductUuid = orderServer.uuid,
+                orderProductCount = orderProductServer.count,
+                orderProductName = orderProductServer.name,
+                orderProductNewPrice = orderProductServer.newPrice,
+                orderProductOldPrice = orderProductServer.oldPrice,
+                orderProductUtils = orderProductServer.utils,
+                orderProductNutrition = orderProductServer.nutrition,
+                orderProductDescription = orderProductServer.description,
+                orderProductComboDescription = orderProductServer.comboDescription,
+                orderProductPhotoLink = orderProductServer.photoLink,
+                orderProductBarcode = orderProductServer.barcode,
+                orderUuid = orderProductServer.uuid
             )
         }
     }
 
-    override fun toOrderStatusUpdate(orderServer: OrderServer): OrderStatusUpdate {
-        return OrderStatusUpdate(
-            uuid = orderServer.uuid,
-            status = OrderStatus.valueOf(orderServer.status),
+    override fun toLightOrder(orderEntity: OrderEntity): LightOrder {
+        return LightOrder(
+            uuid = orderEntity.uuid,
+            status = OrderStatus.valueOf(orderEntity.status),
+            code = orderEntity.code,
+            dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone)
         )
     }
 
@@ -61,21 +62,24 @@ class OrderMapper(
         )
     }
 
-    override fun toOrder(orderEntityWithProducts: OrderEntityWithProducts): Order {
-        return orderEntityWithProducts.run {
+    override fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order? {
+        return orderWithProductEntityList.firstOrNull()?.let { firstOrderWithProductEntity ->
             Order(
-                uuid = orderEntity.uuid,
-                code = orderEntity.code,
-                status = orderEntity.status,
-                dateTime = dateTimeUtil.toDateTime(orderEntity.time, orderEntity.timeZone),
-                isDelivery = orderEntity.isDelivery,
-                deferredTime = orderEntity.deferredTime?.let { millis ->
-                    dateTimeUtil.toTime(millis, orderEntity.timeZone)
+                uuid = firstOrderWithProductEntity.uuid,
+                code = firstOrderWithProductEntity.code,
+                status = OrderStatus.valueOf(firstOrderWithProductEntity.status),
+                dateTime = dateTimeUtil.toDateTime(
+                    millis = firstOrderWithProductEntity.time,
+                    timeZone = firstOrderWithProductEntity.timeZone
+                ),
+                isDelivery = firstOrderWithProductEntity.isDelivery,
+                deferredTime = firstOrderWithProductEntity.deferredTime?.let { millis ->
+                    dateTimeUtil.toTime(millis, firstOrderWithProductEntity.timeZone)
                 },
-                address = orderEntity.address,
-                comment = orderEntity.comment,
-                deliveryCost = orderEntity.deliveryCost,
-                orderProductList = orderProductList.map(orderProductMapper::toModel),
+                address = firstOrderWithProductEntity.address,
+                comment = firstOrderWithProductEntity.comment,
+                deliveryCost = firstOrderWithProductEntity.deliveryCost,
+                orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
             )
         }
     }
@@ -93,7 +97,7 @@ class OrderMapper(
             address = orderServer.addressDescription,
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
-            orderProductList = orderServer.oderProductList.map(orderProductMapper::toModel),
+            orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
         )
     }
 

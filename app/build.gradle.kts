@@ -125,10 +125,6 @@ dependencies {
 
     implementation(Coroutine.core)
 
-    implementation(Room.runtime)
-    implementation(Room.roomKtx)
-    kapt(Room.compiler)
-
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)

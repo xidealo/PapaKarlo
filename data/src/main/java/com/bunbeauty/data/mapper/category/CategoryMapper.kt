@@ -1,8 +1,8 @@
 package com.bunbeauty.data.mapper.category
 
-import com.bunbeauty.data.database.entity.CategoryEntity
 import com.bunbeauty.data.network.model.CategoryServer
 import com.bunbeauty.domain.model.category.Category
+import database.CategoryEntity
 
 class CategoryMapper : ICategoryMapper {
 

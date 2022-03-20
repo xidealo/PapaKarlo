@@ -26,17 +26,12 @@ import org.koin.dsl.module
 
 fun mapperModule() = module {
     single<ICafeMapper> { CafeMapper() }
-    single<IMenuProductMapper> {
-        MenuProductMapper(
-            categoryMapper = get(),
-        )
-    }
-    single<ICartProductMapper> { CartProductMapper(menuProductMapper = get()) }
+    single<IMenuProductMapper> { MenuProductMapper() }
+    single<ICartProductMapper> { CartProductMapper() }
     single<IProfileMapper> {
         ProfileMapper(
             userAddressMapper = get(),
-            orderMapper = get(),
-            userMapper = get(),
+            orderMapper = get()
         )
     }
     single<IUserMapper> { UserMapper() }

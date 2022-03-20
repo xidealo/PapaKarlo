@@ -21,7 +21,7 @@ class RefreshUserWorker(appContext: Context, workerParams: WorkerParameters) :
             return Result.failure()
         }
 
-        userRepo.refreshUser(token)
+        userRepo.refreshProfile(token)
         return Result.success()
     }
 }

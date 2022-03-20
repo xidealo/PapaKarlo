@@ -4,6 +4,7 @@ plugins {
     id(Plugin.kapt)
     id(Plugin.kotlinAndroid)
     id(Plugin.kotlinSerialization)
+    id(Plugin.sqldelight)
 }
 
 android {
@@ -37,10 +38,6 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
 
-    implementation(Room.runtime)
-    implementation(Room.roomKtx)
-    kapt(Room.compiler)
-
     implementation(DataStore.dataStorePreferences)
 
     implementation(platform(Firebase.bom))
@@ -56,4 +53,12 @@ dependencies {
     implementation(Koin.android)
     implementation(Koin.test)
 
+    implementation(SqlDelight.androidDriver)
+    implementation(SqlDelight.coroutineExtensions)
+}
+
+sqldelight {
+    database("FoodDeliveryDatabase") {
+        packageName = "com.bunbeauty.data"
+    }
 }

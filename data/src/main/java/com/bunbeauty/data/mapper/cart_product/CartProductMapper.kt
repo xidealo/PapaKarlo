@@ -1,19 +1,28 @@
 package com.bunbeauty.data.mapper.cart_product
 
-import com.bunbeauty.data.database.entity.product.CartProductEntity
-import com.bunbeauty.data.database.entity.product.CartProductWithMenuProduct
-import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
-import com.bunbeauty.domain.model.cart.CartProduct
+import com.bunbeauty.domain.model.product.CartProduct
+import com.bunbeauty.domain.model.product.MenuProduct
+import database.CartProductEntity
+import database.CartProductWithMenuProductEntity
 
-class CartProductMapper(
-    private val menuProductMapper: IMenuProductMapper
-) : ICartProductMapper {
+class CartProductMapper : ICartProductMapper {
 
-    override fun toModel(cartProductWithMenuProduct: CartProductWithMenuProduct): CartProduct {
+    override fun toModel(cartProductWithMenuProductEntity: CartProductWithMenuProductEntity): CartProduct {
         return CartProduct(
-            uuid = cartProductWithMenuProduct.cartProductEntity.uuid,
-            count = cartProductWithMenuProduct.cartProductEntity.count,
-            product = menuProductMapper.toModel(cartProductWithMenuProduct.menuProductEntity),
+            uuid = cartProductWithMenuProductEntity.cartProductUuid,
+            count = cartProductWithMenuProductEntity.count,
+            product = MenuProduct(
+                uuid = cartProductWithMenuProductEntity.uuid,
+                name = cartProductWithMenuProductEntity.name,
+                newPrice = cartProductWithMenuProductEntity.newPrice,
+                oldPrice = cartProductWithMenuProductEntity.oldPrice,
+                utils = cartProductWithMenuProductEntity.utils,
+                nutrition = cartProductWithMenuProductEntity.nutrition,
+                description = cartProductWithMenuProductEntity.description,
+                comboDescription = cartProductWithMenuProductEntity.comboDescription,
+                photoLink = cartProductWithMenuProductEntity.photoLink,
+                categoryList = emptyList()
+            )
         )
     }
 

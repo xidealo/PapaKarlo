@@ -1,0 +1,45 @@
+CREATE TABLE cartProductEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    count INTEGER AS Int NOT NULL,
+    menuProductUuid TEXT NOT NULL,
+    FOREIGN KEY (menuProductUuid) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE
+);
+
+CREATE VIEW cartProductWithMenuProductEntity AS
+SELECT cartProductEntity.uuid AS cartProductUuid,
+    cartProductEntity.count,
+    cartProductEntity.menuProductUuid,
+    menuProductEntity.*
+FROM cartProductEntity
+JOIN menuProductEntity ON menuProductEntity.uuid = cartProductEntity.menuProductUuid;
+
+insertCartProduct:
+INSERT OR REPLACE
+INTO cartProductEntity
+VALUES (?, ?, ?);
+
+getCartProductList:
+SELECT *
+FROM cartProductWithMenuProductEntity;
+
+getCartProductByUuid:
+SELECT *
+FROM cartProductWithMenuProductEntity
+WHERE cartProductWithMenuProductEntity.cartProductUuid = :uuid;
+
+getCartProductByMenuProductUuid:
+SELECT *
+FROM cartProductWithMenuProductEntity
+WHERE cartProductWithMenuProductEntity.menuProductUuid = :menuProductUuid;
+
+updateCartProductCountByUuid:
+UPDATE cartProductEntity
+SET count = :count
+WHERE uuid = :uuid;
+
+deleteCartProductByUuid:
+DELETE FROM cartProductEntity
+WHERE uuid = :uuid;
+
+deleteAllCartProducts:
+DELETE FROM cartProductEntity;

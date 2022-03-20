@@ -1,20 +1,63 @@
 package com.bunbeauty.data.mapper.user_address
 
-import com.bunbeauty.data.database.entity.user.UserAddressEntity
 import com.bunbeauty.data.mapper.street.IStreetMapper
 import com.bunbeauty.data.network.model.AddressServer
 import com.bunbeauty.data.network.model.UserAddressPostServer
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
+import database.UserAddressEntity
 
 class UserAddressMapper(
     private val streetMapper: IStreetMapper
 ) : IUserAddressMapper {
 
-    override fun toModel(userAddress: UserAddressEntity): UserAddress {
+    override fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
         return UserAddress(
+            uuid = userAddressEntity.uuid,
+            street = streetMapper.toStreet(userAddressEntity),
+            house = userAddressEntity.house,
+            flat = userAddressEntity.flat,
+            entrance = userAddressEntity.entrance,
+            floor = userAddressEntity.floor,
+            comment = userAddressEntity.comment,
+            userUuid = userAddressEntity.userUuid,
+        )
+    }
+
+    override fun toUserAddress(addressServer: AddressServer): UserAddress {
+        return UserAddress(
+            uuid = addressServer.uuid,
+            street = streetMapper.toStreet(addressServer.street),
+            house = addressServer.house,
+            flat = addressServer.flat,
+            entrance = addressServer.entrance,
+            floor = addressServer.floor,
+            comment = addressServer.comment,
+            userUuid = addressServer.userUuid,
+        )
+    }
+
+    override fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
+        return UserAddressEntity(
+            uuid = addressServer.uuid,
+            streetUuid = addressServer.street.uuid,
+            streetName = addressServer.street.name,
+            cityUuid = addressServer.street.cityUuid,
+            house = addressServer.house,
+            flat = addressServer.flat,
+            entrance = addressServer.entrance,
+            floor = addressServer.floor,
+            comment = addressServer.comment,
+            userUuid = addressServer.userUuid,
+        )
+    }
+
+    override fun toUserAddressEntity(userAddress: UserAddress): UserAddressEntity {
+        return UserAddressEntity(
             uuid = userAddress.uuid,
-            street = streetMapper.toModel(userAddress.street),
+            streetUuid = userAddress.street.uuid,
+            streetName = userAddress.street.name,
+            cityUuid = userAddress.street.cityUuid,
             house = userAddress.house,
             flat = userAddress.flat,
             entrance = userAddress.entrance,
@@ -24,49 +67,10 @@ class UserAddressMapper(
         )
     }
 
-    override fun toModel(address: AddressServer): UserAddress {
-        return UserAddress(
-            uuid = address.uuid,
-            street = streetMapper.toModel(address.street),
-            house = address.house,
-            flat = address.flat,
-            entrance = address.entrance,
-            floor = address.floor,
-            comment = address.comment,
-            userUuid = address.userUuid,
-        )
-    }
-
-    override fun toEntityModel(address: AddressServer): UserAddressEntity {
-        return UserAddressEntity(
-            uuid = address.uuid,
-            street = streetMapper.toEntityModel(address.street),
-            house = address.house,
-            flat = address.flat,
-            entrance = address.entrance,
-            floor = address.floor,
-            comment = address.comment,
-            userUuid = address.userUuid,
-        )
-    }
-
-    override fun toEntityModel(userAddress: UserAddress): UserAddressEntity {
-        return UserAddressEntity(
-            uuid = userAddress.uuid,
-            street = streetMapper.toEntityModel(userAddress.street),
-            house = userAddress.house,
-            flat = userAddress.flat,
-            entrance = userAddress.entrance,
-            floor = userAddress.floor,
-            comment = userAddress.comment,
-            userUuid = userAddress.userUuid,
-        )
-    }
-
-    override fun toServerModel(userAddress: UserAddress): AddressServer {
+    override fun toAddressServer(userAddress: UserAddress): AddressServer {
         return AddressServer(
             uuid = userAddress.uuid,
-            street = streetMapper.toServerModel(userAddress.street),
+            street = streetMapper.toStreetServer(userAddress.street),
             house = userAddress.house,
             flat = userAddress.flat,
             entrance = userAddress.entrance,
@@ -76,20 +80,32 @@ class UserAddressMapper(
         )
     }
 
-    override fun toServerModel(userAddress: UserAddressEntity): AddressServer {
+    override fun toAddressServer(userAddressEntity: UserAddressEntity): AddressServer {
         return AddressServer(
-            uuid = userAddress.uuid,
-            street = streetMapper.toServerModel(userAddress.street),
-            house = userAddress.house,
-            flat = userAddress.flat,
-            entrance = userAddress.entrance,
-            floor = userAddress.floor,
-            comment = userAddress.comment,
-            userUuid = userAddress.userUuid
+            uuid = userAddressEntity.uuid,
+            street = streetMapper.toStreetServer(userAddressEntity),
+            house = userAddressEntity.house,
+            flat = userAddressEntity.flat,
+            entrance = userAddressEntity.entrance,
+            floor = userAddressEntity.floor,
+            comment = userAddressEntity.comment,
+            userUuid = userAddressEntity.userUuid
         )
     }
 
-    override fun toPostServerModel(userAddress: UserAddressEntity): UserAddressPostServer {
+    override fun toUserAddressPostServer(userAddressEntity: UserAddressEntity): UserAddressPostServer {
+        return UserAddressPostServer(
+            streetUuid = userAddressEntity.streetUuid,
+            house = userAddressEntity.house,
+            flat = userAddressEntity.flat,
+            entrance = userAddressEntity.entrance,
+            floor = userAddressEntity.floor,
+            comment = userAddressEntity.comment,
+            isVisible = true
+        )
+    }
+
+    override fun toUserAddressPostServer(userAddress: UserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             streetUuid = userAddress.street.uuid,
             house = userAddress.house,
@@ -101,19 +117,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toPostServerModel(userAddress: UserAddress): UserAddressPostServer {
-        return UserAddressPostServer(
-            streetUuid = userAddress.street.uuid,
-            house = userAddress.house,
-            flat = userAddress.flat,
-            entrance = userAddress.entrance,
-            floor = userAddress.floor,
-            comment = userAddress.comment,
-            isVisible = true
-        )
-    }
-
-    override fun toPostServerModel(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
+    override fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,
