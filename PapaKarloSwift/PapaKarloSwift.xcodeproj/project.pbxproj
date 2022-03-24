@@ -45,6 +45,7 @@
 		02727A2827E123D000C212E4 /* ChangeCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02727A2727E123D000C212E4 /* ChangeCityView.swift */; };
 		0278063827E200AF00F7AC86 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278063727E200AF00F7AC86 /* OrderDetailsView.swift */; };
 		0278063B27E2035600F7AC86 /* CreateAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278063A27E2035600F7AC86 /* CreateAddressView.swift */; };
+		0283C82827EC7F9B00AAF687 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0283C82727EC7F9B00AAF687 /* CodeView.swift */; };
 		0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */; };
 		0287396827AC40D80020A919 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* SplashScreen.swift */; };
 		0287396A27AC40DB0020A919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396927AC40DB0020A919 /* Assets.xcassets */; };
@@ -93,6 +94,7 @@
 		02727A2727E123D000C212E4 /* ChangeCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCityView.swift; sourceTree = "<group>"; };
 		0278063727E200AF00F7AC86 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		0278063A27E2035600F7AC86 /* CreateAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressView.swift; sourceTree = "<group>"; };
+		0283C82727EC7F9B00AAF687 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
 		0287396227AC40D80020A919 /* PapaKarloSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaKarloSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapaKarloSwiftApp.swift; sourceTree = "<group>"; };
 		0287396727AC40D80020A919 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				02727A1B27E1178E00C212E4 /* TextCard.swift */,
 				02727A2427E11F6E00C212E4 /* NavigationTextCard.swift */,
 				02BEF69A27E74ADD00F18540 /* SmsTextField.swift */,
+				0283C82727EC7F9B00AAF687 /* CodeView.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -546,6 +549,7 @@
 				0256A04F27D890A7006811FE /* MenuProductUI.swift in Sources */,
 				02727A1E27E1185500C212E4 /* PlaceholderText.swift in Sources */,
 				025C6A5227DC9E6500AB2F17 /* StrikeText.swift in Sources */,
+				0283C82827EC7F9B00AAF687 /* CodeView.swift in Sources */,
 				025C6A5927DCA59A00AB2F17 /* ProfileView.swift in Sources */,
 				026E627727E60DDD00353E69 /* LoginView.swift in Sources */,
 				025DC25D27E755B600521335 /* UpdateView.swift in Sources */,

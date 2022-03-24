@@ -21,6 +21,9 @@ struct ConfirmView: View {
             Spacer()
             Text(Strings.MSG_CONFIRM_ENTER_CODE).multilineTextAlignment(.center)
             
+            
+            SmsTextField(codes: ["1", "2", "7", "", "", ""])
+            
             Spacer()
             
             PlaceholderText(text: "Получить код повторно можно через \(timeRemaining) секунд").multilineTextAlignment(.center)

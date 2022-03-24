@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../PapaKarloSwift/feature/update/UpdateView.swift">
-   </FileRef>
-   <FileRef
-      location = "group:../PapaKarloSwift/feature/update">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
