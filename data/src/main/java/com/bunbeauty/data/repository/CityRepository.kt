@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.CITY_TAG
-import com.bunbeauty.data.database.dao.CityDao
+import com.bunbeauty.data.dao.city.ICityDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.network.api.ApiRepo
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CityRepository(
     private val apiRepo: ApiRepo,
-    private val cityDao: CityDao,
+    private val cityDao: ICityDao,
     private val cityMapper: ICityMapper,
 ) : CityRepo {
 
@@ -21,7 +21,7 @@ class CityRepository(
         apiRepo.getCityList().handleListResult(CITY_TAG) { cityList ->
             if (cityList != null) {
                 val cityEntityList = cityList.map(cityMapper::toCityEntity)
-                cityDao.insertAll(cityEntityList)
+                cityDao.insertCityList(cityEntityList)
             }
         }
     }

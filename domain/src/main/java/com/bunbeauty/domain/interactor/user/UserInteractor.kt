@@ -59,8 +59,11 @@ class UserInteractor(
     }
 
     override fun observeLightProfile(): Flow<Profile?> {
-        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
-            userRepo.observeProfileByUuid(userUuid ?: "")
+        return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
+            userRepo.observeProfileByUserUuidAndCityUuid(
+                userCityUuid.userUuid,
+                userCityUuid.cityUuid
+            )
         }
     }
 

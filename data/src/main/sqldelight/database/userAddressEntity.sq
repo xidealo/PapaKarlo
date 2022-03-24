@@ -1,0 +1,42 @@
+CREATE TABLE userAddressEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    streetUuid TEXT NOT NULL,
+    streetName TEXT NOT NULL,
+    cityUuid TEXT NOT NULL,
+    house TEXT NOT NULL,
+    flat TEXT,
+    entrance TEXT,
+    floor TEXT,
+    comment TEXT,
+    userUuid TEXT NOT NULL
+);
+
+insertUserAddress:
+INSERT OR REPLACE
+INTO userAddressEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getUserAddressListByUserUuidAndCityUuid:
+SELECT *
+FROM userAddressEntity
+WHERE userUuid = :userUuid AND cityUuid = :cityUuid;
+
+getSelectedUserAddressByUserAndCityUuid:
+SELECT userAddressEntity.*
+FROM userAddressEntity
+JOIN selectedUserAddressUuidEntity
+    ON userAddressEntity.uuid == selectedUserAddressUuidEntity.userAddressUuid
+WHERE selectedUserAddressUuidEntity.userUuid = :userUuid
+    AND selectedUserAddressUuidEntity.cityUuid = :cityUuid;
+
+getFirstUserAddressByUserAndCityUuid:
+SELECT *
+FROM userAddressEntity
+WHERE userUuid = :userUuid AND cityUuid = :cityUuid
+ORDER BY uuid DESC
+LIMIT 1;
+
+getUserAddressCountByUserUuidAndCityUuid:
+SELECT COUNT(*)
+FROM userAddressEntity
+WHERE userUuid = :userUuid AND cityUuid = :cityUuid;

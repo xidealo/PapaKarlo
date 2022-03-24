@@ -13,6 +13,7 @@ import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class OrderInteractor(
     private val orderRepo: OrderRepo,

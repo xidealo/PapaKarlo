@@ -1,0 +1,14 @@
+CREATE TABLE selectedCafeUuidEntity (
+    userUuid TEXT NOT NULL,
+    cityUuid TEXT NOT NULL,
+    cafeUuid TEXT NOT NULL,
+    PRIMARY KEY (userUuid, cityUuid),
+    FOREIGN KEY (cityUuid) REFERENCES cityEntity(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (cafeUuid) REFERENCES cafeEntity(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
+);
+
+insertSelectedCafeUuid:
+INSERT OR REPLACE
+INTO selectedCafeUuidEntity
+VALUES (?, ?, ?);

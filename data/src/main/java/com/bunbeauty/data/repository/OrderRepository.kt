@@ -1,6 +1,6 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.data.database.dao.OrderDao
+import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.mapper.order.IOrderMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 class OrderRepository(
-    private val orderDao: OrderDao,
+    private val orderDao: IOrderDao,
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
 ) : BaseRepository(), OrderRepo {
@@ -25,12 +25,15 @@ class OrderRepository(
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
-        return orderDao.observeOrderByUuid(orderUuid).mapFlow(orderMapper::toOrder)
+        return orderDao.observeOrderWithProductListByUuid(orderUuid).mapFlow(orderMapper::toOrder)
     }
 
     override fun observeOrderUpdates(token: String): Flow<Order> {
         return apiRepo.subscribeOnOrderUpdates(token).onEach { orderServer ->
-            orderDao.updateOrderStatus(orderMapper.toOrderStatusUpdate(orderServer))
+            orderDao.updateOrderStatusByUuid(
+                uuid = orderServer.uuid,
+                status = orderServer.status,
+            )
         }.map { orderServer ->
             orderMapper.toOrder(orderServer)
         }
@@ -41,13 +44,13 @@ class OrderRepository(
     }
 
     override suspend fun getOrderByUuid(orderUuid: String): Order? {
-        return orderDao.getOrderByUuid(orderUuid)?.let(orderMapper::toOrder)
+        return orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
     }
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return apiRepo.postOrder(token, orderPostServer).handleResultAndReturn { oderServer ->
-            orderDao.insertOrder(orderMapper.toOrderEntityWithProducts(oderServer))
+            orderDao.insertOrderWithProductList(orderMapper.toOrderWithProductEntityList(oderServer))
             orderMapper.toOrderCode(oderServer)
         }
     }

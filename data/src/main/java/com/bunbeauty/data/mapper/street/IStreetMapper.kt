@@ -1,15 +1,18 @@
 package com.bunbeauty.data.mapper.street
 
-import com.bunbeauty.data.database.entity.StreetEntity
 import com.bunbeauty.data.network.model.StreetServer
 import com.bunbeauty.domain.model.Street
+import database.StreetEntity
+import database.UserAddressEntity
 
 interface IStreetMapper {
 
-    fun toEntityModel(street: StreetServer): StreetEntity
-    fun toEntityModel(street: Street): StreetEntity
-    fun toModel(street: StreetEntity): Street
-    fun toModel(street: StreetServer): Street
-    fun toServerModel(street: Street): StreetServer
-    fun toServerModel(street: StreetEntity): StreetServer
+    fun toStreetEntity(street: StreetServer): StreetEntity
+    fun toStreetEntity(street: Street): StreetEntity
+    fun toStreet(street: StreetEntity): Street
+    fun toStreet(street: StreetServer): Street
+    fun toStreet(userAddressEntity: UserAddressEntity): Street
+    fun toStreetServer(street: Street): StreetServer
+    fun toStreetServer(street: StreetEntity): StreetServer
+    fun toStreetServer(userAddressEntity: UserAddressEntity): StreetServer
 }

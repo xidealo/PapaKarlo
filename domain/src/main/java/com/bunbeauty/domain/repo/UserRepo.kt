@@ -8,11 +8,11 @@ interface UserRepo {
 
     suspend fun login(userUuid: String, userPhone: String): String?
 
-    suspend fun refreshUser(token: String)
+    suspend fun refreshProfile(token: String)
 
     fun observeUserByUuid(userUuid: String): Flow<User?>
 
-    fun observeProfileByUuid(userUuid: String): Flow<Profile?>
+    fun observeProfileByUserUuidAndCityUuid(userUuid: String, cityUuid: String): Flow<Profile?>
 
     suspend fun updateUserEmail(token: String, userUuid: String, email: String): User?
 }

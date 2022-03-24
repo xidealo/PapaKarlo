@@ -52,8 +52,8 @@ class AddressInteractor(
     override fun observeAddressList(): Flow<List<UserAddress>> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
             userAddressRepo.observeUserAddressListByUserUuidAndCityUuid(
-                userCityUuid.userUuid,
-                userCityUuid.cityUuid
+                userUuid = userCityUuid.userUuid,
+                cityUuid = userCityUuid.cityUuid
             )
         }
     }
@@ -61,8 +61,8 @@ class AddressInteractor(
     override suspend fun observeAddress(): Flow<UserAddress?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
             userAddressRepo.observeSelectedUserAddressByUserAndCityUuid(
-                userCityUuid.userUuid,
-                userCityUuid.cityUuid
+                userUuid = userCityUuid.userUuid,
+                cityUuid = userCityUuid.cityUuid
             ).flatMapLatest { userAddress ->
                 logD(ORDER_TAG, "selectedUserAddress = $userAddress")
                 if (userAddress == null) {

@@ -1,0 +1,19 @@
+CREATE TABLE categoryEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    priority INTEGER AS Int NOT NULL
+);
+
+insertCategory:
+INSERT OR REPLACE
+INTO categoryEntity
+VALUES (?, ?, ?);
+
+getCategoryList:
+SELECT categoryEntity.*
+FROM categoryEntity
+WHERE EXISTS (
+    SELECT *
+    FROM menuProductCategoryReference
+    WHERE categoryEntity.uuid = menuProductCategoryReference.categoryUuidReference
+);
