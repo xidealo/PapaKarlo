@@ -12,8 +12,8 @@ struct UpdateView: View {
         VStack{
             Spacer()
             
-            Image("NewVersion").resizable().frame(width: 200, height: 200)
-            
+            DefaultImage(imageName: "NewVersion")
+
             Text(Strings.MSG_UPDATE_GO_TO).multilineTextAlignment(.center)
             Spacer()
             //TODO make button

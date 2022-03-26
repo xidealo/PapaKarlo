@@ -45,7 +45,8 @@ struct MenuItemView: View {
                 
             }.padding(.trailing, Diems.MEDIUM_PADDING)
             
-        }.frame(maxWidth:.infinity, alignment: .topLeading).cornerRadius(Diems.MEDIUM_RADIUS)
+        }.frame(maxWidth:.infinity, alignment: .topLeading)
+        .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
 

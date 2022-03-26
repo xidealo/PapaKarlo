@@ -52,8 +52,8 @@ struct EmptyOrderListView: View {
         VStack{
             Spacer()
             
-            Image("EmptyPage")
-            
+            DefaultImage(imageName: "EmptyPage")
+
             Text(Strings.MSG_ORDER_LIST_EMPTY_ORDERS).multilineTextAlignment(.center)
             Spacer()
             

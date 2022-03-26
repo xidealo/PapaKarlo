@@ -62,4 +62,10 @@ class Strings{
     static let ACTION_UPDATE_UPDATE = "Обновить"
     static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет"
     
+    
+    //CART PRODUCT
+    static let ACTION_CART_PRODUCT_MENU = "Меню"
+    static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "
+
+
 }

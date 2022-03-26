@@ -6,15 +6,23 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CodeView: View {
     
     @State var code:String
     
+    private let textLimit = 1 //Your limit
+
     var body: some View {
         VStack{
             TextField("", text: $code)
-                .foregroundColor(Color("onSurface")).multilineTextAlignment(.center)
+               .foregroundColor(Color("onSurface"))
+                .multilineTextAlignment(.center)
+                .keyboardType(.numberPad)
+                .onReceive(Just(code)) { _ in limitText(textLimit) }
+
+                
             if(code != ""){
                 Capsule()
                     .fill(Color("primary"))
@@ -26,6 +34,12 @@ struct CodeView: View {
             }
         }
     }
+    
+    func limitText(_ upper: Int) {
+            if code.count > upper {
+                code = String(code.prefix(upper))
+            }
+        }
 }
 
 struct CodeView_Previews: PreviewProvider {

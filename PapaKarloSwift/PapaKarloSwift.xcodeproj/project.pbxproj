@@ -27,6 +27,11 @@
 		025C6A5C27DCD32D00AB2F17 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */; };
 		025C6A5E27DCD35000AB2F17 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */; };
 		025DC25D27E755B600521335 /* UpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025DC25C27E755B600521335 /* UpdateView.swift */; };
+		0262AEA927EF76C400456C6E /* ConsumerCartUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262AEA827EF76C400456C6E /* ConsumerCartUI.swift */; };
+		0262AEAB27EF778600456C6E /* CartProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262AEAA27EF778600456C6E /* CartProductItem.swift */; };
+		0262AEAD27EF7E7000456C6E /* DefaultImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262AEAC27EF7E7000456C6E /* DefaultImage.swift */; };
+		0262AEAF27EF835C00456C6E /* CartProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262AEAE27EF835C00456C6E /* CartProductView.swift */; };
+		0262AEB127EF86BC00456C6E /* CountPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262AEB027EF86BC00456C6E /* CountPicker.swift */; };
 		02681E4C27DF89AD00D03834 /* UserAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4B27DF89AD00D03834 /* UserAddressListView.swift */; };
 		02681E4E27DF89EB00D03834 /* AddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4D27DF89EB00D03834 /* AddressItemView.swift */; };
 		02681E5027DF89FD00D03834 /* AddressItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02681E4F27DF89FD00D03834 /* AddressItem.swift */; };
@@ -46,6 +51,7 @@
 		0278063827E200AF00F7AC86 /* OrderDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278063727E200AF00F7AC86 /* OrderDetailsView.swift */; };
 		0278063B27E2035600F7AC86 /* CreateAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0278063A27E2035600F7AC86 /* CreateAddressView.swift */; };
 		0283C82827EC7F9B00AAF687 /* CodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0283C82727EC7F9B00AAF687 /* CodeView.swift */; };
+		0283C82A27ECA4AC00AAF687 /* ConsumerCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0283C82927ECA4AC00AAF687 /* ConsumerCartView.swift */; };
 		0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */; };
 		0287396827AC40D80020A919 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0287396727AC40D80020A919 /* SplashScreen.swift */; };
 		0287396A27AC40DB0020A919 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0287396927AC40DB0020A919 /* Assets.xcassets */; };
@@ -76,6 +82,11 @@
 		025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		025DC25C27E755B600521335 /* UpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateView.swift; sourceTree = "<group>"; };
+		0262AEA827EF76C400456C6E /* ConsumerCartUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerCartUI.swift; sourceTree = "<group>"; };
+		0262AEAA27EF778600456C6E /* CartProductItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProductItem.swift; sourceTree = "<group>"; };
+		0262AEAC27EF7E7000456C6E /* DefaultImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImage.swift; sourceTree = "<group>"; };
+		0262AEAE27EF835C00456C6E /* CartProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartProductView.swift; sourceTree = "<group>"; };
+		0262AEB027EF86BC00456C6E /* CountPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountPicker.swift; sourceTree = "<group>"; };
 		02681E4B27DF89AD00D03834 /* UserAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressListView.swift; sourceTree = "<group>"; };
 		02681E4D27DF89EB00D03834 /* AddressItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItemView.swift; sourceTree = "<group>"; };
 		02681E4F27DF89FD00D03834 /* AddressItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressItem.swift; sourceTree = "<group>"; };
@@ -95,6 +106,7 @@
 		0278063727E200AF00F7AC86 /* OrderDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsView.swift; sourceTree = "<group>"; };
 		0278063A27E2035600F7AC86 /* CreateAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressView.swift; sourceTree = "<group>"; };
 		0283C82727EC7F9B00AAF687 /* CodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeView.swift; sourceTree = "<group>"; };
+		0283C82927ECA4AC00AAF687 /* ConsumerCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerCartView.swift; sourceTree = "<group>"; };
 		0287396227AC40D80020A919 /* PapaKarloSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PapaKarloSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0287396527AC40D80020A919 /* PapaKarloSwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapaKarloSwiftApp.swift; sourceTree = "<group>"; };
 		0287396727AC40D80020A919 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -129,6 +141,10 @@
 		0254656327C918BB00337B98 /* consumer_cart */ = {
 			isa = PBXGroup;
 			children = (
+				0283C82927ECA4AC00AAF687 /* ConsumerCartView.swift */,
+				0262AEA827EF76C400456C6E /* ConsumerCartUI.swift */,
+				0262AEAA27EF778600456C6E /* CartProductItem.swift */,
+				0262AEAE27EF835C00456C6E /* CartProductView.swift */,
 			);
 			path = consumer_cart;
 			sourceTree = "<group>";
@@ -205,6 +221,8 @@
 			children = (
 				025C6A5A27DCA5B000AB2F17 /* text */,
 				025C6A5527DCA4BD00AB2F17 /* card */,
+				0262AEAC27EF7E7000456C6E /* DefaultImage.swift */,
+				0262AEB027EF86BC00456C6E /* CountPicker.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -515,11 +533,14 @@
 				0256A04D27D8891C006811FE /* CafeItemView.swift in Sources */,
 				0287396827AC40D80020A919 /* SplashScreen.swift in Sources */,
 				025C6A5E27DCD35000AB2F17 /* AboutAppView.swift in Sources */,
+				0262AEAD27EF7E7000456C6E /* DefaultImage.swift in Sources */,
 				02727A2127E11AAC00C212E4 /* SettingsView.swift in Sources */,
 				026C537527DD3D3700CE3EF2 /* ProfileUI.swift in Sources */,
 				026C536F27DD35F900CE3EF2 /* OrderItemView.swift in Sources */,
+				0262AEB127EF86BC00456C6E /* CountPicker.swift in Sources */,
 				02500A2627D4F9DB00DA641C /* Strings.swift in Sources */,
 				02727A1C27E1178E00C212E4 /* TextCard.swift in Sources */,
+				0283C82A27ECA4AC00AAF687 /* ConsumerCartView.swift in Sources */,
 				0278063827E200AF00F7AC86 /* OrderDetailsView.swift in Sources */,
 				02727A2527E11F6E00C212E4 /* NavigationTextCard.swift in Sources */,
 				02681E4E27DF89EB00D03834 /* AddressItemView.swift in Sources */,
@@ -536,12 +557,15 @@
 				02727A2827E123D000C212E4 /* ChangeCityView.swift in Sources */,
 				02727A2327E11C1F00C212E4 /* SettingsUI.swift in Sources */,
 				02E0FF8F27C6A22E00BABD2B /* SelectCityView.swift in Sources */,
+				0262AEAB27EF778600456C6E /* CartProductItem.swift in Sources */,
 				0287396627AC40D80020A919 /* PapaKarloSwiftApp.swift in Sources */,
 				02681E5627DFAA0100D03834 /* OrderListView.swift in Sources */,
 				02131A3327DA2D2F00DCF9F5 /* MenuItem.swift in Sources */,
 				025C6A5727DCA4D700AB2F17 /* NavigationCardView.swift in Sources */,
+				0262AEAF27EF835C00456C6E /* CartProductView.swift in Sources */,
 				0254657227C9209700337B98 /* CityItemView.swift in Sources */,
 				02681E5427DF8B5400D03834 /* ElementCard.swift in Sources */,
+				0262AEA927EF76C400456C6E /* ConsumerCartUI.swift in Sources */,
 				026C537327DD36F000CE3EF2 /* OrderItem.swift in Sources */,
 				0256A04927D8886A006811FE /* CafeListView.swift in Sources */,
 				0254657427C9238600337B98 /* CityItem.swift in Sources */,

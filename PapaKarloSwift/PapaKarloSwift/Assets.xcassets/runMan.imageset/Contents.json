@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "empty_page-1.png",
+      "filename" : "cart run man.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "empty_page-2.png",
+      "filename" : "cart run man-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "empty_page.png",
+      "filename" : "cart run man-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

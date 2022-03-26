@@ -13,6 +13,7 @@ struct SelectCityView: View {
     init() {
         cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
     }
+    
     var body: some View {
             VStack{
                 ScrollView {

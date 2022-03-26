@@ -37,8 +37,8 @@ struct EmptyProfileView: View {
             
             Spacer()
             
-            Image("NotLoginnedProfile")
-            
+            DefaultImage(imageName: "NotLoginnedProfile")
+
             Text(Strings.MSG_PROFILE_NO_PROFILE).multilineTextAlignment(.center)
             
             Spacer()

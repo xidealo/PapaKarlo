@@ -22,7 +22,7 @@ struct ConfirmView: View {
             Text(Strings.MSG_CONFIRM_ENTER_CODE).multilineTextAlignment(.center)
             
             
-            SmsTextField(codes: ["1", "2", "7", "", "", ""])
+            SmsTextField(codes: ["1", "", "", "", "", ""])
             
             Spacer()
             
