@@ -19,8 +19,8 @@ struct NavigationTextCard<Content: View>: View {
         ){
         HStack{
             VStack{
-                PlaceholderText(text:placeHolder)
-                Text(text).frame(maxWidth:.infinity, alignment: .leading)
+                PlaceholderText(text:placeHolder).frame(maxWidth:.infinity, alignment: .leading)
+                Text(text).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
                 
             }.frame(maxWidth:.infinity, alignment: .leading)
             Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
@@ -32,6 +32,6 @@ struct NavigationTextCard<Content: View>: View {
 
 struct NavigationTextCard_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationTextCard(placeHolder: "placeholder", text: "text", destination:ChangeCityView())
+        NavigationTextCard(placeHolder: "placeholder", text: "SKADASLDAL< :LDfd;lfsd;l,f", destination:ChangeCityView())
     }
 }

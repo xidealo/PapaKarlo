@@ -70,5 +70,12 @@ class Strings{
     static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "
     static let MSG_CART_PRODUCT_RESULT = "Итого"
 
+    //CREATION ORDER
+    static let HINT_CREATION_ORDER_ADDRESS = "Адрес"
+    static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
+    static let HINT_CREATION_ORDER_DEFERRED_TIME = "Время доставки"
+    static let MSG_CREATION_ORDER_RESULT = "Итого"
+    static let MSG_CREATION_ORDER_DELIVERY = "Доставка"
+    static let MSG_CREATION_ORDER_FINAL_AMOUNT = "Сумма к оплате"
 
 }

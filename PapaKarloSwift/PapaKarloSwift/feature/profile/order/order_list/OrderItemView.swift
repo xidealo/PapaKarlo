@@ -25,7 +25,7 @@ struct OrderItemView<Content: View>: View {
                 .foregroundColor(Color("surface"))
                 .padding(Diems.SMALL_PADDING)
                 .background(Color.blue)
-                .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+                .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .heavy, design: .default))
                 .cornerRadius(Diems.MEDIUM_RADIUS)
             Spacer()
             Text(orderItem.dateTime).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .thin, design: .default))

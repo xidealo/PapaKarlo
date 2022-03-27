@@ -21,7 +21,11 @@ struct SettingsView: View {
        
             NavigationTextCard(placeHolder: Strings.HINT_SETTINGS_CITY, text: settingsUI.city, destination:ChangeCityView())
             Spacer()
-        }.padding(Diems.MEDIUM_PADDING).frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background")).navigationTitle(Text(Strings.TITLE_SETTINGS)).navigationBarItems(leading: Image("chevron.forward.square"))
+        }.padding(Diems.MEDIUM_PADDING)
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .navigationTitle(Text(Strings.TITLE_SETTINGS))
+        .navigationBarItems(leading: Image("chevron.forward.square"))
         
     }
 }

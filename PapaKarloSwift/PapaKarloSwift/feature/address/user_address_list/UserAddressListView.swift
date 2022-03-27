@@ -10,6 +10,10 @@ import SwiftUI
 struct UserAddressListView: View {
     let addressList: [AddressItem]
     
+    init() {
+        addressList = [AddressItem(id: UUID(), address: "Kimry")]
+    }
+    
     var body: some View {
         VStack{
             //SuccessAddressListView(addressList: addressList)
@@ -26,7 +30,7 @@ struct UserAddressListView: View {
 
 struct UserAddressListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserAddressListView(addressList: [AddressItem(id: UUID(), address: "Kimry")])
+        UserAddressListView()
     }
 }
 
@@ -62,7 +66,7 @@ struct EmptyAddressListView: View {
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
-                    .cornerRadius(8)
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
         }

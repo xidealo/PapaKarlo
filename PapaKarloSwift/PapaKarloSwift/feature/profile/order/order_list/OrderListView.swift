@@ -13,8 +13,8 @@ struct OrderListView: View {
     
     var body: some View {
         VStack{
-            //SuccessOrderListView(orderList: orderList)
-            EmptyOrderListView()
+            SuccessOrderListView(orderList: orderList)
+            //EmptyOrderListView()
         }
         .background(Color("background"))
         .navigationTitle(

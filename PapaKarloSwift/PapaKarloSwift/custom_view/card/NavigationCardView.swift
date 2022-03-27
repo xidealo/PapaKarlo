@@ -9,7 +9,8 @@ import SwiftUI
 
 struct NavigationCardView<Content: View>: View {
     
-    let icon:String
+    let icon:String?
+    
     let label:String
     let destination:Content
     
@@ -18,7 +19,9 @@ struct NavigationCardView<Content: View>: View {
                 destination:destination
             ){
                 HStack{
-                    Image(systemName: icon)
+                    if icon != nil{
+                        Image(systemName: icon ?? "")
+                    }
                     Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
                     Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
                 }.frame(maxWidth:.infinity)
