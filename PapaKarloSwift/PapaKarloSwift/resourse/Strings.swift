@@ -65,7 +65,10 @@ class Strings{
     
     //CART PRODUCT
     static let ACTION_CART_PRODUCT_MENU = "Меню"
+    static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
+
     static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "
+    static let MSG_CART_PRODUCT_RESULT = "Итого"
 
 
 }
