@@ -6,6 +6,7 @@ import com.bunbeauty.common.Constants.TOKEN_WORK_KEY
 import com.bunbeauty.domain.worker.IUserWorkerUtil
 import com.bunbeauty.papakarlo.worker.BaseWorkerUtil
 
+@Deprecated("replaced on request on screen")
 class UserWorkerUtil(workManager: WorkManager) : BaseWorkerUtil(workManager), IUserWorkerUtil {
 
     override fun refreshUser(token: String) {

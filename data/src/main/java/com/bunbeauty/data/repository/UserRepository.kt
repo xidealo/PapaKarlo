@@ -5,7 +5,7 @@ import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.dao.user.IUserDao
 import com.bunbeauty.data.dao.user_address.IUserAddressDao
-import com.bunbeauty.data.handleResult
+import com.bunbeauty.data.handleResultAndAlwaysReturn
 import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.mapper.profile.IProfileMapper
 import com.bunbeauty.data.mapper.user.IUserMapper
@@ -31,6 +31,8 @@ class UserRepository(
     private val dataStoreRepo: DataStoreRepo
 ) : UserRepo {
 
+    var profileCache: Profile.Authorized? = null
+
     override suspend fun login(userUuid: String, userPhone: String): String? {
         val loginPost = LoginPostServer(
             firebaseUuid = userUuid,
@@ -42,33 +44,28 @@ class UserRepository(
         }
     }
 
-    override suspend fun refreshProfile(token: String) {
-        apiRepo.getProfile(token).handleResult(USER_TAG) { profile ->
-            saveProfileLocally(profile)
-        }
-    }
-
     override fun observeUserByUuid(userUuid: String): Flow<User?> {
         return userDao.observeUserByUuid(userUuid).mapFlow(userMapper::toUser)
     }
 
-    override fun observeProfileByUserUuidAndCityUuid(
+    override suspend fun getProfileByUserUuidAndCityUuid(
         userUuid: String,
-        cityUuid: String
-    ): Flow<Profile?> {
-        return userDao.observeUserByUuid(userUuid).flatMapLatest { userEntity ->
-            userAddressDao.observeUserAddressCountByUserAndCityUuid(userUuid, cityUuid)
-                .flatMapLatest { userAddressCount ->
-                    orderDao.observeLastOrderByUserUuid(userUuid).map { lastOrderEntity ->
-                        userEntity?.let {
-                            profileMapper.toProfile(
-                                userUuid = userEntity.uuid,
-                                userAddressCount = userAddressCount,
-                                lastOrderEntity = lastOrderEntity
-                            )
-                        }
+        cityUuid: String,
+        token: String
+    ): Profile.Authorized? {
+        return profileCache ?: run {
+            apiRepo.getProfile(token).handleResultAndAlwaysReturn(
+                tag = USER_TAG,
+                onError = {
+                    getProfileLocally(userUuid, cityUuid)
+                },
+                onSuccess = { profileServer ->
+                    saveProfileLocally(profileServer)
+                    profileMapper.toProfile(profileServer).also { profile ->
+                        profileCache = profile
                     }
                 }
+            )
         }
     }
 
@@ -81,6 +78,12 @@ class UserRepository(
             }
     }
 
+    override suspend fun clearUserCache() {
+        dataStoreRepo.clearToken()
+        dataStoreRepo.clearUserUuid()
+        profileCache = null
+    }
+
     suspend fun saveProfileLocally(profile: ProfileServer?) {
         if (profile != null) {
             dataStoreRepo.saveUserUuid(profile.uuid)
@@ -89,4 +92,18 @@ class UserRepository(
             orderDao.insertOrderWithProductList(profileMapper.toOrderWithProductEntityList(profile))
         }
     }
+
+    suspend fun getProfileLocally(userUuid: String, cityUuid: String): Profile.Authorized? {
+        return userDao.getUserByUuid(userUuid)?.let { userEntity ->
+            val userAddressCount =
+                userAddressDao.getUserAddressCountByUserAndCityUuid(userUuid, cityUuid)
+            val lastOrderEntity = orderDao.getLastOrderByUserUuid(userUuid)
+            profileMapper.toProfile(
+                userUuid = userEntity.uuid,
+                userAddressCount = userAddressCount,
+                lastOrderEntity = lastOrderEntity
+            )
+        }
+    }
+
 }

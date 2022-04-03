@@ -13,7 +13,9 @@ interface IProfileMapper {
         userUuid: String,
         userAddressCount: Long,
         lastOrderEntity: OrderEntity?
-    ): Profile
+    ): Profile.Authorized
+
+    fun toProfile(profileServer: ProfileServer): Profile.Authorized
 
     fun toUserEntity(profileServer: ProfileServer): UserEntity
     fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity>

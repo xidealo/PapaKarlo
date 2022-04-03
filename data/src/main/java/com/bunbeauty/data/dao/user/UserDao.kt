@@ -18,6 +18,10 @@ class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {
         )
     }
 
+    override suspend fun getUserByUuid(uuid: String): UserEntity? {
+        return userEntityQueries.getUserByUuid(uuid).executeAsOneOrNull()
+    }
+
     override fun observeUserByUuid(uuid: String): Flow<UserEntity?> {
         return userEntityQueries.getUserByUuid(uuid).asFlow().mapToOneOrNull()
     }

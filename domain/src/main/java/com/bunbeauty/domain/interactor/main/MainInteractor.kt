@@ -17,7 +17,6 @@ class MainInteractor(
     private val categoryWorkerUtil: ICategoryWorkerUtil,
     private val menuProductWorkerUtil: IMenuProductWorkerUtil,
     private val deliveryWorkerUtil: IDeliveryWorkerUtil,
-    private val userWorkerUtil: IUserWorkerUtil,
     private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
     private val dataStoreRepo: DataStoreRepo
@@ -31,11 +30,6 @@ class MainInteractor(
         deliveryWorkerUtil.refreshDelivery()
         categoryWorkerUtil.refreshCategoryList()
         menuProductWorkerUtil.refreshMenuProductList()
-
-        if (userInteractor.isUserAuthorize()) {
-            val token = dataStoreRepo.getToken() ?: ""
-            userWorkerUtil.refreshUser(token)
-        }
     }
 
     override fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
@@ -43,7 +37,6 @@ class MainInteractor(
             userInteractor.observeIsUserAuthorize().flatMapLatest { isUserAuthorize ->
                 if (isStarted && isUserAuthorize) {
                     val token = dataStoreRepo.getToken() ?: ""
-                    userWorkerUtil.refreshUser(token)
                     orderRepo.observeOrderUpdates(token)
                 } else {
                     orderRepo.stopCheckOrderUpdates()

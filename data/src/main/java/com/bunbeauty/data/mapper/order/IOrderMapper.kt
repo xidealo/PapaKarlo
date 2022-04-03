@@ -13,6 +13,7 @@ interface IOrderMapper {
 
     fun toOrderWithProductEntityList(orderServer: OrderServer): List<OrderWithProductEntity>
     fun toLightOrder(orderEntity: OrderEntity): LightOrder
+    fun toLightOrder(orderServer: OrderServer): LightOrder
     fun toOrderCode(orderServer: OrderServer): OrderCode
     fun toOrder(orderWithProductEntityList: List<OrderWithProductEntity>): Order?
     fun toOrder(orderServer: OrderServer): Order

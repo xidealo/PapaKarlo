@@ -9,6 +9,7 @@ import com.bunbeauty.papakarlo.worker.BaseWorker
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+@Deprecated("replaced on request on screen")
 class RefreshUserWorker(appContext: Context, workerParams: WorkerParameters) :
     BaseWorker(appContext, workerParams), KoinComponent {
 
@@ -21,7 +22,7 @@ class RefreshUserWorker(appContext: Context, workerParams: WorkerParameters) :
             return Result.failure()
         }
 
-        userRepo.refreshProfile(token)
+        //userRepo.refreshProfile(token)
         return Result.success()
     }
 }

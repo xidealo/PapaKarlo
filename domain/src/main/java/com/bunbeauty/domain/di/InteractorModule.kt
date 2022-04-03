@@ -37,7 +37,6 @@ fun interactorModule() = module {
             categoryWorkerUtil = get(),
             menuProductWorkerUtil = get(),
             deliveryWorkerUtil = get(),
-            userWorkerUtil = get(),
             orderRepo = get(),
             userInteractor = get(),
             dataStoreRepo = get(),
@@ -46,7 +45,6 @@ fun interactorModule() = module {
     single<IUserInteractor> {
         UserInteractor(
             userRepo = get(),
-            userWorkerUtil = get(),
             dataStoreRepo = get(),
             authRepo = get(),
         )

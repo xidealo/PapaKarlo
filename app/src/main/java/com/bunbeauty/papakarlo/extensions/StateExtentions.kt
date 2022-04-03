@@ -1,9 +1,14 @@
 package com.bunbeauty.papakarlo.extensions
 
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.state.StateWithError
 
 fun <T : Any> T.toStateSuccess(): State.Success<T> {
     return State.Success(this)
+}
+
+fun <T : Any> T.toStateWithErrorSuccess(): StateWithError.Success<T> {
+    return StateWithError.Success(this)
 }
 
 fun <T : Any> T?.toSuccessOrEmpty(): State<T> {

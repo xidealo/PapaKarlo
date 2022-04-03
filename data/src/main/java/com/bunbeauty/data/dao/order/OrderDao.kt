@@ -52,6 +52,11 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
         }
     }
 
+    override suspend fun getLastOrderByUserUuid(userUuid: String): OrderEntity? {
+        return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
+            .executeAsOneOrNull()
+    }
+
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {
         return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid).asFlow().mapToList()
     }
@@ -62,11 +67,6 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
 
     override fun observeOrderWithProductListByUuid(uuid: String): Flow<List<OrderWithProductEntity>> {
         return orderEntityQueries.getOrderWithProductByUuid(uuid).asFlow().mapToList()
-    }
-
-    override fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?> {
-        return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid).asFlow()
-            .mapToOneOrNull()
     }
 
     override fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {

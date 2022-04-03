@@ -46,6 +46,16 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         )
     }
 
+    override suspend fun getUserAddressCountByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Long {
+        return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).executeAsOne()
+    }
+
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
@@ -74,16 +84,6 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
             userUuid = userUuid,
             cityUuid = cityUuid
         ).asFlow().mapToList()
-    }
-
-    override fun observeUserAddressCountByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): Flow<Long> {
-        return userAddressEntityQueries.getUserAddressCountByUserUuidAndCityUuid(
-            userUuid = userUuid,
-            cityUuid = cityUuid
-        ).asFlow().mapToOne()
     }
 
 }
