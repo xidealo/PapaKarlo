@@ -11,6 +11,12 @@ struct CafeListView: View {
     
     let cafes:[CafeItem]
     
+    init() {
+        cafes = [CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
+        ), CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
+        )]
+    }
+    
     var body: some View {
         VStack{
             ScrollView {
@@ -31,8 +37,6 @@ struct CafeListView: View {
 
 struct CafeListView_Previews: PreviewProvider {
     static var previews: some View {
-        CafeListView(cafes: [CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
-        ), CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
-        )])
+        CafeListView()
     }
 }

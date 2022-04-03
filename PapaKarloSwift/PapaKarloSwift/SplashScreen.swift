@@ -12,7 +12,8 @@ struct SplashView: View {
     var body: some View {
         NavigationView{
             NavigationLink(
-                destination:SelectCityView()
+                destination:SelectCityView(),
+                isActive: .constant(true)
             ){
                 
             }

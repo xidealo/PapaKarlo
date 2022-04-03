@@ -78,4 +78,9 @@ class Strings{
     static let MSG_CREATION_ORDER_DELIVERY = "Доставка"
     static let MSG_CREATION_ORDER_FINAL_AMOUNT = "Сумма к оплате"
 
+    //BOTTOM NAVIGATION
+    static let TITLE_BOTTOM_NAVIGATION_CAFES = "Рестораны"
+    static let TITILE_BOTTOM_NAVIGATION_MENU = "Меню"
+    static let TITLE_BOTTOM_NAVIGATION_PROFILE = "Профиль"
+
 }

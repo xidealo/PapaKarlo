@@ -23,7 +23,16 @@ extension String {
 }
 
 struct ProductDetailsView: View {
-    let menuProductUI:MenuProductUI
+    private let menuProductUI:MenuProductUI
+    
+    let menuProductUuid:String
+    
+    init(menuProductUuid:String) {
+        self.menuProductUuid = menuProductUuid
+        
+        menuProductUI = MenuProductUI(name:  "Бургер", size: "200 г", oldPrice: "250 P", newPrice: "200 Р", description: "Сочный пурге, с кртшка, с вкусный сыр, с вкусное мясцо", imageLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
+    }
+    
     var body: some View {
         VStack{
             
@@ -79,6 +88,6 @@ struct ProductDetailsView: View {
 
 struct ProductDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductDetailsView(menuProductUI:MenuProductUI(name:  "Бургер", size: "200 г", oldPrice: "250 P", newPrice: "200 Р", description: "Сочный пурге, с кртшка, с вкусный сыр, с вкусное мясцо", imageLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
+        ProductDetailsView(menuProductUuid: "")
     }
 }

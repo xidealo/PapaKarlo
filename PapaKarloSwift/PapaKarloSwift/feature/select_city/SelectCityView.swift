@@ -19,7 +19,11 @@ struct SelectCityView: View {
                 ScrollView {
                     LazyVStack{
                         ForEach(cities){ city in
-                            CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                            NavigationLink(
+                                destination:MenuView()
+                            ){
+                                CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                            }
                         }
                     }
                 }.padding(.top, Diems.MEDIUM_PADDING)

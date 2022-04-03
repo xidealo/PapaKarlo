@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CategorySectionItem:Identifiable {
-    let id:UUID
+    let id:String
     let name:String
     let menuProdctItems:[MenuProductItem]
 }

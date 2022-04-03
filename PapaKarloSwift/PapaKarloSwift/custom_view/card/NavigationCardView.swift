@@ -28,7 +28,6 @@ struct NavigationCardView<Content: View>: View {
                 .padding(Diems.MEDIUM_PADDING)
                 .background(Color("surface"))
                 .cornerRadius(Diems.MEDIUM_RADIUS)
-                .shadow(radius: 1)
             }
     }
 }

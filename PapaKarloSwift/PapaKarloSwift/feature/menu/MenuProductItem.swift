@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct MenuProductItem:Identifiable  {
-     let id: UUID
+     let id: String
      let name: String
      let newPrice: String
      let oldPrice: String?
