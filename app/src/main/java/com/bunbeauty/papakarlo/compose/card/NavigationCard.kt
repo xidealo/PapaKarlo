@@ -6,7 +6,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -15,17 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.smallIcon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -38,13 +35,7 @@ fun NavigationCard(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.getEvaluation(hasShadow),
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape)
+            .card(hasShadow)
             .clickable(
                 enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },

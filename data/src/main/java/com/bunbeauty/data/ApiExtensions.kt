@@ -6,6 +6,25 @@ import com.bunbeauty.data.network.ApiError
 import com.bunbeauty.data.network.ApiResult
 import com.bunbeauty.data.network.model.ListServer
 
+@JvmName("handleResultAndReturnT")
+suspend fun <T, R> ApiResult<T>.handleResultAndAlwaysReturn(
+    tag: String,
+    onError: (suspend (ApiError) -> R?),
+    onSuccess: (suspend (T) -> R?)
+): R? {
+    logD(tag, "ApiResult = $this")
+    return when (this) {
+        is ApiResult.Success -> {
+            data?.let { result ->
+                onSuccess(result)
+            } ?: onError(ApiError.DATA_IS_NULL)
+        }
+        is ApiResult.Error -> {
+            onError(apiError)
+        }
+    }
+}
+
 suspend fun <T, R> ApiResult<T>.handleResultAndReturn(
     tag: String,
     onError: (suspend (ApiError) -> Unit)? = null,

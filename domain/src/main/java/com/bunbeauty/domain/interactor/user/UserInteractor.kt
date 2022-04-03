@@ -5,14 +5,12 @@ import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.AuthRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
-import com.bunbeauty.domain.worker.IUserWorkerUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class UserInteractor(
     private val userRepo: UserRepo,
-    private val userWorkerUtil: IUserWorkerUtil,
     private val dataStoreRepo: DataStoreRepo,
     private val authRepo: AuthRepo
 ) : IUserInteractor {
@@ -24,16 +22,14 @@ class UserInteractor(
             val token = userRepo.login(userUuid, userPhone)
             if (token != null) {
                 dataStoreRepo.saveToken(token)
-                userWorkerUtil.refreshUserBlocking(token)
+                dataStoreRepo.saveUserUuid(userUuid)
             }
         }
     }
 
     override suspend fun logout() {
-        userWorkerUtil.cancelRefreshUser()
         authRepo.signOut()
-        dataStoreRepo.clearToken()
-        dataStoreRepo.clearUserUuid()
+        userRepo.clearUserCache()
     }
 
     override suspend fun isUserAuthorize(): Boolean {
@@ -58,12 +54,18 @@ class UserInteractor(
         }
     }
 
-    override fun observeLightProfile(): Flow<Profile?> {
-        return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
-            userRepo.observeProfileByUserUuidAndCityUuid(
-                userCityUuid.userUuid,
-                userCityUuid.cityUuid
-            )
+    override suspend fun getProfile(): Profile? {
+        val token = dataStoreRepo.getToken()
+        return if (isUserAuthorize()) {
+            dataStoreRepo.getUserAndCityUuid().let { userCityUuid ->
+                userRepo.getProfileByUserUuidAndCityUuid(
+                    userUuid = userCityUuid.userUuid,
+                    cityUuid = userCityUuid.cityUuid,
+                    token = token!!
+                )
+            }
+        } else {
+            Profile.Unauthorized
         }
     }
 

@@ -208,6 +208,7 @@
     <string name="description_ic_feedback">Отзывы</string>
     <string name="description_ic_about">О приложении</string>
     <string name="description_empty_profile">Пустой профиль</string>
+    <string name="error_profile_not_loaded">Нудалось загрузить профиль</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>

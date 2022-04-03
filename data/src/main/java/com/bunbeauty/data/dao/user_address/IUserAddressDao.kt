@@ -10,6 +10,11 @@ interface IUserAddressDao {
     suspend fun insertUserAddressList(userAddressList: List<UserAddressEntity>)
     suspend fun insertSelectedUserAddressUuid(selectedUserAddressUuidEntity: SelectedUserAddressUuidEntity)
 
+    suspend fun getUserAddressCountByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Long
+
     fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
@@ -24,10 +29,5 @@ interface IUserAddressDao {
         userUuid: String,
         cityUuid: String
     ): Flow<List<UserAddressEntity>>
-
-    fun observeUserAddressCountByUserAndCityUuid(
-        userUuid: String,
-        cityUuid: String
-    ): Flow<Long>
 
 }

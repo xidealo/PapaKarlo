@@ -18,12 +18,24 @@ class ProfileMapper(
         userUuid: String,
         userAddressCount: Long,
         lastOrderEntity: OrderEntity?
-    ): Profile {
-        return Profile(
+    ): Profile.Authorized {
+        return Profile.Authorized(
             userUuid = userUuid,
             hasAddresses = userAddressCount > 0,
             lastOrder = lastOrderEntity?.let { orderEntity ->
                 orderMapper.toLightOrder(orderEntity)
+            }
+        )
+    }
+
+    override fun toProfile(profileServer: ProfileServer): Profile.Authorized {
+        return Profile.Authorized(
+            userUuid = profileServer.uuid,
+            hasAddresses = profileServer.addresses.isNotEmpty(),
+            lastOrder = profileServer.orders.maxByOrNull { orderServer ->
+                orderServer.time
+            }?.let { orderServer ->
+                orderMapper.toLightOrder(orderServer)
             }
         )
     }

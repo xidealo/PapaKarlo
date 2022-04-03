@@ -56,6 +56,15 @@ class OrderMapper(
         )
     }
 
+    override fun toLightOrder(orderServer: OrderServer): LightOrder {
+        return LightOrder(
+            uuid = orderServer.uuid,
+            status = OrderStatus.valueOf(orderServer.status),
+            code = orderServer.code,
+            dateTime = dateTimeUtil.toDateTime(orderServer.time, orderServer.timeZone)
+        )
+    }
+
     override fun toOrderCode(orderServer: OrderServer): OrderCode {
         return OrderCode(
             code = orderServer.code

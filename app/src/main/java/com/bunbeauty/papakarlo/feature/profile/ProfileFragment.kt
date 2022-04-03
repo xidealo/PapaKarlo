@@ -5,6 +5,7 @@ import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,7 +20,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.element.MainButton
@@ -40,22 +42,28 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentProfileCvMain.compose {
-            val state: State<ProfileUI> by viewModel.profileUIState.collectAsState()
+            val state: StateWithError<ProfileUI> by viewModel.profileUIState.collectAsState()
             ProfileScreen(state)
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.getProfile()
+    }
+
     @Composable
-    private fun ProfileScreen(profileState: State<ProfileUI>) {
+    private fun ProfileScreen(profileState: StateWithError<ProfileUI>) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.background)
         ) {
             when (profileState) {
-                is State.Success -> SuccessProfileScreen(profileState.data)
-                is State.Empty -> EmptyProfileScreen()
-                is State.Loading -> LoadingProfileScreen()
+                is StateWithError.Success -> SuccessProfileScreen(profileState.data)
+                is StateWithError.Empty -> EmptyProfileScreen()
+                is StateWithError.Loading -> LoadingProfileScreen()
+                is StateWithError.Error -> ErrorProfileScreen(profileState.message)
             }
         }
     }
@@ -161,6 +169,26 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     @Composable
+    private fun ErrorProfileScreen(message: String) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Card(
+                modifier = Modifier.card(true),
+                backgroundColor = FoodDeliveryTheme.colors.surface
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = message,
+                    style = FoodDeliveryTheme.typography.body1,
+                    color = FoodDeliveryTheme.colors.error,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+
+    @Composable
     private fun ProfileInfoCards(modifier: Modifier = Modifier) {
         Column(modifier = modifier) {
             NavigationIconCard(
@@ -186,9 +214,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Preview
     @Composable
-    private fun ProfileCardsWithAddressesAndLastOrderPreview() {
+    private fun ProfileScreenWithAddressesAndLastOrderPreview() {
         ProfileScreen(
-            State.Success(
+            StateWithError.Success(
                 ProfileUI(
                     userUuid = "",
                     hasAddresses = true,
@@ -207,9 +235,9 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Preview
     @Composable
-    private fun ProfileCardsWithoutAddressesAndLastOrderPreview() {
+    private fun ProfileScreenWithoutAddressesAndLastOrderPreview() {
         ProfileScreen(
-            State.Success(
+            StateWithError.Success(
                 ProfileUI(
                     userUuid = "",
                     hasAddresses = false,
@@ -221,13 +249,19 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Preview
     @Composable
-    private fun EmptyProfileCardsPreview() {
-        ProfileScreen(State.Empty())
+    private fun EmptyProfileScreenPreview() {
+        ProfileScreen(StateWithError.Empty())
     }
 
     @Preview
     @Composable
-    private fun LoadingProfileCardsPreview() {
-        ProfileScreen(State.Loading())
+    private fun LoadingProfileScreenPreview() {
+        ProfileScreen(StateWithError.Loading())
+    }
+
+    @Preview
+    @Composable
+    private fun ErrorProfileScreenPreview() {
+        ProfileScreen(StateWithError.Error("Не удалось загрузить профиль"))
     }
 }
