@@ -19,16 +19,18 @@ struct MenuItemView: View {
                 .scaledToFit()
                 .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
-            
             VStack{
                 Text(menuProductItem.name)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+                    .foregroundColor(Color("onSurface"))
                 HStack{
                     if menuProductItem.oldPrice != nil{
                         StrikeText(text: menuProductItem.oldPrice ?? "")
                     }
-                    Text(menuProductItem.newPrice).frame(maxWidth:.infinity, alignment: .topLeading)
+                    Text(menuProductItem.newPrice)
+                        .frame(maxWidth:.infinity, alignment: .topLeading)
+                        .foregroundColor(Color("onSurface"))
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
@@ -46,7 +48,7 @@ struct MenuItemView: View {
             }.padding(.trailing, Diems.MEDIUM_PADDING)
             
         }.frame(maxWidth:.infinity, alignment: .topLeading)
-        .cornerRadius(Diems.MEDIUM_RADIUS)
+        .background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
 

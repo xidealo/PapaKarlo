@@ -44,7 +44,7 @@ struct EmptyProfileView: View {
             Spacer()
             
             NavigationLink(
-                destination:SelectCityView()
+                destination:LoginView()
             ){
                 Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
                     .padding()

@@ -57,7 +57,8 @@ struct MenuView: View {
                 }
             }.padding(.top, Diems.MEDIUM_PADDING).navigationTitle(
                 Text(Strings.TITLE_MENU)
-            )
+            ).background(Color("background"))
+
         }
         
         

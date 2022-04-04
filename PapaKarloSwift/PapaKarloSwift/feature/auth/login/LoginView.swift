@@ -26,7 +26,6 @@ struct LoginView: View {
                         .stroke(Color("surfaceVariant"), lineWidth: 2)
                 )
 
-            
             Spacer()
             NavigationLink(
                 destination:ConfirmView()

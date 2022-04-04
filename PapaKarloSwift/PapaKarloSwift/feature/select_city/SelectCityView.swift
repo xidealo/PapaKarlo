@@ -20,7 +20,7 @@ struct SelectCityView: View {
                     LazyVStack{
                         ForEach(cities){ city in
                             NavigationLink(
-                                destination:MenuView()
+                                destination:ContainerView()
                             ){
                                 CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                             }

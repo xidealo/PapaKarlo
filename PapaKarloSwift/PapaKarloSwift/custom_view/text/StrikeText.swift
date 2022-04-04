@@ -13,6 +13,7 @@ struct StrikeText: View {
         Text(text)
             .strikethrough()
             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .thin, design: .default))
+            .foregroundColor(Color("onSurface"))
     }
 }
 

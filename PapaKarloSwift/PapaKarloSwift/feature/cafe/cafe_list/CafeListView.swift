@@ -28,9 +28,7 @@ struct CafeListView: View {
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)
-        }.background(Color("background")).navigationTitle(
-            Text(Strings.TITLE_CAFE_LIST)
-        )
+        }.background(Color("background"))
         
     }
 }
