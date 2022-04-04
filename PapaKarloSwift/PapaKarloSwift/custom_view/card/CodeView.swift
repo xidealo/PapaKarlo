@@ -10,7 +10,7 @@ import Combine
 
 struct CodeView: View {
     
-    @State var code:String
+    @State var code:String = ""
     
     private let textLimit = 1 //Your limit
 
@@ -21,8 +21,7 @@ struct CodeView: View {
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
                 .onReceive(Just(code)) { _ in limitText(textLimit) }
-
-                
+            
             if(code != ""){
                 Capsule()
                     .fill(Color("primary"))

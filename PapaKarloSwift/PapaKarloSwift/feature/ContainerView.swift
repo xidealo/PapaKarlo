@@ -14,20 +14,18 @@ struct ContainerView: View {
     var body: some View {
         TabView(selection:$selection){
             CafeListView().tabItem {
-                VStack{
+                Image(systemName:"mappin")
                     Text(Strings.TITLE_BOTTOM_NAVIGATION_CAFES)
-                    Image("ic_cafes")
-                }
             }.tag(0).navigationTitle(
                 Text(Strings.TITLE_CAFE_LIST)
             )
             MenuView().tabItem {
                 Text(Strings.TITILE_BOTTOM_NAVIGATION_MENU)
-                Image("ic_menu")
+                Image(systemName:"list.dash")
             }.tag(1)
             ProfileView().tabItem {
+                Image(systemName: "person.crop.circle")
                 Text(Strings.TITLE_BOTTOM_NAVIGATION_PROFILE)
-                Image("ic_profile")
             }.tag(2)
         }.accentColor(Color("primary"))
     }
