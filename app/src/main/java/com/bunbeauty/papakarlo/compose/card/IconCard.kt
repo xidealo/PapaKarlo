@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -16,17 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.icon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -42,9 +40,7 @@ fun IconCard(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .height(FoodDeliveryTheme.dimensions.cardHeight)
-            .clip(mediumRoundedCornerShape)
+            .card(false)
             .clickable(
                 enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },
