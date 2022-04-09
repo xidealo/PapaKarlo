@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
@@ -28,23 +29,12 @@ fun OrderProductItem(
     modifier: Modifier = Modifier,
     orderProductItemModel: OrderProductItemModel
 ) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.elevation,
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
-        ) {
+    Card(modifier = modifier.card(true)) {
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.productImageSmallHeight)
+                    .fillMaxHeight()
+                    .heightIn(min = FoodDeliveryTheme.dimensions.productImageSmallHeight)
                     .width(FoodDeliveryTheme.dimensions.productImageSmallWidth),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(orderProductItemModel.photoLink)
@@ -52,7 +42,7 @@ fun OrderProductItem(
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
                 contentDescription = stringResource(R.string.description_product),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.FillHeight
             )
             Column(
                 modifier = Modifier

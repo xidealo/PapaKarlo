@@ -84,6 +84,7 @@
         <entry key="../../../../layout/compose-model-1649682122693.xml" value="0.46574074074074073" />
         <entry key="../../../../layout/compose-model-1649682194298.xml" value="0.6473629782833505" />
         <entry key="../../../../layout/compose-model-1649682461523.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1649683213263.xml" value="0.4583333333333333" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.2655" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/bottom_sheet_user_address_list.xml" value="0.5265577119509703" />
@@ -91,7 +92,7 @@
         <entry key="app/src/main/res/layout/element_category_title.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_create_order.xml" value="0.5265577119509703" />
-        <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.7405004633920297" />
+        <entry key="app/src/main/res/layout/fragment_menu.xml" value="0.6257822277847309" />
         <entry key="app/src/main/res/layout/fragment_order_list.xml" value="0.5265577119509703" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.44427083333333334" />
       </map>

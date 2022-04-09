@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.menu
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -51,7 +50,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         }
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun MenuSuccessScreen(menu: MenuUI) {
         Column(
