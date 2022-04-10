@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.custom.CountPicker
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -40,13 +41,7 @@ fun CartProductItem(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.elevation,
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape)
+            .card(true)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
@@ -54,10 +49,11 @@ fun CartProductItem(
             ),
         backgroundColor = FoodDeliveryTheme.colors.surface
     ) {
-        Row {
+        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.productImageSmallHeight)
+                    .fillMaxHeight()
+                    .heightIn(min = FoodDeliveryTheme.dimensions.productImageSmallHeight)
                     .width(FoodDeliveryTheme.dimensions.productImageSmallWidth),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(cartProductItemModel.photoLink)
@@ -65,7 +61,7 @@ fun CartProductItem(
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
                 contentDescription = stringResource(R.string.description_product),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.FillHeight
             )
             Column(
                 modifier = Modifier
