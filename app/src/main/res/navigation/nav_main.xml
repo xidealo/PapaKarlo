@@ -91,9 +91,6 @@
         <argument
             android:name="menuProductName"
             app:argType="string" />
-        <argument
-            android:name="photoLink"
-            app:argType="string" />
     </fragment>
 
     <!-- PROFILE -->

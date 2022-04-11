@@ -9,7 +9,7 @@ sealed class MenuItem : BaseItem() {
         val name: String
     ) : MenuItem()
 
-    data class MenuProductItem(
+    data class MenuProductItemModel(
         override val uuid: String,
         val name: String,
         val newPrice: String,

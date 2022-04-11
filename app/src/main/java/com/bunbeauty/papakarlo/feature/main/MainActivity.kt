@@ -4,15 +4,32 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.FloatingWindow
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.papakarlo.NavMainDirections.*
+import com.bunbeauty.papakarlo.NavMainDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.Router
+import com.bunbeauty.papakarlo.compose.element.OverflowingText
+import com.bunbeauty.papakarlo.compose.icon
+import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.compose.theme.largeRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.toggleVisibility
@@ -192,5 +209,42 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         startedLaunch(this@MainActivity, block)
     }
 
+    @Composable
+    private fun TopBar(modifier: Modifier = Modifier) {
+        TopAppBar(
+            modifier = modifier,
+            title = {
+                OverflowingText(
+                    text = "Title",
+                    style = FoodDeliveryTheme.typography.h1,
+                    color = FoodDeliveryTheme.colors.onSurface
+                )
+            },
+            navigationIcon = {
+                IconButton(
+                    modifier = Modifier
+                        .size(16.dp)
+                        .clip(largeRoundedCornerShape)
+                        .background(FoodDeliveryTheme.colors.done),
+                    onClick = { }
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                        painter = painterResource(R.drawable.ic_back),
+                        contentDescription = stringResource(R.string.description_back_icon)
+                    )
+                }
+            },
+            backgroundColor = FoodDeliveryTheme.colors.surface,
+            contentColor = FoodDeliveryTheme.colors.onSurface,
+            elevation = FoodDeliveryTheme.dimensions.elevation
+        )
+    }
+
+    @Preview
+    @Composable
+    private fun TopBarPreview() {
+        TopBar()
+    }
 
 }

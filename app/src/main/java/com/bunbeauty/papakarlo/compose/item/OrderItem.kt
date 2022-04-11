@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.StatusChip
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
@@ -31,13 +32,7 @@ fun OrderItem(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.elevation,
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape)
+            .card(true)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),

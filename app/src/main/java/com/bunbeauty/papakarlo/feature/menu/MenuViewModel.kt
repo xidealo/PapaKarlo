@@ -1,125 +1,176 @@
 package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.domain.model.MenuModel
+import com.bunbeauty.domain.model.menu.MenuSection
+import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.extensions.toStateSuccess
 import com.bunbeauty.papakarlo.feature.menu.MenuFragmentDirections.toProductFragment
-import com.bunbeauty.papakarlo.feature.menu.category.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
+import com.bunbeauty.papakarlo.feature.menu.view_state.MenuItemModel
+import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
+import com.bunbeauty.papakarlo.feature.menu.view_state.MenuUI
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MenuViewModel(
-    private val categoryInteractor: ICategoryInteractor,
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,
 ) : CartViewModel() {
 
+    private val mutableMenuState: MutableStateFlow<State<MenuUI>> =
+        MutableStateFlow(State.Loading())
+    val menuState: StateFlow<State<MenuUI>> = mutableMenuState.asStateFlow()
+
     private var selectedCategoryUuid: String? = null
+    private var currentMenuPosition = 0
 
-    private var categoryItemList: List<CategoryItem> = emptyList()
-    private val mutableCategoryList: MutableStateFlow<List<CategoryItem>> =
-        MutableStateFlow(categoryItemList)
-    val categoryList: StateFlow<List<CategoryItem>> = mutableCategoryList.asStateFlow()
-
-    private val mutableCategoryPosition: MutableStateFlow<Int> = MutableStateFlow(0)
-    val categoryPosition: StateFlow<Int> = mutableCategoryPosition.asStateFlow()
-
-    private var menuModelList: List<MenuModel> = emptyList()
-    private val mutableMenuList: MutableStateFlow<List<MenuItem>> =
-        MutableStateFlow(emptyList())
-    val menuList: StateFlow<List<MenuItem>> = mutableMenuList.asStateFlow()
-
-    private val mutableMenuPosition: MutableSharedFlow<Int> = MutableSharedFlow(replay = 0)
-    val menuPosition: SharedFlow<Int> = mutableMenuPosition.asSharedFlow()
+    var autoScrolling = false
 
     init {
-        observeCategoryList()
-        observeMenuList()
+        observeMenu()
     }
 
-    fun onCategorySelected(categoryUuid: String) {
-        setCategory(categoryUuid)
-        viewModelScope.launch {
-            val menuPosition =
-                menuProductInteractor.getCurrentMenuPosition(categoryUuid, menuModelList)
-            mutableMenuPosition.emit(menuPosition)
-        }
-    }
-
-    fun setCategory(categoryUuid: String) {
-        if (selectedCategoryUuid == categoryUuid) {
-            return
-        }
-        selectedCategoryUuid = categoryUuid
-        categoryItemList = categoryItemList.mapIndexed { index, categoryItem ->
-            if (categoryUuid == categoryItem.uuid) {
-                mutableCategoryPosition.value = index
-            }
-            CategoryItem(
-                uuid = categoryItem.uuid,
-                name = categoryItem.name,
-                isSelected = (categoryUuid == categoryItem.uuid)
-            )
-        }
-        mutableCategoryList.value = categoryItemList
+    fun onCategoryClicked(categoryItemModel: CategoryItemModel) {
+        setCategory(categoryItemModel.uuid)
     }
 
     fun onMenuPositionChanged(menuPosition: Int) {
-        categoryInteractor.getCurrentCategory(menuPosition, menuModelList)?.let { section ->
-            setCategory(section.category.uuid)
+        if (autoScrolling || menuPosition == currentMenuPosition) {
+            return
+        }
+        currentMenuPosition = menuPosition
+
+        viewModelScope.launch {
+            val menuItemModelList =
+                (mutableMenuState.value as? State.Success)?.data?.menuItemModelList
+            menuItemModelList?.filterIsInstance(MenuItemModel.MenuCategoryHeaderItemModel::class.java)
+                ?.findLast { menuItemModel ->
+                    menuItemModelList.indexOf(menuItemModel) <= menuPosition
+                }?.let { menuItemModel ->
+                    setCategory(menuItemModel.uuid)
+                }
         }
     }
 
-    fun onMenuItemClicked(menuItem: MenuItem) {
-        if (menuItem is MenuItem.MenuProductItem) {
-            router.navigate(toProductFragment(menuItem.uuid, menuItem.name, menuItem.photoLink))
+    fun onMenuItemClicked(menuProductItemModel: MenuProductItemModel) {
+        router.navigate(toProductFragment(menuProductItemModel.uuid, menuProductItemModel.name))
+    }
+
+    fun onAddProductClicked(menuProductUuid: String) {
+        addProductToCart(menuProductUuid)
+    }
+
+    fun getMenuListPosition(categoryItemModel: CategoryItemModel): Int {
+        return (mutableMenuState.value as State.Success).data.menuItemModelList.indexOfFirst { menuItemModel ->
+            (menuItemModel as? MenuItemModel.MenuCategoryHeaderItemModel)?.uuid == categoryItemModel.uuid
         }
     }
 
-    fun onAddProductClicked(menuProductItem: MenuItem.MenuProductItem) {
-        addProductToCart(menuProductItem.uuid)
-    }
-
-    private fun observeCategoryList() {
-        categoryInteractor.observeCategoryList().launchOnEach { categoryList ->
-            val selectedCategoryUuid = categoryList.firstOrNull()?.uuid
-            categoryItemList = categoryList.map { category ->
-                CategoryItem(
-                    uuid = category.uuid,
-                    name = category.name,
-                    isSelected = (selectedCategoryUuid == category.uuid)
-                )
+    private fun setCategory(categoryUuid: String) {
+        viewModelScope.launch {
+            if (selectedCategoryUuid == categoryUuid) {
+                return@launch
             }
-            mutableCategoryList.value = categoryItemList
-        }
-    }
+            selectedCategoryUuid = categoryUuid
 
-    private fun observeMenuList() {
-        menuProductInteractor.observeMenuList().launchOnEach { menuList ->
-            menuModelList = menuList
-            mutableMenuList.value = menuList.map { menuModel ->
-                when (menuModel) {
-                    is MenuModel.Section -> {
-                        MenuItem.CategorySectionItem(
-                            uuid = menuModel.category.uuid,
-                            name = menuModel.category.name,
-                        )
+            val menu = (mutableMenuState.value as State.Success).data
+            val categoryItemModelList = menu.categoryItemModelList.map { categoryItemModel ->
+                when {
+                    categoryItemModel.isSelected -> {
+                        categoryItemModel.copy(isSelected = false)
                     }
-                    is MenuModel.Product -> {
-                        MenuItem.MenuProductItem(
-                            uuid = menuModel.menuProduct.uuid,
-                            name = menuModel.menuProduct.name,
-                            newPrice = stringUtil.getCostString(menuModel.menuProduct.newPrice),
-                            oldPrice = stringUtil.getCostString(menuModel.menuProduct.oldPrice),
-                            photoLink = menuModel.menuProduct.photoLink,
-                        )
+                    categoryItemModel.uuid == selectedCategoryUuid -> {
+                        categoryItemModel.copy(isSelected = true)
+                    }
+                    else -> {
+                        categoryItemModel
                     }
                 }
             }
+            mutableMenuState.value = menu.copy(
+                categoryItemModelList = categoryItemModelList,
+                menuItemModelList = menu.menuItemModelList
+            ).toStateSuccess()
         }
     }
 
+    private fun observeMenu() {
+        menuProductInteractor.observeMenuSectionList().launchOnEach { menuSectionList ->
+            if (selectedCategoryUuid == null) {
+                selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
+            }
+            mutableMenuState.value = toMenu(menuSectionList).toStateSuccess()
+        }
+    }
+
+    private fun toMenu(menuSectionList: List<MenuSection>): MenuUI {
+        return MenuUI(
+            categoryItemModelList = menuSectionList.map { menuSection ->
+                toCategoryItemModel(menuSection)
+            },
+            menuItemModelList = menuSectionList.flatMap { menuSection ->
+                listOf(toMenuCategoryItemModel(menuSection)) +
+                        toMenuProductItemModelList(menuSection)
+            }
+        )
+    }
+
+    private fun toCategoryItemModel(menuSection: MenuSection): CategoryItemModel {
+        return CategoryItemModel(
+            key = "CategoryItemModel ${menuSection.category.uuid}",
+            uuid = menuSection.category.uuid,
+            name = menuSection.category.name,
+            isSelected = isCategorySelected(menuSection.category.uuid)
+        )
+    }
+
+    private fun isCategorySelected(categoryUuid: String): Boolean {
+        return selectedCategoryUuid?.let {
+            selectedCategoryUuid == categoryUuid
+        } ?: false
+    }
+
+    private fun toMenuCategoryItemModel(menuSection: MenuSection): MenuItemModel.MenuCategoryHeaderItemModel {
+        return MenuItemModel.MenuCategoryHeaderItemModel(
+            key = "MenuCategoryHeaderItemModel ${menuSection.category.uuid}",
+            uuid = menuSection.category.uuid,
+            name = menuSection.category.name
+        )
+    }
+
+    private fun toMenuProductItemModelList(menuSection: MenuSection): List<MenuItemModel.MenuProductPairItemModel> {
+        fun toMenuProductItemModel(menuProduct: MenuProduct): MenuProductItemModel {
+            return MenuProductItemModel(
+                uuid = menuProduct.uuid,
+                photoLink = menuProduct.photoLink,
+                name = menuProduct.name,
+                oldPrice = menuProduct.oldPrice?.let { price ->
+                    stringUtil.getCostString(price)
+                },
+                newPrice = stringUtil.getCostString(menuProduct.newPrice)
+            )
+        }
+
+        fun toMenuProductItemModel(menuProduct: MenuProduct?): MenuProductItemModel? {
+            return menuProduct?.let {
+                toMenuProductItemModel(it)
+            }
+        }
+
+        return menuSection.menuProductList.chunked(2) { menuProductChunk ->
+            val firstMenuProduct = menuProductChunk[0]
+            val secondMenuProduct = menuProductChunk.getOrNull(1)
+            MenuItemModel.MenuProductPairItemModel(
+                key = "MenuProductPairItemModel ${firstMenuProduct.uuid} ${secondMenuProduct?.uuid} ${menuSection.category}",
+                firstProduct = toMenuProductItemModel(menuProductChunk[0]),
+                secondProduct = toMenuProductItemModel(menuProductChunk.getOrNull(1))
+            )
+        }
+    }
 }

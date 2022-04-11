@@ -2,11 +2,11 @@ package com.bunbeauty.papakarlo.feature.menu.category
 
 import com.bunbeauty.papakarlo.common.DefaultDiffCallback
 
-class CategoryDiffCallback : DefaultDiffCallback<CategoryItem>() {
+class CategoryDiffCallback : DefaultDiffCallback<CategoryItemModel>() {
 
     override fun getChangePayload(
-        oldItem: CategoryItem,
-        newItem: CategoryItem
+        oldItem: CategoryItemModel,
+        newItem: CategoryItemModel
     ): Any? {
         return if (oldItem.isSelected != newItem.isSelected)
             true

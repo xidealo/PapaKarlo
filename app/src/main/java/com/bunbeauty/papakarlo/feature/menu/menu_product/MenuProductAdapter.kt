@@ -16,16 +16,16 @@ import com.bunbeauty.papakarlo.feature.menu.MenuItem
 class MenuProductAdapter:
     BaseListAdapter<MenuItem, MenuProductAdapter.MenuProductViewHolder>(DefaultDiffCallback()) {
 
-    private var btnItemClickListener: ((MenuItem.MenuProductItem) -> Unit)? = null
+    private var btnItemClickListener: ((MenuItem.MenuProductItemModel) -> Unit)? = null
 
-    fun setOnButtonClickListener(listener: (MenuItem.MenuProductItem) -> Unit) {
+    fun setOnButtonClickListener(listener: (MenuItem.MenuProductItemModel) -> Unit) {
         btnItemClickListener = listener
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
             is MenuItem.CategorySectionItem -> TYPE_ONE
-            is MenuItem.MenuProductItem -> TYPE_TWO
+            is MenuItem.MenuProductItemModel -> TYPE_TWO
         }
     }
 
@@ -56,7 +56,7 @@ class MenuProductAdapter:
                     (viewBinding as? ElementCategoryTitleBinding)?.elementCategoryTitleTvName?.text =
                         item.name
                 }
-                is MenuItem.MenuProductItem -> {
+                is MenuItem.MenuProductItemModel -> {
                     (viewBinding as? ElementMenuProductBinding)?.run {
                         elementMenuProductTvTitle.text = item.name
                         elementMenuProductTvNewPrice.text = item.newPrice
