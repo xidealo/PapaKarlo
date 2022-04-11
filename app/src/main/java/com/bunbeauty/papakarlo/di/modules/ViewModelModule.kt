@@ -28,7 +28,6 @@ import org.koin.dsl.module
 fun viewModelModule() = module {
     viewModel {
         MenuViewModel(
-            categoryInteractor = get(),
             menuProductInteractor = get(),
             stringUtil = get()
         )

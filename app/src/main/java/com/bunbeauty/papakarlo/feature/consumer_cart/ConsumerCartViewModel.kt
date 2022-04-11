@@ -44,13 +44,7 @@ class ConsumerCartViewModel(
     }
 
     fun onProductClicked(cartProductItem: CartProductItemModel) {
-        router.navigate(
-            toProductFragment(
-                cartProductItem.menuProductUuid,
-                cartProductItem.name,
-                cartProductItem.photoLink
-            )
-        )
+        router.navigate(toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
     }
 
     private fun observeConsumerCart() {

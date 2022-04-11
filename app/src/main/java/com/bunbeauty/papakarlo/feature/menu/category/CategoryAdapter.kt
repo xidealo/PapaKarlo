@@ -10,7 +10,7 @@ import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
 class CategoryAdapter(
     private val resourcesProvider: IResourcesProvider
-) : BaseListAdapter<CategoryItem, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
+) : BaseListAdapter<CategoryItemModel, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): CategoryViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -20,9 +20,9 @@ class CategoryAdapter(
     }
 
     inner class CategoryViewHolder(private val elementCategoryBinding: ElementCategoryBinding) :
-        BaseViewHolder<CategoryItem>(elementCategoryBinding) {
+        BaseViewHolder<CategoryItemModel>(elementCategoryBinding) {
 
-        override fun onBind(item: CategoryItem) {
+        override fun onBind(item: CategoryItemModel) {
             super.onBind(item)
 
             elementCategoryBinding.run {
@@ -31,7 +31,7 @@ class CategoryAdapter(
             }
         }
 
-        override fun onBind(item: CategoryItem, payloads: List<Any>) {
+        override fun onBind(item: CategoryItemModel, payloads: List<Any>) {
             super.onBind(item, payloads)
 
             if (payloads.last() as Boolean) {
@@ -39,7 +39,7 @@ class CategoryAdapter(
             }
         }
 
-        private fun ElementCategoryBinding.updateSelected(item: CategoryItem) {
+        private fun ElementCategoryBinding.updateSelected(item: CategoryItemModel) {
             if (item.isSelected) {
                 elementCategoryChipMain.isClickable = false
                 elementCategoryChipMain.chipBackgroundColor =

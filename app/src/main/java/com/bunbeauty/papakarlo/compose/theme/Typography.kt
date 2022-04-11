@@ -12,7 +12,7 @@ data class AppTypography(
     val h1: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp
+        fontSize = 20.sp
     ),
     val h2: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
@@ -38,5 +38,10 @@ data class AppTypography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
+    ),
+    val smallButton: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
     ),
 )

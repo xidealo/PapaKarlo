@@ -17,6 +17,7 @@
     <string name="description_ic_clear">Очистить</string>
     <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_back_icon">Назад</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -149,7 +150,7 @@
     <!-- USER ADDRESS LIST -->
     <string name="title_my_addresses">Мои адреса</string>
     <string name="action_add_addresses">Добавить адрес</string>
-    <string name="msg_my_addresses_empty">Здесь будут отбражаться ваши адреса</string>
+    <string name="msg_my_addresses_empty">Здесь будут отображаться ваши адреса</string>
     <string name="title_cafe_addresses">Адреса ресторанов</string>
 
     <!-- ORDER STATUS-->
@@ -198,7 +199,7 @@
     <string name="action_profile_payment">Оплата</string>
     <string name="action_profile_feedback">Отзывы</string>
     <string name="action_profile_about_app">О приложении</string>
-    <string name="msg_profile_no_profile">В профиле будут отбражаться адреса для доставки и история ваших заказов</string>
+    <string name="msg_profile_no_profile">В профиле будут отображаться адреса для доставки и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
     <string name="description_ic_settings">Настройки</string>
     <string name="description_ic_create_address">Добавить адрес</string>
