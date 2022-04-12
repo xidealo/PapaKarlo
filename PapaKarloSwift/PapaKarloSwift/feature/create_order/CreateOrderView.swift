@@ -9,13 +9,19 @@ import SwiftUI
 
 struct CreateOrderView: View {
     private let orderCreationUI:OrderCreationUI
-    
+    @State private var isDelivery:Bool
+
     init() {
-        orderCreationUI = OrderCreationUI(isDelivery: true, address: "2222sdas f", comment: nil, deferredTime: "22:00", totalCost: "223", deliveryCost: "100", amountToPay: "323", isLoading: false)
+        self.orderCreationUI = OrderCreationUI(isDelivery: true, address: "2222sdas f", comment: nil, deferredTime: "22:00", totalCost: "223", deliveryCost: "100", amountToPay: "323", isLoading: false)
+        self.isDelivery = true
     }
+    
     var body: some View {
         VStack(spacing: 0){
+            ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             VStack{
+                Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected: $isDelivery)
+                
                 if orderCreationUI.address == nil{
                     NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_ADDRESS, destination: CreateAddressView())
                 }else{
@@ -27,9 +33,12 @@ struct CreateOrderView: View {
                 }else{
                     NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_COMMENT, text: orderCreationUI.comment!, destination:UserAddressListView())
                 }
-                
-                
-                NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_TIME, text: orderCreationUI.deferredTime, destination:UserAddressListView())
+                if(isDelivery){
+                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_DELIVERY, text: orderCreationUI.deferredTime, destination:UserAddressListView())
+                }else{
+                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_PICKUP, text: orderCreationUI.deferredTime, destination:UserAddressListView())
+                }
+               
             }.padding(Diems.MEDIUM_PADDING)
            
             
@@ -42,11 +51,14 @@ struct CreateOrderView: View {
                     Text(orderCreationUI.totalCost)
                 }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                 
-                HStack{
-                    Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-                    Spacer()
-                    Text(orderCreationUI.deliveryCost)
-                }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                if(isDelivery){
+                    HStack{
+                        Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                        Spacer()
+                        Text(orderCreationUI.deliveryCost)
+                    }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                }
+                
                 HStack{
                     BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
                     Spacer()
@@ -68,8 +80,7 @@ struct CreateOrderView: View {
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
-        .navigationTitle(Text(Strings.TITLE_SETTINGS))
-        .navigationBarItems(leading: Image("chevron.forward.square"))
+        .navigationBarHidden(true)
     }
 }
 

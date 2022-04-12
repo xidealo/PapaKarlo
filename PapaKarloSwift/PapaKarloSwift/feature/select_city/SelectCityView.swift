@@ -15,23 +15,24 @@ struct SelectCityView: View {
     }
     
     var body: some View {
-            VStack{
-                ScrollView {
-                    LazyVStack{
-                        ForEach(cities){ city in
-                            NavigationLink(
-                                destination:ContainerView()
-                            ){
-                                CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                            }
+        VStack{
+            ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
+            
+            ScrollView {
+                LazyVStack{
+                    ForEach(cities){ city in
+                        NavigationLink(
+                            destination:ContainerView()
+                        ){
+                            CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
-                }.padding(.top, Diems.MEDIUM_PADDING)
-            }
-            .background(Color("background"))
-            .navigationTitle(
-                Text(Strings.TITLE_SELECT_CITY_CITY)
-            )
+                }
+            }.padding(.top, Diems.MEDIUM_PADDING)
+        }
+        .background(Color("background"))
+        .navigationBarHidden(true)
+        
     }
 }
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuView: View {
     
     let menuItems : [MenuItem]
-
+    
     init() {
         menuItems = [
             MenuItem(id: UUID().uuidString, categorySectionItem:  CategorySectionItem(
@@ -32,6 +32,11 @@ struct MenuView: View {
                                     name: "Cartoxa",
                                     newPrice: "100 R",
                                     oldPrice: "150 R",
+                                    photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"),
+                    MenuProductItem(id: UUID().uuidString,
+                                    name: "Cartoxa",
+                                    newPrice: "100 R",
+                                    oldPrice: "150 R",
                                     photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
                 ]
             ))
@@ -39,7 +44,15 @@ struct MenuView: View {
     }
     
     var body: some View {
+        
         VStack{
+            ToolbarView(title: Strings.TITLE_MENU, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            LazyVStack{
+                ForEach(menuItems){ menuItem in
+                    
+                }
+            
+            
             ScrollView {
                 LazyVStack{
                     ForEach(menuItems){ menuItem in
@@ -55,13 +68,10 @@ struct MenuView: View {
                         }
                     }
                 }
-            }.padding(.top, Diems.MEDIUM_PADDING).navigationTitle(
-                Text(Strings.TITLE_MENU)
-            ).background(Color("background"))
-
+            }.padding(.top, Diems.MEDIUM_PADDING)
+            .background(Color("background"))
+            .navigationBarHidden(true)
         }
-        
-        
     }
 }
 

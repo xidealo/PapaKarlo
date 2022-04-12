@@ -19,8 +19,7 @@ struct OrderListView: View {
         .background(Color("background"))
         .navigationTitle(
             Text(Strings.TITLE_MY_ORDERS)
-        )
-        
+        ).navigationBarHidden(true)
     }
 }
 

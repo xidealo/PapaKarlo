@@ -10,14 +10,17 @@ import SwiftUI
 struct ProfileView: View {
     var body: some View {
         VStack{
+            
+            ToolbarView(title: Strings.TITLE_PROFILE, cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             EmptyProfileView()
             
             //LoadingProfileView()
             
             //SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false,lastOrderItem: OrderItem(id: UUID(),status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
             
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background")).navigationTitle(Text(Strings.TITLE_PROFILE)
-        )
+        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
+        .navigationBarHidden(true)
+
     }
 }
 

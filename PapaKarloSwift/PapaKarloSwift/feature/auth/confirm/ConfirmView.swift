@@ -17,6 +17,8 @@ struct ConfirmView: View {
     var body: some View {
         
         VStack{
+            ToolbarView(title: "", cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
             Spacer()
             Text(Strings.MSG_CONFIRM_ENTER_CODE).multilineTextAlignment(.center)
     
@@ -52,7 +54,7 @@ struct ConfirmView: View {
                 isEnabled = true
             }
 
-        }
+        }.navigationBarHidden(true)
     }
 }
 

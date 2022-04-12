@@ -11,22 +11,25 @@ struct ConsumerCartView: View {
     
     let consumerCartUI : ConsumerCartUI
 
+    init() {
+        consumerCartUI =  ConsumerCartUI(forFreeDelivery: "100", cartProductList: [CartProductItem(id: UUID(), name: "Burger", newCost: "233", oldCost: "2223", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg", count: 1, menuProductUuid: "uuid")], oldTotalCost: "234", newTotalCost: "200")
+    }
+    
     var body: some View {
         VStack{
+            ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
             //ConsumerCartEmptyScreen()
             ConsumerCartSuccessScreen(consumerCartUI: consumerCartUI)
         }
         .background(Color("background"))
-        .navigationTitle(
-            Text(Strings.TITLE_CART_PRODUCTS)
-        )
-        
+        .navigationBarHidden(true)
     }
 }
 
 struct ConsumerCartView_Previews: PreviewProvider {
     static var previews: some View {
-        ConsumerCartView(consumerCartUI: ConsumerCartUI(forFreeDelivery: "100", cartProductList: [CartProductItem(id: UUID(), name: "Burger", newCost: "233", oldCost: "2223", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg", count: 1, menuProductUuid: "uuid")], oldTotalCost: "234", newTotalCost: "200"))
+        ConsumerCartView()
     }
 }
 

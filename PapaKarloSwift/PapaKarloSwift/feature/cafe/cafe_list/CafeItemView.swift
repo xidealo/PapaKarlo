@@ -16,6 +16,8 @@ struct CafeItemView: View {
         
         VStack{
             LargeHeaderText(text: cafeItem.address)
+                .padding(.top, Diems.MEDIUM_PADDING)
+                .padding(.bottom, Diems.SMALL_PADDING)
             
             HStack{
                 Text(cafeItem.workingHours)

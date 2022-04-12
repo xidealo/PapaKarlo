@@ -16,15 +16,13 @@ struct UserAddressListView: View {
     
     var body: some View {
         VStack{
+            ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             //SuccessAddressListView(addressList: addressList)
             EmptyAddressListView()
             
         }
         .background(Color("background"))
-        .navigationTitle(
-            Text(Strings.TITLE_MY_ADDRESSES)
-        )
-        
+        .navigationBarHidden(true)
     }
 }
 

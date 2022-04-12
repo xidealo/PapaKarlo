@@ -15,9 +15,17 @@ struct CountPicker: View {
         
         HStack{
             Group{
-                Text("-")
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Text("-")
+                }
                 Text(count)
-                Text("+")
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Text("+")
+                }
             }.foregroundColor(Color("onPrimary"))
         }.padding(.horizontal, 12).padding(.vertical, Diems.SMALL_PADDING).background(Color("primary")).cornerRadius(Diems.MEDIUM_RADIUS)
     }

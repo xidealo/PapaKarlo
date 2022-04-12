@@ -39,7 +39,8 @@ struct MenuItemView: View {
             }) {
                 Text(Strings.ACTION_MENU_PRODUCT_WANT)
                     .frame(maxWidth:Diems.BUTTON_WIDTH, maxHeight:Diems.BUTTON_HEIGHT)
-                    .padding()
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 25)
                     .foregroundColor(Color("primary"))
                     .overlay(RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                                 .stroke(Color("primary"), lineWidth: 2))

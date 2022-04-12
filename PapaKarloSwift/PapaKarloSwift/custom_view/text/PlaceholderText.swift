@@ -12,6 +12,7 @@ struct PlaceholderText: View {
     
     var body: some View {
         Text(text).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+            .foregroundColor(Color("onSurface"))
     }
 }
 

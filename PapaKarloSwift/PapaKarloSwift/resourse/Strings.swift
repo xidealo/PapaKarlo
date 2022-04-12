@@ -18,6 +18,7 @@ class Strings{
     static let TITLE_CART_PRODUCTS = "Корзина"
     static let TITLE_CREATION_ORDER = "Создание заказа"
     static let TITLE_NEW_VERSION = "Новая версия"
+    static let TITLE_CREATION_ADDRESS = "Добавление адреса"
 
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
@@ -36,15 +37,15 @@ class Strings{
     static let HINT_SETTINGS_EMAIL = "Почта"
     static let HINT_SETTINGS_CITY = "Город"
 
-    static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отбражаться бонусны, адреса и история ваших заказов"
+    static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться бонусны, адреса и история ваших заказов"
     
     //ADDRESS
-    static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отбражаться ваши адреса"
+    static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отображаться ваши адреса"
     static let ACTION_ADDRESS_LIST_ADD = "Добавить адрес"
 
     
     //ORDERS
-    static let MSG_ORDER_LIST_EMPTY_ORDERS = "Здесь будет отбражаться история ваших заказов"
+    static let MSG_ORDER_LIST_EMPTY_ORDERS = "Здесь будет отображаться история ваших заказов"
 
     static let ACTION_PROFILE_LOGIN = "Войти"
 
@@ -73,10 +74,20 @@ class Strings{
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS = "Адрес"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
-    static let HINT_CREATION_ORDER_DEFERRED_TIME = "Время доставки"
+    static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
+    static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"
     static let MSG_CREATION_ORDER_RESULT = "Итого"
     static let MSG_CREATION_ORDER_DELIVERY = "Доставка"
+    static let MSG_CREATION_ORDER_PICKUP = "Самовывоз"
     static let MSG_CREATION_ORDER_FINAL_AMOUNT = "Сумма к оплате"
+    //CREATION ADDRESS
+    static let HINT_CREATION_ADDRESS_STREET = "Улица*"
+    static let HINT_CREATION_ADDRESS_HOUSE = "Дом*"
+    static let HINT_CREATION_ADDRESS_FLAT = "Квартира"
+    static let HINT_CREATION_ADDRESS_ENTRANCE = "Подъезд"
+    static let HINT_CREATION_ADDRESS_FLOOR = "Этаж"
+    static let HINT_CREATION_ADDRESS_COMMENT = "Комментарий для курьера"
+    static let ACTION_CREATION_ADDRESS_ADD = "Сохранить"
 
     //BOTTOM NAVIGATION
     static let TITLE_BOTTOM_NAVIGATION_CAFES = "Рестораны"

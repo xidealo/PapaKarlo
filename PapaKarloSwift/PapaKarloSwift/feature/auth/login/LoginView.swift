@@ -14,18 +14,15 @@ struct LoginView: View {
     var body: some View {
         
         VStack{
+            ToolbarView(title:"", cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
  
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            TextField(Strings.HINT_LOGIN_PHONE, text:$phone)
-                .padding().overlay(
-                    RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                        .stroke(Color("surfaceVariant"), lineWidth: 2)
-                )
-
+            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:phone)
+            
             Spacer()
             NavigationLink(
                 destination:ConfirmView()
@@ -39,6 +36,7 @@ struct LoginView: View {
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }
         }.padding(Diems.MEDIUM_PADDING)
+        .navigationBarHidden(true)
     }
 }
 

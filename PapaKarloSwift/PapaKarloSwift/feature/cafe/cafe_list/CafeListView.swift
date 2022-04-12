@@ -19,6 +19,7 @@ struct CafeListView: View {
     
     var body: some View {
         VStack{
+            ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             ScrollView {
                 LazyVStack{
                     ForEach(cafes){ cafe in
@@ -29,6 +30,8 @@ struct CafeListView: View {
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)
         }.background(Color("background"))
+        .navigationBarHidden(true)
+
         
     }
 }
