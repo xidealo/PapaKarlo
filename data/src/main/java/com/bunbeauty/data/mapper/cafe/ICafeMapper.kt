@@ -7,7 +7,8 @@ import database.CafeEntity
 
 interface ICafeMapper {
 
-    fun toEntityModel(cafe: CafeServer): CafeEntity
-    fun toModel(cafe: CafeEntity): Cafe
-    fun toCafeAddress(cafe: CafeEntity): CafeAddress
+    fun toCafeEntity(cafeServer: CafeServer): CafeEntity
+    fun toCafe(cafeEntity: CafeEntity): Cafe
+    fun toCafe(cafeServer: CafeServer): Cafe
+    fun toCafeAddress(cafeEntity: CafeEntity): CafeAddress
 }

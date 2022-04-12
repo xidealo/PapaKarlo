@@ -3,7 +3,6 @@ package com.bunbeauty.domain.interactor.city
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.domain.repo.CityRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.worker.ICafeWorkerUtil
 import com.bunbeauty.domain.worker.IStreetWorkerUtil
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 class CityInteractor(
     private val dataStoreRepo: DataStoreRepo,
     private val cityRepo: CityRepo,
-    private val cafeWorkerUtil: ICafeWorkerUtil,
     private val streetWorkerUtil: IStreetWorkerUtil
 ) : ICityInteractor {
 
@@ -22,7 +20,6 @@ class CityInteractor(
     override suspend fun checkIsCitySelected(): Boolean {
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
         if (selectedCityUuid != null) {
-            cafeWorkerUtil.refreshCafeList(selectedCityUuid)
             streetWorkerUtil.refreshStreetList(selectedCityUuid)
         }
 
@@ -31,7 +28,6 @@ class CityInteractor(
 
     override suspend fun saveSelectedCity(city: City) {
         dataStoreRepo.saveSelectedCityUuid(city.uuid, city.timeZone)
-        cafeWorkerUtil.refreshCafeList(city.uuid)
         streetWorkerUtil.refreshStreetList(city.uuid)
     }
 

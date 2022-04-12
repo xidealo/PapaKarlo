@@ -2,62 +2,74 @@ package com.bunbeauty.papakarlo.feature.cafe.cafe_list
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.domain.model.cafe.CafePreview
+import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.extensions.toStateSuccessOrError
+import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus.*
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import com.bunbeauty.papakarlo.util.string.IStringUtil
-import kotlinx.coroutines.flow.*
+import core_common.Constants.WORKING_HOURS_DIVIDER
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
-    private val resourcesProvider: IResourcesProvider,
-    private val stringUtil: IStringUtil
+    private val resourcesProvider: IResourcesProvider
 ) : CartViewModel() {
 
-    private val mutableCafeItemList: MutableStateFlow<List<CafeItemModel>?> = MutableStateFlow(null)
-    val cafeItemList: StateFlow<List<CafeItemModel>?> = mutableCafeItemList.asStateFlow()
+    private val mutableCafeItemList: MutableStateFlow<StateWithError<List<CafeItemModel>>> =
+        MutableStateFlow(StateWithError.Loading())
+    val cafeItemList: StateFlow<StateWithError<List<CafeItemModel>>> =
+        mutableCafeItemList.asStateFlow()
 
-    init {
-        observeCafeList()
+    private var observeMinutesOfDayJob: Job? = null
+
+    fun getCafeItemList() {
+        viewModelScope.launch {
+            observeMinutesOfDayJob?.cancel()
+
+            mutableCafeItemList.value = cafeInteractor.getCafeList()?.map { cafe ->
+                toItemModel(cafe)
+            }.toStateSuccessOrError(resourcesProvider.getString(R.string.error_cafe_list_loading))
+            if (mutableCafeItemList.value is StateWithError.Success) {
+                observeMinutesOfDayJob = cafeInteractor.observeCafeList().launchOnEach { cafeList ->
+                    cafeList?.let {
+                        mutableCafeItemList.value = cafeList.map { cafe ->
+                            toItemModel(cafe)
+                        }.toStateWithErrorSuccess()
+                    }
+                }
+            }
+        }
     }
 
     fun onCafeCardClicked(cafeItem: CafeItemModel) {
         router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
     }
 
-    private fun observeCafeList() {
-        cafeInteractor.observeCafeList().onEach { cafePreviewList ->
-            mutableCafeItemList.value = cafePreviewList.map(::toItemModel)
-        }.launchIn(viewModelScope)
-    }
-
-    private fun toItemModel(cafePreview: CafePreview): CafeItemModel {
-        val cafeStatus = if (cafePreview.isOpen) {
-            if (cafePreview.closeIn == null) {
-                OPEN
-            } else {
-                CLOSE_SOON
-            }
+    private suspend fun toItemModel(cafe: Cafe): CafeItemModel {
+        val fromTime = cafeInteractor.getCafeTime(cafe.fromTime)
+        val toTime = cafeInteractor.getCafeTime(cafe.toTime)
+        val isOpenMessage = if (cafeInteractor.isClosed(cafe)) {
+            resourcesProvider.getString(R.string.msg_cafe_closed)
         } else {
-            CLOSED
-        }
-        val isOpenMessage = if (cafePreview.isOpen) {
-            cafePreview.closeIn?.let { closeIn ->
+            cafeInteractor.getCloseIn(cafe)?.let { closeIn ->
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
                         closeIn +
                         getMinuteString(closeIn)
             } ?: resourcesProvider.getString(R.string.msg_cafe_open)
-        } else {
-            resourcesProvider.getString(R.string.msg_cafe_closed)
         }
+        val cafeStatus = cafeInteractor.getCafeStatus(cafe)
 
         return CafeItemModel(
-            uuid = cafePreview.uuid,
-            address = cafePreview.address,
-            workingHours = stringUtil.getWorkingHoursString(cafePreview),
+            uuid = cafe.uuid,
+            address = cafe.address,
+            workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
             isOpenMessage = isOpenMessage,
             cafeStatus = cafeStatus
         )

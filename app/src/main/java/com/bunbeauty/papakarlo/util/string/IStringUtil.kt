@@ -11,7 +11,6 @@ interface IStringUtil {
     fun getUserAddressString(userAddress: UserAddress?): String?
     fun getDateTimeString(dateTime: DateTime): String
     fun getTimeString(time: Time): String
-    fun getWorkingHoursString(cafe: CafePreview): String
     fun getCostString(cost: Int?): String?
     fun getCostString(cost: Int): String
     fun getCountString(count: Int): String

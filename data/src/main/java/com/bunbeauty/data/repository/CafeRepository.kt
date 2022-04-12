@@ -5,6 +5,7 @@ import com.bunbeauty.data.dao.cafe.ICafeDao
 import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.data.network.api.ApiRepo
+import com.bunbeauty.data.network.model.CafeServer
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
@@ -20,14 +21,28 @@ class CafeRepository(
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: ICafeDao,
     private val cafeMapper: ICafeMapper,
-) : CafeRepo {
+) : CacheListRepository<Cafe>(), CafeRepo {
 
-    override suspend fun refreshCafeList(selectedCityUuid: String) {
-        apiRepo.getCafeListByCityUuid(selectedCityUuid).handleListResult(CAFE_TAG) { cafeList ->
-            if (cafeList != null) {
-                cafeDao.insertCafeList(cafeList.map(cafeMapper::toEntityModel))
-            }
-        }
+    override val tag: String = CAFE_TAG
+
+    override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
+        return getCacheOrListData(
+            isCacheValid = { cache ->
+                cache.all { cafe ->
+                    cafe.cityUuid == selectedCityUuid
+                }
+            },
+            onApiRequest = {
+                apiRepo.getCafeListByCityUuid(selectedCityUuid)
+            },
+            onDatabaseRequest = {
+                cafeDao.getCafeListByCityUuid(selectedCityUuid).map(cafeMapper::toCafe)
+            },
+            onSaveLocally = { cafeServerList ->
+                cafeDao.insertCafeList(cafeServerList.map(cafeMapper::toCafeEntity))
+            },
+            serverToDomainModel = cafeMapper::toCafe
+        )
     }
 
     override suspend fun saveSelectedCafeUuid(
@@ -45,12 +60,12 @@ class CafeRepository(
 
     override suspend fun getCafeList(): List<Cafe> {
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid() ?: ""
-        return cafeDao.getCafeListByCityUuid(selectedCityUuid).map(cafeMapper::toModel)
+        return cafeDao.getCafeListByCityUuid(selectedCityUuid).map(cafeMapper::toCafe)
     }
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeDao.getCafeByUuid(cafeUuid)?.let { cafeEntity ->
-            cafeMapper.toModel(cafeEntity)
+            cafeMapper.toCafe(cafeEntity)
         }
     }
 
@@ -59,18 +74,18 @@ class CafeRepository(
         cityUuid: String
     ): Flow<Cafe?> {
         return cafeDao.observeSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
-            .mapFlow(cafeMapper::toModel)
+            .mapFlow(cafeMapper::toCafe)
     }
 
     override fun observeFirstCafeCityUuid(cityUuid: String): Flow<Cafe?> {
         return cafeDao.observeFirstCafeByCityUuid(cityUuid)
-            .mapFlow(cafeMapper::toModel)
+            .mapFlow(cafeMapper::toCafe)
     }
 
     override fun observeCafeList(): Flow<List<Cafe>> {
         return dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
             cafeDao.observeCafeListByCityUuid(selectedCityUuid ?: "")
-        }.mapListFlow(cafeMapper::toModel)
+        }.mapListFlow(cafeMapper::toCafe)
     }
 
     override fun observeCafeAddressList(): Flow<List<CafeAddress>> {

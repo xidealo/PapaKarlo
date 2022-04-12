@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeStatus
+import com.bunbeauty.domain.model.cafe.CafeStatus
 
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)

@@ -2,7 +2,7 @@ package com.bunbeauty.domain.interactor.cafe
 
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafeAddress
-import com.bunbeauty.domain.model.cafe.CafePreview
+import com.bunbeauty.domain.model.cafe.CafeStatus
 import com.bunbeauty.domain.repo.CafeRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.IDateTimeUtil
@@ -21,20 +21,9 @@ class CafeInteractor(
     private val dataTimeUtil: IDateTimeUtil
 ) : ICafeInteractor {
 
-    override fun observeCafeList(): Flow<List<CafePreview>> {
-        return cafeRepo.observeCafeList().flatMapLatest { cafeList ->
-            observeMinutesOfDay().map { minutesOfDay ->
-                cafeList.map { cafe ->
-                    CafePreview(
-                        uuid = cafe.uuid,
-                        fromTime = getCafeTime(cafe.fromTime),
-                        toTime = getCafeTime(cafe.toTime),
-                        address = cafe.address,
-                        isOpen = isOpen(cafe.fromTime, cafe.toTime, minutesOfDay),
-                        closeIn = getCloseIn(cafe.toTime, minutesOfDay),
-                    )
-                }
-            }
+    override fun observeCafeList(): Flow<List<Cafe>?> {
+        return observeMinutesOfDay().map {
+            getCafeList()
         }
     }
 
@@ -58,6 +47,40 @@ class CafeInteractor(
         }
     }
 
+    override suspend fun getCafeList(): List<Cafe>? {
+        return dataStoreRepo.getSelectedCityUuid()?.let { selectedCityUuid ->
+            cafeRepo.getCafeList(selectedCityUuid).ifEmpty { null }
+        }
+    }
+
+    override suspend fun getCafeStatus(cafe: Cafe): CafeStatus {
+        return getCurrentMinuteOfDay().let { minuteOfDay ->
+            if (isClosed(cafe.fromTime, cafe.toTime, minuteOfDay)) {
+                CafeStatus.CLOSED
+            } else {
+                if (isCloseSoon(cafe.toTime, minuteOfDay)) {
+                    CafeStatus.CLOSE_SOON
+                } else {
+                    CafeStatus.OPEN
+                }
+            }
+        }
+    }
+
+    override suspend fun isClosed(cafe: Cafe): Boolean {
+        return isClosed(cafe.fromTime, cafe.toTime, getCurrentMinuteOfDay())
+    }
+
+    override suspend fun getCloseIn(cafe: Cafe): Int? {
+        val beforeClose = (cafe.toTime / SECONDS_IN_MINUTE) - getCurrentMinuteOfDay()
+
+        return if (beforeClose in 1 until 60) {
+            beforeClose % 60
+        } else {
+            null
+        }
+    }
+
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeRepo.getCafeByUuid(cafeUuid)
     }
@@ -69,6 +92,11 @@ class CafeInteractor(
         if (userUuid != null && selectedCityUuid != null) {
             cafeRepo.saveSelectedCafeUuid(userUuid, selectedCityUuid, cafeUuid)
         }
+    }
+
+    suspend fun getCurrentMinuteOfDay(): Int {
+        val timeZone = dataStoreRepo.getSelectedCityTimeZone()
+        return dataTimeUtil.getCurrentMinuteSecond(timeZone).minuteOfDay
     }
 
     fun observeMinutesOfDay(): Flow<Int> =
@@ -99,7 +127,7 @@ class CafeInteractor(
         }
     }
 
-    fun getCafeTime(daySeconds: Int): String {
+    override fun getCafeTime(daySeconds: Int): String {
         val hours = daySeconds / SECONDS_IN_HOUR
         val minutes = (daySeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE
         val minutesString = if (minutes < 10) {
@@ -111,25 +139,14 @@ class CafeInteractor(
         return "$hours$TIME_DIVIDER$minutesString"
     }
 
-    fun isOpen(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
-        val beforeStart = getMinutesFromNowToTime(fromTime, minutesOfDay)
-        val beforeEnd = getMinutesFromNowToTime(toTime, minutesOfDay)
-
-        return beforeStart < 0 && beforeEnd > 0
+    fun isClosed(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
+        return (minutesOfDay < fromTime / SECONDS_IN_MINUTE)
+                || (minutesOfDay > toTime / SECONDS_IN_MINUTE)
     }
 
-    fun getCloseIn(toTime: Int, minutesOfDay: Int): Int? {
-        val beforeEnd = getMinutesFromNowToTime(toTime, minutesOfDay)
+    fun isCloseSoon(toTime: Int, minutesOfDay: Int): Boolean {
+        val beforeClose = (toTime / SECONDS_IN_MINUTE) - minutesOfDay
 
-        return if (beforeEnd in 1 until 60) {
-            beforeEnd % 60
-        } else {
-            null
-        }
-    }
-
-    fun getMinutesFromNowToTime(daySeconds: Int, minutesOfDay: Int): Int {
-        val minutes = daySeconds / SECONDS_IN_MINUTE
-        return minutes - minutesOfDay
+        return beforeClose in 1 until 60
     }
 }

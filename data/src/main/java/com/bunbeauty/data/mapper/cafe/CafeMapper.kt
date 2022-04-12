@@ -7,38 +7,51 @@ import database.CafeEntity
 
 class CafeMapper : ICafeMapper {
 
-    override fun toEntityModel(cafe: CafeServer): CafeEntity {
+    override fun toCafeEntity(cafeServer: CafeServer): CafeEntity {
         return CafeEntity(
-            uuid = cafe.uuid,
-            fromTime = cafe.fromTime,
-            toTime = cafe.toTime,
-            offset = cafe.toTime,
-            phone = cafe.phone,
-            latitude = cafe.latitude,
-            longitude = cafe.longitude,
-            address = cafe.address,
-            cityUuid = cafe.cityUuid,
-            isVisible = cafe.isVisible,
+            uuid = cafeServer.uuid,
+            fromTime = cafeServer.fromTime,
+            toTime = cafeServer.toTime,
+            offset = cafeServer.toTime,
+            phone = cafeServer.phone,
+            latitude = cafeServer.latitude,
+            longitude = cafeServer.longitude,
+            address = cafeServer.address,
+            cityUuid = cafeServer.cityUuid,
+            isVisible = cafeServer.isVisible,
         )
     }
 
-    override fun toModel(cafe: CafeEntity): Cafe {
+    override fun toCafe(cafeEntity: CafeEntity): Cafe {
         return Cafe(
-            uuid = cafe.uuid,
-            address = cafe.address,
-            fromTime = cafe.fromTime,
-            toTime = cafe.toTime,
-            phone = cafe.phone,
-            latitude = cafe.latitude,
-            longitude = cafe.longitude,
-            cityUuid = cafe.cityUuid,
+            uuid = cafeEntity.uuid,
+            address = cafeEntity.address,
+            fromTime = cafeEntity.fromTime,
+            toTime = cafeEntity.toTime,
+            phone = cafeEntity.phone,
+            latitude = cafeEntity.latitude,
+            longitude = cafeEntity.longitude,
+            cityUuid = cafeEntity.cityUuid,
         )
     }
 
-    override fun toCafeAddress(cafe: CafeEntity): CafeAddress {
+    override fun toCafe(cafeServer: CafeServer): Cafe {
+        return Cafe(
+            uuid = cafeServer.uuid,
+            address = cafeServer.address,
+            fromTime = cafeServer.fromTime,
+            toTime = cafeServer.toTime,
+            phone = cafeServer.phone,
+            latitude = cafeServer.latitude,
+            longitude = cafeServer.longitude,
+            cityUuid = cafeServer.cityUuid,
+        )
+    }
+
+    override fun toCafeAddress(cafeEntity: CafeEntity): CafeAddress {
         return CafeAddress(
-            address = cafe.address,
-            cafeUuid = cafe.uuid,
+            address = cafeEntity.address,
+            cafeUuid = cafeEntity.uuid,
         )
     }
 }

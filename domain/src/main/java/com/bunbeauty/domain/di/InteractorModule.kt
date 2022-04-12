@@ -48,7 +48,6 @@ fun interactorModule() = module {
         CityInteractor(
             dataStoreRepo = get(),
             cityRepo = get(),
-            cafeWorkerUtil = get(),
             streetWorkerUtil = get(),
         )
     }

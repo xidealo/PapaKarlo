@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.cafe.cafe_list
+package com.bunbeauty.domain.model.cafe
 
 enum class CafeStatus {
     OPEN,

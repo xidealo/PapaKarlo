@@ -63,7 +63,7 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         router.navigateUp()
     }
 
-    protected fun <T> Flow<T>.launchOnEach(block: (T) -> Unit): Job {
+    protected fun <T> Flow<T>.launchOnEach(block: suspend (T) -> Unit): Job {
         return onEach { t ->
             block(t)
         }.launchIn(viewModelScope)

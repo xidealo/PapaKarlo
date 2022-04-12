@@ -67,10 +67,6 @@ class StringUtil(
         return "${addFirstZero(time.hourOfDay)}:${addFirstZero(time.minuteOfHour)}"
     }
 
-    override fun getWorkingHoursString(cafe: CafePreview): String {
-        return cafe.fromTime + WORKING_HOURS_DIVIDER + cafe.toTime
-    }
-
     fun getStringPart(divider: String, description: String, data: Any?): String {
         return if (data == null || data.toString().isEmpty()) {
             ""

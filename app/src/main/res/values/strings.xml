@@ -25,14 +25,6 @@
     <string name="msg_address_entrance_short">&#160;подъезд</string>
     <string name="msg_address_floor_short">&#160;этаж</string>
 
-    <!--CAFE-->
-    <string name="msg_cafe_open">Открыто</string>
-    <string name="msg_cafe_close_soon">Открыто. Закроется через&#160;</string>
-    <string name="msg_cafe_minute">&#160;минуту</string>
-    <string name="msg_cafe_minutes_234">&#160;минуты</string>
-    <string name="msg_cafe_minutes">&#160;минут</string>
-    <string name="msg_cafe_closed">Закрыто</string>
-
     <string name="msg_ruble">&#160;₽</string>
     <string name="error_no_internet">Нет подключения к интернету</string>
 
@@ -148,6 +140,21 @@
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="title_cafe_list_payment">Оплата</string>
+    <string name="error_cafe_list_loading">Нудалось загрузить список ресторанов</string>
+
+    <!--CAFE-->
+    <string name="msg_cafe_open">Открыто</string>
+    <string name="msg_cafe_close_soon">Открыто. Закроется через&#160;</string>
+    <string name="msg_cafe_minute">&#160;минуту</string>
+    <string name="msg_cafe_minutes_234">&#160;минуты</string>
+    <string name="msg_cafe_minutes">&#160;минут</string>
+    <string name="msg_cafe_closed">Закрыто</string>
+
+    <!-- CAFE OPTIONS -->
+    <string name="action_cafe_options_call">Позвонить:&#160;</string>
+    <string name="action_cafe_options_show_map">На карте:&#160;</string>
+    <string name="description_cafe_options_call">Позвонить</string>
+    <string name="description_cafe_options_map">Карта</string>
 
     <!-- USER ADDRESS LIST -->
     <string name="title_my_addresses">Мои адреса</string>
@@ -233,12 +240,6 @@
     <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
     <string name="action_confirm_resend_code">Получить код</string>
     <string name="action_confirm_change_phone">Изменить номер</string>
-
-    <!-- CAFE OPTIONS -->
-    <string name="action_cafe_options_call">Позвонить:&#160;</string>
-    <string name="action_cafe_options_show_map">На карте:&#160;</string>
-    <string name="description_cafe_options_call">Позвонить</string>
-    <string name="description_cafe_options_map">Карта</string>
 
     <!-- SETTINGS -->
     <string name="title_settings">Настройки</string>
