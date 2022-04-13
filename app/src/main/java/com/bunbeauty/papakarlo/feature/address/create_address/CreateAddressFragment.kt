@@ -199,35 +199,5 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
                 )
             }
         }
-
-
-//        viewBinding.run {
-//            textInputMap[STREET_ERROR_KEY] = fragmentCreateAddressTilStreet
-//            textInputMap[HOUSE_ERROR_KEY] = fragmentCreateAddressTilHouse
-//            textInputMap[FLAT_ERROR_KEY] = fragmentCreateAddressTilFlat
-//            textInputMap[ENTRANCE_ERROR_KEY] = fragmentCreateAddressTilEntrance
-//            textInputMap[FLOOR_ERROR_KEY] = fragmentCreateAddressTilFloor
-//            textInputMap[COMMENT_ERROR_KEY] = fragmentCreateAddressTilComment
-//
-//            viewModel.streetNameList.startedLaunch { streetNameList ->
-//                val arrayAdapter = ArrayAdapter(
-//                    requireContext(),
-//                    R.layout.support_simple_spinner_dropdown_item,
-//                    streetNameList
-//                )
-//                fragmentCreateAddressEtStreet.setAdapter(arrayAdapter)
-//            }
-//
-//            fragmentCreateAddressBtnCreateAddress.setOnClickListener {
-//                viewModel.onCreateAddressClicked(
-//                    streetName = fragmentCreateAddressEtStreet.text.toString(),
-//                    house = fragmentCreateAddressEtHouse.text.toString().trim(),
-//                    flat = fragmentCreateAddressEtFlat.text.toString().trim(),
-//                    entrance = fragmentCreateAddressEtEntrance.text.toString().trim(),
-//                    comment = fragmentCreateAddressEtComment.text.toString().trim(),
-//                    floor = fragmentCreateAddressEtFloor.text.toString().trim()
-//                )
-//            }
-//        }
     }
 }
