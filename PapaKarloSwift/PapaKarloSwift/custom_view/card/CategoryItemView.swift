@@ -27,7 +27,9 @@ struct CategoryItemView: View {
                 print("button pressed")
             }) {
                 Text(categoryItemModel.name)
+                    .padding(Diems.SMALL_PADDING)
                     .background(Color("surface"))
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
                     .foregroundColor(Color("onSurface"))
             }
         }

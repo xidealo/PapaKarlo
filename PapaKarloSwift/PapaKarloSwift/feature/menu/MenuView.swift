@@ -9,10 +9,10 @@ import SwiftUI
 
 struct MenuView: View {
     
-    let menuItems : [MenuItem]
+    let menuUI:MenuUI
     
     init() {
-        menuItems = [
+        menuUI = MenuUI(menuItems: [
             MenuItem(id: UUID().uuidString, categorySectionItem:  CategorySectionItem(
                 id: UUID().uuidString,
                 name: "Burger",
@@ -40,38 +40,47 @@ struct MenuView: View {
                                     photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
                 ]
             ))
-        ]
+        ], categoryItemModels: [
+            CategoryItemModel(key: "", id: "1", name: "Burgers", isSelected: true),
+            CategoryItemModel(key: "", id: "2", name: "Pizza", isSelected: false),
+            CategoryItemModel(key: "", id: "3", name: "Potato", isSelected: false),
+            CategoryItemModel(key: "", id: "4", name: "Potato", isSelected: false),
+            CategoryItemModel(key: "", id: "5", name: "Potato", isSelected: false),
+            CategoryItemModel(key: "", id: "6", name: "Potato", isSelected: false)
+        ])
     }
     
     var body: some View {
         
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: Strings.TITLE_MENU, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            LazyVStack{
-                ForEach(menuItems){ menuItem in
-                    
-                }
             
+            ScrollView(.horizontal, showsIndicators:false) {
+                HStack{
+                    ForEach(menuUI.categoryItemModels){ categoryItemModel in
+                        CategoryItemView(categoryItemModel: categoryItemModel)
+                    }
+                }
+            }.padding(.top, Diems.MEDIUM_PADDING)
             
             ScrollView {
                 LazyVStack{
-                    ForEach(menuItems){ menuItem in
+                    ForEach(menuUI.menuItems){ menuItem in
                         Section(header: LargeHeaderText(text: menuItem.categorySectionItem.name)){
                             ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
-                                
                                 NavigationLink(
                                     destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
                                 ){
-                                MenuItemView(menuProductItem: menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    MenuItemView(menuProductItem: menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                                 }
                             }
                         }
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)
-            .background(Color("background"))
-            .navigationBarHidden(true)
         }
+        .background(Color("background"))
+        .navigationBarHidden(true)
     }
 }
 
