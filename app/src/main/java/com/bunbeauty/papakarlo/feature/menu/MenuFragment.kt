@@ -14,6 +14,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.compose.item.CategoryItem
 import com.bunbeauty.papakarlo.compose.item.MenuProductItem
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
@@ -35,6 +36,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getMenu()
         viewBinding.fragmentMenuCvMain.compose {
             val menuState by viewModel.menuState.collectAsState()
             MenuScreen(menuState = menuState)
@@ -42,8 +44,8 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     }
 
     @Composable
-    private fun MenuScreen(menuState: State<MenuUI>) {
-        if (menuState is State.Success) {
+    private fun MenuScreen(menuState: StateWithError<MenuUI>) {
+        if (menuState is StateWithError.Success) {
             MenuSuccessScreen(menuState.data)
         } else {
 
@@ -217,7 +219,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Composable
     private fun MenuScreenPreview() {
         MenuScreen(
-            menuState = State.Success(
+            menuState = StateWithError.Success(
                 MenuUI(
                     categoryItemModelList = listOf(
                         categoryItemModel,

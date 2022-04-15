@@ -5,8 +5,10 @@ import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.menu.MenuSection
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuItemModel
@@ -23,17 +25,26 @@ class MenuViewModel(
     private val stringUtil: IStringUtil,
 ) : CartViewModel() {
 
-    private val mutableMenuState: MutableStateFlow<State<MenuUI>> =
-        MutableStateFlow(State.Loading())
-    val menuState: StateFlow<State<MenuUI>> = mutableMenuState.asStateFlow()
+    private val mutableMenuState: MutableStateFlow<StateWithError<MenuUI>> =
+        MutableStateFlow(StateWithError.Loading())
+    val menuState: StateFlow<StateWithError<MenuUI>> = mutableMenuState.asStateFlow()
 
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
 
     var autoScrolling = false
 
-    init {
-        observeMenu()
+    fun getMenu() {
+        mutableMenuState.value = StateWithError.Loading()
+        viewModelScope.launch {
+            mutableMenuState.value =
+                menuProductInteractor.getMenuSectionList()?.let { menuSectionList ->
+                    if (selectedCategoryUuid == null) {
+                        selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
+                    }
+                    toMenu(menuSectionList)
+                }?.toStateWithErrorSuccess() ?: StateWithError.Empty()
+        }
     }
 
     fun onCategoryClicked(categoryItemModel: CategoryItemModel) {
@@ -48,7 +59,7 @@ class MenuViewModel(
 
         viewModelScope.launch {
             val menuItemModelList =
-                (mutableMenuState.value as? State.Success)?.data?.menuItemModelList
+                (mutableMenuState.value as? StateWithError.Success)?.data?.menuItemModelList
             menuItemModelList?.filterIsInstance(MenuItemModel.MenuCategoryHeaderItemModel::class.java)
                 ?.findLast { menuItemModel ->
                     menuItemModelList.indexOf(menuItemModel) <= menuPosition
@@ -67,7 +78,7 @@ class MenuViewModel(
     }
 
     fun getMenuListPosition(categoryItemModel: CategoryItemModel): Int {
-        return (mutableMenuState.value as State.Success).data.menuItemModelList.indexOfFirst { menuItemModel ->
+        return (mutableMenuState.value as StateWithError.Success).data.menuItemModelList.indexOfFirst { menuItemModel ->
             (menuItemModel as? MenuItemModel.MenuCategoryHeaderItemModel)?.uuid == categoryItemModel.uuid
         }
     }
@@ -79,7 +90,7 @@ class MenuViewModel(
             }
             selectedCategoryUuid = categoryUuid
 
-            val menu = (mutableMenuState.value as State.Success).data
+            val menu = (mutableMenuState.value as StateWithError.Success).data
             val categoryItemModelList = menu.categoryItemModelList.map { categoryItemModel ->
                 when {
                     categoryItemModel.isSelected -> {
@@ -96,7 +107,7 @@ class MenuViewModel(
             mutableMenuState.value = menu.copy(
                 categoryItemModelList = categoryItemModelList,
                 menuItemModelList = menu.menuItemModelList
-            ).toStateSuccess()
+            ).toStateWithErrorSuccess()
         }
     }
 
@@ -105,7 +116,7 @@ class MenuViewModel(
             if (selectedCategoryUuid == null) {
                 selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
             }
-            mutableMenuState.value = toMenu(menuSectionList).toStateSuccess()
+            mutableMenuState.value = toMenu(menuSectionList).toStateWithErrorSuccess()
         }
     }
 

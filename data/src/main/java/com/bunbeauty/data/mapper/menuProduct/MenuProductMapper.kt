@@ -3,6 +3,7 @@ package com.bunbeauty.data.mapper.menuProduct
 import com.bunbeauty.data.network.model.MenuProductServer
 import com.bunbeauty.domain.model.category.Category
 import com.bunbeauty.domain.model.product.MenuProduct
+import database.CategoryEntity
 import database.MenuProductCategoryReference
 import database.MenuProductEntity
 import database.MenuProductWithCategoryEntity
@@ -34,6 +35,19 @@ class MenuProductMapper : IMenuProductMapper {
         )
     }
 
+    override fun toCategoryEntityList(menuProductServerList: List<MenuProductServer>): List<CategoryEntity> {
+        return menuProductServerList.flatMap { menuProductServer ->
+            menuProductServer.categories
+        }.toSet()
+            .map { categoryServer ->
+                CategoryEntity(
+                    uuid = categoryServer.uuid,
+                    name = categoryServer.name,
+                    priority = categoryServer.priority,
+                )
+            }
+    }
+
     override fun toMenuProduct(menuProduct: MenuProductEntity): MenuProduct {
         return MenuProduct(
             uuid = menuProduct.uuid,
@@ -46,6 +60,27 @@ class MenuProductMapper : IMenuProductMapper {
             comboDescription = menuProduct.comboDescription,
             photoLink = menuProduct.photoLink,
             categoryList = emptyList()
+        )
+    }
+
+    override fun toMenuProduct(menuProductServer: MenuProductServer): MenuProduct {
+        return MenuProduct(
+            uuid = menuProductServer.uuid,
+            name = menuProductServer.name,
+            newPrice = menuProductServer.newPrice,
+            oldPrice = menuProductServer.oldPrice,
+            utils = menuProductServer.utils,
+            nutrition = menuProductServer.nutrition,
+            description = menuProductServer.description,
+            comboDescription = menuProductServer.comboDescription,
+            photoLink = menuProductServer.photoLink,
+            categoryList = menuProductServer.categories.map { categoryServer ->
+                Category(
+                    uuid = categoryServer.uuid,
+                    name = categoryServer.name,
+                    priority = categoryServer.priority,
+                )
+            }
         )
     }
 

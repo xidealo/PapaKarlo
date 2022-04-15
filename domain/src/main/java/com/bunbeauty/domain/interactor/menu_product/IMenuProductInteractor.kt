@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface IMenuProductInteractor {
 
+    suspend fun getMenuSectionList(): List<MenuSection>?
     fun observeMenuSectionList(): Flow<List<MenuSection>>
     fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?>
 

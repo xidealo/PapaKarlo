@@ -28,8 +28,8 @@ class MainInteractor(
     override suspend fun refreshData() {
         cityWorkerUtil.refreshCityList()
         deliveryWorkerUtil.refreshDelivery()
-        categoryWorkerUtil.refreshCategoryList()
-        menuProductWorkerUtil.refreshMenuProductList()
+        //categoryWorkerUtil.refreshCategoryList()
+        //menuProductWorkerUtil.refreshMenuProductList()
     }
 
     override fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
