@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.menu.MenuSection
 import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
@@ -43,7 +44,9 @@ class MenuViewModel(
                         selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                     }
                     toMenu(menuSectionList)
-                }?.toStateWithErrorSuccess() ?: StateWithError.Empty()
+                }?.toStateWithErrorSuccess() ?: StateWithError.Error(
+                    baseResourcesProvider.getString(R.string.error_menu_loading)
+                )
         }
     }
 

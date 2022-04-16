@@ -61,6 +61,7 @@
     <string name="title_menu_oven">В печи</string>
     <string name="action_menu_want">Хочу!</string>
     <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
+    <string name="error_menu_loading">Нудалось загрузить меню</string>
 
     <!-- PRODUCT DETAILS -->
     <string name="action_product_details_want">Хочу!</string>
@@ -209,7 +210,7 @@
     <string name="description_ic_feedback">Отзывы</string>
     <string name="description_ic_about">О приложении</string>
     <string name="description_empty_profile">Пустой профиль</string>
-    <string name="error_profile_not_loaded">Нудалось загрузить профиль</string>
+    <string name="error_profile_loading">Нудалось загрузить профиль</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>

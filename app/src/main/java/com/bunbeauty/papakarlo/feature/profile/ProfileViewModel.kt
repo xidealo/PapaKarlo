@@ -44,7 +44,7 @@ class ProfileViewModel(
                     }
                 }
             } ?: StateWithError.Error(
-                baseResourcesProvider.getString(R.string.error_profile_not_loaded)
+                baseResourcesProvider.getString(R.string.error_profile_loading)
             )
         }
     }
@@ -59,10 +59,6 @@ class ProfileViewModel(
 
     fun onYourAddressesClicked() {
         router.navigate(toNavAddress(false))
-    }
-
-    fun onAddAddressClicked() {
-        router.navigate(toCreateAddressFragment())
     }
 
     fun onOrderHistoryClicked(userUuid: String) {

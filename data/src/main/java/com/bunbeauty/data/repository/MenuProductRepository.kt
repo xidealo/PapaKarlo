@@ -1,6 +1,5 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.common.Logger
 import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
 import com.bunbeauty.data.dao.category.ICategoryDao
 import com.bunbeauty.data.dao.menu_product.IMenuProductDao
@@ -45,7 +44,7 @@ class MenuProductRepository(
 
     override suspend fun getMenuProductList(): List<MenuProduct> {
         return menuProductListCache ?: apiRepository.getMenuProductList().handleListResultAndReturn(
-            tag = Logger.USER_TAG,
+            tag = MENU_PRODUCT_TAG,
             onError = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()
@@ -53,9 +52,10 @@ class MenuProductRepository(
             },
             onSuccess = { menuProductServerList ->
                 saveMenuLocally(menuProductServerList)
-                menuProductServerList.map { menuProductServer ->
-                    menuProductMapper.toMenuProduct(menuProductServer)
-                }
+                menuProductServerList.map(menuProductMapper::toMenuProduct)
+                    .also { menuProductList ->
+                        menuProductListCache = menuProductList
+                    }
             }
         )
     }

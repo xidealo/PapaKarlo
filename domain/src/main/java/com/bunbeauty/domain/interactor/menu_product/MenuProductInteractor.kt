@@ -3,6 +3,7 @@ package com.bunbeauty.domain.interactor.menu_product
 import com.bunbeauty.domain.model.menu.MenuSection
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.domain.repo.MenuProductRepo
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

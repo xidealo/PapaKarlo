@@ -13,10 +13,11 @@ import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.compose.item.CategoryItem
 import com.bunbeauty.papakarlo.compose.item.MenuProductItem
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -45,10 +46,18 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     @Composable
     private fun MenuScreen(menuState: StateWithError<MenuUI>) {
-        if (menuState is StateWithError.Success) {
-            MenuSuccessScreen(menuState.data)
-        } else {
-
+        when (menuState) {
+            is StateWithError.Success -> {
+                MenuSuccessScreen(menuState.data)
+            }
+            is StateWithError.Loading -> {
+                LoadingScreen()
+            }
+            is StateWithError.Error -> {
+                ErrorScreen(menuState.message) {
+                    viewModel.getMenu()
+                }
+            }
         }
     }
 
@@ -188,53 +197,64 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         }
     }
 
-    private val categoryItemModel = CategoryItemModel(
-        key = "",
-        uuid = "",
-        name = "Бургеры",
-        isSelected = false
-    )
-
-    private val menuCategoryHeaderItemModel = MenuItemModel.MenuCategoryHeaderItemModel(
-        key = "",
-        uuid = "",
-        name = "Бургеры"
-    )
-
-    private val menuProductItemModel = MenuProductItemModel(
-        uuid = "",
-        photoLink = "",
-        name = "Бэргер",
-        newPrice = "99 ₽",
-        oldPrice = "100 ₽",
-    )
-
-    private val menuProductPairItemModel = MenuItemModel.MenuProductPairItemModel(
-        key = "",
-        firstProduct = menuProductItemModel,
-        secondProduct = menuProductItemModel,
-    )
-
-    @Preview(showSystemUi = true, showBackground = true)
+    @Preview(showSystemUi = true)
     @Composable
-    private fun MenuScreenPreview() {
+    private fun MenuScreenSuccessPreview() {
+        fun getCategoryItemModel(key: String) = CategoryItemModel(
+            key = key,
+            uuid = "",
+            name = "Бургеры",
+            isSelected = false
+        )
+
+        fun getMenuCategoryHeaderItemModel(key: String) = MenuItemModel.MenuCategoryHeaderItemModel(
+            key = key,
+            uuid = "",
+            name = "Бургеры"
+        )
+
+        val menuProductItemModel = MenuProductItemModel(
+            uuid = "",
+            photoLink = "",
+            name = "Бэргер",
+            newPrice = "99 ₽",
+            oldPrice = "100 ₽",
+        )
+        fun getMenuProductPairItemModel(key: String) = MenuItemModel.MenuProductPairItemModel(
+            key = key,
+            firstProduct = menuProductItemModel,
+            secondProduct = menuProductItemModel,
+        )
+
         MenuScreen(
             menuState = StateWithError.Success(
                 MenuUI(
                     categoryItemModelList = listOf(
-                        categoryItemModel,
-                        categoryItemModel,
-                        categoryItemModel,
+                        getCategoryItemModel("1"),
+                        getCategoryItemModel("2"),
+                        getCategoryItemModel("3"),
                     ),
                     menuItemModelList = listOf(
-                        menuCategoryHeaderItemModel,
-                        menuProductPairItemModel,
-                        menuProductPairItemModel,
-                        menuCategoryHeaderItemModel,
-                        menuProductPairItemModel,
+                        getMenuCategoryHeaderItemModel("4"),
+                        getMenuProductPairItemModel("5"),
+                        getMenuProductPairItemModel("6"),
+                        getMenuCategoryHeaderItemModel("7"),
+                        getMenuProductPairItemModel("8"),
                     )
                 )
             )
         )
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun MenuScreenLoadingPreview() {
+        MenuScreen(menuState = StateWithError.Loading())
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun MenuScreenErrorPreview() {
+        MenuScreen(menuState = StateWithError.Error("Не удалось загрузить меню"))
     }
 }

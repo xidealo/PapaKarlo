@@ -23,9 +23,10 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.card.NavigationIconCard
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.OrderItem
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -41,15 +42,11 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getProfile()
         viewBinding.fragmentProfileCvMain.compose {
             val state: StateWithError<ProfileUI> by viewModel.profileUIState.collectAsState()
             ProfileScreen(state)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.getProfile()
     }
 
     @Composable
@@ -62,8 +59,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
             when (profileState) {
                 is StateWithError.Success -> SuccessProfileScreen(profileState.data)
                 is StateWithError.Empty -> EmptyProfileScreen()
-                is StateWithError.Loading -> LoadingProfileScreen()
-                is StateWithError.Error -> ErrorProfileScreen(profileState.message)
+                is StateWithError.Loading -> LoadingScreen()
+                is StateWithError.Error -> ErrorScreen(profileState.message) {
+                    viewModel.getProfile()
+                }
             }
         }
     }
@@ -157,33 +156,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 textStringId = R.string.action_profile_login
             ) {
                 viewModel.onLoginClicked()
-            }
-        }
-    }
-
-    @Composable
-    private fun LoadingProfileScreen() {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressBar(modifier = Modifier.align(Alignment.Center))
-        }
-    }
-
-    @Composable
-    private fun ErrorProfileScreen(message: String) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Card(
-                modifier = Modifier.card(true),
-                backgroundColor = FoodDeliveryTheme.colors.surface
-            ) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = message,
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.error,
-                    textAlign = TextAlign.Center
-                )
             }
         }
     }
