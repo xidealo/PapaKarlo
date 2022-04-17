@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct ProfileView: View {
+        
     var body: some View {
         VStack{
             
             ToolbarView(title: Strings.TITLE_PROFILE, cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            
             EmptyProfileView()
+            //EmptyProfileView()
             
             //LoadingProfileView()
             
@@ -20,7 +23,7 @@ struct ProfileView: View {
             
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
         .navigationBarHidden(true)
-
+        
     }
 }
 
@@ -29,6 +32,7 @@ struct ProfileView_Previews: PreviewProvider {
         ProfileView()
     }
 }
+
 
 struct EmptyProfileView: View {
     var body: some View {
@@ -41,7 +45,7 @@ struct EmptyProfileView: View {
             Spacer()
             
             DefaultImage(imageName: "NotLoginnedProfile")
-
+            
             Text(Strings.MSG_PROFILE_NO_PROFILE).multilineTextAlignment(.center)
             
             Spacer()

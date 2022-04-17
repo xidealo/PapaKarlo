@@ -36,6 +36,8 @@ struct ProductDetailsView: View {
     var body: some View {
         VStack{
             
+            ToolbarView(title: menuProductUI.name, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
             VStack{
                 Image(uiImage: menuProductUI.imageLink.load())
                     .resizable()
@@ -79,9 +81,7 @@ struct ProductDetailsView: View {
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
-        .navigationTitle(
-            Text(menuProductUI.name)
-        )
+        .navigationBarHidden(true)
     }
 }
 
