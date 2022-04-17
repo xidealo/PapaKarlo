@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.common.Constants.CARD_NUMBER
-import com.bunbeauty.common.Constants.CARD_NUMBER_LABEL
-import com.bunbeauty.common.Constants.PHONE_NUMBER
-import com.bunbeauty.common.Constants.PHONE_NUMBER_LABEL
+import core_common.Constants.CARD_NUMBER
+import core_common.Constants.CARD_NUMBER_LABEL
+import core_common.Constants.PHONE_NUMBER
+import core_common.Constants.PHONE_NUMBER_LABEL
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel

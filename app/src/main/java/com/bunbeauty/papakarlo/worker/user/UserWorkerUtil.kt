@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.worker.user
 
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.bunbeauty.common.Constants.TOKEN_WORK_KEY
+import core_common.Constants.TOKEN_WORK_KEY
 import com.bunbeauty.domain.worker.IUserWorkerUtil
 import com.bunbeauty.papakarlo.worker.BaseWorkerUtil
 

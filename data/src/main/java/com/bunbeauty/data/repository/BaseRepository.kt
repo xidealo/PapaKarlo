@@ -8,7 +8,7 @@ import com.bunbeauty.data.network.ApiResult
 
 abstract class BaseRepository {
 
-    protected val tag: String =
+    private val tag: String =
         javaClass.simpleName.substring(javaClass.simpleName.lastIndexOf('.') + 1)
 
     suspend fun <T, R> ApiResult<T>.handleResultAndReturn(

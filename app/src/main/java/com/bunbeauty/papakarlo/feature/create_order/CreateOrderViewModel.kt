@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.create_order
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.common.Constants.RESULT_COMMENT_KEY
+import core_common.Constants.COMMENT_REQUEST_KEY
+import core_common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor

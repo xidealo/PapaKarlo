@@ -2,11 +2,10 @@ package com.bunbeauty.papakarlo.feature.auth.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Constants.PHONE_CODE
-import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
+import core_common.Constants.PHONE_CODE
+import core_common.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE

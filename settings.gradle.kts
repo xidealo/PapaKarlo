@@ -1,8 +1,10 @@
+include(
+    ":app",
+    ":data",
+    ":domain",
+    ":common",
+    ":common",
+    ":kmm:shared",
+    ":kmm:core:core-common",
+)
 rootProject.name = "PapaKarlo"
-include(":common")
-include(":domain")
-include(":app")
-include(":data")
-include(":shared")
-//include(":data_firebase")
-//include(":domain_firebase")

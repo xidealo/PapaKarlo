@@ -15,7 +15,10 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/kmm" />
+            <option value="$PROJECT_DIR$/kmm/core" />
+            <option value="$PROJECT_DIR$/kmm/core/core-common" />
+            <option value="$PROJECT_DIR$/kmm/shared" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

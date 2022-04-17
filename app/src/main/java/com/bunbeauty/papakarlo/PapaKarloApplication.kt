@@ -45,7 +45,6 @@ class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
             )
         }
     }
-
 }
 
 object AndroidAppInfo : AppInfo {

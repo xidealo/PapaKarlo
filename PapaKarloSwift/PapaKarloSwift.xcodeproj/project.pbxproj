@@ -560,7 +560,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :kmm:shared:embedAndSignAppleFrameworkForXcode\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -761,7 +761,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"PapaKarloSwift/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../kmm/shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = PapaKarloSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -771,7 +771,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					shared,
+					"\"shared\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = BunBeauty.PapaKarloSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -789,7 +789,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"PapaKarloSwift/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../kmm/shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				INFOPLIST_FILE = PapaKarloSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -799,7 +799,7 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
-					shared,
+					"\"shared\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = BunBeauty.PapaKarloSwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
