@@ -14,8 +14,6 @@ import kotlin.coroutines.CoroutineContext
 
 class MainInteractor(
     private val cityWorkerUtil: ICityWorkerUtil,
-    private val categoryWorkerUtil: ICategoryWorkerUtil,
-    private val menuProductWorkerUtil: IMenuProductWorkerUtil,
     private val deliveryWorkerUtil: IDeliveryWorkerUtil,
     private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
@@ -28,8 +26,6 @@ class MainInteractor(
     override suspend fun refreshData() {
         cityWorkerUtil.refreshCityList()
         deliveryWorkerUtil.refreshDelivery()
-        //categoryWorkerUtil.refreshCategoryList()
-        //menuProductWorkerUtil.refreshMenuProductList()
     }
 
     override fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {

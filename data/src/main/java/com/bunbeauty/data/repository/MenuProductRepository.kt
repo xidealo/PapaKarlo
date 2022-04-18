@@ -25,23 +25,6 @@ class MenuProductRepository(
 
     private var menuProductListCache: List<MenuProduct>? = null
 
-    override suspend fun refreshMenuProductList() {
-        apiRepository.getMenuProductList()
-            .handleListResult(MENU_PRODUCT_TAG) { menuProductServerList ->
-                if (menuProductServerList != null) {
-                    val menuProductEntityList =
-                        menuProductServerList.map(menuProductMapper::toMenuProductEntity)
-                    menuProductDao.insertMenuProductList(menuProductEntityList)
-
-                    val menuProductCategoryReferenceList =
-                        menuProductServerList.flatMap(menuProductMapper::toMenuProductCategoryReference)
-                    menuProductCategoryReferenceDao.updateMenuProductReferenceList(
-                        menuProductCategoryReferenceList
-                    )
-                }
-            }
-    }
-
     override suspend fun getMenuProductList(): List<MenuProduct> {
         return menuProductListCache ?: apiRepository.getMenuProductList().handleListResultAndReturn(
             tag = MENU_PRODUCT_TAG,
