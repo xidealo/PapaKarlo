@@ -5,16 +5,16 @@ import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.menu.MenuSection
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateSuccessOrError
 import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuUI
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,
+    private val resourcesProvider: IResourcesProvider,
 ) : CartViewModel() {
 
     private val mutableMenuState: MutableStateFlow<StateWithError<MenuUI>> =
@@ -44,9 +45,7 @@ class MenuViewModel(
                         selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                     }
                     toMenu(menuSectionList)
-                }?.toStateWithErrorSuccess() ?: StateWithError.Error(
-                    baseResourcesProvider.getString(R.string.error_menu_loading)
-                )
+                }.toStateSuccessOrError(resourcesProvider.getString(R.string.error_menu_loading))
         }
     }
 

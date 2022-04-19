@@ -3,15 +3,19 @@ package com.bunbeauty.papakarlo.extensions
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.state.StateWithError
 
-fun <T : Any> T.toStateSuccess(): State.Success<T> {
+fun <T> T.toStateSuccess(): State.Success<T> {
     return State.Success(this)
 }
 
-fun <T : Any> T.toStateWithErrorSuccess(): StateWithError.Success<T> {
+fun <T> T.toStateWithErrorSuccess(): StateWithError.Success<T> {
     return StateWithError.Success(this)
 }
 
-fun <T : Any> T?.toSuccessOrEmpty(): State<T> {
+fun <T> T?.toStateSuccessOrError(errorMessage: String): StateWithError<T> {
+    return this?.toStateWithErrorSuccess() ?: StateWithError.Error(errorMessage)
+}
+
+fun <T> T?.toSuccessOrEmpty(): State<T> {
     return if (this == null) {
         State.Empty()
     } else {
@@ -23,6 +27,6 @@ fun <T : Any> T?.toSuccessOrEmpty(): State<T> {
     }
 }
 
-fun <T : Any> T?.toStateNullableSuccess(): State.Success<T?> {
+fun <T> T?.toStateNullableSuccess(): State.Success<T?> {
     return State.Success(this)
 }

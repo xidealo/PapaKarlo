@@ -38,6 +38,7 @@
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>
+    <string name="error_select_city_loading">Нудалось загрузить список городов</string>
 
     <!-- UPDATE -->
     <string name="title_update_new_app_version">Новая версия</string>

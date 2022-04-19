@@ -29,7 +29,8 @@ fun viewModelModule() = module {
     viewModel {
         MenuViewModel(
             menuProductInteractor = get(),
-            stringUtil = get()
+            stringUtil = get(),
+            resourcesProvider = get(),
         )
     }
     viewModel {
@@ -151,7 +152,8 @@ fun viewModelModule() = module {
     }
     viewModel {
         SelectCityViewModel(
-            cityInteractor = get()
+            cityInteractor = get(),
+            resourcesProvider = get(),
         )
     }
     viewModel {

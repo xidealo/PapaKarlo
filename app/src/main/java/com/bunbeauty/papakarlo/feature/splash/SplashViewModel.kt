@@ -17,7 +17,7 @@ class SplashViewModel(
         checkIsUpdated()
     }
 
-    fun checkIsUpdated() {
+    private fun checkIsUpdated() {
         viewModelScope.launch {
             val isUpdated = updateInteractor.checkIsUpdated(BuildConfig.VERSION_CODE)
             if (isUpdated) {

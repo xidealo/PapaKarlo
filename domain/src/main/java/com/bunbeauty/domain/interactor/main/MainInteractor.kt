@@ -24,7 +24,7 @@ class MainInteractor(
         get() = Job()
 
     override suspend fun refreshData() {
-        cityWorkerUtil.refreshCityList()
+        //cityWorkerUtil.refreshCityList()
         deliveryWorkerUtil.refreshDelivery()
     }
 

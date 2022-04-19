@@ -36,7 +36,7 @@ fun repositoryModule() = module {
     }
     single<MenuProductRepo> {
         MenuProductRepository(
-            apiRepository = get(),
+            apiRepo = get(),
             menuProductDao = get(),
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),

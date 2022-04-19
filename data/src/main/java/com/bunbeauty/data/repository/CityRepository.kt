@@ -1,8 +1,10 @@
 package com.bunbeauty.data.repository
 
+import com.bunbeauty.common.Logger
 import com.bunbeauty.common.Logger.CITY_TAG
 import com.bunbeauty.data.dao.city.ICityDao
 import com.bunbeauty.data.handleListResult
+import com.bunbeauty.data.handleListResultAndReturn
 import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
@@ -16,6 +18,23 @@ class CityRepository(
     private val cityDao: ICityDao,
     private val cityMapper: ICityMapper,
 ) : CityRepo {
+
+    private var cityListCache: List<City>? = null
+
+    override suspend fun getCityList(): List<City> {
+        return cityListCache ?: apiRepo.getCityList().handleListResultAndReturn(
+            tag = CITY_TAG,
+            onError = {
+                cityDao.getCityList().map(cityMapper::toCity)
+            },
+            onSuccess = { cityServerList ->
+                cityDao.insertCityList(cityServerList.map(cityMapper::toCityEntity))
+                cityServerList.map(cityMapper::toCity).also { cityList ->
+                    cityListCache = cityList
+                }
+            }
+        )
+    }
 
     override suspend fun refreshCityList() {
         apiRepo.getCityList().handleListResult(CITY_TAG) { cityList ->
