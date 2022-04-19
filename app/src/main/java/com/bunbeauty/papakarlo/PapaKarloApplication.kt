@@ -2,6 +2,8 @@ package com.bunbeauty.papakarlo
 
 import android.app.Application
 import androidx.viewbinding.BuildConfig
+import coil.Coil
+import coil.ImageLoader
 import com.bunbeauty.data.di.databaseModule
 import com.bunbeauty.data.di.mapperModule
 import com.bunbeauty.data.di.networkModule
@@ -44,6 +46,11 @@ class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
                 utilModule()
             )
         }
+        Coil.setImageLoader(
+            ImageLoader.Builder(applicationContext)
+                .respectCacheHeaders(false)
+                .build()
+        )
     }
 }
 

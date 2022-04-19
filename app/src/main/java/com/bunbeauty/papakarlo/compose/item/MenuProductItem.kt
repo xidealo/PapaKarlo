@@ -26,7 +26,6 @@ import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.element.SmallButton
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
-import com.bunbeauty.papakarlo.feature.product_details.MenuProductUI
 
 @Composable
 fun MenuProductItem(
