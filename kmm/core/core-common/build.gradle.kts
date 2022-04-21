@@ -20,10 +20,11 @@ kotlin {
             baseName = "shared"
         }
     }
-    
+
     sourceSets {
         val commonMain by getting  {
             dependencies {
+                //api(project(":kmm:core:core-common"))
                 Ktor.run {
                     implementation(clientSerialization)
                     implementation(clientLogging)

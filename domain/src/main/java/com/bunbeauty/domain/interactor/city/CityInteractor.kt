@@ -15,6 +15,10 @@ class CityInteractor(
     private val streetWorkerUtil: IStreetWorkerUtil
 ) : ICityInteractor {
 
+    override suspend fun getCityList(): List<City>? {
+        return cityRepo.getCityList().ifEmpty { null }
+    }
+
     override suspend fun checkIsCitySelected(): Boolean {
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
         if (selectedCityUuid != null) {

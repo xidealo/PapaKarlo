@@ -1,6 +1,5 @@
 package com.bunbeauty.data.di
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
@@ -50,7 +49,7 @@ fun networkModule() = module {
 
             install(ResponseObserver) {
                 onResponse { response ->
-                    Log.d("HTTP status:", "${response.status.value}")
+                    //Log.d("HTTP status:", "${response.status.value}")
                 }
             }
 

@@ -36,7 +36,7 @@ fun repositoryModule() = module {
     }
     single<MenuProductRepo> {
         MenuProductRepository(
-            apiRepository = get(),
+            apiRepo = get(),
             menuProductDao = get(),
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),
@@ -89,26 +89,16 @@ fun repositoryModule() = module {
             cityMapper = get(),
         )
     }
-    single<CategoryRepo> {
-        CategoryRepository(
-            apiRepository = get(),
-            categoryMapper = get(),
-            categoryDao = get()
-        )
-    }
-
     single<AuthRepo> {
         AuthRepository(
             firebaseAuth = get(),
         )
     }
-
     single<VersionRepo> {
         VersionRepository(
             apiRepo = get(),
         )
     }
-
 }
 
 

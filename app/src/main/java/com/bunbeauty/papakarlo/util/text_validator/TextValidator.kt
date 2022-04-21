@@ -1,12 +1,12 @@
 package com.bunbeauty.papakarlo.util.text_validator
 
-import com.bunbeauty.common.Constants
+import core_common.Constants
 
 
 class TextValidator : ITextValidator {
 
     override fun isPhoneNumberCorrect(phoneNumber: String): Boolean {
-        return Regex("\\${Constants.PHONE_CODE} \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}")
+        return Regex("\\${core_common.Constants.PHONE_CODE} \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}")
             .matches(phoneNumber)
     }
 

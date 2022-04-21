@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.util.string
 
-import com.bunbeauty.common.Constants.ADDRESS_DIVIDER
-import com.bunbeauty.common.Constants.WORKING_HOURS_DIVIDER
+import core_common.Constants.ADDRESS_DIVIDER
+import core_common.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.enums.OrderStatus.*
 import com.bunbeauty.domain.model.address.UserAddress

@@ -27,7 +27,7 @@ struct ContainerView: View {
                 Image(systemName: "person.crop.circle")
                 Text(Strings.TITLE_BOTTOM_NAVIGATION_PROFILE)
             }.tag(2)
-        }.accentColor(Color("primary"))
+        }.accentColor(Color("primary")).navigationBarHidden(true)
     }
 }
 

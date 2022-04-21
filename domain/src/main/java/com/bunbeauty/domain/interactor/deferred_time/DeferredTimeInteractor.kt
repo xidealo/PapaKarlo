@@ -1,11 +1,11 @@
 package com.bunbeauty.domain.interactor.deferred_time
 
-import com.bunbeauty.common.Constants.MIN_DEFERRED_HOURS_ADDITION
-import com.bunbeauty.common.Constants.MIN_DEFERRED_MINUTES_ADDITION
 import com.bunbeauty.domain.model.date_time.DateTime
 import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.util.IDateTimeUtil
+import core_common.Constants.MIN_DEFERRED_HOURS_ADDITION
+import core_common.Constants.MIN_DEFERRED_MINUTES_ADDITION
 
 class DeferredTimeInteractor(
     private val dateTimeUtil: IDateTimeUtil,

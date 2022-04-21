@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.common.Constants.CAFE_ADDRESS_REQUEST_KEY
-import com.bunbeauty.common.Constants.RESULT_CAFE_ADDRESS_KEY
+import core_common.Constants.CAFE_ADDRESS_REQUEST_KEY
+import core_common.Constants.RESULT_CAFE_ADDRESS_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar

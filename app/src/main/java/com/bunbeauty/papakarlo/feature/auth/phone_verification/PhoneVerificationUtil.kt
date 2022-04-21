@@ -1,9 +1,9 @@
 package com.bunbeauty.papakarlo.feature.auth.phone_verification
 
 import android.app.Activity
-import com.bunbeauty.common.Constants.SOMETHING_WENT_WRONG
-import com.bunbeauty.common.Constants.TOO_MANY_REQUESTS
-import com.bunbeauty.common.Constants.WRONG_CODE
+import core_common.Constants.SOMETHING_WENT_WRONG
+import core_common.Constants.TOO_MANY_REQUESTS
+import core_common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE

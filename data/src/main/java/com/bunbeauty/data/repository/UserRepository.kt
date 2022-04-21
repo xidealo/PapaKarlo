@@ -1,7 +1,7 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.common.Constants.COMPANY_UUID
 import com.bunbeauty.common.Logger.USER_TAG
+import core_common.Constants.COMPANY_UUID
 import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.dao.user.IUserDao
 import com.bunbeauty.data.dao.user_address.IUserAddressDao
@@ -18,8 +18,6 @@ import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 
 class UserRepository(
     private val apiRepo: ApiRepo,

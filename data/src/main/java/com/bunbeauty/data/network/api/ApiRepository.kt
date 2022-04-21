@@ -1,11 +1,5 @@
 package com.bunbeauty.data.network.api
 
-import com.bunbeauty.common.Constants.AUTHORIZATION_HEADER
-import com.bunbeauty.common.Constants.BEARER
-import com.bunbeauty.common.Constants.CITY_UUID_PARAMETER
-import com.bunbeauty.common.Constants.COMPANY_UUID
-import com.bunbeauty.common.Constants.COMPANY_UUID_PARAMETER
-import com.bunbeauty.common.Constants.UUID_PARAMETER
 import com.bunbeauty.common.Logger.WEB_SOCKET_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
@@ -18,6 +12,12 @@ import com.bunbeauty.data.network.model.order.get.OrderServer
 import com.bunbeauty.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.data.network.model.profile.patch.PatchUserServer
+import core_common.Constants.AUTHORIZATION_HEADER
+import core_common.Constants.BEARER
+import core_common.Constants.CITY_UUID_PARAMETER
+import core_common.Constants.COMPANY_UUID
+import core_common.Constants.COMPANY_UUID_PARAMETER
+import core_common.Constants.UUID_PARAMETER
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.websocket.*

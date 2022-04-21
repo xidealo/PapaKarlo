@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.worker.street
 
 import android.content.Context
 import androidx.work.WorkerParameters
-import com.bunbeauty.common.Constants.SELECTED_CITY_UUID
+import core_common.Constants.SELECTED_CITY_UUID
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.repo.StreetRepo
 import com.bunbeauty.papakarlo.worker.BaseWorker

@@ -2,12 +2,9 @@ package com.bunbeauty.papakarlo.di.modules
 
 import com.bunbeauty.domain.worker.*
 import com.bunbeauty.papakarlo.worker.cafe.CafeWorkerUtil
-import com.bunbeauty.papakarlo.worker.category.CategoryWorkerUtil
 import com.bunbeauty.papakarlo.worker.city.CityWorkerUtil
 import com.bunbeauty.papakarlo.worker.delivery.DeliveryWorkerUtil
-import com.bunbeauty.papakarlo.worker.menu_product.MenuProductWorkerUtil
 import com.bunbeauty.papakarlo.worker.street.StreetWorkerUtil
-import com.bunbeauty.papakarlo.worker.user.UserWorkerUtil
 import org.koin.dsl.module
 
 fun workerModule() = module {
@@ -15,7 +12,4 @@ fun workerModule() = module {
     single<IStreetWorkerUtil> { StreetWorkerUtil(workManager = get()) }
     single<ICityWorkerUtil> { CityWorkerUtil(workManager = get()) }
     single<IDeliveryWorkerUtil> { DeliveryWorkerUtil(workManager = get()) }
-    single<IMenuProductWorkerUtil> { MenuProductWorkerUtil(workManager = get()) }
-    single<IUserWorkerUtil> { UserWorkerUtil(workManager = get()) }
-    single<ICategoryWorkerUtil> { CategoryWorkerUtil(workManager = get()) }
 }

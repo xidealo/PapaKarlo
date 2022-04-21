@@ -79,7 +79,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":data"))
-    implementation(project(":shared"))
+    implementation(project(":kmm:core:core-common"))
+    implementation(project(":kmm:shared"))
 
     implementation(Google.material)
     implementation(AndroidX.appCompat)

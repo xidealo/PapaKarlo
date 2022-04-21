@@ -6,8 +6,6 @@ import com.bunbeauty.domain.interactor.cafe.CafeInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.interactor.cart.CartProductInteractor
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.domain.interactor.categories.CategoryInteractor
-import com.bunbeauty.domain.interactor.categories.ICategoryInteractor
 import com.bunbeauty.domain.interactor.city.CityInteractor
 import com.bunbeauty.domain.interactor.city.ICityInteractor
 import com.bunbeauty.domain.interactor.deferred_time.DeferredTimeInteractor
@@ -34,8 +32,6 @@ fun interactorModule() = module {
     single<IMainInteractor> {
         MainInteractor(
             cityWorkerUtil = get(),
-            categoryWorkerUtil = get(),
-            menuProductWorkerUtil = get(),
             deliveryWorkerUtil = get(),
             orderRepo = get(),
             userInteractor = get(),
@@ -94,11 +90,6 @@ fun interactorModule() = module {
         StreetInteractor(
             streetRepo = get(),
             dataStoreRepo = get(),
-        )
-    }
-    single<ICategoryInteractor> {
-        CategoryInteractor(
-            categoryRepo = get()
         )
     }
     single<IMenuProductInteractor> {

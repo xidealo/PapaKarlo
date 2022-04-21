@@ -19,8 +19,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.item.CityItem
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -35,61 +38,78 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getCityList()
         viewBinding.fragmentSelectCityCvMain.compose {
-            val cityList by viewModel.cityList.collectAsState()
+            val cityList by viewModel.cityListState.collectAsState()
             SelectCityScreen(cityList)
         }
     }
 
     @Composable
-    private fun SelectCityScreen(cityList: List<City>?) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+    private fun SelectCityScreen(cityListState: StateWithError<List<City>>) {
+        when (cityListState) {
+            is StateWithError.Success -> {
+                SelectCitySuccessScreen(cityListState.data)
+            }
+            is StateWithError.Loading -> {
+                LoadingScreen()
+            }
+            is StateWithError.Error -> {
+                ErrorScreen(message = cityListState.message) {
+                    viewModel.getCityList()
+                }
+            }
+            else -> Unit
+        }
+    }
+
+    @Composable
+    private fun SelectCitySuccessScreen(cityList: List<City>) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            if (cityList == null) {
-                CircularProgressBar(modifier = Modifier.align(Alignment.Center))
-            } else {
-                LazyColumn(
-                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
+            itemsIndexed(cityList) { i, city ->
+                CityItem(
+                    modifier = Modifier.padding(
+                        top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
+                    ),
+                    cityName = city.name
                 ) {
-                    itemsIndexed(cityList) { i, city ->
-                        CityItem(
-                            modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                            ),
-                            cityName = city.name
-                        ) {
-                            viewModel.onCitySelected(city)
-                        }
-                    }
+                    viewModel.onCitySelected(city)
                 }
             }
         }
     }
 
-    private val city = City(
-        uuid = "",
-        name = "Москва",
-        timeZone = ""
-    )
-
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun SelectCitySuccessScreenPreview() {
+        val city = City(
+            uuid = "",
+            name = "Москва",
+            timeZone = ""
+        )
         SelectCityScreen(
-            cityList = listOf(
-                city,
-                city,
-                city,
+            StateWithError.Success(
+                listOf(
+                    city,
+                    city,
+                    city,
+                )
             )
         )
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun SelectCityLoadingScreenPreview() {
-        SelectCityScreen(null)
+        SelectCityScreen(StateWithError.Loading())
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun SelectCityErrorScreenPreview() {
+        SelectCityScreen(StateWithError.Error("Не удалось загрузить список городов"))
     }
 }

@@ -4,7 +4,6 @@ import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
 import com.bunbeauty.data.dao.category.ICategoryDao
 import com.bunbeauty.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
-import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.handleListResultAndReturn
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.data.network.api.ApiRepo
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MenuProductRepository(
-    private val apiRepository: ApiRepo,
+    private val apiRepo: ApiRepo,
     private val menuProductDao: IMenuProductDao,
     private val categoryDao: ICategoryDao,
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
@@ -25,25 +24,8 @@ class MenuProductRepository(
 
     private var menuProductListCache: List<MenuProduct>? = null
 
-    override suspend fun refreshMenuProductList() {
-        apiRepository.getMenuProductList()
-            .handleListResult(MENU_PRODUCT_TAG) { menuProductServerList ->
-                if (menuProductServerList != null) {
-                    val menuProductEntityList =
-                        menuProductServerList.map(menuProductMapper::toMenuProductEntity)
-                    menuProductDao.insertMenuProductList(menuProductEntityList)
-
-                    val menuProductCategoryReferenceList =
-                        menuProductServerList.flatMap(menuProductMapper::toMenuProductCategoryReference)
-                    menuProductCategoryReferenceDao.updateMenuProductReferenceList(
-                        menuProductCategoryReferenceList
-                    )
-                }
-            }
-    }
-
     override suspend fun getMenuProductList(): List<MenuProduct> {
-        return menuProductListCache ?: apiRepository.getMenuProductList().handleListResultAndReturn(
+        return menuProductListCache ?: apiRepo.getMenuProductList().handleListResultAndReturn(
             tag = MENU_PRODUCT_TAG,
             onError = {
                 menuProductMapper.toMenuProductList(

@@ -1,6 +1,6 @@
 package com.bunbeauty.common
 
-import android.util.Log
+//import android.util.Log
 
 object Logger {
 
@@ -24,16 +24,16 @@ object Logger {
     const val WEB_SOCKET_TAG = "webSocketTag"
 
     fun logD(tag: String, message: Any) {
-        if (isWorkerTag(tag)) {
-            Log.d(WORKER_TAG, "$tag $message")
-        }
-        Log.d(COMMON_TAG, "$tag $message")
-        Log.d(tag, message.toString())
+        //if (isWorkerTag(tag)) {
+        //    Log.d(WORKER_TAG, "$tag $message")
+        //}
+        //Log.d(COMMON_TAG, "$tag $message")
+        //Log.d(tag, message.toString())
     }
 
     fun logE(tag: String, message: Any) {
-        Log.e(COMMON_TAG, "$tag $message")
-        Log.e(tag, message.toString())
+        //Log.e(COMMON_TAG, "$tag $message")
+        //Log.e(tag, message.toString())
     }
 
     private fun isWorkerTag(tag: String): Boolean {

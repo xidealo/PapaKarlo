@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
-import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
+import core_common.Constants.EMAIL_REQUEST_KEY
+import core_common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.domain.model.profile.Settings
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R

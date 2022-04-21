@@ -4,8 +4,6 @@ import com.bunbeauty.data.mapper.cafe.CafeMapper
 import com.bunbeauty.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.data.mapper.cart_product.CartProductMapper
 import com.bunbeauty.data.mapper.cart_product.ICartProductMapper
-import com.bunbeauty.data.mapper.category.CategoryMapper
-import com.bunbeauty.data.mapper.category.ICategoryMapper
 import com.bunbeauty.data.mapper.city.CityMapper
 import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
@@ -40,5 +38,4 @@ fun mapperModule() = module {
     single<ICityMapper> { CityMapper() }
     single<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
     single<IOrderProductMapper> { OrderProductMapper() }
-    single<ICategoryMapper> { CategoryMapper() }
 }

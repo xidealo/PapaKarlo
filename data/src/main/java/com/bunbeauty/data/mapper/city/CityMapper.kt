@@ -15,6 +15,14 @@ class CityMapper : ICityMapper {
         )
     }
 
+    override fun toCity(cityServer: CityServer): City {
+        return City(
+            uuid = cityServer.uuid,
+            name = cityServer.name,
+            timeZone = cityServer.timeZone,
+        )
+    }
+
     override fun toCity(cityEntity: CityEntity): City {
         return City(
             uuid = cityEntity.uuid,

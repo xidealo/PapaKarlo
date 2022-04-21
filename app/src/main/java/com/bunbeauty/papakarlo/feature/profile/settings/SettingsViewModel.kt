@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.profile.settings
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Constants.EMAIL_REQUEST_KEY
-import com.bunbeauty.common.Constants.RESULT_EMAIL_KEY
+import core_common.Constants.EMAIL_REQUEST_KEY
+import core_common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.domain.interactor.settings.ISettingsInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.Settings
