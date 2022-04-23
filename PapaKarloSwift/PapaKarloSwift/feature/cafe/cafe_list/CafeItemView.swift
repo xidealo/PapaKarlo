@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct CafeItemView: View {
-    
-    
+
     var cafeItem: CafeItem
 
     var body: some View {
@@ -18,9 +17,10 @@ struct CafeItemView: View {
             LargeHeaderText(text: cafeItem.address)
                 .padding(.top, Diems.MEDIUM_PADDING)
                 .padding(.bottom, Diems.SMALL_PADDING)
+                .foregroundColor(Color("onSurface"))
             
             HStack{
-                Text(cafeItem.workingHours)
+                Text(cafeItem.workingHours).foregroundColor(Color("onSurface"))
                 Text(cafeItem.isOpenMessage).foregroundColor(cafeItem.isOpenColor)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)

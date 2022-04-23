@@ -21,6 +21,7 @@ class Strings{
     static let TITLE_CREATION_ADDRESS = "Добавление адреса"
     static let TITLE_ABOUT_APP = "О приложении"
     static let TITLE_FEEDBACK = "Отзывы о приложении"
+    static let TITLE_CAFE_OPTIONS = "Выбранное кафе"
 
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
@@ -97,6 +98,9 @@ class Strings{
     static let TITLE_FEEDBACK_VK = "Вконтакте"
     static let TITLE_FEEDBACK_INSTAGRAM = "Instagram"
     static let TITLE_FEEDBACK_PLAYMARKET = "Play Маркет"
+    //CAFE_OPTIONS
+    static let TITLE_CAFE_OPTIONS_CALL = "Позвонить"
+    static let TITLE_CAFE_OPTIONS_POSITION = "На карте"
 
     //BOTTOM NAVIGATION
     static let TITLE_BOTTOM_NAVIGATION_CAFES = "Рестораны"

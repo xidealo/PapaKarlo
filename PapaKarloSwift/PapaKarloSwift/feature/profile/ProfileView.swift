@@ -14,12 +14,12 @@ struct ProfileView: View {
             
             ToolbarView(title: Strings.TITLE_PROFILE, cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             
-            EmptyProfileView()
+            //EmptyProfileView()
             //EmptyProfileView()
             
             //LoadingProfileView()
             
-            //SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false,lastOrderItem: OrderItem(id: UUID(),status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
+            SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false,lastOrderItem: OrderItem(id: UUID(),status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
             
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
         .navigationBarHidden(true)
@@ -83,7 +83,7 @@ struct SuccessProfileView: View {
                 OrderItemView(orderItem: profileUI.lastOrderItem!, destination: OrderDetailsView())
             }
             
-            NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: FeedbackView())
+            NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
             
             if(profileUI.hasAddresses){
                 NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: AboutAppView())

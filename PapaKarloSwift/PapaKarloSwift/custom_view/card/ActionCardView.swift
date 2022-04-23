@@ -28,9 +28,9 @@ struct ActionCardView: View {
             HStack{
                 if icon != nil{
                     if(isSystemImageName){
-                        Image(systemName: icon ?? "")
+                        Image(systemName: icon ?? "").foregroundColor(Color("iconColor"))
                     }else{
-                        Image(icon ?? "").resizable().frame(width: 23, height: 24)
+                        Image(icon ?? "").resizable().frame(width: 23, height: 24).foregroundColor(Color("iconColor"))
                     }
                 }
                 Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))

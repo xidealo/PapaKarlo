@@ -32,7 +32,7 @@ struct ToolbarView: View {
             
             Text(title).foregroundColor(Color("onSurface"))
                 .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .bold, design: .default))
-                .padding(.vertical, Diems.SMALL_PADDING)
+                .padding(.vertical, Diems.MEDIUM_PADDING)
             Spacer()
           
             if(isCartVisible){
