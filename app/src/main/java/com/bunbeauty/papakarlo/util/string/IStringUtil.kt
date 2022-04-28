@@ -1,8 +1,7 @@
 package com.bunbeauty.papakarlo.util.string
 
-import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.model.order.OrderStatus
 import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.model.date_time.DateTime
 import com.bunbeauty.domain.model.date_time.Time
 

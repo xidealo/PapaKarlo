@@ -30,24 +30,6 @@ class CartProductInteractor(
         }
     }
 
-    override fun observeCartProductList(): Flow<List<LightCartProduct>> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            cartProductList.map { cartProduct ->
-                LightCartProduct(
-                    uuid = cartProduct.uuid,
-                    name = cartProduct.product.name,
-                    newCost = productInteractor.getProductPositionNewCost(cartProduct),
-                    oldCost = productInteractor.getProductPositionOldCost(cartProduct),
-                    photoLink = cartProduct.product.photoLink,
-                    count = cartProduct.count,
-                    menuProductUuid = cartProduct.product.uuid,
-                )
-            }.sortedBy { cartProduct ->
-                cartProduct.name
-            }
-        }
-    }
-
     override fun observeTotalCartCount(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getTotalCount(cartProductList)
@@ -57,12 +39,6 @@ class CartProductInteractor(
     override fun observeNewTotalCartCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getNewTotalCost(cartProductList)
-        }
-    }
-
-    override fun observeOldTotalCartCost(): Flow<Int?> {
-        return cartProductRepo.observeCartProductList().map { cartProductList ->
-            productInteractor.getOldTotalCost(cartProductList)
         }
     }
 
@@ -87,20 +63,6 @@ class CartProductInteractor(
                         deliveryCost = productInteractor.getDeliveryCost(cartProductList),
                         amountToPay = amountToPay
                     )
-                }
-            }
-        }
-    }
-
-    override fun observeAmountToPay(isDeliveryFlow: Flow<Boolean>): Flow<Int> {
-        return observeNewTotalCartCost().flatMapLatest { newTotalCost ->
-            observeDeliveryCost().flatMapLatest { deliveryCost ->
-                isDeliveryFlow.map { isDelivery ->
-                    if (isDelivery) {
-                        newTotalCost + deliveryCost
-                    } else {
-                        newTotalCost
-                    }
                 }
             }
         }

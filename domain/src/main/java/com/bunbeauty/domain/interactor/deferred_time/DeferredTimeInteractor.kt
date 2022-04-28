@@ -12,12 +12,6 @@ class DeferredTimeInteractor(
     private val dataStoreRepo: DataStoreRepo
 ) : IDeferredTimeInteractor {
 
-    override suspend fun isDeferredTimeAvailable(): Boolean {
-        return dataStoreRepo.getSelectedCityTimeZone().let { timeZone ->
-            dateTimeUtil.getCurrentDateTime(timeZone).date == getMinDateTime().date
-        }
-    }
-
     override suspend fun getMinTime(): Time {
         return getMinDateTime().time
     }
@@ -27,24 +21,6 @@ class DeferredTimeInteractor(
             time,
             dataStoreRepo.getSelectedCityTimeZone()
         )
-    }
-
-    override suspend fun getDeferredTimeHours(deferredTimeMillis: Long): Int {
-        return dataStoreRepo.getSelectedCityTimeZone().let { timeZone ->
-            dateTimeUtil.toTime(deferredTimeMillis, timeZone).hourOfDay
-        }
-    }
-
-    override suspend fun getDeferredTimeMinutes(deferredTimeMillis: Long): Int {
-        return dataStoreRepo.getSelectedCityTimeZone().let { timeZone ->
-            dateTimeUtil.toTime(deferredTimeMillis, timeZone).minuteOfHour
-        }
-    }
-
-    override suspend fun getDeferredTime(deferredTimeMillis: Long): Time {
-        return dataStoreRepo.getSelectedCityTimeZone().let { timeZone ->
-            dateTimeUtil.toTime(deferredTimeMillis, timeZone)
-        }
     }
 
     suspend fun getMinDateTime(): DateTime {

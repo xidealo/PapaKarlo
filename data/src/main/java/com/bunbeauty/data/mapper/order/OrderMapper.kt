@@ -3,7 +3,7 @@ package com.bunbeauty.data.mapper.order
 import com.bunbeauty.data.mapper.order_product.IOrderProductMapper
 import com.bunbeauty.data.network.model.order.get.OrderServer
 import com.bunbeauty.data.network.model.order.post.OrderPostServer
-import com.bunbeauty.domain.enums.OrderStatus
+import com.bunbeauty.domain.model.order.OrderStatus
 import com.bunbeauty.domain.model.order.CreatedOrder
 import com.bunbeauty.domain.model.order.LightOrder
 import com.bunbeauty.domain.model.order.Order

@@ -21,10 +21,6 @@ class MenuProductInteractor(
         }
     }
 
-    override fun observeMenuSectionList(): Flow<List<MenuSection>> {
-        return menuProductRepo.observeMenuProductList().map(::toMenuSectionList)
-    }
-
     override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
         return menuProductRepo.observeMenuProductByUuid(menuProductUuid)
     }

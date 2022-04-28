@@ -1,6 +1,5 @@
 package com.bunbeauty.domain.interactor.order
 
-import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.domain.interactor.product.IProductInteractor
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.model.order.CreatedOrder
@@ -13,7 +12,6 @@ import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class OrderInteractor(
     private val orderRepo: OrderRepo,
@@ -25,12 +23,6 @@ class OrderInteractor(
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
         val userUuid = dataStoreRepo.getUserUuid()
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
-    }
-
-    override fun observeOrderStatusByUuid(orderUuid: String): Flow<OrderStatus?> {
-        return orderRepo.observeOrderByUuid(orderUuid).mapFlow { orderDetails ->
-            orderDetails.status
-        }
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?> {

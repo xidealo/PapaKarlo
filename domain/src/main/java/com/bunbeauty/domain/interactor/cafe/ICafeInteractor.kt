@@ -2,7 +2,6 @@ package com.bunbeauty.domain.interactor.cafe
 
 import com.bunbeauty.domain.model.cafe.Cafe
 import com.bunbeauty.domain.model.cafe.CafeAddress
-import com.bunbeauty.domain.model.cafe.CafePreview
 import com.bunbeauty.domain.model.cafe.CafeStatus
 import kotlinx.coroutines.flow.Flow
 

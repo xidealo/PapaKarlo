@@ -13,8 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.domain.enums.OrderStatus
-import com.bunbeauty.papakarlo.R
+import com.bunbeauty.domain.model.order.OrderStatus
 import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.StatusChip
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme

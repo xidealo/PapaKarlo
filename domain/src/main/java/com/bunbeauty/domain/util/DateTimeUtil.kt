@@ -23,10 +23,6 @@ class DateTimeUtil : IDateTimeUtil {
         return getCurrentMinuteSecond(currentMillis, timeZone)
     }
 
-    override fun getCurrentDateTime(timeZone: String): DateTime {
-        return getCurrentDateTime(currentMillis, timeZone)
-    }
-
     override fun getDateTimeIn(hour: Int, minute: Int, timeZone: String): DateTime {
         return getDateTimeIn(currentMillis, hour, minute, timeZone)
     }
