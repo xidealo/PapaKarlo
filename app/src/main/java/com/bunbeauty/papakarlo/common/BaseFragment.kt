@@ -11,12 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.extensions.clearErrorFocus
-import com.bunbeauty.papakarlo.extensions.setErrorFocus
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.android.inject
 

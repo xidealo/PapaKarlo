@@ -10,20 +10,17 @@ import com.bunbeauty.data.di.networkModule
 import com.bunbeauty.data.di.repositoryModule
 import com.bunbeauty.domain.di.interactorModule
 import com.bunbeauty.domain.di.utilModule
-import com.bunbeauty.papakarlo.di.modules.*
-import com.bunbeauty.shared.AppInfo
+import com.bunbeauty.papakarlo.di.appModule
+import com.bunbeauty.papakarlo.di.appUtilModule
+import com.bunbeauty.papakarlo.di.uiMapperModule
+import com.bunbeauty.papakarlo.di.viewModelModule
 import com.bunbeauty.shared.di.initKoin
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
 import org.koin.core.logger.Level
-import kotlin.coroutines.CoroutineContext
 
-class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
-
-    override val coroutineContext: CoroutineContext = Job()
+class PapaKarloApplication : Application(), KoinComponent {
 
     override fun onCreate() {
         setTheme(R.style.AppTheme)
@@ -51,9 +48,5 @@ class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
                 .build()
         )
     }
-}
-
-object AndroidAppInfo : AppInfo {
-    override val appId: String = "BuildConfig.APPLICATION_ID"
 }
 

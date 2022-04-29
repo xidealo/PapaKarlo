@@ -25,12 +25,12 @@ import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.element.SmallButton
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
+import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 
 @Composable
 fun MenuProductItem(
     modifier: Modifier = Modifier,
-    menuProductItemModel: MenuProductItemModel,
+    menuProductItem: MenuProductItem,
     onButtonClicked: () -> Unit,
     onClick: () -> Unit,
 ) {
@@ -48,7 +48,7 @@ fun MenuProductItem(
             AsyncImage(
                 modifier = Modifier.fillMaxWidth(),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(menuProductItemModel.photoLink)
+                    .data(menuProductItem.photoLink)
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
@@ -57,23 +57,23 @@ fun MenuProductItem(
             )
             Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
                 OverflowingText(
-                    text = menuProductItemModel.name,
+                    text = menuProductItem.name,
                     style = FoodDeliveryTheme.typography.h3,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
-                    menuProductItemModel.oldPrice?.let {
+                    menuProductItem.oldPrice?.let {
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
-                            text = menuProductItemModel.oldPrice,
+                            text = menuProductItem.oldPrice,
                             style = FoodDeliveryTheme.typography.body2,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )
                     }
                     Text(
-                        text = menuProductItemModel.newPrice,
+                        text = menuProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.body2,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
@@ -94,7 +94,7 @@ fun MenuProductItem(
 @Composable
 private fun MenuProductItemPreview() {
     MenuProductItem(
-        menuProductItemModel = MenuProductItemModel(
+        menuProductItem = MenuProductItem(
             uuid = "",
             photoLink = "",
             name = "Бэргер",

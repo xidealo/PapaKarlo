@@ -27,12 +27,11 @@ import com.bunbeauty.papakarlo.NavMainDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
-import com.bunbeauty.papakarlo.compose.icon
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.largeRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.extensions.startedLaunch
-import com.bunbeauty.papakarlo.extensions.toggleVisibility
+import com.bunbeauty.papakarlo.extensions.showOrGone
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.Flow
@@ -153,14 +152,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination !is FloatingWindow) {
                 val isToolbarVisible = destination.id in toolbarFragmentIdList
-                viewBinding.activityMainTbToolbar.toggleVisibility(isToolbarVisible)
+                viewBinding.activityMainTbToolbar.showOrGone(isToolbarVisible)
                 val isLogoVisible = destination.id in logoFragmentIdList
-                viewBinding.activityMainIvLogo.toggleVisibility(isLogoVisible)
+                viewBinding.activityMainIvLogo.showOrGone(isLogoVisible)
                 val isCartVisible = destination.id in cartFragmentIdList
-                viewBinding.activityMainClCart.toggleVisibility(isCartVisible)
-                viewBinding.activityMainIvCart.toggleVisibility(isCartVisible)
+                viewBinding.activityMainClCart.showOrGone(isCartVisible)
+                viewBinding.activityMainIvCart.showOrGone(isCartVisible)
                 val isBottomNavigationVisible = destination.id in bottomNavigationFragmentIdList
-                viewBinding.activityMainBnvBottomNavigation.toggleVisibility(
+                viewBinding.activityMainBnvBottomNavigation.showOrGone(
                     isBottomNavigationVisible
                 )
             }
@@ -201,7 +200,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun observeIsOnline() {
         viewModel.isOnline.startedLaunch { isOnline ->
-            viewBinding.activityMainTvInternetWarning.toggleVisibility(!isOnline)
+            viewBinding.activityMainTvInternetWarning.showOrGone(!isOnline)
         }
     }
 

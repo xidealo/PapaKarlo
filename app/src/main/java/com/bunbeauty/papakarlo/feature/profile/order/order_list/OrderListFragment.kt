@@ -43,7 +43,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
     }
 
     @Composable
-    private fun OrderListScreen(orderListState: State<List<OrderItemModel>>) {
+    private fun OrderListScreen(orderListState: State<List<OrderItem>>) {
         when (orderListState) {
             is State.Success -> {
                 OrderListScreenSuccess(orderListState.data)
@@ -65,7 +65,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
     }
 
     @Composable
-    private fun OrderListScreenSuccess(orderItemModelList: List<OrderItemModel>) {
+    private fun OrderListScreenSuccess(orderItemList: List<OrderItem>) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -75,7 +75,7 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                itemsIndexed(orderItemModelList) { i, orderItemModel ->
+                itemsIndexed(orderItemList) { i, orderItemModel ->
                     OrderItem(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
@@ -95,59 +95,52 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
         OrderListScreen(
             State.Success(
                 listOf(
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.NOT_ACCEPTED,
                         statusName = "Обрабатывется",
-                        statusColorId = 0,
                         code = "О-01",
                         dateTime = "30 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.ACCEPTED,
                         statusName = "Принят",
-                        statusColorId = 0,
                         code = "П-02",
                         dateTime = "29 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.PREPARING,
                         statusName = "Готовится",
-                        statusColorId = 0,
                         code = "Г-03",
                         dateTime = "28 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.DONE,
                         statusName = "Готов",
-                        statusColorId = 0,
                         code = "Г-04",
                         dateTime = "27 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.SENT_OUT,
                         statusName = "В пути",
-                        statusColorId = 0,
                         code = "В-05",
                         dateTime = "26 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.DELIVERED,
                         statusName = "Выдан",
-                        statusColorId = 0,
                         code = "В-06",
                         dateTime = "25 января 12:59"
                     ),
-                    OrderItemModel(
+                    OrderItem(
                         uuid = "",
                         status = OrderStatus.CANCELED,
                         statusName = "Отменен",
-                        statusColorId = 0,
                         code = "О-07",
                         dateTime = "24 января 12:59"
                     ),

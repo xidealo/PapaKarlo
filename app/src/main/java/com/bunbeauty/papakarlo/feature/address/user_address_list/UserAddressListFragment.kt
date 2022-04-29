@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.address.AddressItemModel
+import com.bunbeauty.papakarlo.feature.address.AddressItem
 import core_common.Constants.RESULT_USER_ADDRESS_KEY
 import core_common.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
@@ -44,16 +44,16 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentUserAddressListCvMain.compose {
-            val addressItemModelListState by viewModel.addressItemModelList.collectAsState()
+            val addressItemModelListState by viewModel.addressListState.collectAsState()
             UserAddressListScreen(addressItemModelListState)
         }
     }
 
     @Composable
-    private fun UserAddressListScreen(addressItemModelListState: State<List<AddressItemModel>>) {
-        when (addressItemModelListState) {
+    private fun UserAddressListScreen(addressItemListState: State<List<AddressItem>>) {
+        when (addressItemListState) {
             is State.Success -> {
-                UserAddressListSuccessScreen(addressItemModelListState.data)
+                UserAddressListSuccessScreen(addressItemListState.data)
             }
             is State.Loading -> {
                 LoadingScreen()
@@ -68,13 +68,13 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                 )
             }
             is State.Error -> {
-                ErrorScreen(message = addressItemModelListState.message)
+                ErrorScreen(message = addressItemListState.message)
             }
         }
     }
 
     @Composable
-    private fun UserAddressListSuccessScreen(addressItemModelList: List<AddressItemModel>) {
+    private fun UserAddressListSuccessScreen(addressItemList: List<AddressItem>) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -85,7 +85,7 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                 modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                itemsIndexed(addressItemModelList) { i, addressItemModel ->
+                itemsIndexed(addressItemList) { i, addressItemModel ->
                     AddressItem(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
@@ -113,13 +113,13 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
     @Preview
     @Composable
     private fun UserAddressListSuccessScreenPreview() {
-        val addressItemModel = AddressItemModel(
+        val addressItemModel = AddressItem(
             uuid = "",
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
             isClickable = false,
         )
         UserAddressListScreen(
-            addressItemModelListState = State.Success(
+            addressItemListState = State.Success(
                 listOf(
                     addressItemModel,
                     addressItemModel,
@@ -133,12 +133,12 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
     @Preview
     @Composable
     private fun UserAddressListEmptyScreenPreview() {
-        UserAddressListScreen(addressItemModelListState = State.Empty())
+        UserAddressListScreen(addressItemListState = State.Empty())
     }
 
     @Preview
     @Composable
     private fun UserAddressListLoadingScreenPreview() {
-        UserAddressListScreen(addressItemModelListState = State.Loading())
+        UserAddressListScreen(addressItemListState = State.Loading())
     }
 }

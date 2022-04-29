@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.modules
+package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.cafe_address_list.CafeAddressListViewModel

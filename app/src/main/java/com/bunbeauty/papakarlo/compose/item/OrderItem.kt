@@ -11,8 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.domain.enums.OrderStatus
@@ -20,14 +18,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.element.StatusChip
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OrderItem(
     modifier: Modifier = Modifier,
-    orderItem: OrderItemModel,
+    orderItem: OrderItem,
     onClick: () -> Unit
 ) {
     Card(
@@ -72,11 +69,10 @@ fun OrderItem(
 @Composable
 fun OrderItemPreview() {
     OrderItem(
-        orderItem = OrderItemModel(
+        orderItem = OrderItem(
             uuid = "",
             status = OrderStatus.NOT_ACCEPTED,
             statusName = "Обрабатывается",
-            statusColorId = R.color.white,
             code = "Щ-99",
             dateTime = "9 февраля 22:00"
         )
@@ -87,11 +83,10 @@ fun OrderItemPreview() {
 @Composable
 fun OrderItemLageFontPreview() {
     OrderItem(
-        orderItem = OrderItemModel(
+        orderItem = OrderItem(
             uuid = "",
             status = OrderStatus.NOT_ACCEPTED,
             statusName = "Обрабатывается",
-            statusColorId = R.color.white,
             code = "Щ-99",
             dateTime = "9 февраля 22:00"
         )

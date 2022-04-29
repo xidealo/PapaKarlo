@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.consumer_cart
 
-data class CartProductItemModel(
+data class CartProductItem(
     val uuid: String,
     val name: String,
     val newCost: String,

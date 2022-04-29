@@ -18,9 +18,9 @@ class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
 ) : CartViewModel() {
 
-    private val mutableCafeItemList: MutableStateFlow<State<List<CafeItemModel>>> =
+    private val mutableCafeItemList: MutableStateFlow<State<List<CafeItem>>> =
         MutableStateFlow(State.Loading())
-    val cafeItemList: StateFlow<State<List<CafeItemModel>>> =
+    val cafeItemList: StateFlow<State<List<CafeItem>>> =
         mutableCafeItemList.asStateFlow()
 
     private var observeMinutesOfDayJob: Job? = null
@@ -38,17 +38,17 @@ class CafeListViewModel(
         }
     }
 
-    fun onCafeCardClicked(cafeItem: CafeItemModel) {
+    fun onCafeCardClicked(cafeItem: CafeItem) {
         router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
     }
 
-    private suspend fun List<Cafe>?.toState(): State<List<CafeItemModel>> {
+    private suspend fun List<Cafe>?.toState(): State<List<CafeItem>> {
         return this?.map { cafe ->
             toItemModel(cafe)
         }.toState(resourcesProvider.getString(R.string.error_cafe_list_loading))
     }
 
-    private suspend fun toItemModel(cafe: Cafe): CafeItemModel {
+    private suspend fun toItemModel(cafe: Cafe): CafeItem {
         val fromTime = cafeInteractor.getCafeTime(cafe.fromTime)
         val toTime = cafeInteractor.getCafeTime(cafe.toTime)
         val isOpenMessage = if (cafeInteractor.isClosed(cafe)) {
@@ -62,7 +62,7 @@ class CafeListViewModel(
         }
         val cafeStatus = cafeInteractor.getCafeStatus(cafe)
 
-        return CafeItemModel(
+        return CafeItem(
             uuid = cafe.uuid,
             address = cafe.address,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",

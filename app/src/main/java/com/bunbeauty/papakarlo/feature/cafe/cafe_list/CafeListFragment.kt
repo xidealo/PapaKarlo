@@ -42,7 +42,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     }
 
     @Composable
-    private fun CafeListScreen(cafeItemListState: State<List<CafeItemModel>>) {
+    private fun CafeListScreen(cafeItemListState: State<List<CafeItem>>) {
         when (cafeItemListState) {
             is State.Success -> CafeListSuccessScreen(cafeItemListState.data)
             is State.Loading -> LoadingScreen()
@@ -54,7 +54,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     }
 
     @Composable
-    private fun CafeListSuccessScreen(cafeItemList: List<CafeItemModel>) {
+    private fun CafeListSuccessScreen(cafeItemList: List<CafeItem>) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
@@ -78,21 +78,21 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         CafeListScreen(
             cafeItemListState = State.Success(
                 listOf(
-                    CafeItemModel(
+                    CafeItem(
                         uuid = "",
                         address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                         workingHours = "9:00 - 22:00",
                         isOpenMessage = "Открыто",
                         cafeStatus = CafeStatus.OPEN,
                     ),
-                    CafeItemModel(
+                    CafeItem(
                         uuid = "",
                         address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                         workingHours = "9:00 - 22:00",
                         isOpenMessage = "Открыто. Закроется через 30 минут",
                         cafeStatus = CafeStatus.CLOSE_SOON,
                     ),
-                    CafeItemModel(
+                    CafeItem(
                         uuid = "",
                         address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                         workingHours = "9:00 - 22:00",

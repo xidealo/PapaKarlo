@@ -16,9 +16,9 @@ class OrderListViewModel(
     private val userInteractor: IUserInteractor,
 ) : BaseViewModel() {
 
-    private val mutableOrderListState: MutableStateFlow<State<List<OrderItemModel>>> =
+    private val mutableOrderListState: MutableStateFlow<State<List<OrderItem>>> =
         MutableStateFlow(State.Loading())
-    val orderListState: StateFlow<State<List<OrderItemModel>>> =
+    val orderListState: StateFlow<State<List<OrderItem>>> =
         mutableOrderListState.asStateFlow()
 
     init {
@@ -35,7 +35,7 @@ class OrderListViewModel(
         }
     }
 
-    fun onOrderClicked(orderItem: OrderItemModel) {
+    fun onOrderClicked(orderItem: OrderItem) {
         router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 

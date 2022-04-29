@@ -57,7 +57,7 @@ class ConsumerCartViewModel(
         }
     }
 
-    fun onProductClicked(cartProductItem: CartProductItemModel) {
+    fun onProductClicked(cartProductItem: CartProductItem) {
         router.navigate(toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
     }
 
@@ -79,8 +79,8 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun toItem(lightCartProduct: LightCartProduct): CartProductItemModel {
-        return CartProductItemModel(
+    private fun toItem(lightCartProduct: LightCartProduct): CartProductItem {
+        return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
             newCost = stringUtil.getCostString(lightCartProduct.newCost),

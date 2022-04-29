@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.cafe.cafe_list
 
 import com.bunbeauty.domain.model.cafe.CafeStatus
 
-data class CafeItemModel(
+data class CafeItem(
     val uuid: String,
     val address: String,
     val workingHours: String,

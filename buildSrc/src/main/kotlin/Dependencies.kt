@@ -11,28 +11,19 @@ object Versions {
     const val koin = "3.1.5"
 
     const val sqlDelight = "1.5.3"
-    const val slf4j = "1.7.30"
 
     const val constraintLayout = "2.1.3"
 
-    const val dagger = "2.40.1"
-
-    const val room = "2.4.0-rc01"
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
     const val materialComposeThemeAdapter = "1.1.4"
     const val appCompact = "1.4.1"
     const val coil = "2.0.0-rc01"
-    const val glide = "4.13.0"
     const val timePicker = "4.2.3"
     const val compose = "1.2.0-alpha07"
 
     const val dataStorePreferences = "1.0.0"
-
-    const val grpc = "1.40.0"
-
-    const val accompanistVersion = "0.17.0"
 
     const val extensions = "2.2.0"
     const val viewmodel = "2.4.1"
@@ -42,9 +33,7 @@ object Versions {
 
     const val viewBindingDelegate = "1.5.3"
 
-    const val googleMap = "17.0.1"
     const val googleMapUtils = "2.2.3"
-    const val googleMapUtilsKTX = "3.1.0"
 
     const val kotlinxDateTime = "0.3.2"
 
@@ -130,19 +119,6 @@ object Lifecycle {
     const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 }
 
-object Dagger {
-    const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
-    const val compiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
-    const val android = "com.google.dagger:dagger-android:${Versions.dagger}"
-    const val androidProcessor = "com.google.dagger:dagger-android-processor:${Versions.dagger}"
-}
-
-object Room {
-    const val runtime = "androidx.room:room-runtime:${Versions.room}"
-    const val compiler = "androidx.room:room-compiler:${Versions.room}"
-    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
-}
-
 object Test {
     const val junit = "junit:junit:${Versions.junit}"
 }
@@ -181,11 +157,6 @@ object Coil {
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
 }
 
-object Glide {
-    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
-}
-
 object TimePicker {
     const val timePicker = "com.wdullaer:materialdatetimepicker:${Versions.timePicker}"
 }
@@ -197,10 +168,6 @@ object KotlinxDateTime {
 object DataStore {
     const val dataStorePreferences =
         "androidx.datastore:datastore-preferences:${Versions.dataStorePreferences}"
-}
-
-object Grpc {
-    const val grpc = "io.grpc:grpc-okhttp:${Versions.grpc}"
 }
 
 object Serialization {
@@ -246,18 +213,3 @@ object ViewBindingDelegate {
 object Leakcanary {
     const val android = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
 }
-
-/*object Compose {
-    const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-    const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
-    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
-    const val material = "androidx.compose.material:material:${Versions.compose}"
-    const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
-    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
-    const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
-    const val compiler = "androidx.compose.compiler:compiler:${Versions.compose}"
-    const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintCompose}"
-    const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
-}*/

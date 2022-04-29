@@ -90,7 +90,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                             modifier = Modifier.padding(
                                 top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                             ),
-                            cartProductItemModel = cartProductItemModel,
+                            cartProductItem = cartProductItemModel,
                             onCountIncreased = {
                                 viewModel.addProductToCart(cartProductItemModel.menuProductUuid)
                             },
@@ -149,7 +149,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
-        val cartProductItemModel = CartProductItemModel(
+        val cartProductItemModel = CartProductItem(
             uuid = "",
             name = "Бэргер",
             newCost = "300 ₽",

@@ -5,7 +5,7 @@ import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.model.address.UserAddress
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.address.AddressItemModel
+import com.bunbeauty.papakarlo.feature.address.AddressItem
 import com.bunbeauty.papakarlo.feature.address.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +20,10 @@ class UserAddressListViewModel(
 
     private val isClickable = savedStateHandle["isClickable"] ?: false
 
-    private val mutableAddressItemModelList: MutableStateFlow<State<List<AddressItemModel>>> =
+    private val mutableAddressListState: MutableStateFlow<State<List<AddressItem>>> =
         MutableStateFlow(State.Loading())
-    val addressItemModelList: StateFlow<State<List<AddressItemModel>>> =
-        mutableAddressItemModelList.asStateFlow()
+    val addressListState: StateFlow<State<List<AddressItem>>> =
+        mutableAddressListState.asStateFlow()
 
     init {
         observeUserAddressList()
@@ -35,12 +35,12 @@ class UserAddressListViewModel(
 
     private fun observeUserAddressList() {
         addressInteractor.observeAddressList().launchOnEach { userAddressList ->
-            mutableAddressItemModelList.value = userAddressList.map(::toItem).toState()
+            mutableAddressListState.value = userAddressList.map(::toItem).toState()
         }
     }
 
-    private fun toItem(userAddress: UserAddress): AddressItemModel {
-        return AddressItemModel(
+    private fun toItem(userAddress: UserAddress): AddressItem {
+        return AddressItem(
             uuid = userAddress.uuid,
             address = stringUtil.getUserAddressString(userAddress) ?: "",
             isClickable = isClickable

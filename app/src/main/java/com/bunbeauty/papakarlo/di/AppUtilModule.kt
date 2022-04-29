@@ -1,11 +1,9 @@
-package com.bunbeauty.papakarlo.di.modules
+package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.PhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.feature.main.network.NetworkUtil
-import com.bunbeauty.papakarlo.util.color.ColorUtil
-import com.bunbeauty.papakarlo.util.color.IColorUtil
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
@@ -30,5 +28,4 @@ fun appUtilModule() = module {
             resourcesProvider = get(),
         )
     }
-    single<IColorUtil> { ColorUtil() }
 }

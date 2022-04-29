@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.di.modules
+package com.bunbeauty.papakarlo.di
 
 import android.content.Context
 import android.net.ConnectivityManager

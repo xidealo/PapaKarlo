@@ -17,12 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.compose.theme.smallRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
+import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
 @Composable
 fun CategoryItem(
     modifier: Modifier = Modifier,
-    categoryItemModel: CategoryItemModel,
+    categoryItem: CategoryItem,
     onClick: () -> Unit
 ) {
     Card(
@@ -35,23 +35,23 @@ fun CategoryItem(
             )
             .clip(smallRoundedCornerShape)
             .clickable(
-                enabled = !categoryItemModel.isSelected,
+                enabled = !categoryItem.isSelected,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = if (categoryItemModel.isSelected) {
+        backgroundColor = if (categoryItem.isSelected) {
             FoodDeliveryTheme.colors.primary
         } else {
             FoodDeliveryTheme.colors.surface
         }
     ) {
-        val style = if (categoryItemModel.isSelected) {
+        val style = if (categoryItem.isSelected) {
             FoodDeliveryTheme.typography.h3
         } else {
             FoodDeliveryTheme.typography.body2
         }
-        val color = if (categoryItemModel.isSelected) {
+        val color = if (categoryItem.isSelected) {
             FoodDeliveryTheme.colors.onPrimary
         } else {
             FoodDeliveryTheme.colors.onSurface
@@ -66,7 +66,7 @@ fun CategoryItem(
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
-                text = categoryItemModel.name,
+                text = categoryItem.name,
                 style = style,
                 color = color,
                 textAlign = TextAlign.Center
@@ -79,7 +79,7 @@ fun CategoryItem(
 @Composable
 fun CategoryItemSelectedPreview() {
     CategoryItem(
-        categoryItemModel = CategoryItemModel(
+        categoryItem = CategoryItem(
             key = "",
             uuid = "",
             name = "Бургеры",
@@ -92,7 +92,7 @@ fun CategoryItemSelectedPreview() {
 @Composable
 fun CategoryItemNotSelectedPreview() {
     CategoryItem(
-        categoryItemModel = CategoryItemModel(
+        categoryItem = CategoryItem(
             key = "",
             uuid = "",
             name = "Бургеры",

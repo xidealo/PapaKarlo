@@ -11,13 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
@@ -27,14 +24,13 @@ import com.bunbeauty.papakarlo.compose.card
 import com.bunbeauty.papakarlo.compose.custom.CountPicker
 import com.bunbeauty.papakarlo.compose.element.OverflowingText
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.consumer_cart.CartProductItemModel
+import com.bunbeauty.papakarlo.feature.consumer_cart.CartProductItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CartProductItem(
     modifier: Modifier = Modifier,
-    cartProductItemModel: CartProductItemModel,
+    cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
     onClick: () -> Unit
@@ -56,7 +52,7 @@ fun CartProductItem(
                     .heightIn(min = FoodDeliveryTheme.dimensions.productImageSmallHeight)
                     .width(FoodDeliveryTheme.dimensions.productImageSmallWidth),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(cartProductItemModel.photoLink)
+                    .data(cartProductItem.photoLink)
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
@@ -69,24 +65,24 @@ fun CartProductItem(
                     .padding(FoodDeliveryTheme.dimensions.smallSpace)
             ) {
                 OverflowingText(
-                    text = cartProductItemModel.name,
+                    text = cartProductItem.name,
                     style = FoodDeliveryTheme.typography.h3,
                     color = FoodDeliveryTheme.colors.onSurface,
                     maxLines = 2
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
-                    cartProductItemModel.oldCost?.let {
+                    cartProductItem.oldCost?.let {
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = cartProductItemModel.oldCost,
+                            text = cartProductItem.oldCost,
                             style = FoodDeliveryTheme.typography.body2,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )
                     }
                     Text(
-                        text = cartProductItemModel.newCost,
+                        text = cartProductItem.newCost,
                         style = FoodDeliveryTheme.typography.body2,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
@@ -96,7 +92,7 @@ fun CartProductItem(
                 modifier = Modifier
                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace)
                     .align(CenterVertically),
-                count = cartProductItemModel.count,
+                count = cartProductItem.count,
                 onCountIncreased = onCountIncreased,
                 onCountDecreased = onCountDecreased,
             )
@@ -108,7 +104,7 @@ fun CartProductItem(
 @Composable
 private fun CartProductItemPreview() {
     CartProductItem(
-        cartProductItemModel = CartProductItemModel(
+        cartProductItem = CartProductItem(
             uuid = "",
             name = "Бургер MINI с говядиной и плавленым сыром",
             newCost = "99 ₽",
@@ -126,7 +122,7 @@ private fun CartProductItemPreview() {
 @Composable
 private fun CartProductItemWithoutOldCostPreview() {
     CartProductItem(
-        cartProductItemModel = CartProductItemModel(
+        cartProductItem = CartProductItem(
             uuid = "",
             name = "Бургер MINI с говядиной и плавленым сыром",
             newCost = "99 ₽",

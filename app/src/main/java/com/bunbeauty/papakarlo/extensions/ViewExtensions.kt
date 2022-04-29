@@ -40,20 +40,11 @@ fun View.gone(): View {
     return this
 }
 
-fun View.toggleVisibility(isVisible: Boolean): View {
+fun View.showOrGone(isVisible: Boolean): View {
     if (isVisible) {
         this.visible()
     } else {
         this.gone()
-    }
-    return this
-}
-
-fun View.toggleVisibilityInvisibility(isVisible: Boolean): View {
-    if (isVisible) {
-        this.visible()
-    } else {
-        this.invisible()
     }
     return this
 }
@@ -91,47 +82,6 @@ fun View.showSnackbar(
 
 private fun getPixels(context: Context, dp: Int): Int {
     return (dp * context.resources.displayMetrics.density).toInt()
-}
-
-fun TextView.strikeOutText() {
-    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-}
-
-fun TextView.underlineText() {
-    paintFlags = paintFlags or Paint.UNDERLINE_TEXT_FLAG
-}
-
-fun TextInputLayout.setErrorFocus(errorMessage: String) {
-    this.error = errorMessage
-    this.isErrorEnabled = true
-    this.requestFocus()
-}
-
-fun TextInputLayout.clearErrorFocus() {
-    this.error = null
-    this.isErrorEnabled = false
-}
-
-fun View.focusAndShowKeyboard() {
-    requestFocus()
-
-    // Show keyboard
-    val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-    inputMethodManager.showSoftInput(this, 0)
-}
-
-fun RecyclerView.scrollToPositionWithOffset(position: Int, offset: Int) {
-    (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, offset)
-}
-
-@ExperimentalCoilApi
-fun ImageView.setPhoto(photoLink: String) {
-    load(photoLink) {
-        crossfade(true)
-        placeholder(R.drawable.placeholder)
-        error(R.drawable.placeholder)
-        size(ViewSizeResolver(this@setPhoto))
-    }
 }
 
 inline fun ComposeView.compose(crossinline content: @Composable () -> Unit) {

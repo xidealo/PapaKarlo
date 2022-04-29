@@ -19,13 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.domain.model.cafe.CafeStatus
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeItemModel
+import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeItem
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CafeItem(
     modifier: Modifier = Modifier,
-    cafeItem: CafeItemModel,
+    cafeItem: CafeItem,
     onClick: () -> Unit
 ) {
     Card(
@@ -75,7 +75,7 @@ fun CafeItem(
 @Composable
 private fun CafeItemOpenPreview() {
     CafeItem(
-        cafeItem = CafeItemModel(
+        cafeItem = CafeItem(
             uuid = "",
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
             workingHours = "9:00 - 22:00",
@@ -89,7 +89,7 @@ private fun CafeItemOpenPreview() {
 @Composable
 private fun CafeItemCloseSoonPreview() {
     CafeItem(
-        cafeItem = CafeItemModel(
+        cafeItem = CafeItem(
             uuid = "",
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
             workingHours = "9:00 - 22:00",
@@ -103,7 +103,7 @@ private fun CafeItemCloseSoonPreview() {
 @Composable
 private fun CafeItemClosedPreview() {
     CafeItem(
-        cafeItem = CafeItemModel(
+        cafeItem = CafeItem(
             uuid = "",
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
             workingHours = "9:00 - 22:00",

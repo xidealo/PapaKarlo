@@ -27,7 +27,7 @@ import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.address.AddressItemModel
+import com.bunbeauty.papakarlo.feature.address.AddressItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_address_list) {
@@ -45,7 +45,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
     }
 
     @Composable
-    private fun CafeAddressListScreen(cafeAddressList: List<AddressItemModel>?) {
+    private fun CafeAddressListScreen(cafeAddressList: List<AddressItem>?) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -61,7 +61,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
     }
 
     @Composable
-    private fun CafeAddressListSuccessScreen(cafeAddressList: List<AddressItemModel>) {
+    private fun CafeAddressListSuccessScreen(cafeAddressList: List<AddressItem>) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Title(textStringId = R.string.title_cafe_addresses)
             LazyColumn(
@@ -101,7 +101,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
         }
     }
 
-    private val addressItemModel = AddressItemModel(
+    private val addressItemModel = AddressItem(
         uuid = "",
         address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
         isClickable = true

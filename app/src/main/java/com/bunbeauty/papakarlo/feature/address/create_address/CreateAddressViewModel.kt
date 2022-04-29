@@ -19,15 +19,15 @@ class CreateAddressViewModel(
     private val addressInteractor: IAddressInteractor,
 ) : BaseViewModel() {
 
-    private val mutableStreetListState: MutableStateFlow<State<List<StreetItemModel>>> =
+    private val mutableStreetListState: MutableStateFlow<State<List<StreetItem>>> =
         MutableStateFlow(State.Loading())
-    val streetListState: StateFlow<State<List<StreetItemModel>>> =
+    val streetListState: StateFlow<State<List<StreetItem>>> =
         mutableStreetListState.asStateFlow()
 
     fun getStreetList() {
         viewModelScope.launch {
             mutableStreetListState.value = streetInteractor.getStreetList()?.map { street ->
-                StreetItemModel(
+                StreetItem(
                     uuid = street.uuid,
                     name = street.name,
                     cityUuid = street.cityUuid,

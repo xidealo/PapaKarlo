@@ -47,7 +47,7 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     }
 
     @Composable
-    private fun CreateAddressScreen(streetListState: State<List<StreetItemModel>>) {
+    private fun CreateAddressScreen(streetListState: State<List<StreetItem>>) {
         when (streetListState) {
             is State.Success -> CreateAddressSuccessScreen(streetListState.data)
             is State.Loading -> LoadingScreen()
@@ -59,7 +59,7 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     }
 
     @Composable
-    private fun CreateAddressSuccessScreen(streetList: List<StreetItemModel>) {
+    private fun CreateAddressSuccessScreen(streetList: List<StreetItem>) {
         val focusManager = LocalFocusManager.current
         var streetText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
             mutableStateOf(TextFieldValue(""))
@@ -223,7 +223,7 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     @Preview(showSystemUi = true)
     @Composable
     private fun CreateAddressSuccessScreenPreview() {
-        val streetItem = StreetItemModel(
+        val streetItem = StreetItem(
             uuid = "",
             name = "улица Чапаева",
             cityUuid = "",

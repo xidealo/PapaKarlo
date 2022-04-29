@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -190,11 +190,10 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                 ProfileUI(
                     userUuid = "",
                     hasAddresses = true,
-                    lastOrderItem = OrderItemModel(
+                    lastOrderItem = OrderItem(
                         uuid = "",
                         status = OrderStatus.NOT_ACCEPTED,
                         statusName = "Обрабатывается",
-                        statusColorId = 0,
                         code = "А-12",
                         dateTime = "30 января 12:59",
                     )

@@ -5,21 +5,18 @@ import com.bunbeauty.domain.model.order.OrderWithAmounts
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItemModel
 import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
-import com.bunbeauty.papakarlo.util.color.IColorUtil
+import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
 class OrderUIMapper(
-    private val stringUtil: IStringUtil,
-    private val colorUtil: IColorUtil
+    private val stringUtil: IStringUtil
 ) : IOrderUIMapper {
 
-    override fun toItem(order: LightOrder): OrderItemModel {
-        return OrderItemModel(
+    override fun toItem(order: LightOrder): OrderItem {
+        return OrderItem(
             uuid = order.uuid,
             status = order.status,
             statusName = stringUtil.getOrderStatusName(order.status),
-            statusColorId = colorUtil.getOrderStatusColorAttr(order.status),
             code = order.code,
             dateTime = stringUtil.getDateTimeString(order.dateTime)
         )

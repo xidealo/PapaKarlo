@@ -21,10 +21,10 @@ import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
-import com.bunbeauty.papakarlo.feature.menu.view_state.MenuItemModel
-import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
-import com.bunbeauty.papakarlo.feature.menu.view_state.MenuUI
+import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -78,14 +78,14 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 snapshotFlow { menuPosition }.collect(viewModel::onMenuPositionChanged)
             }
 
-            CategoryRow(menu.categoryItemModelList, menuLazyListState)
-            MenuColumn(menu.menuItemModelList, menuLazyListState)
+            CategoryRow(menu.categoryItemList, menuLazyListState)
+            MenuColumn(menu.menuItemList, menuLazyListState)
         }
     }
 
     @Composable
     private fun CategoryRow(
-        categoryItemModelList: List<CategoryItemModel>,
+        categoryItemList: List<CategoryItem>,
         menuLazyListState: LazyListState
     ) {
         val coroutineScope = rememberCoroutineScope()
@@ -96,14 +96,14 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             state = categoryLazyListState
         ) {
             itemsIndexed(
-                categoryItemModelList,
+                categoryItemList,
                 key = { _, categoryItemModel -> categoryItemModel.key }
             ) { i, categoryItemModel ->
                 CategoryItem(
                     modifier = Modifier.padding(
                         start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
-                    categoryItemModel = categoryItemModel
+                    categoryItem = categoryItemModel
                 ) {
                     viewModel.onCategoryClicked(categoryItemModel)
                     coroutineScope.launch {
@@ -121,7 +121,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         }
         SideEffect {
             coroutineScope.launch {
-                categoryItemModelList.indexOfFirst { categoryItemModel ->
+                categoryItemList.indexOfFirst { categoryItemModel ->
                     categoryItemModel.isSelected
                 }.let { index ->
                     categoryLazyListState.animateScrollToItem(index)
@@ -132,7 +132,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     @Composable
     private fun MenuColumn(
-        menuItemModelList: List<MenuItemModel>,
+        menuItemList: List<MenuItem>,
         menuLazyListState: LazyListState
     ) {
         LazyColumn(
@@ -145,11 +145,11 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             state = menuLazyListState
         ) {
             itemsIndexed(
-                items = menuItemModelList,
+                items = menuItemList,
                 key = { _, menuItemModel -> menuItemModel.key }
             ) { i, menuItemModel ->
                 when (menuItemModel) {
-                    is MenuItemModel.MenuCategoryHeaderItemModel -> {
+                    is MenuItem.MenuCategoryHeaderItem -> {
                         val topSpace = if (i == 0) {
                             0.dp
                         } else {
@@ -162,13 +162,13 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                             color = FoodDeliveryTheme.colors.onBackground
                         )
                     }
-                    is MenuItemModel.MenuProductPairItemModel -> {
+                    is MenuItem.MenuProductPairItem -> {
                         Row(Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                             MenuProductItem(
                                 modifier = Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace)
                                     .weight(1f),
-                                menuProductItemModel = menuItemModel.firstProduct,
+                                menuProductItem = menuItemModel.firstProduct,
                                 onButtonClicked = {
                                     viewModel.onAddProductClicked(menuItemModel.firstProduct.uuid)
                                 }
@@ -182,7 +182,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                                     modifier = Modifier
                                         .padding(start = FoodDeliveryTheme.dimensions.verySmallSpace)
                                         .weight(1f),
-                                    menuProductItemModel = menuItemModel.secondProduct,
+                                    menuProductItem = menuItemModel.secondProduct,
                                     onButtonClicked = {
                                         viewModel.onAddProductClicked(menuItemModel.secondProduct.uuid)
                                     }
@@ -200,20 +200,20 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenSuccessPreview() {
-        fun getCategoryItemModel(key: String) = CategoryItemModel(
+        fun getCategoryItemModel(key: String) = CategoryItem(
             key = key,
             uuid = "",
             name = "Бургеры",
             isSelected = false
         )
 
-        fun getMenuCategoryHeaderItemModel(key: String) = MenuItemModel.MenuCategoryHeaderItemModel(
+        fun getMenuCategoryHeaderItemModel(key: String) = MenuItem.MenuCategoryHeaderItem(
             key = key,
             uuid = "",
             name = "Бургеры"
         )
 
-        val menuProductItemModel = MenuProductItemModel(
+        val menuProductItemModel = MenuProductItem(
             uuid = "",
             photoLink = "",
             name = "Бэргер",
@@ -221,7 +221,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             oldPrice = "100 ₽",
         )
 
-        fun getMenuProductPairItemModel(key: String) = MenuItemModel.MenuProductPairItemModel(
+        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductPairItem(
             key = key,
             firstProduct = menuProductItemModel,
             secondProduct = menuProductItemModel,
@@ -230,12 +230,12 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         MenuScreen(
             menuState = State.Success(
                 MenuUI(
-                    categoryItemModelList = listOf(
+                    categoryItemList = listOf(
                         getCategoryItemModel("1"),
                         getCategoryItemModel("2"),
                         getCategoryItemModel("3"),
                     ),
-                    menuItemModelList = listOf(
+                    menuItemList = listOf(
                         getMenuCategoryHeaderItemModel("4"),
                         getMenuProductPairItemModel("5"),
                         getMenuProductPairItemModel("6"),

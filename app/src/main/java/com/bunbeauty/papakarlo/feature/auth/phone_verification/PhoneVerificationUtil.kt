@@ -1,9 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth.phone_verification
 
 import android.app.Activity
-import core_common.Constants.SOMETHING_WENT_WRONG
-import core_common.Constants.TOO_MANY_REQUESTS
-import core_common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
@@ -17,29 +14,36 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import core_common.Constants.SOMETHING_WENT_WRONG
+import core_common.Constants.TOO_MANY_REQUESTS
+import core_common.Constants.WRONG_CODE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.CoroutineContext
 
 class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
 
+    private val sendCodeTimeout = 10_000L
+    private val autoRetrievalTimeout = 60L
+
     override val coroutineContext: CoroutineContext
         get() = Job()
 
-    val mutableAuthErrorEvent: Channel<AuthErrorEvent> = Channel()
-    override val authErrorEvent: Flow<AuthErrorEvent> = mutableAuthErrorEvent.receiveAsFlow()
+    private val mutableAuthErrorEvent: MutableSharedFlow<AuthErrorEvent> = MutableSharedFlow(replay = 1)
+    override val authErrorEvent: SharedFlow<AuthErrorEvent> = mutableAuthErrorEvent.asSharedFlow()
 
-    val mutableAuthSuccessEvent: Channel<AuthSuccessEvent> = Channel()
-    override val authSuccessEvent: Flow<AuthSuccessEvent> = mutableAuthSuccessEvent.receiveAsFlow()
+    private val mutableAuthSuccessEvent: MutableSharedFlow<AuthSuccessEvent> = MutableSharedFlow(replay = 1)
+    override val authSuccessEvent: SharedFlow<AuthSuccessEvent> =
+        mutableAuthSuccessEvent.asSharedFlow()
 
-    val mutableCodeSentEvent: Channel<CodeSentEvent> = Channel()
-    override val codeSentEvent: Flow<CodeSentEvent> = mutableCodeSentEvent.receiveAsFlow()
+    private val mutableCodeSentEvent: MutableSharedFlow<CodeSentEvent> = MutableSharedFlow(replay = 1)
+    override val codeSentEvent: SharedFlow<CodeSentEvent> = mutableCodeSentEvent.asSharedFlow()
 
     override fun sendVerificationCode(phone: String, activity: Activity) {
         verifyPhoneNumber(phone, activity)
@@ -64,7 +68,7 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
         token: PhoneAuthProvider.ForceResendingToken? = null
     ) {
         val timeoutJob: Job = launch {
-            delay(SEND_CODE_TIMEOUT)
+            delay(sendCodeTimeout)
             sendError(SOMETHING_WENT_WRONG)
             logE(AUTH_TAG, "sendCodeTimeout")
         }
@@ -101,7 +105,7 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
         val options = PhoneAuthOptions.newBuilder(Firebase.auth)
             .setPhoneNumber(phone)
             .setActivity(activity)
-            .setTimeout(AUTO_RETRIEVAL_TIMEOUT, TimeUnit.SECONDS)
+            .setTimeout(autoRetrievalTimeout, TimeUnit.SECONDS)
             .setCallbacks(verificationCallback)
         if (token != null) {
             options.setForceResendingToken(token)
@@ -124,13 +128,13 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
 
     fun sendError(error: String) {
         launch {
-            mutableAuthErrorEvent.send(AuthErrorEvent(error))
+            mutableAuthErrorEvent.emit(AuthErrorEvent(error))
         }
     }
 
     fun sendSuccess() {
         launch {
-            mutableAuthSuccessEvent.send(AuthSuccessEvent())
+            mutableAuthSuccessEvent.emit(AuthSuccessEvent())
         }
     }
 
@@ -140,12 +144,7 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
         token: PhoneAuthProvider.ForceResendingToken
     ) {
         launch {
-            mutableCodeSentEvent.send(CodeSentEvent(phone, verificationId, token))
+            mutableCodeSentEvent.emit(CodeSentEvent(phone, verificationId, token))
         }
-    }
-
-    companion object {
-        private const val AUTO_RETRIEVAL_TIMEOUT = 60L
-        private const val SEND_CODE_TIMEOUT = 10_000L
     }
 }
