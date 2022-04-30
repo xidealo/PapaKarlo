@@ -18,6 +18,7 @@
     <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
     <string name="description_back_icon">Назад</string>
+    <string name="error_common">Ошибка</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>

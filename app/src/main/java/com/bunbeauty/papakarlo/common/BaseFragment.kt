@@ -26,8 +26,6 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
     abstract val viewModel: BaseViewModel
     val resourcesProvider: IResourcesProvider by inject()
 
-    protected val textInputMap = HashMap<String, TextInputLayout>()
-
     var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
 
@@ -55,12 +53,6 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
                 colorError,
                 error.isTop
             )
-        }
-        viewModel.fieldError.startedLaunch { fieldError ->
-            textInputMap.values.forEach { textInput ->
-                textInput.clearErrorFocus()
-            }
-            textInputMap[fieldError.key]?.setErrorFocus(fieldError.message)
         }
     }
 

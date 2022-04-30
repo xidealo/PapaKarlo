@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -27,18 +26,17 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.custom.OrderStatusBar
 import com.bunbeauty.papakarlo.compose.element.BlurLine
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.item.OrderProductItem
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
 
@@ -67,9 +65,8 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
         ) {
             when (orderState) {
                 is State.Success -> OrderDetailsSuccessScreen(orderState.data)
-                else -> {
-                    CircularProgressBar(modifier = Modifier.align(Center))
-                }
+                is State.Error -> ErrorScreen(orderState.message)
+                else -> LoadingScreen()
             }
         }
     }
@@ -268,7 +265,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
     @Preview
     @Composable
     private fun OrderInfoCardPreview() {
-        OrderInfoCard(orderUI = orderUI)
+        OrderInfoCard(orderUI = getOrderUI())
     }
 
     @Preview
@@ -280,7 +277,7 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
     @Preview
     @Composable
     private fun BottomAmountBarPreview() {
-        BottomAmountBar(orderUI = orderUI)
+        BottomAmountBar(orderUI = getOrderUI())
     }
 
     @Preview
@@ -289,53 +286,54 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
         BottomAmountBar(orderUI = orderUIMinimal)
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsSuccessScreenPreview() {
-        OrderDetailsScreen(orderState = State.Success(orderUI))
+        OrderDetailsScreen(orderState = State.Success(getOrderUI()))
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsLoadingScreenPreview() {
         OrderDetailsScreen(orderState = State.Loading())
     }
 
-    private val orderProductItemModel = OrderProductItemModel(
-        uuid = "",
-        name = "Бэргер с вкусной свинкой ням ням ням ням",
-        newPrice = "50 ₽",
-        oldPrice = "100 ₽",
-        newCost = "100 ₽",
-        oldCost = "200 ₽",
-        photoLink = "",
-        count = "x 2"
-    )
-
-    private val orderUI = OrderUI(
-        code = "",
-        status = OrderStatus.PREPARING,
-        statusName = "Готовится",
-        dateTime = "20 февраля 18:15",
-        pickupMethod = "Доставка",
-        deferredTimeHintStringId = R.string.msg_order_details_deferred_time_delivery,
-        deferredTime = "20:30",
-        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-        comment = "Позвонить за 5 минут",
-        deliveryCost = "100 ₽",
-        orderProductList = listOf(
-            orderProductItemModel,
-            orderProductItemModel,
-            orderProductItemModel,
-            orderProductItemModel,
-            orderProductItemModel,
-            orderProductItemModel,
-            orderProductItemModel,
-        ),
-        isDelivery = true,
-        oldAmountToPay = "450 ₽",
-        newAmountToPay = "390 ₽",
-    )
+    private fun getOrderUI(): OrderUI {
+        val orderProductItemModel = OrderProductItemModel(
+            uuid = "",
+            name = "Бэргер с вкусной свинкой ням ням ням ням",
+            newPrice = "50 ₽",
+            oldPrice = "100 ₽",
+            newCost = "100 ₽",
+            oldCost = "200 ₽",
+            photoLink = "",
+            count = "x 2"
+        )
+        return OrderUI(
+            code = "",
+            status = OrderStatus.PREPARING,
+            statusName = "Готовится",
+            dateTime = "20 февраля 18:15",
+            pickupMethod = "Доставка",
+            deferredTimeHintStringId = R.string.msg_order_details_deferred_time_delivery,
+            deferredTime = "20:30",
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+            comment = "Позвонить за 5 минут",
+            deliveryCost = "100 ₽",
+            orderProductList = listOf(
+                orderProductItemModel,
+                orderProductItemModel,
+                orderProductItemModel,
+                orderProductItemModel,
+                orderProductItemModel,
+                orderProductItemModel,
+                orderProductItemModel,
+            ),
+            isDelivery = true,
+            oldAmountToPay = "450 ₽",
+            newAmountToPay = "390 ₽",
+        )
+    }
 
     private val orderUIMinimal = OrderUI(
         code = "",

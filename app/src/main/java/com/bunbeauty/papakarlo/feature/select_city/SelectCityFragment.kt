@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.select_city
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,15 +10,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.StateWithError
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.item.CityItem
 import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
 import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
@@ -46,15 +42,15 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
     }
 
     @Composable
-    private fun SelectCityScreen(cityListState: StateWithError<List<City>>) {
+    private fun SelectCityScreen(cityListState: State<List<City>>) {
         when (cityListState) {
-            is StateWithError.Success -> {
+            is State.Success -> {
                 SelectCitySuccessScreen(cityListState.data)
             }
-            is StateWithError.Loading -> {
+            is State.Loading -> {
                 LoadingScreen()
             }
-            is StateWithError.Error -> {
+            is State.Error -> {
                 ErrorScreen(message = cityListState.message) {
                     viewModel.getCityList()
                 }
@@ -91,7 +87,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
             timeZone = ""
         )
         SelectCityScreen(
-            StateWithError.Success(
+            State.Success(
                 listOf(
                     city,
                     city,
@@ -104,12 +100,12 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
     @Preview(showSystemUi = true)
     @Composable
     private fun SelectCityLoadingScreenPreview() {
-        SelectCityScreen(StateWithError.Loading())
+        SelectCityScreen(State.Loading())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun SelectCityErrorScreenPreview() {
-        SelectCityScreen(StateWithError.Error("Не удалось загрузить список городов"))
+        SelectCityScreen(State.Error("Не удалось загрузить список городов"))
     }
 }

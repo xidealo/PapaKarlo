@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/element_category_title_tv_name"
-    style="@style/LargeBoldWrapContentText"
-    android:layout_margin="@dimen/small_margin"
-    tools:text="Бургеры" />

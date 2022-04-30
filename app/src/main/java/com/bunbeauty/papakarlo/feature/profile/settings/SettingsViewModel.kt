@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile.settings
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
-import core_common.Constants.EMAIL_REQUEST_KEY
-import core_common.Constants.RESULT_EMAIL_KEY
 import com.bunbeauty.domain.interactor.settings.ISettingsInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.Settings
@@ -11,13 +9,12 @@ import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.extensions.toStateSuccess
-import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toOneLineActionBottomSheet
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import core_common.Constants.EMAIL_REQUEST_KEY
+import core_common.Constants.RESULT_EMAIL_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,7 +22,6 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val userInteractor: IUserInteractor,
-    private val resourcesProvider: IResourcesProvider,
     private val settingsInteractor: ISettingsInteractor,
 ) : BaseViewModel() {
 
@@ -66,8 +62,11 @@ class SettingsViewModel(
         }
     }
 
-    private fun onEmailChangedSuccessful(settingsState: State.Success<Settings>, user: User) {
-        mutableSettingsState.value = settingsState.data.copy(user = user).toStateSuccess()
+    private fun onEmailChangedSuccessful(
+        settingsState: State.Success<Settings>,
+        user: User
+    ) {
+        mutableSettingsState.value = settingsState.data.copy(user = user).toState()
         showMessage(resourcesProvider.getString(R.string.msg_settings_email_updated), false)
     }
 
@@ -92,7 +91,7 @@ class SettingsViewModel(
 
     private fun observeSettings() {
         settingsInteractor.observeSettings().launchOnEach { settings ->
-            mutableSettingsState.value = settings.toSuccessOrEmpty()
+            mutableSettingsState.value = settings.toState()
         }
     }
 }

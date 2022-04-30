@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.element.BlurLine
 import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.CartProductItem
@@ -47,11 +47,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     }
 
     @Composable
-    private fun ConsumerCartScreen(consumerCartState: StateWithError<ConsumerCartUI>) {
+    private fun ConsumerCartScreen(consumerCartState: State<ConsumerCartUI>) {
         when (consumerCartState) {
-            is StateWithError.Loading -> LoadingScreen()
-            is StateWithError.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
-            is StateWithError.Empty -> {
+            is State.Loading -> LoadingScreen()
+            is State.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
+            is State.Empty -> {
                 EmptyScreen(
                     imageId = R.drawable.empty_cart,
                     imageDescriptionId = R.string.description_consumer_cart_empty,
@@ -60,7 +60,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     onClick = viewModel::onMenuClicked
                 )
             }
-            is StateWithError.Error -> ErrorScreen(message = consumerCartState.message) {
+            is State.Error -> ErrorScreen(message = consumerCartState.message) {
                 viewModel.getConsumerCart()
             }
         }
@@ -159,7 +159,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
             menuProductUuid = ""
         )
         ConsumerCartScreen(
-            StateWithError.Success(
+            State.Success(
                 ConsumerCartUI(
                     forFreeDelivery = "500 ₽",
                     cartProductList = listOf(
@@ -179,19 +179,19 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartEmptyScreenPreview() {
-        ConsumerCartScreen(StateWithError.Empty())
+        ConsumerCartScreen(State.Empty())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartLoadingScreenPreview() {
-        ConsumerCartScreen(StateWithError.Loading())
+        ConsumerCartScreen(State.Loading())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartErrorScreenPreview() {
-        ConsumerCartScreen(StateWithError.Error("Не удалось загрузить корзину"))
+        ConsumerCartScreen(State.Error("Не удалось загрузить корзину"))
     }
 
 }

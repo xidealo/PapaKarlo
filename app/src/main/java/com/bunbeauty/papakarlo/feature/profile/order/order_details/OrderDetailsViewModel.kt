@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.extensions.toSuccessOrEmpty
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,8 +28,7 @@ class OrderDetailsViewModel(
     private fun observeOrder(orderUuid: String) {
         orderInteractor.observeOrderByUuid(orderUuid).launchOnEach { orderWithAmounts ->
             orderWithAmounts?.let {
-                mutableOrderState.value =
-                    orderUIMapper.toOrderUI(orderWithAmounts).toSuccessOrEmpty()
+                mutableOrderState.value = orderUIMapper.toOrderUI(orderWithAmounts).toState()
             }
         }
     }

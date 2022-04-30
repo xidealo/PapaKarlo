@@ -21,6 +21,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.item.OrderItem
 import com.bunbeauty.papakarlo.compose.screen.EmptyScreen
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
 import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
@@ -56,6 +57,9 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
             }
             is State.Loading -> {
                 LoadingScreen()
+            }
+            is State.Error -> {
+                ErrorScreen(message = orderListState.message)
             }
         }
     }

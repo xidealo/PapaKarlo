@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.feature.create_order
 
 import androidx.lifecycle.viewModelScope
-import core_common.Constants.COMMENT_REQUEST_KEY
-import core_common.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
@@ -10,14 +8,14 @@ import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.date_time.Time
-import com.bunbeauty.domain.repo.*
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.create_order.CreateOrderFragmentDirections.*
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import core_common.Constants.COMMENT_REQUEST_KEY
+import core_common.Constants.RESULT_COMMENT_KEY
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -29,7 +27,6 @@ class CreateOrderViewModel(
     private val userInteractor: IUserInteractor,
     private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val stringUtil: IStringUtil,
-    private val resourcesProvider: IResourcesProvider,
 ) : BaseViewModel() {
 
     private val asap = resourcesProvider.getString(R.string.msg_deferred_time_asap)

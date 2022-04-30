@@ -3,7 +3,10 @@ package com.bunbeauty.papakarlo.feature.address.user_address_list
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -14,19 +17,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
-import core_common.Constants.RESULT_USER_ADDRESS_KEY
-import core_common.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.AddressItem
 import com.bunbeauty.papakarlo.compose.screen.EmptyScreen
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
 import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.AddressItemModel
+import core_common.Constants.RESULT_USER_ADDRESS_KEY
+import core_common.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_list) {
@@ -62,6 +66,9 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                     buttonTextId = R.string.action_add_addresses,
                     onClick = viewModel::onCreateAddressClicked
                 )
+            }
+            is State.Error -> {
+                ErrorScreen(message = addressItemModelListState.message)
             }
         }
     }

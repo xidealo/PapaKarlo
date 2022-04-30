@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 
 class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
-    private val resourcesProvider: IResourcesProvider,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 

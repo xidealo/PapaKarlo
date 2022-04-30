@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CafeOptionsViewModel(
-    private val resourcesProvider: IResourcesProvider,
     private val cafeInteractor: ICafeInteractor,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {

@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.element.EditText
 import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.element.auto_complete_text_field.AutoCompleteEditText
@@ -47,11 +47,11 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     }
 
     @Composable
-    private fun CreateAddressScreen(streetListState: StateWithError<List<StreetItemModel>>) {
+    private fun CreateAddressScreen(streetListState: State<List<StreetItemModel>>) {
         when (streetListState) {
-            is StateWithError.Success -> CreateAddressSuccessScreen(streetListState.data)
-            is StateWithError.Loading -> LoadingScreen()
-            is StateWithError.Error -> ErrorScreen(streetListState.message) {
+            is State.Success -> CreateAddressSuccessScreen(streetListState.data)
+            is State.Loading -> LoadingScreen()
+            is State.Error -> ErrorScreen(streetListState.message) {
                 viewModel.getStreetList()
             }
             else -> Unit
@@ -229,7 +229,7 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
             cityUuid = "",
         )
         CreateAddressScreen(
-            StateWithError.Success(
+            State.Success(
                 listOf(
                     streetItem,
                     streetItem,
@@ -243,12 +243,12 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     @Preview(showSystemUi = true)
     @Composable
     private fun CreateAddressLoadingScreenPreview() {
-        CreateAddressScreen(StateWithError.Loading())
+        CreateAddressScreen(State.Loading())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun CreateAddressErrorScreenPreview() {
-        CreateAddressScreen(StateWithError.Error("Не удалось загрузить список улиц"))
+        CreateAddressScreen(State.Error("Не удалось загрузить список улиц"))
     }
 }

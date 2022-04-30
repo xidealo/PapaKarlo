@@ -4,10 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
-import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.profile.ProfileFragmentDirections.*
 import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItemModel
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
@@ -21,31 +20,14 @@ class ProfileViewModel(
     private val orderUIMapper: IOrderUIMapper,
 ) : CartViewModel() {
 
-    private val mutableProfileUIState: MutableStateFlow<StateWithError<ProfileUI>> =
-        MutableStateFlow(StateWithError.Loading())
-    val profileUIState: StateFlow<StateWithError<ProfileUI>> = mutableProfileUIState.asStateFlow()
+    private val mutableProfileUIState: MutableStateFlow<State<ProfileUI>> =
+        MutableStateFlow(State.Loading())
+    val profileUIState: StateFlow<State<ProfileUI>> = mutableProfileUIState.asStateFlow()
 
     fun getProfile() {
-        mutableProfileUIState.value = StateWithError.Loading()
+        mutableProfileUIState.value = State.Loading()
         viewModelScope.launch {
-            mutableProfileUIState.value = userInteractor.getProfile()?.let { profile ->
-                when (profile) {
-                    is Profile.Authorized -> {
-                        ProfileUI(
-                            userUuid = profile.userUuid,
-                            hasAddresses = profile.hasAddresses,
-                            lastOrderItem = profile.lastOrder?.let { lightOrder ->
-                                orderUIMapper.toItem(lightOrder)
-                            }
-                        ).toStateWithErrorSuccess()
-                    }
-                    is Profile.Unauthorized -> {
-                        StateWithError.Empty()
-                    }
-                }
-            } ?: StateWithError.Error(
-                baseResourcesProvider.getString(R.string.error_profile_loading)
-            )
+            mutableProfileUIState.value = userInteractor.getProfile().toState()
         }
     }
 
@@ -79,5 +61,26 @@ class ProfileViewModel(
 
     fun onLoginClicked() {
         router.navigate(toLoginFragment(BACK_TO_PROFILE))
+    }
+
+    private fun Profile?.toState(): State<ProfileUI> {
+        return if (this == null) {
+            State.Error(resourcesProvider.getString(R.string.error_profile_loading))
+        } else {
+            when (this) {
+                is Profile.Authorized -> {
+                    ProfileUI(
+                        userUuid = userUuid,
+                        hasAddresses = hasAddresses,
+                        lastOrderItem = lastOrder?.let { lightOrder ->
+                            orderUIMapper.toItem(lightOrder)
+                        }
+                    ).toState()
+                }
+                is Profile.Unauthorized -> {
+                    State.Empty()
+                }
+            }
+        }
     }
 }

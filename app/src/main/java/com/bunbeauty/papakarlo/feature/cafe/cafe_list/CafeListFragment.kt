@@ -16,7 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.model.cafe.CafeStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.item.CafeItem
 import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
 import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
@@ -42,11 +42,11 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     }
 
     @Composable
-    private fun CafeListScreen(cafeItemListState: StateWithError<List<CafeItemModel>>) {
+    private fun CafeListScreen(cafeItemListState: State<List<CafeItemModel>>) {
         when (cafeItemListState) {
-            is StateWithError.Success -> CafeListSuccessScreen(cafeItemListState.data)
-            is StateWithError.Loading -> LoadingScreen()
-            is StateWithError.Error -> ErrorScreen(cafeItemListState.message) {
+            is State.Success -> CafeListSuccessScreen(cafeItemListState.data)
+            is State.Loading -> LoadingScreen()
+            is State.Error -> ErrorScreen(cafeItemListState.message) {
                 viewModel.getCafeItemList()
             }
             else -> Unit
@@ -76,7 +76,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Composable
     private fun CafeListSuccessScreenPreview() {
         CafeListScreen(
-            cafeItemListState = StateWithError.Success(
+            cafeItemListState = State.Success(
                 listOf(
                     CafeItemModel(
                         uuid = "",
@@ -107,12 +107,12 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListLoadingScreenPreview() {
-        CafeListScreen(cafeItemListState = StateWithError.Loading())
+        CafeListScreen(cafeItemListState = State.Loading())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListErrorScreenPreview() {
-        CafeListScreen(cafeItemListState = StateWithError.Error("Не удалось загрузить список рестиков"))
+        CafeListScreen(cafeItemListState = State.Error("Не удалось загрузить список рестиков"))
     }
 }

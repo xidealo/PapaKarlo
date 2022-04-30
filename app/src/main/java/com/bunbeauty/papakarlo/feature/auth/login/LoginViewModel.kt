@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
-    private val resourcesProvider: IResourcesProvider,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 

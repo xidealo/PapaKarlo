@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.extensions.toState
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +14,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CreateAddressViewModel(
-    private val resourcesProvider: IResourcesProvider,
     private val textValidator: ITextValidator,
     private val streetInteractor: IStreetInteractor,
     private val addressInteractor: IAddressInteractor,
 ) : BaseViewModel() {
 
-    private val mutableStreetListState: MutableStateFlow<StateWithError<List<StreetItemModel>>> =
-        MutableStateFlow(StateWithError.Loading())
-    val streetListState: StateFlow<StateWithError<List<StreetItemModel>>> =
+    private val mutableStreetListState: MutableStateFlow<State<List<StreetItemModel>>> =
+        MutableStateFlow(State.Loading())
+    val streetListState: StateFlow<State<List<StreetItemModel>>> =
         mutableStreetListState.asStateFlow()
 
     fun getStreetList() {
@@ -40,7 +37,7 @@ class CreateAddressViewModel(
     }
 
     fun checkStreetError(streetText: String): Int? {
-        return (mutableStreetListState.value as? StateWithError.Success)?.let {
+        return (mutableStreetListState.value as? State.Success)?.let {
             it.data.none { street ->
                 street.name == streetText
             }.let { isIncorrectStreetSelected ->

@@ -5,16 +5,13 @@ import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.domain.model.menu.MenuSection
 import com.bunbeauty.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.extensions.toStateSuccessOrError
-import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.menu.MenuFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.menu.view_state.CategoryItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuProductItemModel
 import com.bunbeauty.papakarlo.feature.menu.view_state.MenuUI
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,12 +21,11 @@ import kotlinx.coroutines.launch
 class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,
-    private val resourcesProvider: IResourcesProvider,
 ) : CartViewModel() {
 
-    private val mutableMenuState: MutableStateFlow<StateWithError<MenuUI>> =
-        MutableStateFlow(StateWithError.Loading())
-    val menuState: StateFlow<StateWithError<MenuUI>> = mutableMenuState.asStateFlow()
+    private val mutableMenuState: MutableStateFlow<State<MenuUI>> =
+        MutableStateFlow(State.Loading())
+    val menuState: StateFlow<State<MenuUI>> = mutableMenuState.asStateFlow()
 
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
@@ -37,7 +33,7 @@ class MenuViewModel(
     var autoScrolling = false
 
     fun getMenu() {
-        mutableMenuState.value = StateWithError.Loading()
+        mutableMenuState.value = State.Loading()
         viewModelScope.launch {
             mutableMenuState.value =
                 menuProductInteractor.getMenuSectionList()?.let { menuSectionList ->
@@ -45,7 +41,7 @@ class MenuViewModel(
                         selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                     }
                     toMenu(menuSectionList)
-                }.toStateSuccessOrError(resourcesProvider.getString(R.string.error_menu_loading))
+                }.toState(resourcesProvider.getString(R.string.error_menu_loading))
         }
     }
 
@@ -61,7 +57,7 @@ class MenuViewModel(
 
         viewModelScope.launch {
             val menuItemModelList =
-                (mutableMenuState.value as? StateWithError.Success)?.data?.menuItemModelList
+                (mutableMenuState.value as? State.Success)?.data?.menuItemModelList
             menuItemModelList?.filterIsInstance(MenuItemModel.MenuCategoryHeaderItemModel::class.java)
                 ?.findLast { menuItemModel ->
                     menuItemModelList.indexOf(menuItemModel) <= menuPosition
@@ -80,7 +76,7 @@ class MenuViewModel(
     }
 
     fun getMenuListPosition(categoryItemModel: CategoryItemModel): Int {
-        return (mutableMenuState.value as StateWithError.Success).data.menuItemModelList.indexOfFirst { menuItemModel ->
+        return (mutableMenuState.value as State.Success).data.menuItemModelList.indexOfFirst { menuItemModel ->
             (menuItemModel as? MenuItemModel.MenuCategoryHeaderItemModel)?.uuid == categoryItemModel.uuid
         }
     }
@@ -92,7 +88,7 @@ class MenuViewModel(
             }
             selectedCategoryUuid = categoryUuid
 
-            val menu = (mutableMenuState.value as StateWithError.Success).data
+            val menu = (mutableMenuState.value as State.Success).data
             val categoryItemModelList = menu.categoryItemModelList.map { categoryItemModel ->
                 when {
                     categoryItemModel.isSelected -> {
@@ -109,16 +105,7 @@ class MenuViewModel(
             mutableMenuState.value = menu.copy(
                 categoryItemModelList = categoryItemModelList,
                 menuItemModelList = menu.menuItemModelList
-            ).toStateWithErrorSuccess()
-        }
-    }
-
-    private fun observeMenu() {
-        menuProductInteractor.observeMenuSectionList().launchOnEach { menuSectionList ->
-            if (selectedCategoryUuid == null) {
-                selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
-            }
-            mutableMenuState.value = toMenu(menuSectionList).toStateWithErrorSuccess()
+            ).toState()
         }
     }
 

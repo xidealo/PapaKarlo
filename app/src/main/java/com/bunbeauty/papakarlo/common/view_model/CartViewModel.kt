@@ -14,13 +14,11 @@ open class CartViewModel : BaseViewModel() {
 
     val baseCartProductInteractor: ICartProductInteractor by inject()
 
-    val baseResourcesProvider: IResourcesProvider by inject()
-
     fun addProductToCart(menuProductUuid: String) {
         viewModelScope.launch {
             val cartProduct = baseCartProductInteractor.addProductToCart(menuProductUuid)
             if (cartProduct == null) {
-                showError(baseResourcesProvider.getString(R.string.error_consumer_cart_full), true)
+                showError(resourcesProvider.getString(R.string.error_consumer_cart_full), true)
             }
         }
     }

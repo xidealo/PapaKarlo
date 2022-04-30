@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.StateWithError
+import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.compose.item.CategoryItem
 import com.bunbeauty.papakarlo.compose.item.MenuProductItem
 import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
@@ -45,18 +45,18 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     }
 
     @Composable
-    private fun MenuScreen(menuState: StateWithError<MenuUI>) {
+    private fun MenuScreen(menuState: State<MenuUI>) {
         when (menuState) {
-            is StateWithError.Success -> {
+            is State.Success -> {
                 MenuSuccessScreen(menuState.data)
             }
-            is StateWithError.Loading -> {
-                LoadingScreen()
-            }
-            is StateWithError.Error -> {
+            is State.Error -> {
                 ErrorScreen(menuState.message) {
                     viewModel.getMenu()
                 }
+            }
+            else -> {
+                LoadingScreen()
             }
         }
     }
@@ -220,6 +220,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             newPrice = "99 ₽",
             oldPrice = "100 ₽",
         )
+
         fun getMenuProductPairItemModel(key: String) = MenuItemModel.MenuProductPairItemModel(
             key = key,
             firstProduct = menuProductItemModel,
@@ -227,7 +228,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         )
 
         MenuScreen(
-            menuState = StateWithError.Success(
+            menuState = State.Success(
                 MenuUI(
                     categoryItemModelList = listOf(
                         getCategoryItemModel("1"),
@@ -249,12 +250,12 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenLoadingPreview() {
-        MenuScreen(menuState = StateWithError.Loading())
+        MenuScreen(menuState = State.Loading())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenErrorPreview() {
-        MenuScreen(menuState = StateWithError.Error("Не удалось загрузить меню"))
+        MenuScreen(menuState = State.Error("Не удалось загрузить меню"))
     }
 }

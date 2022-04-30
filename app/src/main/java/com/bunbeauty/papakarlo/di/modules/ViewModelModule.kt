@@ -30,7 +30,6 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             stringUtil = get(),
-            resourcesProvider = get(),
         )
     }
     viewModel {
@@ -46,7 +45,6 @@ fun viewModelModule() = module {
             stringUtil = get(),
             userInteractor = get(),
             cartProductInteractor = get(),
-            resourcesProvider = get(),
         )
     }
     viewModel {
@@ -58,13 +56,11 @@ fun viewModelModule() = module {
             userInteractor = get(),
             deferredTimeInteractor = get(),
             stringUtil = get(),
-            resourcesProvider = get(),
         )
     }
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
-            resourcesProvider = get(),
         )
     }
     viewModel {
@@ -76,7 +72,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateAddressViewModel(
-            resourcesProvider = get(),
             textValidator = get(),
             streetInteractor = get(),
             addressInteractor = get()
@@ -96,7 +91,6 @@ fun viewModelModule() = module {
     }
     viewModel { parameters ->
         CafeOptionsViewModel(
-            resourcesProvider = get(),
             cafeInteractor = get(),
             savedStateHandle = parameters.get(),
         )
@@ -119,21 +113,18 @@ fun viewModelModule() = module {
         LoginViewModel(
             textValidator = get(),
             userInteractor = get(),
-            resourcesProvider = get(),
             savedStateHandle = parameters.get()
         )
     }
     viewModel { parameters ->
         ConfirmViewModel(
             userInteractor = get(),
-            resourcesProvider = get(),
             savedStateHandle = parameters.get()
         )
     }
     viewModel {
         SettingsViewModel(
             userInteractor = get(),
-            resourcesProvider = get(),
             settingsInteractor = get(),
         )
     }
@@ -152,8 +143,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         SelectCityViewModel(
-            cityInteractor = get(),
-            resourcesProvider = get(),
+            cityInteractor = get()
         )
     }
     viewModel {

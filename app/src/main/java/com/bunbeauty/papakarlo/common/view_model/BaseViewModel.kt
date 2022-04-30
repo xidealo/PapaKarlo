@@ -2,9 +2,11 @@ package com.bunbeauty.papakarlo.common.view_model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.Router
-import com.bunbeauty.papakarlo.common.model.FieldError
 import com.bunbeauty.papakarlo.common.model.Message
+import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,14 +18,13 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
     //TODO(Move to constructor)
     val router: Router by inject()
 
+    val resourcesProvider: IResourcesProvider by inject()
+
     private val mutableMessage: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
     val message: SharedFlow<Message> = mutableMessage.asSharedFlow()
 
     private val mutableError: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
     val error: SharedFlow<Message> = mutableError.asSharedFlow()
-
-    private val mutableFieldError = MutableSharedFlow<FieldError>(0)
-    val fieldError: SharedFlow<FieldError> = mutableFieldError.asSharedFlow()
 
     protected fun <T> MutableSharedFlow<T>.launchEmit(value: T) {
         viewModelScope.launch {
@@ -53,12 +54,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    protected fun sendFieldError(fieldKey: String, error: String) {
-        viewModelScope.launch {
-            mutableFieldError.emit(FieldError(fieldKey, error))
-        }
-    }
-
     fun goBack() {
         router.navigateUp()
     }
@@ -67,5 +62,17 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         return onEach { t ->
             block(t)
         }.launchIn(viewModelScope)
+    }
+
+    protected fun <T: Any?> T?.toState(errorMessage: String? = null): State<T> {
+        return if (this == null) {
+            State.Error(errorMessage ?: resourcesProvider.getString(R.string.error_common))
+        } else {
+            if (this is List<*> && isEmpty()) {
+                State.Empty()
+            } else {
+                State.Success(this)
+            }
+        }
     }
 }
