@@ -41,6 +41,7 @@ internal fun EmptyScreen(
                 contentDescription = stringResource(imageDescriptionId)
             )
             Text(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(textId),
                 textAlign = TextAlign.Center,
                 style = FoodDeliveryTheme.typography.body1

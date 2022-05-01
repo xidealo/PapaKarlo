@@ -57,7 +57,7 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
             is State.Empty -> {
                 EmptyScreen(
                     imageId = R.drawable.empty_page,
-                    imageDescriptionId = R.string.description_empty_profile,
+                    imageDescriptionId = R.string.description_cafe_addresses_empty,
                     textId = R.string.msg_my_addresses_empty,
                     buttonTextId = R.string.action_add_addresses,
                     onClick = viewModel::onCreateAddressClicked

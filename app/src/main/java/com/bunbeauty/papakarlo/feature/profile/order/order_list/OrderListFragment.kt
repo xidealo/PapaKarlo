@@ -2,28 +2,26 @@ package com.bunbeauty.papakarlo.feature.profile.order.order_list
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.domain.enums.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.item.OrderItem
+import com.bunbeauty.papakarlo.compose.screen.EmptyScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -45,61 +43,49 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
 
     @Composable
     private fun OrderListScreen(orderListState: State<List<OrderItemModel>>) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
-        ) {
-            when (orderListState) {
-                is State.Success -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
-                    ) {
-                        itemsIndexed(orderListState.data) { i, orderItemModel ->
-                            OrderItem(
-                                modifier = Modifier.padding(
-                                    top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                                ),
-                                orderItem = orderItemModel
-                            ) {
-                                viewModel.onOrderClicked(orderItemModel)
-                            }
-                        }
-                    }
-                }
-                is State.Empty -> {
-                    OrderListScreenEmpty()
-                }
-                is State.Loading -> {
-                    CircularProgressBar(modifier = Modifier.align(Alignment.Center))
-                }
+        when (orderListState) {
+            is State.Success -> {
+                OrderListScreenSuccess(orderListState.data)
+            }
+            is State.Empty -> {
+                EmptyScreen(
+                    imageId = R.drawable.empty_page,
+                    imageDescriptionId = R.string.description_cafe_addresses_empty,
+                    textId = R.string.msg_order_list_empty
+                )
+            }
+            is State.Loading -> {
+                LoadingScreen()
             }
         }
     }
 
     @Composable
-    private fun OrderListScreenEmpty() {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
+    private fun OrderListScreenSuccess(orderItemModelList: List<OrderItemModel>) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.background)
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.empty_page),
-                    contentDescription = stringResource(R.string.description_empty_profile)
-                )
-                Text(
-                    modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(R.string.msg_order_list_empty),
-                    textAlign = TextAlign.Center,
-                    style = FoodDeliveryTheme.typography.body1
-                )
+                itemsIndexed(orderItemModelList) { i, orderItemModel ->
+                    OrderItem(
+                        modifier = Modifier.padding(
+                            top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
+                        ),
+                        orderItem = orderItemModel
+                    ) {
+                        viewModel.onOrderClicked(orderItemModel)
+                    }
+                }
             }
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenSuccessPreview() {
         OrderListScreen(
@@ -166,13 +152,13 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
         )
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenEmptyPreview() {
         OrderListScreen(State.Empty())
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenLoadingPreview() {
         OrderListScreen(State.Loading())
