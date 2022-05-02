@@ -1,7 +1,5 @@
 package com.bunbeauty.domain.interactor.address
 
-import com.bunbeauty.common.Logger.ORDER_TAG
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.domain.interactor.user.IUserInteractor
 import com.bunbeauty.domain.model.address.CreatedUserAddress
 import com.bunbeauty.domain.model.address.UserAddress
@@ -64,7 +62,6 @@ class AddressInteractor(
                 userUuid = userCityUuid.userUuid,
                 cityUuid = userCityUuid.cityUuid
             ).flatMapLatest { userAddress ->
-                logD(ORDER_TAG, "selectedUserAddress = $userAddress")
                 if (userAddress == null) {
                     userAddressRepo.observeFirstUserAddressByUserAndCityUuid(
                         userCityUuid.userUuid,

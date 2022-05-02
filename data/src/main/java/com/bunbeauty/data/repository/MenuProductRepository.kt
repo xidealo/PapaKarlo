@@ -4,7 +4,6 @@ import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
 import com.bunbeauty.data.dao.category.ICategoryDao
 import com.bunbeauty.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
-import com.bunbeauty.data.handleListResultAndReturn
 import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.model.MenuProductServer
@@ -20,25 +19,20 @@ class MenuProductRepository(
     private val categoryDao: ICategoryDao,
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
     private val menuProductMapper: IMenuProductMapper
-) : MenuProductRepo {
+) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
-    private var menuProductListCache: List<MenuProduct>? = null
+    override val tag: String = MENU_PRODUCT_TAG
 
     override suspend fun getMenuProductList(): List<MenuProduct> {
-        return menuProductListCache ?: apiRepo.getMenuProductList().handleListResultAndReturn(
-            tag = MENU_PRODUCT_TAG,
-            onError = {
+        return getCacheOrListData(
+            onApiRequest = apiRepo::getMenuProductList,
+            onLocalRequest = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()
                 )
             },
-            onSuccess = { menuProductServerList ->
-                saveMenuLocally(menuProductServerList)
-                menuProductServerList.map(menuProductMapper::toMenuProduct)
-                    .also { menuProductList ->
-                        menuProductListCache = menuProductList
-                    }
-            }
+            onSaveLocally = ::saveMenuLocally,
+            serverToDomainModel = menuProductMapper::toMenuProduct
         )
     }
 

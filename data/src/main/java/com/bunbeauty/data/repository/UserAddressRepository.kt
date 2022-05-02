@@ -2,7 +2,6 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
 import com.bunbeauty.data.dao.user_address.IUserAddressDao
-import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
@@ -17,7 +16,9 @@ class UserAddressRepository(
     private val apiRepo: ApiRepo,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: IUserAddressMapper
-) : UserAddressRepo {
+) : BaseRepository(), UserAddressRepo {
+
+    override val tag: String = USER_ADDRESS_TAG
 
     override suspend fun saveUserAddress(
         token: String,
@@ -25,7 +26,7 @@ class UserAddressRepository(
     ): UserAddress? {
         val userAddressPostServer = userAddressMapper.toUserAddressPostServer(createdUserAddress)
         return apiRepo.postUserAddress(token, userAddressPostServer)
-            .handleResultAndReturn(USER_ADDRESS_TAG) { addressServer ->
+            .getNullableResult { addressServer ->
                 val userAddressEntity = userAddressMapper.toUserAddressEntity(addressServer)
                 userAddressDao.insertUserAddress(userAddressEntity)
 

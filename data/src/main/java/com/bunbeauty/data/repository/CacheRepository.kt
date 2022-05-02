@@ -1,11 +1,9 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.data.handleResultAndAlwaysReturn
 import com.bunbeauty.data.network.ApiResult
 
-abstract class CacheRepository<D> {
+abstract class CacheRepository<D> : BaseRepository() {
 
-    abstract val tag: String
     protected var cache: D? = null
 
     protected suspend inline fun <S> getCacheOrData(
@@ -19,8 +17,7 @@ abstract class CacheRepository<D> {
         return if (cacheData != null && isCacheValid(cacheData)) {
             cacheData
         } else {
-            onApiRequest().handleResultAndAlwaysReturn(
-                tag = tag,
+            onApiRequest().getNullableResult(
                 onError = {
                     onLocalRequest()
                 },
@@ -31,6 +28,18 @@ abstract class CacheRepository<D> {
                     }
                 }
             )
+
+//            apiRepo.getProfile(token).getNullableResult(
+//                onError = {
+//                    getProfileLocally(userUuid, cityUuid)
+//                },
+//                onSuccess = { profileServer ->
+//                    saveProfileLocally(profileServer)
+//                    profileMapper.toProfile(profileServer).also { profile ->
+//                        profileCache = profile
+//                    }
+//                }
+//            )
         }
     }
 }

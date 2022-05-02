@@ -1,13 +1,10 @@
 package com.bunbeauty.data.repository
 
-import com.bunbeauty.data.handleListResultAndReturn
-import com.bunbeauty.data.handleResultAndAlwaysReturn
 import com.bunbeauty.data.network.ApiResult
 import com.bunbeauty.data.network.model.ListServer
 
-abstract class CacheListRepository<D> {
+abstract class CacheListRepository<D>: BaseRepository() {
 
-    abstract val tag: String
     protected var cache: List<D>? = null
 
     protected suspend inline fun <S> getCacheOrListData(
@@ -21,8 +18,7 @@ abstract class CacheListRepository<D> {
         return if (cacheData != null && isCacheValid(cacheData)) {
             cacheData
         } else {
-            onApiRequest().handleListResultAndReturn(
-                tag = tag,
+            onApiRequest().getListResult(
                 onError = {
                     onLocalRequest()
                 },

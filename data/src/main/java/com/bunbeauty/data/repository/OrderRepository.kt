@@ -1,5 +1,6 @@
 package com.bunbeauty.data.repository
 
+import com.bunbeauty.common.Logger.ORDER_TAG
 import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.mapper.order.IOrderMapper
 import com.bunbeauty.data.network.api.ApiRepo
@@ -19,6 +20,8 @@ class OrderRepository(
     private val apiRepo: ApiRepo,
     private val orderMapper: IOrderMapper,
 ) : BaseRepository(), OrderRepo {
+
+    override val tag: String = ORDER_TAG
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)
@@ -49,7 +52,7 @@ class OrderRepository(
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
-        return apiRepo.postOrder(token, orderPostServer).handleResultAndReturn { oderServer ->
+        return apiRepo.postOrder(token, orderPostServer).getNullableResult { oderServer ->
             orderDao.insertOrderWithProductList(orderMapper.toOrderWithProductEntityList(oderServer))
             orderMapper.toOrderCode(oderServer)
         }

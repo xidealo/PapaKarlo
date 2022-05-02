@@ -1,12 +1,9 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.USER_TAG
-import core_common.Constants.COMPANY_UUID
 import com.bunbeauty.data.dao.order.IOrderDao
 import com.bunbeauty.data.dao.user.IUserDao
 import com.bunbeauty.data.dao.user_address.IUserAddressDao
-import com.bunbeauty.data.handleResultAndAlwaysReturn
-import com.bunbeauty.data.handleResultAndReturn
 import com.bunbeauty.data.mapper.profile.IProfileMapper
 import com.bunbeauty.data.mapper.user.IUserMapper
 import com.bunbeauty.data.network.api.ApiRepo
@@ -17,6 +14,7 @@ import com.bunbeauty.domain.model.profile.Profile
 import com.bunbeauty.domain.model.profile.User
 import com.bunbeauty.domain.repo.DataStoreRepo
 import com.bunbeauty.domain.repo.UserRepo
+import core_common.Constants.COMPANY_UUID
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(
@@ -27,9 +25,9 @@ class UserRepository(
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
     private val dataStoreRepo: DataStoreRepo
-) : UserRepo {
+) : CacheRepository<Profile.Authorized>(), UserRepo {
 
-    var profileCache: Profile.Authorized? = null
+    override val tag: String = USER_TAG
 
     override suspend fun login(userUuid: String, userPhone: String): String? {
         val loginPost = LoginPostServer(
@@ -37,7 +35,7 @@ class UserRepository(
             phoneNumber = userPhone,
             companyUuid = COMPANY_UUID
         )
-        return apiRepo.postLogin(loginPost).handleResultAndReturn(USER_TAG) { authResponseServer ->
+        return apiRepo.postLogin(loginPost).getNullableResult { authResponseServer ->
             authResponseServer.token
         }
     }
@@ -51,26 +49,25 @@ class UserRepository(
         cityUuid: String,
         token: String
     ): Profile.Authorized? {
-        return profileCache ?: run {
-            apiRepo.getProfile(token).handleResultAndAlwaysReturn(
-                tag = USER_TAG,
-                onError = {
-                    getProfileLocally(userUuid, cityUuid)
-                },
-                onSuccess = { profileServer ->
-                    saveProfileLocally(profileServer)
-                    profileMapper.toProfile(profileServer).also { profile ->
-                        profileCache = profile
-                    }
-                }
-            )
-        }
+        return getCacheOrData(
+            isCacheValid = { cache ->
+                cache.userUuid == userUuid
+            },
+            onApiRequest = {
+                apiRepo.getProfile(token)
+            },
+            onLocalRequest = {
+                getProfileLocally(userUuid, cityUuid)
+            },
+            onSaveLocally = ::saveProfileLocally,
+            serverToDomainModel = profileMapper::toProfile
+        )
     }
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
         val patchUserServer = userMapper.toPatchServerModel(email)
         return apiRepo.patchProfileEmail(token, userUuid, patchUserServer)
-            .handleResultAndReturn(USER_TAG) { profile ->
+            .getNullableResult { profile ->
                 userDao.updateUserEmailByUuid(userUuid, email)
                 userMapper.toUser(profile)
             }
@@ -79,7 +76,6 @@ class UserRepository(
     override suspend fun clearUserCache() {
         dataStoreRepo.clearToken()
         dataStoreRepo.clearUserUuid()
-        profileCache = null
     }
 
     suspend fun saveProfileLocally(profile: ProfileServer?) {
