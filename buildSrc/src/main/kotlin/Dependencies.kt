@@ -48,8 +48,6 @@ object Versions {
 
     const val kotlinxDateTime = "0.3.2"
 
-    const val workManagerVersion = "2.7.1"
-
     const val leakcanary = "2.8.1"
 
     const val firebase = "29.0.3"
@@ -194,11 +192,6 @@ object TimePicker {
 
 object KotlinxDateTime {
     const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
-}
-
-object WorkManager {
-    const val workRuntime = "androidx.work:work-runtime-ktx:${Versions.workManagerVersion}"
-    const val workGcm = "androidx.work:work-gcm:${Versions.workManagerVersion}"
 }
 
 object DataStore {

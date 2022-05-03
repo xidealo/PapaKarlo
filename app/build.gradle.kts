@@ -121,9 +121,6 @@ dependencies {
     implementation(Ktor.clientWebsockets)
     implementation(Ktor.clientOkhttp)
 
-    implementation(WorkManager.workGcm)
-    implementation(WorkManager.workRuntime)
-
     implementation(Coroutine.core)
 
     implementation(platform(Firebase.bom))

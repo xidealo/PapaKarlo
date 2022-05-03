@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.di.modules
 
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.work.WorkManager
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.Router
@@ -23,7 +22,6 @@ fun appModule() = module {
     single { Router() }
     single { androidContext().imageLoader }
     single { ImageRequest.Builder(androidContext()) }
-    single { WorkManager.getInstance(androidContext()) }
     single { androidContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
     single { CategoryAdapter(resourcesProvider = get()) }
     single { MenuProductAdapter() }
