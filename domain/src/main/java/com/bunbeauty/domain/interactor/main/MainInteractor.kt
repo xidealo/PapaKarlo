@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlin.coroutines.CoroutineContext
 
 class MainInteractor(
-    private val deliveryWorkerUtil: IDeliveryWorkerUtil,
     private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
     private val dataStoreRepo: DataStoreRepo
@@ -21,10 +20,6 @@ class MainInteractor(
 
     override val coroutineContext: CoroutineContext
         get() = Job()
-
-    override suspend fun refreshData() {
-        deliveryWorkerUtil.refreshDelivery()
-    }
 
     override fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
         isStartedFlow.flatMapLatest { isStarted ->

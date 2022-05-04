@@ -31,7 +31,6 @@ import org.koin.dsl.module
 fun interactorModule() = module {
     single<IMainInteractor> {
         MainInteractor(
-            deliveryWorkerUtil = get(),
             orderRepo = get(),
             userInteractor = get(),
             dataStoreRepo = get(),
@@ -54,6 +53,7 @@ fun interactorModule() = module {
     single<ICartProductInteractor> {
         CartProductInteractor(
             cartProductRepo = get(),
+            deliveryRepo = get(),
             dataStoreRepo = get(),
             productInteractor = get(),
         )

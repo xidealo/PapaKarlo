@@ -23,7 +23,7 @@ class ProductInteractor(
     }
 
     override suspend fun getDeliveryCost(productList: List<ProductPosition>): Int {
-        val delivery = dataStoreRepo.getDelivery()
+        val delivery = dataStoreRepo.getDelivery() ?: return 0
         return if (getNewTotalCost(productList) < delivery.forFree) {
             delivery.cost
         } else {

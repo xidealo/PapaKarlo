@@ -8,26 +8,25 @@ import com.bunbeauty.domain.model.cart.ConsumerCart
 import com.bunbeauty.domain.model.cart.LightCartProduct
 import com.bunbeauty.domain.repo.CartProductRepo
 import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.domain.repo.DeliveryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
+    private val deliveryRepo: DeliveryRepo,
     private val dataStoreRepo: DataStoreRepo,
     private val productInteractor: IProductInteractor,
 ) : ICartProductInteractor {
 
-    override fun observeConsumerCart(): Flow<ConsumerCart> {
-        return dataStoreRepo.delivery.flatMapLatest { delivery ->
-            cartProductRepo.observeCartProductList().map { cartProductList ->
-                ConsumerCart(
-                    forFreeDelivery = delivery.forFree,
-                    cartProductList = cartProductList.map(::toLightCartProduct),
-                    oldTotalCost = productInteractor.getOldTotalCost(cartProductList),
-                    newTotalCost = productInteractor.getNewTotalCost(cartProductList)
-                )
-            }
+    override suspend fun getConsumerCart(): ConsumerCart? {
+        return getConsumerCart(cartProductRepo.getCartProductList())
+    }
+
+    override fun observeConsumerCart(): Flow<ConsumerCart?> {
+        return  cartProductRepo.observeCartProductList().map { cartProductList ->
+            getConsumerCart(cartProductList)
         }
     }
 
@@ -71,10 +70,6 @@ class CartProductInteractor(
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getDeliveryCost(cartProductList)
         }
-    }
-
-    override fun observeDelivery(): Flow<Delivery> {
-        return dataStoreRepo.delivery
     }
 
     override fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal> {
@@ -135,6 +130,21 @@ class CartProductInteractor(
 
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
+    }
+
+    suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
+        return if (cartProductList.isEmpty()) {
+            ConsumerCart.Empty
+        } else {
+            deliveryRepo.getDelivery()?.let { delivery ->
+                ConsumerCart.WithProducts(
+                    forFreeDelivery = delivery.forFree,
+                    cartProductList = cartProductList.map(::toLightCartProduct),
+                    oldTotalCost = productInteractor.getOldTotalCost(cartProductList),
+                    newTotalCost = productInteractor.getNewTotalCost(cartProductList)
+                )
+            }
+        }
     }
 
     fun toLightCartProduct(cartProduct: CartProduct): LightCartProduct {

@@ -30,7 +30,6 @@ class MainViewModel(
     private val mutableIsStarted: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     init {
-        refreshData()
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
@@ -45,12 +44,6 @@ class MainViewModel(
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
         mutableIsStarted.value = false
-    }
-
-    private fun refreshData() {
-        viewModelScope.launch {
-            mainInteractor.refreshData()
-        }
     }
 
     private fun observeTotalCartCount() {

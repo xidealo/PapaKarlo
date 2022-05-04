@@ -2,10 +2,8 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.CAFE_TAG
 import com.bunbeauty.data.dao.cafe.ICafeDao
-import com.bunbeauty.data.handleListResult
 import com.bunbeauty.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.data.network.model.CafeServer
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.domain.model.address.CafeAddress
@@ -35,7 +33,7 @@ class CafeRepository(
             onApiRequest = {
                 apiRepo.getCafeListByCityUuid(selectedCityUuid)
             },
-            onDatabaseRequest = {
+            onLocalRequest = {
                 cafeDao.getCafeListByCityUuid(selectedCityUuid).map(cafeMapper::toCafe)
             },
             onSaveLocally = { cafeServerList ->

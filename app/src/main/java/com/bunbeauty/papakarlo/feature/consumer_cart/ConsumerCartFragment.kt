@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -21,11 +19,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.compose.element.BlurLine
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
 import com.bunbeauty.papakarlo.compose.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.CartProductItem
+import com.bunbeauty.papakarlo.compose.screen.EmptyScreen
+import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
+import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -39,6 +39,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getConsumerCart()
         viewBinding.fragmentConsumerCartCvMain.compose {
             val consumerCartState by viewModel.consumerCartState.collectAsState()
             ConsumerCartScreen(consumerCartState)
@@ -46,16 +47,21 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     }
 
     @Composable
-    private fun ConsumerCartScreen(consumerCartState: State<ConsumerCartUI>) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
-        ) {
-            when (consumerCartState) {
-                is State.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
-                is State.Empty -> ConsumerCartEmptyScreen()
-                is State.Loading -> ConsumerCartLoadingScreen()
+    private fun ConsumerCartScreen(consumerCartState: StateWithError<ConsumerCartUI>) {
+        when (consumerCartState) {
+            is StateWithError.Loading -> LoadingScreen()
+            is StateWithError.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
+            is StateWithError.Empty -> {
+                EmptyScreen(
+                    imageId = R.drawable.empty_cart,
+                    imageDescriptionId = R.string.description_consumer_cart_empty,
+                    textId = R.string.msg_consumer_cart_empty,
+                    buttonTextId = R.string.action_consumer_cart_menu,
+                    onClick = viewModel::onMenuClicked
+                )
+            }
+            is StateWithError.Error -> ErrorScreen(message = consumerCartState.message) {
+                viewModel.getConsumerCart()
             }
         }
     }
@@ -140,60 +146,20 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
         }
     }
 
-    @Composable
-    private fun ConsumerCartEmptyScreen() {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.empty_cart),
-                    contentDescription = stringResource(R.string.description_consumer_cart_empty)
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(R.string.msg_consumer_cart_empty),
-                    style = FoodDeliveryTheme.typography.body1,
-                    textAlign = TextAlign.Center
-                )
-            }
-            MainButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                textStringId = R.string.action_consumer_cart_menu
-            ) {
-                viewModel.onMenuClicked()
-            }
-        }
-    }
-
-    @Composable
-    private fun ConsumerCartLoadingScreen() {
-        Box(modifier = Modifier.fillMaxSize()) {
-            CircularProgressBar(modifier = Modifier.align(Alignment.Center))
-        }
-    }
-
-    private val cartProductItemModel = CartProductItemModel(
-        uuid = "",
-        name = "Бэргер",
-        newCost = "300 ₽",
-        oldCost = "330 ₽",
-        photoLink = "",
-        count = 3,
-        menuProductUuid = ""
-    )
-
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
+        val cartProductItemModel = CartProductItemModel(
+            uuid = "",
+            name = "Бэргер",
+            newCost = "300 ₽",
+            oldCost = "330 ₽",
+            photoLink = "",
+            count = 3,
+            menuProductUuid = ""
+        )
         ConsumerCartScreen(
-            State.Success(
+            StateWithError.Success(
                 ConsumerCartUI(
                     forFreeDelivery = "500 ₽",
                     cartProductList = listOf(
@@ -210,16 +176,22 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
         )
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartEmptyScreenPreview() {
-        ConsumerCartScreen(State.Empty())
+        ConsumerCartScreen(StateWithError.Empty())
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartLoadingScreenPreview() {
-        ConsumerCartScreen(State.Loading())
+        ConsumerCartScreen(StateWithError.Loading())
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun ConsumerCartErrorScreenPreview() {
+        ConsumerCartScreen(StateWithError.Error("Нудалось загрузить корзину"))
     }
 
 }

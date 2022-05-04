@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICartProductInteractor {
 
-    fun observeConsumerCart(): Flow<ConsumerCart>
+    suspend fun getConsumerCart(): ConsumerCart?
+
+    fun observeConsumerCart(): Flow<ConsumerCart?>
 
     fun observeCartProductList(): Flow<List<LightCartProduct>>
 
@@ -20,8 +22,6 @@ interface ICartProductInteractor {
     fun observeTotalCartCount(): Flow<Int>
 
     fun observeDeliveryCost(): Flow<Int>
-
-    fun observeDelivery(): Flow<Delivery>
 
     fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal>
 

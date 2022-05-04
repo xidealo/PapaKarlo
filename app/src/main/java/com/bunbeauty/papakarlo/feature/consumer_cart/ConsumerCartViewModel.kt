@@ -3,13 +3,17 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.domain.model.cart.ConsumerCart
 import com.bunbeauty.domain.model.cart.LightCartProduct
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.extensions.toStateSuccess
+import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.*
+import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,14 +23,27 @@ class ConsumerCartViewModel(
     private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
+    private val resourcesProvider: IResourcesProvider,
 ) : CartViewModel() {
 
-    private val mutableConsumerCartState: MutableStateFlow<State<ConsumerCartUI>> =
-        MutableStateFlow(State.Loading())
-    val consumerCartState: StateFlow<State<ConsumerCartUI>> = mutableConsumerCartState.asStateFlow()
+    private val mutableConsumerCartState: MutableStateFlow<StateWithError<ConsumerCartUI>> =
+        MutableStateFlow(StateWithError.Loading())
+    val consumerCartState: StateFlow<StateWithError<ConsumerCartUI>> =
+        mutableConsumerCartState.asStateFlow()
 
-    init {
-        observeConsumerCart()
+    private var observeConsumerCartJob: Job? = null
+
+    fun getConsumerCart() {
+        viewModelScope.launch {
+            observeConsumerCartJob?.cancel()
+            mutableConsumerCartState.value = cartProductInteractor.getConsumerCart().toState()
+            if (mutableConsumerCartState.value is StateWithError.Success) {
+                observeConsumerCartJob =
+                    cartProductInteractor.observeConsumerCart().launchOnEach { consumerCart ->
+                        mutableConsumerCartState.value = consumerCart.toState()
+                    }
+            }
+        }
     }
 
     fun onMenuClicked() {
@@ -47,19 +64,20 @@ class ConsumerCartViewModel(
         router.navigate(toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
     }
 
-    private fun observeConsumerCart() {
-        cartProductInteractor.observeConsumerCart().launchOnEach { consumerCart ->
-            mutableConsumerCartState.value = if (consumerCart.cartProductList.isEmpty()) {
-                State.Empty()
-            } else {
-                ConsumerCartUI(
-                    forFreeDelivery = stringUtil.getCostString(consumerCart.forFreeDelivery),
-                    cartProductList = consumerCart.cartProductList.map(::toItem),
-                    oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
+    private fun ConsumerCart?.toState(): StateWithError<ConsumerCartUI> {
+        return if (this == null) {
+            StateWithError.Error(resourcesProvider.getString(R.string.error_consumer_cart_loading))
+        } else {
+            when (this) {
+                is ConsumerCart.Empty -> StateWithError.Empty()
+                is ConsumerCart.WithProducts -> ConsumerCartUI(
+                    forFreeDelivery = stringUtil.getCostString(forFreeDelivery),
+                    cartProductList = cartProductList.map(::toItem),
+                    oldTotalCost = oldTotalCost?.let { oldTotalCost ->
                         stringUtil.getCostString(oldTotalCost)
                     },
-                    newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost),
-                ).toStateSuccess()
+                    newTotalCost = stringUtil.getCostString(newTotalCost),
+                ).toStateWithErrorSuccess()
             }
         }
     }

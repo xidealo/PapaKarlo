@@ -16,8 +16,8 @@ interface DataStoreRepo {
     suspend fun saveUserUuid(userId: String)
     suspend fun clearUserUuid()
 
-    val delivery: Flow<Delivery>
-    suspend fun getDelivery(): Delivery
+    val delivery: Flow<Delivery?>
+    suspend fun getDelivery(): Delivery?
     suspend fun saveDelivery(delivery: Delivery)
 
     val selectedCityUuid: Flow<String?>

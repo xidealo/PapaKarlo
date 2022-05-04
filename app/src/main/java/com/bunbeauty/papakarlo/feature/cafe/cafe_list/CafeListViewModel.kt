@@ -7,7 +7,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.StateWithError
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.extensions.toStateSuccessOrError
-import com.bunbeauty.papakarlo.extensions.toStateWithErrorSuccess
 import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import core_common.Constants.WORKING_HOURS_DIVIDER
@@ -33,16 +32,10 @@ class CafeListViewModel(
         viewModelScope.launch {
             observeMinutesOfDayJob?.cancel()
 
-            mutableCafeItemList.value = cafeInteractor.getCafeList()?.map { cafe ->
-                toItemModel(cafe)
-            }.toStateSuccessOrError(resourcesProvider.getString(R.string.error_cafe_list_loading))
+            mutableCafeItemList.value = cafeInteractor.getCafeList().toState()
             if (mutableCafeItemList.value is StateWithError.Success) {
                 observeMinutesOfDayJob = cafeInteractor.observeCafeList().launchOnEach { cafeList ->
-                    cafeList?.let {
-                        mutableCafeItemList.value = cafeList.map { cafe ->
-                            toItemModel(cafe)
-                        }.toStateWithErrorSuccess()
-                    }
+                    mutableCafeItemList.value = cafeList.toState()
                 }
             }
         }
@@ -50,6 +43,12 @@ class CafeListViewModel(
 
     fun onCafeCardClicked(cafeItem: CafeItemModel) {
         router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
+    }
+
+    private suspend fun List<Cafe>?.toState(): StateWithError<List<CafeItemModel>> {
+        return this?.map { cafe ->
+            toItemModel(cafe)
+        }.toStateSuccessOrError(resourcesProvider.getString(R.string.error_cafe_list_loading))
     }
 
     private suspend fun toItemModel(cafe: Cafe): CafeItemModel {

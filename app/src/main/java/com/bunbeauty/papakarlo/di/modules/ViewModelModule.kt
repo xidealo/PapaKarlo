@@ -46,6 +46,7 @@ fun viewModelModule() = module {
             stringUtil = get(),
             userInteractor = get(),
             cartProductInteractor = get(),
+            resourcesProvider = get(),
         )
     }
     viewModel {

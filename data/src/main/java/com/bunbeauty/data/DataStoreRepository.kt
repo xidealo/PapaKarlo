@@ -39,15 +39,16 @@ class DataStoreRepository(private val context: Context) : DataStoreRepo {
         }
     }
 
-    override val delivery: Flow<Delivery> = context.deliveryDataStore.data.map {
-        Delivery(
-            it[DELIVERY_COST_KEY] ?: DEFAULT_DELIVERY_COST,
-            it[FOR_FREE_DELIVERY_KEY] ?: DEFAULT_FOR_FREE_DELIVERY
-        )
+    override val delivery: Flow<Delivery?> = context.deliveryDataStore.data.map {
+        it[DELIVERY_COST_KEY]?.let { cost ->
+            it[FOR_FREE_DELIVERY_KEY]?.let { forFree ->
+                Delivery(cost = cost, forFree = forFree)
+            }
+        }
     }
 
-    override suspend fun getDelivery(): Delivery {
-        return delivery.first()
+    override suspend fun getDelivery(): Delivery? {
+        return delivery.firstOrNull()
     }
 
     override suspend fun saveDelivery(delivery: Delivery) {

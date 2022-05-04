@@ -1,6 +1,7 @@
 package com.bunbeauty.data.repository
 
 import com.bunbeauty.data.handleListResultAndReturn
+import com.bunbeauty.data.handleResultAndAlwaysReturn
 import com.bunbeauty.data.network.ApiResult
 import com.bunbeauty.data.network.model.ListServer
 
@@ -11,8 +12,8 @@ abstract class CacheListRepository<D> {
 
     protected suspend inline fun <S> getCacheOrListData(
         isCacheValid: ((List<D>) -> Boolean) = { true },
-        onApiRequest: () -> ApiResult<ListServer<S>>,
-        crossinline onDatabaseRequest: suspend () -> List<D>,
+        crossinline onApiRequest: suspend () -> ApiResult<ListServer<S>>,
+        crossinline onLocalRequest: suspend () -> List<D>,
         crossinline onSaveLocally: suspend (List<S>) -> Unit,
         crossinline serverToDomainModel: (S) -> D,
     ): List<D> {
@@ -23,7 +24,7 @@ abstract class CacheListRepository<D> {
             onApiRequest().handleListResultAndReturn(
                 tag = tag,
                 onError = {
-                    onDatabaseRequest()
+                    onLocalRequest()
                 },
                 onSuccess = { serverModelList ->
                     onSaveLocally(serverModelList)
