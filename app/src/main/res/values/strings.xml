@@ -30,7 +30,7 @@
 
     <!-- SELECT CITY -->
     <string name="title_select_city">Выберите город</string>
-    <string name="error_select_city_loading">Нудалось загрузить список городов</string>
+    <string name="error_select_city_loading">Не удалось загрузить список городов</string>
 
     <!-- UPDATE -->
     <string name="title_update_new_app_version">Новая версия</string>
@@ -54,7 +54,7 @@
     <string name="title_menu_oven">В печи</string>
     <string name="action_menu_want">Хочу!</string>
     <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
-    <string name="error_menu_loading">Нудалось загрузить меню</string>
+    <string name="error_menu_loading">Не удалось загрузить меню</string>
 
     <!-- PRODUCT DETAILS -->
     <string name="action_product_details_want">Хочу!</string>
@@ -71,7 +71,7 @@
     <string name="description_consumer_cart_increase">Увеличить</string>
     <string name="description_consumer_cart_decrease">Уменьшить</string>
     <string name="description_consumer_cart_empty">Пустая корзина</string>
-    <string name="error_consumer_cart_loading">Нудалось загрузить корзину</string>
+    <string name="error_consumer_cart_loading">Не удалось загрузить корзину</string>
 
     <!-- CREATE ORDER -->
     <string name="title_create_order">Оформление заказа</string>
@@ -123,6 +123,7 @@
     <string name="error_create_address_floor_max_length">Максимальная длинна для поля 5</string>
     <string name="error_create_address_comment_max_length">Максимальная длинна для поля 100</string>
     <string name="action_create_address_save">Сохранить</string>
+    <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>
@@ -141,7 +142,7 @@
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="title_cafe_list_payment">Оплата</string>
-    <string name="error_cafe_list_loading">Нудалось загрузить список ресторанов</string>
+    <string name="error_cafe_list_loading">Не удалось загрузить список ресторанов</string>
 
     <!--CAFE-->
     <string name="msg_cafe_open">Открыто</string>
@@ -219,7 +220,7 @@
     <string name="description_ic_feedback">Отзывы</string>
     <string name="description_ic_about">О приложении</string>
     <string name="description_empty_profile">Пустой профиль</string>
-    <string name="error_profile_loading">Нудалось загрузить профиль</string>
+    <string name="error_profile_loading">Не удалось загрузить профиль</string>
 
     <!-- LOGIN  -->
     <string name="title_login_registration">Регистрация</string>
@@ -301,21 +302,6 @@
     <string name="description_google_play">google play image</string>
 
     <!-- MONTHS -->
-    <!--
-    JANUARY
-    FEBRUARY
-    MARCH
-    APRIL
-    MAY
-    JUNE
-    JULY
-    AUGUST
-    SEPTEMBER
-    OCTOBER
-    NOVEMBER
-    DECEMBER
-        -->
-
     <string name="month_january">января</string>
     <string name="month_february">февраля</string>
     <string name="month_march">марта</string>

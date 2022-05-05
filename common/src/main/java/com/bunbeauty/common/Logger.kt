@@ -5,7 +5,6 @@ package com.bunbeauty.common
 object Logger {
 
     private const val COMMON_TAG = "commonTag"
-    private const val WORKER_TAG = "workerTag"
 
     const val TEST_TAG = "testTag"
     const val NAV_TAG = "navTag"
@@ -34,9 +33,5 @@ object Logger {
     fun logE(tag: String, message: Any) {
         //Log.e(COMMON_TAG, "$tag $message")
         //Log.e(tag, message.toString())
-    }
-
-    private fun isWorkerTag(tag: String): Boolean {
-        return tag.contains(Regex("Worker$"))
     }
 }

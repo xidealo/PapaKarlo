@@ -32,13 +32,6 @@ object Constants {
     const val MENU_PRODUCTS = "menu_products"
     const val DELIVERY = "delivery"
 
-    // WORKER KEYS
-
-    const val TOKEN_WORK_KEY = "token"
-    const val SELECTED_CITY_UUID = "selected sity uuid"
-    const val USER_UUID = "user uuid"
-    const val USER_PHONE = "user phone"
-
     // LIMITS
 
     const val PHONE_LENGTH = 15

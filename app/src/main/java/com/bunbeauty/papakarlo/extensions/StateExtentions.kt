@@ -30,3 +30,15 @@ fun <T> T?.toSuccessOrEmpty(): State<T> {
 fun <T> T?.toStateNullableSuccess(): State.Success<T?> {
     return State.Success(this)
 }
+
+fun <T> T?.toState(errorMessage: String): StateWithError<T> {
+    return if (this == null) {
+        StateWithError.Error(errorMessage)
+    } else {
+        if (this is List<*> && isEmpty()) {
+            StateWithError.Empty()
+        } else {
+            StateWithError.Success(this)
+        }
+    }
+}

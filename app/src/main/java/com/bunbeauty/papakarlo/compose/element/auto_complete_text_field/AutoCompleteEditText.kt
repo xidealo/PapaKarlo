@@ -51,7 +51,7 @@ fun <T : AutoCompleteEntity> AutoCompleteEditText(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
             ) {
                 listState.forEachIndexed { i, item ->
                     DropdownItem(

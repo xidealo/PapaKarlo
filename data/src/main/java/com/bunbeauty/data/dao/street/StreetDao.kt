@@ -22,6 +22,10 @@ class StreetDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IStreetDao {
         }
     }
 
+    override suspend fun getStreetListByCityUuid(cityUuid: String): List<StreetEntity> {
+        return streetEntityQueries.getStreetListByCityUuid(cityUuid).executeAsList()
+    }
+
     override fun observeStreetListByCityUuid(cityUuid: String): Flow<List<StreetEntity>> {
         return streetEntityQueries.getStreetListByCityUuid(cityUuid).asFlow().mapToList()
     }

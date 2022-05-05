@@ -37,7 +37,6 @@ class PapaKarloApplication : Application(), CoroutineScope, KoinComponent {
                 appUtilModule(),
                 uiMapperModule(),
                 viewModelModule(),
-                workerModule(),
                 databaseModule(),
                 networkModule(),
                 mapperModule(),

@@ -5,6 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface IStreetInteractor {
 
-    fun observeStreetList(): Flow<List<Street>>
-    fun observeStreetNameList(): Flow<List<String>>
+    suspend fun getStreetList(): List<Street>?
 }

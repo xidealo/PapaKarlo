@@ -191,7 +191,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartErrorScreenPreview() {
-        ConsumerCartScreen(StateWithError.Error("Нудалось загрузить корзину"))
+        ConsumerCartScreen(StateWithError.Error("Не удалось загрузить корзину"))
     }
 
 }

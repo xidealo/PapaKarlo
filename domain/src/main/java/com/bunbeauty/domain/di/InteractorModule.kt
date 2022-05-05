@@ -46,8 +46,7 @@ fun interactorModule() = module {
     single<ICityInteractor> {
         CityInteractor(
             dataStoreRepo = get(),
-            cityRepo = get(),
-            streetWorkerUtil = get(),
+            cityRepo = get()
         )
     }
     single<ICartProductInteractor> {
