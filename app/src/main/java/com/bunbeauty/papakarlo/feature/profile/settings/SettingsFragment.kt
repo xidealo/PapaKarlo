@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.domain.model.profile.Settings
-import com.bunbeauty.domain.model.profile.User
+import com.bunbeauty.shared.domain.model.profile.Settings
+import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State

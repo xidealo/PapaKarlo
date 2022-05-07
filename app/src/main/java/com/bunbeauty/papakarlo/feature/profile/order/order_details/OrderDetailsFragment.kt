@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State

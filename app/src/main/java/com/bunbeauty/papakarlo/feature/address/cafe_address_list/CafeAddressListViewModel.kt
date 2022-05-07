@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.address.cafe_address_list
 
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.domain.model.cafe.CafeAddress
+import com.bunbeauty.shared.domain.model.cafe.CafeAddress
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.address.AddressItem
 import kotlinx.coroutines.flow.MutableStateFlow

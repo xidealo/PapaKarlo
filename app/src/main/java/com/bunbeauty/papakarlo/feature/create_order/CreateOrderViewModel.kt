@@ -7,7 +7,7 @@ import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.create_order.CreateOrderFragmentDirections.*
@@ -158,7 +158,8 @@ class CreateOrderViewModel(
         } else {
             resourcesProvider.getString(R.string.hint_create_order_pickup_time)
         }
-        router.navigate(toDeferredTimeBottomSheet(deferredTimeHint, selectedDeferredTime))
+        //TODO(Change parametrs)
+        //router.navigate(toDeferredTimeBottomSheet(deferredTimeHint, selectedDeferredTime))
     }
 
     fun onAddCommentClicked() {

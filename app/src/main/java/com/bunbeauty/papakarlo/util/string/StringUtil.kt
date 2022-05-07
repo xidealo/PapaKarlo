@@ -1,11 +1,11 @@
 package com.bunbeauty.papakarlo.util.string
 
 import core_common.Constants.ADDRESS_DIVIDER
-import com.bunbeauty.domain.model.order.OrderStatus
-import com.bunbeauty.domain.model.order.OrderStatus.*
-import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.model.date_time.DateTime
-import com.bunbeauty.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus.*
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 

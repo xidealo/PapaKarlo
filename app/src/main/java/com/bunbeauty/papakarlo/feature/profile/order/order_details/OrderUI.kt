@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.profile.order.order_details
 
 import androidx.annotation.StringRes
-import com.bunbeauty.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 data class OrderUI(
     val code: String,

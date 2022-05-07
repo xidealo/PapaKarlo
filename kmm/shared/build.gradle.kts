@@ -38,6 +38,9 @@ kotlin {
                 // koin
                 implementation(Koin.core)
                 api(Koin.test)
+
+                implementation(KotlinxDateTime.dateTime)
+
             }
         }
         val commonTest by getting {

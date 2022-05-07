@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.product_details
 
 import androidx.lifecycle.SavedStateHandle
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.cafe.cafe_list
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.domain.model.cafe.Cafe
+import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel

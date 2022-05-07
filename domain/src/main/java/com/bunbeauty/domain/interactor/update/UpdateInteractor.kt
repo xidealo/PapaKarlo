@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.update
 
-import com.bunbeauty.domain.repo.VersionRepo
+import com.bunbeauty.shared.domain.repo.VersionRepo
 
 class UpdateInteractor(
     private val versionRepo: VersionRepo

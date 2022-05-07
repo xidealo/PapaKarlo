@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.interactor.street
 
-import com.bunbeauty.domain.model.Street
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.StreetRepo
+import com.bunbeauty.shared.domain.model.Street
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.repo.StreetRepo
 
 class StreetInteractor(
     private val streetRepo: StreetRepo,

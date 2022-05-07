@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.select_city
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.city.ICityInteractor
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel

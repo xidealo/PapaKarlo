@@ -3,8 +3,8 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.cart.ConsumerCart
-import com.bunbeauty.domain.model.cart.LightCartProduct
+import com.bunbeauty.shared.domain.model.cart.ConsumerCart
+import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel

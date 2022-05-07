@@ -3,9 +3,9 @@ package com.bunbeauty.data.repository
 import com.bunbeauty.common.Logger.DELIVERY_TAG
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.model.DeliveryServer
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.DeliveryRepo
+import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
 class DeliveryRepository(
     private val apiRepo: ApiRepo,

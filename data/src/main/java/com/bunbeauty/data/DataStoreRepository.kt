@@ -7,9 +7,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.UserCityUuid
-import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.UserCityUuid
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.*
 
 class DataStoreRepository(private val context: Context) : DataStoreRepo {

@@ -2,7 +2,7 @@ package com.bunbeauty.data.repository
 
 import com.bunbeauty.common.Logger.VERSION_TAG
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.domain.repo.VersionRepo
+import com.bunbeauty.shared.domain.repo.VersionRepo
 
 class VersionRepository(private val apiRepo: ApiRepo) : BaseRepository(), VersionRepo {
 

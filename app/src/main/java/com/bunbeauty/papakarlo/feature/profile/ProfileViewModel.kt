@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.model.profile.Profile
+import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel

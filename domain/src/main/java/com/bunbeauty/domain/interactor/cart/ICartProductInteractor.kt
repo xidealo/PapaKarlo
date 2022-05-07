@@ -1,9 +1,8 @@
 package com.bunbeauty.domain.interactor.cart
 
-import com.bunbeauty.domain.model.cart.CartProduct
-import com.bunbeauty.domain.model.cart.CartTotal
-import com.bunbeauty.domain.model.cart.ConsumerCart
-import com.bunbeauty.domain.model.cart.LightCartProduct
+import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.cart.CartTotal
+import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import kotlinx.coroutines.flow.Flow
 
 interface ICartProductInteractor {

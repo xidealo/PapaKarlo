@@ -34,7 +34,18 @@ struct ToolbarView: View {
                 .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .bold, design: .default))
                 .padding(.vertical, Diems.MEDIUM_PADDING)
             Spacer()
-          
+            
+            if isLogoutVisible{
+                Button(action:{
+                    print("logount")
+                    self.mode.wrappedValue.dismiss()
+                }){
+                    Image("LogoutIcon").resizable().frame(width: 24, height: 24).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
+                }
+     
+            }
+           
+            
             if(isCartVisible){
                 NavigationLink(
                     destination:ConsumerCartView()
@@ -61,6 +72,6 @@ struct ToolbarView: View {
 
 struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolbarView(title: "Title", cost: "220R", count: "2", isShowBackArrow: true, isCartVisible: true, isLogoutVisible: false)
+        ToolbarView(title: "Title", cost: "220R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: true)
     }
 }

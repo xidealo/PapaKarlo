@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.interactor.product
 
-import com.bunbeauty.domain.model.product.ProductPosition
-import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.model.product.ProductPosition
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
 
 class ProductInteractor(
     private val dataStoreRepo: DataStoreRepo

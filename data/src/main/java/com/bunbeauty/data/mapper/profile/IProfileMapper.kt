@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.profile
 
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
-import com.bunbeauty.domain.model.profile.Profile
+import com.bunbeauty.shared.domain.model.profile.Profile
 import database.OrderEntity
 import database.OrderWithProductEntity
 import database.UserAddressEntity

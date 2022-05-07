@@ -2,8 +2,8 @@ package com.bunbeauty.data.mapper.user_address
 
 import com.bunbeauty.data.network.model.AddressServer
 import com.bunbeauty.data.network.model.UserAddressPostServer
-import com.bunbeauty.domain.model.address.CreatedUserAddress
-import com.bunbeauty.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddress
 import database.UserAddressEntity
 
 interface IUserAddressMapper {

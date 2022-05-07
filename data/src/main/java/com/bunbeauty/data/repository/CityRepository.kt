@@ -6,8 +6,8 @@ import com.bunbeauty.data.mapper.city.ICityMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
-import com.bunbeauty.domain.model.City
-import com.bunbeauty.domain.repo.CityRepo
+import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow
 
 class CityRepository(

@@ -34,13 +34,12 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":kmm:core:core-common"))
+    implementation(project(":kmm:shared"))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
 
     implementation(Coroutine.core)
-
-    implementation(KotlinxDateTime.dateTime)
 
     implementation(Test.junit)
 

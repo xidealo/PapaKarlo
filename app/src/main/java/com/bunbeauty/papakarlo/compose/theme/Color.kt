@@ -8,8 +8,8 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.bunbeauty.domain.model.order.OrderStatus
-import com.bunbeauty.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)

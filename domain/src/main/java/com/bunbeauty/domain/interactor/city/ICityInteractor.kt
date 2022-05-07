@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.city
 
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.shared.domain.model.City
 import kotlinx.coroutines.flow.Flow
 
 interface ICityInteractor {

@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.profile.order.order_list
 
-import com.bunbeauty.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 data class OrderItem(
     val uuid: String,

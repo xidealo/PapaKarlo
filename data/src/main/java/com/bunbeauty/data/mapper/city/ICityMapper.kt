@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.city
 
 import com.bunbeauty.data.network.model.CityServer
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.shared.domain.model.City
 import database.CityEntity
 
 interface ICityMapper {

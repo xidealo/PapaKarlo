@@ -4,9 +4,8 @@ import com.bunbeauty.common.Logger.STREET_TAG
 import com.bunbeauty.data.dao.street.IStreetDao
 import com.bunbeauty.data.mapper.street.IStreetMapper
 import com.bunbeauty.data.network.api.ApiRepo
-import com.bunbeauty.domain.model.Street
-import com.bunbeauty.domain.repo.StreetRepo
-import kotlinx.coroutines.flow.Flow
+import com.bunbeauty.shared.domain.model.Street
+import com.bunbeauty.shared.domain.repo.StreetRepo
 
 class StreetRepository(
     private val apiRepo: ApiRepo,

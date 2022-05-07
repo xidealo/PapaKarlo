@@ -23,9 +23,7 @@ import core_common.Constants.DEFERRED_TIME_REQUEST_KEY
 import core_common.Constants.RESULT_CAFE_ADDRESS_KEY
 import core_common.Constants.RESULT_COMMENT_KEY
 import core_common.Constants.RESULT_USER_ADDRESS_KEY
-import core_common.Constants.SELECTED_DEFERRED_TIME_KEY
 import core_common.Constants.USER_ADDRESS_REQUEST_KEY
-import com.bunbeauty.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.compose.card.NavigationCard
@@ -66,9 +64,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             }
         }
         setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
-            bundle.getParcelable<Time>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
+            /*bundle.getParcelable<Time>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
                 viewModel.onDeferredTimeSelected(selectedDeferredTime)
-            }
+            }*/
         }
     }
 

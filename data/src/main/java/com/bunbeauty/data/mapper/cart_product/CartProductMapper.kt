@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.cart_product
 
-import com.bunbeauty.domain.model.cart.CartProduct
-import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.product.MenuProduct
 import database.CartProductEntity
 import database.CartProductWithMenuProductEntity
 

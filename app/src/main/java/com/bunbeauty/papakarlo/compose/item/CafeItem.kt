@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeItem

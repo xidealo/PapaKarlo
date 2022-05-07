@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.cafe.cafe_list
 
-import com.bunbeauty.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 
 data class CafeItem(
     val uuid: String,

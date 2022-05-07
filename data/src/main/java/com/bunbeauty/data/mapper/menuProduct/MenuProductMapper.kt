@@ -1,8 +1,8 @@
 package com.bunbeauty.data.mapper.menuProduct
 
 import com.bunbeauty.data.network.model.MenuProductServer
-import com.bunbeauty.domain.model.category.Category
-import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.model.category.Category
+import com.bunbeauty.shared.domain.model.product.MenuProduct
 import database.CategoryEntity
 import database.MenuProductCategoryReference
 import database.MenuProductEntity

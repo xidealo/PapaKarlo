@@ -1,14 +1,13 @@
 package com.bunbeauty.domain.interactor.cart
 
 import com.bunbeauty.domain.interactor.product.IProductInteractor
-import com.bunbeauty.domain.model.Delivery
-import com.bunbeauty.domain.model.cart.CartProduct
-import com.bunbeauty.domain.model.cart.CartTotal
-import com.bunbeauty.domain.model.cart.ConsumerCart
-import com.bunbeauty.domain.model.cart.LightCartProduct
-import com.bunbeauty.domain.repo.CartProductRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.DeliveryRepo
+import com.bunbeauty.shared.domain.model.cart.CartProduct
+import com.bunbeauty.shared.domain.model.cart.CartTotal
+import com.bunbeauty.shared.domain.model.cart.ConsumerCart
+import com.bunbeauty.shared.domain.model.cart.LightCartProduct
+import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map

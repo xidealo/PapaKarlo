@@ -1,6 +1,6 @@
 package com.bunbeauty.data.network
 
-import com.bunbeauty.domain.repo.AuthRepo
+import com.bunbeauty.shared.domain.repo.AuthRepo
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow

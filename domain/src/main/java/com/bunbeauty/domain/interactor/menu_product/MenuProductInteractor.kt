@@ -1,11 +1,9 @@
 package com.bunbeauty.domain.interactor.menu_product
 
-import com.bunbeauty.domain.model.menu.MenuSection
-import com.bunbeauty.domain.model.product.MenuProduct
-import com.bunbeauty.domain.repo.MenuProductRepo
-import kotlinx.coroutines.delay
+import com.bunbeauty.shared.domain.model.menu.MenuSection
+import com.bunbeauty.shared.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,

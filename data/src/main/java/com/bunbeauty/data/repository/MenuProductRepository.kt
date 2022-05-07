@@ -8,8 +8,8 @@ import com.bunbeauty.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.model.MenuProductServer
 import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.model.product.MenuProduct
-import com.bunbeauty.domain.repo.MenuProductRepo
+import com.bunbeauty.shared.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

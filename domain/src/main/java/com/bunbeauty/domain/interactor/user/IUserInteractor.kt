@@ -1,7 +1,7 @@
 package com.bunbeauty.domain.interactor.user
 
-import com.bunbeauty.domain.model.profile.Profile
-import com.bunbeauty.domain.model.profile.User
+import com.bunbeauty.shared.domain.model.profile.Profile
+import com.bunbeauty.shared.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface IUserInteractor {

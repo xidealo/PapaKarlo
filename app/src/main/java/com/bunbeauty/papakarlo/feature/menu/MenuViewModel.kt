@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.domain.model.menu.MenuSection
-import com.bunbeauty.domain.model.product.MenuProduct
+import com.bunbeauty.shared.domain.model.menu.MenuSection
+import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel

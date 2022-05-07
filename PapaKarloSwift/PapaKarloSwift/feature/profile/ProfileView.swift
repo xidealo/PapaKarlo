@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import shared
 struct ProfileView: View {
         
     var body: some View {
@@ -37,7 +37,6 @@ struct ProfileView_Previews: PreviewProvider {
 struct EmptyProfileView: View {
     var body: some View {
         VStack{
-            
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
             
             NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())

@@ -6,9 +6,9 @@ import com.bunbeauty.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
-import com.bunbeauty.domain.model.address.CreatedUserAddress
-import com.bunbeauty.domain.model.address.UserAddress
-import com.bunbeauty.domain.repo.UserAddressRepo
+import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import database.SelectedUserAddressUuidEntity
 import kotlinx.coroutines.flow.Flow
 

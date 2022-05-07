@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.deferred_time
 
-import com.bunbeauty.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.date_time.Time
 
 interface IDeferredTimeInteractor {
 

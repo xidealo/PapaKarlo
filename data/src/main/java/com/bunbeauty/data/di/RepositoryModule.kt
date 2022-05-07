@@ -5,7 +5,7 @@ import com.bunbeauty.data.network.AuthRepository
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.data.network.api.ApiRepository
 import com.bunbeauty.data.repository.*
-import com.bunbeauty.domain.repo.*
+import com.bunbeauty.shared.domain.repo.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

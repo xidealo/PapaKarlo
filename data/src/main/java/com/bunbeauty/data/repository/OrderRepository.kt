@@ -6,11 +6,11 @@ import com.bunbeauty.data.mapper.order.IOrderMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
-import com.bunbeauty.domain.model.order.CreatedOrder
-import com.bunbeauty.domain.model.order.LightOrder
-import com.bunbeauty.domain.model.order.Order
-import com.bunbeauty.domain.model.order.OrderCode
-import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.shared.domain.model.order.CreatedOrder
+import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.domain.model.order.Order
+import com.bunbeauty.shared.domain.model.order.OrderCode
+import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach

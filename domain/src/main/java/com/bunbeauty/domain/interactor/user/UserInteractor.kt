@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.interactor.user
 
-import com.bunbeauty.domain.model.profile.Profile
-import com.bunbeauty.domain.model.profile.User
-import com.bunbeauty.domain.repo.AuthRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.UserRepo
+import com.bunbeauty.shared.domain.model.profile.Profile
+import com.bunbeauty.shared.domain.model.profile.User
+import com.bunbeauty.shared.domain.repo.AuthRepo
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map

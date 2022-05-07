@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.compose.element.Title

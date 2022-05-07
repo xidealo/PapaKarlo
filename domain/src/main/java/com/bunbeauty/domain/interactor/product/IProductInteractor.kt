@@ -1,6 +1,6 @@
 package com.bunbeauty.domain.interactor.product
 
-import com.bunbeauty.domain.model.product.ProductPosition
+import com.bunbeauty.shared.domain.model.product.ProductPosition
 
 interface IProductInteractor {
 

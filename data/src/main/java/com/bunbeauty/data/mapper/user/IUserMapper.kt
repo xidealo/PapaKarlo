@@ -2,7 +2,7 @@ package com.bunbeauty.data.mapper.user
 
 import com.bunbeauty.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.data.network.model.profile.patch.PatchUserServer
-import com.bunbeauty.domain.model.profile.User
+import com.bunbeauty.shared.domain.model.profile.User
 import database.UserEntity
 
 interface IUserMapper {

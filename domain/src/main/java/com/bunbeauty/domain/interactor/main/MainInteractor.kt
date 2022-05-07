@@ -1,8 +1,8 @@
 package com.bunbeauty.domain.interactor.main
 
 import com.bunbeauty.domain.interactor.user.IUserInteractor
-import com.bunbeauty.domain.repo.DataStoreRepo
-import com.bunbeauty.domain.repo.OrderRepo
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow

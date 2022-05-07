@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.settings.change_city
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.domain.interactor.city.ICityInteractor
-import com.bunbeauty.domain.model.City
+import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

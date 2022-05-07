@@ -20,7 +20,7 @@ import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
 import core_common.Constants.DEFERRED_TIME_REQUEST_KEY
 import core_common.Constants.SELECTED_DEFERRED_TIME_KEY
-import com.bunbeauty.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.compose.card.NavigationCard

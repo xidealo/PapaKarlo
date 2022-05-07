@@ -1,7 +1,7 @@
 package com.bunbeauty.data.mapper.street
 
 import com.bunbeauty.data.network.model.StreetServer
-import com.bunbeauty.domain.model.Street
+import com.bunbeauty.shared.domain.model.Street
 import database.StreetEntity
 import database.UserAddressEntity
 

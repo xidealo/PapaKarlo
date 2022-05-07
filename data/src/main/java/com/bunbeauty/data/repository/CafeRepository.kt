@@ -6,10 +6,10 @@ import com.bunbeauty.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
-import com.bunbeauty.domain.model.address.CafeAddress
-import com.bunbeauty.domain.model.cafe.Cafe
-import com.bunbeauty.domain.repo.CafeRepo
-import com.bunbeauty.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.domain.model.address.CafeAddress
+import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.shared.domain.repo.DataStoreRepo
 import database.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
