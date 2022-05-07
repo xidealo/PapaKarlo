@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EditTextView: View {
     
-    let hint:String
-    @State var text:String
+    let hint: String
+    @State var text: String
     
     var body: some View {
-        TextField(hint, text:$text)
+        TextField(hint, text: $text)
             .padding().overlay(
                 RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                     .stroke(Color("surfaceVariant"), lineWidth: 2)

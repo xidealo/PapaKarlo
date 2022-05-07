@@ -6,37 +6,51 @@
 //
 
 import SwiftUI
-
-struct SelectCityView: View {
-    let cities : [CityItem]
     
-    init() {
-        cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
-    }
+struct SelectCityView: View {
+    @StateObject private var viewModel = ViewModel()
     
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
-            
-            ScrollView {
-                LazyVStack{
-                    ForEach(cities){ city in
-                        NavigationLink(
-                            destination:ContainerView()
-                        ){
-                            CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                        }
-                    }
-                }
-            }.padding(.top, Diems.MEDIUM_PADDING)
+        
+            switch (viewModel.cityListState) {
+                case .loading:
+                    LoadingView()
+                case .success(let cityList):
+                    SelectCitySuccessView(cityList: cityList)
+                case .empty:
+                    LoadingView()
+                case .error(let error):
+                    LoadingView()
+            }
         }
         .background(Color("background"))
         .navigationBarHidden(true)
+    }
+}
+
+struct SelectCitySuccessView : View {
+    
+    let cityList: [CityItem]
+    
+    var body: some View {
+        ScrollView {
+            LazyVStack{
+                ForEach(cityList){ city in
+                    NavigationLink(
+                        destination:ContainerView()
+                    ){
+                        CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                }
+            }
+        }.padding(.top, Diems.MEDIUM_PADDING)
         
     }
 }
 
-struct SelectCityView_Previews: PreviewProvider {
+struct SelectCitySuccessView_Previews: PreviewProvider {
     static var previews: some View {
         SelectCityView()
     }
