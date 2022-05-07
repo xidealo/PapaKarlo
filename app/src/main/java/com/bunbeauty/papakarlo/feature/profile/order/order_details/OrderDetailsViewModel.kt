@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.profile.order.order_details
 
 import androidx.lifecycle.SavedStateHandle
-import com.bunbeauty.domain.interactor.order.IOrderInteractor
+import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper

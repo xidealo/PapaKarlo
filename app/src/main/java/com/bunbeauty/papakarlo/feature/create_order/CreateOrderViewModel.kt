@@ -1,12 +1,12 @@
 package com.bunbeauty.papakarlo.feature.create_order
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.address.IAddressInteractor
-import com.bunbeauty.domain.interactor.cafe.ICafeInteractor
-import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
-import com.bunbeauty.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
+import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel

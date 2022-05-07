@@ -4,14 +4,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import core_common.Constants.PHONE_CODE
 import core_common.Constants.TOO_MANY_REQUESTS
-import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.feature.auth.login.LoginFragmentDirections.*
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.MutableStateFlow

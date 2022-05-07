@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.address.create_address
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.address.IAddressInteractor
-import com.bunbeauty.domain.interactor.street.IStreetInteractor
+import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel

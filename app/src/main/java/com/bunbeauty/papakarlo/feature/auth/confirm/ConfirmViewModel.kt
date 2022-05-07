@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import core_common.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
-import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection
@@ -13,7 +13,6 @@ import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragmentDirections.toCreateOrderFragment
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

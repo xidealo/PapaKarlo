@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.address.user_address_list
 
 import androidx.lifecycle.SavedStateHandle
-import com.bunbeauty.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel

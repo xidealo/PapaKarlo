@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.consumer_cart
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.papakarlo.R

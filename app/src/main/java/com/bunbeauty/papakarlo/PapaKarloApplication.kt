@@ -8,7 +8,7 @@ import com.bunbeauty.data.di.databaseModule
 import com.bunbeauty.data.di.mapperModule
 import com.bunbeauty.data.di.networkModule
 import com.bunbeauty.data.di.repositoryModule
-import com.bunbeauty.domain.di.interactorModule
+import com.bunbeauty.shared.di.interactorModule
 import com.bunbeauty.domain.di.utilModule
 import com.bunbeauty.papakarlo.di.appModule
 import com.bunbeauty.papakarlo.di.appUtilModule

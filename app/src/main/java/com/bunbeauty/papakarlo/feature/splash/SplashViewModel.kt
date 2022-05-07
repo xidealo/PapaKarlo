@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.splash
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.city.ICityInteractor
-import com.bunbeauty.domain.interactor.update.IUpdateInteractor
+import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.*

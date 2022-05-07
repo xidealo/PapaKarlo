@@ -7,6 +7,7 @@
 
 import SwiftUI
 import shared
+
 struct ProfileView: View {
         
     var body: some View {

@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.profile.settings
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.settings.ISettingsInteractor
-import com.bunbeauty.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.profile.Settings
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.papakarlo.R

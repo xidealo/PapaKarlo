@@ -3,13 +3,12 @@ package com.bunbeauty.papakarlo.feature.main
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.domain.interactor.main.IMainInteractor
+import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val cartProductInteractor: ICartProductInteractor,

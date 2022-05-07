@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
     implementation(project(":common"))
     implementation(project(":kmm:core:core-common"))
     implementation(project(":kmm:shared"))

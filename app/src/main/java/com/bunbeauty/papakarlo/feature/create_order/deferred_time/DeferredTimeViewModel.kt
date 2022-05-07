@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.create_order.deferred_time
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.domain.interactor.deferred_time.IDeferredTimeInteractor
+import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
