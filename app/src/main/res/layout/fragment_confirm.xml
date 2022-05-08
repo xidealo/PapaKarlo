@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
-    tools:context=".feature.auth.confirm.ConfirmFragment">
+    tools:context=".feature.auth.screen.confirm.ConfirmFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentConfirmCvMain"

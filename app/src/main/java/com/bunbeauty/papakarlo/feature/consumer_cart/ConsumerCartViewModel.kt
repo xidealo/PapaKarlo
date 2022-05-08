@@ -8,8 +8,10 @@ import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.enums.SuccessLoginDirection.TO_CREATE_ORDER
+import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.*
+import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
+import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow

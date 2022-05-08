@@ -14,11 +14,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.compose.item.CategoryItem
-import com.bunbeauty.papakarlo.compose.item.MenuProductItem
-import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
-import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
+import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem

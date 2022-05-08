@@ -25,12 +25,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.compose.element.CircularProgressBar
-import com.bunbeauty.papakarlo.compose.element.MainButton
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.mediumRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
+import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.feature.product_details.model.MenuProductUI
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {

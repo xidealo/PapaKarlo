@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".feature.create_order.deferred_time.DeferredTimeBottomSheet">
+    tools:context=".feature.create_order.screen.deferred_time.DeferredTimeBottomSheet">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/bottomSheetDeferredTimeCvMain"
