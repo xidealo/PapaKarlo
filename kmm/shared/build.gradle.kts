@@ -2,6 +2,8 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id(Plugin.sqldelight)
+    id(Plugin.kotlinSerialization)
 }
 
 version = "1.0"
@@ -20,9 +22,9 @@ kotlin {
             baseName = "shared"
         }
     }
-    
+
     sourceSets {
-        val commonMain by getting  {
+        val commonMain by getting {
             dependencies {
                 api(project(":kmm:core:core-common"))
                 Ktor.run {
@@ -41,6 +43,9 @@ kotlin {
 
                 implementation(KotlinxDateTime.dateTime)
 
+                implementation(project.dependencies.platform(Firebase.bom))
+                implementation(Firebase.authKtx)
+                implementation(SqlDelight.nativeDriver)
             }
         }
         val commonTest by getting {
@@ -49,7 +54,15 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(DataStore.dataStorePreferences)
+
+                implementation(SqlDelight.androidDriver)
+                implementation(SqlDelight.coroutineExtensions)
+
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
@@ -83,5 +96,11 @@ android {
         minSdk = AndroidSdk.min
         compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
+    }
+}
+
+sqldelight {
+    database("FoodDeliveryDatabase") {
+        packageName = "com.bunbeauty.data"
     }
 }

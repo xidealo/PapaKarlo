@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.viewbinding.BuildConfig
 import coil.Coil
 import coil.ImageLoader
-import com.bunbeauty.data.di.databaseModule
-import com.bunbeauty.data.di.mapperModule
-import com.bunbeauty.data.di.networkModule
-import com.bunbeauty.data.di.repositoryModule
+import com.bunbeauty.shared.data.di.databaseModule
+import com.bunbeauty.shared.data.di.mapperModule
+import com.bunbeauty.shared.data.di.networkModule
+import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.di.interactorModule
 import com.bunbeauty.domain.di.utilModule
 import com.bunbeauty.papakarlo.di.appModule
