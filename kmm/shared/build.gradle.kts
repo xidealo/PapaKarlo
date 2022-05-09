@@ -45,7 +45,8 @@ kotlin {
 
                 implementation(project.dependencies.platform(Firebase.bom))
                 implementation(Firebase.authKtx)
-                implementation(SqlDelight.nativeDriver)
+
+                implementation(SqlDelight.runtime)
             }
         }
         val commonTest by getting {
@@ -60,7 +61,6 @@ kotlin {
 
                 implementation(SqlDelight.androidDriver)
                 implementation(SqlDelight.coroutineExtensions)
-
             }
         }
         val androidTest by getting {
@@ -77,6 +77,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(SqlDelight.nativeDriver)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -101,6 +104,6 @@ android {
 
 sqldelight {
     database("FoodDeliveryDatabase") {
-        packageName = "com.bunbeauty.data"
+        packageName = "com.bunbeauty.shared.data"
     }
 }

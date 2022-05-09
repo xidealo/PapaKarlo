@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.dao.user
 
-import com.bunbeauty.data.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import database.UserEntity

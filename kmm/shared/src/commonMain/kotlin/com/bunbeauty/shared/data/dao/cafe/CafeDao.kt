@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.dao.cafe
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.data.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull

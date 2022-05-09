@@ -4,8 +4,9 @@ import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import com.bunbeauty.shared.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.component.KoinComponent
 
-expect class DataStoreRepository:DataStoreRepo {
+expect class DataStoreRepository: DataStoreRepo, KoinComponent {
     override val token: Flow<String?>
     override suspend fun getToken(): String?
     override suspend fun saveToken(token: String)

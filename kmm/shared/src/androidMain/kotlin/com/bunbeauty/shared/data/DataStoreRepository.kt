@@ -1,4 +1,4 @@
-package com.bunbeauty.shared
+package com.bunbeauty.shared.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -11,8 +11,12 @@ import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import com.bunbeauty.shared.domain.repo.DataStoreRepo
 import kotlinx.coroutines.flow.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-actual class DataStoreRepository(private val context: Context) : DataStoreRepo {
+actual class DataStoreRepository : DataStoreRepo, KoinComponent {
+
+    private val context: Context by inject()
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
@@ -62,7 +66,7 @@ actual class DataStoreRepository(private val context: Context) : DataStoreRepo {
         it[USER_UUID_KEY]
     }
 
-    override suspend fun getUserUuid(): String? {
+    actual override suspend fun getUserUuid(): String? {
         return userUuid.firstOrNull()
     }
 
