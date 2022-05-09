@@ -36,7 +36,6 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     override val viewModel: CreateAddressViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateAddressBinding::bind)
 
-    @OptIn(ExperimentalComposeUiApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

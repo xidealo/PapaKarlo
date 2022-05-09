@@ -19,7 +19,6 @@ import com.bunbeauty.papakarlo.common.ui.element.StatusChip
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun OrderItem(
     modifier: Modifier = Modifier,

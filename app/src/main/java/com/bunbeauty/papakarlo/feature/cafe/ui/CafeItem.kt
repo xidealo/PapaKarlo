@@ -21,7 +21,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CafeItem(
     modifier: Modifier = Modifier,

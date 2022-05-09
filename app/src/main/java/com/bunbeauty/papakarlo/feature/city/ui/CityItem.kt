@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CityItem(
     modifier: Modifier = Modifier,

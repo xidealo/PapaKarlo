@@ -115,7 +115,6 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
         }
     }
 
-    @OptIn(ExperimentalMaterialApi::class)
     @Composable
     private fun DeferredTimeSuccessScreen(deferredTimeSettingsUI: DeferredTimeSettingsUI) {
         Column {
