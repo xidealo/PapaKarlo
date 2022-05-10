@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.di
 
-import com.bunbeauty.data.FoodDeliveryDatabase
 import com.bunbeauty.shared.data.dao.cafe.CafeDao
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.dao.cart_product.CartProductDao
@@ -21,16 +20,13 @@ import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user.UserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.dao.user_address.UserAddressDao
-import com.squareup.sqldelight.android.AndroidSqliteDriver
-import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 fun databaseModule() = module {
-    single {
-        val driver =
-            AndroidSqliteDriver(FoodDeliveryDatabase.Schema, androidContext(), "foodDelivery.db")
-        FoodDeliveryDatabase(driver)
-    }
+//    single {
+//        FoodDeliveryDatabase(driver)
+//    }
+
     single<ICafeDao> {
         CafeDao(foodDeliveryDatabase = get())
     }
