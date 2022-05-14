@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data
 
 import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
 actual class DatabaseDriverFactory{
     actual fun createDriver(): SqlDriver {
-        TODO()
-       //return Native(FoodDeliveryDatabase.Schema, "foodDelivery.db")
+        return NativeSqliteDriver(FoodDeliveryDatabase.Schema, "foodDelivery.db")
     }
 }
