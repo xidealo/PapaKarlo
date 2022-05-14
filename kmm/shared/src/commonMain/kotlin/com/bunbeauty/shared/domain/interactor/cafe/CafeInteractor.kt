@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 import core_common.Constants.SECONDS_IN_HOUR
 import core_common.Constants.SECONDS_IN_MINUTE

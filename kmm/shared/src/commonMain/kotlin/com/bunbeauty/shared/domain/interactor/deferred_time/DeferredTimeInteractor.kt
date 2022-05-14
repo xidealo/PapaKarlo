@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.interactor.deferred_time
 
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 import core_common.Constants.MIN_DEFERRED_HOURS_ADDITION
 import core_common.Constants.MIN_DEFERRED_MINUTES_ADDITION

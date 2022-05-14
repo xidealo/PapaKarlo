@@ -2,7 +2,7 @@ package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull

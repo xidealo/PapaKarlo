@@ -9,7 +9,7 @@ import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.address.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 

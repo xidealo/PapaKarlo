@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.interactor.address
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow

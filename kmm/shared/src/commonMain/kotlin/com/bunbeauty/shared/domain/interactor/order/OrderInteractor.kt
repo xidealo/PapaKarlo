@@ -9,7 +9,7 @@ import com.bunbeauty.shared.domain.model.order.OrderWithAmounts
 import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderProductWithCosts
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 
