@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.order
 
-import database.OrderEntity
-import database.OrderWithProductEntity
+import com.bunbeauty.shared.db.OrderEntity
+import com.bunbeauty.shared.db.OrderWithProductEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IOrderDao {

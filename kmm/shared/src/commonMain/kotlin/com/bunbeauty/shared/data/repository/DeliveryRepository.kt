@@ -1,10 +1,9 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.DELIVERY_TAG
 import com.bunbeauty.shared.data.network.api.ApiRepo
 import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
 class DeliveryRepository(
@@ -12,7 +11,7 @@ class DeliveryRepository(
     private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Delivery>(), DeliveryRepo {
 
-    override val tag: String = DELIVERY_TAG
+    override val tag: String = "DELIVERY_TAG"
 
     override suspend fun getDelivery(): Delivery? {
         return getCacheOrData(

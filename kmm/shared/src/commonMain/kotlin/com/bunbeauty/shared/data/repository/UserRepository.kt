@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
@@ -12,7 +11,7 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 import core_common.Constants.COMPANY_UUID
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +26,7 @@ class UserRepository(
     private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Profile.Authorized>(), UserRepo {
 
-    override val tag: String = USER_TAG
+    override val tag: String = "USER_TAG"
 
     override suspend fun login(userUuid: String, userPhone: String): String? {
         val loginPost = LoginPostServer(

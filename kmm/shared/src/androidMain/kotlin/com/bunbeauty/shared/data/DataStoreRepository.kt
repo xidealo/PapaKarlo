@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

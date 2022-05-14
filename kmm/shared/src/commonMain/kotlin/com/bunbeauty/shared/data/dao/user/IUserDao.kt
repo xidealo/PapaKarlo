@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.dao.user
 
-import database.UserEntity
+import com.bunbeauty.shared.db.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IUserDao {

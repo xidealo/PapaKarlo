@@ -23,10 +23,6 @@ import com.bunbeauty.shared.data.dao.user_address.UserAddressDao
 import org.koin.dsl.module
 
 fun databaseModule() = module {
-//    single {
-//        FoodDeliveryDatabase(driver)
-//    }
-
     single<ICafeDao> {
         CafeDao(foodDeliveryDatabase = get())
     }

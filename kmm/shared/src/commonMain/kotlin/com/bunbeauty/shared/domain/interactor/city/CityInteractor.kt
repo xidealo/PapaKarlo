@@ -2,7 +2,7 @@ package com.bunbeauty.shared.domain.interactor.city
 
 import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.repo.CityRepo
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 

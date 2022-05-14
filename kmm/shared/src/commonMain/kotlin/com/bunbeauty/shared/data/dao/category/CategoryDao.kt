@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.dao.category
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.CategoryEntity
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import database.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 class CategoryDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICategoryDao {

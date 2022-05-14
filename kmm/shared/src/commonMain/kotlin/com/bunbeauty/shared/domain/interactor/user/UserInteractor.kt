@@ -3,7 +3,7 @@ package com.bunbeauty.shared.domain.interactor.user
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.AuthRepo
-import com.bunbeauty.shared.domain.repo.DataStoreRepo
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

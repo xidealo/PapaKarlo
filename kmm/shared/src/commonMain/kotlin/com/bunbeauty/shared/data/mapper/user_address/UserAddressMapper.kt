@@ -3,9 +3,9 @@ package com.bunbeauty.shared.data.mapper.user_address
 import com.bunbeauty.shared.data.mapper.street.IStreetMapper
 import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
+import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import database.UserAddressEntity
 
 class UserAddressMapper(
     private val streetMapper: IStreetMapper

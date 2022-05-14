@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.data.mapper.menuProduct
 
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.db.CategoryEntity
+import com.bunbeauty.shared.db.MenuProductCategoryReference
+import com.bunbeauty.shared.db.MenuProductEntity
+import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
-import database.CategoryEntity
-import database.MenuProductCategoryReference
-import database.MenuProductEntity
-import database.MenuProductWithCategoryEntity
 
 class MenuProductMapper : IMenuProductMapper {
 

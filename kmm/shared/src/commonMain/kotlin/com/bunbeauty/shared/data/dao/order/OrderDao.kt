@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.dao.order
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.OrderEntity
+import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import database.OrderEntity
-import database.OrderWithProductEntity
 import kotlinx.coroutines.flow.Flow
 
 class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {

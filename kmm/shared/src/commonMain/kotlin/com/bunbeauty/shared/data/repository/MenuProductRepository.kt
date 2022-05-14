@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.MENU_PRODUCT_TAG
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
@@ -21,7 +20,7 @@ class MenuProductRepository(
     private val menuProductMapper: IMenuProductMapper
 ) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
-    override val tag: String = MENU_PRODUCT_TAG
+    override val tag: String = "MENU_PRODUCT_TAG"
 
     override suspend fun getMenuProductList(): List<MenuProduct> {
         return getCacheOrListData(

@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.ORDER_TAG
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.network.api.ApiRepo
@@ -21,7 +20,7 @@ class OrderRepository(
     private val orderMapper: IOrderMapper,
 ) : BaseRepository(), OrderRepo {
 
-    override val tag: String = ORDER_TAG
+    override val tag: String = "ORDER_TAG"
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)

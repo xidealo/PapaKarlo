@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.dao.city
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.CityEntity
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import database.CityEntity
 import kotlinx.coroutines.flow.Flow
 
 class CityDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICityDao {

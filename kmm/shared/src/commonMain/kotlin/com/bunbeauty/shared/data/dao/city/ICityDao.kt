@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.dao.city
 
-import database.CityEntity
+import com.bunbeauty.shared.db.CityEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ICityDao {

@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.cafe
 
-import database.CafeEntity
-import database.SelectedCafeUuidEntity
+import com.bunbeauty.shared.db.CafeEntity
+import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 
 

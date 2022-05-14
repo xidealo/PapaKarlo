@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.repo
+package com.bunbeauty.shared
 
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid

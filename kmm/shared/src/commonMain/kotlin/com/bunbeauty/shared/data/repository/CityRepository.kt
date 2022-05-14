@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.CITY_TAG
 import com.bunbeauty.shared.data.dao.city.ICityDao
 import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.ApiRepo
@@ -16,7 +15,7 @@ class CityRepository(
     private val cityMapper: ICityMapper,
 ) : CacheListRepository<City>(), CityRepo {
 
-    override val tag: String = CITY_TAG
+    override val tag: String = "CITY_TAG"
 
     override suspend fun getCityList(): List<City> {
         return getCacheOrListData(

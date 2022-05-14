@@ -1,8 +1,9 @@
 package com.bunbeauty.shared.data.dao.user
 
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.UserEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import database.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 class UserDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserDao {

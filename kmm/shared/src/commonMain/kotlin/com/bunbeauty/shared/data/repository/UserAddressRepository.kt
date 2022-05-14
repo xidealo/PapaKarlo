@@ -1,15 +1,14 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.USER_ADDRESS_TAG
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.shared.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
-import database.SelectedUserAddressUuidEntity
 import kotlinx.coroutines.flow.Flow
 
 class UserAddressRepository(
@@ -18,7 +17,7 @@ class UserAddressRepository(
     private val userAddressMapper: IUserAddressMapper
 ) : BaseRepository(), UserAddressRepo {
 
-    override val tag: String = USER_ADDRESS_TAG
+    override val tag: String = "USER_ADDRESS_TAG"
 
     override suspend fun saveUserAddress(
         token: String,

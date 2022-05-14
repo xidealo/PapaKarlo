@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.dao.category
 
-import database.CategoryEntity
+import com.bunbeauty.shared.db.CategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ICategoryDao {
