@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.menu_product_category_reference
 
-import com.bunbeauty.data.FoodDeliveryDatabase
-import database.MenuProductCategoryReference
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.MenuProductCategoryReference
 
 class MenuProductCategoryReferenceDao(foodDeliveryDatabase: FoodDeliveryDatabase) :
     IMenuProductCategoryReferenceDao {

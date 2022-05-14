@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.menu_product
 
-import database.MenuProductEntity
-import database.MenuProductWithCategoryEntity
+import com.bunbeauty.shared.db.MenuProductEntity
+import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IMenuProductDao {

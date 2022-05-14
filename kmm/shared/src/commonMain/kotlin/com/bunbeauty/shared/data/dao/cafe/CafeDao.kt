@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.dao.cafe
 
-import com.bunbeauty.shared.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.CafeEntity
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import database.CafeEntity
-import database.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 
 class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {

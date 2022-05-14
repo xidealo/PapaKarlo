@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.dao.street
 
-import database.StreetEntity
+import com.bunbeauty.shared.db.StreetEntity
 import kotlinx.coroutines.flow.Flow
 
 

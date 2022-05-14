@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.STREET_TAG
 import com.bunbeauty.shared.data.dao.street.IStreetDao
 import com.bunbeauty.shared.data.mapper.street.IStreetMapper
 import com.bunbeauty.shared.data.network.api.ApiRepo
@@ -13,7 +12,7 @@ class StreetRepository(
     private val streetMapper: IStreetMapper,
 ) : CacheListRepository<Street>(), StreetRepo {
 
-    override val tag: String = STREET_TAG
+    override val tag: String = "STREET_TAG"
 
     override suspend fun getStreetList(selectedCityUuid: String): List<Street> {
         return getCacheOrListData(

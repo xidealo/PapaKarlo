@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.cart_product
 
-import database.CartProductEntity
-import database.CartProductWithMenuProductEntity
+import com.bunbeauty.shared.db.CartProductEntity
+import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ICartProductDao {

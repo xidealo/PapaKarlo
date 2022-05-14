@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.dao.menu_product
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.MenuProductEntity
+import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import database.MenuProductEntity
-import database.MenuProductWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 
 class MenuProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IMenuProductDao {

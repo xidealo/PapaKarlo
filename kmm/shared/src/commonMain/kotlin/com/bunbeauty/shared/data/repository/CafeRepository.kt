@@ -1,16 +1,15 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.CAFE_TAG
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.network.api.ApiRepo
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.address.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.repo.DataStoreRepo
-import database.SelectedCafeUuidEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
@@ -21,7 +20,7 @@ class CafeRepository(
     private val cafeMapper: ICafeMapper,
 ) : CacheListRepository<Cafe>(), CafeRepo {
 
-    override val tag: String = CAFE_TAG
+    override val tag: String = "CAFE_TAG"
 
     override suspend fun getCafeList(selectedCityUuid: String): List<Cafe> {
         return getCacheOrListData(

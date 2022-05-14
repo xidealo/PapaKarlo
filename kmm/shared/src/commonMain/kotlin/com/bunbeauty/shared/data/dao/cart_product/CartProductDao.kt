@@ -1,10 +1,10 @@
 package com.bunbeauty.shared.data.dao.cart_product
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.CartProductEntity
+import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import database.CartProductEntity
-import database.CartProductWithMenuProductEntity
 import kotlinx.coroutines.flow.Flow
 
 class CartProductDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICartProductDao {

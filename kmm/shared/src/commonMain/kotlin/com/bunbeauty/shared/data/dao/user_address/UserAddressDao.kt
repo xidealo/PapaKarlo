@@ -1,11 +1,11 @@
 package com.bunbeauty.shared.data.dao.user_address
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
+import com.bunbeauty.shared.db.UserAddressEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
-import database.SelectedUserAddressUuidEntity
-import database.UserAddressEntity
 import kotlinx.coroutines.flow.Flow
 
 class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressDao {

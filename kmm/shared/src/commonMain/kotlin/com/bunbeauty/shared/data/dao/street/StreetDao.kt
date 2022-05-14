@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.dao.street
 
-import com.bunbeauty.data.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.FoodDeliveryDatabase
+import com.bunbeauty.shared.db.StreetEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import database.StreetEntity
 import kotlinx.coroutines.flow.Flow
 
 class StreetDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IStreetDao {

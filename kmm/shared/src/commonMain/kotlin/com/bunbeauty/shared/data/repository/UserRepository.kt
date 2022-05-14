@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.USER_TAG
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
@@ -27,7 +26,7 @@ class UserRepository(
     private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Profile.Authorized>(), UserRepo {
 
-    override val tag: String = USER_TAG
+    override val tag: String = "USER_TAG"
 
     override suspend fun login(userUuid: String, userPhone: String): String? {
         val loginPost = LoginPostServer(

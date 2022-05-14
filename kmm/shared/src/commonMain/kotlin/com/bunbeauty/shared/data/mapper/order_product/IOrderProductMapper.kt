@@ -2,10 +2,10 @@ package com.bunbeauty.shared.data.mapper.order_product
 
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderProductPostServer
+import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderProduct
-import database.OrderWithProductEntity
 
 interface IOrderProductMapper {
 

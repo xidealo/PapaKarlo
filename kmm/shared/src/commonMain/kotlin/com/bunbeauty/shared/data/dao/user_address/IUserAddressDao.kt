@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.data.dao.user_address
 
-import database.SelectedUserAddressUuidEntity
-import database.UserAddressEntity
+import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
+import com.bunbeauty.shared.db.UserAddressEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IUserAddressDao {

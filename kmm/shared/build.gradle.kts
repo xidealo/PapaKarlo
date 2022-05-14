@@ -52,6 +52,8 @@ kotlin {
                 implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.runtime)
+                implementation(SqlDelight.coroutineExtensions)
+
             }
         }
         val commonTest by getting {
@@ -65,7 +67,6 @@ kotlin {
                 implementation(DataStore.dataStorePreferences)
 
                 implementation(SqlDelight.androidDriver)
-                implementation(SqlDelight.coroutineExtensions)
             }
         }
         val androidTest by getting {
@@ -110,6 +111,7 @@ android {
 
 sqldelight {
     database("FoodDeliveryDatabase") {
-        packageName = "com.bunbeauty.shared"
+        packageName = "com.bunbeauty.shared.db"
+        sourceFolders = listOf("sqldelight")
     }
 }

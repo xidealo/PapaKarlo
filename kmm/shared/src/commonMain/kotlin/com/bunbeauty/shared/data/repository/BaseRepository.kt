@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.ListServer
@@ -13,7 +12,7 @@ abstract class BaseRepository {
         onError: (suspend (ApiError) -> R?)? = null,
         onSuccess: (suspend (T) -> R?)
     ): R? {
-        logD(tag, "ApiResult = $this")
+        //logD(tag, "ApiResult = $this")
         return when (this) {
             is ApiResult.Success -> {
                 data?.let {
@@ -30,7 +29,7 @@ abstract class BaseRepository {
         onError: (suspend (ApiError) -> R),
         onSuccess: (suspend (List<T>) -> R)
     ): R {
-        logD(tag, "ApiResult = $this")
+       // logD(tag, "ApiResult = $this")
         return when (this) {
             is ApiResult.Success -> {
                 data?.let {

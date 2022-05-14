@@ -2,10 +2,10 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
+import com.bunbeauty.shared.db.CartProductEntity
+import com.bunbeauty.shared.db.CartProductWithMenuProductEntity
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
-import database.CartProductEntity
-import database.CartProductWithMenuProductEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.*

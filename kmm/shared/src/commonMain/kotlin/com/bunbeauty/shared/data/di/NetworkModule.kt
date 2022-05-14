@@ -2,7 +2,6 @@ package com.bunbeauty.shared.data.di
 
 import com.google.firebase.auth.FirebaseAuth
 import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -25,7 +24,7 @@ fun networkModule() = module {
         FirebaseAuth.getInstance()
     }
     single {
-        HttpClient(OkHttp) {
+        HttpClient {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
                     prettyPrint = true
