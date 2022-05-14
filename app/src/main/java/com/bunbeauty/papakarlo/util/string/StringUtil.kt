@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.util.string
 
-import core_common.Constants.ADDRESS_DIVIDER
+import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.model.order.OrderStatus.*
 import com.bunbeauty.shared.domain.model.address.UserAddress

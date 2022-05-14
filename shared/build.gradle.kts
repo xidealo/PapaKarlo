@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -28,10 +30,17 @@ kotlin {
         }
     }
 
+//    ios {
+//        binaries {
+//            framework {
+//                baseName = "shared"
+//            }
+//        }
+//    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":kmm:core:core-common"))
                 Ktor.run {
                     implementation(clientSerialization)
                     implementation(clientLogging)

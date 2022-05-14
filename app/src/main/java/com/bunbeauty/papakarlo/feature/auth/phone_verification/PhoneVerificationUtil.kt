@@ -14,9 +14,9 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import core_common.Constants.SOMETHING_WENT_WRONG
-import core_common.Constants.TOO_MANY_REQUESTS
-import core_common.Constants.WRONG_CODE
+import com.bunbeauty.shared.Constants.SOMETHING_WENT_WRONG
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.Constants.WRONG_CODE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

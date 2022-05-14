@@ -1,4 +1,4 @@
-package core_common
+package com.bunbeauty.shared
 
 object Constants {
 

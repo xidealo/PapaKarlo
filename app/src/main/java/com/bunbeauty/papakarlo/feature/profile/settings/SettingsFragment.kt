@@ -25,8 +25,8 @@ import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
 import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import core_common.Constants.EMAIL_REQUEST_KEY
-import core_common.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.shared.Constants.EMAIL_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_EMAIL_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {

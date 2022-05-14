@@ -13,7 +13,7 @@ import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
-import core_common.Constants.COMPANY_UUID
+import com.bunbeauty.shared.Constants.COMPANY_UUID
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(

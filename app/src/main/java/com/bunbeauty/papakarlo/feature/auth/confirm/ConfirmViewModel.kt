@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.auth.confirm
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import core_common.Constants.WRONG_CODE
+import com.bunbeauty.shared.Constants.WRONG_CODE
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor

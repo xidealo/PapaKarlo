@@ -13,8 +13,8 @@ import com.bunbeauty.papakarlo.feature.edit_text.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toOneLineActionBottomSheet
-import core_common.Constants.EMAIL_REQUEST_KEY
-import core_common.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.shared.Constants.EMAIL_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_EMAIL_KEY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

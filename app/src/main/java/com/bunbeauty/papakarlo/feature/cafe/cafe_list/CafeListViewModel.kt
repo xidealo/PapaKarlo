@@ -7,7 +7,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.feature.cafe.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
-import core_common.Constants.WORKING_HOURS_DIVIDER
+import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

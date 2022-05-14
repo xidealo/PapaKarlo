@@ -11,9 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
-import core_common.Constants.INSTAGRAM_LINK
-import core_common.Constants.PLAY_MARKET_LINK
-import core_common.Constants.VK_LINK
+import com.bunbeauty.shared.Constants.INSTAGRAM_LINK
+import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
+import com.bunbeauty.shared.Constants.VK_LINK
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel

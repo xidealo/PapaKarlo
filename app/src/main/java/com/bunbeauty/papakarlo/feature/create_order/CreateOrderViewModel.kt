@@ -14,8 +14,8 @@ import com.bunbeauty.papakarlo.feature.create_order.CreateOrderFragmentDirection
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.EditTextType
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import core_common.Constants.COMMENT_REQUEST_KEY
-import core_common.Constants.RESULT_COMMENT_KEY
+import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

@@ -6,9 +6,9 @@ import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
-import core_common.Constants.SECONDS_IN_HOUR
-import core_common.Constants.SECONDS_IN_MINUTE
-import core_common.Constants.TIME_DIVIDER
+import com.bunbeauty.shared.Constants.SECONDS_IN_HOUR
+import com.bunbeauty.shared.Constants.SECONDS_IN_MINUTE
+import com.bunbeauty.shared.Constants.TIME_DIVIDER
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest

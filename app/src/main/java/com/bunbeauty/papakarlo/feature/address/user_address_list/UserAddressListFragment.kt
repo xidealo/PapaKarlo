@@ -29,8 +29,8 @@ import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.AddressItem
-import core_common.Constants.RESULT_USER_ADDRESS_KEY
-import core_common.Constants.USER_ADDRESS_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
+import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_list) {
