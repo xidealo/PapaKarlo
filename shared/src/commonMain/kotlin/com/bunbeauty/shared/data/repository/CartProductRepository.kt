@@ -8,7 +8,6 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.util.*
 
 class CartProductRepository(
     private val cartProductDao: ICartProductDao,
@@ -28,17 +27,17 @@ class CartProductRepository(
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProduct? {
         return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid).toCartProduct()
     }
-
+    //TODO(ADD UUID GENERATE)
     override suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct? {
-        val uuid = UUID.randomUUID().toString()
+        //val uuid = UUID.randomUUID().toString()
         val cartProductEntity = CartProductEntity(
-            uuid = uuid,
+            uuid = "",
             count = 1,
             menuProductUuid = menuProductUuid
         )
         cartProductDao.insertCartProduct(cartProductEntity)
 
-        return cartProductDao.getCartProductByUuid(uuid).toCartProduct()
+        return cartProductDao.getCartProductByUuid("").toCartProduct()
     }
 
     override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {

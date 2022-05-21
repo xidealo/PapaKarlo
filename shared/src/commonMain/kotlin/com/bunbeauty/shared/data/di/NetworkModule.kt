@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.di
 
-import com.google.firebase.auth.FirebaseAuth
+//import com.google.firebase.auth.FirebaseAuth
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -20,9 +20,9 @@ fun networkModule() = module {
             ignoreUnknownKeys = true
         }
     }
-    single {
-        FirebaseAuth.getInstance()
-    }
+//    single {
+//        FirebaseAuth.getInstance()
+//    }
     single {
         HttpClient {
             install(JsonFeature) {

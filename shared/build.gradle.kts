@@ -13,13 +13,15 @@ version = "1.0"
 kotlin {
     android()
 
-    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
-    if (onPhone) {
-        iosArm64("ios")
-    } else {
-        iosX64("ios")
-    }
-    //iosSimulatorArm64() //sure all ios dependencies support this target
+//    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
+//    if (onPhone) {
+//        iosArm64("ios")
+//    } else {
+//        iosX64("ios")
+//    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64() //sure all ios dependencies support this target
 
     cocoapods {
         summary = "Some description for the Shared Module"
@@ -57,8 +59,8 @@ kotlin {
 
                 implementation(KotlinxDateTime.dateTime)
 
-                implementation(project.dependencies.platform(Firebase.bom))
-                implementation(Firebase.authKtx)
+                //implementation(project.dependencies.platform(Firebase.bom))
+                //implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
@@ -84,27 +86,26 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
-        //val iosX64Main by getting
-        //val iosArm64Main by getting
-        //val iosSimulatorArm64Main by getting
-        val iosMain by getting {
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
             dependencies {
                 implementation(SqlDelight.nativeDriver)
             }
-            /*dependsOn(commonMain)
+            dependsOn(commonMain)
             iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)*/
-            //iosSimulatorArm64Main.dependsOn(this)
-
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
         }
-        //val iosX64Test by getting
-        //val iosArm64Test by getting
-        //val iosSimulatorArm64Test by getting
-        val iosTest by getting {
-            /*dependsOn(commonTest)
+        val iosX64Test by getting
+        val iosArm64Test by getting
+        val iosSimulatorArm64Test by getting
+        val iosTest by creating {
+            dependsOn(commonTest)
             iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)*/
-            //iosSimulatorArm64Test.dependsOn(this)
+            iosArm64Test.dependsOn(this)
+            iosSimulatorArm64Test.dependsOn(this)
         }
     }
 }
