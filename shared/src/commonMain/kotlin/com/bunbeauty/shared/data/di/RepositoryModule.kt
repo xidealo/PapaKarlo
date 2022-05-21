@@ -14,13 +14,9 @@ fun repositoryModule() = module {
             json = get()
         )
     }
-//    single<DataStoreRepo> {
-//        DataStoreRepository(
-//            context = androidContext()
-//        )
-//    }
     single<CartProductRepo> {
         CartProductRepository(
+            uuidGenerator = get(),
             cartProductDao = get(),
             cartProductMapper = get(),
         )

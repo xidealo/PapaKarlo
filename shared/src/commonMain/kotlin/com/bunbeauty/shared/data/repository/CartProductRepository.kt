@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.data.UuidGenerator
 import com.bunbeauty.shared.data.dao.cart_product.ICartProductDao
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.db.CartProductEntity
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CartProductRepository(
+    private val uuidGenerator: UuidGenerator,
     private val cartProductDao: ICartProductDao,
     private val cartProductMapper: ICartProductMapper
 ) : CartProductRepo {
@@ -27,17 +29,17 @@ class CartProductRepository(
     override suspend fun getCartProductByMenuProductUuid(menuProductUuid: String): CartProduct? {
         return cartProductDao.getCartProductByMenuProductUuid(menuProductUuid).toCartProduct()
     }
-    //TODO(ADD UUID GENERATE)
+
     override suspend fun saveAsCartProduct(menuProductUuid: String): CartProduct? {
-        //val uuid = UUID.randomUUID().toString()
+        val uuid = uuidGenerator.generateUuid()
         val cartProductEntity = CartProductEntity(
-            uuid = "",
+            uuid = uuid,
             count = 1,
             menuProductUuid = menuProductUuid
         )
         cartProductDao.insertCartProduct(cartProductEntity)
 
-        return cartProductDao.getCartProductByUuid("").toCartProduct()
+        return cartProductDao.getCartProductByUuid(uuid).toCartProduct()
     }
 
     override suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct? {
