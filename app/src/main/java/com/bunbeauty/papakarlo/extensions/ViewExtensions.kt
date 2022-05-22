@@ -1,29 +1,19 @@
 package com.bunbeauty.papakarlo.extensions
 
 import android.content.Context
-import android.content.Context.INPUT_METHOD_SERVICE
-import android.graphics.Paint
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import coil.annotation.ExperimentalCoilApi
-import coil.load
-import coil.size.ViewSizeResolver
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 
 fun View.invisible(): View {
     visibility = View.INVISIBLE

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".feature.profile.settings.logout.LogoutBottomSheet">
+    tools:context=".feature.profile.screen.logout.LogoutBottomSheet">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/bottomSheetLogoutCvMain"

@@ -26,13 +26,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.NavMainDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.Router
-import com.bunbeauty.papakarlo.compose.element.OverflowingText
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.compose.theme.largeRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.showOrGone
-import com.bunbeauty.papakarlo.feature.profile.settings.SettingsFragmentDirections.toLogoutBottomSheet
+import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.android.inject

@@ -22,12 +22,14 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.compose.element.EditText
-import com.bunbeauty.papakarlo.compose.element.MainButton
-import com.bunbeauty.papakarlo.compose.element.Title
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.element.EditText
+import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.Title
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetEditTextBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
+import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.address.create_address.CreateAddressFragment">
+    tools:context=".feature.address.screen.create_address.CreateAddressFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentCreateAddressCvMain"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.profile.ProfileFragment">
+    tools:context=".feature.profile.screen.profile.ProfileFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentProfileCvMain"

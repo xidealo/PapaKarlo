@@ -1,9 +1,9 @@
 package com.bunbeauty.papakarlo.feature.auth.phone_verification
 
 import android.app.Activity
-import com.bunbeauty.papakarlo.feature.auth.login.event.AuthErrorEvent
-import com.bunbeauty.papakarlo.feature.auth.login.event.AuthSuccessEvent
-import com.bunbeauty.papakarlo.feature.auth.login.event.CodeSentEvent
+import com.bunbeauty.papakarlo.feature.auth.event.AuthErrorEvent
+import com.bunbeauty.papakarlo.feature.auth.event.AuthSuccessEvent
+import com.bunbeauty.papakarlo.feature.auth.event.CodeSentEvent
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.Flow
 

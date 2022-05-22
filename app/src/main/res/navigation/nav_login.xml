@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.bunbeauty.papakarlo.feature.auth.login.LoginFragment"
+        android:name="com.bunbeauty.papakarlo.feature.auth.screen.login.LoginFragment"
         android:label=""
         tools:layout="@layout/fragment_login">
         <argument
             android:name="successLoginDirection"
-            app:argType="com.bunbeauty.papakarlo.enums.SuccessLoginDirection" />
+            app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />
         <action
             android:id="@+id/to_confirmFragment"
             app:destination="@id/confirmFragment" />
@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/confirmFragment"
-        android:name="com.bunbeauty.papakarlo.feature.auth.confirm.ConfirmFragment"
+        android:name="com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragment"
         android:label=""
         tools:layout="@layout/fragment_confirm">
         <argument
@@ -44,7 +44,7 @@
             app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
         <argument
             android:name="successLoginDirection"
-            app:argType="com.bunbeauty.papakarlo.enums.SuccessLoginDirection" />
+            app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />
         <action
             android:id="@+id/back_to_profileFragment"
             app:destination="@id/profileFragment"

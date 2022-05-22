@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.cafe.cafe_list.CafeListFragment">
+    tools:context=".feature.cafe.screen.cafe_list.CafeListFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentCafeListCvMain"

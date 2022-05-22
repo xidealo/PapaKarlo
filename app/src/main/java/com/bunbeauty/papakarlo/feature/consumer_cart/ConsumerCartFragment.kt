@@ -20,15 +20,16 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.compose.element.BlurLine
-import com.bunbeauty.papakarlo.compose.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.BlurLine
+import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.compose.item.CartProductItem
-import com.bunbeauty.papakarlo.compose.screen.EmptyScreen
-import com.bunbeauty.papakarlo.compose.screen.ErrorScreen
-import com.bunbeauty.papakarlo.compose.screen.LoadingScreen
-import com.bunbeauty.papakarlo.compose.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
+import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
@@ -149,15 +150,16 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
-        val cartProductItemModel = CartProductItem(
-            uuid = "",
-            name = "Бэргер",
-            newCost = "300 ₽",
-            oldCost = "330 ₽",
-            photoLink = "",
-            count = 3,
-            menuProductUuid = ""
-        )
+        val cartProductItemModel =
+            com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem(
+                uuid = "",
+                name = "Бэргер",
+                newCost = "300 ₽",
+                oldCost = "330 ₽",
+                photoLink = "",
+                count = 3,
+                menuProductUuid = ""
+            )
         ConsumerCartScreen(
             State.Success(
                 ConsumerCartUI(
