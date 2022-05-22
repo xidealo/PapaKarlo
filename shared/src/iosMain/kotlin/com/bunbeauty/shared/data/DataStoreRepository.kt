@@ -4,23 +4,24 @@ import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
+import platform.Foundation.NSUserDefaults
 
 actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
 
     actual override val token: Flow<String?> = flow {
-
+        getToken()
     }
 
     actual override suspend fun getToken(): String? {
-        return token.first()
+        //return NSUserDefaults.standardUserDefaults.stringForKey(TOKEN).toString()
+        return ""
     }
 
     actual override suspend fun saveToken(token: String) {
-
+        //NSUserDefaults.standardUserDefaults.setObject(token, TOKEN)
     }
 
     actual override suspend fun clearToken() {
