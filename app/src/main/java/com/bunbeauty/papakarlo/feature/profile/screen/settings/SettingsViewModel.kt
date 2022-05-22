@@ -2,10 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile.screen.settings
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.profile.Settings
-import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
@@ -13,8 +9,12 @@ import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragmentDirections.toCitySelectionBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragmentDirections.toOneLineActionBottomSheet
-import core_common.Constants.EMAIL_REQUEST_KEY
-import core_common.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.shared.Constants.EMAIL_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.model.profile.Settings
+import com.bunbeauty.shared.domain.model.profile.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
