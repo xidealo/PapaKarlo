@@ -2,7 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
 class CafeRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val dataStoreRepo: DataStoreRepo,
     private val cafeDao: ICafeDao,
     private val cafeMapper: ICafeMapper,
@@ -30,7 +30,7 @@ class CafeRepository(
                 }
             },
             onApiRequest = {
-                apiRepo.getCafeListByCityUuid(selectedCityUuid)
+                networkConnector.getCafeListByCityUuid(selectedCityUuid)
             },
             onLocalRequest = {
                 cafeDao.getCafeListByCityUuid(selectedCityUuid).map(cafeMapper::toCafe)

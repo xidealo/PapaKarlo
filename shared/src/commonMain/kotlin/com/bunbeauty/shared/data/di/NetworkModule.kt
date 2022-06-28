@@ -21,41 +21,79 @@ fun networkModule() = module {
         }
     }
 //    single {
+//        HttpClient {
+//            install(JsonFeature) {
+//                serializer = KotlinxSerializer(kotlinx.serialization.json.Json{
+//                    prettyPrint = true
+//                    isLenient = true
+//                    ignoreUnknownKeys = true
+//                    encodeDefaults = true
+//                })
+//            }
+//
+//            install(DefaultRequest) {
+//                url {
+//                    protocol = URLProtocol.HTTPS
+//                }
+//            }
+//            /*install(HttpTimeout) {
+//                connectTimeoutMillis = timeout
+//                requestTimeoutMillis = timeout
+//                socketTimeoutMillis = timeout
+//            }*/
+//
+//            /*  install(Logging) {
+//                  logger = object : Logger {
+//                      override fun log(message: String) {
+//                          //Log.d("loggerTag", message) // Or whatever logging system you want here
+//                      }
+//                  }
+//                  level = LogLevel.ALL
+//              }*/
+//
+//
+//        }
+//    }
+      single {
+          HttpClient {
+              install(JsonFeature) {
+                  serializer = KotlinxSerializer(kotlinx.serialization.json.Json{
+                      prettyPrint = true
+                      isLenient = true
+                      ignoreUnknownKeys = true
+                      encodeDefaults = true
+                  })
+              }
+
+              install(WebSockets) {
+                  pingInterval = 10
+              }
+
+              install(Logging) {
+                  logger = object : Logger {
+                      override fun log(message: String) {
+                          //Log.v("Logger Ktor =>", message)
+                      }
+                  }
+                  level = LogLevel.ALL
+              }
+
+              install(ResponseObserver) {
+                  onResponse { response ->
+                      //Log.d("HTTP status:", "${response.status.value}")
+                  }
+              }
+
+              install(DefaultRequest) {
+                  host = "food-delivery-api-bunbeauty.herokuapp.com"
+                  header(HttpHeaders.ContentType, ContentType.Application.Json)
+                  url {
+                      protocol = URLProtocol.HTTPS
+                  }
+              }
+          }
+      }
+//    single {
 //        FirebaseAuth.getInstance()
 //    }
-    single {
-        HttpClient {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
-            }
-
-            install(WebSockets) {
-                pingInterval = 10
-            }
-
-            install(Logging) {
-                logger = object : Logger {
-                    override fun log(message: String) {
-                        //Log.v("Logger Ktor =>", message)
-                    }
-                }
-                level = LogLevel.ALL
-            }
-
-            install(ResponseObserver) {
-                onResponse { response ->
-                    //Log.d("HTTP status:", "${response.status.value}")
-                }
-            }
-
-            install(DefaultRequest) {
-                host = "food-delivery-api-bunbeauty.herokuapp.com"
-                header(HttpHeaders.ContentType, ContentType.Application.Json)
-            }
-        }
-    }
 }

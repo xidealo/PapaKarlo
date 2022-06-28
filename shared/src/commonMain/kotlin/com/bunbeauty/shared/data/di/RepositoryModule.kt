@@ -1,18 +1,15 @@
 package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.data.network.AuthRepository
-import com.bunbeauty.shared.data.network.api.ApiRepo
-import com.bunbeauty.shared.data.network.api.ApiRepository
+import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.repository.*
 import com.bunbeauty.shared.domain.repo.*
 import org.koin.dsl.module
 
 fun repositoryModule() = module {
-    single<ApiRepo> {
-        ApiRepository(
-            client = get(),
-            json = get()
-        )
+    single<NetworkConnector> {
+        NetworkConnectorImpl()
     }
     single<CartProductRepo> {
         CartProductRepository(
@@ -24,13 +21,13 @@ fun repositoryModule() = module {
     single<OrderRepo> {
         OrderRepository(
             orderDao = get(),
-            apiRepo = get(),
+            networkConnector = get(),
             orderMapper = get(),
         )
     }
     single<MenuProductRepo> {
         MenuProductRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             menuProductDao = get(),
             categoryDao = get(),
             menuProductCategoryReferenceDao = get(),
@@ -39,14 +36,14 @@ fun repositoryModule() = module {
     }
     single<UserAddressRepo> {
         UserAddressRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             userAddressDao = get(),
             userAddressMapper = get(),
         )
     }
     single<CafeRepo> {
         CafeRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             dataStoreRepo = get(),
             cafeDao = get(),
             cafeMapper = get(),
@@ -54,20 +51,20 @@ fun repositoryModule() = module {
     }
     single<StreetRepo> {
         StreetRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             streetDao = get(),
             streetMapper = get(),
         )
     }
     single<DeliveryRepo> {
         DeliveryRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             dataStoreRepo = get(),
         )
     }
     single<UserRepo> {
         UserRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             profileMapper = get(),
             userMapper = get(),
             userDao = get(),
@@ -78,7 +75,7 @@ fun repositoryModule() = module {
     }
     single<CityRepo> {
         CityRepository(
-            apiRepo = get(),
+            networkConnector = get(),
             cityDao = get(),
             cityMapper = get(),
         )
@@ -90,7 +87,7 @@ fun repositoryModule() = module {
     }
     single<VersionRepo> {
         VersionRepository(
-            apiRepo = get(),
+            networkConnector = get(),
         )
     }
 }

@@ -1,13 +1,13 @@
 package com.bunbeauty.shared.data.repository
 
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
 class DeliveryRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val dataStoreRepo: DataStoreRepo
 ) : CacheRepository<Delivery>(), DeliveryRepo {
 
@@ -15,7 +15,7 @@ class DeliveryRepository(
 
     override suspend fun getDelivery(): Delivery? {
         return getCacheOrData(
-            onApiRequest = apiRepo::getDelivery,
+            onApiRequest = networkConnector::getDelivery,
             onLocalRequest = dataStoreRepo::getDelivery,
             onSaveLocally = { deliveryServer ->
                 dataStoreRepo.saveDelivery(toDelivery(deliveryServer))

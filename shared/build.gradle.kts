@@ -12,33 +12,17 @@ version = "1.0"
 
 kotlin {
     android()
+    android()
 
-//    val onPhone = System.getenv("SDK_NAME")?.startsWith("iphoneos") ?: false
-//    if (onPhone) {
-//        iosArm64("ios")
-//    } else {
-//        iosX64("ios")
-//    }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64() //sure all ios dependencies support this target
-
-    cocoapods {
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        framework {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach {
+        it.binaries.framework {
             baseName = "shared"
         }
     }
-
-//    ios {
-//        binaries {
-//            framework {
-//                baseName = "shared"
-//            }
-//        }
-//    }
 
     sourceSets {
         val commonMain by getting {
@@ -47,7 +31,8 @@ kotlin {
                     implementation(clientSerialization)
                     implementation(clientLogging)
                     implementation(clientWebsockets)
-                    //implementation(clientOkhttp)
+                    implementation(clientJson)
+                    implementation(clientAuth)
                 }
 
                 implementation(Coroutine.core)
@@ -76,6 +61,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(DataStore.dataStorePreferences)
+                implementation(Ktor.clientAndroid)
 
                 implementation(SqlDelight.androidDriver)
             }
@@ -92,6 +78,7 @@ kotlin {
         val iosMain by creating {
             dependencies {
                 implementation(SqlDelight.nativeDriver)
+                implementation(Ktor.clientIos)
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)

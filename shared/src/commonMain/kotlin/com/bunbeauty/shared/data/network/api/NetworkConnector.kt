@@ -10,7 +10,7 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import kotlinx.coroutines.flow.Flow
 
-interface ApiRepo {
+interface NetworkConnector {
 
     suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer>
 

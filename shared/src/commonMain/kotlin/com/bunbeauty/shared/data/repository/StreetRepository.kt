@@ -2,12 +2,12 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.street.IStreetDao
 import com.bunbeauty.shared.data.mapper.street.IStreetMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.model.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 
 class StreetRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val streetDao: IStreetDao,
     private val streetMapper: IStreetMapper,
 ) : CacheListRepository<Street>(), StreetRepo {
@@ -22,7 +22,7 @@ class StreetRepository(
                 }
             },
             onApiRequest = {
-                apiRepo.getStreetListByCityUuid(selectedCityUuid)
+                networkConnector.getStreetListByCityUuid(selectedCityUuid)
             },
             onLocalRequest = {
                 streetDao.getStreetListByCityUuid(selectedCityUuid).map(streetMapper::toStreet)

@@ -5,7 +5,7 @@ import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.domain.mapFlow
@@ -17,7 +17,7 @@ import com.bunbeauty.shared.Constants.COMPANY_UUID
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val profileMapper: IProfileMapper,
     private val userMapper: IUserMapper,
     private val userDao: IUserDao,
@@ -34,7 +34,7 @@ class UserRepository(
             phoneNumber = userPhone,
             companyUuid = COMPANY_UUID
         )
-        return apiRepo.postLogin(loginPost).getNullableResult { authResponseServer ->
+        return networkConnector.postLogin(loginPost).getNullableResult { authResponseServer ->
             authResponseServer.token
         }
     }
@@ -53,7 +53,7 @@ class UserRepository(
                 cache.userUuid == userUuid
             },
             onApiRequest = {
-                apiRepo.getProfile(token)
+                networkConnector.getProfile(token)
             },
             onLocalRequest = {
                 getProfileLocally(userUuid, cityUuid)
@@ -65,7 +65,7 @@ class UserRepository(
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
         val patchUserServer = userMapper.toPatchServerModel(email)
-        return apiRepo.patchProfileEmail(token, userUuid, patchUserServer)
+        return networkConnector.patchProfileEmail(token, userUuid, patchUserServer)
             .getNullableResult { profile ->
                 userDao.updateUserEmailByUuid(userUuid, email)
                 userMapper.toUser(profile)

@@ -4,7 +4,7 @@ import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.shared.domain.model.product.MenuProduct
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MenuProductRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val menuProductDao: IMenuProductDao,
     private val categoryDao: ICategoryDao,
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
@@ -24,7 +24,7 @@ class MenuProductRepository(
 
     override suspend fun getMenuProductList(): List<MenuProduct> {
         return getCacheOrListData(
-            onApiRequest = apiRepo::getMenuProductList,
+            onApiRequest = networkConnector::getMenuProductList,
             onLocalRequest = {
                 menuProductMapper.toMenuProductList(
                     menuProductDao.getMenuProductWithCategoryList()

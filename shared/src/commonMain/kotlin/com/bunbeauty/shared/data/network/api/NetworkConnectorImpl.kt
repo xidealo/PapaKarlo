@@ -1,5 +1,11 @@
 package com.bunbeauty.shared.data.network.api
 
+import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
+import com.bunbeauty.shared.Constants.BEARER
+import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
+import com.bunbeauty.shared.Constants.COMPANY_UUID
+import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.*
@@ -9,12 +15,6 @@ import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
-import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
-import com.bunbeauty.shared.Constants.BEARER
-import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.COMPANY_UUID
-import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.websocket.*
@@ -26,11 +26,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ApiRepository(
-    private val client: HttpClient,
-    private val json: Json
-) : ApiRepo {
+class NetworkConnectorImpl : KoinComponent, NetworkConnector {
+
+    private val client: HttpClient by inject()
+    private val json: Json by inject()
 
     private var webSocketSession: DefaultClientWebSocketSession? = null
 

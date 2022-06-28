@@ -146,10 +146,16 @@ object Navigation {
 }
 
 object Ktor {
+
+    const val clientWebsockets = "io.ktor:ktor-client-websockets:${Versions.ktor}"
+
+    const val clientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
     const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     const val clientSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
-    const val clientWebsockets = "io.ktor:ktor-client-websockets:${Versions.ktor}"
-    const val clientOkhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
+    const val clientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
+
+    const val clientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
+    const val clientIos = "io.ktor:ktor-client-ios:${Versions.ktor}"
 }
 
 object Coil {

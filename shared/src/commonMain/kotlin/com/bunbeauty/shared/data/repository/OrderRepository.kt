@@ -2,7 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 
 class OrderRepository(
     private val orderDao: IOrderDao,
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
 ) : BaseRepository(), OrderRepo {
 
@@ -31,7 +31,7 @@ class OrderRepository(
     }
 
     override fun observeOrderUpdates(token: String): Flow<Order> {
-        return apiRepo.subscribeOnOrderUpdates(token).onEach { orderServer ->
+        return networkConnector.subscribeOnOrderUpdates(token).onEach { orderServer ->
             orderDao.updateOrderStatusByUuid(
                 uuid = orderServer.uuid,
                 status = orderServer.status,
@@ -42,7 +42,7 @@ class OrderRepository(
     }
 
     override suspend fun stopCheckOrderUpdates() {
-        apiRepo.unsubscribeOnOrderUpdates()
+        networkConnector.unsubscribeOnOrderUpdates()
     }
 
     override suspend fun getOrderByUuid(orderUuid: String): Order? {
@@ -51,7 +51,7 @@ class OrderRepository(
 
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
-        return apiRepo.postOrder(token, orderPostServer).getNullableResult { oderServer ->
+        return networkConnector.postOrder(token, orderPostServer).getNullableResult { oderServer ->
             orderDao.insertOrderWithProductList(orderMapper.toOrderWithProductEntityList(oderServer))
             orderMapper.toOrderCode(oderServer)
         }

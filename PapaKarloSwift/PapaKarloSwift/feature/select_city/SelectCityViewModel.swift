@@ -6,9 +6,21 @@
 //
 
 import Foundation
+import shared
 
-extension SelectCityView {
-    @MainActor class ViewModel: ObservableObject {
-        @Published private(set) var cityListState = StateUI<[CityItem]>.success([CityItem(city: "Кимры"), CityItem(city: "Дубна")])
+class SelectCityViewModel : ObservableObject{
+    
+    init(){
+            
+//        iosComponent.provideCityInteractor().getCityList(completionHandler: { cityList,error    in
+//            print(cityList ?? "NIL")
+//        })
+       
+        iosComponent.provideCityInteractor().getCityList(completionHandler: {
+            cityList, error in
+            print(cityList)
+        })
+        
     }
+
 }

@@ -114,10 +114,6 @@ dependencies {
     implementation(Koin.test)
 
     implementation(Serialization.json)
-    implementation(Ktor.clientSerialization)
-    implementation(Ktor.clientLogging)
-    implementation(Ktor.clientWebsockets)
-    implementation(Ktor.clientOkhttp)
 
     implementation(Coroutine.core)
 

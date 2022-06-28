@@ -2,7 +2,7 @@ package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.IUserAddressMapper
-import com.bunbeauty.shared.data.network.api.ApiRepo
+import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.domain.mapFlow
 import com.bunbeauty.domain.mapListFlow
 import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
@@ -12,7 +12,7 @@ import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 
 class UserAddressRepository(
-    private val apiRepo: ApiRepo,
+    private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: IUserAddressMapper
 ) : BaseRepository(), UserAddressRepo {
@@ -24,7 +24,7 @@ class UserAddressRepository(
         createdUserAddress: CreatedUserAddress
     ): UserAddress? {
         val userAddressPostServer = userAddressMapper.toUserAddressPostServer(createdUserAddress)
-        return apiRepo.postUserAddress(token, userAddressPostServer)
+        return networkConnector.postUserAddress(token, userAddressPostServer)
             .getNullableResult { addressServer ->
                 val userAddressEntity = userAddressMapper.toUserAddressEntity(addressServer)
                 userAddressDao.insertUserAddress(userAddressEntity)
