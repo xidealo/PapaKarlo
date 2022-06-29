@@ -6,24 +6,20 @@
 //
 
 import SwiftUI
-    import shared
+import shared
+
 struct SelectCityView: View {
-    @StateObject private var viewModel = SelectCityViewModel()
+    
+    @ObservedObject private var viewModel = SelectCityViewModel()
     
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
-        
-//            switch (viewModel.cityListState) {
-//                case .loading:
-//                    LoadingView()
-//                case .success(let cityList):
-//                    SelectCitySuccessView(cityList: cityList)
-//                case .empty:
-//                    LoadingView()
-//                case .error(let error):
-//                    LoadingView()
-//            }
+            if viewModel.selectCityViewState.isLoading{
+                LoadingView()
+            }else{
+                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList)
+            }
         }
         .background(Color("background"))
         .navigationBarHidden(true)
@@ -52,6 +48,6 @@ struct SelectCitySuccessView : View {
 
 struct SelectCitySuccessView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectCityView()
+        SelectCitySuccessView(cityList: [CityItem(city: "Kimry"), CityItem(city: "Dubna")])
     }
 }

@@ -17,7 +17,10 @@ struct SplashView: View {
             ){
                 
             }
-        }.navigationBarBackButtonHidden(true)
+        }.navigationBarBackButtonHidden(true)    .navigationBarHidden(true)
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationViewStyle(StackNavigationViewStyle())
+            .statusBar(hidden: true)
     }
 }
 

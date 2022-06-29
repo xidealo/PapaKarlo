@@ -26,7 +26,7 @@ struct MenuItemView: View {
                     .foregroundColor(Color("onSurface"))
                 HStack{
                     if menuProductItem.oldPrice != nil{
-                        StrikeText(text: menuProductItem.oldPrice ?? "")
+                        StrikeText(text: String(menuProductItem.oldPrice ?? 0))
                     }
                     Text(menuProductItem.newPrice)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
@@ -55,7 +55,7 @@ struct MenuItemView: View {
 
 struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, name: "Burger", newPrice: "200 R", oldPrice: "250 R", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
+        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, name: "Burger", newPrice: "200 R", oldPrice: 250, photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg"))
     }
 }
 
