@@ -13,7 +13,9 @@ struct MenuView: View {
     
     var body: some View {
         VStack(spacing:0){
+            
             ToolbarView(title: Strings.TITLE_MENU, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
@@ -42,6 +44,7 @@ struct MenuView: View {
                 }.padding(.top, Diems.MEDIUM_PADDING)
             }
         }.background(Color("background"))
+        
     }
 }
 

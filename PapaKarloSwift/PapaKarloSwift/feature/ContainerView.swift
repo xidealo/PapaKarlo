@@ -16,16 +16,16 @@ struct ContainerView: View {
             CafeListView().tabItem {
                 Image(systemName:"mappin")
                     Text(Strings.TITLE_BOTTOM_NAVIGATION_CAFES)
-            }.tag(0).navigationBarHidden(true)
+            }.tag(0)
             MenuView().tabItem {
                 Text(Strings.TITILE_BOTTOM_NAVIGATION_MENU)
                 Image(systemName:"list.dash")
-            }.tag(1).navigationBarHidden(true)
+            }.tag(1)
             ProfileView().tabItem {
                 Image(systemName: "person.crop.circle")
                 Text(Strings.TITLE_BOTTOM_NAVIGATION_PROFILE)
-            }.tag(2).navigationBarHidden(true)
-        }.accentColor(Color("primary"))
+            }.tag(2)
+        }.accentColor(Color("primary")).hiddenNavigationBarStyle()
     }
 }
 

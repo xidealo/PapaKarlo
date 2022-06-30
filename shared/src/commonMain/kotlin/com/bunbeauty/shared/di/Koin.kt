@@ -5,6 +5,7 @@ import com.bunbeauty.shared.data.di.mapperModule
 import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
@@ -44,4 +45,5 @@ class IosComponent:KoinComponent {
     fun provideCityInteractor(): ICityInteractor = get()
     fun provideApiRepo(): NetworkConnector = get()
     fun provideMenuInteractor(): IMenuProductInteractor = get()
+    fun provideCafeInteractor(): ICafeInteractor = get()
 }

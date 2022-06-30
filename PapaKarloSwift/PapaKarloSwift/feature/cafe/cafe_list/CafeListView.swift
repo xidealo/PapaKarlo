@@ -8,34 +8,31 @@
 import SwiftUI
 
 struct CafeListView: View {
-    
-    let cafes:[CafeItem]
-    
-    init() {
-        cafes = [CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
-        ), CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
-        )]
-    }
-    
+        
+    @ObservedObject private var viewModel = CafeViewModel()
+
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            ScrollView {
-                LazyVStack{
-                    ForEach(cafes){ cafe in
-                        NavigationLink(
-                        destination: CafeOptionsView()
-                        ){
-                            CafeItemView(cafeItem: cafe)
-                                .padding(.bottom, Diems.SMALL_PADDING)
-                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            if viewModel.cafeViewState.isLoading{
+                LoadingView()
+            }
+            else{
+                ScrollView {
+                    LazyVStack{
+                        ForEach(viewModel.cafeViewState.cafeItemList){ cafe in
+                            NavigationLink(
+                                destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
+                            ){
+                                CafeItemView(cafeItem: cafe)
+                                    .padding(.bottom, Diems.SMALL_PADDING)
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            }
                         }
                     }
-                }
-            }.padding(.top, Diems.MEDIUM_PADDING)
+                }.padding(.top, Diems.MEDIUM_PADDING)
+            }
         }.background(Color("background"))
-        .navigationBarHidden(true)
-        
     }
 }
 

@@ -16,12 +16,11 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun getToken(): String? {
-        //return NSUserDefaults.standardUserDefaults.stringForKey(TOKEN).toString()
-        return ""
+        return NSUserDefaults.standardUserDefaults.stringForKey(TOKEN_KEY).toString()
     }
 
     actual override suspend fun saveToken(token: String) {
-        //NSUserDefaults.standardUserDefaults.setObject(token, TOKEN)
+        NSUserDefaults.standardUserDefaults.setObject(token, TOKEN_KEY)
     }
 
     actual override suspend fun clearToken() {
@@ -64,15 +63,16 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
 
     }
     actual override suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String) {
-
+        NSUserDefaults.standardUserDefaults.setObject(cityUuid, SELECTED_CITY_UUID_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(cityTimeZone, SELECTED_CITY_TIME_ZONE_KEY)
     }
 
     actual override suspend fun getSelectedCityUuid(): String? {
-        return ""
+        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY).toString()
     }
 
     actual override suspend fun getSelectedCityTimeZone(): String {
-        return  ""
+        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_TIME_ZONE_KEY).toString()
     }
 
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
@@ -86,6 +86,13 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
             userUuid = getUserUuid() ?: "",
             cityUuid = getSelectedCityUuid() ?: ""
         )
+    }
+
+    companion object{
+    const val TOKEN_KEY = "TOKEN_KEY"
+    const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"
+    const val SELECTED_CITY_TIME_ZONE_KEY = "SELECTED_CITY_TIME_ZONE_KEY"
+
     }
 
 

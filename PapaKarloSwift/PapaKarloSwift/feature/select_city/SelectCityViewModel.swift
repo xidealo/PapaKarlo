@@ -17,9 +17,13 @@ class SelectCityViewModel : ObservableObject{
         iosComponent.provideCityInteractor().getCityList(completionHandler: {
             cityList, error in
             self.selectCityViewState = SelectCityViewState(isLoading: false, cityList: cityList?.map({ city in
-                CityItem(city : city.name)
+                CityItem(city : city)
             }) ?? [])
         })
+    }
+    
+    func saveSelectedCity(city:City){
+        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { _, error in })
     }
 }
 

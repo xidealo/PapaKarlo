@@ -18,36 +18,44 @@ struct SelectCityView: View {
             if viewModel.selectCityViewState.isLoading{
                 LoadingView()
             }else{
-                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList)
+                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
             }
         }
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
+
     }
 }
 
 struct SelectCitySuccessView : View {
     
     let cityList: [CityItem]
-    
+    let viewModel:SelectCityViewModel
+    @State private var isGoToMenu = false
+
     var body: some View {
         ScrollView {
             LazyVStack{
                 ForEach(cityList){ city in
                     NavigationLink(
-                        destination:ContainerView()
+                        destination:ContainerView().navigationBarHidden(true),
+                        isActive: $isGoToMenu
                     ){
-                        CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        Button {
+                            viewModel.saveSelectedCity(city: city.city)
+                            isGoToMenu = true
+                        } label: {
+                            CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
                     }
                 }
             }
         }.padding(.top, Diems.MEDIUM_PADDING)
-        
     }
 }
 
 struct SelectCitySuccessView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectCitySuccessView(cityList: [CityItem(city: "Kimry"), CityItem(city: "Dubna")])
+        SelectCitySuccessView(cityList: [CityItem(city: City(uuid: "uuid", name: "name", timeZone: "+3")), CityItem(city: City(uuid: "ss", name: "Dubna", timeZone: "+3"))], viewModel: SelectCityViewModel())
     }
 }

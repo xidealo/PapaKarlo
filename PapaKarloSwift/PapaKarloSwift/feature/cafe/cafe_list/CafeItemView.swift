@@ -35,7 +35,7 @@ struct CafeItemView: View {
 struct CafeView_Previews: PreviewProvider {
     static var previews: some View {
         CafeItemView(
-            cafeItem: CafeItem(id: UUID(), address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green
+            cafeItem: CafeItem(id: "UUID", address: "Kimry chapaevo 22a", workingHours: "9:00 - 22:00", isOpenMessage: "Open", isOpenColor: Color.green, phone: "8999999999", latitude: 0, longitude: 0
             )
         )
     }
