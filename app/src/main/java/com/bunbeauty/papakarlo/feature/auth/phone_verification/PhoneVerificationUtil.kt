@@ -4,9 +4,9 @@ import android.app.Activity
 import com.bunbeauty.common.Logger.AUTH_TAG
 import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.common.Logger.logE
-import com.bunbeauty.papakarlo.feature.auth.login.event.AuthErrorEvent
-import com.bunbeauty.papakarlo.feature.auth.login.event.AuthSuccessEvent
-import com.bunbeauty.papakarlo.feature.auth.login.event.CodeSentEvent
+import com.bunbeauty.papakarlo.feature.auth.event.AuthErrorEvent
+import com.bunbeauty.papakarlo.feature.auth.event.AuthSuccessEvent
+import com.bunbeauty.papakarlo.feature.auth.event.CodeSentEvent
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.PhoneAuthCredential
@@ -14,9 +14,9 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import core_common.Constants.SOMETHING_WENT_WRONG
-import core_common.Constants.TOO_MANY_REQUESTS
-import core_common.Constants.WRONG_CODE
+import com.bunbeauty.shared.Constants.SOMETHING_WENT_WRONG
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.Constants.WRONG_CODE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -35,14 +35,14 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Job()
 
-    private val mutableAuthErrorEvent: MutableSharedFlow<AuthErrorEvent> = MutableSharedFlow(replay = 1)
+    private val mutableAuthErrorEvent: MutableSharedFlow<AuthErrorEvent> = MutableSharedFlow()
     override val authErrorEvent: SharedFlow<AuthErrorEvent> = mutableAuthErrorEvent.asSharedFlow()
 
-    private val mutableAuthSuccessEvent: MutableSharedFlow<AuthSuccessEvent> = MutableSharedFlow(replay = 1)
+    private val mutableAuthSuccessEvent: MutableSharedFlow<AuthSuccessEvent> = MutableSharedFlow()
     override val authSuccessEvent: SharedFlow<AuthSuccessEvent> =
         mutableAuthSuccessEvent.asSharedFlow()
 
-    private val mutableCodeSentEvent: MutableSharedFlow<CodeSentEvent> = MutableSharedFlow(replay = 1)
+    private val mutableCodeSentEvent: MutableSharedFlow<CodeSentEvent> = MutableSharedFlow()
     override val codeSentEvent: SharedFlow<CodeSentEvent> = mutableCodeSentEvent.asSharedFlow()
 
     override fun sendVerificationCode(phone: String, activity: Activity) {

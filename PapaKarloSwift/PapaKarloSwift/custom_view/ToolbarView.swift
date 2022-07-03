@@ -21,7 +21,7 @@ struct ToolbarView: View {
     
     var body: some View {
         HStack{
-            
+
             Button(action: {
                 self.mode.wrappedValue.dismiss()
             }) {

@@ -36,9 +36,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":kmm:core:core-common"))
-    implementation(project(":kmm:shared"))
-
+    implementation(project(":shared"))
 }
 
 sqldelight {

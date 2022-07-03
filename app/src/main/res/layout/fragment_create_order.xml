@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.create_order.CreateOrderFragment">
+    tools:context=".feature.create_order.screen.create_order.CreateOrderFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentCreateOrderCvMain"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature.select_city.SelectCityFragment">
+    tools:context=".feature.city.screen.select_city.SelectCityFragment">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/fragmentSelectCityCvMain"

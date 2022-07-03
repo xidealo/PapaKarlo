@@ -6,12 +6,21 @@
 //
 
 import SwiftUI
+import shared
+
+let iosComponent = IosComponent()
 
 @main
-struct PapaKarloSwiftApp: App {
+struct PapaKarloSwiftApp: App { 
+
+    init(){
+        KoinKt.doInitKoin()
+    }
+    
     var body: some Scene {
         WindowGroup {
             SplashView()
         }
     }
+    
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".feature.cafe.cafe_options.CafeOptionsBottomSheet">
+    tools:context=".feature.cafe.screen.cafe_options.CafeOptionsBottomSheet">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/bottomSheetCafeOptionsCvMain"

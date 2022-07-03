@@ -3,7 +3,7 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".feature.address.user_address_list.UserAddressListFragment">
+tools:context=".feature.address.screen.user_address_list.UserAddressListFragment">
 
 <androidx.compose.ui.platform.ComposeView
     android:id="@+id/fragmentUserAddressListCvMain"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BottomSheet"
-    tools:context=".feature.address.cafe_address_list.CafeAddressListBottomSheet">
+    tools:context=".feature.address.screen.cafe_address_list.CafeAddressListBottomSheet">
 
     <androidx.compose.ui.platform.ComposeView
         android:id="@+id/bottomSheetCafeAddressListCvMain"

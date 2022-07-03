@@ -3,9 +3,9 @@ package com.bunbeauty.papakarlo.mapper.order
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderWithAmounts
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderProductItemModel
-import com.bunbeauty.papakarlo.feature.profile.order.order_details.OrderUI
-import com.bunbeauty.papakarlo.feature.profile.order.order_list.OrderItem
+import com.bunbeauty.papakarlo.feature.order.model.OrderProductItem
+import com.bunbeauty.papakarlo.feature.order.model.OrderUI
+import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
 class OrderUIMapper(
@@ -41,7 +41,7 @@ class OrderUIMapper(
             comment = orderWithAmounts.comment,
             deliveryCost = stringUtil.getCostString(orderWithAmounts.deliveryCost),
             orderProductList = orderWithAmounts.orderProductList.map { orderProduct ->
-                OrderProductItemModel(
+                OrderProductItem(
                     uuid = orderProduct.uuid,
                     name = orderProduct.product.name,
                     newPrice = stringUtil.getCostString(orderProduct.product.newPrice),

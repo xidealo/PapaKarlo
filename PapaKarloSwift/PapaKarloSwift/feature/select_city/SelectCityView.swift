@@ -6,38 +6,56 @@
 //
 
 import SwiftUI
+import shared
 
 struct SelectCityView: View {
-    let cities : [CityItem]
     
-    init() {
-        cities = [CityItem(city: "Kimry"), CityItem(city: "Dubna")]
-    }
+    @ObservedObject private var viewModel = SelectCityViewModel()
     
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
-            
-            ScrollView {
-                LazyVStack{
-                    ForEach(cities){ city in
-                        NavigationLink(
-                            destination:ContainerView()
-                        ){
+            if viewModel.selectCityViewState.isLoading{
+                LoadingView()
+            }else{
+                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
+            }
+        }
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
+
+    }
+}
+
+struct SelectCitySuccessView : View {
+    
+    let cityList: [CityItem]
+    let viewModel:SelectCityViewModel
+    @State private var isGoToMenu = false
+
+    var body: some View {
+        ScrollView {
+            LazyVStack{
+                ForEach(cityList){ city in
+                    NavigationLink(
+                        destination:ContainerView().navigationBarHidden(true),
+                        isActive: $isGoToMenu
+                    ){
+                        Button {
+                            viewModel.saveSelectedCity(city: city.city)
+                            isGoToMenu = true
+                        } label: {
                             CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
                 }
-            }.padding(.top, Diems.MEDIUM_PADDING)
-        }
-        .background(Color("background"))
-        .navigationBarHidden(true)
-        
+            }
+        }.padding(.top, Diems.MEDIUM_PADDING)
     }
 }
 
-struct SelectCityView_Previews: PreviewProvider {
+struct SelectCitySuccessView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectCityView()
+        SelectCitySuccessView(cityList: [CityItem(city: City(uuid: "uuid", name: "name", timeZone: "+3")), CityItem(city: City(uuid: "ss", name: "Dubna", timeZone: "+3"))], viewModel: SelectCityViewModel())
     }
 }

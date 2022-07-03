@@ -21,6 +21,7 @@ object Logger {
     const val DELIVERY_TAG = "deliveryTag"
     const val WEB_SOCKET_TAG = "webSocketTag"
 
+    @Deprecated("use Logger from shared")
     fun logD(tag: String, message: Any) {
         //if (isWorkerTag(tag)) {
         //    Log.d(WORKER_TAG, "$tag $message")
@@ -29,6 +30,7 @@ object Logger {
         //Log.d(tag, message.toString())
     }
 
+    @Deprecated("use Logger from shared")
     fun logE(tag: String, message: Any) {
         //Log.e(COMMON_TAG, "$tag $message")
         //Log.e(tag, message.toString())

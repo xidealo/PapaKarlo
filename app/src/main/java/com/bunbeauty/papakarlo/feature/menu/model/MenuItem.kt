@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.menu.model
 
-import com.bunbeauty.papakarlo.common.ItemModel
+import com.bunbeauty.papakarlo.common.model.ItemModel
 
 sealed class MenuItem: ItemModel() {
     data class MenuCategoryHeaderItem(

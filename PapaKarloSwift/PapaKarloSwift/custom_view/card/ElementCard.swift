@@ -15,6 +15,7 @@ struct ElementCard: View {
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
             .foregroundColor(Color("onSurface"))
+            .shadow(radius: 2.0)
     }
 }
 

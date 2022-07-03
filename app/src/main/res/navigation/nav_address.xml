@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/userAddressListFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.user_address_list.UserAddressListFragment"
+        android:name="com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragment"
         android:label="@string/title_my_addresses"
         tools:layout="@layout/bottom_sheet_user_address_list">
         <argument
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/createAddressFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.create_address.CreateAddressFragment"
+        android:name="com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressFragment"
         android:label="@string/title_create_address"
         tools:layout="@layout/fragment_create_address" />
 

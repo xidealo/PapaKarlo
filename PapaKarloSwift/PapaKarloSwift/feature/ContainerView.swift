@@ -16,9 +16,7 @@ struct ContainerView: View {
             CafeListView().tabItem {
                 Image(systemName:"mappin")
                     Text(Strings.TITLE_BOTTOM_NAVIGATION_CAFES)
-            }.tag(0).navigationTitle(
-                Text(Strings.TITLE_CAFE_LIST)
-            )
+            }.tag(0)
             MenuView().tabItem {
                 Text(Strings.TITILE_BOTTOM_NAVIGATION_MENU)
                 Image(systemName:"list.dash")
@@ -27,7 +25,7 @@ struct ContainerView: View {
                 Image(systemName: "person.crop.circle")
                 Text(Strings.TITLE_BOTTOM_NAVIGATION_PROFILE)
             }.tag(2)
-        }.accentColor(Color("primary")).navigationBarHidden(true)
+        }.accentColor(Color("primary")).hiddenNavigationBarStyle()
     }
 }
 
