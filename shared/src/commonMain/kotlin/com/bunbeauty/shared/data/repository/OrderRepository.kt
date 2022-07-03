@@ -3,8 +3,8 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order

@@ -8,7 +8,7 @@ import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
-import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.DataStoreRepo

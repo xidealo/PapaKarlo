@@ -23,53 +23,58 @@ extension String {
 }
 
 struct ProductDetailsView: View {
-    private let menuProductUI:MenuProductUI
     
+    @ObservedObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
     
     init(menuProductUuid:String) {
+        self.viewModel = ProductDetailsViewModel(productUuid: menuProductUuid)
         self.menuProductUuid = menuProductUuid
-        
-        menuProductUI = MenuProductUI(name:  "Бургер", size: "200 г", oldPrice: "250 P", newPrice: "200 Р", description: "Сочный пурге, с кртшка, с вкусный сыр, с вкусное мясцо", imageLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")
     }
     
     var body: some View {
         VStack{
-            
-            ToolbarView(title: menuProductUI.name, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title: viewModel.productDetailsViewState.name, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: true, isCartVisible: true, isLogoutVisible: false)
             
             VStack{
-                Image(uiImage: menuProductUI.imageLink.load())
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
+                AsyncImage(
+                    url: URL(string: viewModel.productDetailsViewState.imageLink),
+                    content: { image in
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                    },
+                    placeholder: {
+                        Rectangle().frame(maxWidth: .infinity)
+                    }
+                )
                 
                 Group{
                     HStack{
-                        Text(menuProductUI.name).frame(maxWidth: .infinity, alignment: .leading).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
-                        Text(menuProductUI.size).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+                        Text(viewModel.productDetailsViewState.name).frame(maxWidth: .infinity, alignment: .leading).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
+                        Text(viewModel.productDetailsViewState.size).font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
                     }.padding(.top, Diems.MEDIUM_PADDING)
                     
                     HStack{
-                        if menuProductUI.oldPrice != nil{
-                            StrikeText(text: menuProductUI.oldPrice ?? "")
+                        if viewModel.productDetailsViewState.oldPrice != nil{
+                            StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!))
                         }
-                        Text(menuProductUI.newPrice)
+                        Text(viewModel.productDetailsViewState.newPrice)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
                     }.frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.SMALL_PADDING)
                     
-                    Text(menuProductUI.description).frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.LARGE_PADDING).padding(.bottom, Diems.MEDIUM_PADDING)
+                    Text(viewModel.productDetailsViewState.description).frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.MEDIUM_PADDING).padding(.bottom, Diems.MEDIUM_PADDING)
                     
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
             .padding(Diems.MEDIUM_PADDING)
-
+            
             Spacer()
             
             Button(action: {
-                print("button pressed")
+                viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)
             }) {
                 Text(Strings.ACTION_PRODUCT_DETAILS_ADD).frame(maxWidth: .infinity)
                     .padding()

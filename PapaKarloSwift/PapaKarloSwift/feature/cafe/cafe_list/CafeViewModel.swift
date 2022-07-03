@@ -9,10 +9,12 @@ import Foundation
 import shared
 import SwiftUI
 
-class CafeViewModel:ObservableObject {
+class CafeViewModel: ToolbarViewModel {
     @Published var cafeViewState:CafeViewState = CafeViewState(isLoading: false, cafeItemList: [])
 
-    init(){
+    override init(){
+        super.init()
+
        cafeViewState = CafeViewState(isLoading: true, cafeItemList: [])
         iosComponent.provideCafeInteractor().getCafeList { cafeList, error in
             print(cafeList)

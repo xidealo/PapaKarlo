@@ -12,9 +12,8 @@ struct MenuView: View {
     @ObservedObject private var viewModel = MenuViewModel()
     
     var body: some View {
-        VStack(spacing:0){
-            
-            ToolbarView(title: Strings.TITLE_MENU, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+        VStack{
+            ToolbarView(title: Strings.TITLE_MENU, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             
             if viewModel.menuViewState.isLoading {
                 LoadingView()
@@ -35,7 +34,9 @@ struct MenuView: View {
                                     NavigationLink(
                                         destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
                                     ){
-                                        MenuItemView(menuProductItem: menuProductItem).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                                        MenuItemView(menuProductItem: menuProductItem, action: {
+                                            viewModel.addCartProductToCart(menuProductUuid: menuProductItem.id)
+                                        }).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                                     }
                                 }
                             }

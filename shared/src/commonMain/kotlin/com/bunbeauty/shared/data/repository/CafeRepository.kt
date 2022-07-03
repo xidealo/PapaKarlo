@@ -3,8 +3,8 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.address.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe

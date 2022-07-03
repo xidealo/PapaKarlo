@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContainerView: View {
-
+    
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color("surface"))
+    }
+    
     @State var selection:Int = 1
     
     var body: some View {
         TabView(selection:$selection){
             CafeListView().tabItem {
                 Image(systemName:"mappin")
-                    Text(Strings.TITLE_BOTTOM_NAVIGATION_CAFES)
+                Text(Strings.TITLE_BOTTOM_NAVIGATION_CAFES)
             }.tag(0)
             MenuView().tabItem {
                 Text(Strings.TITILE_BOTTOM_NAVIGATION_MENU)

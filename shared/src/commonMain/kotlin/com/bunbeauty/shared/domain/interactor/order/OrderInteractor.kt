@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.order
 
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
-import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderCode

@@ -12,8 +12,7 @@ class MenuViewState : NSObject {
     let categoryItemModels : [CategoryItemModel]
     let isLoading:Bool
     
-    
-    init(menuItems:[MenuItem], categoryItemModels: [CategoryItemModel], isLoading:Bool ){
+    init(menuItems:[MenuItem], categoryItemModels: [CategoryItemModel], isLoading:Bool){
         self.menuItems = menuItems
         self.categoryItemModels = categoryItemModels
         self.isLoading = isLoading

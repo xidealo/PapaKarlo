@@ -13,7 +13,7 @@ struct CafeListView: View {
 
     var body: some View {
         VStack{
-            ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: "220 R", count: "2",  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             if viewModel.cafeViewState.isLoading{
                 LoadingView()
             }

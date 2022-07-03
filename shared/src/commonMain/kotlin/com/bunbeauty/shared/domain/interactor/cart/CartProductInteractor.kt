@@ -7,6 +7,8 @@ import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -35,10 +37,18 @@ class CartProductInteractor(
         }
     }
 
+    override fun observeTotalCartCountForIos(): CommonFlow<Int> {
+        return observeTotalCartCount().asCommonFlow()
+    }
+
     override fun observeNewTotalCartCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getNewTotalCost(cartProductList)
         }
+    }
+
+    override fun observeNewTotalCartCostForIos(): CommonFlow<Int> {
+        return observeNewTotalCartCost().asCommonFlow()
     }
 
     override fun observeDeliveryCost(): Flow<Int> {
