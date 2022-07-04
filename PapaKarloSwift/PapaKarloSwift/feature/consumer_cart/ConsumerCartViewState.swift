@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct ConsumerCartUI {
+struct ConsumerCartViewState {
     let forFreeDelivery:String
     let cartProductList: [CartProductItem]
-    let oldTotalCost:String?
+    let oldTotalCost:Int?
     let newTotalCost:String
 }

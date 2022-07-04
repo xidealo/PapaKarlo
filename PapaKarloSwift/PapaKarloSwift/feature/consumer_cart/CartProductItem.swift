@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CartProductItem: Identifiable {
-    var id = UUID()
+    var id :String
     let name:String
     let newCost:String
-    let oldCost:String?
+    let oldCost:Int?
     let photoLink:String
     let count:Int
     let menuProductUuid:String

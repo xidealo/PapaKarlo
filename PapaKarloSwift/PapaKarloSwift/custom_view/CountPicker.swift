@@ -10,20 +10,18 @@ import SwiftUI
 struct CountPicker: View {
     
     let count:String
-    
+    let plusAction: () -> Void
+    let minusAction: () -> Void
+
     var body: some View {
         
         HStack{
             Group{
-                Button(action: {
-                    print("button pressed")
-                }) {
+                Button(action: minusAction) {
                     Text("-")
                 }
                 Text(count)
-                Button(action: {
-                    print("button pressed")
-                }) {
+                Button(action:plusAction) {
                     Text("+")
                 }
             }.foregroundColor(Color("onPrimary"))
@@ -34,6 +32,11 @@ struct CountPicker: View {
 
 struct CountPicker_Previews: PreviewProvider {
     static var previews: some View {
-        CountPicker(count: "4")
+        CountPicker(count: "4") {
+            
+        } minusAction: {
+            
+        }
+
     }
 }

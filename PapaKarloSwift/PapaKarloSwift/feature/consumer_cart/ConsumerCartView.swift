@@ -9,33 +9,40 @@ import SwiftUI
 
 struct ConsumerCartView: View {
     
-    let consumerCartUI : ConsumerCartUI
-
-    init() {
-        consumerCartUI =  ConsumerCartUI(forFreeDelivery: "100", cartProductList: [CartProductItem(id: UUID(), name: "Burger", newCost: "233", oldCost: "2223", photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg", count: 1, menuProductUuid: "uuid")], oldTotalCost: "234", newTotalCost: "200")
-    }
+    @ObservedObject var viewModel = ConsumerCartViewModel()
     
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            //ConsumerCartEmptyScreen()
-            ConsumerCartSuccessScreen(consumerCartUI: consumerCartUI)
+            if(viewModel.consumerCartViewState.cartProductList.count == 0 ){
+                ConsumerCartEmptyScreen()
+            }
+            else{
+                //TODO (can send only viewmodel)
+                ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState , viewModel: viewModel)
+            }
         }
         .background(Color("background"))
         .navigationBarHidden(true)
     }
 }
 
-struct ConsumerCartView_Previews: PreviewProvider {
+struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
-        ConsumerCartView()
+        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100"), viewModel: ConsumerCartViewModel())
     }
 }
 
+struct ConsumerCartViewEmpty_Previews: PreviewProvider {
+    static var previews: some View {
+        ConsumerCartEmptyScreen()
+    }
+}
 struct ConsumerCartSuccessScreen: View {
     
-    let consumerCartUI : ConsumerCartUI
+    let consumerCartUI : ConsumerCartViewState
+    @ObservedObject var viewModel : ConsumerCartViewModel
 
     var body: some View {
         VStack(spacing:0){
@@ -45,12 +52,16 @@ struct ConsumerCartSuccessScreen: View {
                 ScrollView {
                     LazyVStack{
                         ForEach(consumerCartUI.cartProductList){ cartProductItem in
-                            CartProductView(cartProductItem: cartProductItem).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
+                            CartProductView(cartProductItem: cartProductItem, plusAction: {
+                                viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
+                            }, minusAction: {
+                                viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
+                            }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
                         }
                     }
                 }
             }
-           
+            
             VStack{
                 
                 HStack{
@@ -58,11 +69,11 @@ struct ConsumerCartSuccessScreen: View {
                     Spacer()
                     
                     if consumerCartUI.oldTotalCost != nil{
-                        StrikeText(text: consumerCartUI.oldTotalCost ?? "0")
+                        StrikeText(text: String(consumerCartUI.oldTotalCost!))
                     }
                     BoldText(text: consumerCartUI.newTotalCost)
                 }.padding()
-
+                
                 
                 NavigationLink(
                     destination:CreateOrderView()
@@ -80,18 +91,20 @@ struct ConsumerCartSuccessScreen: View {
 }
 
 struct ConsumerCartEmptyScreen: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     var body: some View {
         VStack{
             Spacer()
             
-            DefaultImage(imageName: "RunMan")
+            DefaultImage(imageName: "runMan")
             
             Text(Strings.MSG_CART_PRODUCT_EMPTY).multilineTextAlignment(.center)
             Spacer()
             
-            NavigationLink(
-                destination:MenuView()
-            ){
+            Button {
+                presentationMode.wrappedValue.dismiss()
+            } label: {
                 Text(Strings.ACTION_CART_PRODUCT_MENU).frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))

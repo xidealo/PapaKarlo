@@ -1,14 +1,11 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.cart.CartTotal
-import com.bunbeauty.shared.domain.model.cart.ConsumerCart
-import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
+import com.bunbeauty.shared.domain.model.cart.*
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -24,6 +21,19 @@ class CartProductInteractor(
     override suspend fun getConsumerCart(): ConsumerCart? {
         return getConsumerCart(cartProductRepo.getCartProductList())
     }
+
+    override suspend fun getConsumerCartWithProducts(): CartWithProducts? {
+        return when(val cart = getConsumerCart(cartProductRepo.getCartProductList())){
+            is ConsumerCart.WithProducts -> CartWithProducts(
+                forFreeDelivery = cart.forFreeDelivery,
+                cartProductList = cart.cartProductList,
+                oldTotalCost = cart.oldTotalCost,
+                newTotalCost = cart.newTotalCost,
+            )
+            else-> null
+        }
+    }
+
 
     override fun observeConsumerCart(): Flow<ConsumerCart?> {
         return  cartProductRepo.observeCartProductList().map { cartProductList ->
