@@ -25,8 +25,8 @@ struct OrderListView: View {
 
 struct OrderListView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderListView(orderList: [OrderItem(id: UUID(), status: "PREPARING", code: "S-23", dateTime: "15-05-22"),
-                                  OrderItem(id: UUID(), status: "PREPARING", code: "T-03", dateTime: "15-05-22")])
+        OrderListView(orderList: [OrderItem(id: "UUID", status: "PREPARING", code: "S-23", dateTime: "15-05-22"),
+                                  OrderItem(id: "UUID", status: "PREPARING", code: "T-03", dateTime: "15-05-22")])
     }
 }
 

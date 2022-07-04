@@ -43,7 +43,7 @@ struct ConsumerCartSuccessScreen: View {
     
     let consumerCartUI : ConsumerCartViewState
     @ObservedObject var viewModel : ConsumerCartViewModel
-
+    
     var body: some View {
         VStack(spacing:0){
             ZStack(alignment: .bottom){
@@ -52,12 +52,14 @@ struct ConsumerCartSuccessScreen: View {
                 ScrollView {
                     LazyVStack{
                         ForEach(consumerCartUI.cartProductList){ cartProductItem in
+                            
                             CartProductView(cartProductItem: cartProductItem, plusAction: {
                                 viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
                             }, minusAction: {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
                             }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
                         }
+                        
                     }
                 }
             }
@@ -92,7 +94,7 @@ struct ConsumerCartSuccessScreen: View {
 
 struct ConsumerCartEmptyScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    
     var body: some View {
         VStack{
             Spacer()

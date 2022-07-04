@@ -28,7 +28,7 @@ class ConsumerCartViewModel : ObservableObject  {
     
     func getCartProductItems(cartWithProducts:CartWithProducts?) -> [CartProductItem]{
         return cartWithProducts?.cartProductList.map({ lightCartProduct in
-            CartProductItem(id: lightCartProduct.uuid, name: lightCartProduct.name, newCost: String(lightCartProduct.newCost), oldCost: lightCartProduct.oldCost as? Int ?? 0, photoLink: lightCartProduct.photoLink, count: Int(lightCartProduct.count) , menuProductUuid: lightCartProduct.menuProductUuid)
+            CartProductItem(id: lightCartProduct.uuid, name: lightCartProduct.name, newCost: String(lightCartProduct.newCost), oldCost: lightCartProduct.oldCost as? Int, photoLink: lightCartProduct.photoLink, count: Int(lightCartProduct.count) , menuProductUuid: lightCartProduct.menuProductUuid)
         }) ?? []
     }
     

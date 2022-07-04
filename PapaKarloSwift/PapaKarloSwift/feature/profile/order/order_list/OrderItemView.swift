@@ -39,6 +39,6 @@ struct OrderItemView<Content: View>: View {
 
 struct OrderItemView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderItemView(orderItem: OrderItem(id: UUID(), status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView())
+        OrderItemView(orderItem: OrderItem(id: "UUID", status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView())
     }
 }

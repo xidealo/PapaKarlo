@@ -18,6 +18,8 @@
 		0216BAD5286CCA9D00A73042 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216BAD4286CCA9D00A73042 /* MenuViewModel.swift */; };
 		0216BAD7286CDBEA00A73042 /* CafeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216BAD6286CDBEA00A73042 /* CafeViewModel.swift */; };
 		0216BAD9286CDC2C00A73042 /* CafeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0216BAD8286CDC2C00A73042 /* CafeViewState.swift */; };
+		021AA3B82873811A00268D57 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021AA3B72873811A00268D57 /* ProfileViewModel.swift */; };
+		021AA3BA2873837D00268D57 /* ProfileViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021AA3B92873837D00268D57 /* ProfileViewState.swift */; };
 		022197952811F4F200904924 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022197942811F4F200904924 /* CafeOptionsView.swift */; };
 		02500A2327D4F72700DA641C /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500A2227D4F72700DA641C /* Diems.swift */; };
 		02500A2627D4F9DB00DA641C /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02500A2527D4F9DB00DA641C /* Strings.swift */; };
@@ -56,7 +58,6 @@
 		026C14432806075A00AD13A5 /* MenuViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C14422806075A00AD13A5 /* MenuViewState.swift */; };
 		026C536F27DD35F900CE3EF2 /* OrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C536E27DD35F900CE3EF2 /* OrderItemView.swift */; };
 		026C537327DD36F000CE3EF2 /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C537227DD36F000CE3EF2 /* OrderItem.swift */; };
-		026C537527DD3D3700CE3EF2 /* ProfileUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C537427DD3D3700CE3EF2 /* ProfileUI.swift */; };
 		026C90BE280C19120012D3CA /* ActionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026C90BD280C19120012D3CA /* ActionCardView.swift */; };
 		026E627727E60DDD00353E69 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E627627E60DDD00353E69 /* LoginView.swift */; };
 		026E627B27E60E0200353E69 /* ConfirmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026E627A27E60E0200353E69 /* ConfirmView.swift */; };
@@ -97,6 +98,8 @@
 		0216BAD4286CCA9D00A73042 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		0216BAD6286CDBEA00A73042 /* CafeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeViewModel.swift; sourceTree = "<group>"; };
 		0216BAD8286CDC2C00A73042 /* CafeViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeViewState.swift; sourceTree = "<group>"; };
+		021AA3B72873811A00268D57 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		021AA3B92873837D00268D57 /* ProfileViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewState.swift; sourceTree = "<group>"; };
 		022197942811F4F200904924 /* CafeOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeOptionsView.swift; sourceTree = "<group>"; };
 		02500A2227D4F72700DA641C /* Diems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diems.swift; sourceTree = "<group>"; };
 		02500A2527D4F9DB00DA641C /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -135,7 +138,6 @@
 		026C14422806075A00AD13A5 /* MenuViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewState.swift; sourceTree = "<group>"; };
 		026C536E27DD35F900CE3EF2 /* OrderItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemView.swift; sourceTree = "<group>"; };
 		026C537227DD36F000CE3EF2 /* OrderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
-		026C537427DD3D3700CE3EF2 /* ProfileUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUI.swift; sourceTree = "<group>"; };
 		026C90BD280C19120012D3CA /* ActionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCardView.swift; sourceTree = "<group>"; };
 		026E627627E60DDD00353E69 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		026E627A27E60E0200353E69 /* ConfirmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmView.swift; sourceTree = "<group>"; };
@@ -247,7 +249,8 @@
 				025C6A5827DCA59A00AB2F17 /* ProfileView.swift */,
 				025C6A5B27DCD32D00AB2F17 /* FeedbackView.swift */,
 				025C6A5D27DCD35000AB2F17 /* AboutAppView.swift */,
-				026C537427DD3D3700CE3EF2 /* ProfileUI.swift */,
+				021AA3B72873811A00268D57 /* ProfileViewModel.swift */,
+				021AA3B92873837D00268D57 /* ProfileViewState.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -633,7 +636,6 @@
 				0262AEAD27EF7E7000456C6E /* DefaultImage.swift in Sources */,
 				02727A2127E11AAC00C212E4 /* SettingsView.swift in Sources */,
 				026A62E427F0AEE50019C3D4 /* BoldText.swift in Sources */,
-				026C537527DD3D3700CE3EF2 /* ProfileUI.swift in Sources */,
 				026C536F27DD35F900CE3EF2 /* OrderItemView.swift in Sources */,
 				0209DFF228718DE90034A625 /* ProductDetailsViewModel.swift in Sources */,
 				0262AEB127EF86BC00456C6E /* CountPicker.swift in Sources */,
@@ -642,6 +644,7 @@
 				02727A1C27E1178E00C212E4 /* TextCard.swift in Sources */,
 				026C14432806075A00AD13A5 /* MenuViewState.swift in Sources */,
 				0283C82A27ECA4AC00AAF687 /* ConsumerCartView.swift in Sources */,
+				021AA3BA2873837D00268D57 /* ProfileViewState.swift in Sources */,
 				025298A427FA00ED0028934A /* Switcher.swift in Sources */,
 				3D55C0F52826D026000742AE /* SelectCityViewModel.swift in Sources */,
 				0216BAD9286CDC2C00A73042 /* CafeViewState.swift in Sources */,
@@ -663,6 +666,7 @@
 				022197952811F4F200904924 /* CafeOptionsView.swift in Sources */,
 				02131A3927DA3D7E00DCF9F5 /* MenuItemView.swift in Sources */,
 				025C6A5427DC9F4700AB2F17 /* LargeHeaderText.swift in Sources */,
+				021AA3B82873811A00268D57 /* ProfileViewModel.swift in Sources */,
 				02681E4C27DF89AD00D03834 /* UserAddressListView.swift in Sources */,
 				025C6A5C27DCD32D00AB2F17 /* FeedbackView.swift in Sources */,
 				027FA4E42814133D00BD2B1D /* ChangeCityItem.swift in Sources */,

@@ -9,18 +9,23 @@ import SwiftUI
 import shared
 
 struct ProfileView: View {
-        
+    
+    @ObservedObject private var viewModel = ProfileViewModel()
+
     var body: some View {
         VStack{
             
-            ToolbarView(title: Strings.TITLE_PROFILE, cost: "220 R", count: "2", isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             
-            //EmptyProfileView()
-            //EmptyProfileView()
-            
-            //LoadingProfileView()
-            
-            SuccessProfileView(profileUI: ProfileUI(userUUid: "String", hasAddresses: false,lastOrderItem: OrderItem(id: UUID(),status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00")))
+            if(viewModel.profileViewState.isLoading){
+                LoadingProfileView()
+            }else{
+                if viewModel.profileViewState.isAuthorize{
+                    SuccessProfileView(profileViewState:  viewModel.profileViewState)
+                }else{
+                    EmptyProfileView()
+                }
+            }
             
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
         .navigationBarHidden(true)
@@ -67,25 +72,29 @@ struct EmptyProfileView: View {
 
 struct LoadingProfileView: View {
     var body: some View {
-        ProgressView()
-            .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
-            .scaleEffect(1.5)
+        VStack{
+            Spacer()
+            ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
+                .scaleEffect(1.5)
+            Spacer()
+        }
     }
 }
 
 struct SuccessProfileView: View {
-    let profileUI:ProfileUI
+    let profileViewState:ProfileViewState
     
     var body: some View {
         VStack{
             
-            if(profileUI.lastOrderItem != nil){
-                OrderItemView(orderItem: profileUI.lastOrderItem!, destination: OrderDetailsView())
+            if(profileViewState.lastOrder != nil){
+                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView())
             }
             
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
             
-            if(profileUI.hasAddresses){
+            if(profileViewState.hasAddresses){
                 NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: AboutAppView())
             }else{
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: AboutAppView())
