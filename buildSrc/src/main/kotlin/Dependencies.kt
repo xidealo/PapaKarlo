@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.0.2"
-    const val kotlin = "1.6.10"
+    const val kotlin = "1.6.21"
     const val googleServices = "4.3.10"
     const val crashlytics = "2.8.1"
     const val navigation = "2.4.0"
@@ -17,11 +17,15 @@ object Versions {
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
-    const val materialComposeThemeAdapter = "1.1.4"
     const val appCompact = "1.4.1"
-    const val coil = "2.0.0-rc01"
+    const val coil = "2.1.0"
     const val timePicker = "4.2.3"
-    const val compose = "1.2.0-alpha07"
+
+    const val composeCompiler = "1.2.0-rc02"
+    const val composeMaterial = "1.1.1"
+    const val composeAnimation = "1.1.1"
+    const val composeUi = "1.1.1"
+    const val composeThemeAdapter = "1.1.4"
 
     const val dataStorePreferences = "1.0.0"
 
@@ -100,11 +104,11 @@ object Google {
 }
 
 object Compose {
-    const val material = "androidx.compose.material:material:${Versions.compose}"
-    const val animation = "androidx.compose.animation:animation:${Versions.compose}"
-    const val ui = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    const val material = "androidx.compose.material:material:${Versions.composeMaterial}"
+    const val animation = "androidx.compose.animation:animation:${Versions.composeAnimation}"
+    const val ui = "androidx.compose.ui:ui-tooling:${Versions.composeUi}"
     const val materialThemeAdapter =
-        "com.google.android.material:compose-theme-adapter:${Versions.materialComposeThemeAdapter}"
+        "com.google.android.material:compose-theme-adapter:${Versions.composeThemeAdapter}"
 }
 
 object Lifecycle {
