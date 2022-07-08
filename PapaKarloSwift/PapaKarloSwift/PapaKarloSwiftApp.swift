@@ -7,11 +7,12 @@
 
 import SwiftUI
 import shared
-
+import FirebaseCore
 let iosComponent = IosComponent()
 
 @main
 struct PapaKarloSwiftApp: App { 
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init(){
         KoinKt.doInitKoin()

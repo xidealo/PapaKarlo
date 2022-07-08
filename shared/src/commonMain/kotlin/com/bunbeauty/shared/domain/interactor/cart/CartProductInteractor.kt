@@ -22,19 +22,6 @@ class CartProductInteractor(
         return getConsumerCart(cartProductRepo.getCartProductList())
     }
 
-    override suspend fun getConsumerCartWithProducts(): CartWithProducts? {
-        return when(val cart = getConsumerCart(cartProductRepo.getCartProductList())){
-            is ConsumerCart.WithProducts -> CartWithProducts(
-                forFreeDelivery = cart.forFreeDelivery,
-                cartProductList = cart.cartProductList,
-                oldTotalCost = cart.oldTotalCost,
-                newTotalCost = cart.newTotalCost,
-            )
-            else-> null
-        }
-    }
-
-
     override fun observeConsumerCart(): Flow<ConsumerCart?> {
         return  cartProductRepo.observeCartProductList().map { cartProductList ->
             getConsumerCart(cartProductList)

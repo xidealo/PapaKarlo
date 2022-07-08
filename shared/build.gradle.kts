@@ -23,6 +23,13 @@ kotlin {
             baseName = "shared"
         }
     }
+//    cocoapods {
+//        summary = ""
+//        homepage = ""
+//        ios.deploymentTarget = "13.2"
+//
+//        pod("FirebaseAuth")
+//    }
 
     sourceSets {
         val commonMain by getting {
@@ -34,7 +41,6 @@ kotlin {
                     implementation(clientJson)
                     implementation(clientAuth)
                 }
-
                 implementation(Coroutine.core)
 
                 implementation(Serialization.json)
@@ -49,7 +55,7 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
-
+               // implementation("dev.gitlive:firebase-auth:1.6.1")
             }
         }
         val commonTest by getting {

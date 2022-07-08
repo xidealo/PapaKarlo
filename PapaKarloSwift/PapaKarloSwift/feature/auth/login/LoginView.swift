@@ -9,7 +9,32 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State var phone:String = ""
+    @State private var phone:String = ""
+    
+    @ObservedObject private var viewModel = LoginViewModel()
+    
+    var body: some View {
+        if(viewModel.loginViewState.isLoading){
+            LoadingView().navigationBarHidden(true)
+        }else{
+            if(viewModel.loginViewState.isGoToMenu){
+                NavigationLink(
+                    destination:ConfirmView(),
+                    isActive: .constant(true)
+                ){
+                    LoginViewSuccessView(phone: $phone, viewModel: viewModel)
+                }
+            }else{
+                LoginViewSuccessView(phone: $phone, viewModel: viewModel)
+            }
+            
+        }
+    }
+}
+
+struct LoginViewSuccessView: View {
+    @Binding var phone:String
+    @ObservedObject var viewModel : LoginViewModel
     
     var body: some View {
         
@@ -17,16 +42,16 @@ struct LoginView: View {
             ToolbarView(title:"", cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
- 
+            
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:phone)
+            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone)
             
             Spacer()
-            NavigationLink(
-                destination:ConfirmView()
-            ){
+            Button {
+                viewModel.sendCodeToPhone(phone: phone)
+            } label: {
                 Text(Strings.ACTION_LOGIN_LOGIN)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -36,9 +61,11 @@ struct LoginView: View {
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }
         }.padding(Diems.MEDIUM_PADDING)
-        .navigationBarHidden(true)
+            .navigationBarHidden(true)
     }
 }
+
+
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

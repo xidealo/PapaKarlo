@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import shared
+import FirebaseAuth
 
 struct FeedbackView: View {
     var body: some View {
@@ -14,15 +16,15 @@ struct FeedbackView: View {
             
             VStack{
                 ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false){
-                    print("go to dev")
+                    UIApplication.shared.open(URL(string: Constants.init().VK_LINK)!)
                 }
                 
                 ActionCardView(icon: "InstagramIcon", label: Strings.TITLE_FEEDBACK_INSTAGRAM, isSystemImageName: false){
-                    print("go to dev")
+                    UIApplication.shared.open(URL(string: Constants.init().INSTAGRAM_LINK)!)
                 }
                 
                 ActionCardView(icon: "PlayMarketIcon", label: Strings.TITLE_FEEDBACK_PLAYMARKET, isSystemImageName: false){
-                    print("go to dev")
+                    UIApplication.shared.open(URL(string: Constants.init().PLAY_MARKET_LINK)!)
                 }
             }.padding(Diems.MEDIUM_PADDING)
           

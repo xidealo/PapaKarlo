@@ -10,7 +10,7 @@ import SwiftUI
 struct EditTextView: View {
     
     let hint: String
-    @State var text: String
+    @Binding var text: String
     
     var body: some View {
         TextField(hint, text: $text)
@@ -24,6 +24,6 @@ struct EditTextView: View {
 
 struct EditTextView_Previews: PreviewProvider {
     static var previews: some View {
-        EditTextView(hint: "hint", text: "")
+        EditTextView(hint: "hint", text: .constant(""))
     }
 }
