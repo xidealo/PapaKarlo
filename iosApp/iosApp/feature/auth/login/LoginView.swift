@@ -10,8 +10,13 @@ import SwiftUI
 struct LoginView: View {
     
     @State private var phone:String = ""
+    let auth = AuthManager()
+
+    @ObservedObject private var viewModel : LoginViewModel
     
-    @ObservedObject private var viewModel = LoginViewModel()
+    init(){
+        viewModel = LoginViewModel(auth: auth)
+    }
     
     var body: some View {
         if(viewModel.loginViewState.isLoading){
@@ -19,7 +24,7 @@ struct LoginView: View {
         }else{
             if(viewModel.loginViewState.isGoToMenu){
                 NavigationLink(
-                    destination:ConfirmView(),
+                    destination:ConfirmView(auth: auth),
                     isActive: .constant(true)
                 ){
                     LoginViewSuccessView(phone: $phone, viewModel: viewModel)
@@ -64,8 +69,6 @@ struct LoginViewSuccessView: View {
             .navigationBarHidden(true)
     }
 }
-
-
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

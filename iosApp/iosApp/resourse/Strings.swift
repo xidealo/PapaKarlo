@@ -61,7 +61,8 @@ class Strings{
     //CONFIRM
     static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер +7 (999) 888-77-66"
     static let ACTION_CONFIRM_GET_CODE = "Получить код"
-    
+    static let HINT_CONFIRM_CODE = "Код"
+
     //NEW VERSION
     static let ACTION_UPDATE_UPDATE = "Обновить"
     static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет"

@@ -9,22 +9,66 @@ import SwiftUI
 
 struct ConfirmView: View {
     
+    @State private var code:String = ""
+    
+    @ObservedObject private var viewModel : ConfirmViewModel
+
+    init(auth:AuthManager){
+        viewModel = ConfirmViewModel(auth: auth)
+    }
+    
+    var body: some View {
+        if viewModel.confirmViewState.isLoading{
+            LoadingView()
+        }else{
+            if viewModel.confirmViewState.isGoToProfile{
+                NavigationLink(
+                    destination:ContainerView(selection: 2),
+                    isActive: .constant(true)
+                ){
+                    Text("")
+                }
+            }else{
+                ConfirmViewSuccessView(code: $code, viewModel: viewModel)
+            }
+        }
+    }
+}
+
+struct ConfirmViewSuccessView: View {
+    @Binding var code:String
+    @ObservedObject var viewModel : ConfirmViewModel
+    
     @State private var timeRemaining = 60
     @State private var isEnabled = false
-
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
         VStack{
-            ToolbarView(title: "", cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title: "", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
             Text(Strings.MSG_CONFIRM_ENTER_CODE).multilineTextAlignment(.center)
     
-            SmsTextField(count: 6)
+            //SmsTextField(count: 6)
             
+            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code)
+
             Spacer()
+            
+            Button {
+                viewModel.checkCode(code: code)
+            } label: {
+                Text(Strings.ACTION_LOGIN_LOGIN)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color("surface"))
+                    .background(Color("primary"))
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+            }
             
             if(isEnabled){
                 Button(
@@ -60,6 +104,6 @@ struct ConfirmView: View {
 
 struct ConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmView()
+        ConfirmView(auth: AuthManager())
     }
 }

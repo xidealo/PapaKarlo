@@ -5,7 +5,6 @@ import com.bunbeauty.shared.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface IUserInteractor {
-
     suspend fun login()
     suspend fun logout()
     suspend fun isUserAuthorize(): Boolean

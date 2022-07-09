@@ -11,13 +11,15 @@ import shared
 
 class ProfileViewModel: ToolbarViewModel {
     
-    
     @Published var profileViewState:ProfileViewState = ProfileViewState(userUuid: "", hasAddresses: false, lastOrder: nil, isAuthorize: false, isLoading: true)
 
-    
     override init() {
         super.init()
-        
+        refreshProfile()
+    }
+    
+    func refreshProfile()
+    {
         iosComponent.provideIUserInteractor().getProfile { profile, error in
             if(profile is Profile.Authorized){
                 let authorizedProfile = profile as! Profile.Authorized
@@ -26,11 +28,5 @@ class ProfileViewModel: ToolbarViewModel {
                 self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, isAuthorize: false, isLoading: false)
             }
         }
-        
     }
-    
-    
-    
-    
-    
 }

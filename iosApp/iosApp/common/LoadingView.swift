@@ -16,6 +16,7 @@ struct LoadingView: View {
                 .scaleEffect(2)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .hiddenNavigationBarStyle()
     }
 }
 

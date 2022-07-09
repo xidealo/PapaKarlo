@@ -9,8 +9,6 @@ import Foundation
 import FirebaseAuth
 
 class AuthManager {
-    static let shared = AuthManager()
-    
     private let auth = Auth.auth()
 
     private var verificationId:String?

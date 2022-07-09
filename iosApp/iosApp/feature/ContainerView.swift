@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContainerView: View {
-    
-    init() {
+    @State var selection:Int
+
+    init(selection:Int = 1) {
         UITabBar.appearance().backgroundColor = UIColor(Color("surface"))
+        self.selection = selection
     }
-    
-    @State var selection:Int = 1
     
     var body: some View {
         TabView(selection:$selection){

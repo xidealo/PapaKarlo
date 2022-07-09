@@ -12,15 +12,23 @@ import shared
 
 class ConfirmViewModel:ObservableObject {
     
-    
     @Published var confirmViewState:ConfirmViewState = ConfirmViewState(isLoading: false, isGoToProfile: false)
-    let auth = AuthManager()
+    
+    let auth :AuthManager
+
+    init(auth:AuthManager){
+        self.auth = auth
+    }
     
     func checkCode(code:String){
         confirmViewState  = ConfirmViewState(isLoading: true, isGoToProfile: false)
 
         auth.verifyCode(smsCode: code) { result in
-            self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
+            if(result){
+                iosComponent.provideIUserInteractor().login { _, _ in
+                    self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
+                }
+            }
         }
     }
     

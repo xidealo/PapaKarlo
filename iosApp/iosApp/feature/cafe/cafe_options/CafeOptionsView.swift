@@ -18,7 +18,7 @@ struct CafeOptionsView: View {
             ToolbarView(title: Strings.TITLE_CAFE_OPTIONS, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack{
-                ActionCardView(icon: "phone", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: true){
+                ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false){
                     UIApplication.shared.open(URL(string: "tel://" + phone.removeWhitespace())!)
                 }
                 

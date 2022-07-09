@@ -12,7 +12,11 @@ import shared
 class LoginViewModel:ObservableObject {
     
     @Published var loginViewState:LoginViewState = LoginViewState(isLoading: false, isGoToMenu: false)
-    let auth = AuthManager()
+    let auth :AuthManager
+
+    init(auth:AuthManager){
+        self.auth = auth
+    }
     
     func sendCodeToPhone(phone:String){
         loginViewState  = LoginViewState(isLoading: true, isGoToMenu: false)

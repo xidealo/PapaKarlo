@@ -12,7 +12,7 @@ import platform.Foundation.NSUserDefaults
 actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
 
     actual override val token: Flow<String?> = flow {
-        getToken()
+        emit(getToken())
     }
 
     actual override suspend fun getToken(): String? {
@@ -40,7 +40,7 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override val userUuid: Flow<String?> = flow {
-
+       emit(NSUserDefaults.standardUserDefaults.stringForKey(USER_UUID_KEY).toString())
     }
 
     actual override suspend fun getUserUuid(): String? {
@@ -48,19 +48,19 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveUserUuid(userId: String) {
-
+        NSUserDefaults.standardUserDefaults.setObject(userId, USER_UUID_KEY)
     }
 
     actual override suspend fun clearUserUuid() {
-
+        NSUserDefaults.standardUserDefaults.setObject("", USER_UUID_KEY)
     }
 
     actual override val selectedCityUuid: Flow<String?> = flow {
-
+        emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY).toString())
     }
 
     actual override val selectedCityTimeZone: Flow<String> = flow {
-
+        emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_TIME_ZONE_KEY).toString())
     }
     actual override suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String) {
         NSUserDefaults.standardUserDefaults.setObject(cityUuid, SELECTED_CITY_UUID_KEY)
@@ -68,7 +68,7 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun getSelectedCityUuid(): String? {
-        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY).toString()
+        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
     }
 
     actual override suspend fun getSelectedCityTimeZone(): String {
@@ -92,6 +92,7 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     const val TOKEN_KEY = "TOKEN_KEY"
     const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"
     const val SELECTED_CITY_TIME_ZONE_KEY = "SELECTED_CITY_TIME_ZONE_KEY"
+    const val USER_UUID_KEY = "USER_UUID_KEY"
 
     }
 

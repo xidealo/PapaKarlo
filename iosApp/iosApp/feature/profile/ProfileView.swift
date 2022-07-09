@@ -11,7 +11,7 @@ import shared
 struct ProfileView: View {
     
     @ObservedObject private var viewModel = ProfileViewModel()
-
+    
     var body: some View {
         VStack{
             
@@ -28,7 +28,9 @@ struct ProfileView: View {
             }
             
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+            .navigationBarHidden(true).onAppear {
+                viewModel.refreshProfile()
+            }
         
     }
 }

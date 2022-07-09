@@ -90,6 +90,8 @@
 		023234DC28787A280048CF39 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DB28787A280048CF39 /* LoadingView.swift */; };
 		023234E028787A360048CF39 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DE28787A360048CF39 /* Strings.swift */; };
 		023234E128787A360048CF39 /* Diems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234DF28787A360048CF39 /* Diems.swift */; };
+		024E877F287A15D000728CB3 /* SpalshViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E877E287A15D000728CB3 /* SpalshViewModel.swift */; };
+		024E8781287A160500728CB3 /* SpalshViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E8780287A160500728CB3 /* SpalshViewState.swift */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
@@ -181,6 +183,8 @@
 		023234DB28787A280048CF39 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		023234DE28787A360048CF39 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		023234DF28787A360048CF39 /* Diems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diems.swift; sourceTree = "<group>"; };
+		024E877E287A15D000728CB3 /* SpalshViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpalshViewModel.swift; sourceTree = "<group>"; };
+		024E8780287A160500728CB3 /* SpalshViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpalshViewState.swift; sourceTree = "<group>"; };
 		04A086BC920573BF10C84347 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 		02323425287879EF0048CF39 /* feature */ = {
 			isa = PBXGroup;
 			children = (
+				024E877D287A15C000728CB3 /* splash */,
 				02323426287879EF0048CF39 /* consumer_cart */,
 				0232342C287879EF0048CF39 /* update */,
 				0232342E287879EF0048CF39 /* select_city */,
@@ -512,6 +517,16 @@
 			path = resourse;
 			sourceTree = "<group>";
 		};
+		024E877D287A15C000728CB3 /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				02323421287878520048CF39 /* SplashScreen.swift */,
+				024E877E287A15D000728CB3 /* SpalshViewModel.swift */,
+				024E8780287A160500728CB3 /* SpalshViewState.swift */,
+			);
+			path = splash;
+			sourceTree = "<group>";
+		};
 		058557D7273AAEEB004C7B11 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -563,7 +578,6 @@
 				023234DA28787A280048CF39 /* common */,
 				023234AF28787A180048CF39 /* custom_view */,
 				02323425287879EF0048CF39 /* feature */,
-				02323421287878520048CF39 /* SplashScreen.swift */,
 				0232341F287878440048CF39 /* AppDelegate.swift */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -709,6 +723,7 @@
 				023234A0287879EF0048CF39 /* MenuViewModel.swift in Sources */,
 				02323482287879EF0048CF39 /* LoginViewModel.swift in Sources */,
 				023234A1287879EF0048CF39 /* MenuViewState.swift in Sources */,
+				024E877F287A15D000728CB3 /* SpalshViewModel.swift in Sources */,
 				0232348C287879EF0048CF39 /* ChangeCityView.swift in Sources */,
 				02323422287878520048CF39 /* SplashScreen.swift in Sources */,
 				02323477287879EF0048CF39 /* CartProductView.swift in Sources */,
@@ -725,6 +740,7 @@
 				023234E028787A360048CF39 /* Strings.swift in Sources */,
 				0232349E287879EF0048CF39 /* CategorySectionItem.swift in Sources */,
 				02323496287879EF0048CF39 /* CafeItem.swift in Sources */,
+				024E8781287A160500728CB3 /* SpalshViewState.swift in Sources */,
 				023234CC28787A180048CF39 /* OrderStatusBar.swift in Sources */,
 				02323492287879EF0048CF39 /* FeedbackView.swift in Sources */,
 				02323491287879EF0048CF39 /* ProfileViewState.swift in Sources */,

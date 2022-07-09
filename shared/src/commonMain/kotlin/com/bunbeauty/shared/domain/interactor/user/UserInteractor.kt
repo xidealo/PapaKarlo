@@ -19,8 +19,6 @@ class UserInteractor(
         val userUuid = authRepo.firebaseUserUuid
         val userPhone = authRepo.firebaseUserPhone
         if (userUuid != null && userPhone != null) {
-            println(userPhone)
-            println(userUuid)
             val token = userRepo.login(userUuid, userPhone)
             if (token != null) {
                 dataStoreRepo.saveToken(token)
