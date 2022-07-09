@@ -9,5 +9,5 @@ interface AuthRepo {
     val firebaseUserPhone: String?
 
     fun observeIsAuthorize(): Flow<Boolean>
-    fun signOut()
+    suspend fun signOut()
 }

@@ -82,7 +82,7 @@ fun repositoryModule() = module {
     }
     single<AuthRepo> {
         AuthRepository(
-            //firebaseAuth = get(),
+            firebase = get(),
         )
     }
     single<VersionRepo> {

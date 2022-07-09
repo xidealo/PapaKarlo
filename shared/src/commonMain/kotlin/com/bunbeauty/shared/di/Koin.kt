@@ -10,7 +10,6 @@ import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get

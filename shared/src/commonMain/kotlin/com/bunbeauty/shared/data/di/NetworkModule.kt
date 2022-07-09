@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data.di
 
-//import com.google.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.Firebase
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -20,40 +20,6 @@ fun networkModule() = module {
             ignoreUnknownKeys = true
         }
     }
-//    single {
-//        HttpClient {
-//            install(JsonFeature) {
-//                serializer = KotlinxSerializer(kotlinx.serialization.json.Json{
-//                    prettyPrint = true
-//                    isLenient = true
-//                    ignoreUnknownKeys = true
-//                    encodeDefaults = true
-//                })
-//            }
-//
-//            install(DefaultRequest) {
-//                url {
-//                    protocol = URLProtocol.HTTPS
-//                }
-//            }
-//            /*install(HttpTimeout) {
-//                connectTimeoutMillis = timeout
-//                requestTimeoutMillis = timeout
-//                socketTimeoutMillis = timeout
-//            }*/
-//
-//            /*  install(Logging) {
-//                  logger = object : Logger {
-//                      override fun log(message: String) {
-//                          //Log.d("loggerTag", message) // Or whatever logging system you want here
-//                      }
-//                  }
-//                  level = LogLevel.ALL
-//              }*/
-//
-//
-//        }
-//    }
       single {
           HttpClient {
               install(JsonFeature) {
@@ -93,7 +59,7 @@ fun networkModule() = module {
               }
           }
       }
-//    single {
-//        FirebaseAuth.getInstance()
-//    }
+    single {
+        Firebase
+    }
 }
