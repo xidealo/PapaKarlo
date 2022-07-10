@@ -24,7 +24,7 @@ struct LoginView: View {
         }else{
             if(viewModel.loginViewState.isGoToMenu){
                 NavigationLink(
-                    destination:ConfirmView(auth: auth),
+                    destination:ConfirmView(auth: auth, phone: phone),
                     isActive: .constant(true)
                 ){
                     LoginViewSuccessView(phone: $phone, viewModel: viewModel)
@@ -51,7 +51,7 @@ struct LoginViewSuccessView: View {
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone)
+            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 12)
             
             Spacer()
             Button {

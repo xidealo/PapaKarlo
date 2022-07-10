@@ -20,12 +20,12 @@ struct CreateAddressView: View {
             ToolbarView(title: Strings.TITLE_CREATION_ADDRESS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             VStack{
                 Group{
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_STREET, text: $street).padding(.top, Diems.MEDIUM_PADDING)
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_HOUSE, text: $house)
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLAT, text: $flat)
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE, text: $entarance)
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLOOR, text: $floor)
-                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment).padding(.bottom, Diems.MEDIUM_PADDING)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_STREET, text: $street, limit: 100).padding(.top, Diems.MEDIUM_PADDING)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_HOUSE, text: $house, limit: 100)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLAT, text: $flat, limit: 5)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE, text: $entarance, limit: 5)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLOOR, text: $floor, limit: 5)
+                    EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment, limit: 5).padding(.bottom, Diems.MEDIUM_PADDING)
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             .background(Color("surface"))

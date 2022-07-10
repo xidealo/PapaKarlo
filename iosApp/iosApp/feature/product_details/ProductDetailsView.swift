@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 extension String {
     
@@ -37,17 +38,9 @@ struct ProductDetailsView: View {
             ToolbarView(title: viewModel.productDetailsViewState.name, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: true, isCartVisible: true, isLogoutVisible: false)
             
             VStack{
-                AsyncImage(
-                    url: URL(string: viewModel.productDetailsViewState.imageLink),
-                    content: { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: .infinity)
-                    },
-                    placeholder: {
-                        Rectangle().frame(maxWidth: .infinity)
-                    }
-                )
+                KFImage(URL(string: viewModel.productDetailsViewState.imageLink))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
                 
                 Group{
                     HStack{

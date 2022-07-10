@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MenuItemView: View {
     
@@ -14,26 +15,21 @@ struct MenuItemView: View {
     
     var body: some View {
         HStack{
-            AsyncImage(
-                url: URL(string: menuProductItem.photoLink),
-                content: { image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                },
-                placeholder: {
-                    Rectangle().frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                }
-            )
+            
+            KFImage(URL(string: menuProductItem.photoLink))
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
             VStack{
                 Text(menuProductItem.name)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
                     .foregroundColor(Color("onSurface"))
+                    .multilineTextAlignment(.leading)
                 HStack{
                     if menuProductItem.oldPrice != nil{
-                        StrikeText(text: String(menuProductItem.oldPrice ?? 0))
+                        StrikeText(text: String(menuProductItem.oldPrice ?? 0) + Strings.CURRENCY)
                     }
                     Text(menuProductItem.newPrice)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
@@ -60,7 +56,7 @@ struct MenuItemView: View {
 
 struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, name: "Burger  sdlmdkm dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg")) {
+        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, name: "Burger sdlmdkm dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "")) {
             print("btn pressed")
         }
     }

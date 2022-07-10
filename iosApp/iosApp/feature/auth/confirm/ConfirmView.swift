@@ -12,9 +12,11 @@ struct ConfirmView: View {
     @State private var code:String = ""
     
     @ObservedObject private var viewModel : ConfirmViewModel
+    private let phone:String
 
-    init(auth:AuthManager){
+    init(auth:AuthManager, phone:String){
         viewModel = ConfirmViewModel(auth: auth)
+        self.phone = phone
     }
     
     var body: some View {
@@ -29,7 +31,7 @@ struct ConfirmView: View {
                     Text("")
                 }
             }else{
-                ConfirmViewSuccessView(code: $code, viewModel: viewModel)
+                ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
             }
         }
     }
@@ -43,6 +45,7 @@ struct ConfirmViewSuccessView: View {
     @State private var isEnabled = false
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    let phone:String
     
     var body: some View {
         
@@ -50,18 +53,18 @@ struct ConfirmViewSuccessView: View {
             ToolbarView(title: "", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
-            Text(Strings.MSG_CONFIRM_ENTER_CODE).multilineTextAlignment(.center)
+            Text(Strings.MSG_CONFIRM_ENTER_CODE + phone).multilineTextAlignment(.center)
     
             //SmsTextField(count: 6)
             
-            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code)
+            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6)
 
             Spacer()
             
             Button {
                 viewModel.checkCode(code: code)
             } label: {
-                Text(Strings.ACTION_LOGIN_LOGIN)
+                Text(Strings.ACTION_SEND_CODE)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
@@ -104,6 +107,6 @@ struct ConfirmViewSuccessView: View {
 
 struct ConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmView(auth: AuthManager())
+        ConfirmView(auth: AuthManager(), phone: "+79969224186")
     }
 }

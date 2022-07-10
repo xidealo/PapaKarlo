@@ -28,6 +28,8 @@ class ConfirmViewModel:ObservableObject {
                 iosComponent.provideIUserInteractor().login { _, _ in
                     self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
                 }
+            }else{
+                self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
             }
         }
     }

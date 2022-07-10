@@ -59,9 +59,10 @@ class Strings{
 
     
     //CONFIRM
-    static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер +7 (999) 888-77-66"
+    static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер\n"
     static let ACTION_CONFIRM_GET_CODE = "Получить код"
     static let HINT_CONFIRM_CODE = "Код"
+    static let ACTION_SEND_CODE = "Отправить"
 
     //NEW VERSION
     static let ACTION_UPDATE_UPDATE = "Обновить"
@@ -107,5 +108,8 @@ class Strings{
     static let TITLE_BOTTOM_NAVIGATION_CAFES = "Рестораны"
     static let TITILE_BOTTOM_NAVIGATION_MENU = "Меню"
     static let TITLE_BOTTOM_NAVIGATION_PROFILE = "Профиль"
+
+    //COMMON
+    static let CURRENCY = "₽"
 
 }

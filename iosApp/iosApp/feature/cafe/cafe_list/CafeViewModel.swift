@@ -17,8 +17,6 @@ class CafeViewModel: ToolbarViewModel {
 
        cafeViewState = CafeViewState(isLoading: true, cafeItemList: [])
         iosComponent.provideCafeInteractor().getCafeList { cafeList, error in
-            print(cafeList)
-
             self.cafeViewState = CafeViewState(isLoading: false, cafeItemList: cafeList?.map({ cafe in
                 
                 let fromTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.fromTime))

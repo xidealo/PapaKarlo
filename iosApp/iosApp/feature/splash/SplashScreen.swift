@@ -34,8 +34,8 @@ struct SplashView: View {
                 
             default : Text("")
             }
-        }.navigationBarBackButtonHidden(true)
-            .navigationBarHidden(self.isNavigationBarHidden)
+        }.navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
             .navigationBarTitle("", displayMode: .inline)
             .navigationViewStyle(StackNavigationViewStyle())
             .statusBar(hidden: true)
@@ -46,9 +46,9 @@ struct SplashView: View {
 struct HiddenNavigationBar: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
-            .navigationBarBackButtonHidden(true)
+                  .navigationBarBackButtonHidden(true)
+                  .navigationBarTitle("", displayMode: .inline)
     }
 }
 

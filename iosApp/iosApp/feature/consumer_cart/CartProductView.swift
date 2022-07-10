@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CartProductView: View {
     
@@ -15,17 +16,10 @@ struct CartProductView: View {
     var body: some View {
         
         HStack{
-            AsyncImage(
-                url: URL(string: cartProductItem.photoLink),
-                content: { image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                },
-                placeholder: {
-                    Rectangle().frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                }
-            )
+            KFImage(URL(string: cartProductItem.photoLink))
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
             VStack{
                 Text(cartProductItem.name)
