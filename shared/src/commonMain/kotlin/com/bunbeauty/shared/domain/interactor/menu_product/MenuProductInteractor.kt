@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.menu_product
 
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
@@ -21,6 +23,10 @@ class MenuProductInteractor(
 
     override fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?> {
         return menuProductRepo.observeMenuProductByUuid(menuProductUuid)
+    }
+
+    override fun observeMenuProductByUuidForSwift(menuProductUuid: String): CommonFlow<MenuProduct?> {
+        return menuProductRepo.observeMenuProductByUuid(menuProductUuid).asCommonFlow()
     }
 
     fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {

@@ -3,8 +3,8 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.city.ICityDao
 import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.domain.mapFlow
-import com.bunbeauty.domain.mapListFlow
+import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow

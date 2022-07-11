@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.order
 
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
-import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderCode
@@ -10,8 +10,12 @@ import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderProductWithCosts
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 
 class OrderInteractor(
     private val orderRepo: OrderRepo,
@@ -23,6 +27,12 @@ class OrderInteractor(
     override suspend fun observeOrderList(): Flow<List<LightOrder>> {
         val userUuid = dataStoreRepo.getUserUuid()
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
+    }
+
+    override fun observeOrderListSwift(): CommonFlow<List<LightOrder>> {
+        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            orderRepo.observeOrderListByUserUuid(userUuid ?: "")
+        }.asCommonFlow()
     }
 
     override fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?> {

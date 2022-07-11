@@ -6,10 +6,13 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
+import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
+import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -46,4 +49,8 @@ class IosComponent:KoinComponent {
     fun provideApiRepo(): NetworkConnector = get()
     fun provideMenuInteractor(): IMenuProductInteractor = get()
     fun provideCafeInteractor(): ICafeInteractor = get()
+    fun provideCartProductInteractor(): ICartProductInteractor = get()
+    fun provideIUserInteractor(): IUserInteractor = get()
+    fun provideISettingsInteractor(): ISettingsInteractor = get()
+    fun provideIOrderInteractor(): IOrderInteractor = get()
 }

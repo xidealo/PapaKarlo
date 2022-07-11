@@ -6,7 +6,7 @@ import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProduc
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.MenuProductServer
-import com.bunbeauty.domain.mapFlow
+import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import kotlinx.coroutines.flow.Flow

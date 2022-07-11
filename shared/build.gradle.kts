@@ -12,7 +12,6 @@ version = "1.0"
 
 kotlin {
     android()
-    android()
 
     listOf(
         iosX64(),
@@ -20,6 +19,25 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
+            baseName = "shared"
+        }
+    }
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        pod("FirebaseCore") {
+            source = git("https://github.com/firebase/firebase-ios-sdk.git") {
+                branch = "master"
+            }
+        }
+        pod("FirebaseAuth") {
+            source = git("https://github.com/firebase/firebase-ios-sdk.git") {
+                branch = "master"
+            }
+        }
+        framework {
             baseName = "shared"
         }
     }
@@ -34,7 +52,6 @@ kotlin {
                     implementation(clientJson)
                     implementation(clientAuth)
                 }
-
                 implementation(Coroutine.core)
 
                 implementation(Serialization.json)
@@ -49,7 +66,7 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
-
+                implementation("dev.gitlive:firebase-auth:1.6.1")
             }
         }
         val commonTest by getting {

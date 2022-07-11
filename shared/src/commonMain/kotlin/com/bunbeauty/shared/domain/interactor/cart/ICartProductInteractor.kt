@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.cart
 
+import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
@@ -13,7 +14,11 @@ interface ICartProductInteractor {
 
     fun observeNewTotalCartCost(): Flow<Int>
 
+    fun observeNewTotalCartCostForIos(): CommonFlow<Int>
+
     fun observeTotalCartCount(): Flow<Int>
+
+    fun observeTotalCartCountForIos(): CommonFlow<Int>
 
     fun observeDeliveryCost(): Flow<Int>
 
