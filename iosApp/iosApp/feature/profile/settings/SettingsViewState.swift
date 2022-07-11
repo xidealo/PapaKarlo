@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SettingsUI {
+struct SettingsViewState {
     let phone:String
     let email:String?
     let city:String

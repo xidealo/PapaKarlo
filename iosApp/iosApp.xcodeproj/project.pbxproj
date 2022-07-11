@@ -10,6 +10,9 @@
 		021CDA03287988C100DD1A98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		021CDA052879955800DD1A98 /* ConfirmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA042879955800DD1A98 /* ConfirmViewModel.swift */; };
 		021CDA072879959600DD1A98 /* ConfirmViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA062879959600DD1A98 /* ConfirmViewState.swift */; };
+		022696A6287B020D00B2E003 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A5287B020D00B2E003 /* SettingsViewModel.swift */; };
+		022696A8287B127C00B2E003 /* OrderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A7287B127C00B2E003 /* OrderListViewModel.swift */; };
+		022696AA287B166900B2E003 /* OrderListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A9287B166900B2E003 /* OrderListViewState.swift */; };
 		02323420287878440048CF39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232341F287878440048CF39 /* AppDelegate.swift */; };
 		02323422287878520048CF39 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323421287878520048CF39 /* SplashScreen.swift */; };
 		02323477287879EF0048CF39 /* CartProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323427287879EF0048CF39 /* CartProductView.swift */; };
@@ -31,7 +34,7 @@
 		02323487287879EF0048CF39 /* OrderListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323440287879EF0048CF39 /* OrderListView.swift */; };
 		02323488287879EF0048CF39 /* OrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323441287879EF0048CF39 /* OrderItemView.swift */; };
 		02323489287879EF0048CF39 /* OrderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323442287879EF0048CF39 /* OrderItem.swift */; };
-		0232348A287879EF0048CF39 /* SettingsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323444287879EF0048CF39 /* SettingsUI.swift */; };
+		0232348A287879EF0048CF39 /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323444287879EF0048CF39 /* SettingsViewState.swift */; };
 		0232348B287879EF0048CF39 /* ChangeCityItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323446287879EF0048CF39 /* ChangeCityItemView.swift */; };
 		0232348C287879EF0048CF39 /* ChangeCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323447287879EF0048CF39 /* ChangeCityView.swift */; };
 		0232348D287879EF0048CF39 /* ChangeCityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323448287879EF0048CF39 /* ChangeCityItem.swift */; };
@@ -103,6 +106,9 @@
 		021CDA02287988C100DD1A98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		021CDA042879955800DD1A98 /* ConfirmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewModel.swift; sourceTree = "<group>"; };
 		021CDA062879959600DD1A98 /* ConfirmViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewState.swift; sourceTree = "<group>"; };
+		022696A5287B020D00B2E003 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		022696A7287B127C00B2E003 /* OrderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewModel.swift; sourceTree = "<group>"; };
+		022696A9287B166900B2E003 /* OrderListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewState.swift; sourceTree = "<group>"; };
 		0232341F287878440048CF39 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02323421287878520048CF39 /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		02323427287879EF0048CF39 /* CartProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartProductView.swift; sourceTree = "<group>"; };
@@ -124,7 +130,7 @@
 		02323440287879EF0048CF39 /* OrderListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderListView.swift; sourceTree = "<group>"; };
 		02323441287879EF0048CF39 /* OrderItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItemView.swift; sourceTree = "<group>"; };
 		02323442287879EF0048CF39 /* OrderItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderItem.swift; sourceTree = "<group>"; };
-		02323444287879EF0048CF39 /* SettingsUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsUI.swift; sourceTree = "<group>"; };
+		02323444287879EF0048CF39 /* SettingsViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewState.swift; sourceTree = "<group>"; };
 		02323446287879EF0048CF39 /* ChangeCityItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCityItemView.swift; sourceTree = "<group>"; };
 		02323447287879EF0048CF39 /* ChangeCityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCityView.swift; sourceTree = "<group>"; };
 		02323448287879EF0048CF39 /* ChangeCityItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeCityItem.swift; sourceTree = "<group>"; };
@@ -326,6 +332,8 @@
 				02323440287879EF0048CF39 /* OrderListView.swift */,
 				02323441287879EF0048CF39 /* OrderItemView.swift */,
 				02323442287879EF0048CF39 /* OrderItem.swift */,
+				022696A7287B127C00B2E003 /* OrderListViewModel.swift */,
+				022696A9287B166900B2E003 /* OrderListViewState.swift */,
 			);
 			path = order_list;
 			sourceTree = "<group>";
@@ -333,9 +341,10 @@
 		02323443287879EF0048CF39 /* settings */ = {
 			isa = PBXGroup;
 			children = (
-				02323444287879EF0048CF39 /* SettingsUI.swift */,
+				02323444287879EF0048CF39 /* SettingsViewState.swift */,
 				02323445287879EF0048CF39 /* change_city */,
 				02323449287879EF0048CF39 /* SettingsView.swift */,
+				022696A5287B020D00B2E003 /* SettingsViewModel.swift */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -733,6 +742,7 @@
 				023234C928787A180048CF39 /* NavigationCardView.swift in Sources */,
 				021CDA052879955800DD1A98 /* ConfirmViewModel.swift in Sources */,
 				023234A3287879EF0048CF39 /* MenuProductItem.swift in Sources */,
+				022696AA287B166900B2E003 /* OrderListViewState.swift in Sources */,
 				023234D228787A180048CF39 /* CountPicker.swift in Sources */,
 				0232348F287879EF0048CF39 /* ProfileView.swift in Sources */,
 				02323478287879EF0048CF39 /* ConsumerCartViewModel.swift in Sources */,
@@ -750,6 +760,7 @@
 				023234CB28787A180048CF39 /* SmsTextField.swift in Sources */,
 				02323483287879EF0048CF39 /* LoginView.swift in Sources */,
 				023234A8287879EF0048CF39 /* ProductDetailsViewState.swift in Sources */,
+				022696A8287B127C00B2E003 /* OrderListViewModel.swift in Sources */,
 				02323420287878440048CF39 /* AppDelegate.swift in Sources */,
 				023234D528787A180048CF39 /* BoldText.swift in Sources */,
 				02323493287879EF0048CF39 /* ProfileViewModel.swift in Sources */,
@@ -767,7 +778,7 @@
 				023234C628787A180048CF39 /* Switcher.swift in Sources */,
 				023234D428787A180048CF39 /* EditTextView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				0232348A287879EF0048CF39 /* SettingsUI.swift in Sources */,
+				0232348A287879EF0048CF39 /* SettingsViewState.swift in Sources */,
 				0232349F287879EF0048CF39 /* MenuItemView.swift in Sources */,
 				023234DC28787A280048CF39 /* LoadingView.swift in Sources */,
 				023234AB287879EF0048CF39 /* ToolbarViewModel.swift in Sources */,
@@ -777,6 +788,7 @@
 				0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */,
 				023234A6287879EF0048CF39 /* ProductDetailsViewModel.swift in Sources */,
 				021CDA072879959600DD1A98 /* ConfirmViewState.swift in Sources */,
+				022696A6287B020D00B2E003 /* SettingsViewModel.swift in Sources */,
 				023234D028787A180048CF39 /* TextCard.swift in Sources */,
 				02323487287879EF0048CF39 /* OrderListView.swift in Sources */,
 				023234AC287879EF0048CF39 /* ToolbarViewState.swift in Sources */,

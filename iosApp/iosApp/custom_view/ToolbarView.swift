@@ -37,15 +37,15 @@ struct ToolbarView: View {
             
             if isLogoutVisible{
                 Button(action:{
-                    print("logount")
-                    self.mode.wrappedValue.dismiss()
+                    iosComponent.provideIUserInteractor().logout { _, _ in
+                        self.mode.wrappedValue.dismiss()
+                    }
                 }){
                     Image("LogoutIcon").resizable().frame(width: 24, height: 24).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
                 }
      
             }
            
-            
             if(isCartVisible){
                 NavigationLink(
                     destination:ConsumerCartView()

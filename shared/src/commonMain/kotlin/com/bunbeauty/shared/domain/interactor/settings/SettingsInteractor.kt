@@ -5,12 +5,17 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Settings
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 
 class SettingsInteractor(
     private val cityInteractor: ICityInteractor,
     private val userInteractor: IUserInteractor,
 ) : ISettingsInteractor {
+
+    override suspend fun getSettings(): Settings? {
+        return observeSettings().first()
+    }
 
     override fun observeSettings(): Flow<Settings?> {
         return cityInteractor.observeSelectedCity().flatMapLatest { city ->

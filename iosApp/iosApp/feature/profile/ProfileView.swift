@@ -28,9 +28,7 @@ struct ProfileView: View {
             }
             
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-            .navigationBarHidden(true).onAppear {
-                viewModel.refreshProfile()
-            }
+            .navigationBarHidden(true)
         
     }
 }
@@ -102,7 +100,7 @@ struct SuccessProfileView: View {
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: AboutAppView())
             }
             
-            NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: FeedbackView())
+            NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())
             
             NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: AboutAppView())
             

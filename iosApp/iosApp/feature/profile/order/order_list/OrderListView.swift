@@ -9,12 +9,15 @@ import SwiftUI
 
 struct OrderListView: View {
     
-    let orderList : [OrderItem]
+    @ObservedObject private var viewModel  = OrderListViewModel()
     
     var body: some View {
         VStack{
-            SuccessOrderListView(orderList: orderList)
-            //EmptyOrderListView()
+            if(viewModel.orderListViewState.orderList.count == 0){
+                EmptyOrderListView()
+            }else{
+                SuccessOrderListView(orderList: viewModel.orderListViewState.orderList)
+            }
         }
         .background(Color("background"))
         .navigationTitle(
@@ -25,23 +28,27 @@ struct OrderListView: View {
 
 struct OrderListView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderListView(orderList: [OrderItem(id: "UUID", status: "PREPARING", code: "S-23", dateTime: "15-05-22"),
-                                  OrderItem(id: "UUID", status: "PREPARING", code: "T-03", dateTime: "15-05-22")])
+        OrderListView()
     }
 }
 
 struct SuccessOrderListView: View {
     let orderList : [OrderItem]
-
+    
     var body: some View {
-        ScrollView {
-            LazyVStack{
-                ForEach(orderList){ order in
-                    OrderItemView(orderItem:  order, destination: OrderDetailsView()).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+        VStack{
+            ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
+            ScrollView {
+                LazyVStack{
+                    ForEach(orderList){ order in
+                        OrderItemView(orderItem:  order, destination: OrderDetailsView()).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
                 }
-            }
-        }.padding(.top, Diems.MEDIUM_PADDING)
+            }.padding(.top, Diems.MEDIUM_PADDING)
+        }
     }
+    
 }
 
 
@@ -52,7 +59,7 @@ struct EmptyOrderListView: View {
             Spacer()
             
             DefaultImage(imageName: "EmptyPage")
-
+            
             Text(Strings.MSG_ORDER_LIST_EMPTY_ORDERS).multilineTextAlignment(.center)
             Spacer()
             

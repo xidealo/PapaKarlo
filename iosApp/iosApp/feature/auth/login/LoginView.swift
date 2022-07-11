@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LoginView: View {
     
-    @State private var phone:String = ""
+    @State private var phone:String = "+7"
     let auth = AuthManager()
 
     @ObservedObject private var viewModel : LoginViewModel
@@ -51,7 +52,7 @@ struct LoginViewSuccessView: View {
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 12)
+            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 12).onReceive(Just(phone)) { _ in minCode() }
             
             Spacer()
             Button {
@@ -68,6 +69,12 @@ struct LoginViewSuccessView: View {
         }.padding(Diems.MEDIUM_PADDING)
             .navigationBarHidden(true)
     }
+    
+    func minCode() {
+          if phone.count < 2 {
+              phone = String(phone.prefix(2))
+          }
+      }
 }
 
 struct LoginView_Previews: PreviewProvider {
