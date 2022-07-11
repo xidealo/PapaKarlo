@@ -5,12 +5,10 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 //import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 
 class AuthRepository(
-    private val firebase:Firebase
+    private val firebase: Firebase
 ) : AuthRepo {
 
     override val isAuthorize: Boolean
@@ -22,16 +20,10 @@ class AuthRepository(
     override val firebaseUserPhone: String?
         get() = firebase.auth.currentUser?.phoneNumber
 
-    override fun observeIsAuthorize(): Flow<Boolean> = flow {}
-      //  callbackFlow {
-//        val listener = FirebaseAuth.AuthStateListener { auth ->
-//            trySend(auth.currentUser != null)
-//        }
-//        firebaseAuth.addAuthStateListener(listener)
-//        awaitClose {
-//            //firebaseAuth.removeAuthStateListener(listener)
-//        }
-   // }
+    override fun observeIsAuthorize(): Flow<Boolean> =
+        firebase.auth.authStateChanged.map { auth ->
+            auth != null
+        }
 
     override suspend fun signOut() {
         firebase.auth.signOut()
