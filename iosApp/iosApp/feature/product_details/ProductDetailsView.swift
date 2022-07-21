@@ -25,11 +25,11 @@ extension String {
 
 struct ProductDetailsView: View {
     
-    @ObservedObject private var viewModel:ProductDetailsViewModel
+    @StateObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
     
     init(menuProductUuid:String) {
-        self.viewModel = ProductDetailsViewModel(productUuid: menuProductUuid)
+        self._viewModel = StateObject(wrappedValue: ProductDetailsViewModel(productUuid: menuProductUuid))
         self.menuProductUuid = menuProductUuid
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 import shared
 
-class SelectCityViewModel : ObservableObject{
+class SelectCityViewModel : ObservableObject {
     
     @Published var selectCityViewState:SelectCityViewState = SelectCityViewState(isLoading: false, cityList: [])
 

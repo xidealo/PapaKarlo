@@ -28,7 +28,14 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override val delivery: Flow<Delivery?> = flow {
-
+        emit(
+            Delivery(
+                cost = NSUserDefaults.standardUserDefaults.integerForKey(DELIVERY_COST_KEY).toInt(),
+                forFree = NSUserDefaults.standardUserDefaults.integerForKey(
+                    DELIVERY_FOR_FREE_KEY
+                ).toInt()
+            )
+        )
     }
 
     actual override suspend fun getDelivery(): Delivery? {
@@ -36,7 +43,8 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
     }
 
     actual override suspend fun saveDelivery(delivery: Delivery) {
-
+        NSUserDefaults.standardUserDefaults.setObject(delivery.cost, DELIVERY_COST_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(delivery.forFree, DELIVERY_FOR_FREE_KEY)
     }
 
     actual override val userUuid: Flow<String?> = flow {
@@ -97,6 +105,8 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
         const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"
         const val SELECTED_CITY_TIME_ZONE_KEY = "SELECTED_CITY_TIME_ZONE_KEY"
         const val USER_UUID_KEY = "USER_UUID_KEY"
+        const val DELIVERY_COST_KEY = "DELIVERY_COST_KEY"
+        const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
 
     }
 

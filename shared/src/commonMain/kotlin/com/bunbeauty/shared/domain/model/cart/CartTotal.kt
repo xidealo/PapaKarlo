@@ -4,4 +4,5 @@ data class CartTotal(
     val totalCost: Int,
     val deliveryCost: Int,
     val amountToPay: Int,
+    val amountToPayWithDeliveryCost: Int,
 )

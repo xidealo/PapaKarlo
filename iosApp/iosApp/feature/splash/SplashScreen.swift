@@ -21,16 +21,12 @@ struct SplashView: View {
                 NavigationLink(
                     destination:SelectCityView(),
                     isActive: .constant(true)
-                ){
-                    
-                }
+                ){}
             case .isGoMenu:
                 NavigationLink(
                     destination:ContainerView(),
                     isActive: .constant(true)
-                ){
-                    
-                }
+                ){}
                 
             default : Text("")
             }

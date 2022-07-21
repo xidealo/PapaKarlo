@@ -40,7 +40,8 @@ class CreateOrderViewModel(
             totalCost = null,
             deliveryCost = null,
             amountToPay = null,
-            isLoading = false
+            isLoading = false,
+            amountToPayWithDeliveryCost = null
         )
     )
     val orderCreationUI: StateFlow<OrderCreationUI> = mutableOrderCreationUI.asStateFlow()
@@ -54,11 +55,23 @@ class CreateOrderViewModel(
 
     init {
         observeAddress()
-        observeCartTotal()
+        viewModelScope.launch {
+            cartProductInteractor.getCartTotal().let { cartTotal ->
+                mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
+                    totalCost = stringUtil.getCostString(cartTotal.totalCost),
+                    deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
+                    amountToPay = stringUtil.getCostString(cartTotal.amountToPay)
+                )
+            }
+        }
     }
 
     fun onSwitcherPositionChanged(position: Int) {
-        mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(isDelivery = position == 0)
+        (position == 0).let { isDelivery ->
+            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
+                isDelivery = isDelivery,
+            )
+        }
     }
 
     fun onDeferredTimeSelected(deferredTime: Time?) {
@@ -216,18 +229,5 @@ class CreateOrderViewModel(
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    private fun observeCartTotal() {
-        val isDelivery = mutableOrderCreationUI.map { orderCreationUI ->
-            orderCreationUI.isDelivery
-        }
-        cartProductInteractor.observeCartTotal(isDelivery).launchOnEach { cartTotal ->
-            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
-                totalCost = stringUtil.getCostString(cartTotal.totalCost),
-                deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
-                amountToPay = stringUtil.getCostString(cartTotal.amountToPay)
-            )
-        }
     }
 }

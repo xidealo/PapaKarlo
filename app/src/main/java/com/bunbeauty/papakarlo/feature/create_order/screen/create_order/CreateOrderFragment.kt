@@ -221,12 +221,22 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.amountToPay != null) {
-                    Text(
-                        text = orderCreationUI.amountToPay,
-                        style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
+                if (orderCreationUI.isDelivery) {
+                    if (orderCreationUI.amountToPayWithDeliveryCost != null) {
+                        Text(
+                            text = orderCreationUI.amountToPayWithDeliveryCost,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
+                }else{
+                    if (orderCreationUI.amountToPay != null) {
+                        Text(
+                            text = orderCreationUI.amountToPay,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
                 }
             }
             LoadingButton(

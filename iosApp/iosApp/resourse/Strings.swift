@@ -22,7 +22,7 @@ class Strings{
     static let TITLE_ABOUT_APP = "О приложении"
     static let TITLE_FEEDBACK = "Отзывы о приложении"
     static let TITLE_CAFE_OPTIONS = "Выбранное кафе"
-
+    
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
     
@@ -39,31 +39,31 @@ class Strings{
     static let HINT_SETTINGS_PHONE = "Номер телефона"
     static let HINT_SETTINGS_EMAIL = "Почта"
     static let HINT_SETTINGS_CITY = "Город"
-
+    
     static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться бонусы, адреса и история ваших заказов"
     
     //ADDRESS
     static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отображаться ваши адреса"
     static let ACTION_ADDRESS_LIST_ADD = "Добавить адрес"
-
+    
     
     //ORDERS
     static let MSG_ORDER_LIST_EMPTY_ORDERS = "Здесь будет отображаться история ваших заказов"
-
+    
     static let ACTION_PROFILE_LOGIN = "Войти"
-
+    
     //LOGIN
     static let MSG_LOGIN_ENTER_PHONE = "Пожалуйста, введите номер вашего телефона"
     static let HINT_LOGIN_PHONE = "Номер телефона"
     static let ACTION_LOGIN_LOGIN = "Продолжить"
-
+    
     
     //CONFIRM
     static let MSG_CONFIRM_ENTER_CODE = "Введите код подтверждения ✉ \nКод был отправлен на номер\n"
     static let ACTION_CONFIRM_GET_CODE = "Получить код"
     static let HINT_CONFIRM_CODE = "Код"
     static let ACTION_SEND_CODE = "Отправить"
-
+    
     //NEW VERSION
     static let ACTION_UPDATE_UPDATE = "Обновить"
     static let MSG_UPDATE_GO_TO = "Пожалуйста, обновите приложение. Новая версия уже доступна в Play Маркет"
@@ -72,10 +72,10 @@ class Strings{
     //CART PRODUCT
     static let ACTION_CART_PRODUCT_MENU = "Меню"
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
-
+    
     static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "
     static let MSG_CART_PRODUCT_RESULT = "Итого"
-
+    
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS = "Адрес"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
@@ -103,13 +103,22 @@ class Strings{
     //CAFE_OPTIONS
     static let TITLE_CAFE_OPTIONS_CALL = "Позвонить"
     static let TITLE_CAFE_OPTIONS_POSITION = "На карте"
-
+    
     //BOTTOM NAVIGATION
     static let TITLE_BOTTOM_NAVIGATION_CAFES = "Рестораны"
     static let TITILE_BOTTOM_NAVIGATION_MENU = "Меню"
     static let TITLE_BOTTOM_NAVIGATION_PROFILE = "Профиль"
-
+    
     //COMMON
     static let CURRENCY = "₽"
-
+    
+    
+    //STATUS
+    static let  MSG_STATUS_NOT_ACCEPTED = "Обрабатывается"
+    static let   MSG_STATUS_ACCEPTED = "Принят"
+    static let  MSG_STATUS_PREPARING = "Готовится"
+    static let  MSG_STATUS_SENT_OUT = "В пути"
+    static let  MSG_STATUS_DELIVERED = "Выдан"
+    static let  MSG_STATUS_DONE = "Готов"
+    static let  MSG_STATUS_CANCELED = "Отменен"
 }

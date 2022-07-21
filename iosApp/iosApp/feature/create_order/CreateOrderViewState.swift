@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct OrderCreationUI {
-    let isDelivery:Bool
+struct CreateOrderViewState {
+    var isDelivery:Bool
     let address:String?
     let comment: String?
     let deferredTime: String
     let totalCost: String
     let deliveryCost: String
     let amountToPay: String
+    let amountToPayWithDeliveryCost: String
     let isLoading: Bool
     
     

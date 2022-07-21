@@ -15,12 +15,9 @@ class ProductDetailsViewModel : ToolbarViewModel {
     init(productUuid:String){
         super.init()
         iosComponent.provideMenuInteractor().observeMenuProductByUuidForSwift(menuProductUuid: productUuid).watch { menuProduct in
-            
             self.productDetailsViewState = self.getProductDetailsViewState(menuProduct: menuProduct!)
-            
         }
     }
-    
     
     func getProductDetailsViewState(menuProduct:MenuProduct) -> ProductDetailsViewState {
         return ProductDetailsViewState(name: menuProduct.name, size: getSize(menuProduct: menuProduct), oldPrice: menuProduct.oldPrice as? Int, newPrice: String(menuProduct.newPrice), description: menuProduct.description_, imageLink: menuProduct.photoLink)
