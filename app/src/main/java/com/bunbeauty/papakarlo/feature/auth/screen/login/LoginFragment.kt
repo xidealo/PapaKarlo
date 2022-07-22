@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -85,51 +86,59 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         var phoneError: Int? by rememberSaveable {
             mutableStateOf(null)
         }
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.logo_login_papa_karlo),
-                    contentDescription = stringResource(R.string.description_login_logo)
-                )
-                Text(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(R.string.msg_login_info),
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-                EditText(
+            Box(modifier = Modifier.weight(1f)) {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = R.string.hint_login_phone,
-                    textFieldValue = phoneText,
-                    editTextType = EditTextType.PHONE,
-                    onTextChanged = { changedValue ->
-                        phoneText = TextFieldValue(
-                            text = viewModel.formatPhoneNumber(changedValue.text),
-                            selection = TextRange(
-                                viewModel.getNewPosition(
-                                    changedValue.text,
-                                    changedValue.selection.start
+                        .align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BoxWithConstraints {
+                        if (maxHeight > 200.dp) {
+                            Image(
+                                painter = painterResource(R.drawable.logo_login_papa_k),
+                                contentDescription = stringResource(R.string.description_login_logo)
+                            )
+                        }
+                    }
+                    Text(
+                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        text = stringResource(R.string.msg_login_info),
+                        style = FoodDeliveryTheme.typography.body1,
+                        color = FoodDeliveryTheme.colors.onSurface
+                    )
+                    EditText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                        labelStringId = R.string.hint_login_phone,
+                        textFieldValue = phoneText,
+                        editTextType = EditTextType.PHONE,
+                        onTextChanged = { changedValue ->
+                            phoneText = TextFieldValue(
+                                text = viewModel.formatPhoneNumber(changedValue.text),
+                                selection = TextRange(
+                                    viewModel.getNewPosition(
+                                        changedValue.text,
+                                        changedValue.selection.start
+                                    )
                                 )
                             )
-                        )
-                    },
-                    isLast = true,
-                    focus = true,
-                    errorMessageId = phoneError,
-                )
+                        },
+                        isLast = true,
+                        focus = true,
+                        errorMessageId = phoneError,
+                    )
+                }
             }
             MainButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier
+                    .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_login_continue
             ) {
                 phoneError = viewModel.checkPhoneNumberError(phoneText.text)
