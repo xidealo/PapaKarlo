@@ -4,6 +4,8 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
@@ -47,13 +49,13 @@ class AddressInteractor(
         return userAddress
     }
 
-    override fun observeAddressList(): Flow<List<UserAddress>> {
+    override fun observeAddressList(): CommonFlow<List<UserAddress>> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
             userAddressRepo.observeUserAddressListByUserUuidAndCityUuid(
                 userUuid = userCityUuid.userUuid,
                 cityUuid = userCityUuid.cityUuid
             )
-        }
+        }.asCommonFlow()
     }
 
     override suspend fun observeAddress(): Flow<UserAddress?> {

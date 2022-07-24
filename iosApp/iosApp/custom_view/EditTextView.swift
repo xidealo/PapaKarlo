@@ -17,6 +17,7 @@ struct EditTextView: View {
     var body: some View {
         TextField(hint, text: $text)
             .padding()
+            .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
             .overlay(
                 RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                     .stroke(Color("surfaceVariant"), lineWidth: 2)

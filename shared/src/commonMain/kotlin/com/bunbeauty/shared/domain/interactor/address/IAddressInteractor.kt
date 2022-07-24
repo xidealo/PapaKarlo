@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.address
 
+import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import kotlinx.coroutines.flow.Flow
 
@@ -14,7 +15,7 @@ interface IAddressInteractor {
         floor: String
     ): UserAddress?
 
-    fun observeAddressList(): Flow<List<UserAddress>>
+    fun observeAddressList(): CommonFlow<List<UserAddress>>
 
     suspend fun observeAddress(): Flow<UserAddress?>
 
