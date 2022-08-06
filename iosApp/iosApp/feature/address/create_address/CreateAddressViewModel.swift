@@ -10,24 +10,23 @@ import Foundation
 
 class CreateAddressViewModel : ObservableObject {
     
-    @Published var createAddressViewState:CreateAddressViewState = CreateAddressViewState(streetList: [])
-    
+    @Published var createAddressViewState:CreateAddressViewState = CreateAddressViewState(streetList: [], isBack: false)
+    @Published var isBack : Bool = false
+
     init(){
         iosComponent.provideIStreetInteractor().getStreetList { streetList, err in
             self.createAddressViewState = CreateAddressViewState(streetList: streetList?.map({ street in
                 StreetItem(id: street.uuid, name: street.name, cityUuid: street.cityUuid)
-            }) ?? [])
+            }) ?? [], isBack: false)
         }
     }
     
-    
-    func onCreateAddressClicked(streetName: String, house: String, flat: String, entrance: String, floor: String, comment: String){
-        
+    func onCreateAddressClicked(streetName: String, house: String, flat: String, entrance: String, floor: String, comment: String, action: @escaping (_ isBack:Bool) -> Void){
         iosComponent.provideIAddressInteractor().createAddress(streetName: streetName, house: house, flat: flat, entrance: entrance, comment: comment, floor: floor) { userAddress, err in
             if(userAddress == nil){
-                //show error
+                action(false)
             }else{
-                //show nice message and back
+                action(true)
             }
         }
         

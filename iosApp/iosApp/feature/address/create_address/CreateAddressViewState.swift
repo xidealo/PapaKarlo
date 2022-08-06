@@ -11,9 +11,11 @@ import Foundation
 class CreateAddressViewState : NSObject {
     
     var streetList : [StreetItem]
-    
-    init(streetList:[StreetItem]){
+    var isBack : Bool
+
+    init(streetList:[StreetItem], isBack:Bool){
         self.streetList = streetList
+        self.isBack = isBack
     }
     
 }

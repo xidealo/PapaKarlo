@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CreateAddressView: View {
+    
     @State var street:String = ""
     @State var house:String = ""
     @State var flat:String = ""
@@ -16,8 +17,10 @@ struct CreateAddressView: View {
     @State var comment:String = ""
     
     @ObservedObject private var viewModel = CreateAddressViewModel()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
+        
         VStack{
             ToolbarView(title: Strings.TITLE_CREATION_ADDRESS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             VStack{
@@ -38,7 +41,11 @@ struct CreateAddressView: View {
             Spacer()
             
             Button(action: {
-                viewModel.onCreateAddressClicked(streetName: street, house: house, flat: flat, entrance: entarance, floor: floor, comment: comment)
+                viewModel.onCreateAddressClicked(streetName: street, house: house, flat: flat, entrance: entarance, floor: floor, comment: comment){ isBack in
+                    if(isBack){
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                }
             }) {
                 Text(Strings.ACTION_CREATION_ADDRESS_ADD).frame(maxWidth: .infinity)
                     .padding()
