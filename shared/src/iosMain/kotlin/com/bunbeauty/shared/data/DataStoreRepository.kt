@@ -89,7 +89,16 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
 
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
         return flow {
-
+            emit(
+                UserCityUuid(
+                    userUuid = NSUserDefaults.standardUserDefaults.stringForKey(
+                        USER_UUID_KEY
+                    ).toString(),
+                    cityUuid = NSUserDefaults.standardUserDefaults.stringForKey(
+                        SELECTED_CITY_UUID_KEY
+                    ).toString(),
+                )
+            )
         }
     }
 

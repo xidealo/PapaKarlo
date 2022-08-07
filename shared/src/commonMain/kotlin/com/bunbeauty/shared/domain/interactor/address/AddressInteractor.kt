@@ -58,7 +58,7 @@ class AddressInteractor(
         }.asCommonFlow()
     }
 
-    override suspend fun observeAddress(): Flow<UserAddress?> {
+    override fun observeAddress(): CommonFlow<UserAddress?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
             userAddressRepo.observeSelectedUserAddressByUserAndCityUuid(
                 userUuid = userCityUuid.userUuid,
@@ -73,7 +73,7 @@ class AddressInteractor(
                     flow { emit(userAddress) }
                 }
             }
-        }
+        }.asCommonFlow()
     }
 
     override suspend fun saveSelectedUserAddress(addressUuid: String) {

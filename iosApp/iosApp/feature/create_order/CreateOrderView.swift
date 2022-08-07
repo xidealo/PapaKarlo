@@ -15,7 +15,9 @@ struct CreateOrderView: View {
         VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             VStack{
-                Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery)
+                Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
+                    viewModel.getAddressList(isDelivery: isDelivery)
+                }
                 
                 if viewModel.creationOrderViewState.address == nil{
                     NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_ADDRESS, destination: CreateAddressView())
@@ -33,11 +35,10 @@ struct CreateOrderView: View {
                 }else{
                     NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_PICKUP, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
                 }
-               
             }.padding(Diems.MEDIUM_PADDING)
            
-            
             Spacer()
+            
             LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
             VStack{
                 HStack{

@@ -12,6 +12,7 @@ struct Switcher: View {
     let leftTitle:String
     let rightTitle:String
     @Binding var isLeftSelected:Bool
+    let action: (_ isDelivery:Bool) -> Void
     
     var body: some View {
         HStack{
@@ -19,6 +20,7 @@ struct Switcher: View {
                 Button(action: {
                     print("button pressed")
                     isLeftSelected = true
+                    action(true)
                 }) {
                     SelectedSwicher(title: leftTitle)
                 }
@@ -26,6 +28,7 @@ struct Switcher: View {
                 Button(action: {
                     print("button pressed")
                     isLeftSelected = false
+                    action(false)
                 }) {
                     Text(rightTitle).foregroundColor(Color("onSurfaceVariant")).frame(maxWidth:.infinity)
                 }
@@ -33,6 +36,7 @@ struct Switcher: View {
                 Button(action: {
                     print("button pressed")
                     isLeftSelected = true
+                    action(true)
                 }) {
                     Text(leftTitle).foregroundColor(Color("onSurfaceVariant")).frame(maxWidth:.infinity)
                 }
@@ -40,6 +44,7 @@ struct Switcher: View {
                 Button(action: {
                     print("button pressed")
                     isLeftSelected = false
+                    action(false)
                 }) {
                     SelectedSwicher(title: rightTitle).frame(maxWidth:.infinity)
                 }
@@ -50,7 +55,7 @@ struct Switcher: View {
 
 struct Switcher_Previews: PreviewProvider {
     static var previews: some View {
-        Switcher(leftTitle: "Доставка", rightTitle: "Самовывоз", isLeftSelected: .constant(true))
+        Switcher(leftTitle: "Доставка", rightTitle: "Самовывоз", isLeftSelected: .constant(true), action: {_ in })
     }
 }
 

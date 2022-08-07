@@ -9,6 +9,8 @@ import com.bunbeauty.shared.domain.util.IDateTimeUtil
 import com.bunbeauty.shared.Constants.SECONDS_IN_HOUR
 import com.bunbeauty.shared.Constants.SECONDS_IN_MINUTE
 import com.bunbeauty.shared.Constants.TIME_DIVIDER
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -38,13 +40,13 @@ class CafeInteractor(
         }
     }
 
-    override fun observeSelectedCafeAddress(): Flow<CafeAddress> {
+    override fun observeSelectedCafeAddress(): CommonFlow<CafeAddress> {
         return observeCafe().map { cafe ->
             CafeAddress(
                 cafeUuid = cafe?.uuid ?: "",
                 address = cafe?.address ?: ""
             )
-        }
+        }.asCommonFlow()
     }
 
     override suspend fun getCafeList(): List<Cafe>? {
