@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.domain.interactor.cafe
 
+import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
@@ -9,7 +10,7 @@ interface ICafeInteractor {
 
     fun observeCafeList(): Flow<List<Cafe>?>
     fun observeCafeAddressList(): Flow<List<CafeAddress>>
-    fun observeSelectedCafeAddress(): Flow<CafeAddress>
+    fun observeSelectedCafeAddress(): CommonFlow<CafeAddress>
     suspend fun getCafeList(): List<Cafe>?
     suspend fun getCafeStatus(cafe: Cafe): CafeStatus
     suspend fun isClosed(cafe: Cafe): Boolean

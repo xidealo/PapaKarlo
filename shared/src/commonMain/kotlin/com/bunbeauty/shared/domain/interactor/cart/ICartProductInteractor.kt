@@ -22,7 +22,7 @@ interface ICartProductInteractor {
 
     fun observeDeliveryCost(): Flow<Int>
 
-    fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal>
+    suspend fun getCartTotal(): CartTotal
 
     suspend fun addProductToCart(menuProductUuid: String): CartProduct?
 

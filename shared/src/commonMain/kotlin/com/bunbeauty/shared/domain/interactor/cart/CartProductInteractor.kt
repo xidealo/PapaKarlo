@@ -23,7 +23,7 @@ class CartProductInteractor(
     }
 
     override fun observeConsumerCart(): Flow<ConsumerCart?> {
-        return  cartProductRepo.observeCartProductList().map { cartProductList ->
+        return cartProductRepo.observeCartProductList().map { cartProductList ->
             getConsumerCart(cartProductList)
         }
     }
@@ -48,29 +48,23 @@ class CartProductInteractor(
         return observeNewTotalCartCost().asCommonFlow()
     }
 
-    override fun observeDeliveryCost(): Flow<Int> {
+    override  fun observeDeliveryCost(): Flow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getDeliveryCost(cartProductList)
         }
     }
 
-    override fun observeCartTotal(isDeliveryFlow: Flow<Boolean>): Flow<CartTotal> {
-        return cartProductRepo.observeCartProductList().flatMapLatest { cartProductList ->
+    override suspend fun getCartTotal(): CartTotal {
+        return cartProductRepo.getCartProductList().let { cartProductList ->
             val newTotalCost = productInteractor.getNewTotalCost(cartProductList)
-            observeDeliveryCost().flatMapLatest { deliveryCost ->
-                isDeliveryFlow.map { isDelivery ->
-                    val amountToPay = if (isDelivery) {
-                        newTotalCost + deliveryCost
-                    } else {
-                        newTotalCost
-                    }
+            dataStoreRepo.getDelivery().let { deliveryCost ->
                     CartTotal(
                         totalCost = newTotalCost,
-                        deliveryCost = productInteractor.getDeliveryCost(cartProductList),
-                        amountToPay = amountToPay
+                        deliveryCost = deliveryCost?.cost ?: 0,
+                        amountToPay = newTotalCost,
+                        amountToPayWithDeliveryCost = newTotalCost + (deliveryCost?.cost ?: 0)
                     )
                 }
-            }
         }
     }
 

@@ -95,9 +95,9 @@ struct SuccessProfileView: View {
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
             
             if(profileViewState.hasAddresses){
-                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: AboutAppView())
+                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: UserAddressListView())
             }else{
-                NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: AboutAppView())
+                NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: CreateAddressView())
             }
             
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())

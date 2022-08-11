@@ -36,7 +36,7 @@ struct MenuView: View {
                                     ){
                                         MenuItemView(menuProductItem: menuProductItem, action: {
                                             viewModel.addCartProductToCart(menuProductUuid: menuProductItem.id)
-                                        }).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                                        }).padding(.horizontal, Diems.MEDIUM_PADDING)
                                     }
                                 }
                             }

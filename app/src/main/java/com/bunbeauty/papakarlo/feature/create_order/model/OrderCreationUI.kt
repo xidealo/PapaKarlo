@@ -8,6 +8,7 @@ data class OrderCreationUI(
     val totalCost: String?,
     val deliveryCost: String?,
     val amountToPay: String?,
+    val amountToPayWithDeliveryCost: String?,
     val isLoading: Boolean,
 ) {
     val switcherPosition = if (isDelivery) {

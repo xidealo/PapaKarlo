@@ -22,7 +22,7 @@ struct OrderItemView<Content: View>: View {
                 .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
                 .frame(width: 60)
             
-            Text(orderItem.status)
+            Text(getStatusName(status: orderItem.status))
                 .foregroundColor(Color("surface"))
                 .padding(Diems.SMALL_PADDING)
                 .background(getColor(statusName: orderItem.status))
@@ -51,6 +51,20 @@ struct OrderItemView<Content: View>: View {
         default : return Color.blue
         }
     }
+    
+    func getStatusName(status:String) -> String{
+        switch status{
+        case OrderStatus.notAccepted.name : return Strings.MSG_STATUS_NOT_ACCEPTED
+          case OrderStatus.accepted.name : return Strings.MSG_STATUS_ACCEPTED
+          case OrderStatus.preparing.name : return Strings.MSG_STATUS_PREPARING
+          case OrderStatus.sentOut.name : return Strings.MSG_STATUS_SENT_OUT
+          case OrderStatus.done.name : return Strings.MSG_STATUS_DONE
+          case OrderStatus.delivered.name : return Strings.MSG_STATUS_DELIVERED
+          case OrderStatus.canceled.name : return Strings.MSG_STATUS_CANCELED
+          default : return Strings.MSG_STATUS_NOT_ACCEPTED
+          }
+    }
+    
 }
 
 struct OrderItemView_Previews: PreviewProvider {
