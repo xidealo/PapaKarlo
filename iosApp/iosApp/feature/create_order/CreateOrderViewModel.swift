@@ -12,7 +12,6 @@ class CreateOrderViewModel:ObservableObject {
     
     @Published var creationOrderViewState = CreateOrderViewState(isDelivery: true, address: nil, comment: nil, deferredTime: "", totalCost: "", deliveryCost: "", amountToPay: "", amountToPayWithDeliveryCost: "", isLoading: true)
     
-    
     init(){
         iosComponent.provideCartProductInteractor().getCartTotal { cartTotal, error in
             if(cartTotal==nil) {

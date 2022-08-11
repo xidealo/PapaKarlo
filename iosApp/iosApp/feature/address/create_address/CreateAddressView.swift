@@ -34,9 +34,7 @@ struct CreateAddressView: View {
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
                 
                 EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment, limit: 5).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.bottom, Diems.SMALL_PADDING)
-
             }
-            .padding(Diems.MEDIUM_PADDING)
             
             Spacer()
             
