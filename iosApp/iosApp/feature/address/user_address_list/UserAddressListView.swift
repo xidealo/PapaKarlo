@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct UserAddressListView: View {
-    let addressList: [AddressItem]
     
-    init() {
-        addressList = [AddressItem(id: UUID(), address: "Kimry")]
-    }
-    
+    @ObservedObject private var viewModel = UserAddressListViewModel()
+
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            //SuccessAddressListView(addressList: addressList)
-            EmptyAddressListView()
-            
+            if(viewModel.addressList.isEmpty){
+                EmptyAddressListView()
+            }else{
+                SuccessAddressListView(addressList: viewModel.addressList)
+            }
         }
         .background(Color("background"))
         .navigationBarHidden(true)
@@ -39,11 +38,10 @@ struct SuccessAddressListView: View {
         ScrollView {
             LazyVStack{
                 ForEach(addressList){ address in
-                    AddressItemView(addressItem: address).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                    Text("")
+                    AddressItemView(addressItem: address).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.top, Diems.SMALL_PADDING)
                 }
             }
-        }.padding(.top, Diems.MEDIUM_PADDING)
+        }
     }
 }
 

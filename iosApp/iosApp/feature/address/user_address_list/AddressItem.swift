@@ -8,6 +8,6 @@
 import SwiftUI
 
 struct AddressItem:Identifiable {
-    var id : UUID
+    var id : String
     let address:String
 }
