@@ -229,7 +229,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                             color = FoodDeliveryTheme.colors.onSurface
                         )
                     }
-                }else{
+                } else {
                     if (orderCreationUI.amountToPay != null) {
                         Text(
                             text = orderCreationUI.amountToPay,
@@ -261,7 +261,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -278,7 +279,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = "450 ₽"
             )
         )
     }
@@ -295,7 +297,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -312,7 +315,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = true
+                isLoading = true,
+                amountToPayWithDeliveryCost = "450 ₽"
             )
         )
     }
