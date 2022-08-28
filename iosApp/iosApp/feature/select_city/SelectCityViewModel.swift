@@ -23,7 +23,7 @@ class SelectCityViewModel : ObservableObject {
     }
     
     func saveSelectedCity(city:City){
-        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { _, error in })
+        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { _, err in })
     }
 }
 

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CafeListView: View {
-        
-    @ObservedObject private var viewModel = CafeViewModel()
-
+    
+    @ObservedObject private var viewModel = viewModelStore.getCafeListViewModelViewModel()
+    
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
@@ -32,7 +32,11 @@ struct CafeListView: View {
                     }
                 }.padding(.top, Diems.MEDIUM_PADDING)
             }
-        }.background(Color("background"))
+        }
+        .background(Color("background"))
+        .onAppear(){
+            viewModel.fetchData()
+        }
     }
 }
 

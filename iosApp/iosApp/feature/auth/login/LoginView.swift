@@ -20,20 +20,21 @@ struct LoginView: View {
     }
     
     var body: some View {
-        if(viewModel.loginViewState.isLoading){
-            LoadingView().navigationBarHidden(true)
-        }else{
-            if(viewModel.loginViewState.isGoToMenu){
-                NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone),
-                    isActive: .constant(true)
-                ){
+        VStack{
+            if(viewModel.loginViewState.isLoading){
+                LoadingView().navigationBarHidden(true)
+            }else{
+                if(viewModel.loginViewState.isGoToMenu){
+                    NavigationLink(
+                        destination:ConfirmView(auth: auth, phone: phone),
+                        isActive: .constant(true)
+                    ){
+                        LoginViewSuccessView(phone: $phone, viewModel: viewModel)
+                    }
+                }else{
                     LoginViewSuccessView(phone: $phone, viewModel: viewModel)
                 }
-            }else{
-                LoginViewSuccessView(phone: $phone, viewModel: viewModel)
             }
-            
         }
     }
 }

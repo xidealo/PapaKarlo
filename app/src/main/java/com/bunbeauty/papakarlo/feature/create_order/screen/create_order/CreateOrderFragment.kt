@@ -261,7 +261,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -278,7 +279,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -295,7 +297,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
+
             )
         )
     }
@@ -312,7 +316,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = true
+                isLoading = true,
+                amountToPayWithDeliveryCost = null
+
             )
         )
     }

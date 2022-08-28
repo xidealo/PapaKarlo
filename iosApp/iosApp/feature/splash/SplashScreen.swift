@@ -9,9 +9,7 @@ import SwiftUI
 import shared
 
 struct SplashView: View {
-    
-    @State var isNavigationBarHidden: Bool = true
-    
+        
     @ObservedObject private var viewModel = SplashViewModel()
     
     var body: some View {
@@ -30,9 +28,9 @@ struct SplashView: View {
                 
             default : Text("")
             }
-        }.navigationBarHidden(true)
+        }.navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("", displayMode: .inline)
             .navigationViewStyle(StackNavigationViewStyle())
             .statusBar(hidden: true)
         

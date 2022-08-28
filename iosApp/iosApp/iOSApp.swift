@@ -16,6 +16,7 @@ struct PapaKarloSwiftApp: App {
 
     init(){
         KoinKt.doInitKoin()
+        
     }
     
     var body: some Scene {
@@ -25,3 +26,18 @@ struct PapaKarloSwiftApp: App {
     }
     
 }
+
+protocol HasApply { }
+
+extension HasApply {
+    func applyAndReturn(closure:(Self) -> ()) -> Self {
+        closure(self)
+        return self
+    }
+    
+    func apply(closure:(Self) -> ()) {
+        closure(self)
+    }
+}
+
+extension NSObject: HasApply { }

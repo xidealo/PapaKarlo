@@ -10,7 +10,7 @@ import shared
 
 struct ProfileView: View {
     
-    @ObservedObject private var viewModel = ProfileViewModel()
+    @ObservedObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
     
     var body: some View {
         VStack{
@@ -27,9 +27,12 @@ struct ProfileView: View {
                 }
             }
             
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-            .navigationBarHidden(true)
-        
+        }
+        .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
+        .navigationBarHidden(true)
+        .onAppear(){
+            viewModel.fetchProfile()
+        }
     }
 }
 

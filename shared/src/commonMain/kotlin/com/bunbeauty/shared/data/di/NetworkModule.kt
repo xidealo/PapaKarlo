@@ -13,6 +13,7 @@ import io.ktor.http.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
+
 fun networkModule() = module {
     single {
         Json {
@@ -20,45 +21,45 @@ fun networkModule() = module {
             ignoreUnknownKeys = true
         }
     }
-      single {
-          HttpClient {
-              install(JsonFeature) {
-                  serializer = KotlinxSerializer(kotlinx.serialization.json.Json{
-                      prettyPrint = true
-                      isLenient = true
-                      ignoreUnknownKeys = true
-                      encodeDefaults = true
-                  })
-              }
+    single {
+        HttpClient {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                    encodeDefaults = true
+                })
+            }
 
-              install(WebSockets) {
-                  pingInterval = 10
-              }
+            install(WebSockets) {
+                pingInterval = 10
+            }
 
-              install(Logging) {
-                  logger = object : Logger {
-                      override fun log(message: String) {
-                          //Log.v("Logger Ktor =>", message)
-                      }
-                  }
-                  level = LogLevel.ALL
-              }
+            install(Logging) {
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        //Log.v("Logger Ktor =>", message)
+                    }
+                }
+                level = LogLevel.ALL
+            }
 
-              install(ResponseObserver) {
-                  onResponse { response ->
-                      //Log.d("HTTP status:", "${response.status.value}")
-                  }
-              }
+            install(ResponseObserver) {
+                onResponse { response ->
+                    //Log.d("HTTP status:", "${response.status.value}")
+                }
+            }
 
-              install(DefaultRequest) {
-                  host = "food-delivery-api-bunbeauty.herokuapp.com"
-                  header(HttpHeaders.ContentType, ContentType.Application.Json)
-                  url {
-                      protocol = URLProtocol.HTTPS
-                  }
-              }
-          }
-      }
+            install(DefaultRequest) {
+                host = "food-delivery-api-bunbeauty.herokuapp.com"
+                header(HttpHeaders.ContentType, ContentType.Application.Json)
+                url {
+                    protocol = URLProtocol.HTTPS
+                }
+            }
+        }
+    }
     single {
         Firebase
     }

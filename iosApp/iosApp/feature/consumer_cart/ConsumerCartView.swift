@@ -9,28 +9,38 @@ import SwiftUI
 
 struct ConsumerCartView: View {
     
-    @ObservedObject var viewModel = ConsumerCartViewModel()
+    @ObservedObject var viewModel: ConsumerCartViewModel = viewModelStore.getConsumerCartViewModel()
     
     var body: some View {
         VStack{
-            ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            if(viewModel.consumerCartViewState.cartProductList.count == 0 ){
-                ConsumerCartEmptyScreen()
-            }
-            else{
-                //TODO (can send only viewmodel)
-                ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState , viewModel: viewModel)
+            if(viewModel.consumerCartViewState.isLoading){
+                LoadingView()
+            }else{
+                if(viewModel.consumerCartViewState.cartProductList.count == 0 ){
+                    ConsumerCartEmptyScreen()
+                }
+                else{
+                    ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState , viewModel: viewModel)
+                }
             }
         }
         .background(Color("background"))
         .navigationBarHidden(true)
+        .onAppear() {
+            viewModel.fetchData()
+        }
+        .onDisappear(){
+            viewModel.removeListener()
+        }
+
     }
 }
 
 struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
-        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100"), viewModel: ConsumerCartViewModel())
+        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", isLoading: false), viewModel: ConsumerCartViewModel())
     }
 }
 
@@ -52,7 +62,6 @@ struct ConsumerCartSuccessScreen: View {
                 ScrollView {
                     LazyVStack{
                         ForEach(consumerCartUI.cartProductList){ cartProductItem in
-                            
                             CartProductView(cartProductItem: cartProductItem, plusAction: {
                                 viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
                             }, minusAction: {

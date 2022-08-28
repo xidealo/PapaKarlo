@@ -48,7 +48,7 @@ struct ToolbarView: View {
            
             if(isCartVisible){
                 NavigationLink(
-                    destination:ConsumerCartView()
+                    destination:consumerCartView
                 ){
                     HStack{
                         Text(cost).foregroundColor(Color("onSurface"))

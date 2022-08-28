@@ -15,11 +15,12 @@ class ProfileViewModel: ToolbarViewModel {
 
     override init() {
         super.init()
-        refreshProfile()
+        print("ProfileViewModel")
     }
     
-    func refreshProfile()
-    {
+    func fetchProfile(){
+        print("ProfileViewModel: fetch")
+
         iosComponent.provideIUserInteractor().getProfile { profile, error in
             if(profile is Profile.Authorized){
                 let authorizedProfile = profile as! Profile.Authorized
