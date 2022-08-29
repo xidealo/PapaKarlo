@@ -10,8 +10,8 @@ import Foundation
 
 class LoginViewState :NSObject {
     
-    let isLoading:Bool
-    let isGoToMenu:Bool
+    var isLoading:Bool
+    var isGoToMenu:Bool
     
     init(isLoading:Bool, isGoToMenu:Bool){
         self.isLoading = isLoading

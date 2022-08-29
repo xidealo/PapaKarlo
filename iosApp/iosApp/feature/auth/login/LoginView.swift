@@ -12,7 +12,7 @@ struct LoginView: View {
     
     @State private var phone:String = "+7"
     let auth = AuthManager()
-
+    
     @ObservedObject private var viewModel : LoginViewModel
     
     init(){
@@ -24,17 +24,17 @@ struct LoginView: View {
             if(viewModel.loginViewState.isLoading){
                 LoadingView().navigationBarHidden(true)
             }else{
-                if(viewModel.loginViewState.isGoToMenu){
-                    NavigationLink(
-                        destination:ConfirmView(auth: auth, phone: phone),
-                        isActive: .constant(true)
-                    ){
-                        LoginViewSuccessView(phone: $phone, viewModel: viewModel)
-                    }
-                }else{
-                    LoginViewSuccessView(phone: $phone, viewModel: viewModel)
+                NavigationLink(
+                    destination:ConfirmView(auth: auth, phone: phone),
+                    isActive: $viewModel.loginViewState.isGoToMenu
+                ){
+                    EmptyView()
                 }
+                
+                LoginViewSuccessView(phone: $phone, viewModel: viewModel)
             }
+        }.onDisappear(){
+            viewModel.loginViewState.isGoToMenu = false
         }
     }
 }
@@ -72,10 +72,10 @@ struct LoginViewSuccessView: View {
     }
     
     func minCode() {
-          if phone.count < 2 {
-              phone = String(phone.prefix(2))
-          }
-      }
+        if phone.count < 2 {
+            phone = String(phone.prefix(2))
+        }
+    }
 }
 
 struct LoginView_Previews: PreviewProvider {
