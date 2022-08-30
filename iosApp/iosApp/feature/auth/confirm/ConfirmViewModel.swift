@@ -25,7 +25,7 @@ class ConfirmViewModel:ObservableObject {
 
         auth.verifyCode(smsCode: code) { result in
             if(result){
-                iosComponent.provideIUserInteractor().login { _, _ in
+                iosComponent.provideIUserInteractor().login { _,_  in
                     self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
                 }
             }else{

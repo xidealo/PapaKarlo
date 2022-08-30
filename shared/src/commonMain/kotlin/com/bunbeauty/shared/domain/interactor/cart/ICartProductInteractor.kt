@@ -10,7 +10,7 @@ interface ICartProductInteractor {
 
     suspend fun getConsumerCart(): ConsumerCart?
 
-    fun observeConsumerCart(): Flow<ConsumerCart?>
+    fun observeConsumerCart(): CommonFlow<ConsumerCart?>
 
     fun observeNewTotalCartCost(): Flow<Int>
 

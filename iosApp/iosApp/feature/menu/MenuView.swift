@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     
-    @ObservedObject private var viewModel = MenuViewModel()
+    @ObservedObject private var viewModel = viewModelStore.getMenuViewModel()
     
     var body: some View {
         VStack{

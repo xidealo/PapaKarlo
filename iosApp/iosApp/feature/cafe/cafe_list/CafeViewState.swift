@@ -8,15 +8,18 @@
 import Foundation
 
 
-class CafeViewState :NSObject {
+class CafeViewState :NSObject,  NSCopying {
     
-    let isLoading:Bool
-    let cafeItemList:[CafeItem]
+    var isLoading:Bool
+    var cafeItemList:[CafeItem]
     
     init(isLoading:Bool, cafeItemList:[CafeItem]){
         self.isLoading = isLoading
         self.cafeItemList = cafeItemList
     }
     
-    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = CafeViewState(isLoading: isLoading, cafeItemList: cafeItemList)
+        return copy
+    }
 }

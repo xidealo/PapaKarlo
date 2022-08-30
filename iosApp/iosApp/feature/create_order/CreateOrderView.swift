@@ -8,12 +8,32 @@
 import SwiftUI
 
 struct CreateOrderView: View {
-
+    
     @ObservedObject private var viewModel = CreateOrderViewModel()
-
+    
     var body: some View {
         VStack(spacing: 0){
-            ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            if(viewModel.creationOrderViewState.isLoading){
+                LoadingView()
+            }else{
+                CreateOrderSuccessView(viewModel: viewModel)
+            }
+        }
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .navigationBarHidden(true)
+    }
+}
+
+struct CreateOrderSuccessView:View {
+    
+    @ObservedObject var viewModel:CreateOrderViewModel
+    
+    var body: some View{
+        if(viewModel.creationOrderViewState.isGoProfile){
+            NavigationLink(destination:ContainerView(selection: 2), isActive: .constant(true)){}
+        }else{
             VStack{
                 Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
                     viewModel.getAddressList(isDelivery: isDelivery)
@@ -30,13 +50,13 @@ struct CreateOrderView: View {
                 }else{
                     NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_COMMENT, text: viewModel.creationOrderViewState.comment!, destination:UserAddressListView())
                 }
-                if(viewModel.creationOrderViewState.isDelivery){
-                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_DELIVERY, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
-                }else{
-                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_PICKUP, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
-                }
+//                    if(viewModel.creationOrderViewState.isDelivery){
+//                        NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_DELIVERY, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
+//                    }else{
+//                        NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_PICKUP, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
+//                    }
             }.padding(Diems.MEDIUM_PADDING)
-           
+            
             Spacer()
             
             LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
@@ -66,25 +86,24 @@ struct CreateOrderView: View {
                     }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                     
                 }
-                
-                NavigationLink(
-                    destination:ContainerView(selection: 2)
-                ){
-                    Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                }.padding(Diems.MEDIUM_PADDING)
+                Button(
+                    action: {
+                        viewModel.createOrder()
+                    }, label: {
+                        Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(Color("surface"))
+                            .background(Color("primary"))
+                            .cornerRadius(Diems.MEDIUM_RADIUS)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    }
+                ).padding(Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
-            
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
-        .navigationBarHidden(true)
     }
+    
 }
+
 
 struct CreateOrderView_Previews: PreviewProvider {
     static var previews: some View {

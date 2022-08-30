@@ -14,7 +14,6 @@ struct CartProductView: View {
     let plusAction: () -> Void
     let minusAction: () -> Void
     var body: some View {
-        
         HStack{
             KFImage(URL(string: cartProductItem.photoLink))
                 .resizable()
@@ -41,7 +40,6 @@ struct CartProductView: View {
         }.frame(maxWidth:.infinity, alignment: .topLeading)
         .background(Color("surface"))
         .cornerRadius(Diems.MEDIUM_RADIUS)
-
     }
 }
 

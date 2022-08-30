@@ -10,32 +10,35 @@ import shared
 
 struct SplashView: View {
     
-    @State var isNavigationBarHidden: Bool = true
-    
     @ObservedObject private var viewModel = SplashViewModel()
     
     var body: some View {
-        NavigationView{
-            switch viewModel.splashViewState.splashState {
-            case .isGoSelectCity:
-                NavigationLink(
-                    destination:SelectCityView(),
-                    isActive: .constant(true)
-                ){}
-            case .isGoMenu:
-                NavigationLink(
-                    destination:ContainerView(),
-                    isActive: .constant(true)
-                ){}
-                
-            default : Text("")
-            }
-        }.navigationBarHidden(true)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationViewStyle(StackNavigationViewStyle())
-            .statusBar(hidden: true)
-        
+        HStack{
+            NavigationView{
+                switch viewModel.splashViewState.splashState {
+                case .isGoSelectCity:
+                    NavigationLink(
+                        destination:SelectCityView(),
+                        isActive: .constant(true)
+                    ){
+                        EmptyView()
+                    }
+                case .isGoMenu:
+                    NavigationLink(
+                        destination:ContainerView(),
+                        isActive: .constant(true)
+                    ){
+                        EmptyView()
+                    }
+                    
+                default : Text("")
+                }
+            }.navigationBarTitle("", displayMode: .inline)
+                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
+                .navigationViewStyle(StackNavigationViewStyle())
+                .statusBar(hidden: true)
+        }
     }
 }
 
@@ -43,8 +46,8 @@ struct HiddenNavigationBar: ViewModifier {
     func body(content: Content) -> some View {
         content
             .navigationBarHidden(true)
-                  .navigationBarBackButtonHidden(true)
-                  .navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
+            .navigationBarTitle("", displayMode: .inline)
     }
 }
 

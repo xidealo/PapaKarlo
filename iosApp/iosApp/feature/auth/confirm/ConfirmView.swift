@@ -13,7 +13,7 @@ struct ConfirmView: View {
     
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
-
+    
     init(auth:AuthManager, phone:String){
         viewModel = ConfirmViewModel(auth: auth)
         self.phone = phone
@@ -23,16 +23,14 @@ struct ConfirmView: View {
         if viewModel.confirmViewState.isLoading{
             LoadingView()
         }else{
-            if viewModel.confirmViewState.isGoToProfile{
-                NavigationLink(
-                    destination:ContainerView(selection: 2),
-                    isActive: .constant(true)
-                ){
-                    Text("")
-                }
-            }else{
-                ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+            NavigationLink(
+                destination:ContainerView(selection: 2),
+                isActive: $viewModel.confirmViewState.isGoToProfile
+            ){
+                EmptyView()
             }
+            
+            ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
         }
     }
 }
@@ -54,11 +52,11 @@ struct ConfirmViewSuccessView: View {
             
             Spacer()
             Text(Strings.MSG_CONFIRM_ENTER_CODE + phone).multilineTextAlignment(.center)
-    
+            
             //SmsTextField(count: 6)
             
             EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6)
-
+            
             Spacer()
             
             Button {
@@ -100,7 +98,7 @@ struct ConfirmViewSuccessView: View {
             if(timeRemaining == 0){
                 isEnabled = true
             }
-
+            
         }.navigationBarHidden(true)
     }
 }

@@ -8,21 +8,44 @@
 import Foundation
 import shared
 
+var consumerCartView = ConsumerCartView()
+
 class ConsumerCartViewModel : ObservableObject  {
     
-    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(forFreeDelivery: "", cartProductList: [], oldTotalCost: nil, newTotalCost: "")
-
+    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(forFreeDelivery: "", cartProductList: [], oldTotalCost: nil, newTotalCost: "", isLoading: true)
+    
+    var closable : Ktor_ioCloseable? = nil
+    
     init(){
-        iosComponent.provideCartProductInteractor().getConsumerCart { consumerCart, error in
+        print("CreateOrderViewModel")
+    }
+    
+    func fetchData(){
+        print("Fetch data ConsumerCartViewModel")
+        (consumerCartViewState.copy() as! ConsumerCartViewState).apply { newState in
+            newState.isLoading = true
+            consumerCartViewState = newState
+        }
+        
+        closable = iosComponent.provideCartProductInteractor().observeConsumerCart().watch{ consumerCart in
             if(consumerCart is ConsumerCart.WithProducts){
                 self.consumerCartViewState = self.getConsumerCartViewState(cartWithProducts: consumerCart as? ConsumerCart.WithProducts)
+            }else{
+                (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
+                    copiedState.isLoading = false
+                    copiedState.cartProductList = []
+                    self.consumerCartViewState = copiedState
+                }
             }
         }
     }
     
+    func removeListener(){
+        closable?.close()
+    }
     
     func getConsumerCartViewState(cartWithProducts:ConsumerCart.WithProducts?) -> ConsumerCartViewState {
-        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0)
+        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0), isLoading: false
         )
     }
     
@@ -39,7 +62,7 @@ class ConsumerCartViewModel : ObservableObject  {
     }
     
     func minusProduct(productUuid:String){
-        iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) { unit, error in
+        iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) { _,err in
             //stub
         }
     }
