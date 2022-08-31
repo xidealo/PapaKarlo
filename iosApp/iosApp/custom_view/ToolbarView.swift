@@ -21,7 +21,6 @@ struct ToolbarView: View {
     
     var body: some View {
         HStack{
-
             Button(action: {
                 self.mode.wrappedValue.dismiss()
             }) {
@@ -43,7 +42,6 @@ struct ToolbarView: View {
                 }){
                     Image("LogoutIcon").resizable().frame(width: 24, height: 24).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
                 }
-     
             }
            
             if(isCartVisible){

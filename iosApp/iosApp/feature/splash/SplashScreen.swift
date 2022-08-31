@@ -12,32 +12,21 @@ struct SplashView: View {
     
     @ObservedObject private var viewModel = SplashViewModel()
     
+    init(){
+        UINavigationBar.setAnimationsEnabled(false)
+    }
+    
     var body: some View {
         HStack{
-            NavigationView{
-                switch viewModel.splashViewState.splashState {
-                case .isGoSelectCity:
-                    NavigationLink(
-                        destination:SelectCityView(),
-                        isActive: .constant(true)
-                    ){
-                        EmptyView()
-                    }
-                case .isGoMenu:
-                    NavigationLink(
-                        destination:ContainerView(),
-                        isActive: .constant(true)
-                    ){
-                        EmptyView()
-                    }
-                    
-                default : Text("")
-                }
-            }.navigationBarTitle("", displayMode: .inline)
-                .navigationBarHidden(true)
-                .navigationBarBackButtonHidden(true)
-                .navigationViewStyle(StackNavigationViewStyle())
-                .statusBar(hidden: true)
+            switch viewModel.splashViewState.splashState {
+            case .isGoSelectCity:NavigationView{
+                SelectCityView()
+            }
+            case .isGoMenu: NavigationView{
+                MenuView()
+            }
+            default : EmptyView()
+            }
         }
     }
 }

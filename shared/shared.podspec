@@ -15,6 +15,7 @@ Pod::Spec.new do |spec|
 
     spec.dependency 'FirebaseAuth'
     spec.dependency 'FirebaseCore'
+    spec.dependency 'Kingfisher', '7.0'
 
     spec.pod_target_xcconfig = {
         'KOTLIN_PROJECT_PATH' => ':shared',

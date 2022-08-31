@@ -32,7 +32,7 @@ struct CreateOrderSuccessView:View {
     
     var body: some View{
         if(viewModel.creationOrderViewState.isGoProfile){
-            NavigationLink(destination:ContainerView(selection: 2), isActive: .constant(true)){}
+            NavigationLink(destination:ProfileView(), isActive: .constant(true)){}
         }else{
             VStack{
                 Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in

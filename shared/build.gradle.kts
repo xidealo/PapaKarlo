@@ -37,6 +37,9 @@ kotlin {
                 branch = "master"
             }
         }
+        pod("Kingfisher") {
+           version = "7.0"
+        }
         framework {
             baseName = "shared"
         }

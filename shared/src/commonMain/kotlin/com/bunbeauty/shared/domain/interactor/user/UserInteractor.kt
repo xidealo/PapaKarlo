@@ -55,13 +55,13 @@ class UserInteractor(
     }
 
     override suspend fun getProfile(): Profile? {
-        val token = dataStoreRepo.getToken()
+        val token = dataStoreRepo.getToken() ?: return Profile.Unauthorized
         return if (isUserAuthorize()) {
             dataStoreRepo.getUserAndCityUuid().let { userCityUuid ->
                 userRepo.getProfileByUserUuidAndCityUuid(
                     userUuid = userCityUuid.userUuid,
                     cityUuid = userCityUuid.cityUuid,
-                    token = token!!
+                    token = token
                 )
             }
         } else {

@@ -20,7 +20,7 @@ struct NavigationCardView<Content: View>: View {
             ){
                 HStack{
                     if icon != nil{
-                        Image(systemName: icon ?? "")
+                        Image(systemName: icon ?? "").foregroundColor(Color("onSurfaceVariant"))
                     }
                     Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
                     Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))

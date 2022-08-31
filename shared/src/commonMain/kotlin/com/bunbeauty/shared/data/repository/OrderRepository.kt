@@ -53,6 +53,9 @@ class OrderRepository(
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector.postOrder(token, orderPostServer).getNullableResult { oderServer ->
             orderDao.insertOrderWithProductList(orderMapper.toOrderWithProductEntityList(oderServer))
+            println("CHECK ITTTTTT")
+            println(oderServer)
+            println("RETURN FROM DB ${orderDao.getLastOrderByUserUuid(oderServer.clientUserUuid)}")
             orderMapper.toOrderCode(oderServer)
         }
     }

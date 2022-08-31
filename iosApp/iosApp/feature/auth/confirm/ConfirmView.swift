@@ -24,7 +24,7 @@ struct ConfirmView: View {
             LoadingView()
         }else{
             NavigationLink(
-                destination:ContainerView(selection: 2),
+                destination:ProfileView(),
                 isActive: $viewModel.confirmViewState.isGoToProfile
             ){
                 EmptyView()

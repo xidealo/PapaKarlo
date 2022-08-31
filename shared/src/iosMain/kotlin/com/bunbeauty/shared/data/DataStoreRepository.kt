@@ -116,7 +116,6 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
         const val USER_UUID_KEY = "USER_UUID_KEY"
         const val DELIVERY_COST_KEY = "DELIVERY_COST_KEY"
         const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
-
     }
 
 

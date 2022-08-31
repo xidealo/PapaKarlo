@@ -21,6 +21,9 @@
     ],
     "FirebaseCore": [
 
+    ],
+    "Kingfisher": [
+      "7.0"
     ]
   },
   "pod_target_xcconfig": {

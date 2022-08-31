@@ -16,7 +16,6 @@ struct PapaKarloSwiftApp: App {
 
     init(){
         KoinKt.doInitKoin()
-        
     }
     
     var body: some Scene {

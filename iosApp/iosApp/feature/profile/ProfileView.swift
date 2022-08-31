@@ -11,12 +11,10 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
-    
+
     var body: some View {
         VStack{
-            
             ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            
             if(viewModel.profileViewState.isLoading){
                 LoadingProfileView()
             }else{
@@ -26,9 +24,9 @@ struct ProfileView: View {
                     EmptyProfileView()
                 }
             }
+            BottomBarView(isSelected: 2)
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+        .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background")).hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.fetchProfile()
         }
@@ -89,7 +87,6 @@ struct SuccessProfileView: View {
     
     var body: some View {
         VStack{
-            
             if(profileViewState.lastOrder != nil){
                 OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView())
             }
