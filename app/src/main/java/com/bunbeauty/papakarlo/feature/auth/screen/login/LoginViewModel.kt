@@ -2,8 +2,8 @@ package com.bunbeauty.papakarlo.feature.auth.screen.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import core_common.Constants.PHONE_CODE
-import core_common.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.Constants.PHONE_CODE
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel

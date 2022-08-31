@@ -18,9 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
-import core_common.Constants.COORDINATES_DIVIDER
-import core_common.Constants.MAPS_LINK
-import core_common.Constants.PHONE_LINK
+import com.bunbeauty.shared.Constants.COORDINATES_DIVIDER
+import com.bunbeauty.shared.Constants.MAPS_LINK
+import com.bunbeauty.shared.Constants.PHONE_LINK
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard

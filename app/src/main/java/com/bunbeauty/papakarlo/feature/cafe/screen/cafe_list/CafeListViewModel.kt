@@ -6,9 +6,8 @@ import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListFragmentDirections.toCafeOptionsBottomSheet
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
-import core_common.Constants.WORKING_HOURS_DIVIDER
+import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +39,7 @@ class CafeListViewModel(
     }
 
     fun onCafeCardClicked(cafeItem: CafeItem) {
-        router.navigate(toCafeOptionsBottomSheet(cafeItem.uuid))
+        router.navigate(CafeListFragmentDirections.toCafeOptionsBottomSheet(cafeItem.uuid))
     }
 
     private suspend fun List<Cafe>?.toState(): State<List<CafeItem>> {

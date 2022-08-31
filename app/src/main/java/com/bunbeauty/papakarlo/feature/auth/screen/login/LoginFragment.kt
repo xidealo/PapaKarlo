@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
-import core_common.Constants.PHONE_CODE
+import com.bunbeauty.shared.Constants.PHONE_CODE
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 

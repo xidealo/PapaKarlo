@@ -17,13 +17,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
 import by.kirich1409.viewbindingdelegate.viewBinding
-import core_common.Constants.CAFE_ADDRESS_REQUEST_KEY
-import core_common.Constants.COMMENT_REQUEST_KEY
-import core_common.Constants.DEFERRED_TIME_REQUEST_KEY
-import core_common.Constants.RESULT_CAFE_ADDRESS_KEY
-import core_common.Constants.RESULT_COMMENT_KEY
-import core_common.Constants.RESULT_USER_ADDRESS_KEY
-import core_common.Constants.USER_ADDRESS_REQUEST_KEY
+import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
+import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
+import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
+import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
+import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
@@ -221,12 +221,22 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.amountToPay != null) {
-                    Text(
-                        text = orderCreationUI.amountToPay,
-                        style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
+                if (orderCreationUI.isDelivery) {
+                    if (orderCreationUI.amountToPayWithDeliveryCost != null) {
+                        Text(
+                            text = orderCreationUI.amountToPayWithDeliveryCost,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
+                }else{
+                    if (orderCreationUI.amountToPay != null) {
+                        Text(
+                            text = orderCreationUI.amountToPay,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
                 }
             }
             LoadingButton(
@@ -251,7 +261,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -268,7 +279,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -285,7 +297,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = null,
                 deliveryCost = null,
                 amountToPay = null,
-                isLoading = false
+                isLoading = false,
+                amountToPayWithDeliveryCost = null
+
             )
         )
     }
@@ -302,7 +316,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
                 amountToPay = "350 ₽",
-                isLoading = true
+                isLoading = true,
+                amountToPayWithDeliveryCost = null
+
             )
         )
     }

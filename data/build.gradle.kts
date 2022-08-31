@@ -36,26 +36,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":kmm:core:core-common"))
-    implementation(project(":kmm:shared"))
-
-    implementation(DataStore.dataStorePreferences)
-
-    implementation(platform(Firebase.bom))
-    implementation(Firebase.authKtx)
-
-    implementation(Serialization.json)
-    implementation(Ktor.clientSerialization)
-    implementation(Ktor.clientLogging)
-    implementation(Ktor.clientWebsockets)
-    implementation(Ktor.clientOkhttp)
-
-    implementation(Koin.core)
-    implementation(Koin.android)
-    implementation(Koin.test)
-
-    implementation(SqlDelight.androidDriver)
-    implementation(SqlDelight.coroutineExtensions)
+    implementation(project(":shared"))
 }
 
 sqldelight {
