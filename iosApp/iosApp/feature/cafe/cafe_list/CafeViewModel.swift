@@ -15,7 +15,6 @@ class CafeViewModel: ToolbarViewModel {
     
     override init(){
         super.init()
-        
         print("CafeViewModel")
     }
     
@@ -32,7 +31,7 @@ class CafeViewModel: ToolbarViewModel {
                 let fromTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.fromTime))
                 let toTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.toTime))
                 
-                return CafeItem(id: cafe.uuid, address: cafe.address, workingHours: fromTime + Constants.init().WORKING_HOURS_DIVIDER + toTime, isOpenMessage: "Open", isOpenColor: Color.green, phone: cafe.phone, latitude: Float(cafe.latitude), longitude: Float(cafe.longitude))
+                return CafeItem(id: cafe.uuid, address: cafe.address, workingHours: fromTime + Constants.init().WORKING_HOURS_DIVIDER + toTime, isOpenMessage: "", isOpenColor: Color.green, phone: cafe.phone, latitude: Float(cafe.latitude), longitude: Float(cafe.longitude))
             }) ?? [])
         }
     }

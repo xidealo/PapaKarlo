@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LargeHeaderText: View {
     let text:String
+    
     var body: some View {
         Text(text)
             .padding(.horizontal,  Diems.MEDIUM_PADDING)

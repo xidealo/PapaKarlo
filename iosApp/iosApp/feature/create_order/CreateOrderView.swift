@@ -45,11 +45,8 @@ struct CreateOrderSuccessView:View {
                     NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_ADDRESS, text: viewModel.creationOrderViewState.address!, destination:UserAddressListView())
                 }
                 
-                if viewModel.creationOrderViewState.comment == nil{
-                    NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_COMMENT, destination: CreateAddressView())
-                }else{
-                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_COMMENT, text: viewModel.creationOrderViewState.comment!, destination:UserAddressListView())
-                }
+                EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+                
 //                    if(viewModel.creationOrderViewState.isDelivery){
 //                        NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_DELIVERY, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
 //                    }else{
