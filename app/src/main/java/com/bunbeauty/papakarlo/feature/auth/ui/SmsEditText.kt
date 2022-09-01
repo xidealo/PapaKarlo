@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth.ui
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.TextField
@@ -19,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -44,10 +43,11 @@ fun SmsEditText(
             LocalTextSelectionColors provides FoodDeliveryTheme.colors.smsTextSelectionColors
         ) {
             repeat(smsCodeLength) { i ->
+                if (i > 0) {
+                    Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.smallSpace))
+                }
                 SmsDigitCell(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)),
+                    modifier = Modifier.weight(1f),
                     value = enteredNumbers[i],
                     focusRequester = focusRequesters[i],
                     onValueChanged = { changedValue ->
@@ -92,10 +92,11 @@ fun SmsDigitCell(
 ) {
     TextField(
         modifier = modifier
-            .size(
-                width = FoodDeliveryTheme.dimensions.smsEditTextWidth,
-                height = FoodDeliveryTheme.dimensions.smsEditTextHeight
-            )
+            //.widthIn(max = 16.dp)
+//            .size(
+//                width = FoodDeliveryTheme.dimensions.smsEditTextWidth,
+//                height = FoodDeliveryTheme.dimensions.smsEditTextHeight
+//            )
             .onKeyEvent { event ->
                 if (event.type == KeyEventType.KeyUp) {
                     if (event.key == Key.Backspace) {

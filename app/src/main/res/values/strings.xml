@@ -240,6 +240,8 @@
     <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
     <string name="msg_confirm_code_info">Получить повторно код можно через:&#160;</string>
     <string name="msg_confirm_seconds">&#160;секунд</string>
+    <string name="msg_request_code">Запросить код повторно</string>
+    <string name="msg_request_code_sec">&#160;сек.</string>
     <string name="error_confirm_wrong_code">Неправильный код</string>
     <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
     <string name="action_confirm_resend_code">Получить код</string>
