@@ -99,7 +99,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     BoxWithConstraints {
-                        if (maxHeight > 200.dp) {
+                        if (maxHeight > 240.dp) {
                             Image(
                                 painter = painterResource(R.drawable.logo_login_papa_k),
                                 contentDescription = stringResource(R.string.description_login_logo)
