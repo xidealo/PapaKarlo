@@ -1,5 +1,7 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
@@ -11,9 +13,7 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
-import com.bunbeauty.shared.Constants.COMPANY_UUID
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(
@@ -24,15 +24,16 @@ class UserRepository(
     private val userAddressDao: IUserAddressDao,
     private val orderDao: IOrderDao,
     private val dataStoreRepo: DataStoreRepo
-) : CacheRepository<Profile.Authorized>(), UserRepo {
+) : DatabaseCacheRepository(), UserRepo {
 
     override val tag: String = "USER_TAG"
+    var cachedUserUuid: String? = null
 
     override suspend fun login(userUuid: String, userPhone: String): String? {
         val loginPost = LoginPostServer(
             firebaseUuid = userUuid,
             phoneNumber = userPhone,
-            companyUuid = COMPANY_UUID
+            companyUuid = companyUuid
         )
         return networkConnector.postLogin(loginPost).getNullableResult { authResponseServer ->
             authResponseServer.token
@@ -49,18 +50,20 @@ class UserRepository(
         token: String
     ): Profile.Authorized? {
         return getCacheOrData(
-            isCacheValid = { cache ->
-                cache.userUuid == userUuid
-            },
-            onApiRequest = {
-                networkConnector.getProfile(token)
+            isCacheValid = {
+                cachedUserUuid == userUuid
             },
             onLocalRequest = {
                 getProfileLocally(userUuid, cityUuid)
             },
+            onApiRequest = {
+                networkConnector.getProfile(token)
+            },
             onSaveLocally = ::saveProfileLocally,
             serverToDomainModel = profileMapper::toProfile
-        )
+        ).also { profile ->
+            cachedUserUuid = profile?.userUuid
+        }
     }
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {

@@ -2,10 +2,6 @@ package com.bunbeauty.shared
 
 object Constants {
 
-    // UUID
-
-    const val COMPANY_UUID = "7416dba5-2825-4fe3-abfb-1494a5e2bf99"
-
     // API PARAMETER
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"

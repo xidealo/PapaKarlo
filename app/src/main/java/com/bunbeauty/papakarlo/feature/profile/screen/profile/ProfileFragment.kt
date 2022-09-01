@@ -15,21 +15,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
-import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
+import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.profile.model.ProfileUI
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
@@ -129,29 +130,39 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Composable
     private fun EmptyProfileScreen() {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             ProfileInfoCards()
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.empty_profile),
-                    contentDescription = stringResource(R.string.description_empty_profile)
-                )
-                Text(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = stringResource(R.string.msg_profile_no_profile),
-                    style = FoodDeliveryTheme.typography.body1,
-                    textAlign = TextAlign.Center
-                )
+                Column(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BoxWithConstraints {
+                        if (maxHeight > 280.dp) {
+                            Image(
+                                painter = painterResource(R.drawable.empty_profile),
+                                contentDescription = stringResource(R.string.description_empty_profile)
+                            )
+                        }
+                    }
+                    Text(
+                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        text = stringResource(R.string.msg_profile_no_profile),
+                        style = FoodDeliveryTheme.typography.body1,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
             MainButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_profile_login
             ) {
                 viewModel.onLoginClicked()
