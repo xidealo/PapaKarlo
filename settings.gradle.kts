@@ -1,6 +1,5 @@
 include(
     ":app",
-    ":data",
     ":common",
     ":shared",
 )

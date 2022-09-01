@@ -3,9 +3,9 @@ package com.bunbeauty.shared.data.network.api
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.shared.Constants.BEARER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.COMPANY_UUID
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.UUID_PARAMETER
+import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
 import com.bunbeauty.shared.data.network.model.*
@@ -42,7 +42,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             path = "force_update_version",
             serializer = ForceUpdateVersionServer.serializer(),
-            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -50,7 +50,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             path = "category",
             serializer = ListServer.serializer(CategoryServer.serializer()),
-            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -58,7 +58,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             path = "menu_product",
             serializer = ListServer.serializer(MenuProductServer.serializer()),
-            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -66,7 +66,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             path = "city",
             serializer = ListServer.serializer(CityServer.serializer()),
-            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -90,7 +90,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             path = "delivery",
             serializer = DeliveryServer.serializer(),
-            parameters = mapOf(COMPANY_UUID_PARAMETER to COMPANY_UUID)
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
