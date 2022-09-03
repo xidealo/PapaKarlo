@@ -113,12 +113,14 @@ fun viewModelModule() = module {
         LoginViewModel(
             textValidator = get(),
             userInteractor = get(),
+            firebaseAuthRepository = get(),
             savedStateHandle = parameters.get()
         )
     }
     viewModel { parameters ->
         ConfirmViewModel(
             userInteractor = get(),
+            firebaseAuthRepository = get(),
             savedStateHandle = parameters.get()
         )
     }
@@ -153,6 +155,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         LogoutViewModel(
+            firebaseAuthRepository = get(),
             userInteractor = get(),
         )
     }

@@ -4,10 +4,7 @@ import android.app.Application
 import androidx.viewbinding.BuildConfig
 import coil.Coil
 import coil.ImageLoader
-import com.bunbeauty.papakarlo.di.appModule
-import com.bunbeauty.papakarlo.di.appUtilModule
-import com.bunbeauty.papakarlo.di.uiMapperModule
-import com.bunbeauty.papakarlo.di.viewModelModule
+import com.bunbeauty.papakarlo.di.*
 import com.bunbeauty.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -28,6 +25,7 @@ class PapaKarloApplication : Application(), KoinComponent {
                 appUtilModule(),
                 uiMapperModule(),
                 viewModelModule(),
+                appRepositoryModule()
             )
         }
         Coil.setImageLoader(

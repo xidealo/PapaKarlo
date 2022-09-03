@@ -5,8 +5,8 @@ import com.bunbeauty.shared.domain.model.profile.User
 import kotlinx.coroutines.flow.Flow
 
 interface IUserInteractor {
-    suspend fun login()
-    suspend fun logout()
+    suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?)
+    suspend fun clearUserCache()
     suspend fun isUserAuthorize(): Boolean
 
     fun observeIsUserAuthorize(): Flow<Boolean>

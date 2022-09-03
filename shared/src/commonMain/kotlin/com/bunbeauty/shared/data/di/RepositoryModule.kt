@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.data.repository.UserRepository
-import com.bunbeauty.shared.data.network.AuthRepository
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
 import com.bunbeauty.shared.data.repository.*
@@ -80,9 +79,6 @@ fun repositoryModule() = module {
             cityDao = get(),
             cityMapper = get(),
         )
-    }
-    single<AuthRepo> {
-        AuthRepository()
     }
     single<VersionRepo> {
         VersionRepository(
