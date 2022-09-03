@@ -12,18 +12,21 @@ class ConsumerCartViewState: NSObject, NSCopying {
     var cartProductList: [CartProductItem]
     var oldTotalCost:Int?
     var newTotalCost:String
-    var isLoading:Bool
+    var consumerCartState:ConsumerCartState
     
-    init(forFreeDelivery:String, cartProductList: [CartProductItem], oldTotalCost:Int?, newTotalCost:String, isLoading:Bool){
+    init(forFreeDelivery:String, cartProductList: [CartProductItem], oldTotalCost:Int?, newTotalCost:String, consumerCartState:ConsumerCartState){
         self.forFreeDelivery = forFreeDelivery
         self.cartProductList = cartProductList
         self.oldTotalCost = oldTotalCost
         self.newTotalCost = newTotalCost
-        self.isLoading = isLoading
+        self.consumerCartState = consumerCartState
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = ConsumerCartViewState(forFreeDelivery: forFreeDelivery, cartProductList: cartProductList, oldTotalCost: oldTotalCost, newTotalCost: newTotalCost, isLoading: isLoading)
+        let copy = ConsumerCartViewState(forFreeDelivery: forFreeDelivery, cartProductList: cartProductList, oldTotalCost: oldTotalCost, newTotalCost: newTotalCost, consumerCartState: consumerCartState)
         return copy
     }
+}
+enum ConsumerCartState{
+    case empty, notAuthorized, hasData, loading, goToCreateOrder, goToLogin
 }

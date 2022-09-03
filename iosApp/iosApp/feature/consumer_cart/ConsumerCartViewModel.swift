@@ -12,7 +12,7 @@ var consumerCartView = ConsumerCartView()
 
 class ConsumerCartViewModel : ObservableObject  {
     
-    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(forFreeDelivery: "", cartProductList: [], oldTotalCost: nil, newTotalCost: "", isLoading: true)
+    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(forFreeDelivery: "", cartProductList: [], oldTotalCost: nil, newTotalCost: "", consumerCartState: ConsumerCartState.loading)
     
     var closable : Ktor_ioCloseable? = nil
     
@@ -23,7 +23,7 @@ class ConsumerCartViewModel : ObservableObject  {
     func fetchData(){
         print("Fetch data ConsumerCartViewModel")
         (consumerCartViewState.copy() as! ConsumerCartViewState).apply { newState in
-            newState.isLoading = true
+            newState.consumerCartState = ConsumerCartState.loading
             consumerCartViewState = newState
         }
         
@@ -32,8 +32,8 @@ class ConsumerCartViewModel : ObservableObject  {
                 self.consumerCartViewState = self.getConsumerCartViewState(cartWithProducts: consumerCart as? ConsumerCart.WithProducts)
             }else{
                 (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
-                    copiedState.isLoading = false
                     copiedState.cartProductList = []
+                    copiedState.consumerCartState = ConsumerCartState.empty
                     self.consumerCartViewState = copiedState
                 }
             }
@@ -45,7 +45,7 @@ class ConsumerCartViewModel : ObservableObject  {
     }
     
     func getConsumerCartViewState(cartWithProducts:ConsumerCart.WithProducts?) -> ConsumerCartViewState {
-        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0) + Strings.CURRENCY, isLoading: false
+        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0) + Strings.CURRENCY, consumerCartState: ConsumerCartState.hasData
         )
     }
     
@@ -64,6 +64,23 @@ class ConsumerCartViewModel : ObservableObject  {
     func minusProduct(productUuid:String){
         iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) { _,err in
             //stub
+        }
+    }
+    func checkAuthorization(){
+        iosComponent.provideIUserInteractor().isUserAuthorize { isAuthorized, err in
+            if(isAuthorized == true){
+                (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
+                    copiedState.cartProductList = []
+                    copiedState.consumerCartState = ConsumerCartState.goToCreateOrder
+                    self.consumerCartViewState = copiedState
+                }
+            }else{
+                (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
+                    copiedState.cartProductList = []
+                    copiedState.consumerCartState = ConsumerCartState.goToLogin
+                    self.consumerCartViewState = copiedState
+                }
+            }
         }
     }
 }
