@@ -40,7 +40,6 @@ fun interactorModule() = module {
         UserInteractor(
             userRepo = get(),
             dataStoreRepo = get(),
-            authRepo = get(),
         )
     }
     single<ICityInteractor> {

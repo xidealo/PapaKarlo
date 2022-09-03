@@ -1,9 +1,8 @@
 package com.bunbeauty.shared.domain.interactor.user
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
-import com.bunbeauty.shared.domain.repo.AuthRepo
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -11,40 +10,29 @@ import kotlinx.coroutines.flow.map
 
 class UserInteractor(
     private val userRepo: UserRepo,
-    private val dataStoreRepo: DataStoreRepo,
-    private val authRepo: AuthRepo
+    private val dataStoreRepo: DataStoreRepo
 ) : IUserInteractor {
 
-    override suspend fun login() {
-        val userUuid = authRepo.firebaseUserUuid
-        val userPhone = authRepo.firebaseUserPhone
-        if (userUuid != null && userPhone != null) {
-            val token = userRepo.login(userUuid, userPhone)
+    override suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?) {
+        if (firebaseUserUuid != null && firebaseUserPhone != null) {
+            val token = userRepo.login(firebaseUserUuid, firebaseUserPhone)
             if (token != null) {
                 dataStoreRepo.saveToken(token)
-                dataStoreRepo.saveUserUuid(userUuid)
             }
         }
     }
 
-    override suspend fun logout() {
-        authRepo.signOut()
+    override suspend fun clearUserCache() {
         userRepo.clearUserCache()
     }
 
     override suspend fun isUserAuthorize(): Boolean {
-        return authRepo.isAuthorize &&
-                (dataStoreRepo.getToken() != null) &&
-                (dataStoreRepo.getUserUuid() != null)
+        return dataStoreRepo.getToken() != null
     }
 
     override fun observeIsUserAuthorize(): Flow<Boolean> {
-        return authRepo.observeIsAuthorize().flatMapLatest { isAuthorize ->
-            dataStoreRepo.token.flatMapLatest { token ->
-                dataStoreRepo.userUuid.map { userUuid ->
-                    isAuthorize && token != null && userUuid != null
-                }
-            }
+        return dataStoreRepo.token.map { token ->
+            token != null
         }
     }
 
