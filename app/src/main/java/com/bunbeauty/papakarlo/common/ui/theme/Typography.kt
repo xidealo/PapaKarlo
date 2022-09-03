@@ -4,6 +4,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 internal val LocalAppTypography = staticCompositionLocalOf { AppTypography() }
@@ -37,7 +38,8 @@ data class AppTypography(
     val button: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 16.sp,
+        textAlign = TextAlign.Center
     ),
     val smallButton: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
