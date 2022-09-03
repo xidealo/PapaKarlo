@@ -27,8 +27,7 @@ class ConsumerCartViewModel(
 
     private val mutableConsumerCartState: MutableStateFlow<State<ConsumerCartUI>> =
         MutableStateFlow(State.Loading())
-    val consumerCartState: StateFlow<State<ConsumerCartUI>> =
-        mutableConsumerCartState.asStateFlow()
+    val consumerCartState: StateFlow<State<ConsumerCartUI>> = mutableConsumerCartState.asStateFlow()
 
     private var observeConsumerCartJob: Job? = null
 

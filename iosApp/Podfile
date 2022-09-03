@@ -1,0 +1,11 @@
+target 'iosApp' do
+  #use_frameworks!
+  platform :ios, '14.1'
+  
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseAuth', :modular_headers => true
+  pod 'Kingfisher', :modular_headers => true
+  pod 'shared', :path => '../shared'
+end

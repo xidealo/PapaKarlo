@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
-import core_common.Constants.PHONE_CODE
+import com.bunbeauty.shared.Constants.PHONE_CODE
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
@@ -99,7 +99,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     BoxWithConstraints {
-                        if (maxHeight > 200.dp) {
+                        if (maxHeight > 240.dp) {
                             Image(
                                 painter = painterResource(R.drawable.logo_login_papa_k),
                                 contentDescription = stringResource(R.string.description_login_logo)

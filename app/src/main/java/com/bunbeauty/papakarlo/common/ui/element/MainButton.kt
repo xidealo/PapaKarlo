@@ -22,7 +22,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 @Composable
 fun MainButton(
     modifier: Modifier = Modifier,
-    @StringRes textStringId: Int,
+    @StringRes textStringId: Int? = null,
+    text: String? = null,
     hasShadow: Boolean = true,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
@@ -58,9 +59,12 @@ fun MainButton(
                         vertical = FoodDeliveryTheme.dimensions.smallSpace
                     )
             ) {
+                val buttonText = text ?: textStringId?.let {
+                    stringResource(it)
+                } ?: ""
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = stringResource(textStringId).uppercase(),
+                    text = buttonText,
                     style = FoodDeliveryTheme.typography.button,
                     color = if (isEnabled) {
                         FoodDeliveryTheme.colors.onPrimary

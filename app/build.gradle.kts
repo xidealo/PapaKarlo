@@ -77,9 +77,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":data"))
-    implementation(project(":kmm:core:core-common"))
-    implementation(project(":kmm:shared"))
+    implementation(project(":shared"))
 
     implementation(Google.material)
     implementation(AndroidX.appCompat)
@@ -115,10 +113,6 @@ dependencies {
     implementation(Koin.test)
 
     implementation(Serialization.json)
-    implementation(Ktor.clientSerialization)
-    implementation(Ktor.clientLogging)
-    implementation(Ktor.clientWebsockets)
-    implementation(Ktor.clientOkhttp)
 
     implementation(Coroutine.core)
 

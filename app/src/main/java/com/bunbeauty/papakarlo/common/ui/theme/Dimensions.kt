@@ -23,8 +23,7 @@ data class AppDimensions(
     val productImageSmallWidth: Dp = 108.dp,
     val blurHeight: Dp = 16.dp,
     val smallProgressBarSize: Dp = 24.dp,
-    val smsEditTextHeight: Dp = 80.dp,
-    val smsEditTextWidth: Dp = 64.dp,
+    val smsEditTextWidth: Dp = 320.dp,
 ) {
     fun getItemSpaceByIndex(i: Int): Dp {
         return if (i == 0) {

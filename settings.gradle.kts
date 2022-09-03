@@ -1,8 +1,6 @@
 include(
     ":app",
-    ":data",
     ":common",
-    ":kmm:shared",
-    ":kmm:core:core-common",
+    ":shared",
 )
 rootProject.name = "PapaKarlo"
