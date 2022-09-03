@@ -73,11 +73,7 @@ struct EmptyProfileView: View {
 struct LoadingProfileView: View {
     var body: some View {
         VStack{
-            Spacer()
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
-                .scaleEffect(1.5)
-            Spacer()
+          LoadingView()
         }
     }
 }

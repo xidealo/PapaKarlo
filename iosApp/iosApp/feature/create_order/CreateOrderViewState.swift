@@ -11,7 +11,7 @@ class CreateOrderViewState: NSObject, NSCopying {
     
     var isDelivery:Bool
     var address:String?
-    var comment: String?
+    var comment: String
     var deferredTime: String
     var totalCost: String
     var deliveryCost: String
@@ -22,7 +22,7 @@ class CreateOrderViewState: NSObject, NSCopying {
     var cafeUuid:String?
     var isGoProfile:Bool = false
     
-    init(isDelivery:Bool, address:String?, comment:String?, deferredTime:String,totalCost: String, deliveryCost: String, amountToPay:String,amountToPayWithDeliveryCost: String,isLoading: Bool, userUuid:String?,cafeUuid:String?,isGoProfile:Bool){
+    init(isDelivery:Bool, address:String?, comment:String, deferredTime:String,totalCost: String, deliveryCost: String, amountToPay:String,amountToPayWithDeliveryCost: String,isLoading: Bool, userUuid:String?,cafeUuid:String?,isGoProfile:Bool){
         self.isDelivery = isDelivery
         self.address = address
         self.comment = comment
@@ -39,8 +39,8 @@ class CreateOrderViewState: NSObject, NSCopying {
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = CreateOrderViewState(isDelivery : isDelivery, address : address, comment : comment, deferredTime : deferredTime, totalCost : totalCost, deliveryCost : deliveryCost, amountToPay : amountToPay, amountToPayWithDeliveryCost : amountToPayWithDeliveryCost, isLoading : isLoading, userUuid : userUuid, cafeUuid : cafeUuid, isGoProfile : isGoProfile)
-            return copy
-        }
+        return copy
+    }
     
     func switchPosition(isDelivery:Bool) -> Int {
         if (isDelivery) {

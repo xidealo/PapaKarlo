@@ -8,83 +8,66 @@
 
 import SwiftUI
 
-
-//class BottomBarStore{
-//    var bottomBarView : BottomBarView? = nil
-//
-//    func getBottomBar() -> BottomBarView{
-//
-//        if(bottomBarView == nil){
-//            let newBottomBarView = BottomBarView()
-//            bottomBarView = newBottomBarView
-//            return newBottomBarView
-//        }
-//
-//        return bottomBarView!
-//    }
-//}
-
 struct BottomBarView: View {
     
     @State var isSelected:Int
-    
-    @State var isGoToCafeList = false
-    @State var isGoToMenu = false
-    @State var isGoToPropfile = false
+    let iconSize = CGFloat(22)
+    let iconBlockHeight = CGFloat(24)
+    let iconTopPaddig = CGFloat(8)
 
     var body: some View {
         HStack{
-            Button {
-                isGoToCafeList = true
-                isGoToMenu = false
-                isGoToPropfile = false
-            } label: {
-                NavigationLink(
-                    destination:CafeListView(),
-                    isActive: $isGoToCafeList
-                ){
-                    EmptyView()
-                }
-                
-                if(isSelected == 0){
-                    Text("Кафе").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
-                }else{
-                    Text("Кафе").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
-                }
-            }
-            Button {
-                isGoToMenu = true
-                isGoToCafeList = false
-                isGoToPropfile = false
-            } label: {
-                NavigationLink(
-                    destination:MenuView(),
-                    isActive: $isGoToMenu
-                ){
-                    EmptyView()
-                }
-                if(isSelected == 1){
-                    Text("Меню").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
-                }else{
-                    Text("Меню").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+            NavigationLink(
+                destination:CafeListView()
+            ){
+                VStack{
+                    if(isSelected == 0){
+                        ZStack{
+                            Image(systemName:"mappin").font(.system(size:iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        
+                        Text("Кафе").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
+                    }else{
+                        ZStack{
+                            Image(systemName:"mappin").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        Text("Кафе").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+                    }
                 }
             }
-            Button {
-                isGoToMenu = false
-                isGoToCafeList = false
-                isGoToPropfile = true
-            } label: {
-                NavigationLink(
-                    destination:ProfileView(),
-                    isActive: $isGoToPropfile
-                ){
-                    EmptyView()
+            NavigationLink(
+                destination:MenuView()
+            ){
+                VStack{
+                    if(isSelected == 1){
+                        ZStack{
+                            Image(systemName:"list.dash").font(.system(size: iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        Text("Меню").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
+                    }else{
+                        ZStack{
+                            Image(systemName:"list.dash").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        Text("Меню").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+                    }
                 }
-                
-                if(isSelected == 2){
-                    Text("Профиль").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
-                }else{
-                    Text("Профиль").frame(maxWidth:.infinity).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+            }
+            
+            NavigationLink(
+                destination:ProfileView()
+            ){
+                VStack{
+                    if(isSelected == 2){
+                        ZStack{
+                            Image(systemName: "person.crop.circle").font(.system(size: iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        Text("Профиль").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
+                    }else{
+                        ZStack{
+                            Image(systemName: "person.crop.circle").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                        }.frame(height: iconBlockHeight)
+                        Text("Профиль").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+                    }
                 }
             }
         }.background(Color("surface"))

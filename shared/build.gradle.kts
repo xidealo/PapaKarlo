@@ -11,37 +11,18 @@ version = "1.0"
 
 kotlin {
     android()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-        }
-    }
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
-        pod("FirebaseCore") {
-            source = git("https://github.com/firebase/firebase-ios-sdk.git") {
-                branch = "master"
-            }
-        }
-        pod("FirebaseAuth") {
-            source = git("https://github.com/firebase/firebase-ios-sdk.git") {
-                branch = "master"
-            }
-        }
-        pod("Kingfisher") {
-           version = "7.0"
-        }
         framework {
             baseName = "shared"
+            isStatic = false
         }
     }
 
@@ -64,12 +45,9 @@ kotlin {
 
                 implementation(KotlinxDateTime.dateTime)
 
-                //implementation(project.dependencies.platform(Firebase.bom))
-                //implementation(Firebase.authKtx)
-
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
-                implementation("dev.gitlive:firebase-auth:1.6.1")
+                //implementation("dev.gitlive:firebase-auth:1.6.2")
             }
         }
         val commonTest by getting {
@@ -140,5 +118,6 @@ sqldelight {
     database("FoodDeliveryDatabase") {
         packageName = "com.bunbeauty.shared.db"
         sourceFolders = listOf("sqldelight")
+        linkSqlite = true
     }
 }

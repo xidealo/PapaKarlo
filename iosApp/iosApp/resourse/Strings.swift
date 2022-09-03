@@ -121,4 +121,9 @@ class Strings{
     static let  MSG_STATUS_DELIVERED = "Выдан"
     static let  MSG_STATUS_DONE = "Готов"
     static let  MSG_STATUS_CANCELED = "Отменен"
+    
+    //COMMENT
+    static let HINT_CREATE_COMMENT_COMMENT = "Комментарий"
+    static let ACTION_CREATE_COMMENT_SAVE = "Сохранить"
+
 }

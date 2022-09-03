@@ -35,13 +35,27 @@ struct SuccessAddressListView: View {
     let addressList: [AddressItem]
 
     var body: some View {
-        ScrollView {
-            LazyVStack{
-                ForEach(addressList){ address in
-                    AddressItemView(addressItem: address).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.top, Diems.SMALL_PADDING)
+        VStack(spacing:0){
+            ScrollView {
+                LazyVStack{
+                    ForEach(addressList){ address in
+                        AddressItemView(addressItem: address).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.top, Diems.SMALL_PADDING)
+                    }
                 }
             }
+            
+            NavigationLink(
+                destination:CreateAddressView()
+            ){
+                Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
+                    .padding()
+                    .foregroundColor(Color("surface"))
+                    .background(Color("primary"))
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+            }.padding(Diems.MEDIUM_PADDING)
         }
+       
     }
 }
 

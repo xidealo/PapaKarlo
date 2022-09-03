@@ -12,8 +12,8 @@ struct LoadingView: View {
     var body: some View {
         ZStack {
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: .gray))
-                .scaleEffect(2)
+                .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
+                .scaleEffect(1.5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .hiddenNavigationBarStyle()

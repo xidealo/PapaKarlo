@@ -20,8 +20,10 @@ struct NavigationTextCard<Content: View>: View {
         HStack{
             VStack{
                 PlaceholderText(text:placeHolder).frame(maxWidth:.infinity, alignment: .leading)
-                Text(text).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
-                
+                Text(text)
+                    .frame(maxWidth:.infinity, alignment: .leading)
+                    .foregroundColor(Color("onSurface"))
+                    .multilineTextAlignment(.leading)
             }.frame(maxWidth:.infinity, alignment: .leading)
             Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
         }.padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING).background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS)

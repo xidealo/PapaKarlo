@@ -1,4 +1,4 @@
-framework module FirebaseCoreInternal {
+module FirebaseCoreInternal {
   umbrella header "FirebaseCoreInternal-umbrella.h"
 
   export *

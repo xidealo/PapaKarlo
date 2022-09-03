@@ -61,9 +61,10 @@ class UserRepository(
             },
             onSaveLocally = ::saveProfileLocally,
             serverToDomainModel = profileMapper::toProfile
-        ).also { profile ->
-            cachedUserUuid = profile?.userUuid
-        }
+        )
+//            //.also { profile ->
+//            cachedUserUuid = profile?.userUuid
+//        }
     }
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {

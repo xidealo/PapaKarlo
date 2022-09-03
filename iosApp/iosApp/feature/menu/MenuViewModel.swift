@@ -13,7 +13,7 @@ class MenuViewModel : ToolbarViewModel {
     
     override init(){
         super.init()
-
+        
         menuViewState =  MenuViewState(menuItems: [], categoryItemModels: [], isLoading: true)
         
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
@@ -45,6 +45,19 @@ class MenuViewModel : ToolbarViewModel {
             else{
                 print("Added")
             }
+        }
+    }
+    
+    func selectTag(tagName:String){
+        (menuViewState.copy() as! MenuViewState).apply { newState in
+            newState.categoryItemModels =  newState.categoryItemModels.map { categoryItem in
+                if(tagName == categoryItem.name){
+                   return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: true)
+                }else{
+                   return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: false)
+                }
+            }
+            menuViewState = newState
         }
     }
 }
