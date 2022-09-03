@@ -30,8 +30,9 @@ struct CartProductView: View {
                     if cartProductItem.oldCost != nil {
                         StrikeText(text: String(cartProductItem.oldCost!))
                     }
-                    Text(cartProductItem.newCost).frame(maxWidth:.infinity, alignment: .topLeading)                    .foregroundColor(Color("onSurface"))
-
+                    Text(cartProductItem.newCost)
+                        .frame(maxWidth:.infinity, alignment: .topLeading)
+                        .foregroundColor(Color("onSurface"))
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
