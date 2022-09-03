@@ -68,7 +68,6 @@ struct ConsumerCartSuccessScreen: View {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
                             }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
                         }
-                        
                     }
                 }
             }
@@ -80,7 +79,7 @@ struct ConsumerCartSuccessScreen: View {
                     Spacer()
                     
                     if consumerCartUI.oldTotalCost != nil{
-                        StrikeText(text: String(consumerCartUI.oldTotalCost!))
+                        StrikeText(text: String(consumerCartUI.oldTotalCost!) + Strings.CURRENCY)
                     }
                     BoldText(text: consumerCartUI.newTotalCost)
                 }.padding()

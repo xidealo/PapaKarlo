@@ -45,13 +45,13 @@ class ConsumerCartViewModel : ObservableObject  {
     }
     
     func getConsumerCartViewState(cartWithProducts:ConsumerCart.WithProducts?) -> ConsumerCartViewState {
-        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0), isLoading: false
+        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0) + Strings.CURRENCY, isLoading: false
         )
     }
     
     func getCartProductItems(cartWithProducts:ConsumerCart.WithProducts?) -> [CartProductItem]{
         return cartWithProducts?.cartProductList.map({ lightCartProduct in
-            CartProductItem(id: lightCartProduct.uuid, name: lightCartProduct.name, newCost: String(lightCartProduct.newCost), oldCost: lightCartProduct.oldCost as? Int, photoLink: lightCartProduct.photoLink, count: Int(lightCartProduct.count) , menuProductUuid: lightCartProduct.menuProductUuid)
+            CartProductItem(id: lightCartProduct.uuid, name: lightCartProduct.name, newCost: String(lightCartProduct.newCost) + Strings.CURRENCY, oldCost: lightCartProduct.oldCost as? Int, photoLink: lightCartProduct.photoLink, count: Int(lightCartProduct.count) , menuProductUuid: lightCartProduct.menuProductUuid)
         }) ?? []
     }
     
