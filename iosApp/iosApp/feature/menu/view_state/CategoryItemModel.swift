@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CategoryItemModel: Identifiable{
-    let key:String
-    let id:String
-    let name:String
-    let isSelected:Bool
+    var key:String
+    var id:String
+    var name:String
+    var isSelected:Bool
 }

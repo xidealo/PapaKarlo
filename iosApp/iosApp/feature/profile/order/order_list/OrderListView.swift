@@ -36,16 +36,16 @@ struct SuccessOrderListView: View {
     let orderList : [OrderItem]
     
     var body: some View {
-        VStack{
+        VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             ScrollView {
-                LazyVStack{
+                LazyVStack(spacing:0){
                     ForEach(orderList){ order in
-                        OrderItemView(orderItem:  order, destination: OrderDetailsView()).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        OrderItemView(orderItem:  order, destination: OrderDetailsView()).padding(.vertical, Diems.HALF_SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
-            }.padding(.top, Diems.MEDIUM_PADDING)
+            }
         }
     }
     

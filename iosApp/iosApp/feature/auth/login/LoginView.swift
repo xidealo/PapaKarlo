@@ -46,7 +46,7 @@ struct LoginViewSuccessView: View {
     var body: some View {
         
         VStack{
-            ToolbarView(title:"", cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
             

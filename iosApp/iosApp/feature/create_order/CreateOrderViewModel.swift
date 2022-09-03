@@ -10,7 +10,7 @@ import Foundation
 import shared
 class CreateOrderViewModel:ObservableObject {
     
-    @Published var creationOrderViewState = CreateOrderViewState(isDelivery: true, address: nil, comment: nil, deferredTime: "", totalCost: "", deliveryCost: "", amountToPay: "", amountToPayWithDeliveryCost: "", isLoading: true, userUuid: nil, cafeUuid: nil, isGoProfile: false)
+    @Published var creationOrderViewState = CreateOrderViewState(isDelivery: true, address: nil, comment: "", deferredTime: "", totalCost: "", deliveryCost: "", amountToPay: "", amountToPayWithDeliveryCost: "", isLoading: true, userUuid: nil, cafeUuid: nil, isGoProfile: false)
     
     init(){
         print("CreateOrderViewModel")
@@ -19,7 +19,6 @@ class CreateOrderViewModel:ObservableObject {
                 self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: self.creationOrderViewState.address, comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: "", deliveryCost: "", amountToPay:  "", amountToPayWithDeliveryCost:  "", isLoading: false, userUuid: self.creationOrderViewState.userUuid, cafeUuid: self.creationOrderViewState.cafeUuid, isGoProfile: false)
                 return
             }
-            
             self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: self.creationOrderViewState.address, comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: String(cartTotal!.totalCost), deliveryCost: String(cartTotal!.deliveryCost), amountToPay: String(cartTotal!.amountToPay), amountToPayWithDeliveryCost:  String(cartTotal!.amountToPayWithDeliveryCost), isLoading: false,userUuid: self.creationOrderViewState.userUuid, cafeUuid: self.creationOrderViewState.cafeUuid, isGoProfile: false)
         }
         getAddressList(isDelivery: true)

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -70,60 +71,67 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     @Composable
     private fun SuccessProfileScreen(profile: ProfileUI) {
         Box(modifier = Modifier.fillMaxSize()) {
-            Column(
-                modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-            ) {
+            LazyColumn(contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)) {
                 profile.lastOrderItem?.let { lastOrderItem ->
-                    OrderItem(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        orderItem = lastOrderItem
-                    ) {
-                        viewModel.onLastOrderClicked(lastOrderItem)
+                    item {
+                        OrderItem(orderItem = lastOrderItem) {
+                            viewModel.onLastOrderClicked(lastOrderItem)
+                        }
                     }
                 }
-                NavigationIconCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                    iconId = R.drawable.ic_settings,
-                    iconDescription = R.string.description_ic_settings,
-                    labelStringId = R.string.action_profile_settings
-                ) {
-                    viewModel.onSettingsClicked()
+                item {
+                    NavigationIconCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        iconId = R.drawable.ic_settings,
+                        iconDescription = R.string.description_ic_settings,
+                        labelStringId = R.string.action_profile_settings
+                    ) {
+                        viewModel.onSettingsClicked()
+                    }
                 }
-                NavigationIconCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_address,
-                    iconDescription = R.string.description_ic_my_addresses,
-                    labelStringId = R.string.action_profile_my_addresses
-                ) {
-                    viewModel.onYourAddressesClicked()
+                item {
+                    NavigationIconCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                        iconId = R.drawable.ic_address,
+                        iconDescription = R.string.description_ic_my_addresses,
+                        labelStringId = R.string.action_profile_my_addresses
+                    ) {
+                        viewModel.onYourAddressesClicked()
+                    }
                 }
-                NavigationIconCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_history,
-                    iconDescription = R.string.description_ic_my_orders,
-                    labelStringId = R.string.action_profile_my_orders
-                ) {
-                    viewModel.onOrderHistoryClicked(profile.userUuid)
+                item {
+                    NavigationIconCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                        iconId = R.drawable.ic_history,
+                        iconDescription = R.string.description_ic_my_orders,
+                        labelStringId = R.string.action_profile_my_orders
+                    ) {
+                        viewModel.onOrderHistoryClicked(profile.userUuid)
+                    }
                 }
-                NavigationIconCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_payment,
-                    iconDescription = R.string.description_ic_payment,
-                    labelStringId = R.string.action_profile_payment
-                ) {
-                    viewModel.onPaymentClicked()
+                item {
+                    NavigationIconCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                        iconId = R.drawable.ic_payment,
+                        iconDescription = R.string.description_ic_payment,
+                        labelStringId = R.string.action_profile_payment
+                    ) {
+                        viewModel.onPaymentClicked()
+                    }
                 }
-                ProfileInfoCards(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                )
+                item {
+                    ProfileInfoCards(
+                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                    )
+                }
             }
         }
     }

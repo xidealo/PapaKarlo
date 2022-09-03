@@ -9,8 +9,10 @@ import SwiftUI
 
 struct LargeHeaderText: View {
     let text:String
+    
     var body: some View {
         Text(text)
+            .foregroundColor(Color("onSurface"))
             .padding(.horizontal,  Diems.MEDIUM_PADDING)
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
