@@ -8,7 +8,7 @@
 
 import Foundation
 import shared
-
+import FirebaseAuth
 
 class ConfirmViewModel:ObservableObject {
     
@@ -22,10 +22,10 @@ class ConfirmViewModel:ObservableObject {
     
     func checkCode(code:String){
         confirmViewState  = ConfirmViewState(isLoading: true, isGoToProfile: false)
-
+        
         auth.verifyCode(smsCode: code) { result in
             if(result){
-                iosComponent.provideIUserInteractor().login { _,_  in
+                iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { _,_  in
                     self.confirmViewState  = ConfirmViewState(isLoading: false, isGoToProfile: result)
                 }
             }else{

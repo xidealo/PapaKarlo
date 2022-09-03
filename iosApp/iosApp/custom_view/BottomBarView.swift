@@ -23,13 +23,16 @@ struct BottomBarView: View {
                 VStack{
                     if(isSelected == 0){
                         ZStack{
-                            Image(systemName:"mappin").font(.system(size:iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                            IconImage(width: 20, height: 24, imageName: "CafesIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("primary"))
                         }.frame(height: iconBlockHeight)
-                        
                         Text("Кафе").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
                     }else{
                         ZStack{
-                            Image(systemName:"mappin").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                            IconImage(width: 20, height: 24, imageName: "CafesIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("onSurfaceVariant"))
                         }.frame(height: iconBlockHeight)
                         Text("Кафе").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
                     }
@@ -41,12 +44,16 @@ struct BottomBarView: View {
                 VStack{
                     if(isSelected == 1){
                         ZStack{
-                            Image(systemName:"list.dash").font(.system(size: iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                            IconImage(width: 24, height: 24, imageName: "MenuIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("primary"))
                         }.frame(height: iconBlockHeight)
                         Text("Меню").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
                     }else{
                         ZStack{
-                            Image(systemName:"list.dash").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                            IconImage(width: 24, height: 24, imageName: "MenuIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("onSurfaceVariant"))
                         }.frame(height: iconBlockHeight)
                         Text("Меню").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
                     }
@@ -59,12 +66,16 @@ struct BottomBarView: View {
                 VStack{
                     if(isSelected == 2){
                         ZStack{
-                            Image(systemName: "person.crop.circle").font(.system(size: iconSize)).foregroundColor(Color("primary")).padding(.top, iconTopPaddig)
+                            IconImage(width: 24, height: 24, imageName: "ProfileIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("primary"))
                         }.frame(height: iconBlockHeight)
                         Text("Профиль").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("primary"))
                     }else{
                         ZStack{
-                            Image(systemName: "person.crop.circle").font(.system(size: iconSize)).foregroundColor(Color("onSurfaceVariant")).padding(.top, iconTopPaddig)
+                            IconImage(width: 24, height: 24, imageName: "ProfileIcon")
+                                .padding(.top, iconTopPaddig)
+                                .foregroundColor(Color("onSurfaceVariant"))
                         }.frame(height: iconBlockHeight)
                         Text("Профиль").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
                     }

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+import shared
 
 struct ToolbarView: View {
     
@@ -17,6 +19,8 @@ struct ToolbarView: View {
     let isCartVisible:Bool
     let isLogoutVisible:Bool
     
+    private let authManager = AuthManager()
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -26,6 +30,8 @@ struct ToolbarView: View {
             }) {
                 if(isShowBackArrow){
                     Image(systemName: "arrow.backward").foregroundColor(Color("onSurface"))
+                        .padding(.vertical)
+                        .padding(.horizontal, Diems.SMALL_PADDING)
                 }
             }.padding(Diems.SMALL_PADDING)
             
@@ -36,7 +42,8 @@ struct ToolbarView: View {
             
             if isLogoutVisible{
                 Button(action:{
-                    iosComponent.provideIUserInteractor().logout { _, _ in
+                    authManager.logout()
+                    iosComponent.provideIUserInteractor().clearUserCache { _, _ in
                         self.mode.wrappedValue.dismiss()
                     }
                 }){

@@ -20,7 +20,7 @@ class ProductDetailsViewModel : ToolbarViewModel {
     }
     
     func getProductDetailsViewState(menuProduct:MenuProduct) -> ProductDetailsViewState {
-        return ProductDetailsViewState(name: menuProduct.name, size: getSize(menuProduct: menuProduct), oldPrice: menuProduct.oldPrice as? Int, newPrice: String(menuProduct.newPrice), description: menuProduct.description_, imageLink: menuProduct.photoLink)
+        return ProductDetailsViewState(name: menuProduct.name, size: getSize(menuProduct: menuProduct), oldPrice: menuProduct.oldPrice as? Int, newPrice: String(menuProduct.newPrice) + Strings.CURRENCY, description: menuProduct.description_, imageLink: menuProduct.photoLink)
     }
     
     func getSize(menuProduct:MenuProduct) -> String {

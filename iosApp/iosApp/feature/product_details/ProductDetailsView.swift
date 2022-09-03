@@ -44,23 +44,29 @@ struct ProductDetailsView: View {
                 
                 Group{
                     HStack{
-                        Text(viewModel.productDetailsViewState.name).frame(maxWidth: .infinity, alignment: .leading)
+                        Text(viewModel.productDetailsViewState.name)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
-                        Text(viewModel.productDetailsViewState.size).foregroundColor(Color("onSurface"))
+                        Text(viewModel.productDetailsViewState.size)
+                            .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
-                    }.padding(.top, Diems.MEDIUM_PADDING)
+                    }.padding(.top, Diems.SMALL_PADDING)
                     
                     HStack{
                         if viewModel.productDetailsViewState.oldPrice != nil{
-                            StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!))
+                            StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY)
                         }
-                        Text(viewModel.productDetailsViewState.newPrice)
+                        Text(viewModel.productDetailsViewState.newPrice )
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
-                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.SMALL_PADDING)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, Diems.SMALL_PADDING)
                     
-                    Text(viewModel.productDetailsViewState.description).frame(maxWidth: .infinity, alignment: .leading).padding(.top, Diems.MEDIUM_PADDING).padding(.bottom, Diems.MEDIUM_PADDING)
+                    Text(viewModel.productDetailsViewState.description)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                         .foregroundColor(Color("onSurface"))
                     
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
