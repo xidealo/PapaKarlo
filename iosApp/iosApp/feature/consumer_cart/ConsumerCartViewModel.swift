@@ -62,7 +62,7 @@ class ConsumerCartViewModel : ObservableObject  {
     }
     
     func minusProduct(productUuid:String){
-        iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) { _,err in
+        iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) {err in
             //stub
         }
     }

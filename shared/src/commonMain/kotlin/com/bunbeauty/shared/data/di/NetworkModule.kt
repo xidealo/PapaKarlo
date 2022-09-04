@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -21,7 +22,7 @@ fun networkModule() = module {
         }
     }
     single {
-        HttpClient {
+        HttpClient(httpClientEngine) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
                     prettyPrint = true
