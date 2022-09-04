@@ -90,7 +90,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.surface)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 Column(
@@ -136,11 +136,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     )
                 }
             }
-            MainButton(
-                modifier = Modifier
-                    .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_login_continue
-            ) {
+            MainButton(textStringId = R.string.action_login_continue) {
                 phoneError = viewModel.checkPhoneNumberError(phoneText.text)
                 if (phoneError == null) {
                     phoneVerificationUtil.sendVerificationCode(

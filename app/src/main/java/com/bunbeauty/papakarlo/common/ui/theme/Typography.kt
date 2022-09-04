@@ -35,15 +35,20 @@ data class AppTypography(
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp
     ),
+    val hint: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
+    ),
     val button: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         textAlign = TextAlign.Center
     ),
     val smallButton: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Medium,
         fontSize = 14.sp
     ),
 )

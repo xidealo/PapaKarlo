@@ -45,7 +45,7 @@ fun MainIconButton(
 @Composable
 fun MainIconButtonPreview() {
     MainIconButton(
-        iconId = R.drawable.ic_add,
+        iconId = R.drawable.ic_plus_16,
         iconDescriptionStringId = R.string.description_ic_add,
     ) {}
 }

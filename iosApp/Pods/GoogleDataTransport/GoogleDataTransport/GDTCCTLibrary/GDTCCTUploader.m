@@ -42,9 +42,6 @@ static NSURL *_testServerURL = nil;
 
 + (void)load {
   GDTCCTUploader *uploader = [GDTCCTUploader sharedInstance];
-#if GDT_TEST
-  [[GDTCORRegistrar sharedInstance] registerUploader:uploader target:kGDTCORTargetTest];
-#endif  // GDT_TEST
   [[GDTCORRegistrar sharedInstance] registerUploader:uploader target:kGDTCORTargetCCT];
   [[GDTCORRegistrar sharedInstance] registerUploader:uploader target:kGDTCORTargetFLL];
   [[GDTCORRegistrar sharedInstance] registerUploader:uploader target:kGDTCORTargetCSH];
@@ -92,17 +89,13 @@ static NSURL *_testServerURL = nil;
     return;
   }
 
-  id<GDTCORMetricsControllerProtocol> metricsController =
-      GDTCORMetricsControllerInstanceForTarget(target);
-
   GDTCCTUploadOperation *uploadOperation =
       [[GDTCCTUploadOperation alloc] initWithTarget:target
                                          conditions:conditions
                                           uploadURL:[[self class] serverURLForTarget:target]
                                               queue:self.uploadQueue
                                             storage:storage
-                                   metadataProvider:self
-                                  metricsController:metricsController];
+                                   metadataProvider:self];
 
   GDTCORLogDebug(@"Upload operation created: %@, target: %@", uploadOperation, @(target));
 
@@ -141,11 +134,11 @@ static NSURL *_testServerURL = nil;
 }
 
 + (nullable NSURL *)serverURLForTarget:(GDTCORTarget)target {
-#if GDT_TEST
+#if !NDEBUG
   if (_testServerURL) {
     return _testServerURL;
   }
-#endif  // GDT_TEST
+#endif  // !NDEBUG
 
   return [GDTCOREndpoints uploadURLForTarget:target];
 }
@@ -193,7 +186,8 @@ static NSURL *_testServerURL = nil;
   return nil;
 }
 
-#if GDT_TEST
+#if !NDEBUG
+
 - (BOOL)waitForUploadFinishedWithTimeout:(NSTimeInterval)timeout {
   NSDate *expirationDate = [NSDate dateWithTimeIntervalSinceNow:timeout];
   while ([expirationDate compare:[NSDate date]] == NSOrderedDescending) {
@@ -208,7 +202,8 @@ static NSURL *_testServerURL = nil;
                  self.uploadOperationQueue.operations);
   return NO;
 }
-#endif  // GDT_TEST
+
+#endif  // !NDEBUG
 
 @end
 

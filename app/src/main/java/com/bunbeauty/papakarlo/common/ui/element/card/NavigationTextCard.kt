@@ -43,8 +43,10 @@ fun NavigationTextCard(
         backgroundColor = FoodDeliveryTheme.colors.surface
     ) {
         Row(
-            modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier = Modifier.padding(
+                horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                vertical = FoodDeliveryTheme.dimensions.smallSpace
+            ),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
@@ -54,11 +56,10 @@ fun NavigationTextCard(
             ) {
                 Text(
                     text = stringResource(hintStringId),
-                    style = FoodDeliveryTheme.typography.body2,
+                    style = FoodDeliveryTheme.typography.hint,
                     color = FoodDeliveryTheme.colors.onSurfaceVariant
                 )
                 Text(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
                     text = label,
                     style = FoodDeliveryTheme.typography.body1,
                     color = FoodDeliveryTheme.colors.onSurface
