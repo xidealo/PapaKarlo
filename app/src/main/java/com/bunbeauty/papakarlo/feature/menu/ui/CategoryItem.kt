@@ -47,7 +47,7 @@ fun CategoryItem(
         }
     ) {
         val style = if (categoryItem.isSelected) {
-            FoodDeliveryTheme.typography.h3
+            FoodDeliveryTheme.typography.smallButton
         } else {
             FoodDeliveryTheme.typography.body2
         }

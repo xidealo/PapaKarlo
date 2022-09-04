@@ -90,7 +90,7 @@ private fun SwitcherButton(
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = text.uppercase(),
+                    text = text,
                     style = FoodDeliveryTheme.typography.button,
                     color = FoodDeliveryTheme.colors.switcherButtonTextColor(enabled)
                 )

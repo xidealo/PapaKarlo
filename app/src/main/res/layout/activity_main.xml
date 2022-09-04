@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/medium_margin">
+            android:layout_margin="@dimen/medium_margin">
 
             <TextView
                 android:id="@+id/activity_main_tv_cart"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/cart_count_margin"
-                android:src="@drawable/ic_cart"
+                android:src="@drawable/ic_cart_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/activity_main_tv_cart_count"
                 app:layout_constraintTop_toTopOf="@+id/activity_main_tv_cart_count"

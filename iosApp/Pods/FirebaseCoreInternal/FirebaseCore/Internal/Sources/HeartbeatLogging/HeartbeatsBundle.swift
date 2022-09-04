@@ -57,49 +57,18 @@ struct HeartbeatsBundle: Codable, HeartbeatsPayloadConvertible {
       return // Do not append if capacity is non-positive.
     }
 
-    do {
-      // Push the heartbeat to the back of the buffer.
-      if let overwrittenHeartbeat = try buffer.push(heartbeat) {
-        // If a heartbeat was overwritten, update the cache to ensure it's date
-        // is removed.
-        lastAddedHeartbeatDates = lastAddedHeartbeatDates.mapValues { date in
-          overwrittenHeartbeat.date == date ? .distantPast : date
-        }
+    // 1. Push the heartbeat to the back of the buffer.
+    if let overwrittenHeartbeat = buffer.push(heartbeat) {
+      // If a heartbeat was overwritten, update the cache to ensure it's date
+      // is removed (if it was stored).
+      lastAddedHeartbeatDates = lastAddedHeartbeatDates.mapValues { date in
+        overwrittenHeartbeat.date == date ? .distantPast : date
       }
+    }
 
-      // Update cache with the new heartbeat's date.
-      heartbeat.timePeriods.forEach {
-        lastAddedHeartbeatDates[$0] = heartbeat.date
-      }
-
-    } catch let error as RingBufferError {
-      // A ring buffer error occurred while pushing to the buffer so the bundle
-      // is reset.
-      self = HeartbeatsBundle(capacity: capacity)
-
-      // Create a diagnostic heartbeat to capture the failure and add it to the
-      // buffer. The failure is added as a key/value pair to the agent string.
-      // Given that the ring buffer has been reset, it is not expected for the
-      // second push attempt to fail.
-      let errorDescription = error.errorDescription.replacingOccurrences(of: " ", with: "-")
-      let diagnosticHeartbeat = Heartbeat(
-        agent: "\(heartbeat.agent) error/\(errorDescription)",
-        date: heartbeat.date,
-        timePeriods: heartbeat.timePeriods
-      )
-
-      let secondPushAttempt = Result {
-        try buffer.push(diagnosticHeartbeat)
-      }
-
-      if case .success = secondPushAttempt {
-        // Update cache with the new heartbeat's date.
-        diagnosticHeartbeat.timePeriods.forEach {
-          lastAddedHeartbeatDates[$0] = diagnosticHeartbeat.date
-        }
-      }
-    } catch {
-      // Ignore other error.
+    // 2. Update cache with the new heartbeat's date.
+    heartbeat.timePeriods.forEach {
+      lastAddedHeartbeatDates[$0] = heartbeat.date
     }
   }
 
@@ -121,11 +90,7 @@ struct HeartbeatsBundle: Codable, HeartbeatsPayloadConvertible {
     }
 
     poppedHeartbeats.reversed().forEach {
-      do {
-        try buffer.push($0)
-      } catch {
-        // Ignore error.
-      }
+      buffer.push($0)
     }
 
     return removedHeartbeat

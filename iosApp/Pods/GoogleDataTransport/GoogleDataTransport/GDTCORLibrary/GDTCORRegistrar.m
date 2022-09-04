@@ -23,6 +23,7 @@ id<GDTCORStorageProtocol> _Nullable GDTCORStorageInstanceForTarget(GDTCORTarget 
   return [GDTCORRegistrar sharedInstance].targetToStorage[@(target)];
 }
 
+FOUNDATION_EXPORT
 id<GDTCORStoragePromiseProtocol> _Nullable GDTCORStoragePromiseInstanceForTarget(
     GDTCORTarget target) {
   id storage = [GDTCORRegistrar sharedInstance].targetToStorage[@(target)];
@@ -33,22 +34,12 @@ id<GDTCORStoragePromiseProtocol> _Nullable GDTCORStoragePromiseInstanceForTarget
   }
 }
 
-id<GDTCORMetricsControllerProtocol> _Nullable GDTCORMetricsControllerInstanceForTarget(
-    GDTCORTarget target) {
-  return [GDTCORRegistrar sharedInstance].targetToMetricsController[@(target)];
-}
-
 @implementation GDTCORRegistrar {
-  // TODO(ncooke3): Replace ivar declarations with @synthesize attributes.
-
   /** Backing ivar for targetToUploader property. */
   NSMutableDictionary<NSNumber *, id<GDTCORUploader>> *_targetToUploader;
 
   /** Backing ivar for targetToStorage property. */
   NSMutableDictionary<NSNumber *, id<GDTCORStorageProtocol>> *_targetToStorage;
-
-  /** Backing ivar for targetToMetricsController property. */
-  NSMutableDictionary<NSNumber *, id<GDTCORMetricsControllerProtocol>> *_targetToMetricsController;
 }
 
 + (instancetype)sharedInstance {
@@ -64,9 +55,8 @@ id<GDTCORMetricsControllerProtocol> _Nullable GDTCORMetricsControllerInstanceFor
   self = [super init];
   if (self) {
     _registrarQueue = dispatch_queue_create("com.google.GDTCORRegistrar", DISPATCH_QUEUE_SERIAL);
-    _targetToUploader = [NSMutableDictionary dictionary];
-    _targetToStorage = [NSMutableDictionary dictionary];
-    _targetToMetricsController = [NSMutableDictionary dictionary];
+    _targetToUploader = [[NSMutableDictionary alloc] init];
+    _targetToStorage = [[NSMutableDictionary alloc] init];
   }
   return self;
 }
@@ -89,21 +79,6 @@ id<GDTCORMetricsControllerProtocol> _Nullable GDTCORMetricsControllerInstanceFor
     if (strongSelf) {
       GDTCORLogDebug(@"Registered storage: %@ for target:%ld", storage, (long)target);
       strongSelf->_targetToStorage[@(target)] = storage;
-      [self setMetricsControllerAsStorageDelegateForTarget:target];
-    }
-  });
-}
-
-- (void)registerMetricsController:(id<GDTCORMetricsControllerProtocol>)metricsController
-                           target:(GDTCORTarget)target {
-  __weak GDTCORRegistrar *weakSelf = self;
-  dispatch_async(_registrarQueue, ^{
-    GDTCORRegistrar *strongSelf = weakSelf;
-    if (strongSelf) {
-      GDTCORLogDebug(@"Registered metrics controller: %@ for target:%ld", metricsController,
-                     (long)target);
-      strongSelf->_targetToMetricsController[@(target)] = metricsController;
-      [self setMetricsControllerAsStorageDelegateForTarget:target];
     }
   });
 }
@@ -130,24 +105,6 @@ id<GDTCORMetricsControllerProtocol> _Nullable GDTCORMetricsControllerInstanceFor
     }
   });
   return targetToStorage;
-}
-
-- (NSMutableDictionary<NSNumber *, id<GDTCORMetricsControllerProtocol>> *)
-    targetToMetricsController {
-  __block NSMutableDictionary<NSNumber *, id<GDTCORMetricsControllerProtocol>>
-      *targetToMetricsController;
-  __weak GDTCORRegistrar *weakSelf = self;
-  dispatch_sync(_registrarQueue, ^{
-    GDTCORRegistrar *strongSelf = weakSelf;
-    if (strongSelf) {
-      targetToMetricsController = strongSelf->_targetToMetricsController;
-    }
-  });
-  return targetToMetricsController;
-}
-
-- (void)setMetricsControllerAsStorageDelegateForTarget:(GDTCORTarget)target {
-  _targetToStorage[@(target)].delegate = _targetToMetricsController[@(target)];
 }
 
 #pragma mark - GDTCORLifecycleProtocol

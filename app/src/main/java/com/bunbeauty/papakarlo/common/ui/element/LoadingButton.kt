@@ -71,7 +71,7 @@ fun LoadingButton(
                 } else {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = stringResource(textStringId).uppercase(),
+                        text = stringResource(textStringId),
                         style = FoodDeliveryTheme.typography.button,
                         color = FoodDeliveryTheme.colors.onPrimary
                     )
