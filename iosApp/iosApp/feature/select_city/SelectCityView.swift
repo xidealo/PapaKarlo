@@ -14,18 +14,22 @@ struct SelectCityView: View {
     
     var body: some View {
         VStack{
-            if(viewModel.selectCityViewState.isGoToMenu){
-                ContainerView()
+            NavigationLink(
+                destination:MenuView(),
+                isActive: $viewModel.selectCityViewState.isGoToMenu
+            ){
+                EmptyView()
+            }
+            
+            ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "", count: "", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
+            if viewModel.selectCityViewState.isLoading{
+                LoadingView()
             }else{
-                ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "", count: "", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
-                if viewModel.selectCityViewState.isLoading{
-                    LoadingView()
-                }else{
-                    SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
-                }
+                SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
             }
         }
         .background(Color("background"))
+        .hiddenNavigationBarStyle()
     }
 }
 

@@ -30,7 +30,6 @@ struct ToolbarView: View {
             }) {
                 if(isShowBackArrow){
                     Image(systemName: "arrow.backward").foregroundColor(Color("onSurface"))
-                        .padding(.vertical)
                         .padding(.horizontal, Diems.SMALL_PADDING)
                 }
             }.padding(Diems.SMALL_PADDING)

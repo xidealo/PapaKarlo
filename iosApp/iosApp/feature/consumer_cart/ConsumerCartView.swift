@@ -15,15 +15,23 @@ struct ConsumerCartView: View {
         VStack{
             ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            if(viewModel.consumerCartViewState.isLoading){
-                LoadingView()
-            }else{
-                if(viewModel.consumerCartViewState.cartProductList.count == 0 ){
-                    ConsumerCartEmptyScreen()
-                }
-                else{
-                    ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState , viewModel: viewModel)
-                }
+            switch viewModel.consumerCartViewState.consumerCartState{
+            case .loading: LoadingView()
+            case .notAuthorized: EmptyView()
+            case .empty: ConsumerCartEmptyScreen()
+            case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
+            case .goToLogin:NavigationLink(
+                destination:LoginView(),
+                isActive: .constant(true)
+            ){
+                EmptyView()
+            }
+            case .goToCreateOrder:NavigationLink(
+                destination:CreateOrderView(),
+                isActive: .constant(true)
+            ){
+                EmptyView()
+            }
             }
         }
         .background(Color("background"))
@@ -34,13 +42,12 @@ struct ConsumerCartView: View {
         .onDisappear(){
             viewModel.removeListener()
         }
-
     }
 }
 
 struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
-        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", isLoading: false), viewModel: ConsumerCartViewModel())
+        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData), viewModel: ConsumerCartViewModel())
     }
 }
 
@@ -68,27 +75,24 @@ struct ConsumerCartSuccessScreen: View {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
                             }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
                         }
-                        
                     }
                 }
             }
             
             VStack{
-                
                 HStack{
                     BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                     Spacer()
                     
                     if consumerCartUI.oldTotalCost != nil{
-                        StrikeText(text: String(consumerCartUI.oldTotalCost!))
+                        StrikeText(text: String(consumerCartUI.oldTotalCost!) + Strings.CURRENCY)
                     }
                     BoldText(text: consumerCartUI.newTotalCost)
                 }.padding()
                 
-                
-                NavigationLink(
-                    destination:CreateOrderView()
-                ){
+                Button {
+                    viewModel.checkAuthorization()
+                } label: {
                     Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(Color("surface"))
@@ -96,6 +100,7 @@ struct ConsumerCartSuccessScreen: View {
                         .cornerRadius(Diems.MEDIUM_RADIUS)
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }.padding(Diems.MEDIUM_PADDING)
+                
             }.background(Color("surface"))
         }
     }
