@@ -1,11 +1,11 @@
 object Versions {
-    const val gradle = "7.0.2"
-    const val kotlin = "1.6.21"
+    const val gradle = "7.2.2"
+    const val kotlin = "1.7.10"
     const val googleServices = "4.3.10"
     const val crashlytics = "2.8.1"
-    const val navigation = "2.4.0"
+    const val navigation = "2.5.1"
 
-    const val kotlinCoroutines = "1.6.0-native-mt"
+    const val kotlinCoroutines = "1.6.4"
     const val ktor = "1.6.5"
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
@@ -21,10 +21,10 @@ object Versions {
     const val coil = "2.1.0"
     const val timePicker = "4.2.3"
 
-    const val composeCompiler = "1.2.0-rc02"
-    const val composeMaterial = "1.1.1"
-    const val composeAnimation = "1.1.1"
-    const val composeUi = "1.1.1"
+    const val composeCompiler = "1.3.0"
+    const val composeMaterial = "1.2.1"
+    const val composeAnimation = "1.2.1"
+    const val composeUi = "1.2.1"
     const val composeThemeAdapter = "1.1.4"
 
     const val dataStorePreferences = "1.0.0"
@@ -39,7 +39,7 @@ object Versions {
 
     const val googleMapUtils = "2.2.3"
 
-    const val kotlinxDateTime = "0.3.2"
+    const val kotlinxDateTime = "0.3.3"
 
     const val leakcanary = "2.8.1"
 
@@ -60,7 +60,7 @@ object Application {
 
 object AndroidSdk {
     const val min = 24
-    const val compile = 31
+    const val compile = 32
     const val target = compile
 }
 
