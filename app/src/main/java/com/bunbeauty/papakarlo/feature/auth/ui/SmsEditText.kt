@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.feature.auth.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material.TextField
@@ -17,7 +19,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -28,9 +29,7 @@ fun SmsEditText(
     onFilled: (smsCode: String) -> Unit
 ) {
     val enteredNumbers: SnapshotStateList<String> = remember {
-        mutableStateListOf(
-            *((0 until smsCodeLength).map { "" }.toTypedArray())
-        )
+        (0 until smsCodeLength).map { "" }.toMutableStateList()
     }
     val focusRequesters: List<FocusRequester> = remember {
         (0 until smsCodeLength).map { FocusRequester() }
@@ -62,10 +61,10 @@ fun SmsEditText(
                             onFilled(enteredNumbers.joinToString(separator = ""))
                         }
                     },
-                    onCurrentRemoved = {
+                    onFilledRemoved = {
                         enteredNumbers[i] = ""
                     },
-                    onPreviousRemoved = {
+                    onEmptyRemoved = {
                         if (i > 0) {
                             enteredNumbers[i - 1] = ""
                             focusRequesters[i - 1].requestFocus()
@@ -87,29 +86,23 @@ fun SmsDigitCell(
     value: String,
     focusRequester: FocusRequester,
     onValueChanged: (String) -> Unit,
-    onCurrentRemoved: () -> Unit,
-    onPreviousRemoved: () -> Unit
+    onFilledRemoved: () -> Unit,
+    onEmptyRemoved: () -> Unit
 ) {
     TextField(
         modifier = modifier
-            //.widthIn(max = 16.dp)
-//            .size(
-//                width = FoodDeliveryTheme.dimensions.smsEditTextWidth,
-//                height = FoodDeliveryTheme.dimensions.smsEditTextHeight
-//            )
             .onKeyEvent { event ->
                 if (event.type == KeyEventType.KeyUp) {
                     if (event.key == Key.Backspace) {
                         if (value == "") {
-                            onPreviousRemoved()
+                            onEmptyRemoved()
                         } else {
-                            onCurrentRemoved()
+                            onFilledRemoved()
                         }
                     }
                 }
                 true
             }
-            .focusOrder(focusRequester)
             .focusRequester(focusRequester),
         colors = FoodDeliveryTheme.colors.smsTextFieldColors(),
         textStyle = FoodDeliveryTheme.typography.body1.copy(textAlign = TextAlign.Center),

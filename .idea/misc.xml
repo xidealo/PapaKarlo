@@ -55,6 +55,8 @@
         <entry key="../../../../layout/compose-model-1662215613236.xml" value="1.5" />
         <entry key="../../../../layout/compose-model-1662215613238.xml" value="1.8088235294117647" />
         <entry key="../../../../layout/compose-model-1662215702536.xml" value="1.5" />
+        <entry key="../../../../layout/compose-model-1662217343058.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1662217499269.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1662235607741.xml" value="0.25925925925925924" />
         <entry key="../../../../layout/compose-model-1662235890532.xml" value="0.34155844155844156" />
         <entry key="../../../../layout/compose-model-1662290340529.xml" value="0.11225124378109452" />
@@ -74,6 +76,8 @@
         <entry key="../../../../layout/compose-model-1662293637660.xml" value="0.5" />
         <entry key="../../../../layout/compose-model-1662293640370.xml" value="0.5" />
         <entry key="../../../../layout/compose-model-1662293644319.xml" value="0.525" />
+        <entry key="../../../../layout/compose-model-1662373847433.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1662374189738.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/background_circle.xml" value="0.352" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ic_cart_24.xml" value="0.352" />
@@ -81,8 +85,6 @@
         <entry key="app/src/main/res/drawable/ic_plus_16.xml" value="0.2985" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.48332097850259453" />
         <entry key="app/src/main/res/menu/top_menu.xml" value="0.3692708333333333" />
-        <entry key="../../../../layout/compose-model-1662217343058.xml" value="0.1" />
-        <entry key="../../../../layout/compose-model-1662217499269.xml" value="0.1" />
       </map>
     </option>
   </component>
