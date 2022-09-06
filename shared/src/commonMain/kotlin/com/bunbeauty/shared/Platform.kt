@@ -6,4 +6,4 @@ expect class Platform() {
     val platform: String
 }
 
-//expect val httpClientEngine: HttpClientEngine
+expect val httpClientEngine: HttpClientEngine

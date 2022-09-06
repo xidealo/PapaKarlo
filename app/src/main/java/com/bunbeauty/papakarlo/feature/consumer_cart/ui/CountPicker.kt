@@ -57,16 +57,16 @@ fun CountPicker(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .smallIcon(),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_minus),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_minus_16),
                     contentDescription = stringResource(R.string.description_consumer_cart_decrease),
                     tint = FoodDeliveryTheme.colors.onPrimary
                 )
             }
         }
         Text(
-            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace),
+            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.verySmallSpace),
             text = count.toString(),
-            style = FoodDeliveryTheme.typography.h3,
+            style = FoodDeliveryTheme.typography.button,
             color = FoodDeliveryTheme.colors.onPrimary,
         )
         Card(
@@ -90,7 +90,7 @@ fun CountPicker(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .smallIcon(),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_add),
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_plus_16),
                     contentDescription = stringResource(R.string.description_consumer_cart_increase),
                     tint = FoodDeliveryTheme.colors.onPrimary
                 )

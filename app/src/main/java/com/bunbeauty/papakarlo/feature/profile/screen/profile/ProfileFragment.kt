@@ -77,13 +77,12 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         OrderItem(orderItem = lastOrderItem) {
                             viewModel.onLastOrderClicked(lastOrderItem)
                         }
+                        Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace))
                     }
                 }
                 item {
                     NavigationIconCard(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        modifier = Modifier.fillMaxWidth(),
                         iconId = R.drawable.ic_settings,
                         iconDescription = R.string.description_ic_settings,
                         labelStringId = R.string.action_profile_settings

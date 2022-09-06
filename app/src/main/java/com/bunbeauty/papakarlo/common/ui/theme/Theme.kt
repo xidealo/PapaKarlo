@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.runtime.Composable
@@ -27,7 +27,7 @@ fun FoodDeliveryTheme(
     }
 
     CompositionLocalProvider(
-        LocalOverScrollConfiguration provides null,
+        LocalOverscrollConfiguration provides null,
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),

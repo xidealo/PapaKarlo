@@ -42,7 +42,7 @@ struct ToolbarView: View {
             if isLogoutVisible{
                 Button(action:{
                     authManager.logout()
-                    iosComponent.provideIUserInteractor().clearUserCache { _, _ in
+                    iosComponent.provideIUserInteractor().clearUserCache { err in
                         self.mode.wrappedValue.dismiss()
                     }
                 }){

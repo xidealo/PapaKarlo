@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 fun Modifier.icon() = this.size(24.dp)
-fun Modifier.smallIcon() = this.size(12.dp)
+fun Modifier.smallIcon() = this.size(16.dp)
 
 fun Modifier.card(hasShadow: Boolean) = composed {
     fillMaxWidth()

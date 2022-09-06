@@ -75,7 +75,7 @@ class CreateOrderViewModel:ObservableObject {
                 //show error
                 print("sss")
             }else{
-                iosComponent.provideCartProductInteractor().removeAllProductsFromCart { _, _ in
+                iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
                     (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                         copiedState.isGoProfile = true
                         copiedState.isLoading = false

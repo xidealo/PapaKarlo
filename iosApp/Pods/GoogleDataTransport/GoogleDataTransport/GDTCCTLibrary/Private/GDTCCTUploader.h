@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)sharedInstance;
 
-#if GDT_TEST
+#if !NDEBUG
 /** An upload URL used across all targets. For testing only. */
 @property(class, nullable, nonatomic) NSURL *testServerURL;
 
@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)waitForUploadFinishedWithTimeout:(NSTimeInterval)timeout;
 
-#endif  // GDT_TEST
+#endif  // !NDEBUG
 
 @end
 

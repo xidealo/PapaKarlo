@@ -27,7 +27,7 @@ class SelectCityViewModel : ObservableObject {
             newState.isGoToMenu = true
             selectCityViewState = newState
         }
-        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { _, err in })
+        iosComponent.provideCityInteractor().saveSelectedCity(city: city, completionHandler: { err in })
     }
 }
 
