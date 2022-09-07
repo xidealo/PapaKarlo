@@ -6,7 +6,7 @@ object Versions {
     const val navigation = "2.5.1"
 
     const val kotlinCoroutines = "1.6.4"
-    const val ktor = "1.6.5"
+    const val ktor = "2.1.0"
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
 
@@ -152,6 +152,7 @@ object Navigation {
 object Ktor {
 
     const val clientWebsockets = "io.ktor:ktor-client-websockets:${Versions.ktor}"
+    const val negotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
 
     const val clientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
     const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
