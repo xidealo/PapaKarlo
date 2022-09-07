@@ -2,12 +2,11 @@ package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.logging.*
-import io.ktor.client.features.observer.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.client.plugins.observer.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
@@ -23,13 +22,13 @@ fun networkModule() = module {
     }
     single {
         HttpClient(httpClientEngine) {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(kotlinx.serialization.json.Json {
+            install(ContentNegotiation) {
+                Json {
                     prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
                     encodeDefaults = true
-                })
+                }
             }
 
             install(WebSockets) {
@@ -39,7 +38,7 @@ fun networkModule() = module {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
-                        //Log.v("Logger Ktor =>", message)
+                        com.bunbeauty.shared.Logger.logD("ktor_tag", message)
                     }
                 }
                 level = LogLevel.ALL

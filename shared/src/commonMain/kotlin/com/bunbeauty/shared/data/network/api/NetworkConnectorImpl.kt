@@ -16,12 +16,13 @@ import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import io.ktor.client.*
-import io.ktor.client.features.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
+import io.ktor.util.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
@@ -214,7 +215,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<T> {
-        val request = client.get<HttpStatement> {
+        val request = client.get {
             buildRequest(path, null, parameters, headers)
         }
         return handleResponse(serializer, request)
@@ -243,7 +244,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<R> {
-        val request = client.post<HttpStatement> {
+        val request = client.post{
             buildRequest(path, postBody, parameters, headers)
         }
         return handleResponse(serializer, request)
@@ -272,7 +273,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<R> {
-        val request = client.patch<HttpStatement> {
+        val request = client.patch {
             buildRequest(path, patchBody, parameters, headers)
         }
         return handleResponse(serializer, request)
@@ -280,10 +281,10 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
 
     suspend fun <R> handleResponse(
         serializer: KSerializer<R>,
-        request: HttpStatement
+        request: HttpResponse
     ): ApiResult<R> {
         return try {
-            ApiResult.Success(json.decodeFromString(serializer, request.execute().readText()))
+            ApiResult.Success(json.decodeFromString(serializer, request.bodyAsText()))
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Exception) {
@@ -291,6 +292,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         }
     }
 
+    @OptIn(InternalAPI::class)
     fun HttpRequestBuilder.buildRequest(
         path: String,
         body: Any?,
