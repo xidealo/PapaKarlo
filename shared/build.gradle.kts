@@ -34,6 +34,7 @@ kotlin {
                     implementation(clientLogging)
                     implementation(clientWebsockets)
                     implementation(negotiation)
+                    implementation(serializerJson)
                     implementation(clientJson)
                     implementation(clientAuth)
                 }

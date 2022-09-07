@@ -155,8 +155,10 @@ object Ktor {
     const val negotiation = "io.ktor:ktor-client-content-negotiation:${Versions.ktor}"
 
     const val clientJson = "io.ktor:ktor-client-json:${Versions.ktor}"
-    const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
+    const val serializerJson = "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}"
     const val clientSerialization = "io.ktor:ktor-client-serialization:${Versions.ktor}"
+
+    const val clientLogging = "io.ktor:ktor-client-logging:${Versions.ktor}"
     const val clientAuth = "io.ktor:ktor-client-auth:${Versions.ktor}"
 
     const val clientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"

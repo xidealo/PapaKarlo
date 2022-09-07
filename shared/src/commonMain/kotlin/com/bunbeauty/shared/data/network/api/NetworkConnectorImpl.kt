@@ -291,8 +291,6 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             ApiResult.Error(ApiError(0, exception.message ?: "-"))
         }
     }
-
-    @OptIn(InternalAPI::class)
     fun HttpRequestBuilder.buildRequest(
         path: String,
         body: Any?,
@@ -300,7 +298,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         headers: Map<String, String> = mapOf()
     ) {
         if (body != null) {
-            this.body = body
+            setBody(body)
         }
         url {
             path(path)
