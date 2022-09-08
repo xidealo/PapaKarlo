@@ -84,7 +84,7 @@ struct SuccessProfileView: View {
     var body: some View {
         VStack{
             if(profileViewState.lastOrder != nil){
-                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView())
+                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.id))
             }
             
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())

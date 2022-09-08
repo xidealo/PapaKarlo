@@ -10,7 +10,7 @@ interface IOrderInteractor {
 
     suspend fun observeOrderList(): Flow<List<LightOrder>>
     fun observeOrderListSwift(): CommonFlow<List<LightOrder>>
-    fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?>
+    fun observeOrderByUuid(orderUuid: String): CommonFlow<OrderWithAmounts?>
     suspend fun createOrder(
         isDelivery: Boolean,
         userAddressUuid: String?,

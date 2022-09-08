@@ -51,24 +51,23 @@ struct OrderItemView<Content: View>: View {
         default : return Color.blue
         }
     }
-    
-    func getStatusName(status:String) -> String{
-        switch status{
-        case OrderStatus.notAccepted.name : return Strings.MSG_STATUS_NOT_ACCEPTED
-          case OrderStatus.accepted.name : return Strings.MSG_STATUS_ACCEPTED
-          case OrderStatus.preparing.name : return Strings.MSG_STATUS_PREPARING
-          case OrderStatus.sentOut.name : return Strings.MSG_STATUS_SENT_OUT
-          case OrderStatus.done.name : return Strings.MSG_STATUS_DONE
-          case OrderStatus.delivered.name : return Strings.MSG_STATUS_DELIVERED
-          case OrderStatus.canceled.name : return Strings.MSG_STATUS_CANCELED
-          default : return Strings.MSG_STATUS_NOT_ACCEPTED
-          }
-    }
-    
+}
+
+func getStatusName(status:String) -> String{
+    switch status{
+    case OrderStatus.notAccepted.name : return Strings.MSG_STATUS_NOT_ACCEPTED
+      case OrderStatus.accepted.name : return Strings.MSG_STATUS_ACCEPTED
+      case OrderStatus.preparing.name : return Strings.MSG_STATUS_PREPARING
+      case OrderStatus.sentOut.name : return Strings.MSG_STATUS_SENT_OUT
+      case OrderStatus.done.name : return Strings.MSG_STATUS_DONE
+      case OrderStatus.delivered.name : return Strings.MSG_STATUS_DELIVERED
+      case OrderStatus.canceled.name : return Strings.MSG_STATUS_CANCELED
+      default : return Strings.MSG_STATUS_NOT_ACCEPTED
+      }
 }
 
 struct OrderItemView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderItemView(orderItem: OrderItem(id: "UUID", status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView())
+        OrderItemView(orderItem: OrderItem(id: "UUID", status: "PREPARING", code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView(orderUuid: ""))
     }
 }
