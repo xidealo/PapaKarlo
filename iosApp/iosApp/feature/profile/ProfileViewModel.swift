@@ -24,7 +24,7 @@ class ProfileViewModel: ToolbarViewModel {
         iosComponent.provideIUserInteractor().getProfile { profile, error in
             if(profile is Profile.Authorized){
                 let authorizedProfile = profile as! Profile.Authorized
-                self.profileViewState =  ProfileViewState(userUuid: authorizedProfile.userUuid, hasAddresses: authorizedProfile.hasAddresses, lastOrder: OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status.name ?? "", code: authorizedProfile.lastOrder?.code ?? "", dateTime: ""), isAuthorize: true, isLoading: false)
+                self.profileViewState =  ProfileViewState(userUuid: authorizedProfile.userUuid, hasAddresses: authorizedProfile.hasAddresses, lastOrder: OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status ?? OrderStatus.notAccepted, code: authorizedProfile.lastOrder?.code ?? "", dateTime: ""), isAuthorize: true, isLoading: false)
             }else{
                 self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, isAuthorize: false, isLoading: false)
             }

@@ -48,10 +48,7 @@ struct SuccessOrderListView: View {
             }
         }
     }
-    
 }
-
-
 
 struct EmptyOrderListView: View {
     var body: some View {

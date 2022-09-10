@@ -16,6 +16,9 @@
 		022A929A288D460500EB5885 /* SearchEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A9299288D460500EB5885 /* SearchEditText.swift */; };
 		022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		022B86AE28B8108E00AC1B97 /* ViewModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022B86AD28B8108E00AC1B97 /* ViewModelStore.swift */; };
+		022BC66E28CC895800F3ED27 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC66D28CC895800F3ED27 /* DateUtil.swift */; };
+		022BC67228CC8A6700F3ED27 /* OrderChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC67128CC8A6700F3ED27 /* OrderChip.swift */; };
+		022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */; };
 		0231084A287DFF0500383F45 /* OrderDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02310849287DFF0500383F45 /* OrderDetailsViewModel.swift */; };
 		023149A1288BFAC300068094 /* CreateAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023149A0288BFAC300068094 /* CreateAddressViewModel.swift */; };
 		023149A3288BFC5300068094 /* CreateAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023149A2288BFC5300068094 /* CreateAddressViewState.swift */; };
@@ -124,6 +127,9 @@
 		022A9299288D460500EB5885 /* SearchEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEditText.swift; sourceTree = "<group>"; };
 		022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		022B86AD28B8108E00AC1B97 /* ViewModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelStore.swift; sourceTree = "<group>"; };
+		022BC66D28CC895800F3ED27 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		022BC67128CC8A6700F3ED27 /* OrderChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderChip.swift; sourceTree = "<group>"; };
+		022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderProductItem.swift; sourceTree = "<group>"; };
 		02310849287DFF0500383F45 /* OrderDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewModel.swift; sourceTree = "<group>"; };
 		023149A0288BFAC300068094 /* CreateAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressViewModel.swift; sourceTree = "<group>"; };
 		023149A2288BFC5300068094 /* CreateAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAddressViewState.swift; sourceTree = "<group>"; };
@@ -348,6 +354,7 @@
 				0232343E287879EF0048CF39 /* OrderDetailsView.swift */,
 				02310849287DFF0500383F45 /* OrderDetailsViewModel.swift */,
 				0251571128C924AB0010C65E /* OrderDetailsViewState.swift */,
+				022BC67328CC9D0700F3ED27 /* OrderProductItem.swift */,
 			);
 			path = order_details;
 			sourceTree = "<group>";
@@ -510,6 +517,7 @@
 				022A9299288D460500EB5885 /* SearchEditText.swift */,
 				022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */,
 				023761C228C3612600FD33BD /* IconImage.swift */,
+				022BC67128CC8A6700F3ED27 /* OrderChip.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -548,6 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				023234DB28787A280048CF39 /* LoadingView.swift */,
+				022BC66D28CC895800F3ED27 /* DateUtil.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -787,7 +796,9 @@
 				022696AA287B166900B2E003 /* OrderListViewState.swift in Sources */,
 				023234D228787A180048CF39 /* CountPicker.swift in Sources */,
 				02542938287F39060089B45E /* CreateOrderViewModel.swift in Sources */,
+				022BC66E28CC895800F3ED27 /* DateUtil.swift in Sources */,
 				0232348F287879EF0048CF39 /* ProfileView.swift in Sources */,
+				022BC67228CC8A6700F3ED27 /* OrderChip.swift in Sources */,
 				02323478287879EF0048CF39 /* ConsumerCartViewModel.swift in Sources */,
 				023234E128787A360048CF39 /* Diems.swift in Sources */,
 				023234E028787A360048CF39 /* Strings.swift in Sources */,
@@ -831,6 +842,7 @@
 				023234A4287879EF0048CF39 /* MenuItem.swift in Sources */,
 				0232348E287879EF0048CF39 /* SettingsView.swift in Sources */,
 				023149A3288BFC5300068094 /* CreateAddressViewState.swift in Sources */,
+				022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */,
 				023761C328C3612600FD33BD /* IconImage.swift in Sources */,
 				0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */,
 				023234A6287879EF0048CF39 /* ProductDetailsViewModel.swift in Sources */,

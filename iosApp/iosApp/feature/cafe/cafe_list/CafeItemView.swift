@@ -12,19 +12,20 @@ struct CafeItemView: View {
     var cafeItem: CafeItem
 
     var body: some View {
-        
         VStack{
             LargeHeaderText(text: cafeItem.address)
                 .foregroundColor(Color("onSurface"))
+                .padding(.horizontal,  Diems.MEDIUM_PADDING)
+                .padding(.top, Diems.MEDIUM_PADDING)
+                .padding(.bottom, Diems.HALF_SMALL_PADDING)
             
             HStack{
                 Text(cafeItem.workingHours).foregroundColor(Color("onSurface"))
                 Text(cafeItem.isOpenMessage).foregroundColor(cafeItem.isOpenColor)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.bottom, Diems.SMALL_PADDING)
+            .padding(.bottom, Diems.MEDIUM_PADDING)
             .frame(maxWidth: .infinity, alignment: .leading)
-            
         }.background(Color("surface")).cornerRadius(15)
     }
 }

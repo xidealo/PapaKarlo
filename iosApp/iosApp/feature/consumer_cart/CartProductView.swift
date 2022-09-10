@@ -13,6 +13,7 @@ struct CartProductView: View {
     let cartProductItem:CartProductItem
     let plusAction: () -> Void
     let minusAction: () -> Void
+    
     var body: some View {
         HStack{
             KFImage(URL(string: cartProductItem.photoLink))
@@ -51,6 +52,5 @@ struct CartProductView_Previews: PreviewProvider {
         } minusAction: {
             
         }
-
     }
 }

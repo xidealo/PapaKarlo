@@ -15,7 +15,7 @@ class OrderDetailsViewState: NSObject, NSCopying {
     var statusName:     String
     var dateTime:       String
     var pickupMethod:   String
-    var deferredTimeHintStringId: String
+    var deferredTimeHintString: String
     var deferredTime:   String?
     var address:        String
     var comment:        String?
@@ -23,17 +23,16 @@ class OrderDetailsViewState: NSObject, NSCopying {
     var isDelivery:     Bool
     var oldAmountToPay: String?
     var newAmountToPay: String
+    var orderProductList: [OrderProductItem]
     
-    //var orderProductList: [OrderProductItem]
-    
-    init(code: String, status: OrderStatus, statusName: String, dateTime: String, pickupMethod: String, deferredTimeHintStringId:String, deferredTime: String?, address: String, comment: String?, deliveryCost: String?, isDelivery: Bool, oldAmountToPay: String?,newAmountToPay: String){
+    init(code: String, status: OrderStatus, statusName: String, dateTime: String, pickupMethod: String, deferredTimeHintString:String, deferredTime: String?, address: String, comment: String?, deliveryCost: String?, isDelivery: Bool, oldAmountToPay: String?,newAmountToPay: String, orderProductList:[OrderProductItem]){
         
         self.code =             code
         self.status =           status
         self.statusName =       statusName
         self.dateTime =         dateTime
         self.pickupMethod =     pickupMethod
-        self.deferredTimeHintStringId = deferredTimeHintStringId
+        self.deferredTimeHintString = deferredTimeHintString
         self.deferredTime =     deferredTime
         self.address =          address
         self.comment =          comment
@@ -41,6 +40,8 @@ class OrderDetailsViewState: NSObject, NSCopying {
         self.isDelivery =       isDelivery
         self.oldAmountToPay =   oldAmountToPay
         self.newAmountToPay =   newAmountToPay
+        self.orderProductList =   orderProductList
+
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
@@ -50,14 +51,15 @@ class OrderDetailsViewState: NSObject, NSCopying {
             statusName:statusName,
             dateTime:dateTime,
             pickupMethod:pickupMethod,
-            deferredTimeHintStringId:deferredTimeHintStringId,
+            deferredTimeHintString:deferredTimeHintString,
             deferredTime:deferredTime,
             address:address,
             comment:comment,
             deliveryCost:deliveryCost,
             isDelivery:isDelivery,
             oldAmountToPay:oldAmountToPay,
-            newAmountToPay:newAmountToPay)
+            newAmountToPay:newAmountToPay,
+            orderProductList:orderProductList)
         return copy
     }
 }
