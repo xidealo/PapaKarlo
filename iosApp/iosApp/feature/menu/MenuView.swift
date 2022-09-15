@@ -26,6 +26,7 @@ struct MenuView: View {
                     }
                 }.padding(.top, Diems.MEDIUM_PADDING)
                 
+                
                 ScrollView {
                     LazyVStack(spacing:0){
                         ForEach(viewModel.menuViewState.menuItems){ menuItem in

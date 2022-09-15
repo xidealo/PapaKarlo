@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface ICafeInteractor {
 
     fun observeCafeList(): Flow<List<Cafe>?>
-    fun observeCafeAddressList(): Flow<List<CafeAddress>>
+    fun observeCafeAddressList(): CommonFlow<List<CafeAddress>>
     fun observeSelectedCafeAddress(): CommonFlow<CafeAddress>
     suspend fun getCafeList(): List<Cafe>?
     suspend fun getCafeStatus(cafe: Cafe): CafeStatus

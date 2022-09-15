@@ -29,7 +29,7 @@ class CafeInteractor(
         }
     }
 
-    override fun observeCafeAddressList(): Flow<List<CafeAddress>> {
+    override fun observeCafeAddressList(): CommonFlow<List<CafeAddress>> {
         return cafeRepo.observeCafeList().map { cafeList ->
             cafeList.map { cafe ->
                 CafeAddress(
@@ -37,7 +37,7 @@ class CafeInteractor(
                     address = cafe.address
                 )
             }
-        }
+        }.asCommonFlow()
     }
 
     override fun observeSelectedCafeAddress(): CommonFlow<CafeAddress> {

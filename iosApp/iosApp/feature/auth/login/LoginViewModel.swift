@@ -11,7 +11,10 @@ import shared
 
 class LoginViewModel:ObservableObject {
     
-    @Published var loginViewState:LoginViewState = LoginViewState(isLoading: false, isGoToMenu: false)
+    @Published var loginViewState:LoginViewState = LoginViewState(
+        isLoading: false,
+        isGoToMenu: false
+    )
     let auth :AuthManager
 
     init(auth:AuthManager){

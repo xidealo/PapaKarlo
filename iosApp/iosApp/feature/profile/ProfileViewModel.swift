@@ -11,7 +11,13 @@ import shared
 
 class ProfileViewModel: ToolbarViewModel {
     
-    @Published var profileViewState:ProfileViewState = ProfileViewState(userUuid: "", hasAddresses: false, lastOrder: nil, isAuthorize: false, isLoading: true)
+    @Published var profileViewState:ProfileViewState = ProfileViewState(
+        userUuid: "",
+        hasAddresses: false,
+        lastOrder: nil,
+        isAuthorize: false,
+        isLoading: true
+    )
 
     override init() {
         super.init()

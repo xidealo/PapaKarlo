@@ -11,7 +11,22 @@ import shared
 
 class OrderDetailsViewModel :ObservableObject {
 
-    @Published var orderDetailsViewState:OrderDetailsViewState = OrderDetailsViewState(code: "", status: OrderStatus.notAccepted, statusName: "", dateTime: "", pickupMethod: "", deferredTimeHintString: "", deferredTime: nil, address: "", comment: nil, deliveryCost: nil, isDelivery: false, oldAmountToPay: nil, newAmountToPay: "", orderProductList: [])
+    @Published var orderDetailsViewState:OrderDetailsViewState = OrderDetailsViewState(
+        code: "",
+        status: OrderStatus.notAccepted,
+        statusName: "",
+        dateTime: "",
+        pickupMethod: "",
+        deferredTimeHintString: "",
+        deferredTime: nil,
+        address: "",
+        comment: nil,
+        deliveryCost: nil,
+        isDelivery: false,
+        oldAmountToPay: nil,
+        newAmountToPay: "",
+        orderProductList: []
+    )
 
 
     let dateUtil = DateUtil()
@@ -42,38 +57,36 @@ class OrderDetailsViewModel :ObservableObject {
 
                 copiedState.address = orderWithAmout?.address ?? ""
                 copiedState.comment = orderWithAmout?.comment ?? ""
-                if(orderWithAmout?.deliveryCost != nil){
-                   // copiedState.deliveryCost = String(orderWithAmout!.deliveryCost) + Strings.CURRENCY
-                }
+
                 copiedState.isDelivery = orderWithAmout?.isDelivery ?? false
                 if(orderWithAmout?.oldAmountToPay != nil){
-                    copiedState.oldAmountToPay =  "\(orderWithAmout?.oldAmountToPay ?? 0) \(Strings.CURRENCY)"
+                    copiedState.oldAmountToPay =  "\(orderWithAmout?.oldAmountToPay ?? 0)\(Strings.CURRENCY)"
                 }
-                copiedState.newAmountToPay = "\(orderWithAmout?.newAmountToPay ?? 0) \(Strings.CURRENCY)"
+                copiedState.newAmountToPay = "\(orderWithAmout?.newAmountToPay ?? 0)\(Strings.CURRENCY)"
 
                 copiedState.orderProductList = orderWithAmout?.orderProductList.map({ orderProductsWithCosts in
                     var oldPrice:String? = nil
                     var oldCost:String? = nil
                     
                     if(orderProductsWithCosts.product.oldPrice != nil){
-                        oldPrice = "\(orderProductsWithCosts.product.oldPrice ?? 0) \(Strings.CURRENCY)"
+                        oldPrice = "\(orderProductsWithCosts.product.oldPrice ?? 0)\(Strings.CURRENCY)"
                     }
                     
                     if(orderProductsWithCosts.oldCost != nil){
-                        oldCost = "\(orderProductsWithCosts.oldCost ?? 0) \(Strings.CURRENCY)"
+                        oldCost = "\(orderProductsWithCosts.oldCost ?? 0)\(Strings.CURRENCY)"
                     }
                     
                     return OrderProductItem(id: orderProductsWithCosts.uuid,
                                      name: orderProductsWithCosts.product.name,
-                                     newPrice: "\(orderProductsWithCosts.product.newPrice) \(Strings.CURRENCY)",
+                                     newPrice: "\(orderProductsWithCosts.product.newPrice)\(Strings.CURRENCY)",
                                      oldPrice: oldPrice,
-                                     newCost: "\(orderProductsWithCosts.newCost) \(Strings.CURRENCY)",
+                                     newCost: "\(orderProductsWithCosts.newCost)\(Strings.CURRENCY)",
                                      oldCost: oldCost,
                                      photoLink: orderProductsWithCosts.product.photoLink,
                                      count: "× \(orderProductsWithCosts.count)")
                 }) ?? []
                 if(orderWithAmout?.deliveryCost != nil){
-                    copiedState.deliveryCost = "\(orderWithAmout?.deliveryCost ?? 0) \(Strings.CURRENCY)"
+                    copiedState.deliveryCost = "\(orderWithAmout?.deliveryCost ?? 0)\(Strings.CURRENCY)"
                 }
                 self.orderDetailsViewState = copiedState
             }

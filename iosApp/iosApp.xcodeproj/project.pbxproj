@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
+		020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */; };
+		020FEEC328D3BCFA002B3D69 /* UserAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEC228D3BCFA002B3D69 /* UserAddressViewState.swift */; };
 		021CDA03287988C100DD1A98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		021CDA052879955800DD1A98 /* ConfirmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA042879955800DD1A98 /* ConfirmViewModel.swift */; };
 		021CDA072879959600DD1A98 /* ConfirmViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA062879959600DD1A98 /* ConfirmViewState.swift */; };
@@ -110,6 +113,7 @@
 		0251571228C924AB0010C65E /* OrderDetailsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0251571128C924AB0010C65E /* OrderDetailsViewState.swift */; };
 		02542938287F39060089B45E /* CreateOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02542937287F39060089B45E /* CreateOrderViewModel.swift */; };
 		029FEBCD28A5974E00651D7B /* UserAddressListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029FEBCC28A5974E00651D7B /* UserAddressListViewModel.swift */; };
+		02C21FF928D265E900DCF537 /* ActionTextCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C21FF828D265E900DCF537 /* ActionTextCardView.swift */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		0E1E945F134CE0042C54F2F0 /* libPods-iosApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFC9BE3BD43758415333FAC /* libPods-iosApp.a */; };
@@ -118,6 +122,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressListView.swift; sourceTree = "<group>"; };
+		020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewModel.swift; sourceTree = "<group>"; };
+		020FEEC228D3BCFA002B3D69 /* UserAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressViewState.swift; sourceTree = "<group>"; };
 		021CDA02287988C100DD1A98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		021CDA042879955800DD1A98 /* ConfirmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewModel.swift; sourceTree = "<group>"; };
 		021CDA062879959600DD1A98 /* ConfirmViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewState.swift; sourceTree = "<group>"; };
@@ -221,6 +228,7 @@
 		0251571128C924AB0010C65E /* OrderDetailsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewState.swift; sourceTree = "<group>"; };
 		02542937287F39060089B45E /* CreateOrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderViewModel.swift; sourceTree = "<group>"; };
 		029FEBCC28A5974E00651D7B /* UserAddressListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressListViewModel.swift; sourceTree = "<group>"; };
+		02C21FF828D265E900DCF537 /* ActionTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTextCardView.swift; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -244,6 +252,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020FEEBD28D3AEE5002B3D69 /* cafe_address_list */ = {
+			isa = PBXGroup;
+			children = (
+				020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */,
+				020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */,
+			);
+			path = cafe_address_list;
+			sourceTree = "<group>";
+		};
 		02323425287879EF0048CF39 /* feature */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +441,7 @@
 		02323458287879EF0048CF39 /* address */ = {
 			isa = PBXGroup;
 			children = (
+				020FEEBD28D3AEE5002B3D69 /* cafe_address_list */,
 				02323459287879EF0048CF39 /* user_address_list */,
 				0232345D287879EF0048CF39 /* create_address */,
 			);
@@ -437,6 +455,7 @@
 				0232345B287879EF0048CF39 /* UserAddressListView.swift */,
 				0232345C287879EF0048CF39 /* AddressItem.swift */,
 				029FEBCC28A5974E00651D7B /* UserAddressListViewModel.swift */,
+				020FEEC228D3BCFA002B3D69 /* UserAddressViewState.swift */,
 			);
 			path = user_address_list;
 			sourceTree = "<group>";
@@ -537,6 +556,7 @@
 				023234BA28787A180048CF39 /* CategoryItemView.swift */,
 				023234BB28787A180048CF39 /* TextCard.swift */,
 				023234BC28787A180048CF39 /* StatusChip.swift */,
+				02C21FF828D265E900DCF537 /* ActionTextCardView.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -763,6 +783,7 @@
 				0232347A287879EF0048CF39 /* ConsumerCartViewState.swift in Sources */,
 				0232347B287879EF0048CF39 /* ConsumerCartView.swift in Sources */,
 				022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */,
+				020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */,
 				02323497287879EF0048CF39 /* CafeListView.swift in Sources */,
 				029FEBCD28A5974E00651D7B /* UserAddressListViewModel.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,
@@ -844,6 +865,7 @@
 				023149A3288BFC5300068094 /* CreateAddressViewState.swift in Sources */,
 				022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */,
 				023761C328C3612600FD33BD /* IconImage.swift in Sources */,
+				020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */,
 				0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */,
 				023234A6287879EF0048CF39 /* ProductDetailsViewModel.swift in Sources */,
 				021CDA072879959600DD1A98 /* ConfirmViewState.swift in Sources */,
@@ -856,6 +878,8 @@
 				0232347C287879EF0048CF39 /* UpdateView.swift in Sources */,
 				023234D628787A180048CF39 /* LargeHeaderText.swift in Sources */,
 				023234CA28787A180048CF39 /* ActionCardView.swift in Sources */,
+				02C21FF928D265E900DCF537 /* ActionTextCardView.swift in Sources */,
+				020FEEC328D3BCFA002B3D69 /* UserAddressViewState.swift in Sources */,
 				02323490287879EF0048CF39 /* AboutAppView.swift in Sources */,
 				0232349B287879EF0048CF39 /* UserAddressListView.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,

@@ -10,7 +10,10 @@ import Foundation
 
 class CreateAddressViewModel : ObservableObject {
     
-    @Published var createAddressViewState:CreateAddressViewState = CreateAddressViewState(streetList: [], isBack: false)
+    @Published var createAddressViewState:CreateAddressViewState = CreateAddressViewState(
+        streetList: [],
+        isBack: false
+    )
     @Published var isBack : Bool = false
 
     init(){

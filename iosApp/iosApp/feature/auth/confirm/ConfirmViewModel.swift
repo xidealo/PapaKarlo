@@ -12,7 +12,10 @@ import FirebaseAuth
 
 class ConfirmViewModel:ObservableObject {
     
-    @Published var confirmViewState:ConfirmViewState = ConfirmViewState(isLoading: false, isGoToProfile: false)
+    @Published var confirmViewState:ConfirmViewState = ConfirmViewState(
+        isLoading: false,
+        isGoToProfile: false
+    )
     
     let auth :AuthManager
 

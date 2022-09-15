@@ -10,14 +10,15 @@ import SwiftUI
 struct UserAddressListView: View {
     
     @ObservedObject private var viewModel = UserAddressListViewModel()
-
+    
     var body: some View {
         VStack{
-            ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            if(viewModel.addressList.isEmpty){
-                EmptyAddressListView()
-            }else{
-                SuccessAddressListView(addressList: viewModel.addressList)
+            ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
+            switch(viewModel.userAddressViewState.userAddressState){
+            case UserAddressState.loading: LoadingView()
+            case UserAddressState.empty: EmptyAddressListView()
+            case UserAddressState.success :    SuccessAddressListView(addressList: viewModel.userAddressViewState.addressItemist)
             }
         }
         .background(Color("background"))
@@ -33,7 +34,7 @@ struct UserAddressListView_Previews: PreviewProvider {
 
 struct SuccessAddressListView: View {
     let addressList: [AddressItem]
-
+    
     var body: some View {
         VStack(spacing:0){
             ScrollView {
@@ -55,7 +56,7 @@ struct SuccessAddressListView: View {
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
         }
-       
+        
     }
 }
 
