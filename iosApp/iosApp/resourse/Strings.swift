@@ -22,7 +22,8 @@ class Strings{
     static let TITLE_ABOUT_APP = "О приложении"
     static let TITLE_FEEDBACK = "Отзывы о приложении"
     static let TITLE_CAFE_OPTIONS = "Выбранное кафе"
-    
+    static let TITLE_PAYMENT = "Оплата"
+
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
     
@@ -115,7 +116,7 @@ class Strings{
     
     //STATUS
     static let  MSG_STATUS_NOT_ACCEPTED = "Обрабатывается"
-    static let   MSG_STATUS_ACCEPTED = "Принят"
+    static let  MSG_STATUS_ACCEPTED = "Принят"
     static let  MSG_STATUS_PREPARING = "Готовится"
     static let  MSG_STATUS_SENT_OUT = "В пути"
     static let  MSG_STATUS_DELIVERED = "Выдан"
@@ -125,5 +126,10 @@ class Strings{
     //COMMENT
     static let HINT_CREATE_COMMENT_COMMENT = "Комментарий"
     static let ACTION_CREATE_COMMENT_SAVE = "Сохранить"
+
+    
+    //PAYMENT
+    static let MSG_PAYMENT_PHONE = "+7 (903) 801-55-52"
+    static let MSG_PAYMENT_CARD_NUMBER = "4279 3800 2260 1191"
 
 }

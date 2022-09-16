@@ -73,7 +73,7 @@ struct ConsumerCartSuccessScreen: View {
                                 viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
                             }, minusAction: {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
+                            }).padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
                 }
