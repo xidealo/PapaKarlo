@@ -56,6 +56,7 @@ class CreateOrderViewModel(
     init {
         observeAddress()
         viewModelScope.launch {
+            cafeInteractor.getCafeList()
             cartProductInteractor.getCartTotal().let { cartTotal ->
                 mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
                     totalCost = stringUtil.getCostString(cartTotal.totalCost),
