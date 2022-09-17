@@ -44,7 +44,6 @@ struct LoginViewSuccessView: View {
     @ObservedObject var viewModel : LoginViewModel
     
     var body: some View {
-        
         VStack{
             ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
@@ -69,6 +68,7 @@ struct LoginViewSuccessView: View {
             }
         }.padding(Diems.MEDIUM_PADDING)
             .navigationBarHidden(true)
+         
     }
     
     func minCode() {

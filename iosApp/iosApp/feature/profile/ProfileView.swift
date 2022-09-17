@@ -11,6 +11,7 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
+    @State var show:Bool
 
     var body: some View {
         VStack{
@@ -19,7 +20,7 @@ struct ProfileView: View {
                 LoadingProfileView()
             }else{
                 if viewModel.profileViewState.isAuthorize{
-                    SuccessProfileView(profileViewState:  viewModel.profileViewState)
+                    SuccessProfileView(profileViewState:  viewModel.profileViewState, show: show)
                 }else{
                     EmptyProfileView()
                 }
@@ -35,7 +36,7 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(show: false)
     }
 }
 
@@ -80,7 +81,8 @@ struct LoadingProfileView: View {
 
 struct SuccessProfileView: View {
     let profileViewState:ProfileViewState
-    
+    @State var show:Bool
+
     var body: some View {
         VStack{
             if(profileViewState.lastOrder != nil){
@@ -106,5 +108,6 @@ struct SuccessProfileView: View {
             Spacer()
             
         }.padding(Diems.MEDIUM_PADDING)
+            .overlay(overlayView: ToastView(toast: Toast(title: profileViewState.lastOrder?.code ?? ""), show: $show, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $show)
     }
 }

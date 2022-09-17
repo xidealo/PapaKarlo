@@ -35,7 +35,7 @@ struct CreateOrderSuccessView:View {
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
         case CreateOrderState.goToProfile: NavigationLink(
-            destination:ProfileView(),
+            destination:ProfileView(show: true),
             isActive: .constant(true)
         ){
             EmptyView()

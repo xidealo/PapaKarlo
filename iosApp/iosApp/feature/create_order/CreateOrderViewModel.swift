@@ -59,10 +59,16 @@ class CreateOrderViewModel:ObservableObject {
         }
         getAddressList(isDelivery: true)
     }
+    
     func getAddressList(isDelivery:Bool){
         if(isDelivery){
             iosComponent.provideIAddressInteractor().observeAddress().watch { userAddress in
                 if(userAddress == nil){
+                    (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                        copiedState.address = nil
+                        copiedState.createOrderState = CreateOrderState.success
+                        self.creationOrderViewState = copiedState
+                    }
                     return
                 }
                 var address = userAddress?.street.name ?? ""
@@ -96,6 +102,7 @@ class CreateOrderViewModel:ObservableObject {
             iosComponent.provideCafeInteractor().observeSelectedCafeAddress().watch { cafeAddress in
                 (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                     copiedState.address = cafeAddress?.address ?? ""
+                    copiedState.cafeUuid = cafeAddress?.cafeUuid
                     copiedState.createOrderState = CreateOrderState.success
                     self.creationOrderViewState = copiedState
                 }
@@ -109,16 +116,23 @@ class CreateOrderViewModel:ObservableObject {
             copiedState.createOrderState = CreateOrderState.loading
             creationOrderViewState = copiedState
         }
-        
+  
         iosComponent.provideIOrderInteractor().createOrder(isDelivery: creationOrderViewState.isDelivery, userAddressUuid: creationOrderViewState.userUuid, cafeUuid: creationOrderViewState.cafeUuid, addressDescription: creationOrderViewState.address ?? "", comment: creationOrderViewState.comment, deferredTime: nil) { code, err in
             if(code == nil){
                 //show error
                 print("sss")
+                (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                    
+                    copiedState.createOrderState = CreateOrderState.success //TODO SHOW ERROR
+                    self.creationOrderViewState = copiedState
+                }
             }else{
-                iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
-                    (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                        copiedState.createOrderState = CreateOrderState.goToProfile
-                        self.creationOrderViewState = copiedState
+                DispatchQueue.main.async {
+                    iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
+                        (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                            copiedState.createOrderState = CreateOrderState.goToProfile
+                            self.creationOrderViewState = copiedState
+                        }
                     }
                 }
             }

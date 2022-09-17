@@ -61,7 +61,7 @@ struct BottomBarView: View {
             }
             
             NavigationLink(
-                destination:ProfileView()
+                destination:ProfileView(show: false)
             ){
                 VStack{
                     if(isSelected == 2){

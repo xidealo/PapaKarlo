@@ -28,7 +28,6 @@ struct PaymentView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
         .navigationBarHidden(true)
     }
-    
 }
 
 struct PaymentView_Previews: PreviewProvider {

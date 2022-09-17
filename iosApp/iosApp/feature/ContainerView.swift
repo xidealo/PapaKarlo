@@ -25,7 +25,7 @@ struct ContainerView: View {
                 Text(Strings.TITILE_BOTTOM_NAVIGATION_MENU)
                 Image(systemName:"list.dash")
             }.tag(1)
-            ProfileView().tabItem {
+            ProfileView(show: false).tabItem {
                 Image(systemName: "person.crop.circle")
                 Text(Strings.TITLE_BOTTOM_NAVIGATION_PROFILE)
             }.tag(2)
