@@ -35,7 +35,11 @@ struct ActionCardView: View {
                         Image(icon ?? "").resizable().frame(width: 23, height: 24).foregroundColor(Color("iconColor"))
                     }
                 }
-                Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
+                Text(label)
+                    .frame(maxWidth:.infinity, alignment: .leading)
+                    .foregroundColor(Color("onSurface"))
+                    .multilineTextAlignment(.leading)
+
                 if isShowRightArrow{
                     Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
                 }

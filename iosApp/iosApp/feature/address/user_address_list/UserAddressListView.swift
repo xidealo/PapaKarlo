@@ -11,7 +11,7 @@ struct UserAddressListView: View {
     
     @ObservedObject private var viewModel : UserAddressListViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     init(isClickable:Bool){
         viewModel = UserAddressListViewModel(isClickable: isClickable)
     }
@@ -23,10 +23,10 @@ struct UserAddressListView: View {
             switch(viewModel.userAddressViewState.userAddressState){
             case UserAddressState.loading: LoadingView()
             case UserAddressState.empty: EmptyAddressListView()
-            case UserAddressState.success :    SuccessAddressListView(viewModel: viewModel)
+            case UserAddressState.success : SuccessAddressListView(viewModel: viewModel)
             case UserAddressState.goBack : EmptyView()
             }
-        
+            
         }.onReceive(viewModel.$userAddressViewState, perform: { userAddressViewState in
             if(userAddressViewState.userAddressState == UserAddressState.goBack){
                 self.mode.wrappedValue.dismiss()

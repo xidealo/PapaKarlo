@@ -147,14 +147,14 @@ struct OrderDetailsTextView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.top, Diems.HALF_SMALL_PADDING)
-            
-            VStack{
-                PlaceholderText(text: "Комментарий")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(orderDetails.comment ?? "")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            if(orderDetails.comment != nil && orderDetails.comment != ""){
+                VStack{
+                    PlaceholderText(text: "Комментарий")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(orderDetails.comment ?? "")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }.padding(.top, Diems.HALF_SMALL_PADDING)
             }
-            .padding(.top, Diems.HALF_SMALL_PADDING)
         }.frame(maxWidth: .infinity, alignment: .leading)
         .padding(Diems.MEDIUM_PADDING)
         .background(Color("surface"))

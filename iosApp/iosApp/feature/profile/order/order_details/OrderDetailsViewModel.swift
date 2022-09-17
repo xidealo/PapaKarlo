@@ -56,7 +56,7 @@ class OrderDetailsViewModel :ObservableObject {
                 }
 
                 copiedState.address = orderWithAmout?.address ?? ""
-                copiedState.comment = orderWithAmout?.comment ?? ""
+                copiedState.comment = orderWithAmout?.comment
 
                 copiedState.isDelivery = orderWithAmout?.isDelivery ?? false
                 if(orderWithAmout?.oldAmountToPay != nil){

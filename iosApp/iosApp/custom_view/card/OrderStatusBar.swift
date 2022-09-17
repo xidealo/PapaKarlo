@@ -72,7 +72,7 @@ struct DoneStep: View {
     let orderStatus : OrderStatus
 
     var body: some View {
-        IconImage(width: 18, height: 18, imageName: "CheckIcon")
+        IconImage(width: 15, height: 18, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(OrderChip.getColor(status: orderStatus))
             .foregroundColor(Color("surface"))
@@ -82,7 +82,7 @@ struct DoneStep: View {
 
 struct FutureStep: View {
     var body: some View {
-        IconImage(width: 18, height: 18, imageName: "CheckIcon")
+        IconImage(width: 15, height: 18, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(Color("surfaceVariant"))
             .foregroundColor(Color("surfaceVariant"))
