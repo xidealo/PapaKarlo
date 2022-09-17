@@ -5,6 +5,7 @@ import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
+import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.mapper.profile.IProfileMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 class UserRepository(
     private val networkConnector: NetworkConnector,
     private val profileMapper: IProfileMapper,
+    private val orderMapper: IOrderMapper,
     private val userMapper: IUserMapper,
     private val userDao: IUserDao,
     private val userAddressDao: IUserAddressDao,
@@ -49,7 +51,7 @@ class UserRepository(
         cityUuid: String,
         token: String
     ): Profile.Authorized? {
-        return getCacheOrData(
+        val profile = getCacheOrData(
             isCacheValid = {
                 cachedUserUuid == userUuid
             },
@@ -62,9 +64,9 @@ class UserRepository(
             onSaveLocally = ::saveProfileLocally,
             serverToDomainModel = profileMapper::toProfile
         )
-//            //.also { profile ->
-//            cachedUserUuid = profile?.userUuid
-//        }
+        cachedUserUuid = profile?.userUuid
+
+        return profile
     }
 
     override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
@@ -86,7 +88,13 @@ class UserRepository(
             dataStoreRepo.saveUserUuid(profile.uuid)
             userDao.insertUser(profileMapper.toUserEntity(profile))
             userAddressDao.insertUserAddressList(profileMapper.toUserAddressEntityList(profile))
-            orderDao.insertOrderWithProductList(profileMapper.toOrderWithProductEntityList(profile))
+            profile.orders.flatMap { orderServer ->
+                orderServer.oderProductList.map { orderProductServer ->
+                    orderMapper.toOrderWithProductEntity(orderServer, orderProductServer)
+                }
+            }.let { orderWithProductEntityList ->
+                orderDao.insertOrderWithProductList(orderWithProductEntityList)
+            }
         }
     }
 
