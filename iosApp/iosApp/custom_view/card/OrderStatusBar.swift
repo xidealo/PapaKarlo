@@ -29,7 +29,9 @@ struct OrderStatusBar: View {
                     Spacer()
                 }
             }.padding(.horizontal, Diems.MEDIUM_PADDING)
-        }.frame(maxWidth:.infinity).background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS)
+        }.frame(maxWidth:.infinity)
+            .background(Color("surface"))
+            .cornerRadius(Diems.MEDIUM_RADIUS)
     }
     
     func getCurrentStep(orderStatus:OrderStatus) -> Int{

@@ -8,16 +8,17 @@
 
 import Foundation
 import shared
+
 class UserAddressListViewModel: ObservableObject {
     
-    @Published var userAddressViewState:UserAddressViewState = UserAddressViewState(userAddressState: UserAddressState.loading, addressItemist: [])
+    @Published var userAddressViewState:UserAddressViewState = UserAddressViewState(userAddressState: UserAddressState.loading, addressItemList: [])
     
-    init(){
+    init(isClickable:Bool){
         iosComponent.provideIAddressInteractor().observeAddressList().watch { list in
             
             (self.userAddressViewState.copy() as! UserAddressViewState).apply { copiedState in
              
-                copiedState.addressItemist = (list as! [UserAddress]).map { userAddress in
+                copiedState.addressItemList = (list as! [UserAddress]).map { userAddress in
                     
                     var address = userAddress.street.name
                     address += " д. " + (userAddress.house)
@@ -38,9 +39,9 @@ class UserAddressListViewModel: ObservableObject {
                         address += (userAddress.comment ?? "")
                     }
                     
-                    return AddressItem(id: userAddress.uuid, address: address)
+                    return AddressItem(id: userAddress.uuid, address: address, isClickable:isClickable)
                 }
-                if(copiedState.addressItemist.isEmpty){
+                if(copiedState.addressItemList.isEmpty){
                     copiedState.userAddressState = UserAddressState.empty
                 }else{
                     copiedState.userAddressState = UserAddressState.success
@@ -49,7 +50,17 @@ class UserAddressListViewModel: ObservableObject {
             }
         }
     }
+    
+    func selectAddress(uuid:String){
+        iosComponent.provideIAddressInteractor().saveSelectedUserAddress(addressUuid: uuid) { err in
+            (self.userAddressViewState.copy() as! UserAddressViewState).apply { copiedState in
+                copiedState.userAddressState = UserAddressState.goBack
+                self.userAddressViewState = copiedState
+            }
+        }
+    }
+    
 }
 enum UserAddressState {
-    case loading, empty, success
+    case loading, empty, success, goBack
 }

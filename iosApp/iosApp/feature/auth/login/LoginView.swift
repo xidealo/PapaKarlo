@@ -53,7 +53,7 @@ struct LoginViewSuccessView: View {
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 12).onReceive(Just(phone)) { _ in minCode() }
+            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 17).onReceive(Just(phone)) { _ in minCode() }
             
             Spacer()
             Button {
@@ -73,8 +73,24 @@ struct LoginViewSuccessView: View {
     
     func minCode() {
         if phone.count < 2 {
-            phone = String(phone.prefix(2))
+            phone = String("+7")
+        }else{
+            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
         }
+    }
+}
+
+extension String {
+    func applyPatternOnNumbers(pattern: String, replacementCharacter: Character) -> String {
+        var pureNumber = self.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
+        for index in 0 ..< pattern.count {
+            guard index < pureNumber.count else { return pureNumber }
+            let stringIndex = String.Index(utf16Offset: index, in: pattern)
+            let patternCharacter = pattern[stringIndex]
+            guard patternCharacter != replacementCharacter else { continue }
+            pureNumber.insert(patternCharacter, at: stringIndex)
+        }
+        return pureNumber
     }
 }
 

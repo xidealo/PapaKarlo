@@ -14,15 +14,15 @@ struct FeedbackView: View {
             ToolbarView(title: Strings.TITLE_FEEDBACK, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack{
-                ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false){
+                ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().VK_LINK)!)
                 }
                 
-                ActionCardView(icon: "InstagramIcon", label: Strings.TITLE_FEEDBACK_INSTAGRAM, isSystemImageName: false){
+                ActionCardView(icon: "InstagramIcon", label: Strings.TITLE_FEEDBACK_INSTAGRAM, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().INSTAGRAM_LINK)!)
                 }
                 
-                ActionCardView(icon: "PlayMarketIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false){
+                ActionCardView(icon: "PlayMarketIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().PLAY_MARKET_LINK)!)
                 }
             }.padding(Diems.MEDIUM_PADDING)

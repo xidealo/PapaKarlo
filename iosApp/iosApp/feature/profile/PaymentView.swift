@@ -14,11 +14,11 @@ struct PaymentView: View {
             ToolbarView(title: Strings.TITLE_PAYMENT, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack{
-                ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_PHONE, isSystemImageName: false){
+                ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_PHONE, isSystemImageName: false, isShowRightArrow: false){
                     UIPasteboard.general.string = Strings.MSG_PAYMENT_PHONE
                 }
                 
-                ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_CARD_NUMBER, isSystemImageName: false){
+                ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_CARD_NUMBER, isSystemImageName: false, isShowRightArrow: false){
                     UIPasteboard.general.string = Strings.MSG_PAYMENT_CARD_NUMBER
                 }
             }.padding(Diems.MEDIUM_PADDING)

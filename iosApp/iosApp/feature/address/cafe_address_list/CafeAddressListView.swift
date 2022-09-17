@@ -12,13 +12,15 @@ struct CafeAddressListView: View {
     
     @ObservedObject private var viewModel = CafeAddressViewModel()
     
+    let isClickable:Bool
+    
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             SuccessCafeAddressListView(addressList: viewModel.addressList)
                 .onAppear {
-                viewModel.loadData()
+                    viewModel.loadData(isClickable: isClickable)
             }
         }.hiddenNavigationBarStyle()
             .background(Color("background"))
@@ -27,7 +29,7 @@ struct CafeAddressListView: View {
 
 struct CafeAddressListView_Previews: PreviewProvider {
     static var previews: some View {
-        CafeAddressListView()
+        CafeAddressListView(isClickable: false)
     }
 }
 
@@ -40,7 +42,21 @@ struct SuccessCafeAddressListView: View {
             ScrollView {
                 LazyVStack{
                     ForEach(addressList){ address in
-                        AddressItemView(addressItem: address).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.top, Diems.SMALL_PADDING)
+                        if(address.isClickable){
+                            Button(action: {
+                                
+
+                            }) {
+                                AddressItemView(addressItem: address)
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    .padding(.top, Diems.SMALL_PADDING)
+                            }
+                        }else{
+                            AddressItemView(addressItem: address)
+                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                .padding(.top, Diems.SMALL_PADDING)
+                        }
+                   
                     }
                 }
             }

@@ -69,7 +69,6 @@ struct ToolbarView: View {
                 }.padding(.vertical, Diems.SMALL_PADDING)
                 .padding(.trailing, Diems.SMALL_PADDING)
             }
-            
         }.background(Color("surface"))
     }
 }

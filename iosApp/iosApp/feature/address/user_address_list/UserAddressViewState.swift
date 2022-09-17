@@ -11,20 +11,20 @@ import Foundation
 class UserAddressViewState : NSObject, NSCopying {
     
     var userAddressState:UserAddressState
-    var addressItemist:[AddressItem]
+    var addressItemList:[AddressItem]
     
     init(
         userAddressState:UserAddressState,
-        addressItemist:[AddressItem]
+        addressItemList:[AddressItem]
     ){
         self.userAddressState = userAddressState
-        self.addressItemist = addressItemist
+        self.addressItemList = addressItemList
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = UserAddressViewState(
             userAddressState: userAddressState,
-            addressItemist: addressItemist
+            addressItemList: addressItemList
         )
         return copy
     }

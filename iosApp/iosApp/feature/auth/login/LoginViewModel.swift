@@ -22,9 +22,14 @@ class LoginViewModel:ObservableObject {
     }
     
     func sendCodeToPhone(phone:String){
+        let formattedPhone = phone.replace(string: "(", replacement: "")
+            .replace(string: ")", replacement: "")
+            .replace(string: "-", replacement: "")
+            .replace(string: " ", replacement: "")
+        
         loginViewState  = LoginViewState(isLoading: true, isGoToMenu: false)
-
-        auth.startAuth(phoneNumber: phone) { result in
+        print("formatted phone = \(formattedPhone)")
+        auth.startAuth(phoneNumber: formattedPhone) { result in
             self.loginViewState  = LoginViewState(isLoading: false, isGoToMenu: result)
         }
     }

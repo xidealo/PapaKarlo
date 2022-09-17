@@ -14,12 +14,14 @@ struct ActionCardView: View {
     let label:String
     let isSystemImageName:Bool
     let action: () -> Void
+    let isShowRightArrow:Bool
     
-    init(icon:String?, label:String, isSystemImageName:Bool, action: @escaping () -> Void) {
+    init(icon:String?, label:String, isSystemImageName:Bool, isShowRightArrow:Bool, action: @escaping () -> Void) {
         self.icon = icon
         self.label = label
         self.action = action
         self.isSystemImageName = isSystemImageName
+        self.isShowRightArrow = isShowRightArrow
     }
     
     var body: some View {
@@ -34,7 +36,9 @@ struct ActionCardView: View {
                     }
                 }
                 Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
-                Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
+                if isShowRightArrow{
+                    Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
+                }
             }.frame(maxWidth:.infinity)
             .padding(Diems.MEDIUM_PADDING)
             .background(Color("surface"))
@@ -46,6 +50,6 @@ struct ActionCardView: View {
 struct ActionCardView_Previews: PreviewProvider {
     static var previews: some View {
         ActionCardView(icon: "DeveloperIcon", label: "Label",
-                        isSystemImageName: false, action: {})
+                       isSystemImageName: false, isShowRightArrow: true, action: {})
     }
 }

@@ -9,5 +9,6 @@ import SwiftUI
 
 struct AddressItem:Identifiable {
     var id : String
-    let address:String
+    var address:String
+    var isClickable:Bool
 }

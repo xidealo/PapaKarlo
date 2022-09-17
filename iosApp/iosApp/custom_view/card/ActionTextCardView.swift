@@ -10,7 +10,6 @@ import SwiftUI
 
 struct ActionTextCardView: View {
     
-    let icon:String?
     let placeHolder:String
     let text:String
     let action: () -> Void

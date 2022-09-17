@@ -33,15 +33,23 @@ struct CreateOrderSuccessView:View {
     @ObservedObject var viewModel:CreateOrderViewModel
     
     var body: some View{
-        
         switch(viewModel.creationOrderViewState.createOrderState){
-        case CreateOrderState.goToProfile: NavigationLink(destination:ProfileView(), isActive: .constant(true)){
+        case CreateOrderState.goToProfile: NavigationLink(
+            destination:ProfileView(),
+            isActive: .constant(true)
+        ){
             EmptyView()
         }
-        case CreateOrderState.goToCafeAddressList: NavigationLink(destination:CafeAddressListView(), isActive: .constant(true)){
+        case CreateOrderState.goToCafeAddressList: NavigationLink(
+            destination:CafeAddressListView(isClickable: true),
+            isActive: .constant(true)
+        ){
             EmptyView()
         }
-        case CreateOrderState.goToUserAddressList: NavigationLink(destination:UserAddressListView(), isActive: .constant(true)){
+        case CreateOrderState.goToUserAddressList: NavigationLink(
+            destination:UserAddressListView(isClickable: true),
+            isActive: .constant(true)
+        ){
             EmptyView()
         }
         default :  VStack{
@@ -52,11 +60,10 @@ struct CreateOrderSuccessView:View {
             if viewModel.creationOrderViewState.address == nil{
                 NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_ADDRESS, destination: CreateAddressView())
             }else{
-                ActionTextCardView(icon: nil, placeHolder: Strings.HINT_CREATION_ORDER_ADDRESS, text: viewModel.creationOrderViewState.address!){
+                ActionTextCardView(placeHolder: Strings.HINT_CREATION_ORDER_ADDRESS, text: viewModel.creationOrderViewState.address!){
                     viewModel.goToAddress()
                 }
             }
-            
             EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
         }.padding(Diems.MEDIUM_PADDING)
             

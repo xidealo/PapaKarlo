@@ -12,11 +12,17 @@ class CafeAddressViewModel: ObservableObject {
     
     @Published var addressList:[AddressItem] = []
     
-    func loadData() {
+    func loadData(isClickable:Bool) {
         iosComponent.provideCafeInteractor().observeCafeAddressList().watch { list in
             self.addressList = (list as! [CafeAddress]).map({ cafeAddress in
-                AddressItem(id: cafeAddress.cafeUuid, address: cafeAddress.address)
+                AddressItem(id: cafeAddress.cafeUuid, address: cafeAddress.address, isClickable: isClickable)
             })
+        }
+    }
+    
+    func selectAddress(uuid:String){
+        iosComponent.provideCafeInteractor().selectCafe(cafeUuid: uuid) { err in
+            //goBack
         }
     }
     

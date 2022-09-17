@@ -24,19 +24,20 @@ struct OrderDetailsView: View {
                 LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
                 
                 ScrollView {
-                    LazyVStack{
+                    LazyVStack(spacing: 0){
                         OrderStatusBar(orderStatus: viewModel.orderDetailsViewState.status, orderStatusName: viewModel.orderDetailsViewState.statusName)
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         
-                        OrderDetailsTextView(orderDetails: viewModel.orderDetailsViewState)
-                        
+                        OrderDetailsTextView(orderDetails: viewModel.orderDetailsViewState)      .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.top, Diems.MEDIUM_PADDING)
+
                         ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
-                            
                             OrderProductItemView(orderProductItem: orderProductItem)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.vertical, Diems.SMALL_PADDING)
-                        }
+                        }.padding(.vertical, Diems.SMALL_PADDING)
+
                     }
                 }
             }
@@ -154,12 +155,10 @@ struct OrderDetailsTextView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.top, Diems.HALF_SMALL_PADDING)
-        }.frame(maxWidth: .infinity,
-                alignment: .leading)
+        }.frame(maxWidth: .infinity, alignment: .leading)
         .padding(Diems.MEDIUM_PADDING)
         .background(Color("surface"))
         .cornerRadius(Diems.MEDIUM_RADIUS)
-        .padding(Diems.MEDIUM_PADDING)
     }
 }
 
