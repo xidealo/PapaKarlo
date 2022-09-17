@@ -58,8 +58,8 @@ class DateTimeUtil : IDateTimeUtil {
             year = currentLocalDateTime.year,
             monthNumber = currentLocalDateTime.monthNumber,
             dayOfMonth = currentLocalDateTime.dayOfMonth,
-            hour = time.hourOfDay,
-            minute = time.minuteOfHour,
+            hour = time.hours,
+            minute = time.minutes,
             second = 0,
             nanosecond = 0
         ).toInstant(TimeZone.of(timeZone))
@@ -76,8 +76,8 @@ class DateTimeUtil : IDateTimeUtil {
 
     private val LocalDateTime.time
         get() = Time(
-            hourOfDay = hour,
-            minuteOfHour = minute,
+            hours = hour,
+            minutes = minute,
         )
 
     private val LocalDateTime.dateTime

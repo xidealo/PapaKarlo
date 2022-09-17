@@ -34,6 +34,8 @@ import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
@@ -65,9 +67,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             }
         }
         setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
-            /*bundle.getParcelable<Time>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
+            bundle.getParcelable<TimeUI>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
                 viewModel.onDeferredTimeSelected(selectedDeferredTime)
-            }*/
+            }
         }
     }
 
