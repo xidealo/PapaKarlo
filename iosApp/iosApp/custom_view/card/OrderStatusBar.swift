@@ -21,14 +21,15 @@ struct OrderStatusBar: View {
     }
     
     var body: some View {
-        HStack{
-            HStack{
+        HStack(spacing:0){
+            HStack(spacing:0){
                 ForEach(0...4, id: \.self){ i in
                     Spacer()
                     Step(index: i, currentStep: getCurrentStep(orderStatus: orderStatus), orderStatus: orderStatus)
                     Spacer()
                 }
             }.padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.vertical, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity)
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
@@ -52,7 +53,7 @@ struct Step: View {
     let index:Int
     let currentStep : Int
     let orderStatus : OrderStatus
-
+    
     var body: some View {
         VStack{
             if(index < currentStep){
@@ -63,14 +64,14 @@ struct Step: View {
                 FutureStep()
             }
         }.padding(.vertical, Diems.SMALL_PADDING)
-
+        
     }
 }
 
 
 struct DoneStep: View {
     let orderStatus : OrderStatus
-
+    
     var body: some View {
         IconImage(width: 15, height: 18, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)

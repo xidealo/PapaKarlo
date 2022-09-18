@@ -44,8 +44,7 @@ struct SuccessCafeAddressListView: View {
                     ForEach(addressList){ address in
                         if(address.isClickable){
                             Button(action: {
-                                
-
+                                //save selected
                             }) {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)

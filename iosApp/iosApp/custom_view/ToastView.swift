@@ -17,8 +17,7 @@ struct ToastView: View {
     @Binding var show :Bool
     let backgroundColor: Color
     let foregaroundColor: Color
-//Color("errorColor")
-    //Color("onErrorColor")
+
     var body: some View {
         VStack{
             Spacer()
@@ -30,7 +29,7 @@ struct ToastView: View {
                 .cornerRadius(Diems.MEDIUM_RADIUS)
                 .padding(Diems.MEDIUM_PADDING)
         }
-        .frame(maxWidth: .infinity)// UIScreen.main.bounds.width / 1.25
+        .frame(maxWidth: .infinity)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
         .onAppear(){
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -63,6 +62,11 @@ extension View {
 
 struct ToastView_Previews: PreviewProvider {
     static var previews: some View {
-        ToastView(toast: Toast(title: "title"), show: .constant(true), backgroundColor: Color.blue, foregaroundColor: Color.brown)
+        ToastView(
+            toast: Toast(title: "title"),
+            show: .constant(true),
+            backgroundColor: Color.blue,
+            foregaroundColor: Color.brown
+        )
     }
 }

@@ -29,14 +29,16 @@ struct OrderDetailsView: View {
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         
-                        OrderDetailsTextView(orderDetails: viewModel.orderDetailsViewState)      .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        OrderDetailsTextView(orderDetails: viewModel.orderDetailsViewState)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.MEDIUM_PADDING)
+                            .padding(.bottom, Diems.SMALL_PADDING)
 
                         ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
                             OrderProductItemView(orderProductItem: orderProductItem)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                .padding(.vertical, Diems.SMALL_PADDING)
-                        }.padding(.vertical, Diems.SMALL_PADDING)
+                                .padding(.top, Diems.SMALL_PADDING)
+                        }
 
                     }
                 }
@@ -61,7 +63,6 @@ struct OrderDetailsView: View {
                 .padding(.top, Diems.SMALL_PADDING)
             }.background(Color("surface"))
             
-            
         }.background(Color("background"))
             .hiddenNavigationBarStyle()
     }
@@ -71,7 +72,7 @@ struct OrderProductItemView :View {
     var orderProductItem:OrderProductItem
     
     var body: some View {
-        HStack{
+        HStack(spacing: 0){
             KFImage(URL(string: orderProductItem.photoLink))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -103,6 +104,7 @@ struct OrderProductItemView :View {
                     
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+                .padding(.leading, Diems.SMALL_PADDING)
             
         }.frame(maxWidth:.infinity, alignment: .topLeading)
             .background(Color("surface"))

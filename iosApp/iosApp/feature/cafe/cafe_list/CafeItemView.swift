@@ -12,7 +12,7 @@ struct CafeItemView: View {
     var cafeItem: CafeItem
 
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             LargeHeaderText(text: cafeItem.address)
                 .foregroundColor(Color("onSurface"))
                 .padding(.horizontal,  Diems.MEDIUM_PADDING)
