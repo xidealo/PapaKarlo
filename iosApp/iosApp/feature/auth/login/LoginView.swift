@@ -52,7 +52,12 @@ struct LoginViewSuccessView: View {
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 17).onReceive(Just(phone)) { _ in minCode() }
+            EditTextView(
+                hint: Strings.HINT_LOGIN_PHONE,
+                text:$phone, limit: 17,
+                keyBoadrType: UIKeyboardType.phonePad)
+                .onReceive(Just(phone)) { _ in minCode() }
+                .keyboardType(.phonePad)
             
             Spacer()
             Button {

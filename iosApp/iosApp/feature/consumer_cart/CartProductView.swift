@@ -15,7 +15,7 @@ struct CartProductView: View {
     let minusAction: () -> Void
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             KFImage(URL(string: cartProductItem.photoLink))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -35,10 +35,9 @@ struct CartProductView: View {
                         .frame(maxWidth:.infinity, alignment: .topLeading)
                         .foregroundColor(Color("onSurface"))
                 }
-            }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+            }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT).padding(.leading, Diems.SMALL_PADDING)
             
             CountPicker(count: String(cartProductItem.count), plusAction: plusAction, minusAction: minusAction).padding(.trailing, Diems.SMALL_PADDING)
-            
         }.frame(maxWidth:.infinity, alignment: .topLeading)
         .background(Color("surface"))
         .cornerRadius(Diems.MEDIUM_RADIUS)

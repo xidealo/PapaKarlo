@@ -25,28 +25,8 @@ struct ActionCardView: View {
     }
     
     var body: some View {
-        
         Button(action: action){
-            HStack{
-                if icon != nil{
-                    if(isSystemImageName){
-                        Image(systemName: icon ?? "").foregroundColor(Color("iconColor"))
-                    }else{
-                        Image(icon ?? "").resizable().frame(width: 23, height: 24).foregroundColor(Color("iconColor"))
-                    }
-                }
-                Text(label)
-                    .frame(maxWidth:.infinity, alignment: .leading)
-                    .foregroundColor(Color("onSurface"))
-                    .multilineTextAlignment(.leading)
-
-                if isShowRightArrow{
-                    Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
-                }
-            }.frame(maxWidth:.infinity)
-            .padding(Diems.MEDIUM_PADDING)
-            .background(Color("surface"))
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+           CardView(icon: icon, label: label, isSystemImageName: isSystemImageName, isShowRightArrow: isShowRightArrow)
         }
     }
 }

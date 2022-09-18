@@ -25,6 +25,7 @@ struct CafeItemView: View {
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             .padding(.bottom, Diems.MEDIUM_PADDING)
+            .padding(.top, Diems.SMALL_PADDING)
             .frame(maxWidth: .infinity, alignment: .leading)
         }.background(Color("surface")).cornerRadius(15)
     }

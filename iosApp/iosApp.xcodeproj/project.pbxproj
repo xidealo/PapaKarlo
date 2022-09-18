@@ -17,6 +17,7 @@
 		022696A6287B020D00B2E003 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A5287B020D00B2E003 /* SettingsViewModel.swift */; };
 		022696A8287B127C00B2E003 /* OrderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A7287B127C00B2E003 /* OrderListViewModel.swift */; };
 		022696AA287B166900B2E003 /* OrderListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022696A9287B166900B2E003 /* OrderListViewState.swift */; };
+		022A868528D79D5F00DBE5EC /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A868428D79D5F00DBE5EC /* CardView.swift */; };
 		022A929A288D460500EB5885 /* SearchEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022A9299288D460500EB5885 /* SearchEditText.swift */; };
 		022AA66D28BE9DD2005B9F20 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */; };
 		022B86AE28B8108E00AC1B97 /* ViewModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022B86AD28B8108E00AC1B97 /* ViewModelStore.swift */; };
@@ -134,6 +135,7 @@
 		022696A5287B020D00B2E003 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		022696A7287B127C00B2E003 /* OrderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewModel.swift; sourceTree = "<group>"; };
 		022696A9287B166900B2E003 /* OrderListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderListViewState.swift; sourceTree = "<group>"; };
+		022A868428D79D5F00DBE5EC /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		022A9299288D460500EB5885 /* SearchEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchEditText.swift; sourceTree = "<group>"; };
 		022AA66C28BE9DD2005B9F20 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		022B86AD28B8108E00AC1B97 /* ViewModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelStore.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				023234BB28787A180048CF39 /* TextCard.swift */,
 				023234BC28787A180048CF39 /* StatusChip.swift */,
 				02C21FF828D265E900DCF537 /* ActionTextCardView.swift */,
+				022A868428D79D5F00DBE5EC /* CardView.swift */,
 			);
 			path = card;
 			sourceTree = "<group>";
@@ -862,6 +865,7 @@
 				023234C628787A180048CF39 /* Switcher.swift in Sources */,
 				023234D428787A180048CF39 /* EditTextView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				022A868528D79D5F00DBE5EC /* CardView.swift in Sources */,
 				0232348A287879EF0048CF39 /* SettingsViewState.swift in Sources */,
 				0232349F287879EF0048CF39 /* MenuItemView.swift in Sources */,
 				023234DC28787A280048CF39 /* LoadingView.swift in Sources */,

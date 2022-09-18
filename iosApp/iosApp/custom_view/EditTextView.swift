@@ -13,16 +13,23 @@ struct EditTextView: View {
     let hint: String
     @Binding var text: String
     let limit:Int
+    var keyBoadrType = UIKeyboardType.default //default
+    
+    //@Binding var isShowError:Bool
     
     var body: some View {
-        TextField(hint, text: $text)
-            .padding()
-            .lineLimit(5)
-            .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
-            .overlay(
-                RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                    .stroke(Color("surfaceVariant"), lineWidth: 2)
-            ).onReceive(Just(text)) { _ in limitText(limit) }
+        //if(isShowError){
+            TextField(hint, text: $text)
+                .padding()
+                .lineLimit(5)
+                .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                        .stroke(Color("surfaceVariant"), lineWidth: 2)
+                ).onReceive(Just(text)) { _ in limitText(limit) }
+            .keyboardType(keyBoadrType)
+      //  }
+
     }
     
     func limitText(_ upper: Int) {

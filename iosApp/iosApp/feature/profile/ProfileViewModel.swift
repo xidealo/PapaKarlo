@@ -8,7 +8,6 @@
 import Foundation
 import shared
 
-
 class ProfileViewModel: ToolbarViewModel {
     
     @Published var profileViewState:ProfileViewState = ProfileViewState(

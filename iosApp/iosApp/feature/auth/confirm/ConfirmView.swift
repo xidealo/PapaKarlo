@@ -55,7 +55,7 @@ struct ConfirmViewSuccessView: View {
             
             //SmsTextField(count: 6)
             
-            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6)
+            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6, keyBoadrType: UIKeyboardType.numberPad)
             
             Spacer()
             

@@ -96,6 +96,7 @@ object Constants {
         "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
     const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
+    const val BB_VK_LINK = "https://vk.com/bunbeauty"
 
     // ERROR_KEY
 
