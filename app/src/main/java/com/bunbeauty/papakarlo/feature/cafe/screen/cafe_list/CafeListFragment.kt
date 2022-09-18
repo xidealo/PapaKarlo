@@ -24,12 +24,18 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
+import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
 
     override val viewBinding by viewBinding(FragmentCafeListBinding::bind)
     override val viewModel: CafeListViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
