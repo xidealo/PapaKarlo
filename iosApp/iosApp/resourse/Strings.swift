@@ -78,7 +78,8 @@ class Strings{
     static let MSG_CART_PRODUCT_RESULT = "Итого"
     
     //CREATION ORDER
-    static let HINT_CREATION_ORDER_ADDRESS = "Адрес"
+    static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"
+    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес кафе"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
     static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
     static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"

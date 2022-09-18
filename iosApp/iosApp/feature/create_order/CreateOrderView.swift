@@ -31,7 +31,7 @@ struct CreateOrderView: View {
 struct CreateOrderSuccessView:View {
     
     @ObservedObject var viewModel:CreateOrderViewModel
-    
+    @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
         case CreateOrderState.goToProfile: NavigationLink(
@@ -58,18 +58,22 @@ struct CreateOrderSuccessView:View {
             }
             
             if viewModel.creationOrderViewState.address == nil{
-                NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_ADDRESS, destination: CreateAddressView())
+                NavigationCardView(icon: nil, label: addressLable, destination: CreateAddressView())
             }else{
-                ActionTextCardView(placeHolder: Strings.HINT_CREATION_ORDER_ADDRESS, text: viewModel.creationOrderViewState.address!){
+                ActionTextCardView(placeHolder: addressLable, text: viewModel.creationOrderViewState.address!){
                     viewModel.goToAddress()
                 }
             }
+            
             EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
         }.padding(Diems.MEDIUM_PADDING)
             
             Spacer()
             
-            LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
+            LinearGradient(
+                gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom
+            )
+            .frame(height:20)
             VStack{
                 HStack{
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
@@ -108,6 +112,13 @@ struct CreateOrderSuccessView:View {
                     }
                 ).padding(Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
+                .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
+                    if(creationOrderViewState.isDelivery){
+                        addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
+                    }else{
+                        addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
+                    }
+                })
         }
     }
 }
