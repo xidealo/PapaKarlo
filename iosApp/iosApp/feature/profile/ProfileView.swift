@@ -16,14 +16,10 @@ struct ProfileView: View {
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            if(viewModel.profileViewState.isLoading){
-                LoadingProfileView()
-            }else{
-                if viewModel.profileViewState.isAuthorize{
-                    SuccessProfileView(profileViewState:  viewModel.profileViewState, show: show)
-                }else{
-                    EmptyProfileView()
-                }
+            switch(viewModel.profileViewState.profieState){
+            case ProfileState.loading : LoadingProfileView()
+            case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, show: show)
+            case ProfileState.notAuthorize : EmptyProfileView()
             }
             BottomBarView(isSelected: 2)
         }
