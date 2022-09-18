@@ -28,18 +28,6 @@ abstract class CacheRepository<D> : BaseRepository() {
                     }
                 }
             )
-
-//            apiRepo.getProfile(token).getNullableResult(
-//                onError = {
-//                    getProfileLocally(userUuid, cityUuid)
-//                },
-//                onSuccess = { profileServer ->
-//                    saveProfileLocally(profileServer)
-//                    profileMapper.toProfile(profileServer).also { profile ->
-//                        profileCache = profile
-//                    }
-//                }
-//            )
         }
     }
 }

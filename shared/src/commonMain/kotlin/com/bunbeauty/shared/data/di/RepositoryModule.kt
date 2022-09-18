@@ -86,6 +86,12 @@ fun repositoryModule() = module {
             networkConnector = get(),
         )
     }
+    single {
+        PaymentRepository(
+            networkConnector = get(),
+            dataStoreRepo = get(),
+        )
+    }
 }
 
 
