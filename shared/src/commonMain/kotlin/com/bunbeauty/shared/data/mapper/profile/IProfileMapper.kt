@@ -19,6 +19,5 @@ interface IProfileMapper {
 
     fun toUserEntity(profileServer: ProfileServer): UserEntity
     fun toUserAddressEntityList(profileServer: ProfileServer): List<UserAddressEntity>
-    fun toOrderWithProductEntityList(profileServer: ProfileServer): List<OrderWithProductEntity>
 
 }

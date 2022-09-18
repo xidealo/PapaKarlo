@@ -66,6 +66,7 @@ fun repositoryModule() = module {
         UserRepository(
             networkConnector = get(),
             profileMapper = get(),
+            orderMapper = get(),
             userMapper = get(),
             userDao = get(),
             userAddressDao = get(),

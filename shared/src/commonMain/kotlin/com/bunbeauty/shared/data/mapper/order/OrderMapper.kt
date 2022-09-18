@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data.mapper.order
 
 import com.bunbeauty.shared.data.mapper.order_product.IOrderProductMapper
+import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.db.OrderEntity
@@ -13,34 +14,35 @@ class OrderMapper(
     private val dateTimeUtil: IDateTimeUtil,
 ) : IOrderMapper {
 
-    override fun toOrderWithProductEntityList(orderServer: OrderServer): List<OrderWithProductEntity> {
-        return orderServer.oderProductList.map { orderProductServer ->
-            OrderWithProductEntity(
-                uuid = orderServer.uuid,
-                status = orderServer.status,
-                isDelivery = orderServer.isDelivery,
-                time = orderServer.time,
-                timeZone = orderServer.timeZone,
-                code = orderServer.code,
-                address = orderServer.addressDescription,
-                comment = orderServer.comment,
-                deliveryCost = orderServer.deliveryCost,
-                deferredTime = orderServer.deferredTime,
-                userUuid = orderServer.clientUserUuid,
-                orderProductUuid = orderServer.uuid,
-                orderProductCount = orderProductServer.count,
-                orderProductName = orderProductServer.name,
-                orderProductNewPrice = orderProductServer.newPrice,
-                orderProductOldPrice = orderProductServer.oldPrice,
-                orderProductUtils = orderProductServer.utils,
-                orderProductNutrition = orderProductServer.nutrition,
-                orderProductDescription = orderProductServer.description,
-                orderProductComboDescription = orderProductServer.comboDescription,
-                orderProductPhotoLink = orderProductServer.photoLink,
-                orderProductBarcode = orderProductServer.barcode,
-                orderUuid = orderProductServer.uuid
-            )
-        }
+    override fun toOrderWithProductEntity(
+        orderServer: OrderServer,
+        orderProductServer: OrderProductServer
+    ): OrderWithProductEntity {
+        return OrderWithProductEntity(
+            uuid = orderServer.uuid,
+            status = orderServer.status,
+            isDelivery = orderServer.isDelivery,
+            time = orderServer.time,
+            timeZone = orderServer.timeZone,
+            code = orderServer.code,
+            address = orderServer.addressDescription,
+            comment = orderServer.comment,
+            deliveryCost = orderServer.deliveryCost,
+            deferredTime = orderServer.deferredTime,
+            userUuid = orderServer.clientUserUuid,
+            orderProductUuid = orderProductServer.uuid,
+            orderProductCount = orderProductServer.count,
+            orderProductName = orderProductServer.name,
+            orderProductNewPrice = orderProductServer.newPrice,
+            orderProductOldPrice = orderProductServer.oldPrice,
+            orderProductUtils = orderProductServer.utils,
+            orderProductNutrition = orderProductServer.nutrition,
+            orderProductDescription = orderProductServer.description,
+            orderProductComboDescription = orderProductServer.comboDescription,
+            orderProductPhotoLink = orderProductServer.photoLink,
+            orderProductBarcode = orderProductServer.barcode,
+            orderUuid = orderServer.uuid
+        )
     }
 
     override fun toLightOrder(orderEntity: OrderEntity): LightOrder {

@@ -56,6 +56,7 @@ fun viewModelModule() = module {
             userInteractor = get(),
             deferredTimeInteractor = get(),
             stringUtil = get(),
+            timeMapper = get(),
         )
     }
     viewModel {
@@ -140,7 +141,8 @@ fun viewModelModule() = module {
     viewModel { parameters ->
         DeferredTimeViewModel(
             deferredTimeInteractor = get(),
-            savedStateHandle = parameters.get()
+            timeMapper = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel {

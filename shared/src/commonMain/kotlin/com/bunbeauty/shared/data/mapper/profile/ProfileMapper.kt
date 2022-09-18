@@ -53,10 +53,4 @@ class ProfileMapper(
             userAddressMapper.toUserAddressEntity(addressServer)
         }
     }
-
-    override fun toOrderWithProductEntityList(profileServer: ProfileServer): List<OrderWithProductEntity> {
-        return profileServer.orders.flatMap { orderServer ->
-            orderMapper.toOrderWithProductEntityList(orderServer)
-        }
-    }
 }

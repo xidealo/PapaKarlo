@@ -62,7 +62,7 @@ class StringUtil(
     }
 
     override fun getTimeString(time: Time): String {
-        return "${addFirstZero(time.hourOfDay)}:${addFirstZero(time.minuteOfHour)}"
+        return "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
     }
 
     fun getStringPart(divider: String, description: String, data: Any?): String {

@@ -15,8 +15,6 @@ struct CafeItemView: View {
         
         VStack{
             LargeHeaderText(text: cafeItem.address)
-                .padding(.top, Diems.MEDIUM_PADDING)
-                .padding(.bottom, Diems.SMALL_PADDING)
                 .foregroundColor(Color("onSurface"))
             
             HStack{
@@ -24,11 +22,10 @@ struct CafeItemView: View {
                 Text(cafeItem.isOpenMessage).foregroundColor(cafeItem.isOpenColor)
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.bottom, Diems.MEDIUM_PADDING)
+            .padding(.bottom, Diems.SMALL_PADDING)
             .frame(maxWidth: .infinity, alignment: .leading)
             
         }.background(Color("surface")).cornerRadius(15)
-       
     }
 }
 

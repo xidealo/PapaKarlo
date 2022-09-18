@@ -1,6 +1,17 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
+import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.*
+import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
+import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
+import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -8,15 +19,6 @@ import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInterac
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.*
-import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -28,6 +30,7 @@ class CreateOrderViewModel(
     private val userInteractor: IUserInteractor,
     private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val stringUtil: IStringUtil,
+    private val timeMapper: TimeMapper,
 ) : BaseViewModel() {
 
     private val asap = resourcesProvider.getString(R.string.msg_deferred_time_asap)
@@ -56,6 +59,7 @@ class CreateOrderViewModel(
     init {
         observeAddress()
         viewModelScope.launch {
+            cafeInteractor.getCafeList()
             cartProductInteractor.getCartTotal().let { cartTotal ->
                 mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
                     totalCost = stringUtil.getCostString(cartTotal.totalCost),
@@ -74,7 +78,8 @@ class CreateOrderViewModel(
         }
     }
 
-    fun onDeferredTimeSelected(deferredTime: Time?) {
+    fun onDeferredTimeSelected(deferredTimeUi: TimeUI?) {
+        val deferredTime = deferredTimeUi?.let { timeMapper.toDomainModel(deferredTimeUi) }
         selectedDeferredTime = deferredTime
         if (deferredTime == null) {
             selectedDeferredTimeMillis = null
@@ -172,8 +177,12 @@ class CreateOrderViewModel(
         } else {
             resourcesProvider.getString(R.string.hint_create_order_pickup_time)
         }
-        //TODO(Change parametrs)
-        //router.navigate(toDeferredTimeBottomSheet(deferredTimeHint, selectedDeferredTime))
+        router.navigate(
+            toDeferredTimeBottomSheet(
+                deferredTimeHint,
+                selectedDeferredTime?.let { timeMapper.toUiModel(it) }
+            )
+        )
     }
 
     fun onAddCommentClicked() {

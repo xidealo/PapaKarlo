@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,21 +17,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
-import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
-import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
-import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.Title
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
+import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetDeferredTimeBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.create_order.model.DeferredTimeSettingsUI
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
+import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
@@ -58,10 +57,10 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
         val colorOnSurface = resourcesProvider.getColorByAttr(R.attr.colorOnSurface)
         val timePicker = TimePickerDialog.newInstance(
             { _, hour, minute, _ ->
-                sendResult(Time(hourOfDay = hour, minuteOfHour = minute))
+                sendResult(TimeUI(hours = hour, minutes = minute))
             },
-            deferredTimeSettingsUI.selectedTime.hourOfDay,
-            deferredTimeSettingsUI.selectedTime.minuteOfHour,
+            deferredTimeSettingsUI.selectedTime.hours,
+            deferredTimeSettingsUI.selectedTime.minutes,
             true
         ).apply {
             title = deferredTimeSettingsUI.title
@@ -69,8 +68,8 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
             setCancelColor(colorOnSurfaceVariant)
             setOkColor(colorOnSurface)
             setMinTime(
-                deferredTimeSettingsUI.minTime.hourOfDay,
-                deferredTimeSettingsUI.minTime.minuteOfHour,
+                deferredTimeSettingsUI.minTime.hours,
+                deferredTimeSettingsUI.minTime.minutes,
                 0
             )
             setOnCancelListener {
@@ -80,7 +79,7 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
         timePicker.show(childFragmentManager, null)
     }
 
-    private fun sendResult(selectedTime: Time?) {
+    private fun sendResult(selectedTime: TimeUI?) {
         setFragmentResult(
             DEFERRED_TIME_REQUEST_KEY,
             bundleOf(SELECTED_DEFERRED_TIME_KEY to selectedTime)
@@ -144,8 +143,8 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
         DeferredTimeScreen(
             DeferredTimeSettingsUI(
                 title = "Время доставки",
-                minTime = Time(3, 30),
-                selectedTime = Time(4, 0),
+                minTime = TimeUI(3, 30),
+                selectedTime = TimeUI(4, 0),
             )
         )
     }
