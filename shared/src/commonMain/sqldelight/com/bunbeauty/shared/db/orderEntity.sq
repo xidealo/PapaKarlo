@@ -28,7 +28,7 @@ SELECT orderEntity.*,
     orderProductEntity.barcode AS orderProductBarcode,
     orderProductEntity.orderUuid AS orderUuid
 FROM orderEntity
-JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.uuid;
+JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
 
 isnsertOrder:
 INSERT OR REPLACE

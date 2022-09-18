@@ -52,10 +52,11 @@ class OrderRepository(
     override suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode? {
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector.postOrder(token, orderPostServer).getNullableResult { oderServer ->
-            orderDao.insertOrderWithProductList(orderMapper.toOrderWithProductEntityList(oderServer))
-            println("CHECK ITTTTTT")
-            println(oderServer)
-            println("RETURN FROM DB ${orderDao.getLastOrderByUserUuid(oderServer.clientUserUuid)}")
+            oderServer.oderProductList.map { oderProductServer ->
+                orderMapper.toOrderWithProductEntity(oderServer, oderProductServer)
+            }.let { orderWithProductEntityList ->
+                orderDao.insertOrderWithProductList(orderWithProductEntityList)
+            }
             orderMapper.toOrderCode(oderServer)
         }
     }
