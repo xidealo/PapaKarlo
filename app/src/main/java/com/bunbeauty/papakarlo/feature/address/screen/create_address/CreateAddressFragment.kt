@@ -117,6 +117,10 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
                     list = streetList,
                 ) { changedValue ->
                     streetText = changedValue
+                    val error = viewModel.checkStreetError(streetText.text)
+                    if (error == null) {
+                        streetError = null
+                    }
                 }
                 EditText(
                     modifier = Modifier.fillMaxWidth(),

@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
@@ -21,10 +22,8 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
+import com.bunbeauty.papakarlo.feature.menu.model.*
+import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,6 +31,11 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     override val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentMenuBinding::bind)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
@@ -42,7 +46,24 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             val menuState by viewModel.menuState.collectAsState()
             MenuScreen(menuState = menuState)
         }
+        handleActions()
     }
+
+    private fun handleActions() {
+        viewModel.actionFlow.startedLaunch { action ->
+            when (action) {
+                is MenuAction.GoToSelectedItem -> {
+                    findNavController().navigate(
+                        MenuFragmentDirections.toProductFragment(
+                            action.uuid,
+                            action.name
+                        )
+                    )
+                }
+            }
+        }
+    }
+
 
     @Composable
     private fun MenuScreen(menuState: State<MenuUI>) {

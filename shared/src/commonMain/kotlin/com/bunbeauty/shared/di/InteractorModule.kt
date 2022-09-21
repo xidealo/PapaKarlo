@@ -16,6 +16,7 @@ import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteracto
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.order.OrderInteractor
+import com.bunbeauty.shared.domain.interactor.payment.PaymentInteractor
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.interactor.product.ProductInteractor
 import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
@@ -114,6 +115,12 @@ fun interactorModule() = module {
         SettingsInteractor(
             cityInteractor = get(),
             userInteractor = get(),
+        )
+    }
+    single {
+        PaymentInteractor(
+            dataStoreRepo = get(),
+            paymentRepository = get(),
         )
     }
 }

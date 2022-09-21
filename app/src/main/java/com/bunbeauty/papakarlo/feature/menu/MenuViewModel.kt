@@ -1,21 +1,16 @@
 package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.shared.domain.model.menu.MenuSection
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.feature.menu.MenuFragmentDirections.toProductFragment
-import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
+import com.bunbeauty.papakarlo.common.view_model.send
+import com.bunbeauty.papakarlo.feature.menu.model.*
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
+import com.bunbeauty.shared.domain.model.menu.MenuSection
+import com.bunbeauty.shared.domain.model.product.MenuProduct
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class MenuViewModel(
@@ -26,6 +21,9 @@ class MenuViewModel(
     private val mutableMenuState: MutableStateFlow<State<MenuUI>> =
         MutableStateFlow(State.Loading())
     val menuState: StateFlow<State<MenuUI>> = mutableMenuState.asStateFlow()
+
+    private val mutableActionFlow: MutableSharedFlow<MenuAction> = MutableSharedFlow(replay = 0)
+    val actionFlow: SharedFlow<MenuAction> = mutableActionFlow.asSharedFlow()
 
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
@@ -68,7 +66,7 @@ class MenuViewModel(
     }
 
     fun onMenuItemClicked(menuProductItem: MenuProductItem) {
-        router.navigate(toProductFragment(menuProductItem.uuid, menuProductItem.name))
+        mutableActionFlow.send(MenuAction.GoToSelectedItem(menuProductItem.uuid, menuProductItem.name), viewModelScope)
     }
 
     fun onAddProductClicked(menuProductUuid: String) {

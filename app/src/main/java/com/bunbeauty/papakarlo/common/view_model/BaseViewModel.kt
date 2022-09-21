@@ -15,7 +15,7 @@ import org.koin.core.component.inject
 
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
-    //TODO(Move to constructor)
+    @Deprecated("Use action navigation on Fragments, example MenuFragment")
     val router: Router by inject()
 
     val resourcesProvider: IResourcesProvider by inject()
@@ -64,7 +64,7 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         }.launchIn(viewModelScope)
     }
 
-    protected fun <T: Any?> T?.toState(errorMessage: String? = null): State<T> {
+    protected fun <T : Any?> T?.toState(errorMessage: String? = null): State<T> {
         return if (this == null) {
             State.Error(errorMessage ?: resourcesProvider.getString(R.string.error_common))
         } else {

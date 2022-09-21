@@ -17,7 +17,8 @@ object Versions {
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
-    const val appCompact = "1.4.1"
+    const val appCompact = "1.5.1"
+    const val coreKtx = "1.9.0"
     const val coil = "2.1.0"
     const val timePicker = "4.2.3"
 
@@ -95,7 +96,7 @@ object AndroidX {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompact}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-    const val coreKtx = "androidx.core:core-ktx:1.7.0"
+    const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
 }
 
 object Google {

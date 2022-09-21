@@ -19,6 +19,7 @@ import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsVi
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewModel
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
@@ -56,6 +57,7 @@ fun viewModelModule() = module {
             userInteractor = get(),
             deferredTimeInteractor = get(),
             stringUtil = get(),
+            timeMapper = get(),
         )
     }
     viewModel {
@@ -140,7 +142,8 @@ fun viewModelModule() = module {
     viewModel { parameters ->
         DeferredTimeViewModel(
             deferredTimeInteractor = get(),
-            savedStateHandle = parameters.get()
+            timeMapper = get(),
+            savedStateHandle = parameters.get(),
         )
     }
     viewModel {
@@ -163,6 +166,11 @@ fun viewModelModule() = module {
         SplashViewModel(
             updateInteractor = get(),
             cityInteractor = get(),
+        )
+    }
+    viewModel {
+        PaymentViewModel(
+            paymentInteractor = get()
         )
     }
 }

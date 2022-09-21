@@ -107,6 +107,7 @@ class CreateAddressViewModel(
         floor: String,
         comment: String,
     ) {
+        mutableStreetListState.value = State.Loading()
         viewModelScope.launch {
             val userAddress = addressInteractor.createAddress(
                 streetName,
