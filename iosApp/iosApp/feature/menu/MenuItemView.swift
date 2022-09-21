@@ -14,8 +14,7 @@ struct MenuItemView: View {
     let action: () -> Void
     
     var body: some View {
-        HStack{
-            
+        HStack(spacing:0){
             KFImage(URL(string: menuProductItem.photoLink))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -36,6 +35,7 @@ struct MenuItemView: View {
                         .foregroundColor(Color("onSurface"))
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+                .padding(.leading, Diems.SMALL_PADDING)
             
             Button(action: action) {
                 Text(Strings.ACTION_MENU_PRODUCT_WANT)

@@ -12,10 +12,12 @@ struct LoginView: View {
     
     @State private var phone:String = "+7"
     let auth = AuthManager()
-    
+    private let isGoToProfile:Bool
+
     @ObservedObject private var viewModel : LoginViewModel
     
-    init(){
+    init(isGoToProfile:Bool){
+        self.isGoToProfile = isGoToProfile
         viewModel = LoginViewModel(auth: auth)
     }
     
@@ -25,7 +27,7 @@ struct LoginView: View {
                 LoadingView().navigationBarHidden(true)
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone),
+                    destination:ConfirmView(auth: auth, phone: phone, isGoToProfile: isGoToProfile),
                     isActive: $viewModel.loginViewState.isGoToMenu
                 ){
                     EmptyView()
@@ -44,7 +46,6 @@ struct LoginViewSuccessView: View {
     @ObservedObject var viewModel : LoginViewModel
     
     var body: some View {
-        
         VStack{
             ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
@@ -53,7 +54,12 @@ struct LoginViewSuccessView: View {
             Image("LoginLogo").resizable().frame(width: 152, height: 120)
             Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
             
-            EditTextView(hint: Strings.HINT_LOGIN_PHONE, text:$phone, limit: 12).onReceive(Just(phone)) { _ in minCode() }
+            EditTextView(
+                hint: Strings.HINT_LOGIN_PHONE,
+                text:$phone, limit: 17,
+                keyBoadrType: UIKeyboardType.phonePad)
+                .onReceive(Just(phone)) { _ in minCode() }
+                .keyboardType(.phonePad)
             
             Spacer()
             Button {
@@ -69,17 +75,34 @@ struct LoginViewSuccessView: View {
             }
         }.padding(Diems.MEDIUM_PADDING)
             .navigationBarHidden(true)
+         
     }
     
     func minCode() {
         if phone.count < 2 {
-            phone = String(phone.prefix(2))
+            phone = String("+7")
+        }else{
+            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
         }
+    }
+}
+
+extension String {
+    func applyPatternOnNumbers(pattern: String, replacementCharacter: Character) -> String {
+        var pureNumber = self.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
+        for index in 0 ..< pattern.count {
+            guard index < pureNumber.count else { return pureNumber }
+            let stringIndex = String.Index(utf16Offset: index, in: pattern)
+            let patternCharacter = pattern[stringIndex]
+            guard patternCharacter != replacementCharacter else { continue }
+            pureNumber.insert(patternCharacter, at: stringIndex)
+        }
+        return pureNumber
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(isGoToProfile: false)
     }
 }

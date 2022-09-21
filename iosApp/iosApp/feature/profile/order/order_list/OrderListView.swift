@@ -42,16 +42,13 @@ struct SuccessOrderListView: View {
             ScrollView {
                 LazyVStack(spacing:0){
                     ForEach(orderList){ order in
-                        OrderItemView(orderItem:  order, destination: OrderDetailsView()).padding(.vertical, Diems.HALF_SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id)).padding(.vertical, Diems.HALF_SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }
         }
     }
-    
 }
-
-
 
 struct EmptyOrderListView: View {
     var body: some View {
@@ -62,7 +59,6 @@ struct EmptyOrderListView: View {
             
             Text(Strings.MSG_ORDER_LIST_EMPTY_ORDERS).multilineTextAlignment(.center)
             Spacer()
-            
         }
     }
 }

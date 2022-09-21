@@ -8,10 +8,31 @@
 import Foundation
 import shared
 
-struct ProfileViewState{
-    let userUuid: String
-    let hasAddresses: Bool
-    let lastOrder: OrderItem?
-    let isAuthorize:Bool
-    let isLoading:Bool
+class ProfileViewState : NSObject,  NSCopying  {
+    
+    var userUuid: String
+    var hasAddresses: Bool
+    var lastOrder: OrderItem?
+    var profieState:ProfileState
+    
+    init(userUuid:String, hasAddresses:Bool, lastOrder:OrderItem?, profileState:ProfileState){
+        self.userUuid = userUuid
+        self.hasAddresses = hasAddresses
+        self.lastOrder = lastOrder
+        self.profieState = profileState
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = ProfileViewState(
+            userUuid: userUuid,
+            hasAddresses: hasAddresses,
+            lastOrder: lastOrder,
+            profileState: profieState
+        )
+        return copy
+    }
+}
+
+enum ProfileState{
+    case notAuthorize, loading, success
 }

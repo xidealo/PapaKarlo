@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import shared
 
 struct AboutAppView: View {
     
@@ -21,14 +22,12 @@ struct AboutAppView: View {
             ToolbarView(title: Strings.TITLE_ABOUT_APP, cost: "220 R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack{
-                ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false){
-                    print("go to dev")
+                ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false, isShowRightArrow: true){
+                    UIApplication.shared.open(URL(string: Constants.init().BB_VK_LINK)!)
                 }
                 
-                ActionCardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false){
-                    print("go to dev")
-                    
-                }
+                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: true)
+                
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()

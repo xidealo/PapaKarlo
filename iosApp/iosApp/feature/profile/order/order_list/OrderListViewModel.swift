@@ -11,12 +11,15 @@ import shared
 
 class OrderListViewModel : ObservableObject{
     
-    @Published var orderListViewState = OrderListViewState(isLoading: false, orderList: [])
+    @Published var orderListViewState = OrderListViewState(
+        isLoading: false,
+        orderList: []
+    )
 
     init(){
         iosComponent.provideIOrderInteractor().observeOrderListSwift().watch { orders in
             self.orderListViewState = OrderListViewState(isLoading: false, orderList: orders!.map { order in
-                OrderItem(id: (order as! LightOrder).uuid, status: (order as! LightOrder).status.name, code: (order as! LightOrder).code, dateTime: "")
+                OrderItem(id: (order as! LightOrder).uuid, status: (order as! LightOrder).status, code: (order as! LightOrder).code, dateTime: "")
             })
         }
 

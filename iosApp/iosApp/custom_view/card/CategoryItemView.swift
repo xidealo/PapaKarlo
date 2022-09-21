@@ -12,27 +12,29 @@ struct CategoryItemView: View {
     let categoryItemModel:CategoryItemModel
     
     var body: some View {
-        if(categoryItemModel.isSelected){
-            Button(action: {
-                print("button pressed")
-            }) {
-                Text(categoryItemModel.name)
-                    .padding(Diems.SMALL_PADDING)
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .foregroundColor(Color("onPrimary"))
+        HStack{
+            if(categoryItemModel.isSelected){
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Text(categoryItemModel.name)
+                        .padding(Diems.SMALL_PADDING)
+                        .background(Color("primary"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .foregroundColor(Color("onPrimary"))
+                }
+            }else{
+                Button(action: {
+                    print("button pressed")
+                }) {
+                    Text(categoryItemModel.name)
+                        .padding(Diems.SMALL_PADDING)
+                        .background(Color("surface"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .foregroundColor(Color("onSurface"))
+                }
             }
-        }else{
-            Button(action: {
-                print("button pressed")
-            }) {
-                Text(categoryItemModel.name)
-                    .padding(Diems.SMALL_PADDING)
-                    .background(Color("surface"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .foregroundColor(Color("onSurface"))
-            }
-        }
+        }.padding(.leading, Diems.HALF_SMALL_PADDING)
     }
 }
 
