@@ -12,10 +12,12 @@ struct LoginView: View {
     
     @State private var phone:String = "+7"
     let auth = AuthManager()
-    
+    private let isGoToProfile:Bool
+
     @ObservedObject private var viewModel : LoginViewModel
     
-    init(){
+    init(isGoToProfile:Bool){
+        self.isGoToProfile = isGoToProfile
         viewModel = LoginViewModel(auth: auth)
     }
     
@@ -25,7 +27,7 @@ struct LoginView: View {
                 LoadingView().navigationBarHidden(true)
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone),
+                    destination:ConfirmView(auth: auth, phone: phone, isGoToProfile: isGoToProfile),
                     isActive: $viewModel.loginViewState.isGoToMenu
                 ){
                     EmptyView()
@@ -101,6 +103,6 @@ extension String {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(isGoToProfile: false)
     }
 }

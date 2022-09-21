@@ -21,7 +21,7 @@ struct ConsumerCartView: View {
             case .empty: ConsumerCartEmptyScreen()
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             case .goToLogin:NavigationLink(
-                destination:LoginView(),
+                destination:LoginView(isGoToProfile: false),
                 isActive: .constant(true)
             ){
                 EmptyView()

@@ -53,7 +53,7 @@ struct EmptyProfileView: View {
             Spacer()
             
             NavigationLink(
-                destination:LoginView()
+                destination:LoginView(isGoToProfile: true)
             ){
                 Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
                     .padding()

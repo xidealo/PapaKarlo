@@ -10,12 +10,10 @@ import Foundation
 
 class ConfirmViewState :NSObject {
     
-    var isLoading:Bool
-    var isGoToProfile:Bool
+    var confirmState:ConfirmState
     
-    init(isLoading:Bool, isGoToProfile:Bool){
-        self.isLoading = isLoading
-        self.isGoToProfile = isGoToProfile
+    init(confirmState:ConfirmState){
+        self.confirmState = confirmState
     }
     
 }
