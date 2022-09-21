@@ -7,9 +7,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.Payment
+import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,6 +21,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
+    private val Context.paymentDataStore: DataStore<Preferences> by preferencesDataStore(name = PAYMENT_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
 
@@ -62,6 +64,28 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
+    actual override val payment: Flow<Payment?> = context.paymentDataStore.data.map {
+        Payment(
+            phoneNumber = it[PAYMENT_PHONE_NUMBER_KEY],
+            cardNumber = it[PAYMENT_CARD_NUMBER_KEY],
+        )
+    }
+
+    actual override suspend fun getPayment(): Payment? {
+        return payment.firstOrNull()
+    }
+
+    actual override suspend fun savePayment(payment: Payment) {
+        context.paymentDataStore.edit {
+            payment.phoneNumber?.let { phoneNumber ->
+                it[PAYMENT_PHONE_NUMBER_KEY] = phoneNumber
+            }
+            payment.cardNumber?.let { cardNumber ->
+                it[PAYMENT_CARD_NUMBER_KEY] = cardNumber
+            }
+        }
+    }
+
     actual override val userUuid: Flow<String?> = context.userUuidDataStore.data.map {
         it[USER_UUID_KEY]
     }
@@ -86,9 +110,10 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         it[SELECTED_CITY_UUID_KEY]
     }
 
-    actual override val selectedCityTimeZone: Flow<String> = context.selectedCityDataStore.data.map {
-        it[SELECTED_CITY_TIME_ZONE_KEY] ?: DEFAULT_TIME_ZONE
-    }
+    actual override val selectedCityTimeZone: Flow<String> =
+        context.selectedCityDataStore.data.map {
+            it[SELECTED_CITY_TIME_ZONE_KEY] ?: DEFAULT_TIME_ZONE
+        }
 
     actual override suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String) {
         context.selectedCityDataStore.edit {
@@ -130,6 +155,7 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     companion object {
         private const val TOKEN_DATA_STORE = "token data store"
         private const val DELIVERY_DATA_STORE = "delivery data store"
+        private const val PAYMENT_DATA_STORE = "payment data store"
         private const val USER_UUID_DATA_STORE = "user id data store"
         private const val SELECTED_CITY_DATA_STORE = "selected city data store"
 
@@ -137,18 +163,20 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val USER_UUID = "user uuid"
         private const val DELIVERY_COST = "delivery cost"
         private const val FOR_FREE_DELIVERY = "for free delivery"
+        private const val PAYMENT_PHONE_NUMBER = "payment phone number"
+        private const val PAYMENT_CARD_NUMBER = "payment card number"
         private const val SELECTED_CITY_UUID = "selected city uuid"
         private const val SELECTED_CITY_TIME_ZONE = "selected city time zone"
 
         private val TOKEN_KEY = stringPreferencesKey(TOKEN)
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
+        private val PAYMENT_PHONE_NUMBER_KEY = stringPreferencesKey(PAYMENT_PHONE_NUMBER)
+        private val PAYMENT_CARD_NUMBER_KEY = stringPreferencesKey(PAYMENT_CARD_NUMBER)
         private val USER_UUID_KEY = stringPreferencesKey(USER_UUID)
         private val SELECTED_CITY_UUID_KEY = stringPreferencesKey(SELECTED_CITY_UUID)
         private val SELECTED_CITY_TIME_ZONE_KEY = stringPreferencesKey(SELECTED_CITY_TIME_ZONE)
 
-        private const val DEFAULT_DELIVERY_COST = 0
-        private const val DEFAULT_FOR_FREE_DELIVERY = 0
         private const val DEFAULT_TIME_ZONE = "UTC+3"
     }
 }

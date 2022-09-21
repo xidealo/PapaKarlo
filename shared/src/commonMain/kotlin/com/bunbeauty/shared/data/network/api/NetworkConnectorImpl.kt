@@ -95,6 +95,14 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         )
     }
 
+    override suspend fun getPayment(token: String): ApiResult<PaymentServer> {
+        return getDataWithAuth(
+            path = "payment",
+            serializer = PaymentServer.serializer(),
+            token = token
+        )
+    }
+
     override suspend fun getProfile(token: String): ApiResult<ProfileServer> {
         return getDataWithAuth(
             path = "client",

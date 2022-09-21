@@ -1,6 +1,7 @@
 package com.bunbeauty.shared
 
 import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
 
@@ -19,6 +20,10 @@ interface DataStoreRepo {
     val delivery: Flow<Delivery?>
     suspend fun getDelivery(): Delivery?
     suspend fun saveDelivery(delivery: Delivery)
+
+    val payment: Flow<Payment?>
+    suspend fun getPayment(): Payment?
+    suspend fun savePayment(payment: Payment)
 
     val selectedCityUuid: Flow<String?>
     val selectedCityTimeZone: Flow<String>
