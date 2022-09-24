@@ -10,16 +10,52 @@ import Foundation
 import shared
 class CreateOrderViewModel:ObservableObject {
     
-    @Published var creationOrderViewState = CreateOrderViewState(isDelivery: true, address: nil, comment: "", deferredTime: "", totalCost: "", deliveryCost: "", amountToPay: "", amountToPayWithDeliveryCost: "", isLoading: true, userUuid: nil, cafeUuid: nil, isGoProfile: false)
+    @Published var creationOrderViewState = CreateOrderViewState(
+        isDelivery: true,
+        address: nil,
+        comment: "",
+        deferredTime: "",
+        totalCost: "",
+        deliveryCost: "",
+        amountToPay: "",
+        amountToPayWithDeliveryCost: "",
+        userUuid: nil,
+        cafeUuid: nil,
+        createOrderState: CreateOrderState.loading
+    )
     
-    init(){
+    func loadData(){
         print("CreateOrderViewModel")
         iosComponent.provideCartProductInteractor().getCartTotal { cartTotal, error in
             if(cartTotal==nil) {
-                self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: self.creationOrderViewState.address, comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: "", deliveryCost: "", amountToPay:  "", amountToPayWithDeliveryCost:  "", isLoading: false, userUuid: self.creationOrderViewState.userUuid, cafeUuid: self.creationOrderViewState.cafeUuid, isGoProfile: false)
+                self.creationOrderViewState = CreateOrderViewState(
+                    isDelivery: self.creationOrderViewState.isDelivery,
+                    address: self.creationOrderViewState.address,
+                    comment: self.creationOrderViewState.comment,
+                    deferredTime: self.creationOrderViewState.deferredTime,
+                    totalCost: "",
+                    deliveryCost: "",
+                    amountToPay:  "",
+                    amountToPayWithDeliveryCost:  "",
+                    userUuid: self.creationOrderViewState.userUuid,
+                    cafeUuid: self.creationOrderViewState.cafeUuid,
+                    createOrderState: self.creationOrderViewState.createOrderState
+                )
                 return
             }
-            self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: self.creationOrderViewState.address, comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: String(cartTotal!.totalCost) + Strings.CURRENCY, deliveryCost: String(cartTotal!.deliveryCost) + Strings.CURRENCY, amountToPay: String(cartTotal!.amountToPay) + Strings.CURRENCY, amountToPayWithDeliveryCost:  String(cartTotal!.amountToPayWithDeliveryCost) +  Strings.CURRENCY, isLoading: false,userUuid: self.creationOrderViewState.userUuid, cafeUuid: self.creationOrderViewState.cafeUuid, isGoProfile: false)
+            self.creationOrderViewState = CreateOrderViewState(
+                isDelivery: self.creationOrderViewState.isDelivery,
+                address: self.creationOrderViewState.address,
+                comment: self.creationOrderViewState.comment,
+                deferredTime: self.creationOrderViewState.deferredTime,
+                totalCost: String(cartTotal!.totalCost) + Strings.CURRENCY,
+                deliveryCost: String(cartTotal!.deliveryCost) + Strings.CURRENCY,
+                amountToPay: String(cartTotal!.amountToPay) + Strings.CURRENCY,
+                amountToPayWithDeliveryCost:  String(cartTotal!.amountToPayWithDeliveryCost) +  Strings.CURRENCY,
+                userUuid: self.creationOrderViewState.userUuid,
+                cafeUuid: self.creationOrderViewState.cafeUuid,
+                createOrderState: self.creationOrderViewState.createOrderState
+            )
         }
         getAddressList(isDelivery: true)
     }
@@ -28,6 +64,11 @@ class CreateOrderViewModel:ObservableObject {
         if(isDelivery){
             iosComponent.provideIAddressInteractor().observeAddress().watch { userAddress in
                 if(userAddress == nil){
+                    (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                        copiedState.address = nil
+                        copiedState.createOrderState = CreateOrderState.success
+                        self.creationOrderViewState = copiedState
+                    }
                     return
                 }
                 var address = userAddress?.street.name ?? ""
@@ -51,38 +92,69 @@ class CreateOrderViewModel:ObservableObject {
                     address += (userAddress?.comment ?? "")
                 }
                 
-                print(address)
-                self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: address, comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: self.creationOrderViewState.totalCost, deliveryCost: self.creationOrderViewState.deliveryCost, amountToPay: self.creationOrderViewState.amountToPay, amountToPayWithDeliveryCost:  self.creationOrderViewState.amountToPayWithDeliveryCost, isLoading: false, userUuid: userAddress?.uuid ?? "", cafeUuid: self.creationOrderViewState.cafeUuid, isGoProfile: false)
+                (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                    copiedState.address = address
+                    copiedState.createOrderState = CreateOrderState.success
+                    self.creationOrderViewState = copiedState
+                }
             }
         }else{
             iosComponent.provideCafeInteractor().observeSelectedCafeAddress().watch { cafeAddress in
-                self.creationOrderViewState = CreateOrderViewState(isDelivery: self.creationOrderViewState.isDelivery, address: cafeAddress?.address ?? "", comment: self.creationOrderViewState.comment, deferredTime: self.creationOrderViewState.deferredTime, totalCost: self.creationOrderViewState.totalCost, deliveryCost: self.creationOrderViewState.deliveryCost, amountToPay: self.creationOrderViewState.amountToPay, amountToPayWithDeliveryCost:  self.creationOrderViewState.amountToPayWithDeliveryCost, isLoading: false, userUuid: self.creationOrderViewState.userUuid, cafeUuid: cafeAddress?.cafeUuid ?? "", isGoProfile: false )
+                (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                    copiedState.address = cafeAddress?.address ?? ""
+                    copiedState.cafeUuid = cafeAddress?.cafeUuid
+                    copiedState.createOrderState = CreateOrderState.success
+                    self.creationOrderViewState = copiedState
+                }
             }
         }
     }
     
     func createOrder(){
-        //check address
-        //check authorize
-    
+        
         (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-            copiedState.isLoading = true
+            copiedState.createOrderState = CreateOrderState.loading
             creationOrderViewState = copiedState
         }
-        
+  
         iosComponent.provideIOrderInteractor().createOrder(isDelivery: creationOrderViewState.isDelivery, userAddressUuid: creationOrderViewState.userUuid, cafeUuid: creationOrderViewState.cafeUuid, addressDescription: creationOrderViewState.address ?? "", comment: creationOrderViewState.comment, deferredTime: nil) { code, err in
             if(code == nil){
                 //show error
                 print("sss")
+                (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                    
+                    copiedState.createOrderState = CreateOrderState.success //TODO SHOW ERROR
+                    self.creationOrderViewState = copiedState
+                }
             }else{
-                iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
-                    (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                        copiedState.isGoProfile = true
-                        copiedState.isLoading = false
-                        self.creationOrderViewState = copiedState
+                DispatchQueue.main.async {
+                    iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
+                        (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                            copiedState.createOrderState = CreateOrderState.goToProfile
+                            self.creationOrderViewState = copiedState
+                        }
                     }
                 }
             }
         }
     }
+    
+    func goToAddress(){
+        if(creationOrderViewState.isDelivery){
+            (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                copiedState.createOrderState = CreateOrderState.goToUserAddressList
+                self.creationOrderViewState = copiedState
+            }
+        }else{
+            (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                copiedState.createOrderState = CreateOrderState.goToCafeAddressList
+                self.creationOrderViewState = copiedState
+            }
+        }
+    }
+}
+
+
+enum CreateOrderState{
+    case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile
 }

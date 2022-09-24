@@ -26,10 +26,13 @@ struct MenuView: View {
                     }
                 }.padding(.top, Diems.MEDIUM_PADDING)
                 
+                
                 ScrollView {
                     LazyVStack(spacing:0){
                         ForEach(viewModel.menuViewState.menuItems){ menuItem in
-                            Section(header: LargeHeaderText(text: menuItem.categorySectionItem.name)){
+                            Section(header: LargeHeaderText(text: menuItem.categorySectionItem.name)
+                                .padding(.horizontal,  Diems.MEDIUM_PADDING)
+                                .padding(.top, Diems.MEDIUM_PADDING)){
                                 ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
                                     NavigationLink(
                                         destination:ProductDetailsView(menuProductUuid: menuProductItem.id)

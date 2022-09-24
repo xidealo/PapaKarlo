@@ -22,7 +22,8 @@ class Strings{
     static let TITLE_ABOUT_APP = "О приложении"
     static let TITLE_FEEDBACK = "Отзывы о приложении"
     static let TITLE_CAFE_OPTIONS = "Выбранное кафе"
-    
+    static let TITLE_PAYMENT = "Оплата"
+
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
     
@@ -40,7 +41,7 @@ class Strings{
     static let HINT_SETTINGS_EMAIL = "Почта"
     static let HINT_SETTINGS_CITY = "Город"
     
-    static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться бонусы, адреса и история ваших заказов"
+    static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться адреса и история ваших заказов"
     
     //ADDRESS
     static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отображаться ваши адреса"
@@ -77,7 +78,8 @@ class Strings{
     static let MSG_CART_PRODUCT_RESULT = "Итого"
     
     //CREATION ORDER
-    static let HINT_CREATION_ORDER_ADDRESS = "Адрес"
+    static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"
+    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес кафе"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
     static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
     static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"
@@ -99,7 +101,7 @@ class Strings{
     //FEEDBACK
     static let TITLE_FEEDBACK_VK = "Вконтакте"
     static let TITLE_FEEDBACK_INSTAGRAM = "Instagram"
-    static let TITLE_FEEDBACK_PLAYMARKET = "Play Маркет"
+    static let TITLE_FEEDBACK_APP_STORE = "App Store"
     //CAFE_OPTIONS
     static let TITLE_CAFE_OPTIONS_CALL = "Позвонить"
     static let TITLE_CAFE_OPTIONS_POSITION = "На карте"
@@ -115,7 +117,7 @@ class Strings{
     
     //STATUS
     static let  MSG_STATUS_NOT_ACCEPTED = "Обрабатывается"
-    static let   MSG_STATUS_ACCEPTED = "Принят"
+    static let  MSG_STATUS_ACCEPTED = "Принят"
     static let  MSG_STATUS_PREPARING = "Готовится"
     static let  MSG_STATUS_SENT_OUT = "В пути"
     static let  MSG_STATUS_DELIVERED = "Выдан"
@@ -125,5 +127,10 @@ class Strings{
     //COMMENT
     static let HINT_CREATE_COMMENT_COMMENT = "Комментарий"
     static let ACTION_CREATE_COMMENT_SAVE = "Сохранить"
+
+    
+    //PAYMENT
+    static let MSG_PAYMENT_PHONE = "+7 (903) 801-55-52"
+    static let MSG_PAYMENT_CARD_NUMBER = "4279 3800 2260 1191"
 
 }

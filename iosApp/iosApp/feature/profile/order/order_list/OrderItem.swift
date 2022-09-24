@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import shared
 
 struct OrderItem :Identifiable {
     let id:String
-    let status:String
+    let status:OrderStatus
     let code:String
     let dateTime:String
 }

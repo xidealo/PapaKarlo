@@ -11,7 +11,11 @@ import shared
 
 
 class SettingsViewModel: ObservableObject {
-    @Published var settingsViewState:SettingsViewState = SettingsViewState(phone: "", email: nil, city: "")
+    @Published var settingsViewState:SettingsViewState = SettingsViewState(
+        phone: "",
+        email: nil,
+        city: ""
+    )
     
     init(){
         iosComponent.provideISettingsInteractor().getSettings { settings, err in

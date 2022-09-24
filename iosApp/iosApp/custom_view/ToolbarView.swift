@@ -24,7 +24,7 @@ struct ToolbarView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             Button(action: {
                 self.mode.wrappedValue.dismiss()
             }) {
@@ -69,7 +69,6 @@ struct ToolbarView: View {
                 }.padding(.vertical, Diems.SMALL_PADDING)
                 .padding(.trailing, Diems.SMALL_PADDING)
             }
-            
         }.background(Color("surface"))
     }
 }

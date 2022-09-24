@@ -21,7 +21,7 @@ struct ConsumerCartView: View {
             case .empty: ConsumerCartEmptyScreen()
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             case .goToLogin:NavigationLink(
-                destination:LoginView(),
+                destination:LoginView(isGoToProfile: false),
                 isActive: .constant(true)
             ){
                 EmptyView()
@@ -67,13 +67,19 @@ struct ConsumerCartSuccessScreen: View {
                 LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
                 
                 ScrollView {
-                    LazyVStack{
+                    LazyVStack(spacing:0){
+                        
+                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.bottom, Diems.MEDIUM_PADDING)
+                            .padding(.top, Diems.SMALL_PADDING)
+                        
                         ForEach(consumerCartUI.cartProductList){ cartProductItem in
                             CartProductView(cartProductItem: cartProductItem, plusAction: {
                                 viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
                             }, minusAction: {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.vertical, Diems.SMALL_PADDING)
+                            }).padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
                 }

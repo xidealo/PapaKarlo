@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ConfirmView: View {
     
@@ -13,24 +14,29 @@ struct ConfirmView: View {
     
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
-    
-    init(auth:AuthManager, phone:String){
-        viewModel = ConfirmViewModel(auth: auth)
+
+    init(auth:AuthManager, phone:String, isGoToProfile:Bool){
+        viewModel = ConfirmViewModel(auth: auth, isGoToProfile: isGoToProfile)
         self.phone = phone
     }
     
     var body: some View {
-        if viewModel.confirmViewState.isLoading{
-            LoadingView()
-        }else{
-            NavigationLink(
-                destination:ProfileView(),
-                isActive: $viewModel.confirmViewState.isGoToProfile
-            ){
-                EmptyView()
-            }
-            
-            ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+        switch(viewModel.confirmViewState.confirmState){
+        case ConfirmState.loading: LoadingView()
+        case ConfirmState.success: ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+        case ConfirmState.goToProfile : NavigationLink(
+            destination:ProfileView(show: false),
+            isActive: .constant(true)
+        ){
+            EmptyView()
+        }
+        case ConfirmState.goToCreateOrder: NavigationLink(
+            destination:CreateOrderView(),
+            isActive: .constant(true)
+        ){
+            EmptyView()
+        }
+        default : ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
         }
     }
 }
@@ -38,6 +44,7 @@ struct ConfirmView: View {
 struct ConfirmViewSuccessView: View {
     @Binding var code:String
     @ObservedObject var viewModel : ConfirmViewModel
+    @State var show:Bool = false
     
     @State private var timeRemaining = 60
     @State private var isEnabled = false
@@ -55,29 +62,23 @@ struct ConfirmViewSuccessView: View {
             
             //SmsTextField(count: 6)
             
-            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6)
+            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6, keyBoadrType: UIKeyboardType.numberPad)
+                .onReceive(Just(code)) { _ in
+                    if(code.count == 6){
+                        viewModel.checkCode(code: code)
+                        code = ""
+                    }
+                }
             
             Spacer()
             
-            Button {
-                viewModel.checkCode(code: code)
-            } label: {
-                Text(Strings.ACTION_SEND_CODE)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-            }
-            
-            if(isEnabled){
-                Button(
-                    action: {
-                        isEnabled = false
-                        timeRemaining = 60
-                    }
-                ){
+            Button(
+                action: {
+                    isEnabled = false
+                    timeRemaining = 60
+                }
+            ){
+                if(isEnabled){
                     Text(Strings.ACTION_CONFIRM_GET_CODE)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -86,11 +87,28 @@ struct ConfirmViewSuccessView: View {
                         .cornerRadius(Diems.MEDIUM_RADIUS)
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }
-            }else {
-                PlaceholderText(text: "Получить код повторно можно через \(timeRemaining) секунд").multilineTextAlignment(.center)
-            }
-        }.padding(Diems.MEDIUM_PADDING).onReceive(timer){ time in
-            
+                else{
+                    Text("Запросить код повторно \(timeRemaining) сек.")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color("surface"))
+                        .background(Color("onPrimaryDisabled"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                        .multilineTextAlignment(.center)
+                }
+                
+            }.disabled(!isEnabled)
+        }
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Неправильный код"),
+                show: $show,
+                backgroundColor:Color("errorColor"),
+                foregaroundColor: Color("onErrorColor")
+            ), show: $show)
+        .padding(Diems.MEDIUM_PADDING)
+        .onReceive(timer){ time in
             if timeRemaining > 0{
                 timeRemaining -= 1
             }
@@ -98,13 +116,18 @@ struct ConfirmViewSuccessView: View {
             if(timeRemaining == 0){
                 isEnabled = true
             }
-            
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
+        .onReceive(viewModel.$confirmViewState) { confirmViewState in
+            if(confirmViewState.confirmState == ConfirmState.error){
+                self.show = true
+            }
+        }
     }
 }
 
 struct ConfirmView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfirmView(auth: AuthManager(), phone: "+79969224186")
+        ConfirmView(auth: AuthManager(), phone: "+79969224186", isGoToProfile: true)
     }
 }

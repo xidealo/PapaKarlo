@@ -14,11 +14,13 @@ struct CreateOrderView: View {
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            if(viewModel.creationOrderViewState.isLoading){
+            if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
                 LoadingView()
             }else{
                 CreateOrderSuccessView(viewModel: viewModel)
             }
+        }.onAppear(){
+            viewModel.loadData()
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
@@ -29,34 +31,49 @@ struct CreateOrderView: View {
 struct CreateOrderSuccessView:View {
     
     @ObservedObject var viewModel:CreateOrderViewModel
-    
+    @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     var body: some View{
-        if(viewModel.creationOrderViewState.isGoProfile){
-            NavigationLink(destination:ProfileView(), isActive: .constant(true)){}
-        }else{
-            VStack{
-                Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
-                    viewModel.getAddressList(isDelivery: isDelivery)
+        switch(viewModel.creationOrderViewState.createOrderState){
+        case CreateOrderState.goToProfile: NavigationLink(
+            destination:ProfileView(show: true),
+            isActive: .constant(true)
+        ){
+            EmptyView()
+        }
+        case CreateOrderState.goToCafeAddressList: NavigationLink(
+            destination:CafeAddressListView(isClickable: true),
+            isActive: .constant(true)
+        ){
+            EmptyView()
+        }
+        case CreateOrderState.goToUserAddressList: NavigationLink(
+            destination:UserAddressListView(isClickable: true),
+            isActive: .constant(true)
+        ){
+            EmptyView()
+        }
+        default :  VStack{
+            Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
+                viewModel.getAddressList(isDelivery: isDelivery)
+            }
+            
+            if viewModel.creationOrderViewState.address == nil{
+                NavigationCardView(icon: nil, label: addressLable, destination: CreateAddressView())
+            }else{
+                ActionTextCardView(placeHolder: addressLable, text: viewModel.creationOrderViewState.address!){
+                    viewModel.goToAddress()
                 }
-                
-                if viewModel.creationOrderViewState.address == nil{
-                    NavigationCardView(icon: nil, label: Strings.HINT_CREATION_ORDER_ADDRESS, destination: CreateAddressView())
-                }else{
-                    NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_ADDRESS, text: viewModel.creationOrderViewState.address!, destination:UserAddressListView())
-                }
-                
-                EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
-                
-//                    if(viewModel.creationOrderViewState.isDelivery){
-//                        NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_DELIVERY, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
-//                    }else{
-//                        NavigationTextCard(placeHolder: Strings.HINT_CREATION_ORDER_DEFERRED_PICKUP, text: viewModel.creationOrderViewState.deferredTime, destination:UserAddressListView())
-//                    }
-            }.padding(Diems.MEDIUM_PADDING)
+            }
+            
+            EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+        }.padding(Diems.MEDIUM_PADDING)
             
             Spacer()
             
-            LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
+            LinearGradient(
+                gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom
+            )
+            .frame(height:20)
             VStack{
                 HStack{
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
@@ -81,7 +98,6 @@ struct CreateOrderSuccessView:View {
                         Spacer()
                         BoldText(text:viewModel.creationOrderViewState.amountToPay)
                     }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                    
                 }
                 Button(
                     action: {
@@ -96,9 +112,15 @@ struct CreateOrderSuccessView:View {
                     }
                 ).padding(Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
+                .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
+                    if(creationOrderViewState.isDelivery){
+                        addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
+                    }else{
+                        addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
+                    }
+                })
         }
     }
-    
 }
 
 

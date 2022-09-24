@@ -11,7 +11,10 @@ import shared
 
 class LoginViewModel:ObservableObject {
     
-    @Published var loginViewState:LoginViewState = LoginViewState(isLoading: false, isGoToMenu: false)
+    @Published var loginViewState:LoginViewState = LoginViewState(
+        isLoading: false,
+        isGoToMenu: false
+    )
     let auth :AuthManager
 
     init(auth:AuthManager){
@@ -19,9 +22,14 @@ class LoginViewModel:ObservableObject {
     }
     
     func sendCodeToPhone(phone:String){
+        let formattedPhone = phone.replace(string: "(", replacement: "")
+            .replace(string: ")", replacement: "")
+            .replace(string: "-", replacement: "")
+            .replace(string: " ", replacement: "")
+        
         loginViewState  = LoginViewState(isLoading: true, isGoToMenu: false)
-
-        auth.startAuth(phoneNumber: phone) { result in
+        print("formatted phone = \(formattedPhone)")
+        auth.startAuth(phoneNumber: formattedPhone) { result in
             self.loginViewState  = LoginViewState(isLoading: false, isGoToMenu: result)
         }
     }
