@@ -8,10 +8,14 @@
 import Foundation
 import shared
 
-
 class ProfileViewModel: ToolbarViewModel {
     
-    @Published var profileViewState:ProfileViewState = ProfileViewState(userUuid: "", hasAddresses: false, lastOrder: nil, isAuthorize: false, isLoading: true)
+    @Published var profileViewState:ProfileViewState = ProfileViewState(
+        userUuid: "",
+        hasAddresses: false,
+        lastOrder: nil,
+        profileState: ProfileState.loading
+    )
 
     override init() {
         super.init()
@@ -20,13 +24,20 @@ class ProfileViewModel: ToolbarViewModel {
     
     func fetchProfile(){
         print("ProfileViewModel: fetch")
-
+        
+        (profileViewState.copy() as! ProfileViewState).apply { newState in
+            newState.profieState = ProfileState.loading
+            profileViewState = newState
+        }
+        
         iosComponent.provideIUserInteractor().getProfile { profile, error in
             if(profile is Profile.Authorized){
                 let authorizedProfile = profile as! Profile.Authorized
-                self.profileViewState =  ProfileViewState(userUuid: authorizedProfile.userUuid, hasAddresses: authorizedProfile.hasAddresses, lastOrder: OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status.name ?? "", code: authorizedProfile.lastOrder?.code ?? "", dateTime: ""), isAuthorize: true, isLoading: false)
+                DispatchQueue.main.async {
+                self.profileViewState =  ProfileViewState(userUuid: authorizedProfile.userUuid, hasAddresses: authorizedProfile.hasAddresses, lastOrder: OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status ?? OrderStatus.notAccepted, code: authorizedProfile.lastOrder?.code ?? "", dateTime: ""), profileState: ProfileState.success)
+                }
             }else{
-                self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, isAuthorize: false, isLoading: false)
+                self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, profileState: ProfileState.notAuthorize)
             }
         }
     }

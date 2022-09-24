@@ -9,18 +9,26 @@ import Foundation
 import shared
 
 class MenuViewModel : ToolbarViewModel {
-    @Published var menuViewState:MenuViewState = MenuViewState(menuItems: [], categoryItemModels: [], isLoading: false)
+    @Published var menuViewState:MenuViewState = MenuViewState(
+        menuItems: [],
+        categoryItemModels: [],
+        isLoading: true
+    )
     
     override init(){
         super.init()
         
-        menuViewState =  MenuViewState(menuItems: [], categoryItemModels: [], isLoading: true)
-        
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
-            self.menuViewState = MenuViewState(menuItems: self.getMenuItems(menuSectionList: menuSectionList ?? []), categoryItemModels: self.getCategoryItems(menuSectionList: menuSectionList ?? []), isLoading: false)
+            (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
+                copiedState.isLoading = false
+                copiedState.menuItems = self.getMenuItems(menuSectionList: menuSectionList ?? [])
+                copiedState.categoryItemModels = self.getCategoryItems(menuSectionList: menuSectionList ?? [])
+                DispatchQueue.main.async {
+                    self.menuViewState = copiedState
+                }
+            }
         }
     }
-    
     
     private func getMenuItems(menuSectionList:[MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
@@ -52,9 +60,9 @@ class MenuViewModel : ToolbarViewModel {
         (menuViewState.copy() as! MenuViewState).apply { newState in
             newState.categoryItemModels =  newState.categoryItemModels.map { categoryItem in
                 if(tagName == categoryItem.name){
-                   return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: true)
+                    return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: true)
                 }else{
-                   return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: false)
+                    return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: false)
                 }
             }
             menuViewState = newState

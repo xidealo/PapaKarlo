@@ -12,7 +12,13 @@ var consumerCartView = ConsumerCartView()
 
 class ConsumerCartViewModel : ObservableObject  {
     
-    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(forFreeDelivery: "", cartProductList: [], oldTotalCost: nil, newTotalCost: "", consumerCartState: ConsumerCartState.loading)
+    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(
+        forFreeDelivery: "",
+        cartProductList: [],
+        oldTotalCost: nil,
+        newTotalCost: "",
+        consumerCartState: ConsumerCartState.loading
+    )
     
     var closable : Ktor_ioCloseable? = nil
     
@@ -57,13 +63,13 @@ class ConsumerCartViewModel : ObservableObject  {
     
     func plusProduct(productUuid:String){
         iosComponent.provideCartProductInteractor().addProductToCart(menuProductUuid: productUuid) { cartProduct, error in
-            //checkNotNull CartPr
+            print("plus product \(productUuid)")
         }
     }
     
     func minusProduct(productUuid:String){
         iosComponent.provideCartProductInteractor().removeProductFromCart(menuProductUuid: productUuid) {err in
-            //stub
+            print("minus product \(productUuid)")
         }
     }
     func checkAuthorization(){

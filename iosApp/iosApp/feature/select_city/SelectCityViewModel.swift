@@ -10,7 +10,11 @@ import shared
 
 class SelectCityViewModel : ObservableObject {
     
-    @Published var selectCityViewState:SelectCityViewState = SelectCityViewState(isLoading: false, cityList: [], isGoToMenu: false)
+    @Published var selectCityViewState:SelectCityViewState = SelectCityViewState(
+        isLoading: false,
+        cityList: [],
+        isGoToMenu: false
+    )
     
     init(){
         selectCityViewState = SelectCityViewState(isLoading: true, cityList: selectCityViewState.cityList, isGoToMenu: false)

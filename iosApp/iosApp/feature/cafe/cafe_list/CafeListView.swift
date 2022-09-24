@@ -14,7 +14,7 @@ struct CafeListView: View {
     var body: some View {
             VStack{
                 ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-                
+        
                 if viewModel.cafeViewState.isLoading{
                     LoadingView()
                 }

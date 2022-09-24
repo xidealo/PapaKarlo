@@ -17,12 +17,23 @@ class CreateOrderViewState: NSObject, NSCopying {
     var deliveryCost: String
     var amountToPay: String
     var amountToPayWithDeliveryCost: String
-    var isLoading: Bool
     var userUuid:String?
     var cafeUuid:String?
-    var isGoProfile:Bool = false
+    var createOrderState:CreateOrderState
     
-    init(isDelivery:Bool, address:String?, comment:String, deferredTime:String,totalCost: String, deliveryCost: String, amountToPay:String,amountToPayWithDeliveryCost: String,isLoading: Bool, userUuid:String?,cafeUuid:String?,isGoProfile:Bool){
+    init(
+        isDelivery:Bool,
+        address:String?,
+        comment:String,
+        deferredTime:String,
+        totalCost: String,
+        deliveryCost: String,
+        amountToPay:String,
+        amountToPayWithDeliveryCost: String,
+        userUuid:String?,
+        cafeUuid:String?,
+        createOrderState:CreateOrderState
+    ){
         self.isDelivery = isDelivery
         self.address = address
         self.comment = comment
@@ -31,14 +42,25 @@ class CreateOrderViewState: NSObject, NSCopying {
         self.deliveryCost = deliveryCost
         self.amountToPay = amountToPay
         self.amountToPayWithDeliveryCost = amountToPayWithDeliveryCost
-        self.isLoading = isLoading
         self.userUuid = userUuid
         self.cafeUuid = cafeUuid
-        self.isGoProfile = isGoProfile
+        self.createOrderState = createOrderState
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = CreateOrderViewState(isDelivery : isDelivery, address : address, comment : comment, deferredTime : deferredTime, totalCost : totalCost, deliveryCost : deliveryCost, amountToPay : amountToPay, amountToPayWithDeliveryCost : amountToPayWithDeliveryCost, isLoading : isLoading, userUuid : userUuid, cafeUuid : cafeUuid, isGoProfile : isGoProfile)
+        let copy = CreateOrderViewState(
+            isDelivery : isDelivery,
+            address : address,
+            comment : comment,
+            deferredTime : deferredTime,
+            totalCost : totalCost,
+            deliveryCost : deliveryCost,
+            amountToPay : amountToPay,
+            amountToPayWithDeliveryCost : amountToPayWithDeliveryCost,
+            userUuid : userUuid,
+            cafeUuid : cafeUuid,
+            createOrderState:createOrderState
+        )
         return copy
     }
     

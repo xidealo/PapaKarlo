@@ -18,11 +18,11 @@ struct CafeOptionsView: View {
             ToolbarView(title: Strings.TITLE_CAFE_OPTIONS, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack{
-                ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false){
+                ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: "tel://" + phone.removeWhitespace())!)
                 }
                 
-                ActionCardView(icon: "CafePosition", label: Strings.TITLE_CAFE_OPTIONS_POSITION + " " + address, isSystemImageName: false){
+                ActionCardView(icon: "CafePosition", label: Strings.TITLE_CAFE_OPTIONS_POSITION + " " + address, isSystemImageName: false, isShowRightArrow: true){
                     
                     UIApplication.shared.open(URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(latitude),\(longitude)")!)
                 }

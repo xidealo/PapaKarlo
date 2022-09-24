@@ -3,13 +3,14 @@ package com.bunbeauty.shared.data
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.model.Payment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
 import platform.Foundation.NSUserDefaults
 
-actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
+actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     actual override val token: Flow<String?> = flow {
         emit(getToken())
@@ -87,6 +88,25 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
             .toString()
     }
 
+    actual override val payment: Flow<Payment?> = flow{
+        emit(
+            Payment(
+                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(PAYMENT_PHONE_NUMBER_KEY),
+                cardNumber = NSUserDefaults.standardUserDefaults.stringForKey(PAYMENT_CARD_NUMBER_KEY)
+            )
+        )
+    }
+
+    actual override suspend fun getPayment(): Payment? {
+        return payment.firstOrNull()
+    }
+
+    actual override suspend fun savePayment(payment: Payment) {
+        NSUserDefaults.standardUserDefaults.setObject(payment.phoneNumber, PAYMENT_PHONE_NUMBER_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(payment.cardNumber, PAYMENT_CARD_NUMBER_KEY)
+    }
+
+
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
         return flow {
             emit(
@@ -116,6 +136,8 @@ actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
         const val USER_UUID_KEY = "USER_UUID_KEY"
         const val DELIVERY_COST_KEY = "DELIVERY_COST_KEY"
         const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
+        const val PAYMENT_PHONE_NUMBER_KEY = "PAYMENT_PHONE_NUMBER_KEY"
+        const val PAYMENT_CARD_NUMBER_KEY = "PAYMENT_CARD_NUMBER_KEY"
     }
 
 

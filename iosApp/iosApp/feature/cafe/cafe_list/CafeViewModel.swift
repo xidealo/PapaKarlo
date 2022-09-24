@@ -11,7 +11,10 @@ import SwiftUI
 
 class CafeViewModel: ToolbarViewModel {
     
-    @Published var cafeViewState:CafeViewState = CafeViewState(isLoading: false, cafeItemList: [])
+    @Published var cafeViewState:CafeViewState = CafeViewState(
+        isLoading: false,
+        cafeItemList: []
+    )
     
     override init(){
         super.init()

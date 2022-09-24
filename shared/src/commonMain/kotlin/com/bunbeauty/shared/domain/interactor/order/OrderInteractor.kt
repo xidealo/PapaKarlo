@@ -34,7 +34,7 @@ class OrderInteractor(
         }.asCommonFlow()
     }
 
-    override fun observeOrderByUuid(orderUuid: String): Flow<OrderWithAmounts?> {
+    override fun observeOrderByUuid(orderUuid: String): CommonFlow<OrderWithAmounts?> {
         return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
             OrderWithAmounts(
                 uuid = order.uuid,
@@ -64,7 +64,7 @@ class OrderInteractor(
                     order.deliveryCost
                 ),
             )
-        }
+        }.asCommonFlow()
     }
 
     override suspend fun createOrder(
@@ -91,7 +91,6 @@ class OrderInteractor(
                 )
             },
         )
-
         return orderRepo.createOrder(token, createdOrder)
     }
 

@@ -11,18 +11,15 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
+    @State var show:Bool
 
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            if(viewModel.profileViewState.isLoading){
-                LoadingProfileView()
-            }else{
-                if viewModel.profileViewState.isAuthorize{
-                    SuccessProfileView(profileViewState:  viewModel.profileViewState)
-                }else{
-                    EmptyProfileView()
-                }
+            switch(viewModel.profileViewState.profieState){
+            case ProfileState.loading : LoadingProfileView()
+            case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, show: show)
+            case ProfileState.notAuthorize : EmptyProfileView()
             }
             BottomBarView(isSelected: 2)
         }
@@ -35,7 +32,7 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(show: false)
     }
 }
 
@@ -56,7 +53,7 @@ struct EmptyProfileView: View {
             Spacer()
             
             NavigationLink(
-                destination:LoginView()
+                destination:LoginView(isGoToProfile: true)
             ){
                 Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
                     .padding()
@@ -80,24 +77,25 @@ struct LoadingProfileView: View {
 
 struct SuccessProfileView: View {
     let profileViewState:ProfileViewState
-    
+    @State var show:Bool
+
     var body: some View {
         VStack{
             if(profileViewState.lastOrder != nil){
-                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView())
+                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.id))
             }
             
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
             
             if(profileViewState.hasAddresses){
-                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: UserAddressListView())
+                NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: UserAddressListView(isClickable: false))
             }else{
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: CreateAddressView())
             }
             
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())
             
-            NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: AboutAppView())
+            NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: PaymentView())
             
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
             
@@ -106,5 +104,6 @@ struct SuccessProfileView: View {
             Spacer()
             
         }.padding(Diems.MEDIUM_PADDING)
+            .overlay(overlayView: ToastView(toast: Toast(title: profileViewState.lastOrder?.code ?? ""), show: $show, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $show)
     }
 }

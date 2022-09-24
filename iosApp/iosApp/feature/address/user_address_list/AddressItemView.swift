@@ -18,6 +18,6 @@ struct AddressItemView: View {
 
 struct AddressItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AddressItemView(addressItem: AddressItem(id: "12", address: "Kimry 21"))
+        AddressItemView(addressItem: AddressItem(id: "12", address: "Kimry 21", isClickable: false))
     }
 }
