@@ -7,11 +7,10 @@ import com.bunbeauty.shared.domain.model.Payment
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import platform.Foundation.NSUserDefaults
 
-actual class DataStoreRepository() : DataStoreRepo, KoinComponent {
+actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     actual override val token: Flow<String?> = flow {
         emit(getToken())
