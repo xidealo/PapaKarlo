@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.2.2"
-    const val kotlin = "1.7.10"
+    const val kotlin = "1.7.20"
     const val googleServices = "4.3.10"
     const val crashlytics = "2.8.1"
     const val navigation = "2.5.1"
@@ -61,7 +61,7 @@ object Application {
 
 object AndroidSdk {
     const val min = 24
-    const val compile = 32
+    const val compile = 33
     const val target = compile
 }
 

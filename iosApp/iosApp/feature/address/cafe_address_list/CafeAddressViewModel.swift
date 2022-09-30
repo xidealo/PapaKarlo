@@ -10,22 +10,28 @@ import Foundation
 import shared
 class CafeAddressViewModel: ObservableObject {
     
-    @Published var addressList:[AddressItem] = []
+    @Published var cafeAddressViewState:CafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.loading, addressItemList: [])
     
     func loadData(isClickable:Bool) {
         iosComponent.provideCafeInteractor().observeCafeAddressList().watch { list in
-            self.addressList = (list as! [CafeAddress]).map({ cafeAddress in
+            self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (list as! [CafeAddress]).map({ cafeAddress in
                 AddressItem(id: cafeAddress.cafeUuid, address: cafeAddress.address, isClickable: isClickable)
-            })
+            }))
         }
     }
     
     func selectAddress(uuid:String){
         iosComponent.provideCafeInteractor().selectCafe(cafeUuid: uuid) { err in
-            //goBack
+            (self.cafeAddressViewState.copy() as! CafeAddressViewState).apply { copiedState in
+                copiedState.cafeAddressState = CafeAddressState.goBack
+                self.cafeAddressViewState = copiedState
+            }
         }
     }
     
 }
 
 
+enum CafeAddressState {
+    case loading, empty, success, goBack
+}

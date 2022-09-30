@@ -16,6 +16,8 @@ struct CreateAddressView: View {
     @State var floor:String = ""
     @State var comment:String = ""
     
+    @Binding var show:Bool
+
     @ObservedObject private var viewModel = CreateAddressViewModel()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -24,7 +26,14 @@ struct CreateAddressView: View {
         VStack{
             ToolbarView(title: Strings.TITLE_CREATION_ADDRESS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             VStack{
-                SearchEditTextView(hint: Strings.HINT_CREATION_ADDRESS_STREET, text: $street, limit: 100, list: $viewModel.createAddressViewState.streetList).padding(.top, Diems.MEDIUM_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                SearchEditTextView(
+                    hint: Strings.HINT_CREATION_ADDRESS_STREET,
+                    text: $street,
+                    limit: 100,
+                    list: $viewModel.createAddressViewState.streetList
+                )
+                .padding(.top, Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
                 
                 Group{
                     EditTextView(hint: Strings.HINT_CREATION_ADDRESS_HOUSE, text: $house, limit: 100)
@@ -33,7 +42,9 @@ struct CreateAddressView: View {
                     EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLOOR, text: $floor, limit: 5)
                 }.padding(.horizontal, Diems.MEDIUM_PADDING)
                 
-                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment, limit: 5).padding(.horizontal, Diems.MEDIUM_PADDING).padding(.bottom, Diems.SMALL_PADDING)
+                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment, limit: 5)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(.bottom, Diems.SMALL_PADDING)
             }
             
             Spacer()
@@ -41,7 +52,10 @@ struct CreateAddressView: View {
             Button(action: {
                 viewModel.onCreateAddressClicked(streetName: street, house: house, flat: flat, entrance: entarance, floor: floor, comment: comment){ isBack in
                     if(isBack){
-                        presentationMode.wrappedValue.dismiss()
+                        DispatchQueue.main.async {
+                            presentationMode.wrappedValue.dismiss()
+                            show = true
+                        }
                     }
                 }
             }) {
@@ -56,11 +70,12 @@ struct CreateAddressView: View {
         }
         .navigationBarHidden(true)
         .background(Color("background"))
+        .ignoresSafeArea(.keyboard)
     }
 }
 
 struct CreateAddressView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateAddressView()
+        CreateAddressView(show: .constant(true))
     }
 }

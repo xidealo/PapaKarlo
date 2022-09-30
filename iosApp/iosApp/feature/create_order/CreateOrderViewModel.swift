@@ -57,7 +57,7 @@ class CreateOrderViewModel:ObservableObject {
                 createOrderState: self.creationOrderViewState.createOrderState
             )
         }
-        getAddressList(isDelivery: true)
+        getAddressList(isDelivery: creationOrderViewState.isDelivery)
     }
     
     func getAddressList(isDelivery:Bool){

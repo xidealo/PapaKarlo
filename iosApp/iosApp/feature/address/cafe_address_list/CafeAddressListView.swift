@@ -11,19 +11,27 @@ import SwiftUI
 struct CafeAddressListView: View {
     
     @ObservedObject private var viewModel = CafeAddressViewModel()
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     let isClickable:Bool
     
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            SuccessCafeAddressListView(addressList: viewModel.addressList)
-                .onAppear {
-                    viewModel.loadData(isClickable: isClickable)
+            switch(viewModel.cafeAddressViewState.cafeAddressState){
+            case CafeAddressState.loading : LoadingView()
+            default : SuccessCafeAddressListView(viewModel: viewModel)
             }
         }.hiddenNavigationBarStyle()
             .background(Color("background"))
+            .onAppear {
+                viewModel.loadData(isClickable: isClickable)
+            }.onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
+                if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
+                    self.mode.wrappedValue.dismiss()
+                }
+            })
     }
 }
 
@@ -35,16 +43,17 @@ struct CafeAddressListView_Previews: PreviewProvider {
 
 
 struct SuccessCafeAddressListView: View {
-    let addressList: [AddressItem]
+    let viewModel: CafeAddressViewModel
 
     var body: some View {
         VStack(spacing:0){
             ScrollView {
                 LazyVStack{
-                    ForEach(addressList){ address in
+                    ForEach(viewModel.cafeAddressViewState.addressItemList){ address in
                         if(address.isClickable){
                             Button(action: {
                                 //save selected
+                                viewModel.selectAddress(uuid: address.id)
                             }) {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -60,6 +69,5 @@ struct SuccessCafeAddressListView: View {
                 }
             }
         }
-       
     }
 }

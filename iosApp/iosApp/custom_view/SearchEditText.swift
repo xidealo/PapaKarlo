@@ -41,10 +41,13 @@ struct SearchEditTextView: View {
                         }else{
                             prevSimbol = str
                             filteredList =  Array(list.filter { streetItem in
-                                streetItem.name.lowercased().contains(str.lowercased())
+                                streetItem.name.lowercased().contains(
+                                    str.lowercased()
+                                        .trimingLeadingSpaces()
+                                        .trimingTrailingSpaces()
+                                )
                             }.prefix(3))
                         }
-                     
                     }
                 }
             

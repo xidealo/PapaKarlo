@@ -10,6 +10,8 @@
 		020FEEBF28D3AEF7002B3D69 /* CafeAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */; };
 		020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */; };
 		020FEEC328D3BCFA002B3D69 /* UserAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020FEEC228D3BCFA002B3D69 /* UserAddressViewState.swift */; };
+		021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */; };
+		021A009228E08AA200EFCC63 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A009128E08AA200EFCC63 /* StringExtensions.swift */; };
 		021CDA03287988C100DD1A98 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		021CDA052879955800DD1A98 /* ConfirmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA042879955800DD1A98 /* ConfirmViewModel.swift */; };
 		021CDA072879959600DD1A98 /* ConfirmViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021CDA062879959600DD1A98 /* ConfirmViewState.swift */; };
@@ -128,6 +130,8 @@
 		020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressListView.swift; sourceTree = "<group>"; };
 		020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewModel.swift; sourceTree = "<group>"; };
 		020FEEC228D3BCFA002B3D69 /* UserAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAddressViewState.swift; sourceTree = "<group>"; };
+		021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeAddressViewState.swift; sourceTree = "<group>"; };
+		021A009128E08AA200EFCC63 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		021CDA02287988C100DD1A98 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		021CDA042879955800DD1A98 /* ConfirmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewModel.swift; sourceTree = "<group>"; };
 		021CDA062879959600DD1A98 /* ConfirmViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmViewState.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			children = (
 				020FEEBE28D3AEF7002B3D69 /* CafeAddressListView.swift */,
 				020FEEC028D3AF14002B3D69 /* CafeAddressViewModel.swift */,
+				021A008F28E082DE00EFCC63 /* CafeAddressViewState.swift */,
 			);
 			path = cafe_address_list;
 			sourceTree = "<group>";
@@ -586,6 +591,7 @@
 			children = (
 				023234DB28787A280048CF39 /* LoadingView.swift */,
 				022BC66D28CC895800F3ED27 /* DateUtil.swift */,
+				021A009128E08AA200EFCC63 /* StringExtensions.swift */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -856,6 +862,7 @@
 				023234D128787A180048CF39 /* StatusChip.swift in Sources */,
 				02323489287879EF0048CF39 /* OrderItem.swift in Sources */,
 				0232347D287879EF0048CF39 /* SelectCityViewModel.swift in Sources */,
+				021A009028E082DE00EFCC63 /* CafeAddressViewState.swift in Sources */,
 				023234CF28787A180048CF39 /* CategoryItemView.swift in Sources */,
 				02323486287879EF0048CF39 /* OrderDetailsView.swift in Sources */,
 				02323485287879EF0048CF39 /* AuthManager.swift in Sources */,
@@ -876,6 +883,7 @@
 				023149A3288BFC5300068094 /* CreateAddressViewState.swift in Sources */,
 				022BC67428CC9D0700F3ED27 /* OrderProductItem.swift in Sources */,
 				023761C328C3612600FD33BD /* IconImage.swift in Sources */,
+				021A009228E08AA200EFCC63 /* StringExtensions.swift in Sources */,
 				020FEEC128D3AF14002B3D69 /* CafeAddressViewModel.swift in Sources */,
 				0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */,
 				023234A6287879EF0048CF39 /* ProductDetailsViewModel.swift in Sources */,

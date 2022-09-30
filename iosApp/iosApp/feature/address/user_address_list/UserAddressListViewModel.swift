@@ -41,11 +41,15 @@ class UserAddressListViewModel: ObservableObject {
                     
                     return AddressItem(id: userAddress.uuid, address: address, isClickable:isClickable)
                 }
+                
                 if(copiedState.addressItemList.isEmpty){
                     copiedState.userAddressState = UserAddressState.empty
                 }else{
                     copiedState.userAddressState = UserAddressState.success
                 }
+                
+                print(copiedState.addressItemList)
+                
                 self.userAddressViewState = copiedState
             }
         }
