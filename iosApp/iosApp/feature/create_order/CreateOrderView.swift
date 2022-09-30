@@ -26,9 +26,7 @@ struct CreateOrderView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .navigationBarHidden(true)
-        .ignoresSafeArea(.keyboard)
     }
-
 }
 
 struct CreateOrderSuccessView:View {
