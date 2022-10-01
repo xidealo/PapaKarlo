@@ -12,7 +12,9 @@ class MenuViewModel : ToolbarViewModel {
     @Published var menuViewState:MenuViewState = MenuViewState(
         menuItems: [],
         categoryItemModels: [],
-        isLoading: true
+        isLoading: true,
+        scrollToPostion: "",
+        scrollToHorizontalPostion: ""
     )
     
     override init(){
@@ -56,10 +58,26 @@ class MenuViewModel : ToolbarViewModel {
         }
     }
     
-    func selectTag(tagName:String){
+    func selectTagWithHorizontalScroll(tagName:String){
         (menuViewState.copy() as! MenuViewState).apply { newState in
             newState.categoryItemModels =  newState.categoryItemModels.map { categoryItem in
                 if(tagName == categoryItem.name){
+                    newState.scrollToHorizontalPostion = categoryItem.id
+                    return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: true)
+                }else{
+                    return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: false)
+                }
+            }
+            menuViewState = newState
+        }
+    }
+    
+    func seletTagWithScroll(tagName:String){
+        (menuViewState.copy() as! MenuViewState).apply { newState in
+            print(newState.categoryItemModels)
+            newState.categoryItemModels =  newState.categoryItemModels.map { categoryItem in
+                if(tagName == categoryItem.name){
+                    newState.scrollToPostion = categoryItem.id
                     return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: true)
                 }else{
                     return CategoryItemModel(key: categoryItem.key, id: categoryItem.id, name: categoryItem.name, isSelected: false)

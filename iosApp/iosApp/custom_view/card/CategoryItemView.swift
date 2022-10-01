@@ -10,12 +10,13 @@ import SwiftUI
 struct CategoryItemView: View {
     
     let categoryItemModel:CategoryItemModel
+    let action: (_ tagName:String) -> Void
     
     var body: some View {
         HStack{
             if(categoryItemModel.isSelected){
-                Button(action: {
-                    print("button pressed")
+                Button(action:{
+                    action(categoryItemModel.name)
                 }) {
                     Text(categoryItemModel.name)
                         .padding(Diems.SMALL_PADDING)
@@ -25,8 +26,8 @@ struct CategoryItemView: View {
                 }
             }else{
                 Button(action: {
-                    print("button pressed")
-                }) {
+                    action(categoryItemModel.name)}
+                ) {
                     Text(categoryItemModel.name)
                         .padding(Diems.SMALL_PADDING)
                         .background(Color("surface"))
@@ -34,12 +35,6 @@ struct CategoryItemView: View {
                         .foregroundColor(Color("onSurface"))
                 }
             }
-        }.padding(.leading, Diems.HALF_SMALL_PADDING)
-    }
-}
-
-struct CategoryItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryItemView(categoryItemModel: CategoryItemModel(key: "", id: "", name: "Burger", isSelected: true))
+        }
     }
 }

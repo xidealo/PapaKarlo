@@ -10,6 +10,7 @@ import SwiftUI
 struct MenuView: View {
     
     @ObservedObject private var viewModel = viewModelStore.getMenuViewModel()
+    @State var lastShowCategory = ""
     
     var body: some View {
         VStack(spacing:0){
@@ -19,33 +20,63 @@ struct MenuView: View {
                 LoadingView()
             }else{
                 ScrollView(.horizontal, showsIndicators:false) {
-                    HStack{
-                        ForEach(viewModel.menuViewState.categoryItemModels){ categoryItemModel in
-                            CategoryItemView(categoryItemModel: categoryItemModel)
-                        }
-                    }
-                }.padding(.top, Diems.MEDIUM_PADDING)
-                
-                
-                ScrollView {
-                    LazyVStack(spacing:0){
-                        ForEach(viewModel.menuViewState.menuItems){ menuItem in
-                            Section(header: LargeHeaderText(text: menuItem.categorySectionItem.name)
-                                .padding(.horizontal,  Diems.MEDIUM_PADDING)
-                                .padding(.top, Diems.MEDIUM_PADDING)){
-                                ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
-                                    NavigationLink(
-                                        destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
-                                    ){
-                                        MenuItemView(menuProductItem: menuProductItem, action: {
-                                            viewModel.addCartProductToCart(menuProductUuid: menuProductItem.id)
-                                        })
-                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                        .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                                    }
-                                }
+                    ScrollViewReader{ scrollReader in
+                        HStack(spacing:0){
+                            ForEach(viewModel.menuViewState.categoryItemModels){ categoryItemModel in
+                                CategoryItemView(
+                                    categoryItemModel: categoryItemModel,
+                                    action: viewModel.seletTagWithScroll
+                                )
+                                .padding(.horizontal, Diems.HALF_SMALL_PADDING)
+                                .id(categoryItemModel.id)
                             }
                         }
+                        .onChange(of: viewModel.menuViewState, perform: { menuState in
+                            print("select horizontal tag")
+                            print(menuState.scrollToPostion)
+                                withAnimation(.spring()){
+                                    scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
+                                }
+                        })
+                    }
+                }.padding(.vertical, Diems.SMALL_PADDING)
+                
+                ScrollView {
+                    ScrollViewReader{ scrollReader in
+                        LazyVStack(spacing:0){
+                            ForEach(viewModel.menuViewState.menuItems){ menuItem in
+                                Section(
+                                    header: LargeHeaderText(
+                                        text:menuItem.categorySectionItem.name
+                                    ).id(menuItem.categorySectionItem.id)
+                                        .padding(.horizontal,  Diems.MEDIUM_PADDING)
+                                        .padding(.top, Diems.MEDIUM_PADDING)){
+                                            ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
+                                                NavigationLink(
+                                                    destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
+                                                ){
+                                                    MenuItemView(menuProductItem: menuProductItem, action: {
+                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.id)
+                                                    })
+                                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                                    .padding(.vertical, Diems.HALF_SMALL_PADDING)
+                                                }
+                                            }
+                                        }
+                                        .onAppear(){
+                                            print("show tag")
+                                            print(menuItem.categorySectionItem.name)
+                                            viewModel.selectTagWithHorizontalScroll(tagName: menuItem.categorySectionItem.name)
+                                        }
+                            }
+                        }.onChange(of: viewModel.menuViewState, perform: { menuState in
+                            if(menuState.scrollToPostion != lastShowCategory){
+                                self.lastShowCategory = menuState.scrollToPostion
+                                withAnimation(.spring()){
+                                    scrollReader.scrollTo(menuState.scrollToPostion, anchor: .top)
+                                }
+                            }
+                        })
                     }
                 }
             }

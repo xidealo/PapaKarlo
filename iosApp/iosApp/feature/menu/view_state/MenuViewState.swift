@@ -11,15 +11,31 @@ class MenuViewState : NSObject, NSCopying {
     var menuItems : [MenuItem]
     var categoryItemModels : [CategoryItemModel]
     var isLoading:Bool
-    
-    init(menuItems:[MenuItem], categoryItemModels: [CategoryItemModel], isLoading:Bool){
+    var scrollToPostion:String
+    var scrollToHorizontalPostion:String
+
+    init(
+        menuItems:[MenuItem],
+        categoryItemModels: [CategoryItemModel],
+        isLoading:Bool,
+        scrollToPostion:String,
+        scrollToHorizontalPostion:String
+    ){
         self.menuItems = menuItems
         self.categoryItemModels = categoryItemModels
         self.isLoading = isLoading
+        self.scrollToPostion = scrollToPostion
+        self.scrollToHorizontalPostion = scrollToHorizontalPostion
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
-        let copy = MenuViewState(menuItems: menuItems, categoryItemModels: categoryItemModels, isLoading: isLoading)
+        let copy = MenuViewState(
+            menuItems: menuItems,
+            categoryItemModels: categoryItemModels,
+            isLoading: isLoading,
+            scrollToPostion:scrollToPostion,
+            scrollToHorizontalPostion:scrollToHorizontalPostion
+        )
         return copy
     }
 }
