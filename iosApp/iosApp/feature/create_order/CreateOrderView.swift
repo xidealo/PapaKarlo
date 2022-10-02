@@ -34,7 +34,7 @@ struct CreateOrderSuccessView:View {
     @ObservedObject var viewModel:CreateOrderViewModel
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     @State var showCreatedAddress:Bool
-
+    
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
         case CreateOrderState.goToProfile: NavigationLink(
@@ -69,6 +69,18 @@ struct CreateOrderSuccessView:View {
             }
             
             EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+            
+            Toggle("Как можно скорее", isOn: $viewModel.creationOrderViewState.notNeedDeferredTime)
+                .toggleStyle(.automatic)
+            
+            if(!viewModel.creationOrderViewState.notNeedDeferredTime){
+                if(viewModel.creationOrderViewState.isDelivery){
+                    DatePicker("Время доставки", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                }else{
+                    DatePicker("Время самовывоза", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                }
+            }
+            
         }.padding(Diems.MEDIUM_PADDING)
             
             Spacer()

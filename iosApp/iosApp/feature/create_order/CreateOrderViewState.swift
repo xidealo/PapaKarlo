@@ -12,7 +12,7 @@ class CreateOrderViewState: NSObject, NSCopying {
     var isDelivery:Bool
     var address:String?
     var comment: String
-    var deferredTime: String
+    var deferredTime: Date
     var totalCost: String
     var deliveryCost: String
     var amountToPay: String
@@ -20,19 +20,21 @@ class CreateOrderViewState: NSObject, NSCopying {
     var userUuid:String?
     var cafeUuid:String?
     var createOrderState:CreateOrderState
-    
+    var notNeedDeferredTime:Bool
+
     init(
         isDelivery:Bool,
         address:String?,
         comment:String,
-        deferredTime:String,
+        deferredTime:Date,
         totalCost: String,
         deliveryCost: String,
         amountToPay:String,
         amountToPayWithDeliveryCost: String,
         userUuid:String?,
         cafeUuid:String?,
-        createOrderState:CreateOrderState
+        createOrderState:CreateOrderState,
+        notNeedDeferredTime:Bool
     ){
         self.isDelivery = isDelivery
         self.address = address
@@ -45,6 +47,7 @@ class CreateOrderViewState: NSObject, NSCopying {
         self.userUuid = userUuid
         self.cafeUuid = cafeUuid
         self.createOrderState = createOrderState
+        self.notNeedDeferredTime = notNeedDeferredTime
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
@@ -59,7 +62,8 @@ class CreateOrderViewState: NSObject, NSCopying {
             amountToPayWithDeliveryCost : amountToPayWithDeliveryCost,
             userUuid : userUuid,
             cafeUuid : cafeUuid,
-            createOrderState:createOrderState
+            createOrderState:createOrderState,
+            notNeedDeferredTime:notNeedDeferredTime
         )
         return copy
     }
