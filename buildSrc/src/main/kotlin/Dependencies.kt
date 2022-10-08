@@ -6,7 +6,7 @@ object Versions {
     const val navigation = "2.5.1"
 
     const val kotlinCoroutines = "1.6.4"
-    const val ktor = "2.1.0"
+    const val ktor = "2.1.2"
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
 
@@ -164,6 +164,7 @@ object Ktor {
 
     const val clientAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val clientIos = "io.ktor:ktor-client-ios:${Versions.ktor}"
+    const val clientOkhttp = "io.ktor:ktor-client-okhttp:${Versions.ktor}"
 }
 
 object Coil {

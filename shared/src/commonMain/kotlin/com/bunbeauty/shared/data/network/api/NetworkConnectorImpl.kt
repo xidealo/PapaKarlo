@@ -5,6 +5,9 @@ import com.bunbeauty.shared.Constants.BEARER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.UUID_PARAMETER
+import com.bunbeauty.shared.Logger.WEB_SOCKET_TAG
+import com.bunbeauty.shared.Logger.logD
+import com.bunbeauty.shared.Logger.logE
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
@@ -184,6 +187,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
                 client.webSocket(
                     HttpMethod.Get,
                     path = path,
+                    port = 80,
                     request = {
                         header(AUTHORIZATION_HEADER, BEARER + token)
                     }
@@ -191,13 +195,13 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
                     webSocketSession = this
                     while (true) {
                         val message = incoming.receive() as? Frame.Text ?: continue
+                        logD(WEB_SOCKET_TAG, "Message: ${message.readText()}")
                         val serverModel = json.decodeFromString(serializer, message.readText())
                         emit(serverModel)
-                        //logD(WEB_SOCKET_TAG, "Message: ${message.readText()}")
                     }
                 }
             } catch (e: Exception) {
-                //logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
+                logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
                 unsubscribeOnOrderUpdates()
             }
         }

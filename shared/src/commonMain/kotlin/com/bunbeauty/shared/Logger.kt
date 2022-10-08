@@ -18,6 +18,7 @@ object Logger {
     const val AUTH_TAG = "authTag"
     const val DELIVERY_TAG = "deliveryTag"
     const val WEB_SOCKET_TAG = "webSocketTag"
+    const val NETWORK_TAG = "networkTag"
 
     fun logD(tag: String, message: Any) {
         log(LogLevel.DEBUG, tag = COMMON_TAG, message.toString())
