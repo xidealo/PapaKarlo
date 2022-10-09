@@ -22,7 +22,7 @@ object Versions {
     const val coil = "2.1.0"
     const val timePicker = "4.2.3"
 
-    const val composeCompiler = "1.3.0"
+    const val composeCompiler = "1.3.2"
     const val composeMaterial = "1.2.1"
     const val composeAnimation = "1.2.1"
     const val composeUi = "1.2.1"
