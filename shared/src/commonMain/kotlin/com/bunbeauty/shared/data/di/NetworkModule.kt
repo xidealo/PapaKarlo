@@ -43,9 +43,7 @@ fun networkModule() = module {
                 )
             }
 
-            install(WebSockets) {
-                pingInterval = 10_000
-            }
+            install(WebSockets)
 
             install(Logging) {
                 logger = object : KtorLogger {

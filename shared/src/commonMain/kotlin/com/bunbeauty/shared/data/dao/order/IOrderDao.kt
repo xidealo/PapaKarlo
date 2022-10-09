@@ -13,6 +13,7 @@ interface IOrderDao {
     fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>>
     fun observeOrderListByUserUuid(userUuid: String): Flow<List<OrderEntity>>
     fun observeOrderWithProductListByUuid(uuid: String): Flow<List<OrderWithProductEntity>>
+    fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?>
 
     fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity>
 

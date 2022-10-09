@@ -108,6 +108,7 @@ fun viewModelModule() = module {
     viewModel {
         ProfileViewModel(
             userInteractor = get(),
+            orderInteractor = get(),
             orderUIMapper = get(),
         )
     }

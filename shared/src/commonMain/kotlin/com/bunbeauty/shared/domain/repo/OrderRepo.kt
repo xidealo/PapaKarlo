@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface OrderRepo {
 
     fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>>
+    fun observeLastOrderByUserUuid(userUuid: String): Flow<LightOrder?>
     fun observeOrderByUuid(orderUuid: String): Flow<Order?>
     fun observeOrderUpdates(token: String): Flow<Order>
     suspend fun stopCheckOrderUpdates()

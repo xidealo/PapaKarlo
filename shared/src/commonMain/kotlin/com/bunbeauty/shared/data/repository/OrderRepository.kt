@@ -26,6 +26,10 @@ class OrderRepository(
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)
     }
 
+    override fun observeLastOrderByUserUuid(userUuid: String): Flow<LightOrder?> {
+        return orderDao.observeLastOrderByUserUuid(userUuid).mapFlow(orderMapper::toLightOrder)
+    }
+
     override fun observeOrderByUuid(orderUuid: String): Flow<Order?> {
         return orderDao.observeOrderWithProductListByUuid(orderUuid).mapFlow(orderMapper::toOrder)
     }
