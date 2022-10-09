@@ -17,6 +17,6 @@ struct ChangeCityItemView: View {
 
 struct ChangeCityItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ChangeCityItemView(city: ChangeCityItem(city: "Kimry", isSelected: true))
+        ChangeCityItemView(city: ChangeCityItem(id: "", city: "Kimry", isSelected: true))
     }
 }

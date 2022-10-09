@@ -10,14 +10,15 @@ import SwiftUI
 struct CreateOrderView: View {
     
     @ObservedObject private var viewModel = CreateOrderViewModel()
-    
+    @State var showCreatedAddress:Bool = false
+
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
                 LoadingView()
             }else{
-                CreateOrderSuccessView(viewModel: viewModel)
+                CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: showCreatedAddress)
             }
         }.onAppear(){
             viewModel.loadData()
@@ -32,6 +33,8 @@ struct CreateOrderSuccessView:View {
     
     @ObservedObject var viewModel:CreateOrderViewModel
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
+    @State var showCreatedAddress:Bool
+    
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
         case CreateOrderState.goToProfile: NavigationLink(
@@ -58,7 +61,7 @@ struct CreateOrderSuccessView:View {
             }
             
             if viewModel.creationOrderViewState.address == nil{
-                NavigationCardView(icon: nil, label: addressLable, destination: CreateAddressView())
+                NavigationCardView(icon: nil, label: addressLable, destination: CreateAddressView(show: $showCreatedAddress))
             }else{
                 ActionTextCardView(placeHolder: addressLable, text: viewModel.creationOrderViewState.address!){
                     viewModel.goToAddress()
@@ -66,6 +69,18 @@ struct CreateOrderSuccessView:View {
             }
             
             EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+            
+            Toggle("Как можно скорее", isOn: $viewModel.creationOrderViewState.notNeedDeferredTime)
+                .toggleStyle(.automatic)
+            
+            if(!viewModel.creationOrderViewState.notNeedDeferredTime){
+                if(viewModel.creationOrderViewState.isDelivery){
+                    DatePicker("Время доставки", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                }else{
+                    DatePicker("Время самовывоза", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                }
+            }
+            
         }.padding(Diems.MEDIUM_PADDING)
             
             Spacer()
@@ -119,6 +134,7 @@ struct CreateOrderSuccessView:View {
                         addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
                     }
                 })
+                .overlay(overlayView: ToastView(toast: Toast(title: "Адрес добавлен"), show: $showCreatedAddress, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $showCreatedAddress)
         }
     }
 }

@@ -46,6 +46,8 @@ struct MenuItemView: View {
                     .overlay(RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                         .stroke(Color("primary"), lineWidth: 2))
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    .padding(.leading, Diems.HALF_SMALL_PADDING)
+
                 
             }.padding(.trailing, Diems.MEDIUM_PADDING)
             

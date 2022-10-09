@@ -9,24 +9,21 @@ import SwiftUI
 
 struct ChangeCityView: View {
     
-    let cities : [ChangeCityItem]
-    
-    init() {
-        cities = [ChangeCityItem(city: "Kimry", isSelected:true), ChangeCityItem(city: "Dubna", isSelected:false)]
-    }
+    @ObservedObject private var viewModel = ChangeCityViewModel()
     
     @Environment(\.presentationMode) var presentationMode
-
+    
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "", count: "", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            ScrollView {
+            switch(viewModel.changeCityViewState.changeCityState){
+            case ChangeCityState.loading : LoadingView()
+            case ChangeCityState.success :     ScrollView {
                 LazyVStack{
-                    ForEach(cities){ city in
+                    ForEach(viewModel.changeCityViewState.cityList){ city in
                         Button(action:{
-                            //change city
-                            self.presentationMode.wrappedValue.dismiss()
+                            viewModel.selectCity(uuid: city.id)
                         }
                         ){
                             ChangeCityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -34,6 +31,16 @@ struct ChangeCityView: View {
                     }
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)
+            default:  EmptyView()
+            }
+        }
+        .onReceive(viewModel.$changeCityViewState, perform: { state in
+            if(state.changeCityState == ChangeCityState.back){
+                self.presentationMode.wrappedValue.dismiss()
+            }
+        })
+        .onAppear(){
+            viewModel.loadData()
         }
         .background(Color("background"))
         .navigationBarHidden(true)

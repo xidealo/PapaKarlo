@@ -14,15 +14,22 @@ class CreateOrderViewModel:ObservableObject {
         isDelivery: true,
         address: nil,
         comment: "",
-        deferredTime: "",
+        deferredTime: Date.now + 60 * 60,
         totalCost: "",
         deliveryCost: "",
         amountToPay: "",
         amountToPayWithDeliveryCost: "",
         userUuid: nil,
         cafeUuid: nil,
-        createOrderState: CreateOrderState.loading
+        createOrderState: CreateOrderState.loading,
+        notNeedDeferredTime : true
     )
+    
+    init(){
+        iosComponent.provideCafeInteractor().getCafeList { cafes, err in
+            print("cafe loaded")
+        }
+    }
     
     func loadData(){
         print("CreateOrderViewModel")
@@ -39,7 +46,8 @@ class CreateOrderViewModel:ObservableObject {
                     amountToPayWithDeliveryCost:  "",
                     userUuid: self.creationOrderViewState.userUuid,
                     cafeUuid: self.creationOrderViewState.cafeUuid,
-                    createOrderState: self.creationOrderViewState.createOrderState
+                    createOrderState: self.creationOrderViewState.createOrderState,
+                    notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime
                 )
                 return
             }
@@ -54,10 +62,11 @@ class CreateOrderViewModel:ObservableObject {
                 amountToPayWithDeliveryCost:  String(cartTotal!.amountToPayWithDeliveryCost) +  Strings.CURRENCY,
                 userUuid: self.creationOrderViewState.userUuid,
                 cafeUuid: self.creationOrderViewState.cafeUuid,
-                createOrderState: self.creationOrderViewState.createOrderState
+                createOrderState: self.creationOrderViewState.createOrderState,
+                notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime
             )
         }
-        getAddressList(isDelivery: true)
+        getAddressList(isDelivery: creationOrderViewState.isDelivery)
     }
     
     func getAddressList(isDelivery:Bool){
@@ -111,13 +120,20 @@ class CreateOrderViewModel:ObservableObject {
     }
     
     func createOrder(){
+        print(creationOrderViewState.deferredTime)
         
         (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
             copiedState.createOrderState = CreateOrderState.loading
             creationOrderViewState = copiedState
         }
   
-        iosComponent.provideIOrderInteractor().createOrder(isDelivery: creationOrderViewState.isDelivery, userAddressUuid: creationOrderViewState.userUuid, cafeUuid: creationOrderViewState.cafeUuid, addressDescription: creationOrderViewState.address ?? "", comment: creationOrderViewState.comment, deferredTime: nil) { code, err in
+        var defTime: KotlinLong? = nil
+        
+        if(!creationOrderViewState.notNeedDeferredTime){
+            defTime = KotlinLong(value: Int64(creationOrderViewState.deferredTime.timeIntervalSince1970 * 1000.0))
+        }
+        print(defTime)
+        iosComponent.provideIOrderInteractor().createOrder(isDelivery: creationOrderViewState.isDelivery, userAddressUuid: creationOrderViewState.userUuid, cafeUuid: creationOrderViewState.cafeUuid, addressDescription: creationOrderViewState.address ?? "", comment: creationOrderViewState.comment, deferredTime: defTime) { code, err in
             if(code == nil){
                 //show error
                 print("sss")

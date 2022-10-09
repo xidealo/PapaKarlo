@@ -1,9 +1,12 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.shared.Logger
+import com.bunbeauty.shared.Logger.NETWORK_TAG
 import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.Logger as KtorLogger
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.observer.*
 import io.ktor.client.plugins.websocket.*
@@ -12,7 +15,6 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
-
 
 fun networkModule() = module {
     single {
@@ -23,6 +25,12 @@ fun networkModule() = module {
     }
     single {
         HttpClient(httpClientEngine) {
+
+//        engine {
+//            preconfigured = OkHttpClient.Builder()
+//                .pingInterval(20, TimeUnit.SECONDS)
+//                .build()
+//        }
 
             install(ContentNegotiation) {
                 json(
@@ -36,22 +44,16 @@ fun networkModule() = module {
             }
 
             install(WebSockets) {
-                pingInterval = 10
+                pingInterval = 10_000
             }
 
             install(Logging) {
-                logger = object : Logger {
+                logger = object : KtorLogger {
                     override fun log(message: String) {
-                        com.bunbeauty.shared.Logger.logD("ktor_tag", message)
+                        Logger.logD(NETWORK_TAG, message)
                     }
                 }
                 level = LogLevel.ALL
-            }
-
-            install(ResponseObserver) {
-                onResponse { response ->
-                    //Log.d("HTTP status:", "${response.status.value}")
-                }
             }
 
             install(DefaultRequest) {

@@ -36,7 +36,7 @@ class DateUtil {
     }
     
     func getTimeString(time: Time) -> String {
-        return "\(addFirstZero(number: Int(time.hourOfDay))):\(addFirstZero(number : Int(time.minuteOfHour)))"
+        return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
        }
     
     func addFirstZero(number: Int) -> String {

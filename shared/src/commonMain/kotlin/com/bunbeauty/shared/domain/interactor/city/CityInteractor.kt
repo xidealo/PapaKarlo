@@ -3,6 +3,8 @@ package com.bunbeauty.shared.domain.interactor.city
 import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
@@ -23,8 +25,8 @@ class CityInteractor(
         dataStoreRepo.saveSelectedCityUuid(city.uuid, city.timeZone)
     }
 
-    override fun observeCityList(): Flow<List<City>> {
-        return cityRepo.observeCityList()
+    override fun observeCityList(): CommonFlow<List<City>> {
+        return cityRepo.observeCityList().asCommonFlow()
     }
 
     override fun observeSelectedCity(): Flow<City?> {

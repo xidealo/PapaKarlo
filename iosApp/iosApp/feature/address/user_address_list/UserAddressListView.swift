@@ -12,6 +12,8 @@ struct UserAddressListView: View {
     @ObservedObject private var viewModel : UserAddressListViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @State var show:Bool = false
+
     init(isClickable:Bool){
         viewModel = UserAddressListViewModel(isClickable: isClickable)
     }
@@ -22,8 +24,8 @@ struct UserAddressListView: View {
             
             switch(viewModel.userAddressViewState.userAddressState){
             case UserAddressState.loading: LoadingView()
-            case UserAddressState.empty: EmptyAddressListView()
-            case UserAddressState.success : SuccessAddressListView(viewModel: viewModel)
+            case UserAddressState.empty: EmptyAddressListView(show: show)
+            case UserAddressState.success : SuccessAddressListView(viewModel: viewModel, show: show)
             case UserAddressState.goBack : EmptyView()
             }
             
@@ -45,12 +47,14 @@ struct UserAddressListView_Previews: PreviewProvider {
 }
 
 struct SuccessAddressListView: View {
-    let viewModel:UserAddressListViewModel
-    
+    @ObservedObject var viewModel:UserAddressListViewModel
+
+    @State var show:Bool
+
     var body: some View {
         VStack(spacing:0){
             ScrollView {
-                LazyVStack{
+                LazyVStack(spacing:0){
                     ForEach(viewModel.userAddressViewState.addressItemList){ address in
                         if(address.isClickable){
                             Button(action: {
@@ -59,18 +63,21 @@ struct SuccessAddressListView: View {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                     .padding(.top, Diems.SMALL_PADDING)
+                                    .padding(.bottom, Diems.SMALL_PADDING)
                             }
                         }else{
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
+                                .padding(.bottom, Diems.SMALL_PADDING)
+
                         }
                     }
                 }
             }
             
             NavigationLink(
-                destination:CreateAddressView()
+                destination:CreateAddressView(show: $show)
             ){
                 Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
                     .padding()
@@ -79,12 +86,17 @@ struct SuccessAddressListView: View {
                     .cornerRadius(Diems.MEDIUM_RADIUS)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
-        }
+        }.overlay(overlayView: ToastView(
+            toast: Toast(title: "Адрес добавлен \(viewModel.userAddressViewState.addressItemList.last?.address ?? "")"),
+            show: $show, backgroundColor:Color("primary"),
+            foregaroundColor: Color("onPrimary")), show: $show)
         
     }
 }
 
 struct EmptyAddressListView: View {
+    @State var show:Bool
+
     var body: some View {
         VStack{
             Spacer()
@@ -95,7 +107,7 @@ struct EmptyAddressListView: View {
             Spacer()
             
             NavigationLink(
-                destination:CreateAddressView()
+                destination:CreateAddressView(show: $show)
             ){
                 Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
                     .padding()
