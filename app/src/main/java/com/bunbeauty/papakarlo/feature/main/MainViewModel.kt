@@ -36,14 +36,14 @@ class MainViewModel(
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             mainInteractor.startCheckOrderUpdates()
         }
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch() {
             mainInteractor.stopCheckOrderUpdates()
         }
     }
