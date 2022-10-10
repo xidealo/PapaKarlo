@@ -192,6 +192,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
                         header(AUTHORIZATION_HEADER, BEARER + token)
                     }
                 ) {
+                    logD(WEB_SOCKET_TAG, "WebSocket connected")
                     webSocketSession = this
                     while (true) {
                         val message = incoming.receive() as? Frame.Text ?: continue
@@ -200,8 +201,13 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
                         emit(serverModel)
                     }
                 }
-            } catch (e: Exception) {
+            } catch (e: WebSocketException) {
+                logE(WEB_SOCKET_TAG, "WebSocketException: ${e.message}")
+            }
+            catch (e:Exception){
                 logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
+            }
+            finally {
                 unsubscribeOnOrderUpdates()
             }
         }

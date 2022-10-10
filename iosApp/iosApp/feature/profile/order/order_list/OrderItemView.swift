@@ -24,7 +24,9 @@ struct OrderItemView<Content: View>: View {
             OrderChip(orderStatus: orderItem.status)
             
             Spacer()
-            Text(orderItem.dateTime).font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .thin, design: .default))
+            Text(orderItem.dateTime)
+                .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+                .foregroundColor(Color("onSurface"))
             
         }.frame(maxWidth:.infinity)
         .padding(Diems.MEDIUM_PADDING)

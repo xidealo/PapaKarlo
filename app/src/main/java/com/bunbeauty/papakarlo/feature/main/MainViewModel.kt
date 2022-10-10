@@ -8,7 +8,9 @@ import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val cartProductInteractor: ICartProductInteractor,
@@ -26,23 +28,24 @@ class MainViewModel(
     private val mutableIsOnline: MutableStateFlow<Boolean> = MutableStateFlow(true)
     val isOnline: StateFlow<Boolean> = mutableIsOnline.asStateFlow()
 
-    private val mutableIsStarted: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
     init {
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
-        checkOrderUpdates(mutableIsStarted)
     }
 
     override fun onStart(owner: LifecycleOwner) {
         super.onStart(owner)
-        mutableIsStarted.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            mainInteractor.startCheckOrderUpdates()
+        }
     }
 
     override fun onStop(owner: LifecycleOwner) {
         super.onStop(owner)
-        mutableIsStarted.value = false
+        viewModelScope.launch(Dispatchers.IO) {
+            mainInteractor.stopCheckOrderUpdates()
+        }
     }
 
     private fun observeTotalCartCount() {
@@ -61,9 +64,5 @@ class MainViewModel(
         networkUtil.observeIsOnline().onEach { isOnline ->
             mutableIsOnline.value = isOnline
         }.launchIn(viewModelScope)
-    }
-
-    private fun checkOrderUpdates(isStartedFlow: Flow<Boolean>) {
-        mainInteractor.checkOrderUpdates(isStartedFlow)
     }
 }

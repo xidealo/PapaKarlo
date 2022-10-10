@@ -30,7 +30,6 @@ struct PaymentView: View {
                     UIPasteboard.general.string = Strings.MSG_PAYMENT_CARD_NUMBER
                 }
             }.padding(Diems.MEDIUM_PADDING)
-          
             Spacer()
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface IOrderInteractor {
 
     suspend fun observeOrderList(): Flow<List<LightOrder>>
-    suspend fun observeLastOrder(): Flow<LightOrder?>
+    fun observeLastOrder(): CommonFlow<LightOrder?>
     fun observeOrderListSwift(): CommonFlow<List<LightOrder>>
     fun observeOrderByUuid(orderUuid: String): CommonFlow<OrderWithAmounts?>
     suspend fun createOrder(

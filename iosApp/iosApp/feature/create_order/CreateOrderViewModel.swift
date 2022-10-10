@@ -122,6 +122,14 @@ class CreateOrderViewModel:ObservableObject {
     func createOrder(){
         print(creationOrderViewState.deferredTime)
         
+        if(creationOrderViewState.cafeUuid == nil  && creationOrderViewState.userUuid == nil){
+            (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                copiedState.createOrderState = CreateOrderState.addressError
+                creationOrderViewState = copiedState
+            }
+            return
+        }
+        
         (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
             copiedState.createOrderState = CreateOrderState.loading
             creationOrderViewState = copiedState
@@ -132,14 +140,11 @@ class CreateOrderViewModel:ObservableObject {
         if(!creationOrderViewState.notNeedDeferredTime){
             defTime = KotlinLong(value: Int64(creationOrderViewState.deferredTime.timeIntervalSince1970 * 1000.0))
         }
-        print(defTime)
         iosComponent.provideIOrderInteractor().createOrder(isDelivery: creationOrderViewState.isDelivery, userAddressUuid: creationOrderViewState.userUuid, cafeUuid: creationOrderViewState.cafeUuid, addressDescription: creationOrderViewState.address ?? "", comment: creationOrderViewState.comment, deferredTime: defTime) { code, err in
             if(code == nil){
                 //show error
-                print("sss")
                 (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                    
-                    copiedState.createOrderState = CreateOrderState.success //TODO SHOW ERROR
+                    copiedState.createOrderState = CreateOrderState.commonError
                     self.creationOrderViewState = copiedState
                 }
             }else{
@@ -172,5 +177,5 @@ class CreateOrderViewModel:ObservableObject {
 
 
 enum CreateOrderState{
-    case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile
+    case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile, commonError, addressError
 }

@@ -33,13 +33,13 @@ struct OrderDetailsView: View {
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.bottom, Diems.SMALL_PADDING)
-
+                        
                         ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
                             OrderProductItemView(orderProductItem: orderProductItem)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
                         }
-
+                        
                     }
                 }
             }
@@ -53,7 +53,7 @@ struct OrderDetailsView: View {
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.top, Diems.SMALL_PADDING)
                 }
-               
+                
                 HStack{
                     BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                     Spacer()
@@ -61,6 +61,7 @@ struct OrderDetailsView: View {
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.top, Diems.SMALL_PADDING)
+                .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
             
         }.background(Color("background"))
@@ -117,21 +118,16 @@ struct OrderDetailsTextView: View {
     
     var body: some View {
         VStack{
-            VStack{
-                PlaceholderText(text: "Время заказа")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(orderDetails.dateTime)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .padding(.top, Diems.HALF_SMALL_PADDING)
+            
             HStack{
                 VStack{
-                    PlaceholderText(text: "Способ получения")
+                    PlaceholderText(text: "Время заказа")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(orderDetails.pickupMethod)
+                    Text(orderDetails.dateTime)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.top, Diems.HALF_SMALL_PADDING)
+                
                 if(orderDetails.deferredTime != nil){
                     VStack{
                         PlaceholderText(text: orderDetails.deferredTimeHintString)
@@ -142,6 +138,14 @@ struct OrderDetailsTextView: View {
                     .padding(.top, Diems.HALF_SMALL_PADDING)
                 }
             }
+            VStack{
+                PlaceholderText(text: "Способ получения")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(orderDetails.pickupMethod)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.top, Diems.HALF_SMALL_PADDING)
+            
             VStack{
                 PlaceholderText(text: "Адрес")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -158,9 +162,9 @@ struct OrderDetailsTextView: View {
                 }.padding(.top, Diems.HALF_SMALL_PADDING)
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
-        .padding(Diems.MEDIUM_PADDING)
-        .background(Color("surface"))
-        .cornerRadius(Diems.MEDIUM_RADIUS)
+            .padding(Diems.MEDIUM_PADDING)
+            .background(Color("surface"))
+            .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
 

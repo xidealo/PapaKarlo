@@ -9,6 +9,7 @@ import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
@@ -46,7 +47,7 @@ fun initKoin() = startKoin {
 }
 
 class IosComponent:KoinComponent {
-    fun provideMainInteractor(): MainInteractor = get()
+    fun provideMainInteractor(): IMainInteractor = get()
     fun provideCityInteractor(): ICityInteractor = get()
     fun provideApiRepo(): NetworkConnector = get()
     fun provideMenuInteractor(): IMenuProductInteractor = get()
