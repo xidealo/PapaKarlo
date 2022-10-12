@@ -28,7 +28,7 @@ class OrderInteractor(
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
     }
 
-    override suspend fun observeLastOrder(): CommonFlow<LightOrder?> {
+    override fun observeLastOrder(): CommonFlow<LightOrder?> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             orderRepo.observeLastOrderByUserUuid(userUuid ?: "")
         }.asCommonFlow()

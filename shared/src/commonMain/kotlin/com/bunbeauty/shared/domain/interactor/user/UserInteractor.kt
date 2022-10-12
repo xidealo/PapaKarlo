@@ -1,6 +1,8 @@
 package com.bunbeauty.shared.domain.interactor.user
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -30,10 +32,10 @@ class UserInteractor(
         return dataStoreRepo.getToken() != null
     }
 
-    override fun observeIsUserAuthorize(): Flow<Boolean> {
+    override fun observeIsUserAuthorize(): CommonFlow<Boolean> {
         return dataStoreRepo.token.map { token ->
             token != null
-        }
+        }.asCommonFlow()
     }
 
     override fun observeUser(): Flow<User?> {

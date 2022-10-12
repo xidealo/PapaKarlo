@@ -19,7 +19,7 @@ class MenuViewModel : ToolbarViewModel {
     
     override init(){
         super.init()
-        
+
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
             (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
                 copiedState.isLoading = false

@@ -22,35 +22,67 @@ struct SearchEditTextView: View {
     
     @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""
-    
+    @State var hasError:Bool = false
+    @State var errorMessage:String = ""
+
     var body: some View {
         VStack{
-            TextField(hint, text: $text)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
-                .overlay(
-                    RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                        .stroke(Color("surfaceVariant"), lineWidth: 2)
-                ).onReceive(Just(text)) { str in
-                    limitText(limit)
-                    if(str == "") {
-                        filteredList = []
-                    }else{
-                        if(prevSimbol == str){
-                            return
+            if(hasError){
+                TextField(hint, text: $text)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                            .stroke(Color("errorColor"), lineWidth: 2)
+                    ).onReceive(Just(text)) { str in
+                        limitText(limit)
+                        if(str == "") {
+                            filteredList = []
                         }else{
-                            prevSimbol = str
-                            filteredList =  Array(list.filter { streetItem in
-                                streetItem.name.lowercased().contains(
-                                    str.lowercased()
-                                        .trimingLeadingSpaces()
-                                        .trimingTrailingSpaces()
-                                )
-                            }.prefix(3))
+                            if(prevSimbol == str){
+                                return
+                            }else{
+                                prevSimbol = str
+                                filteredList =  Array(list.filter { streetItem in
+                                    streetItem.name.lowercased().contains(
+                                        str.lowercased()
+                                            .trimingLeadingSpaces()
+                                            .trimingTrailingSpaces()
+                                    )
+                                }.prefix(3))
+                            }
                         }
                     }
-                }
-            
+                Text(errorMessage)
+                    .foregroundColor(Color("errorColor"))
+                    .frame(maxWidth:.infinity, alignment: .leading)
+            }else{
+                TextField(hint, text: $text)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                            .stroke(Color("surfaceVariant"), lineWidth: 2)
+                    ).onReceive(Just(text)) { str in
+                        limitText(limit)
+                        if(str == "") {
+                            filteredList = []
+                        }else{
+                            if(prevSimbol == str){
+                                return
+                            }else{
+                                prevSimbol = str
+                                filteredList =  Array(list.filter { streetItem in
+                                    streetItem.name.lowercased().contains(
+                                        str.lowercased()
+                                            .trimingLeadingSpaces()
+                                            .trimingTrailingSpaces()
+                                    )
+                                }.prefix(3))
+                            }
+                        }
+                    }
+            }
             LazyVStack{
                 ForEach(filteredList){ street in
                     Button {

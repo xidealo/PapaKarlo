@@ -14,11 +14,25 @@ struct EditTextView: View {
     @Binding var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
-    
-    //@Binding var isShowError:Bool
-    
+    @State var hasError:Bool = false
+    @State var errorMessage:String = "Ошибка"
+
     var body: some View {
-        //if(isShowError){
+        if(hasError){
+            TextField(hint, text: $text)
+                .padding()
+                .lineLimit(5)
+                .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                .overlay(
+                    RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                        .stroke(Color("errorColor"), lineWidth: 2)
+                ).onReceive(Just(text)) { _ in limitText(limit) }
+            .keyboardType(keyBoadrType)
+            
+            Text(errorMessage)
+                .foregroundColor(Color("errorColor"))
+                .frame(maxWidth:.infinity, alignment: .leading)
+        }else{
             TextField(hint, text: $text)
                 .padding()
                 .lineLimit(5)
@@ -28,7 +42,7 @@ struct EditTextView: View {
                         .stroke(Color("surfaceVariant"), lineWidth: 2)
                 ).onReceive(Just(text)) { _ in limitText(limit) }
             .keyboardType(keyBoadrType)
-      //  }
+        }
 
     }
     

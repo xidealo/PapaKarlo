@@ -11,14 +11,16 @@ struct CreateOrderView: View {
     
     @ObservedObject private var viewModel = CreateOrderViewModel()
     @State var showCreatedAddress:Bool = false
-
+    @State var showAddressError:Bool = false
+    @State var showCommonError:Bool = false
+    
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
                 LoadingView()
             }else{
-                CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: showCreatedAddress)
+                CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: showCreatedAddress, showAddressError: $showAddressError, showCommonError: $showCommonError)
             }
         }.onAppear(){
             viewModel.loadData()
@@ -26,6 +28,9 @@ struct CreateOrderView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .navigationBarHidden(true)
+        .overlay(overlayView: ToastView(toast: Toast(title: "Адрес добавлен"), show: $showCreatedAddress, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $showCreatedAddress)
+        .overlay(overlayView: ToastView(toast: Toast(title: "Не указан адрес"), show: $showAddressError, backgroundColor:Color("errorColor"), foregaroundColor: Color("onPrimary")), show: $showAddressError)
+        .overlay(overlayView: ToastView(toast: Toast(title: "Что-то пошло не так"), show: $showCommonError, backgroundColor:Color("errorColor"), foregaroundColor: Color("onPrimary")), show: $showCommonError)
     }
 }
 
@@ -34,6 +39,8 @@ struct CreateOrderSuccessView:View {
     @ObservedObject var viewModel:CreateOrderViewModel
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     @State var showCreatedAddress:Bool
+    @Binding var showAddressError:Bool
+    @Binding var showCommonError:Bool
     
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
@@ -133,12 +140,13 @@ struct CreateOrderSuccessView:View {
                     }else{
                         addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
                     }
+                    showCommonError = creationOrderViewState.createOrderState == CreateOrderState.commonError
+                    showAddressError = creationOrderViewState.createOrderState == CreateOrderState.addressError
                 })
-                .overlay(overlayView: ToastView(toast: Toast(title: "Адрес добавлен"), show: $showCreatedAddress, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $showCreatedAddress)
+        
         }
     }
 }
-
 
 struct CreateOrderView_Previews: PreviewProvider {
     static var previews: some View {

@@ -24,9 +24,16 @@ struct ProfileView: View {
             }
             BottomBarView(isSelected: 2)
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background")).hiddenNavigationBarStyle()
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.fetchProfile()
+            viewModel.subscribeOnOrders()
+            viewModel.observeLastOrder()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
         }
     }
 }
