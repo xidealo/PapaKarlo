@@ -14,34 +14,29 @@ import kotlinx.coroutines.withContext
 class MainInteractor(
     private val orderRepo: OrderRepo,
     private val userInteractor: IUserInteractor,
-    private val dataStoreRepo: DataStoreRepo,
-    private val dispatcher: CoroutineDispatcher
+    private val dataStoreRepo: DataStoreRepo
 ) : IMainInteractor {
 
     override suspend fun startCheckOrderUpdates() {
         coroutineScope {
-            withContext(dispatcher) {
-                userInteractor.observeIsUserAuthorize().flatMapLatest { isUserAuthorize ->
-                    if (isUserAuthorize) {
-                        val token = dataStoreRepo.getToken()
-                        if (token != null) {
-                            orderRepo.observeOrderUpdates(token)
-                        } else {
-                            orderRepo.stopCheckOrderUpdates()
-                            flow { }
-                        }
+            userInteractor.observeIsUserAuthorize().flatMapLatest { isUserAuthorize ->
+                if (isUserAuthorize) {
+                    val token = dataStoreRepo.getToken()
+                    if (token != null) {
+                        orderRepo.observeOrderUpdates(token)
                     } else {
                         orderRepo.stopCheckOrderUpdates()
                         flow { }
                     }
-                }.launchIn(this)
-            }
+                } else {
+                    orderRepo.stopCheckOrderUpdates()
+                    flow { }
+                }
+            }.launchIn(this)
         }
     }
 
     override suspend fun stopCheckOrderUpdates() {
-        withContext(dispatcher) {
-            orderRepo.stopCheckOrderUpdates()
-        }
+        orderRepo.stopCheckOrderUpdates()
     }
 }

@@ -36,7 +36,6 @@ fun interactorModule() = module {
             orderRepo = get(),
             userInteractor = get(),
             dataStoreRepo = get(),
-            dispatcher = Dispatchers.Default
         )
     }
     single<IUserInteractor> {
