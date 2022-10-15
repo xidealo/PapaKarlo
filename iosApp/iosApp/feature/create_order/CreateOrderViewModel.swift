@@ -120,9 +120,16 @@ class CreateOrderViewModel:ObservableObject {
     }
     
     func createOrder(){
-        print(creationOrderViewState.deferredTime)
         
-        if(creationOrderViewState.cafeUuid == nil  && creationOrderViewState.userUuid == nil){
+        if(creationOrderViewState.isDelivery && creationOrderViewState.userUuid == nil){
+            (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                copiedState.createOrderState = CreateOrderState.addressError
+                creationOrderViewState = copiedState
+            }
+            return
+        }
+        
+        if(!creationOrderViewState.isDelivery && creationOrderViewState.cafeUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                 copiedState.createOrderState = CreateOrderState.addressError
                 creationOrderViewState = copiedState

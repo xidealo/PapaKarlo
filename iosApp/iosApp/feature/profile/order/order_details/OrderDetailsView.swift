@@ -64,8 +64,15 @@ struct OrderDetailsView: View {
                 .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
             
-        }.background(Color("background"))
-            .hiddenNavigationBarStyle()
+        }
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
+        .onAppear(){
+            viewModel.subscribeOnOrders()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
+        }
     }
 }
 

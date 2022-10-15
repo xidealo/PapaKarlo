@@ -22,7 +22,14 @@ struct OrderListView: View {
         .background(Color("background"))
         .navigationTitle(
             Text(Strings.TITLE_MY_ORDERS)
-        ).navigationBarHidden(true)
+        )
+        .navigationBarHidden(true)
+        .onAppear(){
+            viewModel.subscribeOnOrders()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
+        }
     }
 }
 
@@ -42,7 +49,9 @@ struct SuccessOrderListView: View {
             ScrollView {
                 LazyVStack(spacing:0){
                     ForEach(orderList){ order in
-                        OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id)).padding(.vertical, Diems.HALF_SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id))
+                            .padding(.vertical, Diems.HALF_SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }

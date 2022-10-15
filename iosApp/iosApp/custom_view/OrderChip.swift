@@ -15,7 +15,8 @@ struct OrderChip: View {
     var body: some View {
         Text(OrderChip.getStatusName(status: orderStatus))
             .foregroundColor(Color("surface"))
-            .padding(Diems.SMALL_PADDING)
+            .padding(.vertical, Diems.HALF_SMALL_PADDING)
+            .padding(.horizontal, Diems.HALF_SMALL_PADDING)
             .background(OrderChip.getColor(status: orderStatus))
             .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .heavy, design: .default))
             .cornerRadius(Diems.MEDIUM_RADIUS)

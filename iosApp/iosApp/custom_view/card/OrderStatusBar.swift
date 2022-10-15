@@ -22,14 +22,10 @@ struct OrderStatusBar: View {
     
     var body: some View {
         HStack(spacing:0){
-            HStack(spacing:0){
-                ForEach(0...4, id: \.self){ i in
-                    Spacer()
-                    Step(index: i, currentStep: getCurrentStep(orderStatus: orderStatus), orderStatus: orderStatus)
-                    Spacer()
-                }
-            }.padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.vertical, Diems.SMALL_PADDING)
+            ForEach(0...4, id: \.self){ i in
+                Step(index: i, currentStep: getCurrentStep(orderStatus: orderStatus), orderStatus: orderStatus)
+                    .padding(.horizontal, Diems.HALF_SMALL_PADDING)
+            }.padding(.vertical, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity)
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
@@ -64,7 +60,6 @@ struct Step: View {
                 FutureStep()
             }
         }.padding(.vertical, Diems.SMALL_PADDING)
-        
     }
 }
 
@@ -73,7 +68,7 @@ struct DoneStep: View {
     let orderStatus : OrderStatus
     
     var body: some View {
-        IconImage(width: 15, height: 18, imageName: "CheckIcon")
+        IconImage(width: 12, height: 9, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(OrderChip.getColor(status: orderStatus))
             .foregroundColor(Color("surface"))
@@ -83,7 +78,7 @@ struct DoneStep: View {
 
 struct FutureStep: View {
     var body: some View {
-        IconImage(width: 15, height: 18, imageName: "CheckIcon")
+        IconImage(width: 12, height: 9, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(Color("surfaceVariant"))
             .foregroundColor(Color("surfaceVariant"))

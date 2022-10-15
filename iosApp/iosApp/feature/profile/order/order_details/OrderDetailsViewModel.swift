@@ -93,4 +93,18 @@ class OrderDetailsViewModel :ObservableObject {
         }
     }
 
+    func subscribeOnOrders(){
+        iosComponent.provideMainInteractor().startCheckOrderUpdates { err in
+            if(err != nil){
+                print(err ?? "")
+            }
+        }
+    }
+    func unsubscribeFromOrders(){
+        iosComponent.provideMainInteractor().stopCheckOrderUpdates { err in
+            if(err != nil){
+                print(err ?? "")
+            }
+        }
+    }
 }

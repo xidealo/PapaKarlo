@@ -22,7 +22,7 @@ struct FeedbackView: View {
                     UIApplication.shared.open(URL(string: Constants.init().INSTAGRAM_LINK)!)
                 }
                 
-                ActionCardView(icon: "PlayMarketIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
+                ActionCardView(icon: "AppleIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().PLAY_MARKET_LINK)!)
                 }
             }.padding(Diems.MEDIUM_PADDING)

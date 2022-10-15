@@ -75,7 +75,12 @@ struct CreateOrderSuccessView:View {
                 }
             }
             
-            EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+            EditTextView(
+                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+                text:$viewModel.creationOrderViewState.comment,
+                limit: 255,
+                hasError: .constant(false)
+            )
             
             Toggle("Как можно скорее", isOn: $viewModel.creationOrderViewState.notNeedDeferredTime)
                 .toggleStyle(.automatic)

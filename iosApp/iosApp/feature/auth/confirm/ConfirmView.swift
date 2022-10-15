@@ -14,7 +14,7 @@ struct ConfirmView: View {
     
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
-
+    
     init(auth:AuthManager, phone:String, isGoToProfile:Bool){
         viewModel = ConfirmViewModel(auth: auth, isGoToProfile: isGoToProfile)
         self.phone = phone
@@ -62,13 +62,19 @@ struct ConfirmViewSuccessView: View {
             
             //SmsTextField(count: 6)
             
-            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6, keyBoadrType: UIKeyboardType.numberPad)
-                .onReceive(Just(code)) { _ in
-                    if(code.count == 6){
-                        viewModel.checkCode(code: code)
-                        code = ""
-                    }
+            EditTextView(
+                hint: Strings.HINT_CONFIRM_CODE,
+                text:$code,
+                limit: 6,
+                keyBoadrType: UIKeyboardType.numberPad,
+                hasError: .constant(false)
+            )
+            .onReceive(Just(code)) { _ in
+                if(code.count == 6){
+                    viewModel.checkCode(code: code)
+                    code = ""
                 }
+            }
             
             Spacer()
             
