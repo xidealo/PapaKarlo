@@ -145,8 +145,20 @@ struct CreateOrderSuccessView:View {
                     }else{
                         addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
                     }
+                    print(creationOrderViewState.createOrderState == CreateOrderState.addressError)
                     showCommonError = creationOrderViewState.createOrderState == CreateOrderState.commonError
-                    showAddressError = creationOrderViewState.createOrderState == CreateOrderState.addressError
+                    
+                    creationOrderViewState.actionList.forEach { action in
+                        switch(action){
+                        case CreateOrderAction.showAddressError : showAddressError = true
+                        case CreateOrderAction.showCommonError : showCommonError = true
+                        }
+                    }
+                    
+                    if !creationOrderViewState.actionList.isEmpty{
+                        viewModel.clearActions()
+                    }
+                    
                 })
         
         }

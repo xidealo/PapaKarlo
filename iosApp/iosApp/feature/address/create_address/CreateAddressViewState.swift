@@ -14,26 +14,41 @@ class CreateAddressViewState : NSObject,  NSCopying {
     var isBack : Bool
     var hasStreetError: Bool
     var hasHouseError:Bool
-
+    var hasFlatError:Bool
+    var hasEntranceError:Bool
+    var hasFloorError:Bool
+    var hasCommentError:Bool
+    
     init(
         streetList:[StreetItem],
-         isBack:Bool,
-         hasStreetError:Bool,
-         hasHouseError:Bool
+        isBack:Bool,
+        hasStreetError:Bool,
+        hasHouseError:Bool,
+        hasFlatError:Bool,
+        hasEntranceError:Bool,
+        hasFloorError:Bool,
+        hasCommentError:Bool
     ){
         self.streetList = streetList
         self.isBack = isBack
         self.hasStreetError = hasStreetError
         self.hasHouseError = hasHouseError
+        self.hasFlatError = hasFlatError
+        self.hasEntranceError = hasEntranceError
+        self.hasFloorError = hasFloorError
+        self.hasCommentError = hasCommentError
     }
-    
     
     func copy(with zone: NSZone? = nil) -> Any {
         let copy = CreateAddressViewState(
             streetList: streetList,
             isBack: isBack,
             hasStreetError: hasStreetError,
-            hasHouseError: hasHouseError
+            hasHouseError: hasHouseError,
+            hasFlatError:hasFlatError,
+            hasEntranceError:hasEntranceError,
+            hasFloorError:hasFloorError,
+            hasCommentError:hasCommentError
         )
         return copy
     }

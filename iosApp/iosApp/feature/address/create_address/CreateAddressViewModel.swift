@@ -14,19 +14,27 @@ class CreateAddressViewModel : ObservableObject {
         streetList: [],
         isBack: false,
         hasStreetError: false,
-        hasHouseError: false
+        hasHouseError: false,
+        hasFlatError: false,
+        hasEntranceError: false,
+        hasFloorError: false,
+        hasCommentError: false
     )
     @Published var isBack : Bool = false
-
+    
     init(){
         iosComponent.provideIStreetInteractor().getStreetList { streetList, err in
             self.createAddressViewState = CreateAddressViewState(
                 streetList: streetList?.map({ street in
-                StreetItem(id: street.uuid, name: street.name, cityUuid: street.cityUuid)
-            }) ?? [],
+                    StreetItem(id: street.uuid, name: street.name, cityUuid: street.cityUuid)
+                }) ?? [],
                 isBack: false,
                 hasStreetError: false,
-                hasHouseError: false
+                hasHouseError: false,
+                hasFlatError : false,
+                hasEntranceError : false,
+                hasFloorError : false,
+                hasCommentError : false
             )
         }
     }
@@ -36,7 +44,6 @@ class CreateAddressViewModel : ObservableObject {
         if(!createAddressViewState.streetList.contains(where: {streetName == $0.name})){
             (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
                 newState.hasStreetError = true
-                newState.hasHouseError = false
                 createAddressViewState = newState
             }
             return
@@ -45,7 +52,39 @@ class CreateAddressViewModel : ObservableObject {
         if(house.isEmpty){
             (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
                 newState.hasHouseError = true
-                newState.hasStreetError = false
+                createAddressViewState = newState
+            }
+            return
+        }
+        
+        
+        if(flat.count > 5){
+            (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
+                newState.hasFlatError = true
+                createAddressViewState = newState
+            }
+            return
+        }
+        
+        if(entrance.count > 5){
+            (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
+                newState.hasEntranceError = true
+                createAddressViewState = newState
+            }
+            return
+        }
+        
+        if(floor.count > 5){
+            (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
+                newState.hasFlatError = true
+                createAddressViewState = newState
+            }
+            return
+        }
+        
+        if(comment.count > 100){
+            (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
+                newState.hasCommentError = true
                 createAddressViewState = newState
             }
             return

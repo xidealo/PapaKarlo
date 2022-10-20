@@ -13,7 +13,7 @@ struct ProfileView: View {
     @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
     @State var show:Bool
     @State var showCreatedAddress:Bool = false
-
+    
     var body: some View {
         VStack{
             ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
@@ -78,7 +78,7 @@ struct EmptyProfileView: View {
 struct LoadingProfileView: View {
     var body: some View {
         VStack{
-          LoadingView()
+            LoadingView()
         }
     }
 }
@@ -87,7 +87,7 @@ struct SuccessProfileView: View {
     let profileViewState:ProfileViewState
     @State var show:Bool
     @State var showCreatedAddress:Bool
-
+    
     var body: some View {
         VStack{
             if(profileViewState.lastOrder != nil){
@@ -113,7 +113,20 @@ struct SuccessProfileView: View {
             Spacer()
             
         }.padding(Diems.MEDIUM_PADDING)
-            .overlay(overlayView: ToastView(toast: Toast(title: profileViewState.lastOrder?.code ?? ""), show: $show, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $show)
-            .overlay(overlayView: ToastView(toast: Toast(title: "Адрес добавлен"), show: $showCreatedAddress, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $showCreatedAddress)
+            .overlay(
+                overlayView: ToastView(
+                    toast: Toast(title: profileViewState.lastOrder?.code ?? ""),
+                    show: $show,
+                    backgroundColor:Color("primary"),
+                    foregaroundColor: Color("onPrimary")),
+                show: $show
+            )
+            .overlay(
+                overlayView: ToastView(toast: Toast(title: "Адрес добавлен"),
+                                       show: $showCreatedAddress,
+                                       backgroundColor:Color("primary"),
+                                       foregaroundColor: Color("onPrimary")),
+                show: $showCreatedAddress
+            )
     }
 }

@@ -22,6 +22,7 @@ struct SearchEditTextView: View {
     
     @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""
+    
     @Binding var hasError:Bool
     @State var errorMessage:String = ""
 

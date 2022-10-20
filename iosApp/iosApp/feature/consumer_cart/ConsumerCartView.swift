@@ -69,7 +69,7 @@ struct ConsumerCartSuccessScreen: View {
                 ScrollView {
                     LazyVStack(spacing:0){
                         
-                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
+                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)\(Strings.CURRENCY)")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
@@ -79,7 +79,9 @@ struct ConsumerCartSuccessScreen: View {
                                 viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
                             }, minusAction: {
                                 viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }).padding(.horizontal, Diems.MEDIUM_PADDING)
+                            })
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.bottom, Diems.SMALL_PADDING)
                         }
                     }
                 }

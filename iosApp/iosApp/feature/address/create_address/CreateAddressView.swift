@@ -54,24 +54,31 @@ struct CreateAddressView: View {
                                     hint: Strings.HINT_CREATION_ADDRESS_FLAT,
                                     text: $flat,
                                     limit: 5,
-                                    hasError: .constant(false))
+                                    hasError: $viewModel.createAddressViewState.hasFlatError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
                                     text: $entarance,
                                     limit: 5,
-                                    hasError: .constant(false))
+                                    hasError: $viewModel.createAddressViewState.hasEntranceError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
                                     text: $floor,
                                     limit: 5,
-                                    hasError: .constant(false))
+                                    hasError: $viewModel.createAddressViewState.hasFloorError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
                             }.padding(.horizontal, Diems.MEDIUM_PADDING)
                             
                             EditTextView(
                                 hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
                                 text: $comment,
-                                limit: 5,
-                                hasError: .constant(false))
+                                limit: 100,
+                                hasError: $viewModel.createAddressViewState.hasCommentError,
+                                errorMessage: "Максимальная длина поля 100")
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.bottom, Diems.SMALL_PADDING)
                         }
