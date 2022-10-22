@@ -11,15 +11,15 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
-    @State var show:Bool
+    @State var showOrderCreated:Bool
     @State var showCreatedAddress:Bool = false
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
             switch(viewModel.profileViewState.profieState){
             case ProfileState.loading : LoadingProfileView()
-            case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, show: show, showCreatedAddress: showCreatedAddress)
+            case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
             case ProfileState.notAuthorize : EmptyProfileView()
             }
             BottomBarView(isSelected: 2)
@@ -38,25 +38,20 @@ struct ProfileView: View {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView(show: false)
-    }
-}
-
-
 struct EmptyProfileView: View {
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
             
             NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
             DefaultImage(imageName: "NotLoginnedProfile")
             
             Text(Strings.MSG_PROFILE_NO_PROFILE).multilineTextAlignment(.center)
+                .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
@@ -85,47 +80,56 @@ struct LoadingProfileView: View {
 
 struct SuccessProfileView: View {
     let profileViewState:ProfileViewState
-    @State var show:Bool
-    @State var showCreatedAddress:Bool
+    @Binding var showOrderCreated:Bool
+    @Binding var showCreatedAddress:Bool
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             if(profileViewState.lastOrder != nil){
                 OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.id))
             }
             
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             if(profileViewState.hasAddresses){
                 NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_YOUR_ADDRESSES, destination: UserAddressListView(isClickable: false))
+                    .padding(.top, Diems.SMALL_PADDING)
             }else{
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: CreateAddressView(show: $showCreatedAddress))
+                    .padding(.top, Diems.SMALL_PADDING)
+
             }
             
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: PaymentView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
+                .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
         }.padding(Diems.MEDIUM_PADDING)
             .overlay(
                 overlayView: ToastView(
-                    toast: Toast(title: profileViewState.lastOrder?.code ?? ""),
-                    show: $show,
+                    toast: Toast(title: "Код заказа: \(profileViewState.lastOrder?.code ?? "")"),
+                    show: $showOrderCreated,
                     backgroundColor:Color("primary"),
                     foregaroundColor: Color("onPrimary")),
-                show: $show
+                show: $showOrderCreated
             )
             .overlay(
-                overlayView: ToastView(toast: Toast(title: "Адрес добавлен"),
-                                       show: $showCreatedAddress,
-                                       backgroundColor:Color("primary"),
-                                       foregaroundColor: Color("onPrimary")),
+                overlayView: ToastView(
+                    toast: Toast(title: "Адрес добавлен"),
+                    show: $showCreatedAddress,
+                    backgroundColor:Color("primary"),
+                    foregaroundColor: Color("onPrimary")),
                 show: $showCreatedAddress
             )
     }

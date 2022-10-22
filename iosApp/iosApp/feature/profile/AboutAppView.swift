@@ -17,16 +17,16 @@ struct AboutAppView: View {
     }
     
     var body: some View {
-        
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: Strings.TITLE_ABOUT_APP, cost: "220 R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            VStack{
+            VStack(spacing:0){
                 ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().BB_VK_LINK)!)
                 }
                 
-                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: true)
+                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: false)
+                    .padding(.top, Diems.SMALL_PADDING)
                 
             }.padding(Diems.MEDIUM_PADDING)
           

@@ -73,7 +73,7 @@ struct BottomBarView: View {
             }
             
             NavigationLink(
-                destination:ProfileView(show: false)
+                destination:ProfileView(showOrderCreated: false)
             ){
                 VStack{
                     if(isSelected == 2){

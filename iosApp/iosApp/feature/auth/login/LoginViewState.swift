@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class LoginViewState :NSObject {
     
     var isLoading:Bool

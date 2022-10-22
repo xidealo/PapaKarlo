@@ -26,11 +26,18 @@ struct CreateAddressView: View {
     var body: some View {
         ZStack(alignment: .bottom){
             VStack{
-                ToolbarView(title: Strings.TITLE_CREATION_ADDRESS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+                ToolbarView(
+                    title: Strings.TITLE_CREATION_ADDRESS,
+                    cost: "",
+                    count: "",
+                    isShowBackArrow: true,
+                    isCartVisible: false,
+                    isLogoutVisible: false
+                )
                 
                 ScrollView{
                     VStack(spacing:0){
-                        VStack{
+                        VStack(spacing:0){
                             SearchEditTextView(
                                 hint: Strings.HINT_CREATION_ADDRESS_STREET,
                                 text: $street,
@@ -46,7 +53,7 @@ struct CreateAddressView: View {
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
                                     text: $house,
-                                    limit: 100,
+                                    limit: 5,
                                     hasError: $viewModel.createAddressViewState.hasHouseError,
                                     errorMessage: "Введите номер дома"
                                 )
@@ -71,7 +78,10 @@ struct CreateAddressView: View {
                                     hasError: $viewModel.createAddressViewState.hasFloorError,
                                     errorMessage: "Максимальная длина поля 5"
                                 )
-                            }.padding(.horizontal, Diems.MEDIUM_PADDING)
+                            }
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.top, Diems.SMALL_PADDING)
+
                             
                             EditTextView(
                                 hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
@@ -80,7 +90,7 @@ struct CreateAddressView: View {
                                 hasError: $viewModel.createAddressViewState.hasCommentError,
                                 errorMessage: "Максимальная длина поля 100")
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.bottom, Diems.SMALL_PADDING)
+                            .padding(.vertical, Diems.SMALL_PADDING)
                         }
                     }
                 }
