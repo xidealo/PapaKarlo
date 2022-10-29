@@ -44,14 +44,14 @@ struct MenuView: View {
                 ScrollView {
                     ScrollViewReader{ scrollReader in
                         LazyVStack(spacing:0){
-                            ForEach(viewModel.menuViewState.menuItems){ menuItem in
+                            ForEach(viewModel.menuViewState.menuItems.indices){  i in
                                 Section(
                                     header: LargeHeaderText(
-                                        text:menuItem.categorySectionItem.name
-                                    ).id(menuItem.categorySectionItem.id)
+                                        text:viewModel.menuViewState.menuItems[i].categorySectionItem.name
+                                    ).id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
                                         .padding(.horizontal,  Diems.MEDIUM_PADDING)
                                         .padding(.top, Diems.MEDIUM_PADDING)){
-                                            ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
+                                            ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                                 NavigationLink(
                                                     destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
                                                 ){
@@ -61,12 +61,15 @@ struct MenuView: View {
                                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
+                                                .onAppear(){
+                                                    print("onAppear \(i)")
+                                                    viewModel.checkAppear(index: i)
+                                                }
+                                                .onDisappear(){
+                                                    print("onDisappear \(i)")
+                                                    viewModel.checkDisappear(index: i)
+                                                }
                                             }
-                                        }
-                                        .onAppear(){
-                                            print("show tag")
-                                            print(menuItem.categorySectionItem.name)
-                                            viewModel.selectTagWithHorizontalScroll(tagName: menuItem.categorySectionItem.name)
                                         }
                             }
                         }.onChange(of: viewModel.menuViewState, perform: { menuState in
