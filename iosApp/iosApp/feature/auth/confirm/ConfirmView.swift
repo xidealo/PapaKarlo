@@ -14,7 +14,7 @@ struct ConfirmView: View {
     
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
-
+    
     init(auth:AuthManager, phone:String, isGoToProfile:Bool){
         viewModel = ConfirmViewModel(auth: auth, isGoToProfile: isGoToProfile)
         self.phone = phone
@@ -25,7 +25,7 @@ struct ConfirmView: View {
         case ConfirmState.loading: LoadingView()
         case ConfirmState.success: ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
         case ConfirmState.goToProfile : NavigationLink(
-            destination:ProfileView(show: false),
+            destination:ProfileView(showOrderCreated: false),
             isActive: .constant(true)
         ){
             EmptyView()
@@ -54,51 +54,62 @@ struct ConfirmViewSuccessView: View {
     
     var body: some View {
         
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: "", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            
-            Spacer()
-            Text(Strings.MSG_CONFIRM_ENTER_CODE + phone).multilineTextAlignment(.center)
-            
-            //SmsTextField(count: 6)
-            
-            EditTextView(hint: Strings.HINT_CONFIRM_CODE, text:$code, limit: 6, keyBoadrType: UIKeyboardType.numberPad)
+                        
+            VStack{
+                
+                Spacer()
+
+                Text(Strings.MSG_CONFIRM_ENTER_CODE + phone).multilineTextAlignment(.center)
+                
+                //SmsTextField(count: 6)
+                
+                EditTextView(
+                    hint: Strings.HINT_CONFIRM_CODE,
+                    text:$code,
+                    limit: 6,
+                    keyBoadrType: UIKeyboardType.numberPad,
+                    hasError: .constant(false)
+                )
                 .onReceive(Just(code)) { _ in
                     if(code.count == 6){
                         viewModel.checkCode(code: code)
                         code = ""
                     }
                 }
-            
-            Spacer()
-            
-            Button(
-                action: {
-                    isEnabled = false
-                    timeRemaining = 60
-                }
-            ){
-                if(isEnabled){
-                    Text(Strings.ACTION_CONFIRM_GET_CODE)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                }
-                else{
-                    Text("Запросить код повторно \(timeRemaining) сек.")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("onPrimaryDisabled"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                        .multilineTextAlignment(.center)
-                }
                 
-            }.disabled(!isEnabled)
+                Spacer()
+                
+                Button(
+                    action: {
+                        isEnabled = false
+                        timeRemaining = 60
+                    }
+                ){
+                    if(isEnabled){
+                        Text(Strings.ACTION_CONFIRM_GET_CODE)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(Color("surface"))
+                            .background(Color("primary"))
+                            .cornerRadius(Diems.MEDIUM_RADIUS)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    }
+                    else{
+                        Text("Запросить код повторно \(timeRemaining) сек.")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(Color("surface"))
+                            .background(Color("onPrimaryDisabled"))
+                            .cornerRadius(Diems.MEDIUM_RADIUS)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                }.disabled(!isEnabled)
+            }.padding(Diems.MEDIUM_PADDING)
+            
         }
         .overlay(
             overlayView: ToastView(
@@ -107,7 +118,6 @@ struct ConfirmViewSuccessView: View {
                 backgroundColor:Color("errorColor"),
                 foregaroundColor: Color("onErrorColor")
             ), show: $show)
-        .padding(Diems.MEDIUM_PADDING)
         .onReceive(timer){ time in
             if timeRemaining > 0{
                 timeRemaining -= 1

@@ -14,7 +14,8 @@ struct EditTextView: View {
     @Binding var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
-    @State var hasError:Bool = false
+    @Binding var hasError:Bool
+
     @State var errorMessage:String = "Ошибка"
 
     var body: some View {
@@ -55,6 +56,6 @@ struct EditTextView: View {
 
 struct EditTextView_Previews: PreviewProvider {
     static var previews: some View {
-        EditTextView(hint: "hint", text: .constant(""), limit: 100)
+        EditTextView(hint: "hint", text: .constant(""), limit: 100, hasError: .constant(true))
     }
 }

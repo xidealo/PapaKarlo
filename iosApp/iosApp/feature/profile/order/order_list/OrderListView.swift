@@ -22,7 +22,14 @@ struct OrderListView: View {
         .background(Color("background"))
         .navigationTitle(
             Text(Strings.TITLE_MY_ORDERS)
-        ).navigationBarHidden(true)
+        )
+        .navigationBarHidden(true)
+        .onAppear(){
+            viewModel.subscribeOnOrders()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
+        }
     }
 }
 
@@ -38,14 +45,15 @@ struct SuccessOrderListView: View {
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            
-            ScrollView {
-                LazyVStack(spacing:0){
-                    ForEach(orderList){ order in
-                        OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id)).padding(.vertical, Diems.HALF_SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                    }
+                ScrollView {
+                    LazyVStack(spacing:0){
+                        ForEach(orderList){ order in
+                            OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id))
+                                .padding(.bottom, Diems.SMALL_PADDING)
+                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
+                    }.padding(.top, Diems.MEDIUM_PADDING)
                 }
-            }
         }
     }
 }

@@ -13,7 +13,7 @@ struct LoginView: View {
     @State private var phone:String = "+7"
     let auth = AuthManager()
     private let isGoToProfile:Bool
-
+    
     @ObservedObject private var viewModel : LoginViewModel
     
     init(isGoToProfile:Bool){
@@ -46,36 +46,42 @@ struct LoginViewSuccessView: View {
     @ObservedObject var viewModel : LoginViewModel
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             Spacer()
             
-            Image("LoginLogo").resizable().frame(width: 152, height: 120)
-            Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
-            
-            EditTextView(
-                hint: Strings.HINT_LOGIN_PHONE,
-                text:$phone, limit: 17,
-                keyBoadrType: UIKeyboardType.phonePad)
-                .onReceive(Just(phone)) { _ in minCode() }
+            VStack{
+                Image("LoginLogo").resizable().frame(width: 152, height: 120)
+                Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
+                
+                EditTextView(
+                    hint: Strings.HINT_LOGIN_PHONE,
+                    text:$phone, limit: 17,
+                    keyBoadrType: UIKeyboardType.phonePad,
+                    hasError: $viewModel.loginViewState.hasError,
+                    errorMessage: "Введите номер телефона"
+                )
+                .onReceive(Just(phone)) { _ in
+                    minCode()
+                }
                 .keyboardType(.phonePad)
-            
-            Spacer()
-            Button {
-                viewModel.sendCodeToPhone(phone: phone)
-            } label: {
-                Text(Strings.ACTION_LOGIN_LOGIN)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-            }
-        }.padding(Diems.MEDIUM_PADDING)
-            .navigationBarHidden(true)
-         
+                
+                Spacer()
+                Button {
+                    viewModel.sendCodeToPhone(phone: phone)
+                } label: {
+                    Text(Strings.ACTION_LOGIN_LOGIN)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color("surface"))
+                        .background(Color("primary"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                }
+            }.padding(Diems.MEDIUM_PADDING)
+        }
+        .navigationBarHidden(true)
     }
     
     func minCode() {

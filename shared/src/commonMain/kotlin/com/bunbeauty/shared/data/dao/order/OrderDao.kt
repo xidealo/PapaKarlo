@@ -6,6 +6,7 @@ import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
 class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
@@ -53,8 +54,9 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
     }
 
     override suspend fun getLastOrderByUserUuid(userUuid: String): OrderEntity? {
-        return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
-            .executeAsOneOrNull()
+        val query = orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
+        val order = query.executeAsOneOrNull()
+        return order
     }
 
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {
@@ -71,7 +73,7 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
 
     override fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?> {
         return orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid).asFlow()
-            .mapToOne()
+            .mapToOneOrNull()
     }
 
     override fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {

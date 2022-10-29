@@ -22,7 +22,8 @@ class CreateOrderViewModel:ObservableObject {
         userUuid: nil,
         cafeUuid: nil,
         createOrderState: CreateOrderState.loading,
-        notNeedDeferredTime : true
+        notNeedDeferredTime : true,
+        actionList: []
     )
     
     init(){
@@ -47,7 +48,8 @@ class CreateOrderViewModel:ObservableObject {
                     userUuid: self.creationOrderViewState.userUuid,
                     cafeUuid: self.creationOrderViewState.cafeUuid,
                     createOrderState: self.creationOrderViewState.createOrderState,
-                    notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime
+                    notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime,
+                    actionList: self.creationOrderViewState.actionList
                 )
                 return
             }
@@ -63,7 +65,8 @@ class CreateOrderViewModel:ObservableObject {
                 userUuid: self.creationOrderViewState.userUuid,
                 cafeUuid: self.creationOrderViewState.cafeUuid,
                 createOrderState: self.creationOrderViewState.createOrderState,
-                notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime
+                notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime,
+                actionList: self.creationOrderViewState.actionList
             )
         }
         getAddressList(isDelivery: creationOrderViewState.isDelivery)
@@ -120,9 +123,16 @@ class CreateOrderViewModel:ObservableObject {
     }
     
     func createOrder(){
-        print(creationOrderViewState.deferredTime)
         
-        if(creationOrderViewState.cafeUuid == nil  && creationOrderViewState.userUuid == nil){
+        if(creationOrderViewState.isDelivery && creationOrderViewState.userUuid == nil){
+            (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+                copiedState.actionList.append(CreateOrderAction.showAddressError)
+                creationOrderViewState = copiedState
+            }
+            return
+        }
+        
+        if(!creationOrderViewState.isDelivery && creationOrderViewState.cafeUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                 copiedState.createOrderState = CreateOrderState.addressError
                 creationOrderViewState = copiedState
@@ -173,9 +183,19 @@ class CreateOrderViewModel:ObservableObject {
             }
         }
     }
+    
+    func clearActions(){
+        (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
+            copiedState.actionList = []
+            self.creationOrderViewState = copiedState
+        }
+    }
 }
-
 
 enum CreateOrderState{
     case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile, commonError, addressError
+}
+
+enum CreateOrderAction {
+   case showCommonError, showAddressError
 }

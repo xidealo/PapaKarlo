@@ -20,7 +20,7 @@ struct CreateOrderView: View {
             if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
                 LoadingView()
             }else{
-                CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: showCreatedAddress, showAddressError: $showAddressError, showCommonError: $showCommonError)
+                CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: $showCreatedAddress, showAddressError: $showAddressError, showCommonError: $showCommonError)
             }
         }.onAppear(){
             viewModel.loadData()
@@ -28,9 +28,30 @@ struct CreateOrderView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .navigationBarHidden(true)
-        .overlay(overlayView: ToastView(toast: Toast(title: "Адрес добавлен"), show: $showCreatedAddress, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $showCreatedAddress)
-        .overlay(overlayView: ToastView(toast: Toast(title: "Не указан адрес"), show: $showAddressError, backgroundColor:Color("errorColor"), foregaroundColor: Color("onPrimary")), show: $showAddressError)
-        .overlay(overlayView: ToastView(toast: Toast(title: "Что-то пошло не так"), show: $showCommonError, backgroundColor:Color("errorColor"), foregaroundColor: Color("onPrimary")), show: $showCommonError)
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Адрес добавлен"),
+                show: $showCreatedAddress,
+                backgroundColor:Color("primary"),
+                foregaroundColor: Color("onPrimary")),
+            show: $showCreatedAddress
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Не указан адрес"),
+                show: $showAddressError,
+                backgroundColor:Color("errorColor"),
+                foregaroundColor: Color("onPrimary")),
+            show: $showAddressError
+        )
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Что-то пошло не так")
+                , show: $showCommonError,
+                backgroundColor:Color("errorColor"),
+                foregaroundColor: Color("onPrimary")),
+            show: $showCommonError
+        )
     }
 }
 
@@ -38,14 +59,14 @@ struct CreateOrderSuccessView:View {
     
     @ObservedObject var viewModel:CreateOrderViewModel
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
-    @State var showCreatedAddress:Bool
+    @Binding var showCreatedAddress:Bool
     @Binding var showAddressError:Bool
     @Binding var showCommonError:Bool
     
     var body: some View{
         switch(viewModel.creationOrderViewState.createOrderState){
         case CreateOrderState.goToProfile: NavigationLink(
-            destination:ProfileView(show: true),
+            destination:ProfileView(showOrderCreated: true),
             isActive: .constant(true)
         ){
             EmptyView()
@@ -75,7 +96,12 @@ struct CreateOrderSuccessView:View {
                 }
             }
             
-            EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$viewModel.creationOrderViewState.comment, limit: 255)
+            EditTextView(
+                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+                text:$viewModel.creationOrderViewState.comment,
+                limit: 255,
+                hasError: .constant(false)
+            )
             
             Toggle("Как можно скорее", isOn: $viewModel.creationOrderViewState.notNeedDeferredTime)
                 .toggleStyle(.automatic)
@@ -140,8 +166,20 @@ struct CreateOrderSuccessView:View {
                     }else{
                         addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
                     }
+                    print(creationOrderViewState.createOrderState == CreateOrderState.addressError)
                     showCommonError = creationOrderViewState.createOrderState == CreateOrderState.commonError
-                    showAddressError = creationOrderViewState.createOrderState == CreateOrderState.addressError
+                    
+                    creationOrderViewState.actionList.forEach { action in
+                        switch(action){
+                        case CreateOrderAction.showAddressError : showAddressError = true
+                        case CreateOrderAction.showCommonError : showCommonError = true
+                        }
+                    }
+                    
+                    if !creationOrderViewState.actionList.isEmpty{
+                        viewModel.clearActions()
+                    }
+                    
                 })
         
         }

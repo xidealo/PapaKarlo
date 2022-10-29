@@ -18,36 +18,79 @@ struct CreateAddressView: View {
     
     @Binding var show:Bool
     
+    @State var showError:Bool = false
+    
     @ObservedObject private var viewModel = CreateAddressViewModel()
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         ZStack(alignment: .bottom){
             VStack{
-                ToolbarView(title: Strings.TITLE_CREATION_ADDRESS, cost: "220 R", count: "2",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+                ToolbarView(
+                    title: Strings.TITLE_CREATION_ADDRESS,
+                    cost: "",
+                    count: "",
+                    isShowBackArrow: true,
+                    isCartVisible: false,
+                    isLogoutVisible: false
+                )
                 
                 ScrollView{
                     VStack(spacing:0){
-                        VStack{
+                        VStack(spacing:0){
                             SearchEditTextView(
                                 hint: Strings.HINT_CREATION_ADDRESS_STREET,
                                 text: $street,
                                 limit: 100,
-                                list: $viewModel.createAddressViewState.streetList
+                                list: $viewModel.createAddressViewState.streetList,
+                                hasError: $viewModel.createAddressViewState.hasStreetError,
+                                errorMessage: "Выберите улицу из списка"
                             )
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             
                             Group{
-                                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_HOUSE, text: $house, limit: 100)
-                                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLAT, text: $flat, limit: 5)
-                                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE, text: $entarance, limit: 5)
-                                EditTextView(hint: Strings.HINT_CREATION_ADDRESS_FLOOR, text: $floor, limit: 5)
-                            }.padding(.horizontal, Diems.MEDIUM_PADDING)
+                                EditTextView(
+                                    hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
+                                    text: $house,
+                                    limit: 5,
+                                    hasError: $viewModel.createAddressViewState.hasHouseError,
+                                    errorMessage: "Введите номер дома"
+                                )
+                                EditTextView(
+                                    hint: Strings.HINT_CREATION_ADDRESS_FLAT,
+                                    text: $flat,
+                                    limit: 5,
+                                    hasError: $viewModel.createAddressViewState.hasFlatError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
+                                EditTextView(
+                                    hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
+                                    text: $entarance,
+                                    limit: 5,
+                                    hasError: $viewModel.createAddressViewState.hasEntranceError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
+                                EditTextView(
+                                    hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
+                                    text: $floor,
+                                    limit: 5,
+                                    hasError: $viewModel.createAddressViewState.hasFloorError,
+                                    errorMessage: "Максимальная длина поля 5"
+                                )
+                            }
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.top, Diems.SMALL_PADDING)
+
                             
-                            EditTextView(hint: Strings.HINT_CREATION_ADDRESS_COMMENT, text: $comment, limit: 5)
-                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                .padding(.bottom, Diems.SMALL_PADDING)
+                            EditTextView(
+                                hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
+                                text: $comment,
+                                limit: 100,
+                                hasError: $viewModel.createAddressViewState.hasCommentError,
+                                errorMessage: "Максимальная длина поля 100")
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.vertical, Diems.SMALL_PADDING)
                         }
                     }
                 }
@@ -59,6 +102,8 @@ struct CreateAddressView: View {
                                 presentationMode.wrappedValue.dismiss()
                                 show = true
                             }
+                        }else{
+                            showError = !isBack
                         }
                     }
                 }) {
@@ -72,6 +117,13 @@ struct CreateAddressView: View {
             }
             .navigationBarHidden(true)
             .background(Color("background"))
+            .overlay(
+                overlayView: ToastView(
+                    toast: Toast(title: "Что-то пошло не так"),
+                    show: $showError,
+                    backgroundColor: Color("errorColor"),
+                    foregaroundColor: Color("onErrorColor")),
+                show: $showError)
         }.ignoresSafeArea(.keyboard)
     }
 }

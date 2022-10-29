@@ -21,7 +21,6 @@ struct OrderDetailsView: View {
             ToolbarView(title: viewModel.orderDetailsViewState.code, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             ZStack(alignment: .bottom){
-                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
                 
                 ScrollView {
                     LazyVStack(spacing: 0){
@@ -34,14 +33,20 @@ struct OrderDetailsView: View {
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.bottom, Diems.SMALL_PADDING)
                         
-                        ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
-                            OrderProductItemView(orderProductItem: orderProductItem)
-                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                .padding(.top, Diems.SMALL_PADDING)
+                        VStack(spacing: 0){
+                            ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
+                                OrderProductItemView(orderProductItem: orderProductItem)
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    .padding(.top, Diems.SMALL_PADDING)
+                            }
                         }
-                        
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
                 }
+                
+                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
+                    .frame(height:20)
+
             }
             VStack{
                 if(viewModel.orderDetailsViewState.deliveryCost != nil){
@@ -64,8 +69,15 @@ struct OrderDetailsView: View {
                 .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
             
-        }.background(Color("background"))
-            .hiddenNavigationBarStyle()
+        }
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
+        .onAppear(){
+            viewModel.subscribeOnOrders()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
+        }
     }
 }
 

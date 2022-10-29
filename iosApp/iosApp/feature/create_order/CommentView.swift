@@ -15,7 +15,12 @@ struct CommentView: View {
 
     var body: some View {
         VStack{
-            EditTextView(hint: Strings.HINT_CREATE_COMMENT_COMMENT, text:$createOrderViewModel.creationOrderViewState.comment, limit: 255)
+            EditTextView(
+                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+                text:$createOrderViewModel.creationOrderViewState.comment,
+                limit: 255,
+                hasError: .constant(false)
+            )
             Spacer()
             
             Button {
