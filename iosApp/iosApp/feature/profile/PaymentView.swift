@@ -33,8 +33,9 @@ struct PaymentView: View {
             }.padding(Diems.MEDIUM_PADDING)
             Spacer()
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
         .overlay(overlayView: ToastView(toast: Toast(title: toastText), show: $show, backgroundColor:Color("primary"), foregaroundColor: Color("onPrimary")), show: $show)
     }
 }

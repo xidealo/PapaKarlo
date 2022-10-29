@@ -34,9 +34,10 @@ struct CommentView: View {
                     .cornerRadius(Diems.MEDIUM_RADIUS)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }
-        }.padding(Diems.MEDIUM_PADDING)
-            .background(Color("background"))
-            .navigationBarHidden(true)
+        }
+        .padding(Diems.MEDIUM_PADDING)
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
     }
 }
 

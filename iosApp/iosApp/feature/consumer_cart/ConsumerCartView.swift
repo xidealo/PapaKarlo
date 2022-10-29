@@ -35,7 +35,7 @@ struct ConsumerCartView: View {
             }
         }
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
         .onAppear() {
             viewModel.fetchData()
         }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     
-    @ObservedObject private var viewModel = viewModelStore.getMenuViewModel()
+    @ObservedObject private var viewModel = MenuViewModel()//viewModelStore.getMenuViewModel()
     @State var lastShowCategory = ""
     
     var body: some View {
@@ -34,9 +34,9 @@ struct MenuView: View {
                         .onChange(of: viewModel.menuViewState, perform: { menuState in
                             print("select horizontal tag")
                             print(menuState.scrollToPostion)
-                                withAnimation(.spring()){
-                                    scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
-                                }
+                            withAnimation(.spring()){
+                                scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
+                            }
                         })
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)
@@ -81,9 +81,11 @@ struct MenuView: View {
                 }
             }
             BottomBarView(isSelected: 1)
-        }.background(Color("background"))
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+        }
+        .background(Color("background"))
+        .navigationBarTitle("")
+        .hiddenNavigationBarStyle()
+        .preferredColorScheme(.light)
     }
 }
 

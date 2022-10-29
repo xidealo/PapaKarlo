@@ -115,7 +115,7 @@ struct CreateAddressView: View {
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }.padding(Diems.MEDIUM_PADDING)
             }
-            .navigationBarHidden(true)
+            .hiddenNavigationBarStyle()
             .background(Color("background"))
             .overlay(
                 overlayView: ToastView(

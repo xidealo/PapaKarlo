@@ -40,7 +40,19 @@ class ProfileViewModel: ToolbarViewModel {
                     dateTime = self.dateUtil.getDateTimeString(dateTime: authorizedProfile.lastOrder!.dateTime)
                 }
                 DispatchQueue.main.async {
-                self.profileViewState =  ProfileViewState(userUuid: authorizedProfile.userUuid, hasAddresses: authorizedProfile.hasAddresses, lastOrder: OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status ?? OrderStatus.notAccepted, code: authorizedProfile.lastOrder?.code ?? "", dateTime: dateTime), profileState: ProfileState.success)
+                    (self.profileViewState.copy() as! ProfileViewState).apply { newState in
+                        newState.userUuid = authorizedProfile.userUuid
+                        newState.hasAddresses = authorizedProfile.hasAddresses
+                        
+                        if(authorizedProfile.lastOrder != nil){
+                            newState.lastOrder =
+                            OrderItem(id: authorizedProfile.lastOrder?.uuid ?? "", status: authorizedProfile.lastOrder?.status ?? OrderStatus.notAccepted, code: authorizedProfile.lastOrder?.code ?? "", dateTime: dateTime)
+                        }
+                        
+                        newState.profieState = ProfileState.success
+                        
+                        self.profileViewState = newState
+                    }
                 }
             }else{
                 self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, profileState: ProfileState.notAuthorize)
@@ -55,6 +67,7 @@ class ProfileViewModel: ToolbarViewModel {
             }
         }
     }
+    
     func unsubscribeFromOrders(){
         iosComponent.provideMainInteractor().stopCheckOrderUpdates { err in
             if(err != nil){

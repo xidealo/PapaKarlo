@@ -23,7 +23,7 @@ struct OrderListView: View {
         .navigationTitle(
             Text(Strings.TITLE_MY_ORDERS)
         )
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.subscribeOnOrders()
         }
@@ -61,6 +61,8 @@ struct SuccessOrderListView: View {
 struct EmptyOrderListView: View {
     var body: some View {
         VStack{
+            ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            
             Spacer()
             
             DefaultImage(imageName: "EmptyPage")

@@ -57,12 +57,15 @@ struct ConfirmViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(title: "", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
                         
-            VStack{
+            VStack(spacing:0){
                 
                 Spacer()
 
-                Text(Strings.MSG_CONFIRM_ENTER_CODE + phone).multilineTextAlignment(.center)
-                
+                Text(Strings.MSG_CONFIRM_ENTER_CODE + phone)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color("onSurface"))
+                    .padding(.bottom, Diems.MEDIUM_PADDING)
+
                 //SmsTextField(count: 6)
                 
                 EditTextView(
@@ -95,6 +98,7 @@ struct ConfirmViewSuccessView: View {
                             .background(Color("primary"))
                             .cornerRadius(Diems.MEDIUM_RADIUS)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                        
                     }
                     else{
                         Text("Запросить код повторно \(timeRemaining) сек.")
@@ -108,9 +112,10 @@ struct ConfirmViewSuccessView: View {
                     }
                     
                 }.disabled(!isEnabled)
-            }.padding(Diems.MEDIUM_PADDING)
-            
+            }
+            .padding(Diems.MEDIUM_PADDING)
         }
+        .background(Color("surface"))
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Неправильный код"),
@@ -127,12 +132,12 @@ struct ConfirmViewSuccessView: View {
                 isEnabled = true
             }
         }
-        .navigationBarHidden(true)
         .onReceive(viewModel.$confirmViewState) { confirmViewState in
             if(confirmViewState.confirmState == ConfirmState.error){
                 self.show = true
             }
         }
+        .hiddenNavigationBarStyle()
     }
 }
 

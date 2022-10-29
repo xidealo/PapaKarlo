@@ -30,8 +30,10 @@ struct FeedbackView: View {
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+        }
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
     }
 }
 

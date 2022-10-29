@@ -43,8 +43,8 @@ struct ChangeCityView: View {
             viewModel.loadData()
         }
         .background(Color("background"))
-        .navigationBarHidden(true)
-        
+        .hiddenNavigationBarStyle()
+
     }
 }
 

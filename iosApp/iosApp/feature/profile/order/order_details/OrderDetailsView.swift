@@ -48,9 +48,9 @@ struct OrderDetailsView: View {
                     .frame(height:20)
 
             }
-            VStack{
+            VStack(spacing:0){
                 if(viewModel.orderDetailsViewState.deliveryCost != nil){
-                    HStack{
+                    HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                         Spacer()
                         Text(viewModel.orderDetailsViewState.deliveryCost ?? "0")
@@ -59,7 +59,7 @@ struct OrderDetailsView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                 }
                 
-                HStack{
+                HStack(spacing:0){
                     BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                     Spacer()
                     BoldText(text: viewModel.orderDetailsViewState.newAmountToPay)

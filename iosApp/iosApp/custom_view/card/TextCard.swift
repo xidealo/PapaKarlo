@@ -14,7 +14,9 @@ struct TextCard: View {
     var body: some View {
         VStack{
             PlaceholderText(text:placeHolder).frame(maxWidth:.infinity, alignment: .leading)
-            Text(text).frame(maxWidth:.infinity, alignment: .leading)
+            Text(text)
+                .frame(maxWidth:.infinity, alignment: .leading)
+                .foregroundColor(Color("onSurface"))
         }.padding(.horizontal, Diems.MEDIUM_PADDING)
             .padding(.vertical, Diems.SMALL_PADDING)
             .background(Color("surface"))

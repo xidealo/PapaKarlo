@@ -24,7 +24,7 @@ struct LoginView: View {
     var body: some View {
         VStack{
             if(viewModel.loginViewState.isLoading){
-                LoadingView().navigationBarHidden(true)
+                LoadingView()
             }else{
                 NavigationLink(
                     destination:ConfirmView(auth: auth, phone: phone, isGoToProfile: isGoToProfile),
@@ -49,11 +49,17 @@ struct LoginViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
-            Spacer()
-            
-            VStack{
-                Image("LoginLogo").resizable().frame(width: 152, height: 120)
-                Text(Strings.MSG_LOGIN_ENTER_PHONE).multilineTextAlignment(.center)
+            VStack(spacing:0){
+                Spacer()
+                
+                Image("LoginLogo")
+                    .resizable()
+                    .frame(width: 152, height: 120)
+                
+                Text(Strings.MSG_LOGIN_ENTER_PHONE)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color("onSurface"))
+                    .padding(.top, Diems.MEDIUM_PADDING)
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
@@ -62,6 +68,7 @@ struct LoginViewSuccessView: View {
                     hasError: $viewModel.loginViewState.hasError,
                     errorMessage: "Введите номер телефона"
                 )
+                .padding(.top, Diems.SMALL_PADDING)
                 .onReceive(Just(phone)) { _ in
                     minCode()
                 }
@@ -81,7 +88,8 @@ struct LoginViewSuccessView: View {
                 }
             }.padding(Diems.MEDIUM_PADDING)
         }
-        .navigationBarHidden(true)
+        .background(Color("surface"))
+        .hiddenNavigationBarStyle()
     }
     
     func minCode() {

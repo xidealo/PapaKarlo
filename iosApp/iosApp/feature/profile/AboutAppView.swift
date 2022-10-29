@@ -13,12 +13,12 @@ struct AboutAppView: View {
     let version:String
     
     init(){
-        version = "1.0.0"
+        version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "error"
     }
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_ABOUT_APP, cost: "220 R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(title: Strings.TITLE_ABOUT_APP, cost: "", count: "", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             VStack(spacing:0){
                 ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false, isShowRightArrow: true){
@@ -32,7 +32,7 @@ struct AboutAppView: View {
           
             Spacer()
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
     }
 }
 

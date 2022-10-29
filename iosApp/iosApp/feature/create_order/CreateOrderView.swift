@@ -25,9 +25,12 @@ struct CreateOrderView: View {
         }.onAppear(){
             viewModel.loadData()
         }
-        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .frame(
+            maxWidth:.infinity,
+            maxHeight: .infinity
+        )
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Адрес добавлен"),
