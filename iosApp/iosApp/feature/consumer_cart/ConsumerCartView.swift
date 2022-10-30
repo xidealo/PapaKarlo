@@ -26,7 +26,7 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            case .goToCreateOrder:NavigationLink(
+            case .goToCreateOrder: NavigationLink(
                 destination:CreateOrderView(),
                 isActive: .constant(true)
             ){

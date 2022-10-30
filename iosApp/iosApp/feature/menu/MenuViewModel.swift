@@ -25,6 +25,10 @@ class MenuViewModel : ToolbarViewModel {
         super.init()
 
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
+            if(error != nil){
+                print("")
+                return
+            }
             (self.menuViewState.copy() as! MenuViewState).apply { copiedState in
                 copiedState.isLoading = false
                 copiedState.menuItems = self.getMenuItems(menuSectionList: menuSectionList ?? [])

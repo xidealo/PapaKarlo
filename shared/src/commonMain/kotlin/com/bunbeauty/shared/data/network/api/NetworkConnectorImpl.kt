@@ -25,6 +25,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.util.*
+import io.ktor.utils.io.errors.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -204,7 +205,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             } catch (e: WebSocketException) {
                 logE(WEB_SOCKET_TAG, "WebSocketException: ${e.message}")
             }
-            catch (e:Exception){
+            catch (e:Throwable){
                 logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
             }
             finally {
@@ -305,8 +306,8 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             ApiResult.Success(json.decodeFromString(serializer, request.bodyAsText()))
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
-        } catch (exception: Exception) {
-            ApiResult.Error(ApiError(0, exception.message ?: "-"))
+        }  catch (exception: Throwable) {
+            ApiResult.Error(ApiError(400, exception.message ?: "-"))
         }
     }
     fun HttpRequestBuilder.buildRequest(
