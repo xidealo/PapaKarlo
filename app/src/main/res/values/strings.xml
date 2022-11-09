@@ -113,8 +113,6 @@
     <string name="title_bottom_navigation_menu_menu">Меню</string>
     <string name="title_bottom_navigation_profile">Профиль</string>
 
-    <!-- CONTACTS  -->
-
     <!-- CAFE LIST -->
     <string name="title_cafe_list">Рестораны</string>
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
@@ -216,8 +214,6 @@
     <string name="title_my_orders">Мои заказы</string>
     <string name="msg_order_list_empty">Здесь будет отображаться история ваших заказов</string>
 
-    <!-- ONE LINE ACTON-->
-
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
     <string name="msg_payment_description">Вы можете оплатить заказ наличным, а также переводом по номеру карты или телефона</string>
@@ -245,10 +241,6 @@
     <string name="title_logout">Выйти из профиля?</string>
     <string name="action_logout">Выйти</string>
     <string name="action_logout_cancel">Отмена</string>
-
-    <!-- MAIN ACTIVITY -->
-
-    <!-- CONTENT DESCRIPTIONS -->
 
     <!-- MONTHS -->
     <string name="month_january">января</string>
