@@ -12,10 +12,10 @@ struct SettingsView: View {
     @ObservedObject private var viewModel = SettingsViewModel()
 
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: Strings.TITLE_SETTINGS,  cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: true)
             
-            VStack{
+            VStack(spacing:0){
                 TextCard(placeHolder: Strings.HINT_SETTINGS_PHONE, text: viewModel.settingsViewState.phone)
 //                TODO(Add Email in next Version)
 //                if viewModel.settingsViewState.email == nil{
@@ -25,13 +25,14 @@ struct SettingsView: View {
 //                }
            
                 NavigationTextCard(placeHolder: Strings.HINT_SETTINGS_CITY, text: viewModel.settingsViewState.city, destination:ChangeCityView())
+                    .padding(.top, Diems.SMALL_PADDING)
                 Spacer()
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
-        .navigationBarHidden(true)
-        
+        .hiddenNavigationBarStyle()
+
     }
 }
 

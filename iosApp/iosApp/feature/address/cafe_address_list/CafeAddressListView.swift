@@ -16,7 +16,7 @@ struct CafeAddressListView: View {
     let isClickable:Bool
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
             
             switch(viewModel.cafeAddressViewState.cafeAddressState){

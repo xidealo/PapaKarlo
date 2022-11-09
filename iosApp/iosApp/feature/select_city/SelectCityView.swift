@@ -40,16 +40,21 @@ struct SelectCitySuccessView : View {
     
     var body: some View {
         ScrollView {
-            LazyVStack{
+            LazyVStack(spacing:0){
                 ForEach(cityList){ city in
                     Button {
                         viewModel.saveSelectedCity(city: city.city)
                     } label: {
-                        CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        CityItemView(city: city)
+                            .padding(.bottom, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }
-        }.padding(.top, Diems.MEDIUM_PADDING)
+        }
+        .padding(.top, Diems.MEDIUM_PADDING)
+        .preferredColorScheme(.light)
+
     }
 }
 

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 import SwiftUI
 import Combine
 
@@ -17,72 +16,40 @@ struct SearchEditTextView: View {
     let hint: String
     @Binding var text: String
     let limit:Int
-
+    
     @Binding var list:[StreetItem]
     
     @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""
-    @State var hasError:Bool = false
+    
+    @Binding var hasError:Bool
     @State var errorMessage:String = ""
-
+    
     var body: some View {
         VStack{
-            if(hasError){
-                TextField(hint, text: $text)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("errorColor"), lineWidth: 2)
-                    ).onReceive(Just(text)) { str in
-                        limitText(limit)
-                        if(str == "") {
-                            filteredList = []
+            EditTextView(hint: hint, text: $text, limit: limit, hasError: $hasError, errorMessage: errorMessage)
+                .onReceive(Just(text)) { str in
+                    limitText(limit)
+                    if(str == "") {
+                        filteredList = []
+                        prevSimbol = ""
+                    }else{
+                        if(prevSimbol == str){
+                            return
                         }else{
-                            if(prevSimbol == str){
-                                return
-                            }else{
-                                prevSimbol = str
-                                filteredList =  Array(list.filter { streetItem in
-                                    streetItem.name.lowercased().contains(
-                                        str.lowercased()
-                                            .trimingLeadingSpaces()
-                                            .trimingTrailingSpaces()
-                                    )
-                                }.prefix(3))
-                            }
+                            prevSimbol = str
+                            filteredList =  Array(list.filter { streetItem in
+                                streetItem.name.lowercased().contains(
+                                    str.lowercased()
+                                        .trimingLeadingSpaces()
+                                        .trimingTrailingSpaces()
+                                )
+                            }.prefix(3))
                         }
                     }
-                Text(errorMessage)
-                    .foregroundColor(Color("errorColor"))
-                    .frame(maxWidth:.infinity, alignment: .leading)
-            }else{
-                TextField(hint, text: $text)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("surfaceVariant"), lineWidth: 2)
-                    ).onReceive(Just(text)) { str in
-                        limitText(limit)
-                        if(str == "") {
-                            filteredList = []
-                        }else{
-                            if(prevSimbol == str){
-                                return
-                            }else{
-                                prevSimbol = str
-                                filteredList =  Array(list.filter { streetItem in
-                                    streetItem.name.lowercased().contains(
-                                        str.lowercased()
-                                            .trimingLeadingSpaces()
-                                            .trimingTrailingSpaces()
-                                    )
-                                }.prefix(3))
-                            }
-                        }
-                    }
-            }
+                }
+            
+            
             LazyVStack{
                 ForEach(filteredList){ street in
                     Button {
@@ -102,8 +69,8 @@ struct SearchEditTextView: View {
     }
     
     func limitText(_ upper: Int) {
-          if text.count > upper {
-              text = String(text.prefix(upper))
-          }
-      }
+        if text.count > upper {
+            text = String(text.prefix(upper))
+        }
+    }
 }

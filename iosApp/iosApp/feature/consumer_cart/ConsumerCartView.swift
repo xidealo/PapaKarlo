@@ -26,7 +26,7 @@ struct ConsumerCartView: View {
             ){
                 EmptyView()
             }
-            case .goToCreateOrder:NavigationLink(
+            case .goToCreateOrder: NavigationLink(
                 destination:CreateOrderView(),
                 isActive: .constant(true)
             ){
@@ -35,7 +35,7 @@ struct ConsumerCartView: View {
             }
         }
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
         .onAppear() {
             viewModel.fetchData()
         }
@@ -64,25 +64,30 @@ struct ConsumerCartSuccessScreen: View {
     var body: some View {
         VStack(spacing:0){
             ZStack(alignment: .bottom){
-                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
-                
                 ScrollView {
                     LazyVStack(spacing:0){
                         
-                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
+                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)\(Strings.CURRENCY)")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
-                        
-                        ForEach(consumerCartUI.cartProductList){ cartProductItem in
-                            CartProductView(cartProductItem: cartProductItem, plusAction: {
-                                viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }, minusAction: {
-                                viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        VStack(spacing: 0){
+                            
+                            ForEach(consumerCartUI.cartProductList){ cartProductItem in
+                                CartProductView(cartProductItem: cartProductItem, plusAction: {
+                                    viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
+                                }, minusAction: {
+                                    viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
+                                })
+                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                .padding(.bottom, Diems.SMALL_PADDING)
+                            }
                         }
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
                 }
+                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
+                    .frame(height:20)
             }
             
             VStack{

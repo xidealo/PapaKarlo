@@ -64,7 +64,7 @@ class UserRepository(
             onSaveLocally = ::saveProfileLocally,
             serverToDomainModel = profileMapper::toProfile
         )
-        cachedUserUuid = profile?.userUuid
+        //cachedUserUuid = profile?.userUuid
 
         return profile
     }

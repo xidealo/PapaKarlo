@@ -90,7 +90,7 @@ struct ProductDetailsView: View {
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
     }
 }
 

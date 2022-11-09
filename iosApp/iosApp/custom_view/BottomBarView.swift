@@ -20,7 +20,7 @@ struct BottomBarView: View {
             NavigationLink(
                 destination:CafeListView()
             ){
-                VStack{
+                VStack(spacing:0){
                     if(isSelected == 0){
                         ZStack{
                             IconImage(width: 20, height: 24, imageName: "CafesIcon")
@@ -47,7 +47,7 @@ struct BottomBarView: View {
             NavigationLink(
                 destination:MenuView()
             ){
-                VStack{
+                VStack(spacing:0){
                     if(isSelected == 1){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "MenuIcon")
@@ -73,9 +73,9 @@ struct BottomBarView: View {
             }
             
             NavigationLink(
-                destination:ProfileView(show: false)
+                destination:ProfileView(showOrderCreated: false)
             ){
-                VStack{
+                VStack(spacing:0){
                     if(isSelected == 2){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "ProfileIcon")
