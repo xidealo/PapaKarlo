@@ -2,155 +2,13 @@
 
     <!-- CARD -->
 
-    <style name="BaseCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="cardBackgroundColor">?attr/colorSurface</item>
-        <item name="cardCornerRadius">@dimen/medium_radius</item>
-    </style>
-
-    <style name="MatchParentCard" parent="BaseCard">
-        <item name="android:layout_width">match_parent</item>
-    </style>
-
-    <style name="MatchParentShadowlessCard" parent="MatchParentCard">
-        <item name="cardElevation">@dimen/no_elevation</item>
-    </style>
-
-    <style name="MatchConstraintsCard" parent="BaseCard">
-        <item name="android:layout_width">0dp</item>
-    </style>
-
-    <style name="MatchConstraintsShadowlessCard" parent="MatchConstraintsCard">
-        <item name="cardElevation">@dimen/no_elevation</item>
-    </style>
-
-    <style name="BaseNavigationCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="cardBackgroundColor">?attr/colorSurface</item>
-        <item name="cardCornerRadius">@dimen/medium_radius</item>
-        <item name="android:padding">@dimen/medium_padding</item>
-    </style>
-
-    <style name="MonochromeNavigationCard" parent="BaseNavigationCard">
-        <item name="iconColor">?attr/colorOnSurfaceVariant</item>
-    </style>
-
-    <style name="ShadowlessMonochromeNavigationCard" parent="MonochromeNavigationCard">
-        <item name="cardElevation">@dimen/no_elevation</item>
-    </style>
-
-    <style name="ShadowlessNavigationCard" parent="BaseNavigationCard">
-        <item name="cardElevation">@dimen/no_elevation</item>
-    </style>
-
-    <style name="TextCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="cardBackgroundColor">?attr/colorSurface</item>
-        <item name="textCardIconColor">?attr/colorOnSurfaceVariant</item>
-        <item name="android:padding">@dimen/medium_padding</item>
-        <item name="cardCornerRadius">@dimen/medium_radius</item>
-        <item name="innerMargin">@dimen/very_small_margin</item>
-    </style>
-
-    <style name="Switcher" parent="MatchConstraintsCard">
-        <item name="buttonColor">?attr/colorPrimary</item>
-        <item name="switcherMainTextColor">?attr/colorOnPrimary</item>
-        <item name="switcherAlternativeTextColor">?attr/colorOnSurfaceVariant</item>
-        <item name="switcherButtonMargin">@dimen/small_margin</item>
-        <item name="switcherButtonRadius">@dimen/small_radius</item>
-        <item name="switcherHeight">@dimen/button_height</item>
-    </style>
-
     <!-- INPUT LAYOUT -->
 
-    <style name="BaseRecycleView">
-        <item name="android:overScrollMode">never</item>
-        <item name="layoutManager">androidx.recyclerview.widget.LinearLayoutManager</item>
-    </style>
-
-    <style name="WrapContentRecycleView" parent="BaseRecycleView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="WrapConstraintRecycleView" parent="BaseRecycleView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">0dp</item>
-    </style>
-
-    <style name="MatchParentRecycleView" parent="BaseRecycleView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="HorizontalRecycleView" parent="BaseRecycleView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <!-- INPUT LAYOUT -->
-
-    <style name="MaterialInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColorHint">?attr/colorOnSurfaceVariant</item>
-        <item name="boxStrokeColor">?attr/colorStroke</item>
-    </style>
 
     <!-- INPUT -->
 
-    <style name="MaterialInput">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
-    </style>
-
     <!-- BUTTON -->
-
-    <style name="BaseButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:layout_height">@dimen/button_height</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:backgroundTint">?attr/colorPrimary</item>
-        <item name="cornerRadius">@dimen/medium_radius</item>
-    </style>
-
-    <style name="MainButton" parent="BaseButton">
-        <item name="android:layout_width">0dp</item>
-    </style>
-
-    <style name="ProgressButton">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">@dimen/button_height</item>
-        <item name="buttonTextAllCaps">true</item>
-        <item name="buttonCornerRadius">@dimen/medium_radius</item>
-        <item name="progressButtonColor">?attr/colorPrimary</item>
-        <item name="progressButtonDisableColor">?attr/colorPrimary</item>
-        <item name="progressButtonForegroundColor">?attr/colorOnPrimary</item>
-        <item name="progressButtonDisableForegroundColor">?attr/colorOnPrimary</item>
-    </style>
-
-    <style name="SmallButton" parent="BaseButton">
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="FAButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:backgroundTint">?attr/colorPrimary</item>
-        <item name="shapeAppearanceOverlay">@style/SquareShape</item>
-        <item name="tint">?attr/colorOnPrimary</item>
-        <item name="fabSize">mini</item>
-    </style>
-
-    <style name="SquareShape">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/medium_radius</item>
-    </style>
 
     <!-- BOTTOM BAR -->
 
@@ -172,11 +30,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">true</item>
-        <item name="color">?attr/colorPrimary</item>
-    </style>
-
     <!--TEXT-->
     <!-- Naming: [Secondary][Size*][FontWeight*][Width*][Caps]Text -->
     <!-- Size* : Large, Medium, Small -->
@@ -184,64 +37,12 @@
     <!-- Width* : WrapConstrain, WrapContent -->
     <!-- * - required -->
 
-    <style name="LargeBoldWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/LargeBoldTextAppearance</item>
-    </style>
-
-    <style name="LargeBoldWrapConstraintText" parent="DefaultWrapConstraintsText">
-        <item name="android:textAppearance">@style/LargeBoldTextAppearance</item>
-    </style>
-
-    <style name="LargeRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/LargeRegularTextAppearance</item>
-    </style>
-
-    <style name="LargeRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
-        <item name="android:textAppearance">@style/LargeRegularTextAppearance</item>
-    </style>
-
-    <style name="MediumBoldWrapConstraintsText" parent="DefaultWrapConstraintsText">
-        <item name="android:textAppearance">@style/MediumBoldTextAppearance</item>
-    </style>
-
-    <style name="SmallBoldWrapConstraintsText" parent="DefaultWrapConstraintsText">
-        <item name="android:textAppearance">@style/SmallBoldTextAppearance</item>
-    </style>
-
-    <style name="MediumBoldWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/MediumBoldTextAppearance</item>
-    </style>
-
     <style name="MediumRegularWrapContentText" parent="DefaultWrapContentText">
         <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
     </style>
 
-    <style name="SmallRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SmallRegularTextAppearance</item>
-    </style>
-
     <style name="MediumRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
         <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
-    </style>
-
-    <style name="SecondaryLargeRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SecondaryLargeRegularTextAppearance</item>
-    </style>
-
-    <style name="SecondaryMediumBoldWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SecondaryMediumBoldTextAppearance</item>
-    </style>
-
-    <style name="SecondaryMediumRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SecondaryMediumRegularTextAppearance</item>
-    </style>
-
-    <style name="SecondaryMediumRegularWrapContentCapsText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SecondaryMediumRegularCapsTextAppearance</item>
-    </style>
-
-    <style name="SecondarySmallRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/SecondarySmallRegularTextAppearance</item>
     </style>
 
     <!--BOTTOM SHEET-->
@@ -253,12 +54,6 @@
     <style name="BottomSheet">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="Blur">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">16dp</item>
-        <item name="android:background">@drawable/background_blur</item>
     </style>
 
 </resources>
