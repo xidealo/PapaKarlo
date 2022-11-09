@@ -2,68 +2,25 @@
 <resources>
 
     <!-- TEXT -->
-    <dimen name="large_text_size">18sp</dimen>
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="small_text_size">14sp</dimen>
 
-    <!-- CHIP -->
-    <dimen name="chip_height">20dp</dimen>
-
-    <!-- INPUTS -->
-    <dimen name="material_small_input_layout_width">314dp</dimen>
-    <dimen name="small_dialog_width">500dp</dimen>
-
-    <!-- BUTTON -->
-    <dimen name="default_button_width">200dp</dimen>
-    <dimen name="large_button_width">314dp</dimen>
-    <dimen name="small_button_width">83dp</dimen>
-    <dimen name="status_button_width">152dp</dimen>
-    <dimen name="button_height">40dp</dimen>
-    <dimen name="button_progress_bar_size">36dp</dimen>
-
     <!-- MARGIN -->
-    <dimen name="large_margin">16dp</dimen>
     <dimen name="medium_margin">8dp</dimen>
-    <dimen name="small_margin">4dp</dimen>
     <dimen name="very_small_margin">2dp</dimen>
-    <dimen name="order_status_margin">64dp</dimen>
-    <dimen name="address_margin">40dp</dimen>
 
     <!-- PADDING -->
-    <dimen name="large_padding">16dp</dimen>
-    <dimen name="medium_padding">8dp</dimen>
     <dimen name="small_padding">4dp</dimen>
 
     <!-- IMAGE -->
-    <dimen name="image_element_width">108dp</dimen>
-    <dimen name="image_element_height">72dp</dimen>
-    <dimen name="empty_cart_img_size">200dp</dimen>
-    <dimen name="empty_profile_img_size">200dp</dimen>
-    <dimen name="login_img_size">200dp</dimen>
     <dimen name="top_logo_height">48dp</dimen>
-    <dimen name="icon_height">16dp</dimen>
 
     <!-- RADIUS -->
     <dimen name="large_radius">16dp</dimen>
-    <dimen name="medium_radius">8dp</dimen>
-    <dimen name="small_radius">6dp</dimen>
-
-    <!-- STROKE -->
-    <dimen name="button_stroke_width">2dp</dimen>
-
-    <!--COUNT_PICKER -->
-    <dimen name="picker_width">40dp</dimen>
-    <dimen name="picker_height">40dp</dimen>
-
-    <!--COUNT_PICKER -->
-    <dimen name="switcher_height">32dp</dimen>
 
     <!--CART COUNT -->
     <dimen name="cart_count_padding">2dp</dimen>
     <dimen name="cart_count_size">24dp</dimen>
     <dimen name="cart_count_margin">12dp</dimen>
-
-    <!--ELEVATION -->
-    <dimen name="no_elevation">0dp</dimen>
 
 </resources>

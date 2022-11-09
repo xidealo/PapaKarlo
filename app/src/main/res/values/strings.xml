@@ -11,7 +11,6 @@
     -->
 
     <!--COMMON-->
-    <string name="msg_comma">,&#160;</string>
     <string name="part_ruble">&#160;₽</string>
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_clear">Очистить</string>
@@ -26,7 +25,6 @@
     <string name="msg_address_entrance_short">&#160;подъезд</string>
     <string name="msg_address_floor_short">&#160;этаж</string>
 
-    <string name="msg_ruble">&#160;₽</string>
     <string name="error_no_internet">Нет подключения к интернету</string>
 
     <!-- SELECT CITY -->
@@ -43,18 +41,6 @@
 
     <!-- MENU -->
     <string name="title_menu">Меню</string>
-    <string name="title_menu_all">Все</string>
-    <string name="title_menu_combo">Комбо</string>
-    <string name="title_menu_pizza">Пицца</string>
-    <string name="title_menu_barbecue">На мангале</string>
-    <string name="title_menu_burger">Бургеры</string>
-    <string name="title_menu_drink">Напитки</string>
-    <string name="title_menu_potato">Картошка</string>
-    <string name="title_menu_spice">Соусы</string>
-    <string name="title_menu_bakery">Выпечка</string>
-    <string name="title_menu_oven">В печи</string>
-    <string name="action_menu_want">Хочу!</string>
-    <string name="msg_menu_empty_tab">В этом разделе скоро появятся новые блюда</string>
     <string name="error_menu_loading">Не удалось загрузить меню</string>
 
     <!-- PRODUCT DETAILS -->
@@ -65,7 +51,6 @@
     <string name="action_consumer_cart_creeate_order">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="msg_consumer_cart_empty">Ваша корзина пуста, добавьте товар из \"Меню\"</string>
-    <string name="msg_consumer_cart_free_delivery">Доставка бесплатно</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
     <string name="error_consumer_cart_full">Корзина переполнена</string>
@@ -92,7 +77,6 @@
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_create_order_address">Не указан адрес</string>
     <string name="error_create_order_user">Пользователь не авторизован</string>
-    <string name="error_create_order_time">Не выбрано время</string>
     <string name="error_create_order_something_went_wrong">Что-то пошло не так</string>
     <string name="msg_create_order_order_code">Код заказа&#160;</string>
     <string name="msg_create_order_total_cost">Итого</string>
@@ -103,8 +87,6 @@
     <string name="msg_deferred_time_asap">Как можно скорее</string>
     <string name="action_deferred_time_asap">Как можно скорее</string>
     <string name="action_deferred_time_select_time">Выбрать время</string>
-    <string name="title_deferred_time_select_time">Выберите время</string>
-    <string name="error_deferred_time_not_available">Уже поздно. Отложенное время недоступно</string>
 
     <!-- CREATE ADDRESS -->
     <string name="title_create_address">Добавление адресa</string>
@@ -130,19 +112,11 @@
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>
     <string name="title_bottom_navigation_menu_menu">Меню</string>
     <string name="title_bottom_navigation_profile">Профиль</string>
-    <string name="title_bottom_navigation_discount">Акции</string>
-
-    <!-- CONTACTS  -->
-    <string name="msg_contacts_work_time">Время работы:&#160;</string>
-    <string name="msg_contacts_work_time_divider">&#160;-&#160;</string>
 
     <!-- CAFE LIST -->
     <string name="title_cafe_list">Рестораны</string>
-    <string name="action_cafe_list_copy_card_number">Номер карты</string>
-    <string name="action_cafe_list_copy_phone_number">Номер телефона</string>
     <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
     <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
-    <string name="title_cafe_list_payment">Оплата</string>
     <string name="error_cafe_list_loading">Не удалось загрузить список ресторанов</string>
 
     <!--CAFE-->
@@ -180,42 +154,25 @@
     <string name="msg_pickup">Самовывоз</string>
 
     <!-- ORDER DETAILS -->
-    <string name="msg_order_details_order">Заказ&#160;</string>
     <string name="msg_order_details_date_time">Дата и время заказа</string>
     <string name="msg_order_details_pickup_method">Способ получения</string>
-    <string name="msg_order_details_delivery">Доставка</string>
-    <string name="msg_order_details_pickup">Самовывоз</string>
     <string name="msg_order_details_deferred_time_delivery">Ко времени</string>
     <string name="msg_order_details_deferred_time_pickup">Ко времени</string>
     <string name="msg_order_details_address">Адрес</string>
     <string name="msg_order_details_comment">Комментарий</string>
-    <string name="msg_order_details_order_status">Статус</string>
-    <string name="msg_order_details_order_list">Список заказанных блюд</string>
     <string name="msg_order_details_order_cost">Сумма заказа</string>
     <string name="msg_order_details_delivery_cost">Доставка</string>
-    <string name="msg_order_details_delivery_free">Бесплатно</string>
-    <string name="action_order_details_cancel">Отменить</string>
-    <string name="action_order_details_save">Сохранить</string>
-    <string name="title_order_details_alert">Внимание!</string>
-    <string name="msg_order_details_alert">Отменить заказ?</string>
-    <string name="action_order_details_yes">Да</string>
-    <string name="action_order_details_no">Нет</string>
     <string name="description_order_details_done">Шаг выполнен</string>
 
     <!-- PROFILE  -->
     <string name="title_profile">Профиль</string>
     <string name="action_profile_settings">Настройки</string>
-    <string name="action_profile_bonuses">Бонусы</string>
-    <string name="action_profile_create_address">Добавить адрес</string>
     <string name="action_profile_my_addresses">Мои адерса</string>
     <string name="action_profile_my_orders">Мои заказы</string>
     <string name="action_profile_payment">Оплата</string>
-    <string name="action_profile_feedback">Отзывы</string>
-    <string name="action_profile_about_app">О приложении</string>
     <string name="msg_profile_no_profile">В профиле будут отображаться адреса для доставки и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
     <string name="description_ic_settings">Настройки</string>
-    <string name="description_ic_create_address">Добавить адрес</string>
     <string name="description_ic_my_addresses">Мои адерса</string>
     <string name="description_ic_my_orders">Мои заказы</string>
     <string name="description_ic_payment">Оплата</string>
@@ -225,12 +182,10 @@
     <string name="error_profile_loading">Не удалось загрузить профиль</string>
 
     <!-- LOGIN  -->
-    <string name="title_login_registration">Регистрация</string>
     <string name="hint_login_phone">Телефон*</string>
     <string name="msg_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
-    <string name="error_login_something_went_wrong">Что-то пошло не так</string>
     <string name="error_login_something_try_later">Ошибка. Попробуйте позже</string>
     <string name="error_login_too_many_requests">Превышен лимит на отправку кодов, попробуйте позже</string>
     <string name="description_login_logo">Лого</string>
@@ -238,14 +193,10 @@
     <!-- CONFIRM  -->
     <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
     <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
-    <string name="msg_confirm_code_info">Получить повторно код можно через:&#160;</string>
-    <string name="msg_confirm_seconds">&#160;секунд</string>
     <string name="msg_request_code">Запросить код повторно</string>
     <string name="msg_request_code_sec">&#160;сек.</string>
     <string name="error_confirm_wrong_code">Неправильный код</string>
     <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
-    <string name="action_confirm_resend_code">Получить код</string>
-    <string name="action_confirm_change_phone">Изменить номер</string>
 
     <!-- SETTINGS -->
     <string name="title_settings">Настройки</string>
@@ -256,16 +207,12 @@
     <string name="title_settings_edit_email">Редактирование почты</string>
     <string name="action_settings_save">Сохранить</string>
     <string name="hint_settings_city">Город</string>
-    <string name="title_settings_select_city">Выберите город</string>
     <string name="error_settings_email">Не удалось сменить почту</string>
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
 
     <!-- ORDERS -->
     <string name="title_my_orders">Мои заказы</string>
     <string name="msg_order_list_empty">Здесь будет отображаться история ваших заказов</string>
-
-    <!-- ONE LINE ACTON-->
-    <string name="error_one_line_action_email">Введите корректную почту</string>
 
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
@@ -285,7 +232,6 @@
     <string name="title_about_app">О приложении</string>
     <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
     <string name="msg_about_app_version">Версия&#160;</string>
-    <string name="description_about_app_version">Версия</string>
     <string name="description_about_app_developer">Банбьюти</string>
 
     <!-- CHANGE CITY -->
@@ -295,15 +241,6 @@
     <string name="title_logout">Выйти из профиля?</string>
     <string name="action_logout">Выйти</string>
     <string name="action_logout_cancel">Отмена</string>
-
-    <!-- MAIN ACTIVITY -->
-    <string name="msg_main_activity_downloaded">Обновление установлено</string>
-    <string name="action_main_activity_reload">Перезапустить</string>
-
-    <!-- CONTENT DESCRIPTIONS -->
-    <string name="description_vk">vk image</string>
-    <string name="description_inst">inst image</string>
-    <string name="description_google_play">google play image</string>
 
     <!-- MONTHS -->
     <string name="month_january">января</string>
