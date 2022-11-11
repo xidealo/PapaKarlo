@@ -10,13 +10,20 @@ import shared
 
 struct ProfileView: View {
     
-    @StateObject private var viewModel = viewModelStore.getProfileViewModelViewModel()
+    @StateObject private var viewModel = ProfileViewModel()
     @State var showOrderCreated:Bool
     @State var showCreatedAddress:Bool = false
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_PROFILE, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_PROFILE,
+                cost: viewModel.toolbarViewState.cost,
+                count: viewModel.toolbarViewState.count,
+                isCartVisible: true
+            )
+            
             switch(viewModel.profileViewState.profieState){
             case ProfileState.loading : LoadingProfileView()
             case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
@@ -98,7 +105,7 @@ struct SuccessProfileView: View {
             }else{
                 NavigationCardView(icon: "plus", label: Strings.TITLE_PROFILE_ADD_ADDRESSES, destination: CreateAddressView(show: $showCreatedAddress))
                     .padding(.top, Diems.SMALL_PADDING)
-
+                
             }
             
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())

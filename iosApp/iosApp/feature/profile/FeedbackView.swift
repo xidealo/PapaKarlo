@@ -9,9 +9,20 @@ import SwiftUI
 import shared
 
 struct FeedbackView: View {
+    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_FEEDBACK, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_FEEDBACK,
+                cost: "",
+                count: "2",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             VStack(spacing:0){
                 ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false, isShowRightArrow: true){

@@ -51,11 +51,20 @@ struct ConfirmViewSuccessView: View {
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     let phone:String
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
         
         VStack(spacing:0){
-            ToolbarView(title: "", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: "",
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
                         
             VStack(spacing:0){
                 

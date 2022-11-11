@@ -11,14 +11,23 @@ import Kingfisher
 struct OrderDetailsView: View {
     
     @ObservedObject private var viewModel : OrderDetailsViewModel
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     init(orderUuid:String){
         viewModel = OrderDetailsViewModel(uuid: orderUuid)
     }
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: viewModel.orderDetailsViewState.code, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: viewModel.orderDetailsViewState.code,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             ZStack(alignment: .bottom){
                 

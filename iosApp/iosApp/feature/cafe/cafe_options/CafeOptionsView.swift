@@ -12,10 +12,19 @@ struct CafeOptionsView: View {
     let address:String
     let latitude:Float
     let longitude : Float
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_CAFE_OPTIONS, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_CAFE_OPTIONS,
+                cost: "",
+                count: "2",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             VStack(spacing:0){
                 ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false, isShowRightArrow: true){
@@ -40,6 +49,8 @@ struct CafeOptionsView: View {
 
 struct CafeOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        CafeOptionsView(phone: "8-996-922-41-86", address: "Chapaevo 22a", latitude: 0, longitude: 0)
+        CafeOptionsView(
+            phone: "8-996-922-41-86", address: "Chapaevo 22a", latitude: 0, longitude: 0
+        )
     }
 }

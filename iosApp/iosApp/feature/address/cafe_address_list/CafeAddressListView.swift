@@ -17,7 +17,15 @@ struct CafeAddressListView: View {
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_MY_ADDRESSES,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             switch(viewModel.cafeAddressViewState.cafeAddressState){
             case CafeAddressState.loading : LoadingView()

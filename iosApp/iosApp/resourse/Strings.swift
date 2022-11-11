@@ -40,7 +40,8 @@ class Strings{
     static let HINT_SETTINGS_PHONE = "Номер телефона"
     static let HINT_SETTINGS_EMAIL = "Почта"
     static let HINT_SETTINGS_CITY = "Город"
-    
+    static let ACTION_SETTINGS_REMOVE_ACCOUNT = "Удалить аккаунт"
+
     static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться адреса и история ваших заказов"
     
     //ADDRESS
@@ -71,7 +72,7 @@ class Strings{
     
     
     //CART PRODUCT
-    static let ACTION_CART_PRODUCT_MENU = "Меню"
+    static let ACTION_CART_PRODUCT_BACK = "Назад"
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
     static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "

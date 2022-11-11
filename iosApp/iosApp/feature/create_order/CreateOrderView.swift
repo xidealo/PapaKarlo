@@ -13,22 +13,25 @@ struct CreateOrderView: View {
     @State var showCreatedAddress:Bool = false
     @State var showAddressError:Bool = false
     @State var showCommonError:Bool = false
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack(spacing: 0){
-            ToolbarView(title: Strings.TITLE_CREATION_ORDER, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_CREATION_ORDER,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
                 LoadingView()
             }else{
                 CreateOrderSuccessView(viewModel: viewModel, showCreatedAddress: $showCreatedAddress, showAddressError: $showAddressError, showCommonError: $showCommonError)
             }
-        }.onAppear(){
-            viewModel.loadData()
         }
-        .frame(
-            maxWidth:.infinity,
-            maxHeight: .infinity
-        )
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .overlay(
@@ -88,7 +91,13 @@ struct CreateOrderSuccessView:View {
         }
         default :  VStack{
             Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
-                viewModel.getAddressList(isDelivery: isDelivery)
+                viewModel.getAddressList(
+                    isDelivery: isDelivery,
+                    totalCost: viewModel.creationOrderViewState.totalCost,
+                    deliveryCost: viewModel.creationOrderViewState.deliveryCost,
+                    amountToPay: viewModel.creationOrderViewState.amountToPay,
+                    amountToPayWithDeliveryCost: viewModel.creationOrderViewState.amountToPayWithDeliveryCost
+                )
             }
             
             if viewModel.creationOrderViewState.address == nil{
@@ -182,9 +191,7 @@ struct CreateOrderSuccessView:View {
                     if !creationOrderViewState.actionList.isEmpty{
                         viewModel.clearActions()
                     }
-                    
                 })
-        
         }
     }
 }

@@ -28,6 +28,8 @@ struct ProductDetailsView: View {
     @StateObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
     
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     init(menuProductUuid:String) {
         self._viewModel = StateObject(wrappedValue: ProductDetailsViewModel(productUuid: menuProductUuid))
         self.menuProductUuid = menuProductUuid
@@ -35,7 +37,15 @@ struct ProductDetailsView: View {
     
     var body: some View {
         VStack{
-            ToolbarView(title: viewModel.productDetailsViewState.name, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count, isShowBackArrow: true, isCartVisible: true, isLogoutVisible: false)
+            ToolbarView(
+                title: viewModel.productDetailsViewState.name,
+                cost: viewModel.toolbarViewState.cost,
+                count: viewModel.toolbarViewState.count,
+                isCartVisible: true,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             VStack{
                 KFImage(URL(string: viewModel.productDetailsViewState.imageLink))

@@ -10,10 +10,16 @@ import SwiftUI
 struct CafeListView: View {
     
     @ObservedObject private var viewModel = viewModelStore.getCafeListViewModelViewModel()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
             VStack(spacing:0){
-                ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
+                ToolbarView(
+                    title: Strings.TITLE_CAFE_LIST,
+                    cost: viewModel.toolbarViewState.cost,
+                    count: viewModel.toolbarViewState.count,
+                    isCartVisible: true
+                )
         
                 if viewModel.cafeViewState.isLoading{
                     LoadingView()

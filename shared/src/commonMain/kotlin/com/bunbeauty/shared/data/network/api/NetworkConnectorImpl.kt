@@ -162,6 +162,18 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         )
     }
 
+    override suspend fun patchDisableUser(
+        token: String,
+        patchUserServer: PatchUserServer
+    ): ApiResult<ProfileServer> {
+        return patchDataWithAuth(
+            path = "client",
+            patchBody = patchUserServer,
+            serializer = ProfileServer.serializer(),
+            token = token
+        )
+    }
+
     // WEB_SOCKET
 
     override fun subscribeOnOrderUpdates(token: String): Flow<OrderServer> {
@@ -204,11 +216,9 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
                 }
             } catch (e: WebSocketException) {
                 logE(WEB_SOCKET_TAG, "WebSocketException: ${e.message}")
-            }
-            catch (e:Throwable){
+            } catch (e: Throwable) {
                 logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
-            }
-            finally {
+            } finally {
                 unsubscribeOnOrderUpdates()
             }
         }
@@ -263,7 +273,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         parameters: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
     ): ApiResult<R> {
-        val request = client.post{
+        val request = client.post {
             buildRequest(path, postBody, parameters, headers)
         }
         return handleResponse(serializer, request)
@@ -306,10 +316,11 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             ApiResult.Success(json.decodeFromString(serializer, request.bodyAsText()))
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
-        }  catch (exception: Throwable) {
+        } catch (exception: Throwable) {
             ApiResult.Error(ApiError(400, exception.message ?: "-"))
         }
     }
+
     fun HttpRequestBuilder.buildRequest(
         path: String,
         body: Any?,

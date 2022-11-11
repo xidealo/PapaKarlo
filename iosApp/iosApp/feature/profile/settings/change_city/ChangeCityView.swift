@@ -15,7 +15,15 @@ struct ChangeCityView: View {
     
     var body: some View {
         VStack{
-            ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "", count: "", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_SELECT_CITY_CITY,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            )
             
             switch(viewModel.changeCityViewState.changeCityState){
             case ChangeCityState.loading : LoadingView()
@@ -44,7 +52,7 @@ struct ChangeCityView: View {
         }
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-
+        
     }
 }
 

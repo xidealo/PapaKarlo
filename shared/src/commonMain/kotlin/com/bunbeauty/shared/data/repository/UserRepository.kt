@@ -11,6 +11,7 @@ import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
+import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
@@ -81,6 +82,10 @@ class UserRepository(
     override suspend fun clearUserCache() {
         dataStoreRepo.clearToken()
         dataStoreRepo.clearUserUuid()
+    }
+
+    override suspend fun disableUser(token: String) {
+        networkConnector.patchDisableUser(token, PatchUserServer(isActive = false))
     }
 
     suspend fun saveProfileLocally(profile: ProfileServer?) {

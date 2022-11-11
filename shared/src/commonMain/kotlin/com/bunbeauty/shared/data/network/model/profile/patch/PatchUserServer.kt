@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PatchUserServer(
     @SerialName("email")
-    val email: String,
+    val email: String? = null,
+    @SerialName("isActive")
+    val isActive: Boolean? = null,
 )

@@ -30,9 +30,10 @@ struct CreateAddressView: View {
                     title: Strings.TITLE_CREATION_ADDRESS,
                     cost: "",
                     count: "",
-                    isShowBackArrow: true,
                     isCartVisible: false,
-                    isLogoutVisible: false
+                    back: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 )
                 
                 ScrollView{

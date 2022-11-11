@@ -44,10 +44,19 @@ struct LoginView: View {
 struct LoginViewSuccessView: View {
     @Binding var phone:String
     @ObservedObject var viewModel : LoginViewModel
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title:"", cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title:"",
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             VStack(spacing:0){
                 Spacer()
