@@ -48,8 +48,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentCreateOrderCvMain.setContent {
-            val orderCreationUI by viewModel.orderCreationUI.collectAsState()
-            CreateOrderScreen(orderCreationUI)
+            val orderCreationState by viewModel.orderCreationState.collectAsState()
+            CreateOrderScreen(orderCreationState)
         }
         setFragmentResultListener(USER_ADDRESS_REQUEST_KEY) { _, bundle ->
             bundle.getString(RESULT_USER_ADDRESS_KEY)?.let { userAddressUuid ->
@@ -74,7 +74,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     }
 
     @Composable
-    private fun CreateOrderScreen(orderCreationUI: OrderCreationUI) {
+    private fun CreateOrderScreen(orderCreationState: OrderCreationUiState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -92,93 +92,89 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
-                        position = orderCreationUI.switcherPosition
+                        position = orderCreationState.switcherPosition
                     ) { changedPosition ->
                         viewModel.onSwitcherPositionChanged(changedPosition)
                     }
-                    AddressCard(orderCreationUI)
-                    CommentCard(orderCreationUI)
-                    DeferredTimeCard(orderCreationUI)
+                    AddressCard(orderCreationState)
+                    CommentCard(orderCreationState)
+                    DeferredTimeCard(orderCreationState)
                 }
                 BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
             }
-            BottomAmountBar(orderCreationUI)
+            BottomAmountBar(orderCreationState)
         }
     }
 
     @Composable
-    private fun AddressCard(orderCreationUI: OrderCreationUI) {
-        if (orderCreationUI.address == null) {
-            val addressStringId = if (orderCreationUI.isDelivery) {
-                R.string.action_create_order_delivery_address
+    private fun AddressCard(orderCreationState: OrderCreationUiState) {
+        if (orderCreationState.isDelivery) {
+            if (orderCreationState.deliveryAddress == null) {
+                NavigationCard(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    labelStringId = orderCreationState.addressLabelId,
+                    isClickable = !orderCreationState.isLoading
+                ) {
+                    viewModel.onUserAddressClicked()
+                }
             } else {
-                R.string.action_create_order_cafe_address
-            }
-            NavigationCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = addressStringId,
-                isClickable = !orderCreationUI.isLoading
-            ) {
-                viewModel.onAddAddressClicked()
+                NavigationTextCard(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    hintStringId = orderCreationState.addressLabelId,
+                    label = orderCreationState.deliveryAddress,
+                    isClickable = !orderCreationState.isLoading
+                ) {
+                    viewModel.onUserAddressClicked()
+                }
             }
         } else {
-            val addressHintStringId = if (orderCreationUI.isDelivery) {
-                R.string.hint_create_order_delivery_address
-            } else {
-                R.string.hint_create_order_cafe_address
-            }
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = addressHintStringId,
-                label = orderCreationUI.address,
-                isClickable = !orderCreationUI.isLoading
+                hintStringId = orderCreationState.addressLabelId,
+                label = orderCreationState.pickupAddress ?: "",
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onChangeAddressClicked()
+                viewModel.onCafeAddressClicked()
             }
         }
     }
 
     @Composable
-    private fun CommentCard(orderCreationUI: OrderCreationUI) {
-        if (orderCreationUI.comment == null) {
+    private fun CommentCard(orderCreationState: OrderCreationUiState) {
+        if (orderCreationState.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 labelStringId = R.string.action_create_order_comment,
-                isClickable = !orderCreationUI.isLoading
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onAddCommentClicked()
+                viewModel.onCommentClicked()
             }
         } else {
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.hint_create_order_comment,
-                label = orderCreationUI.comment,
-                isClickable = !orderCreationUI.isLoading
+                label = orderCreationState.comment,
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onEditCommentClicked()
+                viewModel.onCommentClicked()
             }
         }
     }
 
     @Composable
-    private fun DeferredTimeCard(orderCreationUI: OrderCreationUI) {
-        val deferredTimeStringId = if (orderCreationUI.isDelivery) {
-            R.string.hint_create_order_delivery_time
-        } else {
-            R.string.hint_create_order_pickup_time
-        }
+    private fun DeferredTimeCard(orderCreationState: OrderCreationUiState) {
         NavigationTextCard(
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = deferredTimeStringId,
-            label = orderCreationUI.deferredTime,
-            isClickable = !orderCreationUI.isLoading
+            hintStringId = orderCreationState.deferredTimeLabelId,
+            label = orderCreationState.deferredTime,
+            isClickable = !orderCreationState.isLoading
         ) {
             viewModel.onDeferredTimeClicked()
         }
     }
 
     @Composable
-    private fun BottomAmountBar(orderCreationUI: OrderCreationUI) {
+    private fun BottomAmountBar(orderCreationState: OrderCreationUiState) {
         Column(
             modifier = Modifier
                 .background(FoodDeliveryTheme.colors.surface)
@@ -191,15 +187,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.body1,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.totalCost != null) {
+                if (orderCreationState.totalCost != null) {
                     Text(
-                        text = orderCreationUI.totalCost,
+                        text = orderCreationState.totalCost,
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                 }
             }
-            if (orderCreationUI.isDelivery) {
+            if (orderCreationState.isDelivery) {
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                     Text(
                         modifier = Modifier.weight(1f),
@@ -207,9 +203,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
-                    if (orderCreationUI.deliveryCost != null) {
+                    if (orderCreationState.deliveryCost != null) {
                         Text(
-                            text = orderCreationUI.deliveryCost,
+                            text = orderCreationState.deliveryCost,
                             style = FoodDeliveryTheme.typography.body1,
                             color = FoodDeliveryTheme.colors.onSurface
                         )
@@ -223,30 +219,20 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.isDelivery) {
-                    if (orderCreationUI.amountToPayWithDeliveryCost != null) {
-                        Text(
-                            text = orderCreationUI.amountToPayWithDeliveryCost,
-                            style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
-                        )
-                    }
-                }else{
-                    if (orderCreationUI.amountToPay != null) {
-                        Text(
-                            text = orderCreationUI.amountToPay,
-                            style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
-                        )
-                    }
+                if (orderCreationState.finalCost != null) {
+                    Text(
+                        text = orderCreationState.finalCost,
+                        style = FoodDeliveryTheme.typography.h2,
+                        color = FoodDeliveryTheme.colors.onSurface
+                    )
                 }
             }
             LoadingButton(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_create_order_create_order,
-                isLoading = orderCreationUI.isLoading
+                isLoading = orderCreationState.isLoading
             ) {
-                viewModel.onCreateOrderClicked(orderCreationUI)
+                viewModel.onCreateOrderClicked()
             }
         }
     }
@@ -255,16 +241,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderEmptyDeliveryScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = true,
-                address = null,
+                deliveryAddress = null,
                 comment = null,
                 deferredTime = "Как можно скорее",
                 totalCost = null,
                 deliveryCost = null,
-                amountToPay = null,
+                finalCost = null,
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -273,16 +258,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderDeliveryScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = true,
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
                 deferredTime = "Как можно скорее",
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
-                amountToPay = "350 ₽",
+                finalCost = "350 ₽",
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -291,17 +275,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderEmptyPickupScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = false,
-                address = null,
+                pickupAddress = null,
                 comment = null,
                 deferredTime = "10:30",
                 totalCost = null,
                 deliveryCost = null,
-                amountToPay = null,
+                finalCost = null,
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
-
             )
         )
     }
@@ -310,17 +292,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderPickupScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = false,
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
                 deferredTime = "Как можно скорее",
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
-                amountToPay = "350 ₽",
+                finalCost = "350 ₽",
                 isLoading = true,
-                amountToPayWithDeliveryCost = null
-
             )
         )
     }

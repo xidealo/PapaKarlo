@@ -80,10 +80,10 @@
     <string name="action_create_order_pickup">Самовывоз</string>
     <string name="action_create_order_delivery_address">Адрес доставки</string>
     <string name="action_create_order_cafe_address">Адрес ресторана</string>
-    <string name="hint_create_order_delivery_time">Время доставки</string>
-    <string name="hint_create_order_pickup_time">Время самовывоза</string>
-    <string name="hint_create_order_delivery_address">Адрес доставки</string>
-    <string name="hint_create_order_cafe_address">Адрес ресторана</string>
+    <string name="delivery_time">Время доставки</string>
+    <string name="pickup_time">Время самовывоза</string>
+    <string name="delivery_address">Адрес доставки</string>
+    <string name="cafe_address">Адрес ресторана</string>
     <string name="action_create_order_comment">Комментарий</string>
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="title_create_order_addition_comment">Добавление комментария</string>
@@ -92,6 +92,7 @@
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_create_order_address">Не указан адрес</string>
     <string name="error_create_order_user">Пользователь не авторизован</string>
+    <string name="error_user">Пользователь не авторизован</string>
     <string name="error_create_order_time">Не выбрано время</string>
     <string name="error_create_order_something_went_wrong">Что-то пошло не так</string>
     <string name="msg_create_order_order_code">Код заказа&#160;</string>
@@ -100,7 +101,7 @@
     <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
 
     <!-- DEFERRED TIME -->
-    <string name="msg_deferred_time_asap">Как можно скорее</string>
+    <string name="asap">Как можно скорее</string>
     <string name="action_deferred_time_asap">Как можно скорее</string>
     <string name="action_deferred_time_select_time">Выбрать время</string>
     <string name="title_deferred_time_select_time">Выберите время</string>
@@ -243,7 +244,7 @@
     <string name="msg_request_code">Запросить код повторно</string>
     <string name="msg_request_code_sec">&#160;сек.</string>
     <string name="error_confirm_wrong_code">Неправильный код</string>
-    <string name="error_confirm_something_went_wrong">Что-то пошло не так</string>
+    <string name="error_something_went_wrong">Что-то пошло не так</string>
     <string name="action_confirm_resend_code">Получить код</string>
     <string name="action_confirm_change_phone">Изменить номер</string>
 

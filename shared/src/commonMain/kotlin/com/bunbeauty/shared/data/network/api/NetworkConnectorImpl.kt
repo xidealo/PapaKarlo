@@ -98,6 +98,14 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         )
     }
 
+    override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
+        return getDataWithAuth(
+            path = "address",
+            serializer = ListServer.serializer(AddressServer.serializer()),
+            token = token
+        )
+    }
+
     override suspend fun getPayment(token: String): ApiResult<PaymentServer> {
         return getDataWithAuth(
             path = "payment",

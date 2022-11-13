@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.compose.item
+package com.bunbeauty.papakarlo.feature.consumer_cart.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -20,9 +20,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
-import com.bunbeauty.papakarlo.feature.consumer_cart.CountPicker
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.feature.consumer_cart.CountPicker
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 
 @Composable

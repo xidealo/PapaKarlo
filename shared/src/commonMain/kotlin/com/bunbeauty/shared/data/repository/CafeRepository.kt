@@ -12,6 +12,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.DataStoreRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 class CafeRepository(
     private val networkConnector: NetworkConnector,
@@ -62,6 +63,18 @@ class CafeRepository(
 
     override suspend fun getCafeByUuid(cafeUuid: String): Cafe? {
         return cafeDao.getCafeByUuid(cafeUuid)?.let { cafeEntity ->
+            cafeMapper.toCafe(cafeEntity)
+        }
+    }
+
+    override suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): Cafe? {
+        return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.let { cafeEntity ->
+            cafeMapper.toCafe(cafeEntity)
+        }
+    }
+
+    override suspend fun getFirstCafeCityUuid(cityUuid: String): Cafe? {
+        return cafeDao.getFirstCafeByCityUuid(cityUuid)?.let { cafeEntity ->
             cafeMapper.toCafe(cafeEntity)
         }
     }

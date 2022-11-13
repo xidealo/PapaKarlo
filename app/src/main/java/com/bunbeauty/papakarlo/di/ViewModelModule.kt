@@ -58,6 +58,12 @@ fun viewModelModule() = module {
             deferredTimeInteractor = get(),
             stringUtil = get(),
             timeMapper = get(),
+            getSelectedUserAddress = get(),
+            getSelectedCafe = get(),
+            getUserAddressList = get(),
+            getCafeList = get(),
+            getCartTotal = get(),
+            resources = get(),
         )
     }
     viewModel {

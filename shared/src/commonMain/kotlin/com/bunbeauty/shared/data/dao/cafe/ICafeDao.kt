@@ -10,6 +10,9 @@ interface ICafeDao {
     suspend fun insertCafeList(cafeList: List<CafeEntity>)
     suspend fun insertSelectedCafeUuid(selectedCafeUuidEntity: SelectedCafeUuidEntity)
 
+    suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): CafeEntity?
+    suspend fun getFirstCafeByCityUuid(cityUuid: String): CafeEntity?
+
     fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>>
     fun observeCafeByUuid(uuid: String): Flow<CafeEntity?>
     fun observeSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): Flow<CafeEntity?>

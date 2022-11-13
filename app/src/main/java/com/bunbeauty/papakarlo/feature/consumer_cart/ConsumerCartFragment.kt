@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
-import com.bunbeauty.papakarlo.compose.item.CartProductItem
+import com.bunbeauty.papakarlo.feature.consumer_cart.ui.CartProductItem
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen

@@ -62,15 +62,13 @@ class CartProductInteractor(
                     CartTotal(
                         totalCost = newTotalCost,
                         deliveryCost = 0,
-                        amountToPay = newTotalCost,
-                        amountToPayWithDeliveryCost = newTotalCost
+                        finalCost = newTotalCost
                     )
                 else
                     CartTotal(
                         totalCost = newTotalCost,
                         deliveryCost = deliveryCost?.cost ?: 0,
-                        amountToPay = newTotalCost,
-                        amountToPayWithDeliveryCost = newTotalCost + (deliveryCost?.cost ?: 0)
+                        finalCost = newTotalCost + (deliveryCost?.cost ?: 0)
                     )
             }
         }

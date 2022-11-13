@@ -65,6 +65,36 @@ class UserAddressDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IUserAddressD
         ).asFlow().mapToOneOrNull()
     }
 
+    override suspend fun getSelectedUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddressEntity? {
+        return userAddressEntityQueries.getSelectedUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).executeAsOneOrNull()
+    }
+
+    override suspend fun getUserAddressListByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): List<UserAddressEntity> {
+        return userAddressEntityQueries.getUserAddressListByUserUuidAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).executeAsList()
+    }
+
+    override suspend fun geFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddressEntity? {
+        return userAddressEntityQueries.getFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).executeAsOneOrNull()
+    }
+
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
