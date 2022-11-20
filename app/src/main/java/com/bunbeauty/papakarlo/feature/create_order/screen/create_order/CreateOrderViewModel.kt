@@ -4,6 +4,7 @@ import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
@@ -103,15 +104,18 @@ class CreateOrderViewModel(
     }
 
     fun onCafeAddressClicked() {
+        val event = OrderCreationUiState.Event.ShowCafeAddressListEvent(
+            orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem)
+        )
         mutableOrderCreationState.update { state ->
-            state + OrderCreationUiState.Event.ShowCafeAddressListEvent
+            state + event
         }
     }
 
     fun onCafeAddressChanged(cafeUuid: String) {
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
-            updateSelectedUserAddress()
+            updateSelectedCafe()
         }
     }
 

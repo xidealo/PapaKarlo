@@ -28,6 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
@@ -253,6 +254,12 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     val result =
                         UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
                     handleUserAddressListResult(result)
+                }
+                is OrderCreationUiState.Event.ShowCafeAddressListEvent -> {
+                    CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                        ?.let { addressItem ->
+                            viewModel.onCafeAddressChanged(addressItem.uuid)
+                        }
                 }
                 else -> {}
             }

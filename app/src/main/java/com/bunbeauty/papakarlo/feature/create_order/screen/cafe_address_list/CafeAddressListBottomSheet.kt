@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list
+package com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -29,9 +29,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class UserAddressListBottomSheet : BottomSheetDialogFragment() {
+class CafeAddressListBottomSheet : BottomSheetDialogFragment() {
 
-    private var addressList by argument<List<UserAddressItem>>()
+    private var addressList by argument<List<CafeAddressItem>>()
     private var callback: Callback? = null
 
     private var mutableBinding: BottomSheetBinding? = null
@@ -56,17 +56,13 @@ class UserAddressListBottomSheet : BottomSheetDialogFragment() {
 
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.root.setContent {
-            UserAddressListScreen(
+            CafeAddressListScreen(
                 addressList = addressList,
                 scrolledToTop = { isScrolledToTop ->
                     behavior.isDraggable = isScrolledToTop
                 },
                 onAddressClicked = { addressItem ->
-                    callback?.onResult(UserAddressListResult.AddressSelected(addressItem))
-                    dismiss()
-                },
-                onAddAddressClicked = {
-                    callback?.onResult(UserAddressListResult.AddNewAddress)
+                    callback?.onResult(addressItem)
                     dismiss()
                 }
             )
@@ -75,24 +71,24 @@ class UserAddressListBottomSheet : BottomSheetDialogFragment() {
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        callback?.onResult(UserAddressListResult.Cancel)
+        callback?.onResult(null)
     }
 
     private interface Callback {
-        fun onResult(result: UserAddressListResult)
+        fun onResult(result: CafeAddressItem?)
     }
 
     companion object {
-        private const val TAG = "UserAddressListBottomSheet"
+        private const val TAG = "CafeAddressListBottomSheet"
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<UserAddressItem>
+            addressList: List<CafeAddressItem>
         ) = suspendCoroutine { continuation ->
-            UserAddressListBottomSheet().apply {
+            CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
                 callback = object : Callback {
-                    override fun onResult(result: UserAddressListResult) {
+                    override fun onResult(result: CafeAddressItem?) {
                         continuation.resume(result)
                     }
                 }
@@ -103,11 +99,10 @@ class UserAddressListBottomSheet : BottomSheetDialogFragment() {
 }
 
 @Composable
-private fun UserAddressListScreen(
-    addressList: List<UserAddressItem>,
+private fun CafeAddressListScreen(
+    addressList: List<CafeAddressItem>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (UserAddressItem) -> Unit,
-    onAddAddressClicked: () -> Unit,
+    onAddressClicked: (CafeAddressItem) -> Unit
 ) {
     val listState = rememberLazyListState()
     val itemPosition by remember {
@@ -126,7 +121,7 @@ private fun UserAddressListScreen(
                 .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            text = stringResource(R.string.delivery_address),
+            text = stringResource(R.string.cafe_address),
             style = FoodDeliveryTheme.typography.h2,
             color = FoodDeliveryTheme.colors.onSurface
         )
@@ -147,12 +142,5 @@ private fun UserAddressListScreen(
                 }
             }
         }
-        MainButton(
-            modifier = Modifier
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-            textStringId = R.string.action_add_addresses,
-            onClick = onAddAddressClicked
-        )
     }
 }
