@@ -24,8 +24,6 @@ import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.util.*
-import io.ktor.utils.io.errors.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -45,72 +43,72 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
 
     override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
         return getData(
-            path = "force_update_version",
             serializer = ForceUpdateVersionServer.serializer(),
+            path = "force_update_version",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
     override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
         return getData(
-            path = "category",
             serializer = ListServer.serializer(CategoryServer.serializer()),
+            path = "category",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
-            path = "menu_product",
             serializer = ListServer.serializer(MenuProductServer.serializer()),
+            path = "menu_product",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
     override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
         return getData(
-            path = "city",
             serializer = ListServer.serializer(CityServer.serializer()),
+            path = "city",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
     override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> {
         return getData(
-            path = "cafe",
             serializer = ListServer.serializer(CafeServer.serializer()),
+            path = "cafe",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
     }
 
     override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> {
         return getData(
-            path = "street",
             serializer = ListServer.serializer(StreetServer.serializer()),
+            path = "street",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
     }
 
     override suspend fun getDelivery(): ApiResult<DeliveryServer> {
         return getData(
-            path = "delivery",
             serializer = DeliveryServer.serializer(),
+            path = "delivery",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
     override suspend fun getPayment(token: String): ApiResult<PaymentServer> {
-        return getDataWithAuth(
-            path = "payment",
+        return getData(
             serializer = PaymentServer.serializer(),
+            path = "payment",
             token = token
         )
     }
 
     override suspend fun getProfile(token: String): ApiResult<ProfileServer> {
-        return getDataWithAuth(
-            path = "client",
+        return getData(
             serializer = ProfileServer.serializer(),
+            path = "client",
             token = token
         )
     }
@@ -119,9 +117,9 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
 
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
+            serializer = AuthResponseServer.serializer(),
             path = "client/login",
             postBody = loginPostServer,
-            serializer = AuthResponseServer.serializer()
         )
     }
 
@@ -129,19 +127,19 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         token: String,
         userAddress: UserAddressPostServer
     ): ApiResult<AddressServer> {
-        return postDataWithAuth(
+        return postData(
+            serializer = AddressServer.serializer(),
             path = "address",
             postBody = userAddress,
-            serializer = AddressServer.serializer(),
             token = token
         )
     }
 
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
-        return postDataWithAuth(
+        return postData(
+            serializer = OrderServer.serializer(),
             path = "order",
             postBody = order,
-            serializer = OrderServer.serializer(),
             token = token
         )
     }
@@ -153,23 +151,11 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer> {
-        return patchDataWithAuth(
-            path = "client",
-            patchBody = patchUserServer,
+        return patchData(
             serializer = ProfileServer.serializer(),
+            path = "client",
             parameters = hashMapOf(UUID_PARAMETER to userUuid),
-            token = token
-        )
-    }
-
-    override suspend fun patchDisableUser(
-        token: String,
-        patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer> {
-        return patchDataWithAuth(
-            path = "client",
             patchBody = patchUserServer,
-            serializer = ProfileServer.serializer(),
             token = token
         )
     }
@@ -188,13 +174,12 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         if (webSocketSession != null) {
             webSocketSession?.close(CloseReason(CloseReason.Codes.NORMAL, "User logout"))
             webSocketSession = null
-            //logD(WEB_SOCKET_TAG, "webSocketSession closed")
         }
     }
 
     // COMMON
 
-    fun <S> subscribeOnWebSocket(path: String, serializer: KSerializer<S>, token: String): Flow<S> {
+    private fun <S> subscribeOnWebSocket(path: String, serializer: KSerializer<S>, token: String): Flow<S> {
         return flow {
             try {
                 client.webSocket(
@@ -224,108 +209,79 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         }
     }
 
-    suspend fun <T> getDataWithAuth(
-        path: String,
-        serializer: KSerializer<T>,
-        parameters: Map<String, String> = mapOf(),
-        token: String
-    ): ApiResult<T> {
-        return getData(
-            path = path,
-            serializer = serializer,
-            parameters = parameters,
-            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
-        )
-    }
-
     suspend fun <T> getData(
-        path: String,
         serializer: KSerializer<T>,
+        path: String,
         parameters: Map<String, String> = mapOf(),
-        headers: Map<String, String> = mapOf(),
+        token: String? = null
     ): ApiResult<T> {
-        val request = client.get {
-            buildRequest(path, null, parameters, headers)
+        return handleNetworkCall(serializer) {
+            client.get {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    token = token
+                )
+            }
         }
-        return handleResponse(serializer, request)
     }
 
-    suspend fun <R> postDataWithAuth(
-        path: String,
-        postBody: Any,
+    private suspend fun <R> postData(
         serializer: KSerializer<R>,
-        parameters: Map<String, String> = mapOf(),
-        token: String
-    ): ApiResult<R> {
-        return postData(
-            path = path,
-            postBody = postBody,
-            serializer = serializer,
-            parameters = parameters,
-            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
-        )
-    }
-
-    suspend fun <R> postData(
         path: String,
-        postBody: Any,
-        serializer: KSerializer<R>,
         parameters: Map<String, String> = mapOf(),
-        headers: Map<String, String> = mapOf(),
+        postBody: Any,
+        token: String? = null
     ): ApiResult<R> {
-        val request = client.post {
-            buildRequest(path, postBody, parameters, headers)
+        return handleNetworkCall(serializer) {
+            client.post {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    body = postBody,
+                    token = token
+                )
+            }
         }
-        return handleResponse(serializer, request)
     }
 
-    suspend fun <R> patchDataWithAuth(
+    private suspend fun <R> patchData(
         path: String,
         patchBody: Any,
         serializer: KSerializer<R>,
         parameters: Map<String, String> = mapOf(),
-        token: String
+        token: String? = null
     ): ApiResult<R> {
-        return patchData(
-            path = path,
-            patchBody = patchBody,
-            serializer = serializer,
-            parameters = parameters,
-            headers = mapOf(AUTHORIZATION_HEADER to BEARER + token)
-        )
-    }
-
-    suspend fun <R> patchData(
-        path: String,
-        patchBody: Any,
-        serializer: KSerializer<R>,
-        parameters: Map<String, String> = mapOf(),
-        headers: Map<String, String> = mapOf(),
-    ): ApiResult<R> {
-        val request = client.patch {
-            buildRequest(path, patchBody, parameters, headers)
+        return handleNetworkCall(serializer) {
+            client.patch {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    body = patchBody,
+                    token = token
+                )
+            }
         }
-        return handleResponse(serializer, request)
     }
 
-    suspend fun <R> handleResponse(
+    private suspend inline fun <R> handleNetworkCall(
         serializer: KSerializer<R>,
-        request: HttpResponse
+        networkCall: () -> HttpResponse,
     ): ApiResult<R> {
         return try {
-            ApiResult.Success(json.decodeFromString(serializer, request.bodyAsText()))
+            ApiResult.Success(json.decodeFromString(serializer, networkCall().bodyAsText()))
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Throwable) {
-            ApiResult.Error(ApiError(400, exception.message ?: "-"))
+            ApiResult.Error(ApiError(0, "Bad Internet"))
         }
     }
 
-    fun HttpRequestBuilder.buildRequest(
+    private fun HttpRequestBuilder.buildRequest(
         path: String,
-        body: Any?,
         parameters: Map<String, String> = mapOf(),
-        headers: Map<String, String> = mapOf()
+        body: Any? = null,
+        token: String? = null
     ) {
         if (body != null) {
             setBody(body)
@@ -336,10 +292,9 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         parameters.forEach { parameterMap ->
             parameter(parameterMap.key, parameterMap.value)
         }
-        headers.forEach { headerEntry ->
-            header(headerEntry.key, headerEntry.value)
+        if (token != null) {
+            header(AUTHORIZATION_HEADER, "Bearer $token")
         }
     }
-
 
 }
