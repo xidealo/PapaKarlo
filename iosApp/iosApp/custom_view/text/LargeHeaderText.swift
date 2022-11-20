@@ -15,6 +15,7 @@ struct LargeHeaderText: View {
             .foregroundColor(Color("onSurface"))
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
+            .multilineTextAlignment(.leading)
     }
 }
 

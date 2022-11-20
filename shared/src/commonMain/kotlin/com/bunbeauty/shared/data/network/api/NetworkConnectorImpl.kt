@@ -49,6 +49,18 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         )
     }
 
+    override suspend fun patchDisableUser(
+        token: String,
+        patchUserServer: PatchUserServer
+    ): ApiResult<ProfileServer> {
+        return patchData(
+            path = "client",
+            patchBody = patchUserServer,
+            serializer = ProfileServer.serializer(),
+            token = token
+        )
+    }
+
     override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
         return getData(
             serializer = ListServer.serializer(CategoryServer.serializer()),

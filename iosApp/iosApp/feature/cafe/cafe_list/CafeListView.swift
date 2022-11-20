@@ -10,11 +10,10 @@ import SwiftUI
 struct CafeListView: View {
     
     @ObservedObject private var viewModel = viewModelStore.getCafeListViewModelViewModel()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
             VStack(spacing:0){
-                ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-        
                 if viewModel.cafeViewState.isLoading{
                     LoadingView()
                 }
@@ -33,7 +32,6 @@ struct CafeListView: View {
                         }.padding(.top, Diems.MEDIUM_PADDING)
                     }
                 }
-                BottomBarView(isSelected: 0)
             }.background(Color("background")).hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.fetchData()

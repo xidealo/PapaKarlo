@@ -15,24 +15,23 @@ struct ToolbarView: View {
     let cost:String
     let count:String
     
-    let isShowBackArrow:Bool
     let isCartVisible:Bool
-    let isLogoutVisible:Bool
     
-    private let authManager = AuthManager()
-    
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    var logout: (() -> Void)? = nil
+    var back: (() -> Void)? = nil
     
     var body: some View {
         HStack(spacing:0){
             Button(action: {
-                self.mode.wrappedValue.dismiss()
+                back!()
             }) {
-                if(isShowBackArrow){
-                    Image(systemName: "arrow.backward").foregroundColor(Color("onSurface"))
+                if(back != nil){
+                    Image(systemName: "arrow.backward")
+                        .foregroundColor(Color("onSurface"))
                         .padding(.horizontal, Diems.SMALL_PADDING)
                 }
             }.padding(Diems.SMALL_PADDING)
+            
             
             Text(title)
                 .foregroundColor(Color("onSurface"))
@@ -40,17 +39,17 @@ struct ToolbarView: View {
                 .padding(.vertical, Diems.MEDIUM_PADDING)
             Spacer()
             
-            if isLogoutVisible{
+            if logout != nil{
                 Button(action:{
-                    authManager.logout()
-                    iosComponent.provideIUserInteractor().clearUserCache { err in
-                        self.mode.wrappedValue.dismiss()
-                    }
+                    logout!()
                 }){
-                    Image("LogoutIcon").resizable().frame(width: 24, height: 24).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
+                    Image("LogoutIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
                 }
             }
-           
+            
             if(isCartVisible){
                 NavigationLink(
                     destination:consumerCartView
@@ -68,7 +67,7 @@ struct ToolbarView: View {
                             .font(.system(size: Diems.SMALL_TEXT_SIZE, design: .default))
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)
-                .padding(.trailing, Diems.SMALL_PADDING)
+                    .padding(.trailing, Diems.SMALL_PADDING)
             }
         }.background(Color("surface"))
     }
@@ -76,6 +75,6 @@ struct ToolbarView: View {
 
 struct ToolbarView_Previews: PreviewProvider {
     static var previews: some View {
-        ToolbarView(title: "Title", cost: "220R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: true)
+        ToolbarView(title: "Title", cost: "220R", count: "2", isCartVisible: false)
     }
 }

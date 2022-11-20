@@ -22,4 +22,16 @@ class SettingsViewModel: ObservableObject {
             self.settingsViewState = SettingsViewState(phone: settings?.user.phone ?? "" , email: settings?.user.email , city: settings?.cityName ?? "")
         }
     }
+    
+    
+    func disableUser(completion: @escaping(Bool) -> Void){
+        iosComponent.provideDisableUserUseCase().invoke { err in
+            if(err != nil){
+                print(err)
+                completion(false)
+            }else{
+                completion(true)
+            }
+        }
+    }
 }

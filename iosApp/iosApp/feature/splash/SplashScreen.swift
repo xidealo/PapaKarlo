@@ -17,7 +17,7 @@ struct SplashView: View {
     }
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             switch viewModel.splashViewState.splashState {
             case .isGoSelectCity:NavigationView{
                 NavigationLink(
@@ -28,14 +28,13 @@ struct SplashView: View {
                 }
             }
             case .isGoMenu: NavigationView{
-
                 NavigationLink(
-                    destination:MenuView(),
+                    destination:ContainerView(selection: 1),
                     isActive: .constant(true)
                 ){
                     EmptyView()
                 }
-                            }
+            }
             default : EmptyView()
             }
         }

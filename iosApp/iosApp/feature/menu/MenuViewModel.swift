@@ -8,7 +8,7 @@
 import Foundation
 import shared
 
-class MenuViewModel : ToolbarViewModel {
+class MenuViewModel : ObservableObject {
     @Published var menuViewState:MenuViewState = MenuViewState(
         menuItems: [],
         categoryItemModels: [],
@@ -21,8 +21,7 @@ class MenuViewModel : ToolbarViewModel {
     var lastAppearIndex = 2
     var canCalculate = true
     
-    override init(){
-        super.init()
+    init(){
 
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
             if(error != nil){
@@ -43,7 +42,7 @@ class MenuViewModel : ToolbarViewModel {
     private func getMenuItems(menuSectionList:[MenuSection]) -> [MenuItem] {
         return menuSectionList.map { menuSection in
             MenuItem(categorySectionItem: CategorySectionItem(id: menuSection.category.uuid, name: menuSection.category.name, menuProdctItems: menuSection.menuProductList.map({ menuProduct in
-                MenuProductItem(id: menuProduct.uuid, name: menuProduct.name, newPrice: String(menuProduct.newPrice) + Strings.CURRENCY, oldPrice: menuProduct.oldPrice as? Int, photoLink: menuProduct.photoLink)
+                MenuProductItem(id: menuProduct.uuid + menuSection.category.uuid, name: menuProduct.name, newPrice: String(menuProduct.newPrice) + Strings.CURRENCY, oldPrice: menuProduct.oldPrice as? Int, photoLink: menuProduct.photoLink)
             }))
             )
         }

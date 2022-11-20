@@ -17,8 +17,8 @@ struct ActionTextCardView: View {
     var body: some View {
         
         Button(action: action){
-            HStack{
-                VStack{
+            HStack(spacing:0){
+                VStack(spacing:0){
                     PlaceholderText(text:placeHolder).frame(maxWidth:.infinity, alignment: .leading)
                     Text(text)
                         .frame(maxWidth:.infinity, alignment: .leading)

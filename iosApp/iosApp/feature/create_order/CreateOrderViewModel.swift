@@ -30,6 +30,7 @@ class CreateOrderViewModel:ObservableObject {
         iosComponent.provideCafeInteractor().getCafeList { cafes, err in
             print("cafe loaded")
         }
+        loadData()
     }
     
     func loadData(){
@@ -53,31 +54,33 @@ class CreateOrderViewModel:ObservableObject {
                 )
                 return
             }
-            self.creationOrderViewState = CreateOrderViewState(
+            
+            self.getAddressList(
                 isDelivery: self.creationOrderViewState.isDelivery,
-                address: self.creationOrderViewState.address,
-                comment: self.creationOrderViewState.comment,
-                deferredTime: self.creationOrderViewState.deferredTime,
                 totalCost: String(cartTotal!.totalCost) + Strings.CURRENCY,
                 deliveryCost: String(cartTotal!.deliveryCost) + Strings.CURRENCY,
                 amountToPay: String(cartTotal!.amountToPay) + Strings.CURRENCY,
-                amountToPayWithDeliveryCost:  String(cartTotal!.amountToPayWithDeliveryCost) +  Strings.CURRENCY,
-                userUuid: self.creationOrderViewState.userUuid,
-                cafeUuid: self.creationOrderViewState.cafeUuid,
-                createOrderState: self.creationOrderViewState.createOrderState,
-                notNeedDeferredTime: self.creationOrderViewState.notNeedDeferredTime,
-                actionList: self.creationOrderViewState.actionList
+                amountToPayWithDeliveryCost: String(cartTotal!.amountToPayWithDeliveryCost) +  Strings.CURRENCY
             )
         }
-        getAddressList(isDelivery: creationOrderViewState.isDelivery)
     }
     
-    func getAddressList(isDelivery:Bool){
+    func getAddressList(
+        isDelivery:Bool,
+        totalCost:String,
+        deliveryCost:String,
+        amountToPay:String,
+        amountToPayWithDeliveryCost:String
+    ){
         if(isDelivery){
             iosComponent.provideIAddressInteractor().observeAddress().watch { userAddress in
                 if(userAddress == nil){
                     (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                         copiedState.address = nil
+                        copiedState.totalCost = totalCost
+                        copiedState.deliveryCost = deliveryCost
+                        copiedState.amountToPay = amountToPay
+                        copiedState.amountToPayWithDeliveryCost = amountToPayWithDeliveryCost
                         copiedState.createOrderState = CreateOrderState.success
                         self.creationOrderViewState = copiedState
                     }
@@ -127,6 +130,7 @@ class CreateOrderViewModel:ObservableObject {
         if(creationOrderViewState.isDelivery && creationOrderViewState.userUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                 copiedState.actionList.append(CreateOrderAction.showAddressError)
+                copiedState.createOrderState = CreateOrderState.success
                 creationOrderViewState = copiedState
             }
             return
@@ -134,7 +138,8 @@ class CreateOrderViewModel:ObservableObject {
         
         if(!creationOrderViewState.isDelivery && creationOrderViewState.cafeUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.addressError
+                copiedState.actionList.append(CreateOrderAction.showAddressError)
+                copiedState.createOrderState = CreateOrderState.success
                 creationOrderViewState = copiedState
             }
             return
@@ -154,14 +159,16 @@ class CreateOrderViewModel:ObservableObject {
             if(code == nil){
                 //show error
                 (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                    copiedState.createOrderState = CreateOrderState.commonError
+                    copiedState.actionList.append(CreateOrderAction.showCommonError)
+                    copiedState.createOrderState = CreateOrderState.success
                     self.creationOrderViewState = copiedState
                 }
             }else{
                 DispatchQueue.main.async {
                     iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
                         (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                            copiedState.createOrderState = CreateOrderState.goToProfile
+                            copiedState.createOrderState = CreateOrderState.success
+                            copiedState.actionList.append(CreateOrderAction.goToProfile)
                             self.creationOrderViewState = copiedState
                         }
                     }
@@ -173,12 +180,12 @@ class CreateOrderViewModel:ObservableObject {
     func goToAddress(){
         if(creationOrderViewState.isDelivery){
             (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.goToUserAddressList
+                copiedState.actionList.append(CreateOrderAction.goToUserAddressList)
                 self.creationOrderViewState = copiedState
             }
         }else{
             (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.goToCafeAddressList
+                copiedState.actionList.append(CreateOrderAction.goToCafeAddressList)
                 self.creationOrderViewState = copiedState
             }
         }
@@ -193,9 +200,9 @@ class CreateOrderViewModel:ObservableObject {
 }
 
 enum CreateOrderState{
-    case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile, commonError, addressError
+    case success, loading
 }
 
 enum CreateOrderAction {
-   case showCommonError, showAddressError
+   case showCommonError, showAddressError, goToCafeAddressList, goToUserAddressList, goToProfile
 }

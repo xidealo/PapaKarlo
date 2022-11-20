@@ -12,10 +12,19 @@ struct PaymentView: View {
     @State var show:Bool = false
     
     @State var toastText:String = ""
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_PAYMENT, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_PAYMENT,
+                cost: "",
+                count: "2",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             VStack(spacing:0){
                 ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_PHONE, isSystemImageName: false, isShowRightArrow: false){

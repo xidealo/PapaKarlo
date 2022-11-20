@@ -8,7 +8,7 @@
 import Foundation
 import shared
 
-class ProfileViewModel: ToolbarViewModel {
+class ProfileViewModel: ObservableObject {
     
     @Published var profileViewState:ProfileViewState = ProfileViewState(
         userUuid: "",
@@ -19,8 +19,7 @@ class ProfileViewModel: ToolbarViewModel {
     
     let dateUtil = DateUtil()
 
-    override init() {
-        super.init()
+    init() {
         print("ProfileViewModel")
     }
     

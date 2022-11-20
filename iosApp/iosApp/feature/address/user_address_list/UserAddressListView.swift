@@ -20,7 +20,15 @@ struct UserAddressListView: View {
     
     var body: some View {
         VStack{
-            ToolbarView(title: Strings.TITLE_MY_ADDRESSES, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_MY_ADDRESSES,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             switch(viewModel.userAddressViewState.userAddressState){
             case UserAddressState.loading: LoadingView()

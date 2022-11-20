@@ -9,15 +9,14 @@ import Foundation
 import shared
 import SwiftUI
 
-class CafeViewModel: ToolbarViewModel {
+class CafeViewModel: ObservableObject {
     
     @Published var cafeViewState:CafeViewState = CafeViewState(
         isLoading: false,
         cafeItemList: []
     )
     
-    override init(){
-        super.init()
+    init(){
         print("CafeViewModel")
     }
     

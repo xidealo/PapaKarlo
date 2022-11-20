@@ -11,8 +11,19 @@ struct OrderListView: View {
     
     @ObservedObject private var viewModel  = OrderListViewModel()
     
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
-        VStack{
+        VStack(spacing: 0 ){
+            ToolbarView(
+                title: Strings.TITLE_MY_ORDERS,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                })
+            
             if(viewModel.orderListViewState.orderList.count == 0){
                 EmptyOrderListView()
             }else{
@@ -43,26 +54,21 @@ struct SuccessOrderListView: View {
     let orderList : [OrderItem]
     
     var body: some View {
-        VStack(spacing: 0){
-            ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-                ScrollView {
-                    LazyVStack(spacing:0){
-                        ForEach(orderList){ order in
-                            OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id))
-                                .padding(.bottom, Diems.SMALL_PADDING)
-                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                        }
-                    }.padding(.top, Diems.MEDIUM_PADDING)
+        ScrollView {
+            LazyVStack(spacing:0){
+                ForEach(orderList){ order in
+                    OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id))
+                        .padding(.bottom, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
+            }.padding(.top, Diems.MEDIUM_PADDING)
         }
     }
 }
 
 struct EmptyOrderListView: View {
     var body: some View {
-        VStack{
-            ToolbarView(title: Strings.TITLE_MY_ORDERS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
-            
+        VStack(spacing: 0){
             Spacer()
             
             DefaultImage(imageName: "EmptyPage")
