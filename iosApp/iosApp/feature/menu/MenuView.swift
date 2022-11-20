@@ -15,13 +15,6 @@ struct MenuView: View {
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(
-                title: Strings.TITLE_MENU,
-                cost: viewModel.toolbarViewState.cost,
-                count: viewModel.toolbarViewState.count,
-                isCartVisible: true
-            )
-            
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
@@ -89,7 +82,6 @@ struct MenuView: View {
                     }
                 }
             }
-            BottomBarView(isSelected: 1)
         }
         .background(Color("background"))
         .navigationBarTitle("")
@@ -97,7 +89,6 @@ struct MenuView: View {
         .preferredColorScheme(.light)
     }
 }
-
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {

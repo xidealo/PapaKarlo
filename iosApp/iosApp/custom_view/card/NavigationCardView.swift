@@ -13,16 +13,45 @@ struct NavigationCardView<Content: View>: View {
     
     let label:String
     let destination:Content
+    var isSystem = true
     
     var body: some View {
             NavigationLink(
                 destination:destination
             ){
-                HStack{
+                HStack(spacing:0){
                     if icon != nil{
-                        Image(systemName: icon ?? "").foregroundColor(Color("onSurfaceVariant"))
+                        if(isSystem){
+                            Image(
+                                systemName: icon ?? "")
+                            .resizable()
+                            .renderingMode(.template)
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(Color("onSurfaceVariant"))
+                        }else{
+                            IconImage(
+                                width: 24,
+                                height: 24,
+                                imageName: icon ?? ""
+                            )
+                            .foregroundColor(Color("onSurfaceVariant"))
+                        }
                     }
-                    Text(label).frame(maxWidth:.infinity, alignment: .leading).foregroundColor(Color("onSurface"))
+                    if(icon == nil){
+                        Text(label)
+                            .frame(
+                                maxWidth: .infinity, alignment: .leading).foregroundColor(Color("onSurface")
+                            )
+                    }else{
+                        Text(label)
+                            .frame(
+                                maxWidth: .infinity, alignment: .leading).foregroundColor(Color("onSurface")
+                            )
+                            .padding(
+                                .leading, Diems.MEDIUM_PADDING
+                            )
+                    }
+                  
                     Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
                 }.frame(maxWidth:.infinity)
                 .padding(Diems.MEDIUM_PADDING)

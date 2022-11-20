@@ -23,7 +23,7 @@ struct CardView: View {
     }
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             if icon != nil{
                 if(isSystemImageName){
                     Image(systemName: icon ?? "").foregroundColor(Color("iconColor"))
@@ -35,7 +35,7 @@ struct CardView: View {
                 .frame(maxWidth:.infinity, alignment: .leading)
                 .foregroundColor(Color("onSurface"))
                 .multilineTextAlignment(.leading)
-
+                .padding(.leading, Diems.MEDIUM_PADDING)
             if isShowRightArrow{
                 Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
             }

@@ -10,10 +10,12 @@ import SwiftUI
 
 struct CafeAddressListView: View {
     
-    @ObservedObject private var viewModel = CafeAddressViewModel()
+    @ObservedObject private var viewModel : CafeAddressViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    let isClickable:Bool
+    init(isClickable:Bool){
+        viewModel = CafeAddressViewModel(isClickable: true)
+    }
     
     var body: some View {
         VStack(spacing:0){
@@ -33,9 +35,7 @@ struct CafeAddressListView: View {
             }
         }.hiddenNavigationBarStyle()
             .background(Color("background"))
-            .onAppear {
-                viewModel.loadData(isClickable: isClickable)
-            }.onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
+            .onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
                 if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
                     self.mode.wrappedValue.dismiss()
                 }

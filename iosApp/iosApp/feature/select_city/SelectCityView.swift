@@ -16,7 +16,7 @@ struct SelectCityView: View {
     var body: some View {
         VStack{
             NavigationLink(
-                destination:MenuView(),
+                destination:ContainerView(selection: 1),
                 isActive: $viewModel.selectCityViewState.isGoToMenu
             ){
                 EmptyView()

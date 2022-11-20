@@ -130,6 +130,7 @@ class CreateOrderViewModel:ObservableObject {
         if(creationOrderViewState.isDelivery && creationOrderViewState.userUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
                 copiedState.actionList.append(CreateOrderAction.showAddressError)
+                copiedState.createOrderState = CreateOrderState.success
                 creationOrderViewState = copiedState
             }
             return
@@ -137,7 +138,8 @@ class CreateOrderViewModel:ObservableObject {
         
         if(!creationOrderViewState.isDelivery && creationOrderViewState.cafeUuid == nil){
             (creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.addressError
+                copiedState.actionList.append(CreateOrderAction.showAddressError)
+                copiedState.createOrderState = CreateOrderState.success
                 creationOrderViewState = copiedState
             }
             return
@@ -157,14 +159,16 @@ class CreateOrderViewModel:ObservableObject {
             if(code == nil){
                 //show error
                 (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                    copiedState.createOrderState = CreateOrderState.commonError
+                    copiedState.actionList.append(CreateOrderAction.showCommonError)
+                    copiedState.createOrderState = CreateOrderState.success
                     self.creationOrderViewState = copiedState
                 }
             }else{
                 DispatchQueue.main.async {
                     iosComponent.provideCartProductInteractor().removeAllProductsFromCart { err in
                         (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                            copiedState.createOrderState = CreateOrderState.goToProfile
+                            copiedState.createOrderState = CreateOrderState.success
+                            copiedState.actionList.append(CreateOrderAction.goToProfile)
                             self.creationOrderViewState = copiedState
                         }
                     }
@@ -176,12 +180,12 @@ class CreateOrderViewModel:ObservableObject {
     func goToAddress(){
         if(creationOrderViewState.isDelivery){
             (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.goToUserAddressList
+                copiedState.actionList.append(CreateOrderAction.goToUserAddressList)
                 self.creationOrderViewState = copiedState
             }
         }else{
             (self.creationOrderViewState.copy() as! CreateOrderViewState).apply { copiedState in
-                copiedState.createOrderState = CreateOrderState.goToCafeAddressList
+                copiedState.actionList.append(CreateOrderAction.goToCafeAddressList)
                 self.creationOrderViewState = copiedState
             }
         }
@@ -196,9 +200,9 @@ class CreateOrderViewModel:ObservableObject {
 }
 
 enum CreateOrderState{
-    case success, loading, goToUserAddressList, goToCafeAddressList, goToProfile, commonError, addressError
+    case success, loading
 }
 
 enum CreateOrderAction {
-   case showCommonError, showAddressError
+   case showCommonError, showAddressError, goToCafeAddressList, goToUserAddressList, goToProfile
 }

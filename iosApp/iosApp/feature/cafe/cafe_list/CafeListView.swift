@@ -14,13 +14,6 @@ struct CafeListView: View {
 
     var body: some View {
             VStack(spacing:0){
-                ToolbarView(
-                    title: Strings.TITLE_CAFE_LIST,
-                    cost: viewModel.toolbarViewState.cost,
-                    count: viewModel.toolbarViewState.count,
-                    isCartVisible: true
-                )
-        
                 if viewModel.cafeViewState.isLoading{
                     LoadingView()
                 }
@@ -39,7 +32,6 @@ struct CafeListView: View {
                         }.padding(.top, Diems.MEDIUM_PADDING)
                     }
                 }
-                BottomBarView(isSelected: 0)
             }.background(Color("background")).hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.fetchData()

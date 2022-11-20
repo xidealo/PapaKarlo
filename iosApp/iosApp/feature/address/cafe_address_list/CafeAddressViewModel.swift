@@ -12,6 +12,10 @@ class CafeAddressViewModel: ObservableObject {
     
     @Published var cafeAddressViewState:CafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.loading, addressItemList: [])
     
+    init(isClickable:Bool){
+        loadData(isClickable: isClickable)
+    }
+    
     func loadData(isClickable:Bool) {
         iosComponent.provideCafeInteractor().observeCafeAddressList().watch { list in
             self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (list as! [CafeAddress]).map({ cafeAddress in

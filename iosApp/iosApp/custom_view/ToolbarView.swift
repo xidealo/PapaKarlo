@@ -26,8 +26,8 @@ struct ToolbarView: View {
                 back!()
             }) {
                 if(back != nil){
-
-                    Image(systemName: "arrow.backward").foregroundColor(Color("onSurface"))
+                    Image(systemName: "arrow.backward")
+                        .foregroundColor(Color("onSurface"))
                         .padding(.horizontal, Diems.SMALL_PADDING)
                 }
             }.padding(Diems.SMALL_PADDING)
@@ -43,7 +43,10 @@ struct ToolbarView: View {
                 Button(action:{
                     logout!()
                 }){
-                    Image("LogoutIcon").resizable().frame(width: 24, height: 24).padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
+                    Image("LogoutIcon")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(Diems.MEDIUM_PADDING).foregroundColor(Color("onSurface"))
                 }
             }
             
