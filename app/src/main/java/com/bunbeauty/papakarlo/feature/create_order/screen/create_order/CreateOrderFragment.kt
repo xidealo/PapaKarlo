@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -16,26 +17,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.BlurLine
+import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
+import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
 import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
 import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
 import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
 import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
-import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
-import com.bunbeauty.papakarlo.common.ui.element.BlurLine
-import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
-import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
-import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
+import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
@@ -47,8 +50,14 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.update()
         viewBinding.fragmentCreateOrderCvMain.setContent {
             val orderCreationState by viewModel.orderCreationState.collectAsState()
+
+            LaunchedEffect(key1 = orderCreationState.eventList) {
+                handleEventList(orderCreationState.eventList)
+            }
+
             CreateOrderScreen(orderCreationState)
         }
         setFragmentResultListener(USER_ADDRESS_REQUEST_KEY) { _, bundle ->
@@ -234,6 +243,32 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             ) {
                 viewModel.onCreateOrderClicked()
             }
+        }
+    }
+
+    private suspend fun handleEventList(eventList: List<OrderCreationUiState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is OrderCreationUiState.Event.OpenUserAddressListEvent -> {
+                    val result =
+                        UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                    handleUserAddressListResult(result)
+                }
+                else -> {}
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
+    private fun handleUserAddressListResult(result: UserAddressListResult) {
+        when (result) {
+            is UserAddressListResult.AddressSelected -> {
+                viewModel.onUserAddressChanged(result.addressItem.uuid)
+            }
+            is UserAddressListResult.AddNewAddress -> {
+                findNavController().navigate(CreateOrderFragmentDirections.toCreateAddressFragment())
+            }
+            is UserAddressListResult.Cancel -> {}
         }
     }
 

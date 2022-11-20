@@ -33,4 +33,9 @@ abstract class CacheListRepository<D>: BaseRepository() {
             )
         }
     }
+
+    protected fun updateCache(block: (List<D>?) -> List<D>?) {
+        cache = block (cache)
+    }
+
 }

@@ -29,7 +29,14 @@ class UserAddressRepository(
                 val userAddressEntity = userAddressMapper.toUserAddressEntity(addressServer)
                 userAddressDao.insertUserAddress(userAddressEntity)
 
-                userAddressMapper.toUserAddress(addressServer)
+                val userAddress = userAddressMapper.toUserAddress(addressServer)
+                updateCache { cache ->
+                    cache?.let {
+                        cache + userAddress
+                    }
+                }
+
+                userAddress
             }
     }
 

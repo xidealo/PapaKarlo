@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
+import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
@@ -36,6 +37,7 @@ class CreateOrderViewModel(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val stringUtil: IStringUtil,
     private val timeMapper: TimeMapper,
+    private val userAddressMapper: UserAddressMapper,
     private val getSelectedUserAddress: GetSelectedUserAddressUseCase,
     private val getSelectedCafe: GetSelectedCafeUseCase,
     private val getUserAddressList: GetUserAddressListUseCase,
@@ -52,7 +54,7 @@ class CreateOrderViewModel(
         resources.getString(R.string.asap)
     }
 
-    init {
+    fun update() {
         withLoading {
             updateAddresses()
             updateCartTotal()
@@ -84,7 +86,9 @@ class CreateOrderViewModel(
         val event = if (addressList.isEmpty()) {
             OrderCreationUiState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationUiState.Event.OpenUserAddressListEvent
+            OrderCreationUiState.Event.OpenUserAddressListEvent(
+                addressList.map(userAddressMapper::toUserAddressItem)
+            )
         }
         mutableOrderCreationState.update { state ->
             state + event
@@ -208,6 +212,12 @@ class CreateOrderViewModel(
                 )
                 mutableOrderCreationState.update { it + event }
             }
+        }
+    }
+
+    fun consumeEventList(eventList: List<OrderCreationUiState.Event>) {
+        mutableOrderCreationState.update { state ->
+            state.copy(eventList = state.eventList - eventList.toSet())
         }
     }
 

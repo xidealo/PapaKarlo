@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 import androidx.annotation.StringRes
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
 
 data class OrderCreationUiState(
@@ -28,7 +29,7 @@ data class OrderCreationUiState(
 
     sealed interface Event {
         object OpenCreateAddressEvent : Event
-        object OpenUserAddressListEvent : Event
+        class OpenUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
         object ShowCafeAddressListEvent : Event
         class ShowDeferredTimeEvent(val title: String, val time: TimeUI?) : Event
         class ShowCommentInputEvent(val inputSettings: EditTextSettings) : Event
