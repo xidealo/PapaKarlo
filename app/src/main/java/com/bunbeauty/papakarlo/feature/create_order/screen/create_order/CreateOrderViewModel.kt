@@ -80,6 +80,9 @@ class CreateOrderViewModel(
                 )
             }
         }
+        withLoading {
+            updateCartTotal()
+        }
     }
 
     fun onUserAddressClicked() {
@@ -260,12 +263,13 @@ class CreateOrderViewModel(
 
     private suspend fun updateCartTotal() {
         try {
-            val cartTotal = getCartTotal()
+            val isDelivery = mutableOrderCreationState.value.isDelivery
+            val cartTotal = getCartTotal(isDelivery)
             mutableOrderCreationState.update { state ->
                 state.copy(
                     totalCost = stringUtil.getCostString(cartTotal.totalCost),
                     deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
-                    finalCost = stringUtil.getCostString(cartTotal.finalCost)
+                    finalCost = stringUtil.getCostString(cartTotal.finalCost),
                 )
             }
         } catch (exception: Exception) {

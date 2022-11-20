@@ -9,7 +9,7 @@ class GetCartTotalUseCase(
     private val deliveryRepo: DeliveryRepo,
 ) {
 
-    suspend operator fun invoke(): CartTotal {
+    suspend operator fun invoke(isDelivery: Boolean): CartTotal {
         val cartProductList = cartProductRepo.getCartProductList()
         if (cartProductList.isEmpty()) {
             error("Cart is empty")
@@ -18,15 +18,15 @@ class GetCartTotalUseCase(
             cartProduct.count * cartProduct.product.newPrice
         }
         val delivery = deliveryRepo.getDelivery() ?: error("Delivery info is not found")
-        val deliveryCost = if (newTotalCost > delivery.forFree) {
-            0
-        } else {
+        val deliveryCost = if (isDelivery && newTotalCost < delivery.forFree) {
             delivery.cost
+        } else {
+            0
         }
         return CartTotal(
             totalCost = newTotalCost,
             deliveryCost = deliveryCost,
-            finalCost = newTotalCost + deliveryCost
+            finalCost = newTotalCost + deliveryCost,
         )
     }
 }
