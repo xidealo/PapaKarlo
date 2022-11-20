@@ -64,7 +64,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         }
     }
 
-
     @Composable
     private fun MenuScreen(menuState: State<MenuUI>) {
         when (menuState) {

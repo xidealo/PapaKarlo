@@ -60,7 +60,7 @@ class UserAddressRepository(
         userUuid: String,
         cityUuid: String
     ): UserAddress? {
-        return userAddressDao.getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
+        return userAddressDao.geFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
             ?.let { userAddressEntity ->
                 userAddressMapper.toUserAddress(userAddressEntity)
             }
