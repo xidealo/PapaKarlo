@@ -13,47 +13,44 @@ import FirebaseAuth
 class ConfirmViewModel: ObservableObject {
     
     @Published var confirmViewState:ConfirmViewState = ConfirmViewState(
-        confirmState: ConfirmState.success
+        confirmState: ConfirmState.success, actionList: []
     )
     
     let auth : AuthManager
-    private var isGoToProfile:Bool
 
-    init(auth:AuthManager, isGoToProfile:Bool){
+    init(auth:AuthManager){
         self.auth = auth
-        self.isGoToProfile = isGoToProfile
     }
     
     func checkCode(code:String){
-        confirmViewState  = ConfirmViewState(confirmState: ConfirmState.loading)
+        confirmViewState  = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
         
         auth.verifyCode(smsCode: code) { result in
             if(result){
                 iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
                     if(err == nil){
                         DispatchQueue.main.async{
-                            if(self.isGoToProfile){
-                                self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.goToProfile)
-                            }else{
-                                self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.goToCreateOrder)
-                            }
+                            self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
                         }
                     }else{
-                        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error)
+                        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
                     }
                 }
             }else{
-                self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error)
+                self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
             }
         }
     }
     
-    func dporState(){
-        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.success)
+    func clearActions(){
+        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.success, actionList: [])
     }
-    
 }
 
 enum ConfirmState{
-    case success, loading, error, goToProfile, goToCreateOrder
+    case success, loading, error
+}
+
+enum ConfirmAction {
+   case back
 }

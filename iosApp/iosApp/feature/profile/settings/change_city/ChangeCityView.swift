@@ -27,7 +27,7 @@ struct ChangeCityView: View {
             
             switch(viewModel.changeCityViewState.changeCityState){
             case ChangeCityState.loading : LoadingView()
-            case ChangeCityState.success :     ScrollView {
+            case ChangeCityState.success : ScrollView {
                 LazyVStack{
                     ForEach(viewModel.changeCityViewState.cityList){ city in
                         Button(action:{
@@ -47,9 +47,6 @@ struct ChangeCityView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         })
-        .onAppear(){
-            viewModel.loadData()
-        }
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         

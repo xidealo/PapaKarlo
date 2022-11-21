@@ -7,16 +7,21 @@
 
 import Foundation
 
-class LoginViewState :NSObject {
+class LoginViewState :NSObject, NSCopying {
     
     var isLoading:Bool
-    var isGoToMenu:Bool
-    var hasError:Bool
-    
-    init(isLoading:Bool, isGoToMenu:Bool, hasError:Bool){
+    var actionList:[LoginAction]
+
+    init(isLoading:Bool, actionList:[LoginAction]){
         self.isLoading = isLoading
-        self.isGoToMenu = isGoToMenu
-        self.hasError = hasError
+        self.actionList = actionList
     }
     
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = LoginViewState(
+            isLoading : isLoading,
+            actionList : actionList
+        )
+        return copy
+    }
 }

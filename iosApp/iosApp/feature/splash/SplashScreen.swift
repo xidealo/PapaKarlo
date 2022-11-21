@@ -72,3 +72,8 @@ struct ContentView_Previews: PreviewProvider {
         SplashView()
     }
 }
+struct FlatLinkStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+    }
+}

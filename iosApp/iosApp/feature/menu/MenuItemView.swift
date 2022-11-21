@@ -58,7 +58,7 @@ struct MenuItemView: View {
 
 struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, name: "Burger sdlmdkm dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "")) {
+        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, productUuid: "asd", name: "Burger sdlmdkm dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "")) {
             print("btn pressed")
         }
     }

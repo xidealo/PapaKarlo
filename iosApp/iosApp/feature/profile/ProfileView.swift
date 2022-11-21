@@ -14,13 +14,14 @@ struct ProfileView: View {
     @State var showOrderCreated:Bool
     @State var showCreatedAddress:Bool = false
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+    @State var isActive:Bool = false
+
     var body: some View {
         VStack(spacing:0){
             switch(viewModel.profileViewState.profieState){
             case ProfileState.loading : LoadingProfileView()
             case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
-            case ProfileState.notAuthorize : EmptyProfileView()
+            case ProfileState.notAuthorize : EmptyProfileView(isActive: $isActive)
             }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
@@ -38,6 +39,8 @@ struct ProfileView: View {
 }
 
 struct EmptyProfileView: View {
+    @Binding var isActive:Bool
+
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
@@ -55,7 +58,8 @@ struct EmptyProfileView: View {
             Spacer()
             
             NavigationLink(
-                destination:LoginView(isGoToProfile: true)
+                destination:LoginView(rootIsActive: $isActive),
+                isActive: self.$isActive
             ){
                 Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
                     .padding()
@@ -63,7 +67,7 @@ struct EmptyProfileView: View {
                     .background(Color("primary"))
                     .cornerRadius(Diems.MEDIUM_RADIUS)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-            }
+            }.isDetailLink(false)
             
         }.padding(Diems.MEDIUM_PADDING)
     }

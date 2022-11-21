@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     
-    @ObservedObject private var viewModel = MenuViewModel()//viewModelStore.getMenuViewModel()
+    @StateObject private var viewModel = MenuViewModel()
     @State var lastShowCategory = ""
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -52,14 +52,15 @@ struct MenuView: View {
                                         .padding(.top, Diems.MEDIUM_PADDING)){
                                             ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                                 NavigationLink(
-                                                    destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
+                                                    destination:ProductDetailsView(menuProductUuid: menuProductItem.productUuid)
                                                 ){
                                                     MenuItemView(menuProductItem: menuProductItem, action: {
-                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.id)
+                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
                                                     })
                                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
+                                                .buttonStyle(FlatLinkStyle()) 
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)
