@@ -16,8 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon"
-        tools:targetApi="n">
+        tools:replace="android:icon">
         <activity
             android:exported="true"
             android:windowSoftInputMode="adjustResize"

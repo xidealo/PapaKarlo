@@ -29,6 +29,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
@@ -154,7 +155,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
         if (orderCreationState.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = R.string.action_create_order_comment,
+                labelStringId = R.string.comment,
                 isClickable = !orderCreationState.isLoading
             ) {
                 viewModel.onCommentClicked()
@@ -260,6 +261,11 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         ?.let { addressItem ->
                             viewModel.onCafeAddressChanged(addressItem.uuid)
                         }
+                }
+                is OrderCreationUiState.Event.ShowCommentInputEvent -> {
+                    CommentBottomSheet.show(childFragmentManager, event.comment)?.let { comment ->
+                        viewModel.onCommentChanged(comment)
+                    }
                 }
                 else -> {}
             }

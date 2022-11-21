@@ -33,7 +33,7 @@ data class OrderCreationUiState(
         class OpenUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
         class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
         class ShowDeferredTimeEvent(val title: String, val time: TimeUI?) : Event
-        class ShowCommentInputEvent(val inputSettings: EditTextSettings) : Event
+        class ShowCommentInputEvent(val comment: String?) : Event
         class ShowAddressErrorEvent(val message: String) : Event
         class ShowErrorEvent(val message: String) : Event
         class OrderCreatedEvent(val code: String) : Event

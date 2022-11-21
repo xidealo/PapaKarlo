@@ -8,11 +8,7 @@ import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -147,22 +143,9 @@ class CreateOrderViewModel(
     }
 
     fun onCommentClicked() {
-        val titleStringId = if (mutableOrderCreationState.value.comment == null) {
-            R.string.title_create_order_addition_comment
-        } else {
-            R.string.title_create_order_editing_comment
-        }
-        val inputSettings = EditTextSettings(
-            titleStringId = titleStringId,
-            infoText = null,
-            labelStringId = R.string.hint_create_order_comment,
-            type = EditTextType.TEXT,
-            inputText = mutableOrderCreationState.value.comment,
-            buttonStringId = R.string.action_create_order_save_comment,
-            requestKey = COMMENT_REQUEST_KEY,
-            resultKey = RESULT_COMMENT_KEY
+        val event = OrderCreationUiState.Event.ShowCommentInputEvent(
+            comment = mutableOrderCreationState.value.comment
         )
-        val event = OrderCreationUiState.Event.ShowCommentInputEvent(inputSettings = inputSettings)
         mutableOrderCreationState.update { state ->
             state + event
         }

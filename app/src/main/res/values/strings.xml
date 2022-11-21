@@ -84,7 +84,7 @@
     <string name="pickup_time">Время самовывоза</string>
     <string name="delivery_address">Адрес доставки</string>
     <string name="cafe_address">Адрес ресторана</string>
-    <string name="action_create_order_comment">Комментарий</string>
+    <string name="comment">Комментарий</string>
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="title_create_order_addition_comment">Добавление комментария</string>
     <string name="title_create_order_editing_comment">Редактирование комментария</string>
