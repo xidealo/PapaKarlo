@@ -8,22 +8,18 @@
 import SwiftUI
 import Combine
 
+let auth = AuthManager()
+
 struct LoginView: View {
     
     @State private var phone:String = "+7"
     
-    let auth = AuthManager()
     @Binding var rootIsActive:Bool
+    @Binding var isGoToCreateOrder:Bool
     @State var goToConfirm:Bool = false
-    @State var hasError:Bool = false
-    @ObservedObject private var viewModel : LoginViewModel
     
-    init(rootIsActive:Binding<Bool>){
-        viewModel = LoginViewModel(auth: auth)
-        print("ROOT IS ACTIVE LOGIN \(rootIsActive)")
-
-        self._rootIsActive = rootIsActive
-    }
+    @State var hasError:Bool = false
+    @ObservedObject private var viewModel : LoginViewModel = LoginViewModel(auth: auth)
     
     var body: some View {
         VStack(spacing:0){
@@ -31,12 +27,11 @@ struct LoginView: View {
                 LoadingView()
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone, rootIsActive: self.$rootIsActive),
+                    destination:ConfirmView(auth: auth, phone: phone, rootIsActive: self.$rootIsActive, isGoToCreateOrder: $isGoToCreateOrder),
                     isActive: $goToConfirm
                 ){
                     EmptyView()
                 }
-                .isDetailLink(false)
                 
                 LoginViewSuccessView(phone: $phone,hasError: $hasError, viewModel: viewModel)
             }
@@ -45,7 +40,7 @@ struct LoginView: View {
             loginViewState.actionList.forEach { action in
                 switch(action){
                 case LoginAction.hasError : hasError = true
-                case LoginAction.goToConfirm : rootIsActive = false
+                case LoginAction.goToConfirm : goToConfirm = true
                 }
             }
             

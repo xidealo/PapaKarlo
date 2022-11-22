@@ -15,11 +15,13 @@ struct ConfirmView: View {
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
     @Binding var rootIsActive:Bool
+    @Binding var isGoToCreateOrder:Bool
 
-    init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>){
+    init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         viewModel = ConfirmViewModel(auth: auth)
         self.phone = phone
         self._rootIsActive = rootIsActive
+        self._isGoToCreateOrder = isGoToCreateOrder
     }
     
     var body: some View {
@@ -32,13 +34,11 @@ struct ConfirmView: View {
         }
         .onReceive(viewModel.$confirmViewState, perform: { confirmViewState in
             confirmViewState.actionList.forEach { action in
-                print("BEFORE ROOT IS ACTIVER \(rootIsActive)")
-
                 switch(action){
                 case ConfirmAction.back : self.rootIsActive = false
+                    isGoToCreateOrder = true
                 }
             }
-            print("ROOT IS ACTIVER \(rootIsActive)")
             
             if !confirmViewState.actionList.isEmpty{
                 viewModel.clearActions()

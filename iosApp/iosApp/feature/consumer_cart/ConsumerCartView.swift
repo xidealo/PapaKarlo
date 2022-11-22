@@ -14,7 +14,6 @@ struct ConsumerCartView: View {
     
     @State var openCreateOrder:Bool = false
     @State var openLogin:Bool = false
-    @State var isActive:Bool = true
 
     var body: some View {
         VStack(spacing:0){
@@ -28,11 +27,13 @@ struct ConsumerCartView: View {
                 }
             )
             NavigationLink(
-                destination:LoginView(rootIsActive: $isActive),
+                destination:LoginView(rootIsActive: $openLogin, isGoToCreateOrder: $openCreateOrder),
                 isActive: $openLogin
             ){
                 EmptyView()
             }
+            .isDetailLink(false)
+
             NavigationLink(
                 destination:CreateOrderView(),
                 isActive: $openCreateOrder

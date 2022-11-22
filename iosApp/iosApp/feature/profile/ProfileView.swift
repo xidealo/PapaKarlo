@@ -23,6 +23,14 @@ struct ProfileView: View {
             case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
             case ProfileState.notAuthorize : EmptyProfileView(isActive: $isActive)
             }
+            
+            NavigationLink(
+                destination:LoginView(rootIsActive: self.$isActive, isGoToCreateOrder: .constant(false)),
+                isActive: self.$isActive
+            ){
+               EmptyView()
+            }
+            .isDetailLink(false)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
@@ -35,6 +43,7 @@ struct ProfileView: View {
         .onDisappear(){
             viewModel.unsubscribeFromOrders()
         }
+        
     }
 }
 
@@ -57,18 +66,18 @@ struct EmptyProfileView: View {
             
             Spacer()
             
-            NavigationLink(
-                destination:LoginView(rootIsActive: $isActive),
-                isActive: self.$isActive
-            ){
-                Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-            }.isDetailLink(false)
-            
+            Button(
+                action: {
+                    isActive = true
+                }, label: {
+                    Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color("surface"))
+                        .background(Color("primary"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                }
+            )
         }.padding(Diems.MEDIUM_PADDING)
     }
 }

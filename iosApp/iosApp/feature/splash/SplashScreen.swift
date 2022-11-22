@@ -25,7 +25,8 @@ struct SplashView: View {
                     isActive: .constant(true)
                 ){
                     EmptyView()
-                }
+                }.isDetailLink(false)
+
             }
             case .isGoMenu: NavigationView{
                 NavigationLink(
@@ -33,7 +34,8 @@ struct SplashView: View {
                     isActive: .constant(true)
                 ){
                     EmptyView()
-                }
+                }.isDetailLink(false)
+
             }
             default : EmptyView()
             }

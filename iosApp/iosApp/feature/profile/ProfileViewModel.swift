@@ -14,7 +14,8 @@ class ProfileViewModel: ObservableObject {
         userUuid: "",
         hasAddresses: false,
         lastOrder: nil,
-        profileState: ProfileState.loading
+        profileState: ProfileState.loading,
+        actionList: []
     )
     
     let dateUtil = DateUtil()
@@ -54,7 +55,7 @@ class ProfileViewModel: ObservableObject {
                     }
                 }
             }else{
-                self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, profileState: ProfileState.notAuthorize)
+                self.profileViewState =  ProfileViewState(userUuid: self.profileViewState.userUuid, hasAddresses: self.profileViewState.hasAddresses, lastOrder: nil, profileState: ProfileState.notAuthorize, actionList: self.profileViewState.actionList)
             }
         }
     }
@@ -95,4 +96,16 @@ class ProfileViewModel: ObservableObject {
             }
         }
     }
+    
+    func clearActions(){
+        (self.profileViewState.copy() as! ProfileViewState).apply { copiedState in
+            copiedState.actionList = []
+            self.profileViewState = copiedState
+        }
+    }
+    
+}
+
+enum ProfileAction {
+   case goToLogin
 }

@@ -66,8 +66,10 @@ struct ToolbarView: View {
                             .padding(.leading, -12)
                             .font(.system(size: Diems.SMALL_TEXT_SIZE, design: .default))
                     }
-                }.padding(.vertical, Diems.SMALL_PADDING)
-                    .padding(.trailing, Diems.SMALL_PADDING)
+                }
+                .isDetailLink(false)
+                .padding(.vertical, Diems.SMALL_PADDING)
+                .padding(.trailing, Diems.SMALL_PADDING)
             }
         }.background(Color("surface"))
     }
