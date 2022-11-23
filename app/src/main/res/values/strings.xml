@@ -90,7 +90,7 @@
     <string name="title_create_order_editing_comment">Редактирование комментария</string>
     <string name="action_create_order_save_comment">Сохранить</string>
     <string name="action_create_order_create_order">Оформить заказ</string>
-    <string name="error_create_order_address">Не указан адрес</string>
+    <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_create_order_user">Пользователь не авторизован</string>
     <string name="error_user">Пользователь не авторизован</string>
     <string name="error_create_order_time">Не выбрано время</string>

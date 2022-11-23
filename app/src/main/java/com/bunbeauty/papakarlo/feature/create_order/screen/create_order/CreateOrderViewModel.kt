@@ -90,7 +90,7 @@ class CreateOrderViewModel(
         val event = if (addressList.isEmpty()) {
             OrderCreationUiState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationUiState.Event.OpenUserAddressListEvent(
+            OrderCreationUiState.Event.ShowUserAddressListEvent(
                 addressList.map(userAddressMapper::toUserAddressItem)
             )
         }
@@ -128,7 +128,7 @@ class CreateOrderViewModel(
         viewModelScope.launch {
             val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
                 deferredTime = deferredTime,
-                minTime =  timeMapper.toUiModel(getMinTime()),
+                minTime = timeMapper.toUiModel(getMinTime()),
                 title = title
             )
             mutableOrderCreationState.update { state ->
@@ -163,29 +163,30 @@ class CreateOrderViewModel(
     }
 
     fun onCreateOrderClicked() {
-        val state = mutableOrderCreationState.value
+        val stateValue = mutableOrderCreationState.value
         val data = orderCreationData.value
-        val address = if (state.isDelivery) {
+        val address = if (stateValue.isDelivery) {
             stringUtil.getUserAddressString(data.selectedUserAddress)
         } else {
             data.selectedCafe?.address
         }
+        mutableOrderCreationState.update { state ->
+            val isDeliveryAddressNotSelected =
+                stateValue.isDelivery && (data.selectedUserAddress == null)
+            state.copy(isAddressErrorShown = isDeliveryAddressNotSelected)
+        }
         if (address == null) {
-            val event = OrderCreationUiState.Event.ShowAddressErrorEvent(
-                message = resources.getString(R.string.error_create_order_address)
-            )
-            mutableOrderCreationState.update { it + event }
             return
         }
 
         withLoading {
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = orderInteractor.createOrder(
-                    isDelivery = state.isDelivery,
+                    isDelivery = stateValue.isDelivery,
                     userAddressUuid = data.selectedUserAddress?.uuid,
                     cafeUuid = data.selectedCafe?.uuid,
                     addressDescription = address,
-                    comment = state.comment,
+                    comment = stateValue.comment,
                     deferredTime = data.selectedDeferredTime?.let { deferredTime ->
                         deferredTimeInteractor.getDeferredTimeMillis(deferredTime)
                     },
@@ -236,6 +237,11 @@ class CreateOrderViewModel(
         }
         mutableOrderCreationState.update { state ->
             state.copy(deliveryAddress = stringUtil.getUserAddressString(selectedUserAddress))
+        }
+        if (selectedUserAddress != null) {
+            mutableOrderCreationState.update { state ->
+                state.copy(isAddressErrorShown = false)
+            }
         }
     }
 

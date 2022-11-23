@@ -17,6 +17,7 @@ data class OrderCreationUiState(
     val totalCost: String? = null,
     val deliveryCost: String? = null,
     val finalCost: String? = null,
+    val isAddressErrorShown: Boolean = false,
     val isLoading: Boolean = false,
     val eventList: List<Event> = emptyList(),
 ) {
@@ -29,7 +30,7 @@ data class OrderCreationUiState(
 
     sealed interface Event {
         object OpenCreateAddressEvent : Event
-        class OpenUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
+        class ShowUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
         class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
         class ShowDeferredTimeEvent(
             val deferredTime: TimeUI,
@@ -38,7 +39,6 @@ data class OrderCreationUiState(
         ) : Event
 
         class ShowCommentInputEvent(val comment: String?) : Event
-        class ShowAddressErrorEvent(val message: String) : Event
         class ShowErrorEvent(val message: String) : Event
         class OrderCreatedEvent(val code: String) : Event
     }

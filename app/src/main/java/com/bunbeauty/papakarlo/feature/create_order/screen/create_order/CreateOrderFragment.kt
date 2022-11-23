@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -27,22 +26,13 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time_new.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
-import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
-import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
-import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
-import com.bunbeauty.shared.Constants.TIME_DIVIDER
-import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
@@ -90,6 +80,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         viewModel.onSwitcherPositionChanged(changedPosition)
                     }
                     AddressCard(orderCreationState)
+                    DeliveryAddressError(orderCreationState)
                     CommentCard(orderCreationState)
                     DeferredTimeCard(orderCreationState)
                 }
@@ -129,6 +120,20 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             ) {
                 viewModel.onCafeAddressClicked()
             }
+        }
+    }
+
+    @Composable
+    private fun DeliveryAddressError(orderCreationState: OrderCreationUiState) {
+        if (orderCreationState.isDelivery && orderCreationState.isAddressErrorShown) {
+            Text(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(R.string.error_select_delivery_address),
+                style = FoodDeliveryTheme.typography.body2,
+                color = FoodDeliveryTheme.colors.negative
+            )
         }
     }
 
@@ -233,7 +238,10 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     private suspend fun handleEventList(eventList: List<OrderCreationUiState.Event>) {
         eventList.forEach { event ->
             when (event) {
-                is OrderCreationUiState.Event.OpenUserAddressListEvent -> {
+                is OrderCreationUiState.Event.OpenCreateAddressEvent -> {
+                    findNavController().navigate(toCreateAddressFragment())
+                }
+                is OrderCreationUiState.Event.ShowUserAddressListEvent -> {
                     val result =
                         UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
                     handleUserAddressListResult(result)
@@ -260,6 +268,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     }
                 }
                 else -> {}
+                //TODO handle all events
             }
         }
         viewModel.consumeEventList(eventList)
