@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.fragment.app.FragmentManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.element.EditText
@@ -26,6 +27,7 @@ import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetBinding
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -35,15 +37,14 @@ class CommentBottomSheet : BottomSheetDialogFragment() {
     private var comment by nullableArgument<String>()
     private var callback: Callback? = null
 
-    private var mutableBinding: BottomSheetBinding? = null
-    private val binding: BottomSheetBinding
-        get() = checkNotNull(mutableBinding)
+    private val binding by viewBinding(BottomSheetBinding::bind)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        mutableBinding = BottomSheetBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.bottom_sheet, container, true)
     }
 
     override fun getTheme(): Int {

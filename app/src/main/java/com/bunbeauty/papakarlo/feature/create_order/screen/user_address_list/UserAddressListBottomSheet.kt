@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
@@ -34,17 +35,15 @@ class UserAddressListBottomSheet : BottomSheetDialogFragment() {
     private var addressList by argument<List<UserAddressItem>>()
     private var callback: Callback? = null
 
-    private var mutableBinding: BottomSheetBinding? = null
-    private val binding: BottomSheetBinding
-        get() = checkNotNull(mutableBinding)
-
+    private val binding by viewBinding(BottomSheetBinding::bind)
     private val behavior by lazy { (dialog as BottomSheetDialog).behavior }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        mutableBinding = BottomSheetBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.bottom_sheet, container, true)
     }
 
     override fun getTheme(): Int {

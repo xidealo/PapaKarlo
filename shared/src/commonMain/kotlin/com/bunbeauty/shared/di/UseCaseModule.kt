@@ -5,6 +5,7 @@ import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseC
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import org.koin.dsl.module
 
 internal fun useCaseModule() = module {
@@ -37,6 +38,12 @@ internal fun useCaseModule() = module {
         GetCartTotalUseCase(
             cartProductRepo = get(),
             deliveryRepo = get(),
+        )
+    }
+    factory {
+        GetMinTimeUseCase(
+            dateTimeUtil = get(),
+            dataStoreRepo = get(),
         )
     }
 }

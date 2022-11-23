@@ -17,6 +17,7 @@ import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -40,6 +41,7 @@ class CreateOrderViewModel(
     private val getUserAddressList: GetUserAddressListUseCase,
     private val getCafeList: GetCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
+    private val getMinTime: GetMinTimeUseCase,
     private val resources: Resources
 ) : BaseViewModel() {
 
@@ -47,8 +49,10 @@ class CreateOrderViewModel(
     private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
     val orderCreationState = mutableOrderCreationState.asStateFlow()
 
-    private val asap by lazy {
-        resources.getString(R.string.asap)
+    init {
+        mutableOrderCreationState.update { state ->
+            state.copy(deferredTime = timeMapper.toString(TimeUI.ASAP))
+        }
     }
 
     fun update() {
@@ -120,25 +124,26 @@ class CreateOrderViewModel(
 
     fun onDeferredTimeClicked() {
         val title = resources.getString(mutableOrderCreationState.value.deferredTimeLabelId)
-        val deferredTime = orderCreationData.value.selectedDeferredTime?.let { time ->
-            timeMapper.toUiModel(time)
-        }
-        val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(title, deferredTime)
-        mutableOrderCreationState.update { state ->
-            state + event
+        val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
+        viewModelScope.launch {
+            val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
+                deferredTime = deferredTime,
+                minTime =  timeMapper.toUiModel(getMinTime()),
+                title = title
+            )
+            mutableOrderCreationState.update { state ->
+                state + event
+            }
         }
     }
 
-    fun onDeferredTimeSelected(deferredTimeUi: TimeUI?) {
-        val deferredTime = deferredTimeUi?.let { timeMapper.toDomainModel(deferredTimeUi) }
+    fun onDeferredTimeSelected(deferredTimeUi: TimeUI) {
+        val deferredTime = timeMapper.toDomainModel(deferredTimeUi)
         orderCreationData.update { data ->
             data.copy(selectedDeferredTime = deferredTime)
         }
-        val deferredTimeString = deferredTime?.let {
-            stringUtil.getTimeString(deferredTime)
-        } ?: asap
         mutableOrderCreationState.update { state ->
-            state.copy(deferredTime = deferredTimeString)
+            state.copy(deferredTime = timeMapper.toString(deferredTimeUi))
         }
     }
 

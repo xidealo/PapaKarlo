@@ -64,6 +64,7 @@ fun viewModelModule() = module {
             getUserAddressList = get(),
             getCafeList = get(),
             getCartTotal = get(),
+            getMinTime = get(),
             resources = get(),
         )
     }

@@ -52,31 +52,31 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
     }
 
     private fun showTimePicker(deferredTimeSettingsUI: DeferredTimeSettingsUI) {
-        val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
-        val colorOnSurfaceVariant = resourcesProvider.getColorByAttr(R.attr.colorOnSurfaceVariant)
-        val colorOnSurface = resourcesProvider.getColorByAttr(R.attr.colorOnSurface)
-        val timePicker = TimePickerDialog.newInstance(
-            { _, hour, minute, _ ->
-                sendResult(TimeUI(hours = hour, minutes = minute))
-            },
-            deferredTimeSettingsUI.selectedTime.hours,
-            deferredTimeSettingsUI.selectedTime.minutes,
-            true
-        ).apply {
-            title = deferredTimeSettingsUI.title
-            accentColor = colorPrimary
-            setCancelColor(colorOnSurfaceVariant)
-            setOkColor(colorOnSurface)
-            setMinTime(
-                deferredTimeSettingsUI.minTime.hours,
-                deferredTimeSettingsUI.minTime.minutes,
-                0
-            )
-            setOnCancelListener {
-                dismiss()
-            }
-        }
-        timePicker.show(childFragmentManager, null)
+//        val colorPrimary = resourcesProvider.getColorByAttr(R.attr.colorPrimary)
+//        val colorOnSurfaceVariant = resourcesProvider.getColorByAttr(R.attr.colorOnSurfaceVariant)
+//        val colorOnSurface = resourcesProvider.getColorByAttr(R.attr.colorOnSurface)
+//        val timePicker = TimePickerDialog.newInstance(
+//            { _, hour, minute, _ ->
+//                sendResult(TimeUI(hours = hour, minutes = minute))
+//            },
+//            deferredTimeSettingsUI.selectedTime.hours,
+//            deferredTimeSettingsUI.selectedTime.minutes,
+//            true
+//        ).apply {
+//            title = deferredTimeSettingsUI.title
+//            accentColor = colorPrimary
+//            setCancelColor(colorOnSurfaceVariant)
+//            setOkColor(colorOnSurface)
+//            setMinTime(
+//                deferredTimeSettingsUI.minTime.hours,
+//                deferredTimeSettingsUI.minTime.minutes,
+//                0
+//            )
+//            setOnCancelListener {
+//                dismiss()
+//            }
+//        }
+//        timePicker.show(childFragmentManager, null)
     }
 
     private fun sendResult(selectedTime: TimeUI?) {
@@ -143,8 +143,8 @@ class DeferredTimeBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_deferred_t
         DeferredTimeScreen(
             DeferredTimeSettingsUI(
                 title = "Время доставки",
-                minTime = TimeUI(3, 30),
-                selectedTime = TimeUI(4, 0),
+                minTime = TimeUI.Time(3, 30),
+                selectedTime = TimeUI.Time(4, 0),
             )
         )
     }

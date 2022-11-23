@@ -5,7 +5,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,
@@ -14,7 +13,7 @@ data class OrderCreationUiState(
     val pickupAddress: String? = null,
     val comment: String? = null,
     @StringRes val deferredTimeLabelId: Int = R.string.delivery_time,
-    val deferredTime: String? = null,
+    val deferredTime: String = "",
     val totalCost: String? = null,
     val deliveryCost: String? = null,
     val finalCost: String? = null,
@@ -32,7 +31,12 @@ data class OrderCreationUiState(
         object OpenCreateAddressEvent : Event
         class OpenUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
         class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
-        class ShowDeferredTimeEvent(val title: String, val time: TimeUI?) : Event
+        class ShowDeferredTimeEvent(
+            val deferredTime: TimeUI,
+            val minTime: TimeUI.Time,
+            val title: String
+        ) : Event
+
         class ShowCommentInputEvent(val comment: String?) : Event
         class ShowAddressErrorEvent(val message: String) : Event
         class ShowErrorEvent(val message: String) : Event

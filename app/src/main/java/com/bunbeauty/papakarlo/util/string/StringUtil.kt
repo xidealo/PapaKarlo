@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 
 class StringUtil(
@@ -62,6 +63,10 @@ class StringUtil(
     }
 
     override fun getTimeString(time: Time): String {
+        return "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
+    }
+
+    override fun getTimeString(time: TimeUI.Time): String {
         return "${addFirstZero(time.hours)}:${addFirstZero(time.minutes)}"
     }
 

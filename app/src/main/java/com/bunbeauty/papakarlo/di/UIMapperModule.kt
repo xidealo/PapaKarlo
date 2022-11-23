@@ -12,10 +12,13 @@ fun uiMapperModule() = module {
             stringUtil = get()
         )
     }
-    single{
-        TimeMapper()
+    single {
+        TimeMapper(
+            resources = get(),
+            stringUtil = get()
+        )
     }
-    single{
+    single {
         UserAddressMapper(
             stringUtil = get()
         )

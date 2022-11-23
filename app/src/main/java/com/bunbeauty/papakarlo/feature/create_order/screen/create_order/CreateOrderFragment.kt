@@ -30,6 +30,7 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time_new.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
@@ -40,6 +41,7 @@ import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
 import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
 import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
+import com.bunbeauty.shared.Constants.TIME_DIVIDER
 import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,26 +63,6 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             }
 
             CreateOrderScreen(orderCreationState)
-        }
-        setFragmentResultListener(USER_ADDRESS_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_USER_ADDRESS_KEY)?.let { userAddressUuid ->
-                viewModel.onUserAddressChanged(userAddressUuid)
-            }
-        }
-        setFragmentResultListener(CAFE_ADDRESS_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_CAFE_ADDRESS_KEY)?.let { cafUuid ->
-                viewModel.onCafeAddressChanged(cafUuid)
-            }
-        }
-        setFragmentResultListener(COMMENT_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_COMMENT_KEY)?.let { comment ->
-                viewModel.onCommentChanged(comment)
-            }
-        }
-        setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
-            bundle.getParcelable<TimeUI>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
-                viewModel.onDeferredTimeSelected(selectedDeferredTime)
-            }
         }
     }
 
@@ -265,6 +247,16 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 is OrderCreationUiState.Event.ShowCommentInputEvent -> {
                     CommentBottomSheet.show(childFragmentManager, event.comment)?.let { comment ->
                         viewModel.onCommentChanged(comment)
+                    }
+                }
+                is OrderCreationUiState.Event.ShowDeferredTimeEvent -> {
+                    DeferredTimeBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        deferredTime = event.deferredTime,
+                        minTime = event.minTime,
+                        title = event.title,
+                    )?.let { deferredTime ->
+                        viewModel.onDeferredTimeSelected(deferredTime)
                     }
                 }
                 else -> {}
