@@ -29,7 +29,8 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time_new.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toProfileFragment
+import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
@@ -267,8 +268,16 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         viewModel.onDeferredTimeSelected(deferredTime)
                     }
                 }
-                else -> {}
-                //TODO handle all events
+                is OrderCreationUiState.Event.ShowErrorEvent -> {
+                    viewModel.showError(event.message, true)
+                }
+                is OrderCreationUiState.Event.OrderCreatedEvent -> {
+                    viewModel.showMessage(
+                        resources.getString(R.string.msg_order_code, event.code),
+                        false
+                    )
+                    findNavController().navigate(toProfileFragment())
+                }
             }
         }
         viewModel.consumeEventList(eventList)

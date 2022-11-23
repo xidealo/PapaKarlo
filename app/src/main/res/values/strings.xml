@@ -95,7 +95,7 @@
     <string name="error_user">Пользователь не авторизован</string>
     <string name="error_create_order_time">Не выбрано время</string>
     <string name="error_create_order_something_went_wrong">Что-то пошло не так</string>
-    <string name="msg_create_order_order_code">Код заказа&#160;</string>
+    <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_total_cost">Итого</string>
     <string name="msg_create_order_delivery_cost">Доставка</string>
     <string name="msg_create_order_amount_to_pay">Сумма к оплате</string>
