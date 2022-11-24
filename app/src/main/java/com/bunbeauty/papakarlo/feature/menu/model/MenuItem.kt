@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.menu.model
 
 import com.bunbeauty.papakarlo.common.model.ItemModel
 
-sealed class MenuItem: ItemModel() {
+sealed class MenuItem : ItemModel() {
     data class MenuCategoryHeaderItem(
         override val key: String,
         val uuid: String,

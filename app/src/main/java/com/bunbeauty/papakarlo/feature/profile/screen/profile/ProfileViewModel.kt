@@ -7,7 +7,6 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.profile.model.ProfileUI
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileFragmentDirections.*
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -37,35 +36,35 @@ class ProfileViewModel(
     }
 
     fun onLastOrderClicked(orderItem: OrderItem) {
-        router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
+        router.navigate(ProfileFragmentDirections.toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
 
     fun onSettingsClicked() {
-        router.navigate(toSettingsFragment())
+        router.navigate(ProfileFragmentDirections.toSettingsFragment())
     }
 
     fun onYourAddressesClicked() {
-        router.navigate(toNavAddress(false))
+        router.navigate(ProfileFragmentDirections.toNavAddress(false))
     }
 
     fun onOrderHistoryClicked(userUuid: String) {
-        router.navigate(toOrdersFragment(userUuid))
+        router.navigate(ProfileFragmentDirections.toOrdersFragment(userUuid))
     }
 
     fun onPaymentClicked() {
-        router.navigate(toPaymentBottomSheet())
+        router.navigate(ProfileFragmentDirections.toPaymentBottomSheet())
     }
 
     fun onFeedbackClicked() {
-        router.navigate(toFeedbackBottomSheet())
+        router.navigate(ProfileFragmentDirections.toFeedbackBottomSheet())
     }
 
     fun onAboutAppClicked() {
-        router.navigate(toAboutAppBottomSheet())
+        router.navigate(ProfileFragmentDirections.toAboutAppBottomSheet())
     }
 
     fun onLoginClicked() {
-        router.navigate(toLoginFragment(BACK_TO_PROFILE))
+        router.navigate(ProfileFragmentDirections.toLoginFragment(BACK_TO_PROFILE))
     }
 
     private fun observeLastOrder() {

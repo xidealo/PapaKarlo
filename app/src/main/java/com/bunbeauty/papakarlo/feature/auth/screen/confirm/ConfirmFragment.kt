@@ -3,7 +3,12 @@ package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -111,9 +116,9 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                 stringResource(R.string.msg_request_code)
             } else {
                 stringResource(R.string.msg_request_code) +
-                        " " +
-                        confirmation.resendSeconds +
-                        stringResource(R.string.msg_request_code_sec)
+                    " " +
+                    confirmation.resendSeconds +
+                    stringResource(R.string.msg_request_code_sec)
             }
             MainButton(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),

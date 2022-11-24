@@ -1,18 +1,17 @@
 package com.bunbeauty.papakarlo.feature.consumer_cart
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
+import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
+import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
+import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.view_model.CartViewModel
-import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.*
-import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
-import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
-import com.bunbeauty.papakarlo.util.string.IStringUtil
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,21 +44,21 @@ class ConsumerCartViewModel(
     }
 
     fun onMenuClicked() {
-        router.navigate(toMenuFragment())
+        router.navigate(ConsumerCartFragmentDirections.toMenuFragment())
     }
 
     fun onCreateOrderClicked() {
         viewModelScope.launch {
             if (userInteractor.isUserAuthorize()) {
-                router.navigate(toCreateOrderFragment())
+                router.navigate(ConsumerCartFragmentDirections.toCreateOrderFragment())
             } else {
-                router.navigate(toLoginFragment(TO_CREATE_ORDER))
+                router.navigate(ConsumerCartFragmentDirections.toLoginFragment(TO_CREATE_ORDER))
             }
         }
     }
 
     fun onProductClicked(cartProductItem: CartProductItem) {
-        router.navigate(toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
+        router.navigate(ConsumerCartFragmentDirections.toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
     }
 
     private fun ConsumerCart?.toState(): State<ConsumerCartUI> {

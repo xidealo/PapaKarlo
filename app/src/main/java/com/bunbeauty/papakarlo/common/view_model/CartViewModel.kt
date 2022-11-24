@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.common.view_model
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 

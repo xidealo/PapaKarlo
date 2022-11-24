@@ -21,7 +21,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -29,6 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.model.AddressItem
+import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
 import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import org.koin.androidx.viewmodel.ext.android.stateViewModel

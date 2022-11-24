@@ -10,5 +10,4 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
     override val viewModel: SplashViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentSplashBinding::bind)
-
 }

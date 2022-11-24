@@ -7,4 +7,4 @@ import kotlinx.parcelize.Parcelize
 class UserAddressItem(
     val uuid: String,
     val address: String,
-): Parcelable
+) : Parcelable

@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.databinding.BottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-open class ComposeBottomSheet<T: Any?>: BottomSheetDialogFragment() {
+open class ComposeBottomSheet<T : Any?> : BottomSheetDialogFragment() {
 
     protected var callback: Callback<T>? = null
 

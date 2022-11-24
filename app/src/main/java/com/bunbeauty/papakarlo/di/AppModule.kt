@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.di
 import android.content.Context
 import android.net.ConnectivityManager
 import coil.imageLoader
-import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.Router
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module

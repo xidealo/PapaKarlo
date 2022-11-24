@@ -2,17 +2,16 @@ package com.bunbeauty.papakarlo.feature.auth.screen.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.Constants.PHONE_CODE
-import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.auth.FirebaseAuthRepository
-import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginFragmentDirections.*
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
+import com.bunbeauty.shared.Constants.PHONE_CODE
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -127,8 +126,8 @@ class LoginViewModel(
             )
 
             when (successLoginDirection) {
-                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
-                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
+                BACK_TO_PROFILE -> router.navigate(LoginFragmentDirections.backToProfileFragment())
+                TO_CREATE_ORDER -> router.navigate(LoginFragmentDirections.toCreateOrderFragment())
             }
         }
     }
@@ -152,7 +151,7 @@ class LoginViewModel(
         resendToken: PhoneAuthProvider.ForceResendingToken
     ) {
         router.navigate(
-            toConfirmFragment(
+            LoginFragmentDirections.toConfirmFragment(
                 phone,
                 verificationId,
                 resendToken,

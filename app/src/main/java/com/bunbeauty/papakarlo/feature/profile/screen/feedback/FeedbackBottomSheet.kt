@@ -11,17 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.BaseBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.Title
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
+import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
+import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.shared.Constants.INSTAGRAM_LINK
 import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
 import com.bunbeauty.shared.Constants.VK_LINK
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseBottomSheet
-import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.papakarlo.common.ui.element.Title
-import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
-import com.bunbeauty.papakarlo.extensions.compose
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
