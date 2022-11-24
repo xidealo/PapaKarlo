@@ -4,7 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
@@ -243,9 +248,10 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     findNavController().navigate(toCreateAddressFragment())
                 }
                 is OrderCreationUiState.Event.ShowUserAddressListEvent -> {
-                    val result =
-                        UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
-                    handleUserAddressListResult(result)
+                    UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                        ?.let { result ->
+                            handleUserAddressListResult(result)
+                        }
                 }
                 is OrderCreationUiState.Event.ShowCafeAddressListEvent -> {
                     CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
@@ -289,9 +295,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 viewModel.onUserAddressChanged(result.addressItem.uuid)
             }
             is UserAddressListResult.AddNewAddress -> {
-                findNavController().navigate(CreateOrderFragmentDirections.toCreateAddressFragment())
+                findNavController().navigate(toCreateAddressFragment())
             }
-            is UserAddressListResult.Cancel -> {}
         }
     }
 

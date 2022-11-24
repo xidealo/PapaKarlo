@@ -25,7 +25,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI?>() {
+class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
 
     private var deferredTime by argument<TimeUI>()
     private var minTime by argument<TimeUI.Time>()
@@ -108,7 +108,7 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI?>() {
                 this.deferredTime = deferredTime
                 this.minTime = minTime
                 this.title = title
-                callback = object : Callback<TimeUI?> {
+                callback = object : Callback<TimeUI> {
                     override fun onResult(result: TimeUI?) {
                         continuation.resume(result)
                     }

@@ -1,10 +1,7 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,42 +10,27 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.BottomSheetBinding
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class CafeAddressListBottomSheet : BottomSheetDialogFragment() {
+class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
     private var addressList by argument<List<CafeAddressItem>>()
-    private var callback: Callback? = null
-
-    private val binding by viewBinding(BottomSheetBinding::bind)
-    private val behavior by lazy { (dialog as BottomSheetDialog).behavior }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet, container, true)
-    }
-
-
-    override fun getTheme(): Int {
-        return R.style.BottomSheetDialogStyle
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,15 +50,6 @@ class CafeAddressListBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
-        callback?.onResult(null)
-    }
-
-    private interface Callback {
-        fun onResult(result: CafeAddressItem?)
-    }
-
     companion object {
         private const val TAG = "CafeAddressListBottomSheet"
 
@@ -86,7 +59,7 @@ class CafeAddressListBottomSheet : BottomSheetDialogFragment() {
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
-                callback = object : Callback {
+                callback = object : Callback<CafeAddressItem> {
                     override fun onResult(result: CafeAddressItem?) {
                         continuation.resume(result)
                     }
