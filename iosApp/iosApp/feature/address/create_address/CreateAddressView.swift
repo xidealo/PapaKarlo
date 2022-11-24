@@ -106,6 +106,7 @@ struct CreateAddressView: View {
                         }else{
                             showError = !isBack
                         }
+                        
                     }
                 }) {
                     Text(Strings.ACTION_CREATION_ADDRESS_ADD).frame(maxWidth: .infinity)

@@ -12,6 +12,7 @@ struct BoldText: View {
     var body: some View {
         Text(text)
             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+            .foregroundColor(Color("onSurface"))
     }
 }
 

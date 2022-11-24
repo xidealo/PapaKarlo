@@ -11,8 +11,8 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
-    @State var showOrderCreated:Bool
-    @State var showCreatedAddress:Bool = false
+    @Binding var showOrderCreated:Bool
+    @Binding var showCreatedAddress:Bool 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive:Bool = false
 
