@@ -6,15 +6,14 @@ import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.Logger as KtorLogger
 import io.ktor.client.plugins.logging.*
-import io.ktor.client.plugins.observer.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
+import io.ktor.client.plugins.logging.Logger as KtorLogger
 
 fun networkModule() = module {
     single {
