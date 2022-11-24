@@ -12,7 +12,6 @@ import com.bunbeauty.papakarlo.feature.city.screen.change_city.ChangeCityViewMod
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderViewModel
-import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsViewModel
@@ -58,6 +57,13 @@ fun viewModelModule() = module {
             deferredTimeInteractor = get(),
             stringUtil = get(),
             timeMapper = get(),
+            userAddressMapper = get(),
+            getSelectedUserAddress = get(),
+            getSelectedCafe = get(),
+            getUserAddressList = get(),
+            getCafeList = get(),
+            getCartTotal = get(),
+            getMinTime = get(),
         )
     }
     viewModel {
@@ -138,13 +144,6 @@ fun viewModelModule() = module {
             menuProductInteractor = get(),
             stringUtil = get(),
             savedStateHandle = parameters.get()
-        )
-    }
-    viewModel { parameters ->
-        DeferredTimeViewModel(
-            deferredTimeInteractor = get(),
-            timeMapper = get(),
-            savedStateHandle = parameters.get(),
         )
     }
     viewModel {

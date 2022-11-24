@@ -40,6 +40,15 @@ class CafeDao(foodDeliveryDatabase: FoodDeliveryDatabase) : ICafeDao {
         )
     }
 
+    override suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): CafeEntity? {
+        return cityEntityQueries.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)
+            .executeAsOneOrNull()
+    }
+
+    override suspend fun getFirstCafeByCityUuid(cityUuid: String): CafeEntity? {
+        return cityEntityQueries.getFirstCafeByCityUuid(cityUuid).executeAsOneOrNull()
+    }
+
     override fun observeCafeListByCityUuid(cityUuid: String): Flow<List<CafeEntity>> {
         return cityEntityQueries.getCafeListByCityUuid(cityUuid).asFlow().mapToList()
     }

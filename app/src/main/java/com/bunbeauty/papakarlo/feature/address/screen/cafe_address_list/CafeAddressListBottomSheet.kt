@@ -3,7 +3,11 @@ package com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -16,18 +20,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.Title
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.model.AddressItem
+import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
+import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
+import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_address_list) {

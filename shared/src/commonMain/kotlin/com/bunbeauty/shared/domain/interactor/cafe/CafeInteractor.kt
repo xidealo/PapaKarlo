@@ -87,7 +87,7 @@ class CafeInteractor(
         return cafeRepo.getCafeByUuid(cafeUuid)
     }
 
-    override suspend fun selectCafe(cafeUuid: String) {
+    override suspend fun saveSelectedCafe(cafeUuid: String) {
         val userUuid = dataStoreRepo.getUserUuid()
         val selectedCityUuid = dataStoreRepo.getSelectedCityUuid()
 

@@ -23,6 +23,7 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.client.statement.readText
 import io.ktor.http.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.Flow
@@ -106,6 +107,14 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             serializer = DeliveryServer.serializer(),
             path = "delivery",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+        )
+    }
+
+    override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
+        return getData(
+            path = "address",
+            serializer = ListServer.serializer(AddressServer.serializer()),
+            token = token
         )
     }
 

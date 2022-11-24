@@ -13,12 +13,11 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-abstract class MainTest{
+abstract class MainTest {
 
     lateinit var scenario: ActivityScenario<MainActivity>
 
     var context: Context = ApplicationProvider.getApplicationContext()
-
 
     @Before
     fun setup() {
@@ -37,5 +36,4 @@ abstract class MainTest{
         const val LONG_PAUSE = 10000L
         const val SHORT_PAUSE = 500L
     }
-
 }

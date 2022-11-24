@@ -19,8 +19,9 @@ interface NetworkConnector {
     suspend fun getCityList(): ApiResult<ListServer<CityServer>>
     suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>>
     suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>>
-
     suspend fun getDelivery(): ApiResult<DeliveryServer>
+
+    suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>>
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
 

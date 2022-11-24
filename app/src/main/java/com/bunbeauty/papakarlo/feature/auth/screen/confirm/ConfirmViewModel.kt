@@ -75,7 +75,7 @@ class ConfirmViewModel(
                 R.string.error_confirm_wrong_code
             }
             else -> {
-                R.string.error_confirm_something_went_wrong
+                R.string.error_something_went_wrong
             }
         }
         showError(resourcesProvider.getString(errorResourceId), true)

@@ -12,10 +12,9 @@ import shared
 class LoginViewModel:ObservableObject {
     
     @Published var loginViewState:LoginViewState = LoginViewState(
-        isLoading: false,
-        isGoToMenu: false,
-        hasError: false
+        isLoading: false, actionList: []
     )
+    
     let auth : AuthManager
     
     init(auth:AuthManager){
@@ -23,8 +22,14 @@ class LoginViewModel:ObservableObject {
     }
     
     func sendCodeToPhone(phone:String){
+        
         if(phone.count < 17){
-            loginViewState  = LoginViewState(isLoading: false, isGoToMenu: false, hasError: true)
+                        
+            (self.loginViewState.copy() as! LoginViewState).apply { copiedState in
+                copiedState.isLoading = false
+                copiedState.actionList.append(LoginAction.hasError)
+                self.loginViewState = copiedState
+            }
             return
         }
         
@@ -33,10 +38,28 @@ class LoginViewModel:ObservableObject {
             .replace(string: "-", replacement: "")
             .replace(string: " ", replacement: "")
         
-        loginViewState  = LoginViewState(isLoading: true, isGoToMenu: false, hasError: false)
-        print("formatted phone = \(formattedPhone)")
-        auth.startAuth(phoneNumber: formattedPhone) { result in
-            self.loginViewState  = LoginViewState(isLoading: false, isGoToMenu: result, hasError: false)
+        (self.loginViewState.copy() as! LoginViewState).apply { copiedState in
+            copiedState.isLoading = true
+            self.loginViewState = copiedState
+        }
+        
+        auth.startAuth(phoneNumber: formattedPhone) { result in            
+            (self.loginViewState.copy() as! LoginViewState).apply { copiedState in
+                copiedState.isLoading = false
+                copiedState.actionList.append(LoginAction.goToConfirm)
+                self.loginViewState = copiedState
+            }
         }
     }
+    
+    func clearActions(){
+        (self.loginViewState.copy() as! LoginViewState).apply { copiedState in
+            copiedState.actionList = []
+            self.loginViewState = copiedState
+        }
+    }
+}
+
+enum LoginAction {
+    case goToConfirm, hasError
 }

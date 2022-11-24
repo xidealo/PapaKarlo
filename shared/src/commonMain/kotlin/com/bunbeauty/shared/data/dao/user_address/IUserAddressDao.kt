@@ -15,6 +15,10 @@ interface IUserAddressDao {
         cityUuid: String
     ): Long
 
+    suspend fun getSelectedUserAddressByUserAndCityUuid(userUuid: String, cityUuid: String): UserAddressEntity?
+    suspend fun getUserAddressListByUserAndCityUuid(userUuid: String, cityUuid: String): List<UserAddressEntity>
+    suspend fun geFirstUserAddressByUserAndCityUuid(userUuid: String, cityUuid: String): UserAddressEntity?
+
     fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
@@ -27,7 +26,7 @@ fun CityItem(
     onClick: () -> Unit
 ) {
     val elevation = if (hasShadow) {
-       FoodDeliveryTheme.dimensions.elevation
+        FoodDeliveryTheme.dimensions.elevation
     } else {
         0.dp
     }

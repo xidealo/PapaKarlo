@@ -25,7 +25,8 @@ struct SplashView: View {
                     isActive: .constant(true)
                 ){
                     EmptyView()
-                }
+                }.isDetailLink(false)
+
             }
             case .isGoMenu: NavigationView{
                 NavigationLink(
@@ -33,7 +34,8 @@ struct SplashView: View {
                     isActive: .constant(true)
                 ){
                     EmptyView()
-                }
+                }.isDetailLink(false)
+
             }
             default : EmptyView()
             }
@@ -70,5 +72,10 @@ extension String {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         SplashView()
+    }
+}
+struct FlatLinkStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
     }
 }

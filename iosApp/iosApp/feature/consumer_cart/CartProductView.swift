@@ -43,13 +43,3 @@ struct CartProductView: View {
         .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
-
-struct CartProductView_Previews: PreviewProvider {
-    static var previews: some View {
-        CartProductView(cartProductItem: CartProductItem(id: "2", name: "Burger", newCost: "233", oldCost: 1, photoLink: "https://primebeef.ru/images/cms/thumbs/a5b0aeaa3fa7d6e58d75710c18673bd7ec6d5f6d/img_3911_500_306_5_100.jpg", count: 1, menuProductUuid: "uuid")) {
-            
-        } minusAction: {
-            
-        }
-    }
-}

@@ -11,9 +11,10 @@ struct ContainerView: View {
     
     @State var selection:Int
     @State var title:String = Strings.TITLE_MENU
-    @ObservedObject private var viewModel = ToolbarViewModel()
+    @StateObject private var viewModel = ToolbarViewModel()
     @State var showOrderCreated:Bool = false
-    
+    @State var showCreatedAddress:Bool = false
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -25,7 +26,7 @@ struct ContainerView: View {
             switch(selection){
                 case 0 : CafeListView()
                 case 1: MenuView()
-                default : ProfileView(showOrderCreated: showOrderCreated)
+                default : ProfileView(showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
             }
             BottomBarView(selection: $selection, title: $title)
         }

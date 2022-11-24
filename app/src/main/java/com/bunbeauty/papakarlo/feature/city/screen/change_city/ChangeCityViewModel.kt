@@ -1,9 +1,9 @@
 package com.bunbeauty.papakarlo.feature.city.screen.change_city
 
 import androidx.lifecycle.viewModelScope
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.model.City
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

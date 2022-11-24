@@ -16,15 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.Title
-import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetChangeCityBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.feature.city.ui.CityItem
+import com.bunbeauty.shared.domain.model.City
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city) {

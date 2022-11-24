@@ -29,6 +29,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         mapperModule(),
         repositoryModule(),
         interactorModule(),
+        useCaseModule(),
         utilModule(),
         platformModule(),
         useCaseModule()

@@ -1,11 +1,10 @@
 package com.bunbeauty.papakarlo.feature.splash
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.splash.SplashFragmentDirections.*
+import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import kotlinx.coroutines.launch
 
 class SplashViewModel(
@@ -23,7 +22,7 @@ class SplashViewModel(
             if (isUpdated) {
                 checkIsCitySelected()
             } else {
-                router.navigate(toUpdateFragment())
+                router.navigate(SplashFragmentDirections.toUpdateFragment())
             }
         }
     }
@@ -31,9 +30,9 @@ class SplashViewModel(
     private suspend fun checkIsCitySelected() {
         val isCitySelected = cityInteractor.checkIsCitySelected()
         if (isCitySelected) {
-            router.navigate(toMenuFragment())
+            router.navigate(SplashFragmentDirections.toMenuFragment())
         } else {
-            router.navigate(toSelectCityFragment())
+            router.navigate(SplashFragmentDirections.toSelectCityFragment())
         }
     }
 }

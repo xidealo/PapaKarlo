@@ -13,6 +13,7 @@ import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.model.AuthResponse
 import com.bunbeauty.shared.domain.model.profile.Profile
 import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -32,14 +33,17 @@ class UserRepository(
     override val tag: String = "USER_TAG"
     var cachedUserUuid: String? = null
 
-    override suspend fun login(userUuid: String, userPhone: String): String? {
+    override suspend fun login(userUuid: String, userPhone: String): AuthResponse? {
         val loginPost = LoginPostServer(
             firebaseUuid = userUuid,
             phoneNumber = userPhone,
             companyUuid = companyUuid
         )
         return networkConnector.postLogin(loginPost).getNullableResult { authResponseServer ->
-            authResponseServer.token
+            AuthResponse(
+                token = authResponseServer.token,
+                userUuid = authResponseServer.userUuid,
+            )
         }
     }
 

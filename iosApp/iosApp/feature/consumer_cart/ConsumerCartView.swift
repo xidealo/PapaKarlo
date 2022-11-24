@@ -27,11 +27,13 @@ struct ConsumerCartView: View {
                 }
             )
             NavigationLink(
-                destination:LoginView(isGoToProfile: false),
+                destination:LoginView(rootIsActive: $openLogin, isGoToCreateOrder: $openCreateOrder),
                 isActive: $openLogin
             ){
                 EmptyView()
             }
+            .isDetailLink(false)
+
             NavigationLink(
                 destination:CreateOrderView(),
                 isActive: $openCreateOrder

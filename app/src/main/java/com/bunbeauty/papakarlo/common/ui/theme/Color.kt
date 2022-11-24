@@ -5,11 +5,16 @@ import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 val orange = Color(0xFFFF6900)
 val white = Color(0xFFFFFFFF)
@@ -43,9 +48,9 @@ val LightColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
-    open = green,
-    closeSoon = yellow,
-    closed = lightRed,
+    positive = green,
+    warning = yellow,
+    negative = lightRed,
     onPrimary = white,
     onPrimaryDisabled = grey,
     onSecondary = grey,
@@ -73,9 +78,9 @@ val DarkColors = AppColors(
     delivered = green,
     canceled = darkGrey,
     bunBeautyBrandColor = lightBlue,
-    open = green,
-    closeSoon = yellow,
-    closed = lightRed,
+    positive = green,
+    warning = yellow,
+    negative = lightRed,
     onPrimary = white,
     onPrimaryDisabled = grey,
     onSecondary = grey,
@@ -106,9 +111,9 @@ class AppColors(
     delivered: Color,
     canceled: Color,
     bunBeautyBrandColor: Color,
-    open: Color,
-    closeSoon: Color,
-    closed: Color,
+    positive: Color,
+    warning: Color,
+    negative: Color,
     onPrimary: Color,
     onPrimaryDisabled: Color,
     onSecondary: Color,
@@ -149,11 +154,11 @@ class AppColors(
         private set
     var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
         private set
-    var open by mutableStateOf(open)
+    var positive by mutableStateOf(positive)
         private set
-    var closeSoon by mutableStateOf(closeSoon)
+    var warning by mutableStateOf(warning)
         private set
-    var closed by mutableStateOf(closed)
+    var negative by mutableStateOf(negative)
         private set
     var onPrimary by mutableStateOf(onPrimary)
         private set
@@ -276,9 +281,9 @@ class AppColors(
 
     fun cafeStatusColor(cafeStatus: CafeStatus): Color {
         return when (cafeStatus) {
-            CafeStatus.OPEN -> open
-            CafeStatus.CLOSE_SOON -> closeSoon
-            CafeStatus.CLOSED -> closed
+            CafeStatus.OPEN -> positive
+            CafeStatus.CLOSE_SOON -> warning
+            CafeStatus.CLOSED -> negative
         }
     }
 
@@ -314,9 +319,9 @@ class AppColors(
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
         bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
-        open: Color = this.open,
-        closeSoon: Color = this.closeSoon,
-        closed: Color = this.closed,
+        positive: Color = this.positive,
+        warning: Color = this.warning,
+        negative: Color = this.negative,
         onPrimary: Color = this.onPrimary,
         onPrimaryDisabled: Color = this.onPrimaryDisabled,
         onSecondary: Color = this.onSecondary,
@@ -342,9 +347,9 @@ class AppColors(
         delivered = delivered,
         canceled = canceled,
         bunBeautyBrandColor = bunBeautyBrandColor,
-        open = open,
-        closeSoon = closeSoon,
-        closed = closed,
+        positive = positive,
+        warning = warning,
+        negative = negative,
         onPrimary = onPrimary,
         onPrimaryDisabled = onPrimaryDisabled,
         onSecondary = onSecondary,
@@ -372,9 +377,9 @@ class AppColors(
         delivered = other.delivered
         canceled = other.canceled
         bunBeautyBrandColor = other.bunBeautyBrandColor
-        open = other.open
-        closeSoon = other.closeSoon
-        closed = other.closed
+        positive = other.positive
+        warning = other.warning
+        negative = other.negative
         onPrimary = other.onPrimary
         onPrimaryDisabled = other.onPrimaryDisabled
         onSecondary = other.onSecondary

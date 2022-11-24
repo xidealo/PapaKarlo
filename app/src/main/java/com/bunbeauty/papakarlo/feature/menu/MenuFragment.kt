@@ -3,10 +3,27 @@ package com.bunbeauty.papakarlo.feature.menu
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,14 +32,18 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.menu.model.*
+import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuAction
+import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
+import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -63,7 +84,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             }
         }
     }
-
 
     @Composable
     private fun MenuScreen(menuState: State<MenuUI>) {

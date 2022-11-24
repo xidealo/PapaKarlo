@@ -35,7 +35,7 @@ struct FeedbackView: View {
                 .padding(.top, Diems.SMALL_PADDING)
                 
                 ActionCardView(icon: "AppleIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
-                    UIApplication.shared.open(URL(string: Constants.init().PLAY_MARKET_LINK)!)
+                    UIApplication.shared.open(URL(string: Constants.init().APP_STORE_LINK)!)
                 }
                 .padding(.top, Diems.SMALL_PADDING)
             }.padding(Diems.MEDIUM_PADDING)

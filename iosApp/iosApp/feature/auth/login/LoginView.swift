@@ -8,41 +8,52 @@
 import SwiftUI
 import Combine
 
+let auth = AuthManager()
+
 struct LoginView: View {
     
     @State private var phone:String = "+7"
-    let auth = AuthManager()
-    private let isGoToProfile:Bool
     
-    @ObservedObject private var viewModel : LoginViewModel
+    @Binding var rootIsActive:Bool
+    @Binding var isGoToCreateOrder:Bool
+    @State var goToConfirm:Bool = false
     
-    init(isGoToProfile:Bool){
-        self.isGoToProfile = isGoToProfile
-        viewModel = LoginViewModel(auth: auth)
-    }
+    @State var hasError:Bool = false
+    @ObservedObject private var viewModel : LoginViewModel = LoginViewModel(auth: auth)
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             if(viewModel.loginViewState.isLoading){
                 LoadingView()
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone, isGoToProfile: isGoToProfile),
-                    isActive: $viewModel.loginViewState.isGoToMenu
+                    destination:ConfirmView(auth: auth, phone: phone, rootIsActive: self.$rootIsActive, isGoToCreateOrder: $isGoToCreateOrder),
+                    isActive: $goToConfirm
                 ){
                     EmptyView()
                 }
                 
-                LoginViewSuccessView(phone: $phone, viewModel: viewModel)
+                LoginViewSuccessView(phone: $phone,hasError: $hasError, viewModel: viewModel)
             }
-        }.onDisappear(){
-            viewModel.loginViewState.isGoToMenu = false
         }
+        .onReceive(viewModel.$loginViewState, perform: { loginViewState in
+            loginViewState.actionList.forEach { action in
+                switch(action){
+                case LoginAction.hasError : hasError = true
+                case LoginAction.goToConfirm : goToConfirm = true
+                }
+            }
+            
+            if !loginViewState.actionList.isEmpty{
+                viewModel.clearActions()
+            }
+        })
     }
 }
 
 struct LoginViewSuccessView: View {
     @Binding var phone:String
+    @Binding var hasError:Bool
     @ObservedObject var viewModel : LoginViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
@@ -74,7 +85,7 @@ struct LoginViewSuccessView: View {
                     hint: Strings.HINT_LOGIN_PHONE,
                     text:$phone, limit: 17,
                     keyBoadrType: UIKeyboardType.phonePad,
-                    hasError: $viewModel.loginViewState.hasError,
+                    hasError: $hasError,
                     errorMessage: "Введите номер телефона"
                 )
                 .padding(.top, Diems.SMALL_PADDING)
@@ -85,6 +96,7 @@ struct LoginViewSuccessView: View {
                 
                 Spacer()
                 Button {
+                    hasError = false
                     viewModel.sendCodeToPhone(phone: phone)
                 } label: {
                     Text(Strings.ACTION_LOGIN_LOGIN)
@@ -121,11 +133,5 @@ extension String {
             pureNumber.insert(patternCharacter, at: stringIndex)
         }
         return pureNumber
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(isGoToProfile: false)
     }
 }

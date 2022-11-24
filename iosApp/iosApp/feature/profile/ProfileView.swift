@@ -11,17 +11,26 @@ import shared
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
-    @State var showOrderCreated:Bool
-    @State var showCreatedAddress:Bool = false
+    @Binding var showOrderCreated:Bool
+    @Binding var showCreatedAddress:Bool 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+    @State var isActive:Bool = false
+
     var body: some View {
         VStack(spacing:0){
             switch(viewModel.profileViewState.profieState){
             case ProfileState.loading : LoadingProfileView()
             case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
-            case ProfileState.notAuthorize : EmptyProfileView()
+            case ProfileState.notAuthorize : EmptyProfileView(isActive: $isActive)
             }
+            
+            NavigationLink(
+                destination:LoginView(rootIsActive: self.$isActive, isGoToCreateOrder: .constant(false)),
+                isActive: self.$isActive
+            ){
+               EmptyView()
+            }
+            .isDetailLink(false)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
@@ -34,10 +43,13 @@ struct ProfileView: View {
         .onDisappear(){
             viewModel.unsubscribeFromOrders()
         }
+        
     }
 }
 
 struct EmptyProfileView: View {
+    @Binding var isActive:Bool
+
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
@@ -54,17 +66,18 @@ struct EmptyProfileView: View {
             
             Spacer()
             
-            NavigationLink(
-                destination:LoginView(isGoToProfile: true)
-            ){
-                Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-            }
-            
+            Button(
+                action: {
+                    isActive = true
+                }, label: {
+                    Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color("surface"))
+                        .background(Color("primary"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                }
+            )
         }.padding(Diems.MEDIUM_PADDING)
     }
 }

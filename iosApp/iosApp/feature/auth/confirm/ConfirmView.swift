@@ -14,30 +14,37 @@ struct ConfirmView: View {
     
     @ObservedObject private var viewModel : ConfirmViewModel
     private let phone:String
-    
-    init(auth:AuthManager, phone:String, isGoToProfile:Bool){
-        viewModel = ConfirmViewModel(auth: auth, isGoToProfile: isGoToProfile)
+    @Binding var rootIsActive:Bool
+    @Binding var isGoToCreateOrder:Bool
+
+    init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
+        viewModel = ConfirmViewModel(auth: auth)
         self.phone = phone
+        self._rootIsActive = rootIsActive
+        self._isGoToCreateOrder = isGoToCreateOrder
     }
     
     var body: some View {
-        switch(viewModel.confirmViewState.confirmState){
-        case ConfirmState.loading: LoadingView()
-        case ConfirmState.success: ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
-        case ConfirmState.goToProfile : NavigationLink(
-            destination:ProfileView(showOrderCreated: false),
-            isActive: .constant(true)
-        ){
-            EmptyView()
+        VStack(spacing:0){
+            switch(viewModel.confirmViewState.confirmState){
+            case ConfirmState.loading: LoadingView()
+            case ConfirmState.success: ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+            default : ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
+            }
         }
-        case ConfirmState.goToCreateOrder: NavigationLink(
-            destination:CreateOrderView(),
-            isActive: .constant(true)
-        ){
-            EmptyView()
-        }
-        default : ConfirmViewSuccessView(code: $code, viewModel: viewModel, phone: phone)
-        }
+        .onReceive(viewModel.$confirmViewState, perform: { confirmViewState in
+            confirmViewState.actionList.forEach { action in
+                switch(action){
+                case ConfirmAction.back : self.rootIsActive = false
+                    isGoToCreateOrder = true
+                }
+            }
+            
+            if !confirmViewState.actionList.isEmpty{
+                viewModel.clearActions()
+            }
+        })
+     
     }
 }
 
@@ -147,11 +154,5 @@ struct ConfirmViewSuccessView: View {
             }
         }
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct ConfirmView_Previews: PreviewProvider {
-    static var previews: some View {
-        ConfirmView(auth: AuthManager(), phone: "+79969224186", isGoToProfile: true)
     }
 }

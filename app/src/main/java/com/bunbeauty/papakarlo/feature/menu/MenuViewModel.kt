@@ -5,12 +5,21 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.common.view_model.send
-import com.bunbeauty.papakarlo.feature.menu.model.*
+import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuAction
+import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
+import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MenuViewModel(
@@ -114,7 +123,7 @@ class MenuViewModel(
             },
             menuItemList = menuSectionList.flatMap { menuSection ->
                 listOf(toMenuCategoryItemModel(menuSection)) +
-                        toMenuProductItemModelList(menuSection)
+                    toMenuProductItemModelList(menuSection)
             }
         )
     }

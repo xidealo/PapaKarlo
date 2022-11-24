@@ -21,7 +21,11 @@ import androidx.navigation.FloatingWindow
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.NavMainDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.R
@@ -30,8 +34,8 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
-import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.extensions.showOrGone
+import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import kotlinx.coroutines.flow.Flow
@@ -130,8 +134,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             router.navigate(toLogoutBottomSheet())
             true
         } else {
-            item.onNavDestinationSelected(findNavController(R.id.activity_main_fcv_container))
-                    || super.onOptionsItemSelected(item)
+            item.onNavDestinationSelected(findNavController(R.id.activity_main_fcv_container)) ||
+                super.onOptionsItemSelected(item)
         }
     }
 
@@ -144,7 +148,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun getNavController(): NavController {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.activity_main_fcv_container)
-                    as NavHostFragment
+                as NavHostFragment
         return navHostFragment.navController
     }
 
@@ -245,5 +249,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun TopBarPreview() {
         TopBar()
     }
-
 }

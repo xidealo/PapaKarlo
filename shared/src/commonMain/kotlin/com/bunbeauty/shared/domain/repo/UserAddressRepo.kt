@@ -9,6 +9,22 @@ interface UserAddressRepo {
     suspend fun saveUserAddress(token: String, createdUserAddress: CreatedUserAddress): UserAddress?
     suspend fun saveSelectedUserAddress(addressUuid: String, userUuid: String, cityUuid: String)
 
+    suspend fun getSelectedAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddress?
+
+    suspend fun getFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddress?
+
+    suspend fun getUserAddressListByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String,
+        token: String
+    ): List<UserAddress>
+
     fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String

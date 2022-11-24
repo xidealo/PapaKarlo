@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 @Composable
 fun StatusChip(
