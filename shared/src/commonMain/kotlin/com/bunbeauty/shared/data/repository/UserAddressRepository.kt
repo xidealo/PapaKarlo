@@ -3,9 +3,9 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.user_address.IUserAddressDao
 import com.bunbeauty.shared.data.mapper.user_address.IUserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.db.SelectedUserAddressUuidEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
@@ -15,7 +15,7 @@ class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: IUserAddressMapper
-) : BaseRepository(), UserAddressRepo {
+) : CacheListRepository<UserAddress>(), UserAddressRepo {
 
     override val tag: String = "USER_ADDRESS_TAG"
 
@@ -29,7 +29,14 @@ class UserAddressRepository(
                 val userAddressEntity = userAddressMapper.toUserAddressEntity(addressServer)
                 userAddressDao.insertUserAddress(userAddressEntity)
 
-                userAddressMapper.toUserAddress(addressServer)
+                val userAddress = userAddressMapper.toUserAddress(addressServer)
+                updateCache { cache ->
+                    cache?.let {
+                        cache + userAddress
+                    }
+                }
+
+                userAddress
             }
     }
 
@@ -46,6 +53,53 @@ class UserAddressRepository(
         userAddressDao.insertSelectedUserAddressUuid(selectedUserAddressUuid)
     }
 
+    override suspend fun getSelectedAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddress? {
+        return userAddressDao.getSelectedUserAddressByUserAndCityUuid(userUuid, cityUuid)
+            ?.let { userAddressEntity ->
+                userAddressMapper.toUserAddress(userAddressEntity)
+            }
+    }
+
+    override suspend fun getFirstUserAddressByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): UserAddress? {
+        return userAddressDao.geFirstUserAddressByUserAndCityUuid(userUuid, cityUuid)
+            ?.let { userAddressEntity ->
+                userAddressMapper.toUserAddress(userAddressEntity)
+            }
+    }
+
+    override suspend fun getUserAddressListByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String,
+        token: String
+    ): List<UserAddress> {
+        return getCacheOrListData(
+            isCacheValid = { cacheList ->
+                cacheList.all { userAddress ->
+                    userAddress.userUuid == userUuid
+                }
+            },
+            onApiRequest = {
+                networkConnector.getUserAddressList(token)
+            },
+            onLocalRequest = {
+                userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, cityUuid)
+                    .map(userAddressMapper::toUserAddress)
+            },
+            onSaveLocally = { userAddressSeverList ->
+                userAddressDao.insertUserAddressList(
+                    userAddressSeverList.map(userAddressMapper::toUserAddressEntity)
+                )
+            },
+            serverToDomainModel = userAddressMapper::toUserAddress
+        )
+    }
+
     override fun observeSelectedUserAddressByUserAndCityUuid(
         userUuid: String,
         cityUuid: String
@@ -55,6 +109,7 @@ class UserAddressRepository(
             cityUuid = cityUuid
         ).mapFlow(userAddressMapper::toUserAddress)
     }
+
 
     override fun observeFirstUserAddressByUserAndCityUuid(
         userUuid: String,

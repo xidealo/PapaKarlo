@@ -30,7 +30,7 @@ import com.bunbeauty.shared.domain.interactor.user.UserInteractor
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-fun interactorModule() = module {
+internal fun interactorModule() = module {
     single<IMainInteractor> {
         MainInteractor(
             orderRepo = get(),

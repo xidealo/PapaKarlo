@@ -3,8 +3,14 @@ package com.bunbeauty.papakarlo.feature.create_order.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
-data class TimeUI(
-    val hours: Int,
-    val minutes: Int,
-) : Parcelable
+sealed interface TimeUI : Parcelable {
+
+    @Parcelize
+    class Time(
+        val hours: Int,
+        val minutes: Int
+    ) : TimeUI
+
+    @Parcelize
+    object ASAP : TimeUI
+}

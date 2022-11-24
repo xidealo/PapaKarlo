@@ -12,8 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.setFragmentResultListener
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.domain.model.profile.Settings
-import com.bunbeauty.shared.domain.model.profile.User
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
@@ -27,13 +25,14 @@ import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.shared.Constants.EMAIL_REQUEST_KEY
 import com.bunbeauty.shared.Constants.RESULT_EMAIL_KEY
+import com.bunbeauty.shared.domain.model.profile.Settings
+import com.bunbeauty.shared.domain.model.profile.User
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override val viewModel: SettingsViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentSettingsBinding::bind)
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,7 +114,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
         }
     }
-
 
     @Preview(showSystemUi = true)
     @Composable

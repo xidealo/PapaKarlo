@@ -5,7 +5,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Card
@@ -23,13 +31,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
-import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -38,6 +43,9 @@ import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.order.model.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.model.OrderUI
+import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
+import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {

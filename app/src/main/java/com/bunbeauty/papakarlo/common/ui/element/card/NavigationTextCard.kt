@@ -27,7 +27,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun NavigationTextCard(
     modifier: Modifier = Modifier,
     @StringRes hintStringId: Int,
-    label: String,
+    label: String?,
     isClickable: Boolean = true,
     onClick: () -> Unit
 ) {
@@ -60,7 +60,7 @@ fun NavigationTextCard(
                     color = FoodDeliveryTheme.colors.onSurfaceVariant
                 )
                 Text(
-                    text = label,
+                    text = label ?: "",
                     style = FoodDeliveryTheme.typography.body1,
                     color = FoodDeliveryTheme.colors.onSurface
                 )

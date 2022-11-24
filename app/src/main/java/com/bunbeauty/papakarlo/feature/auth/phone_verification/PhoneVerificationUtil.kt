@@ -7,6 +7,9 @@ import com.bunbeauty.common.Logger.logE
 import com.bunbeauty.papakarlo.feature.auth.event.AuthErrorEvent
 import com.bunbeauty.papakarlo.feature.auth.event.AuthSuccessEvent
 import com.bunbeauty.papakarlo.feature.auth.event.CodeSentEvent
+import com.bunbeauty.shared.Constants.SOMETHING_WENT_WRONG
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.Constants.WRONG_CODE
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.PhoneAuthCredential
@@ -14,9 +17,6 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.bunbeauty.shared.Constants.SOMETHING_WENT_WRONG
-import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
-import com.bunbeauty.shared.Constants.WRONG_CODE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

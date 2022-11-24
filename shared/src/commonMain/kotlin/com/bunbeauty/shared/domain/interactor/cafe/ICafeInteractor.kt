@@ -17,5 +17,5 @@ interface ICafeInteractor {
     suspend fun getCloseIn(cafe: Cafe): Int?
     fun getCafeTime(daySeconds: Int): String
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
-    suspend fun selectCafe(cafeUuid: String)
+    suspend fun saveSelectedCafe(cafeUuid: String)
 }

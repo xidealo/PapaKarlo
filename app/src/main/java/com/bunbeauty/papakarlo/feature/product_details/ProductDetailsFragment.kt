@@ -3,7 +3,12 @@ package com.bunbeauty.papakarlo.feature.product_details
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
@@ -167,7 +172,7 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                 oldPrice = "320 ₽",
                 newPrice = "280 ₽",
                 description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                        "красный лук, салат, фирменный соус, булочка с кунжутом",
+                    "красный лук, салат, фирменный соус, булочка с кунжутом",
             )
         )
     }

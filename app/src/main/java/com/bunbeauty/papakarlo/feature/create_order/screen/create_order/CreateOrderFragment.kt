@@ -4,38 +4,41 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
-import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.shared.Constants.DEFERRED_TIME_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_CAFE_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
-import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
-import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
-import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
+import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
-import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.shared.Constants.SELECTED_DEFERRED_TIME_KEY
+import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toProfileFragment
+import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
+import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
@@ -47,34 +50,20 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.update()
         viewBinding.fragmentCreateOrderCvMain.setContent {
-            val orderCreationUI by viewModel.orderCreationUI.collectAsState()
-            CreateOrderScreen(orderCreationUI)
-        }
-        setFragmentResultListener(USER_ADDRESS_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_USER_ADDRESS_KEY)?.let { userAddressUuid ->
-                viewModel.onUserAddressChanged(userAddressUuid)
+            val orderCreationState by viewModel.orderCreationState.collectAsState()
+
+            LaunchedEffect(key1 = orderCreationState.eventList) {
+                handleEventList(orderCreationState.eventList)
             }
-        }
-        setFragmentResultListener(CAFE_ADDRESS_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_CAFE_ADDRESS_KEY)?.let { cafUuid ->
-                viewModel.onCafeAddressChanged(cafUuid)
-            }
-        }
-        setFragmentResultListener(COMMENT_REQUEST_KEY) { _, bundle ->
-            bundle.getString(RESULT_COMMENT_KEY)?.let { comment ->
-                viewModel.onCommentChanged(comment)
-            }
-        }
-        setFragmentResultListener(DEFERRED_TIME_REQUEST_KEY) { _, bundle ->
-            bundle.getParcelable<TimeUI>(SELECTED_DEFERRED_TIME_KEY).let { selectedDeferredTime ->
-                viewModel.onDeferredTimeSelected(selectedDeferredTime)
-            }
+
+            CreateOrderScreen(orderCreationState)
         }
     }
 
     @Composable
-    private fun CreateOrderScreen(orderCreationUI: OrderCreationUI) {
+    private fun CreateOrderScreen(orderCreationState: OrderCreationUiState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -92,93 +81,114 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
-                        position = orderCreationUI.switcherPosition
+                        position = orderCreationState.switcherPosition
                     ) { changedPosition ->
                         viewModel.onSwitcherPositionChanged(changedPosition)
                     }
-                    AddressCard(orderCreationUI)
-                    CommentCard(orderCreationUI)
-                    DeferredTimeCard(orderCreationUI)
+                    AddressCard(orderCreationState)
+                    DeliveryAddressError(orderCreationState)
+                    CommentCard(orderCreationState)
+                    DeferredTimeCard(orderCreationState)
                 }
                 BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
             }
-            BottomAmountBar(orderCreationUI)
+            BottomAmountBar(orderCreationState)
         }
     }
 
     @Composable
-    private fun AddressCard(orderCreationUI: OrderCreationUI) {
-        if (orderCreationUI.address == null) {
-            val addressStringId = if (orderCreationUI.isDelivery) {
-                R.string.action_create_order_delivery_address
+    private fun AddressCard(orderCreationState: OrderCreationUiState) {
+        val labelStringId = if (orderCreationState.isDelivery) {
+            R.string.delivery_address
+        } else {
+            R.string.cafe_address
+        }
+        if (orderCreationState.isDelivery) {
+            if (orderCreationState.deliveryAddress == null) {
+                NavigationCard(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    labelStringId = labelStringId,
+                    isClickable = !orderCreationState.isLoading
+                ) {
+                    viewModel.onUserAddressClicked()
+                }
             } else {
-                R.string.action_create_order_cafe_address
-            }
-            NavigationCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = addressStringId,
-                isClickable = !orderCreationUI.isLoading
-            ) {
-                viewModel.onAddAddressClicked()
+                NavigationTextCard(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    hintStringId = labelStringId,
+                    label = orderCreationState.deliveryAddress,
+                    isClickable = !orderCreationState.isLoading
+                ) {
+                    viewModel.onUserAddressClicked()
+                }
             }
         } else {
-            val addressHintStringId = if (orderCreationUI.isDelivery) {
-                R.string.hint_create_order_delivery_address
-            } else {
-                R.string.hint_create_order_cafe_address
-            }
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = addressHintStringId,
-                label = orderCreationUI.address,
-                isClickable = !orderCreationUI.isLoading
+                hintStringId = labelStringId,
+                label = orderCreationState.pickupAddress ?: "",
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onChangeAddressClicked()
+                viewModel.onCafeAddressClicked()
             }
         }
     }
 
     @Composable
-    private fun CommentCard(orderCreationUI: OrderCreationUI) {
-        if (orderCreationUI.comment == null) {
+    private fun DeliveryAddressError(orderCreationState: OrderCreationUiState) {
+        if (orderCreationState.isDelivery && orderCreationState.isAddressErrorShown) {
+            Text(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(R.string.error_select_delivery_address),
+                style = FoodDeliveryTheme.typography.body2,
+                color = FoodDeliveryTheme.colors.negative
+            )
+        }
+    }
+
+    @Composable
+    private fun CommentCard(orderCreationState: OrderCreationUiState) {
+        if (orderCreationState.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = R.string.action_create_order_comment,
-                isClickable = !orderCreationUI.isLoading
+                labelStringId = R.string.comment,
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onAddCommentClicked()
+                viewModel.onCommentClicked()
             }
         } else {
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.hint_create_order_comment,
-                label = orderCreationUI.comment,
-                isClickable = !orderCreationUI.isLoading
+                label = orderCreationState.comment,
+                isClickable = !orderCreationState.isLoading
             ) {
-                viewModel.onEditCommentClicked()
+                viewModel.onCommentClicked()
             }
         }
     }
 
     @Composable
-    private fun DeferredTimeCard(orderCreationUI: OrderCreationUI) {
-        val deferredTimeStringId = if (orderCreationUI.isDelivery) {
-            R.string.hint_create_order_delivery_time
+    private fun DeferredTimeCard(orderCreationState: OrderCreationUiState) {
+        val hintStringId = if (orderCreationState.isDelivery) {
+            R.string.delivery_time
         } else {
-            R.string.hint_create_order_pickup_time
+            R.string.pickup_time
         }
         NavigationTextCard(
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = deferredTimeStringId,
-            label = orderCreationUI.deferredTime,
-            isClickable = !orderCreationUI.isLoading
+            hintStringId = hintStringId,
+            label = orderCreationState.deferredTime,
+            isClickable = !orderCreationState.isLoading
         ) {
             viewModel.onDeferredTimeClicked()
         }
     }
 
     @Composable
-    private fun BottomAmountBar(orderCreationUI: OrderCreationUI) {
+    private fun BottomAmountBar(orderCreationState: OrderCreationUiState) {
         Column(
             modifier = Modifier
                 .background(FoodDeliveryTheme.colors.surface)
@@ -191,15 +201,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.body1,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.totalCost != null) {
+                if (orderCreationState.totalCost != null) {
                     Text(
-                        text = orderCreationUI.totalCost,
+                        text = orderCreationState.totalCost,
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                 }
             }
-            if (orderCreationUI.isDelivery) {
+            if (orderCreationState.isDelivery) {
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                     Text(
                         modifier = Modifier.weight(1f),
@@ -207,9 +217,9 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
-                    if (orderCreationUI.deliveryCost != null) {
+                    if (orderCreationState.deliveryCost != null) {
                         Text(
-                            text = orderCreationUI.deliveryCost,
+                            text = orderCreationState.deliveryCost,
                             style = FoodDeliveryTheme.typography.body1,
                             color = FoodDeliveryTheme.colors.onSurface
                         )
@@ -223,30 +233,90 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                if (orderCreationUI.isDelivery) {
-                    if (orderCreationUI.amountToPayWithDeliveryCost != null) {
-                        Text(
-                            text = orderCreationUI.amountToPayWithDeliveryCost,
-                            style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
-                        )
-                    }
-                }else{
-                    if (orderCreationUI.amountToPay != null) {
-                        Text(
-                            text = orderCreationUI.amountToPay,
-                            style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
-                        )
-                    }
+                if (orderCreationState.finalCost != null) {
+                    Text(
+                        text = orderCreationState.finalCost,
+                        style = FoodDeliveryTheme.typography.h2,
+                        color = FoodDeliveryTheme.colors.onSurface
+                    )
                 }
             }
             LoadingButton(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_create_order_create_order,
-                isLoading = orderCreationUI.isLoading
+                isLoading = orderCreationState.isLoading
             ) {
-                viewModel.onCreateOrderClicked(orderCreationUI)
+                viewModel.onCreateOrderClicked()
+            }
+        }
+    }
+
+    private suspend fun handleEventList(eventList: List<OrderCreationUiState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is OrderCreationUiState.Event.OpenCreateAddressEvent -> {
+                    findNavController().navigate(toCreateAddressFragment())
+                }
+                is OrderCreationUiState.Event.ShowUserAddressListEvent -> {
+                    UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                        ?.let { result ->
+                            handleUserAddressListResult(result)
+                        }
+                }
+                is OrderCreationUiState.Event.ShowCafeAddressListEvent -> {
+                    CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                        ?.let { addressItem ->
+                            viewModel.onCafeAddressChanged(addressItem.uuid)
+                        }
+                }
+                is OrderCreationUiState.Event.ShowCommentInputEvent -> {
+                    CommentBottomSheet.show(childFragmentManager, event.comment)?.let { comment ->
+                        viewModel.onCommentChanged(comment)
+                    }
+                }
+                is OrderCreationUiState.Event.ShowDeferredTimeEvent -> {
+                    val titleId = if (event.isDelivery) {
+                        R.string.delivery_time
+                    } else {
+                        R.string.pickup_time
+                    }
+                    DeferredTimeBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        deferredTime = event.deferredTime,
+                        minTime = event.minTime,
+                        title = resources.getString(titleId)
+                    )?.let { deferredTime ->
+                        viewModel.onDeferredTimeSelected(deferredTime)
+                    }
+                }
+                is OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent -> {
+                    viewModel.showError(
+                        resources.getString(R.string.error_something_went_wrong),
+                        true
+                    )
+                }
+                is OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent -> {
+                    viewModel.showError(resources.getString(R.string.error_user), true)
+                }
+                is OrderCreationUiState.Event.OrderCreatedEvent -> {
+                    viewModel.showMessage(
+                        resources.getString(R.string.msg_order_code, event.code),
+                        false
+                    )
+                    findNavController().navigate(toProfileFragment())
+                }
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
+    private fun handleUserAddressListResult(result: UserAddressListResult) {
+        when (result) {
+            is UserAddressListResult.AddressSelected -> {
+                viewModel.onUserAddressChanged(result.addressItem.uuid)
+            }
+            is UserAddressListResult.AddNewAddress -> {
+                findNavController().navigate(toCreateAddressFragment())
             }
         }
     }
@@ -255,16 +325,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderEmptyDeliveryScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = true,
-                address = null,
+                deliveryAddress = null,
                 comment = null,
                 deferredTime = "Как можно скорее",
                 totalCost = null,
                 deliveryCost = null,
-                amountToPay = null,
+                finalCost = null,
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -273,16 +342,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderDeliveryScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = true,
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
                 deferredTime = "Как можно скорее",
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
-                amountToPay = "350 ₽",
+                finalCost = "350 ₽",
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
             )
         )
     }
@@ -291,17 +359,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderEmptyPickupScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = false,
-                address = null,
+                pickupAddress = null,
                 comment = null,
                 deferredTime = "10:30",
                 totalCost = null,
                 deliveryCost = null,
-                amountToPay = null,
+                finalCost = null,
                 isLoading = false,
-                amountToPayWithDeliveryCost = null
-
             )
         )
     }
@@ -310,17 +376,15 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
     @Composable
     private fun CreateOrderPickupScreenPreview() {
         CreateOrderScreen(
-            orderCreationUI = OrderCreationUI(
+            orderCreationState = OrderCreationUiState(
                 isDelivery = false,
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
                 deferredTime = "Как можно скорее",
                 totalCost = "250 ₽",
                 deliveryCost = "100 ₽",
-                amountToPay = "350 ₽",
+                finalCost = "350 ₽",
                 isLoading = true,
-                amountToPayWithDeliveryCost = null
-
             )
         )
     }

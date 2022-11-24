@@ -17,9 +17,10 @@ class UserInteractor(
 
     override suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?) {
         if (firebaseUserUuid != null && firebaseUserPhone != null) {
-            val token = userRepo.login(firebaseUserUuid, firebaseUserPhone)
-            if (token != null) {
-                dataStoreRepo.saveToken(token)
+            val loginResponse = userRepo.login(firebaseUserUuid, firebaseUserPhone)
+            if (loginResponse != null) {
+                dataStoreRepo.saveToken(loginResponse.token)
+                dataStoreRepo.saveUserUuid(loginResponse.userUuid)
             }
         }
     }

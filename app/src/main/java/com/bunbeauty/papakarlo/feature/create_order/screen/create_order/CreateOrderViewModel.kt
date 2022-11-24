@@ -1,25 +1,27 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
-import com.bunbeauty.papakarlo.feature.create_order.model.OrderCreationUI
+import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.*
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextSettings
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.Constants.COMMENT_REQUEST_KEY
-import com.bunbeauty.shared.Constants.RESULT_COMMENT_KEY
+import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
+import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
+import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
+import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
+import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.date_time.Time
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CreateOrderViewModel(
@@ -31,212 +33,236 @@ class CreateOrderViewModel(
     private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val stringUtil: IStringUtil,
     private val timeMapper: TimeMapper,
+    private val userAddressMapper: UserAddressMapper,
+    private val getSelectedUserAddress: GetSelectedUserAddressUseCase,
+    private val getSelectedCafe: GetSelectedCafeUseCase,
+    private val getUserAddressList: GetUserAddressListUseCase,
+    private val getCafeList: GetCafeListUseCase,
+    private val getCartTotal: GetCartTotalUseCase,
+    private val getMinTime: GetMinTimeUseCase
 ) : BaseViewModel() {
 
-    private val asap = resourcesProvider.getString(R.string.msg_deferred_time_asap)
-    private val mutableOrderCreationUI: MutableStateFlow<OrderCreationUI> = MutableStateFlow(
-        OrderCreationUI(
-            isDelivery = true,
-            address = null,
-            comment = null,
-            deferredTime = asap,
-            totalCost = null,
-            deliveryCost = null,
-            amountToPay = null,
-            isLoading = false,
-            amountToPayWithDeliveryCost = null
-        )
-    )
-    val orderCreationUI: StateFlow<OrderCreationUI> = mutableOrderCreationUI.asStateFlow()
-    private val isDelivery: Flow<Boolean> = mutableOrderCreationUI.map { orderCreationUI ->
-        orderCreationUI.isDelivery
-    }
-    private var selectedUserAddressUuid: String? = null
-    private var selectedCafeUuid: String? = null
-    private var selectedDeferredTimeMillis: Long? = null
-    private var selectedDeferredTime: Time? = null
+    private val orderCreationData = MutableStateFlow(OrderCreationData())
+    private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
+    val orderCreationState = mutableOrderCreationState.asStateFlow()
 
     init {
-        observeAddress()
-        viewModelScope.launch {
-            cafeInteractor.getCafeList()
-            cartProductInteractor.getCartTotal().let { cartTotal ->
-                mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
-                    totalCost = stringUtil.getCostString(cartTotal.totalCost),
-                    deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
-                    amountToPay = stringUtil.getCostString(cartTotal.amountToPay)
-                )
-            }
+        mutableOrderCreationState.update { state ->
+            state.copy(deferredTime = timeMapper.toString(TimeUI.ASAP))
+        }
+    }
+
+    fun update() {
+        withLoading {
+            updateAddresses()
+            updateCartTotal()
         }
     }
 
     fun onSwitcherPositionChanged(position: Int) {
         (position == 0).let { isDelivery ->
-            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
-                isDelivery = isDelivery,
-            )
-        }
-    }
-
-    fun onDeferredTimeSelected(deferredTimeUi: TimeUI?) {
-        val deferredTime = deferredTimeUi?.let { timeMapper.toDomainModel(deferredTimeUi) }
-        selectedDeferredTime = deferredTime
-        if (deferredTime == null) {
-            selectedDeferredTimeMillis = null
-            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(deferredTime = asap)
-        } else {
-            viewModelScope.launch {
-                selectedDeferredTimeMillis =
-                    deferredTimeInteractor.getDeferredTimeMillis(deferredTime)
-                mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
-                    deferredTime = stringUtil.getTimeString(deferredTime)
-                )
+            mutableOrderCreationState.update { state ->
+                state.copy(isDelivery = isDelivery)
             }
         }
+        withLoading {
+            updateCartTotal()
+        }
     }
 
-    fun onCommentChanged(comment: String) {
-        if (comment.isEmpty()) {
-            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(comment = null)
+    fun onUserAddressClicked() {
+        val addressList = orderCreationData.value.userAddressList
+        val event = if (addressList.isEmpty()) {
+            OrderCreationUiState.Event.OpenCreateAddressEvent
         } else {
-            mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(comment = comment)
+            OrderCreationUiState.Event.ShowUserAddressListEvent(
+                addressList.map(userAddressMapper::toUserAddressItem)
+            )
+        }
+        mutableOrderCreationState.update { state ->
+            state + event
         }
     }
 
     fun onUserAddressChanged(userAddressUuid: String) {
-        viewModelScope.launch {
+        withLoading {
             addressInteractor.saveSelectedUserAddress(userAddressUuid)
+            updateSelectedUserAddress()
+        }
+    }
+
+    fun onCafeAddressClicked() {
+        val event = OrderCreationUiState.Event.ShowCafeAddressListEvent(
+            orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem)
+        )
+        mutableOrderCreationState.update { state ->
+            state + event
         }
     }
 
     fun onCafeAddressChanged(cafeUuid: String) {
-        viewModelScope.launch {
-            cafeInteractor.selectCafe(cafeUuid)
+        withLoading {
+            cafeInteractor.saveSelectedCafe(cafeUuid)
+            updateSelectedCafe()
         }
-    }
-
-    fun onCreateOrderClicked(orderCreationUI: OrderCreationUI) {
-        startLoading()
-        if ((orderCreationUI.isDelivery && (selectedUserAddressUuid == null))
-            || (!orderCreationUI.isDelivery && (selectedCafeUuid == null))
-            || orderCreationUI.address == null
-        ) {
-            showError(resourcesProvider.getString(R.string.error_create_order_address), false)
-            finishLoading()
-            return
-        }
-
-        viewModelScope.launch {
-            if (!userInteractor.isUserAuthorize()) {
-                showError(resourcesProvider.getString(R.string.error_create_order_user), false)
-                goBack()
-                return@launch
-            }
-
-            val orderCode = orderInteractor.createOrder(
-                isDelivery = orderCreationUI.isDelivery,
-                userAddressUuid = selectedUserAddressUuid,
-                cafeUuid = selectedCafeUuid,
-                addressDescription = orderCreationUI.address,
-                comment = orderCreationUI.comment,
-                deferredTime = selectedDeferredTimeMillis,
-            )
-
-            if (orderCode == null) {
-                showError(
-                    resourcesProvider.getString(R.string.error_create_order_something_went_wrong),
-                    false
-                )
-                finishLoading()
-            } else {
-                cartProductInteractor.removeAllProductsFromCart()
-                showMessage(
-                    resourcesProvider.getString(R.string.msg_create_order_order_code) + orderCode.code,
-                    false
-                )
-                router.navigate(toProfileFragment())
-            }
-        }
-    }
-
-    fun onChangeAddressClicked() {
-        if (mutableOrderCreationUI.value.isDelivery) {
-            router.navigate(toNavAddress(true))
-        } else {
-            router.navigate(toCafeAddressesBottomSheet())
-        }
-    }
-
-    fun onAddAddressClicked() {
-        router.navigate(toCreateAddressFragment())
     }
 
     fun onDeferredTimeClicked() {
-        val deferredTimeHint = if (mutableOrderCreationUI.value.isDelivery) {
-            resourcesProvider.getString(R.string.hint_create_order_delivery_time)
-        } else {
-            resourcesProvider.getString(R.string.hint_create_order_pickup_time)
+        val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
+        viewModelScope.launch {
+            mutableOrderCreationState.update { state ->
+                val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
+                    deferredTime = deferredTime,
+                    minTime = timeMapper.toUiModel(getMinTime()),
+                    isDelivery = state.isDelivery
+                )
+                state + event
+            }
         }
-        router.navigate(
-            toDeferredTimeBottomSheet(
-                deferredTimeHint,
-                selectedDeferredTime?.let { timeMapper.toUiModel(it) }
-            )
+    }
+
+    fun onDeferredTimeSelected(deferredTimeUi: TimeUI) {
+        val deferredTime = timeMapper.toDomainModel(deferredTimeUi)
+        orderCreationData.update { data ->
+            data.copy(selectedDeferredTime = deferredTime)
+        }
+        mutableOrderCreationState.update { state ->
+            state.copy(deferredTime = timeMapper.toString(deferredTimeUi))
+        }
+    }
+
+    fun onCommentClicked() {
+        val event = OrderCreationUiState.Event.ShowCommentInputEvent(
+            comment = mutableOrderCreationState.value.comment
         )
+        mutableOrderCreationState.update { state ->
+            state + event
+        }
     }
 
-    fun onAddCommentClicked() {
-        val oneLineActionModel = EditTextSettings(
-            titleStringId = R.string.title_create_order_addition_comment,
-            infoText = null,
-            labelStringId = R.string.hint_create_order_comment,
-            type = EditTextType.TEXT,
-            inputText = "",
-            buttonStringId = R.string.action_create_order_save_comment,
-            requestKey = COMMENT_REQUEST_KEY,
-            resultKey = RESULT_COMMENT_KEY
-        )
-        router.navigate(toOneLineActionBottomSheet(oneLineActionModel))
+    fun onCommentChanged(comment: String) {
+        mutableOrderCreationState.update { state ->
+            state.copy(comment = comment.ifEmpty { null })
+        }
     }
 
-    fun onEditCommentClicked() {
-        val oneLineActionModel = EditTextSettings(
-            titleStringId = R.string.title_create_order_editing_comment,
-            infoText = null,
-            labelStringId = R.string.hint_create_order_comment,
-            type = EditTextType.TEXT,
-            inputText = mutableOrderCreationUI.value.comment ?: "",
-            buttonStringId = R.string.action_create_order_save_comment,
-            requestKey = COMMENT_REQUEST_KEY,
-            resultKey = RESULT_COMMENT_KEY
-        )
-        router.navigate(toOneLineActionBottomSheet(oneLineActionModel))
-    }
+    fun onCreateOrderClicked() {
+        val stateValue = mutableOrderCreationState.value
+        val data = orderCreationData.value
+        val address = if (stateValue.isDelivery) {
+            stringUtil.getUserAddressString(data.selectedUserAddress)
+        } else {
+            data.selectedCafe?.address
+        }
+        mutableOrderCreationState.update { state ->
+            val isDeliveryAddressNotSelected =
+                stateValue.isDelivery && (data.selectedUserAddress == null)
+            state.copy(isAddressErrorShown = isDeliveryAddressNotSelected)
+        }
+        if (address == null) {
+            return
+        }
 
-    private fun startLoading() {
-        mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(isLoading = true)
-    }
+        withLoading {
+            if (userInteractor.isUserAuthorize()) {
+                val orderCode = orderInteractor.createOrder(
+                    isDelivery = stateValue.isDelivery,
+                    userAddressUuid = data.selectedUserAddress?.uuid,
+                    cafeUuid = data.selectedCafe?.uuid,
+                    addressDescription = address,
+                    comment = stateValue.comment,
+                    deferredTime = data.selectedDeferredTime?.let { deferredTime ->
+                        deferredTimeInteractor.getDeferredTimeMillis(deferredTime)
+                    },
+                )
+                if (orderCode == null) {
+                    val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
+                    mutableOrderCreationState.update { it + event }
+                } else {
+                    cartProductInteractor.removeAllProductsFromCart()
 
-    private fun finishLoading() {
-        mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(isLoading = false)
-    }
-
-    private fun observeAddress() {
-        isDelivery.flatMapLatest { isDelivery ->
-            if (isDelivery) {
-                addressInteractor.observeAddress().onEach { userAddress ->
-                    mutableOrderCreationUI.value = mutableOrderCreationUI.value.copy(
-                        address = stringUtil.getUserAddressString(userAddress)
-                    )
-                    selectedUserAddressUuid = userAddress?.uuid
+                    val event = OrderCreationUiState.Event.OrderCreatedEvent(code = orderCode.code)
+                    mutableOrderCreationState.update { it + event }
                 }
             } else {
-                cafeInteractor.observeSelectedCafeAddress().onEach { cafeAddress ->
-                    mutableOrderCreationUI.value =
-                        mutableOrderCreationUI.value.copy(address = cafeAddress.address)
-                    selectedCafeUuid = cafeAddress.cafeUuid
-                }
+                val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
+                mutableOrderCreationState.update { it + event }
             }
-        }.launchIn(viewModelScope)
+        }
+    }
+
+    fun consumeEventList(eventList: List<OrderCreationUiState.Event>) {
+        mutableOrderCreationState.update { state ->
+            state.copy(eventList = state.eventList - eventList.toSet())
+        }
+    }
+
+    private suspend fun updateAddresses() {
+        val userAddressList = getUserAddressList()
+        val cafeList = getCafeList()
+        orderCreationData.update { data ->
+            data.copy(
+                userAddressList = userAddressList, cafeList = cafeList
+            )
+        }
+
+        updateSelectedUserAddress()
+        updateSelectedCafe()
+    }
+
+    private suspend fun updateSelectedUserAddress() {
+        val selectedUserAddress = getSelectedUserAddress()
+        orderCreationData.update { data ->
+            data.copy(selectedUserAddress = selectedUserAddress)
+        }
+        mutableOrderCreationState.update { state ->
+            state.copy(deliveryAddress = stringUtil.getUserAddressString(selectedUserAddress))
+        }
+        if (selectedUserAddress != null) {
+            mutableOrderCreationState.update { state ->
+                state.copy(isAddressErrorShown = false)
+            }
+        }
+    }
+
+    private suspend fun updateSelectedCafe() {
+        val selectedCafe = getSelectedCafe()
+        orderCreationData.update { data ->
+            data.copy(selectedCafe = selectedCafe)
+        }
+        mutableOrderCreationState.update { state ->
+            state.copy(pickupAddress = selectedCafe?.address)
+        }
+    }
+
+    private suspend fun updateCartTotal() {
+        try {
+            val isDelivery = mutableOrderCreationState.value.isDelivery
+            val cartTotal = getCartTotal(isDelivery)
+            mutableOrderCreationState.update { state ->
+                state.copy(
+                    totalCost = stringUtil.getCostString(cartTotal.totalCost),
+                    deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
+                    finalCost = stringUtil.getCostString(cartTotal.finalCost),
+                )
+            }
+        } catch (exception: Exception) {
+            val event = OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent
+            mutableOrderCreationState.update { state ->
+                state + event
+            }
+        }
+    }
+
+    private inline fun withLoading(crossinline block: suspend () -> Unit) {
+        viewModelScope.launch {
+            mutableOrderCreationState.update { state ->
+                state.copy(isLoading = true)
+            }
+            block()
+            mutableOrderCreationState.update { state ->
+                state.copy(isLoading = false)
+            }
+        }
     }
 }

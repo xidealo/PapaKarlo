@@ -3,6 +3,5 @@ package com.bunbeauty.shared.domain.model.cart
 data class CartTotal(
     val totalCost: Int,
     val deliveryCost: Int,
-    val amountToPay: Int,
-    val amountToPayWithDeliveryCost: Int,
+    val finalCost: Int
 )

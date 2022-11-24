@@ -1,13 +1,13 @@
 package com.bunbeauty.papakarlo.feature.address.screen.user_address_list
 
 import androidx.lifecycle.SavedStateHandle
-import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
-import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.address.model.AddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.model.address.UserAddress
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

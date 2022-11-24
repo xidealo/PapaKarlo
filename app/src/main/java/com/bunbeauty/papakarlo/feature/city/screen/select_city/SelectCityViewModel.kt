@@ -1,12 +1,12 @@
 package com.bunbeauty.papakarlo.feature.city.screen.select_city
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityFragmentDirections.toMenuFragment
+import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
+import com.bunbeauty.shared.domain.model.City
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
