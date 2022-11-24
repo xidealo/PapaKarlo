@@ -43,7 +43,12 @@ class ProfileViewModel(
     }
 
     fun onLastOrderClicked(orderItem: OrderItem) {
-        router.navigate(ProfileFragmentDirections.toOrderDetailsFragment(orderItem.uuid, orderItem.code))
+        router.navigate(
+            ProfileFragmentDirections.toOrderDetailsFragment(
+                orderItem.uuid,
+                orderItem.code
+            )
+        )
     }
 
     fun onSettingsClicked() {

@@ -23,7 +23,6 @@ import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
