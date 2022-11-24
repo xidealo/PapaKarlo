@@ -13,13 +13,21 @@ class ProfileViewState : NSObject,  NSCopying  {
     var userUuid: String
     var hasAddresses: Bool
     var lastOrder: OrderItem?
-    var profieState:ProfileState
+    var profieState: ProfileState
+    var actionList: [ProfileAction]
     
-    init(userUuid:String, hasAddresses:Bool, lastOrder:OrderItem?, profileState:ProfileState){
+    init(
+        userUuid:String,
+        hasAddresses:Bool,
+        lastOrder:OrderItem?,
+        profileState:ProfileState,
+        actionList: [ProfileAction]
+    ){
         self.userUuid = userUuid
         self.hasAddresses = hasAddresses
         self.lastOrder = lastOrder
         self.profieState = profileState
+        self.actionList = actionList
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
@@ -27,7 +35,8 @@ class ProfileViewState : NSObject,  NSCopying  {
             userUuid: userUuid,
             hasAddresses: hasAddresses,
             lastOrder: lastOrder,
-            profileState: profieState
+            profileState: profieState,
+            actionList: actionList
         )
         return copy
     }

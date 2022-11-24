@@ -177,15 +177,19 @@ struct CreateOrderSuccessView:View {
             VStack(spacing:0){
                 HStack(spacing:0){
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
+                        .foregroundColor(Color("onSurface"))
                     Spacer()
                     Text(viewModel.creationOrderViewState.totalCost)
+                        .foregroundColor(Color("onSurface"))
                 }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                 
                 if(viewModel.creationOrderViewState.isDelivery){
                     HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                            .foregroundColor(Color("onSurface"))
                         Spacer()
                         Text(viewModel.creationOrderViewState.deliveryCost)
+                            .foregroundColor(Color("onSurface"))
                     }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
                     HStack(spacing:0){
                         BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)

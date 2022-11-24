@@ -16,6 +16,11 @@ class ChangeCityViewModel: ObservableObject {
         changeCityState: ChangeCityState.loading
     )
     var cityList: [City] = []
+    
+    init(){
+        loadData()
+    }
+    
     func loadData(){
         iosComponent.provideCityInteractor().observeCityList().watch { arr in
             self.cityList = arr as! [City]

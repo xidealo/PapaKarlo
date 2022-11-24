@@ -39,7 +39,25 @@ class CreateAddressViewModel : ObservableObject {
         }
     }
     
-    func onCreateAddressClicked(streetName: String, house: String, flat: String, entrance: String, floor: String, comment: String, action: @escaping (_ isBack:Bool) -> Void){
+    func onCreateAddressClicked(
+        streetName: String,
+        house: String,
+        flat: String,
+        entrance: String,
+        floor: String,
+        comment: String,
+        action: @escaping (_ isBack:Bool) -> Void){
+        
+        (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in
+            newState.hasStreetError = false
+            newState.hasHouseError = false
+            newState.hasFlatError = false
+            newState.hasEntranceError = false
+            newState.hasFloorError = false
+            newState.hasCommentError = false
+
+            createAddressViewState = newState
+        }
         
         if(!createAddressViewState.streetList.contains(where: {streetName == $0.name})){
             (createAddressViewState.copy() as! CreateAddressViewState).apply { newState in

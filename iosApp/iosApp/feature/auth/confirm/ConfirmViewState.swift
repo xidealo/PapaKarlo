@@ -11,9 +11,13 @@ import Foundation
 class ConfirmViewState :NSObject {
     
     var confirmState:ConfirmState
-    
-    init(confirmState:ConfirmState){
+    var actionList:[ConfirmAction]
+
+    init(confirmState:ConfirmState, actionList:[ConfirmAction]){
         self.confirmState = confirmState
+        self.actionList = actionList
     }
     
+    
 }
+

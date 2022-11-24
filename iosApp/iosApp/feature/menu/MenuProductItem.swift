@@ -7,9 +7,10 @@
 
 import SwiftUI
 struct MenuProductItem:Identifiable  {
-     let id: String
-     let name: String
-     let newPrice: String
-     let oldPrice: Int?
-     let photoLink: String
+    let id: String
+    let productUuid: String
+    let name: String
+    let newPrice: String
+    let oldPrice: Int?
+    let photoLink: String
 }
