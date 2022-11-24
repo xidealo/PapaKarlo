@@ -248,9 +248,10 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     findNavController().navigate(toCreateAddressFragment())
                 }
                 is OrderCreationUiState.Event.ShowUserAddressListEvent -> {
-                    val result =
-                        UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
-                    handleUserAddressListResult(result)
+                    UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
+                        ?.let { result ->
+                            handleUserAddressListResult(result)
+                        }
                 }
                 is OrderCreationUiState.Event.ShowCafeAddressListEvent -> {
                     CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
@@ -294,9 +295,8 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                 viewModel.onUserAddressChanged(result.addressItem.uuid)
             }
             is UserAddressListResult.AddNewAddress -> {
-                findNavController().navigate(CreateOrderFragmentDirections.toCreateAddressFragment())
+                findNavController().navigate(toCreateAddressFragment())
             }
-            is UserAddressListResult.Cancel -> {}
         }
     }
 

@@ -1,10 +1,7 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.comment
 
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,36 +16,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.fragment.app.FragmentManager
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
+import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.BottomSheetBinding
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class CommentBottomSheet : BottomSheetDialogFragment() {
+class CommentBottomSheet : ComposeBottomSheet<String>() {
 
     private var comment by nullableArgument<String>()
-    private var callback: Callback? = null
-
-    private val binding by viewBinding(BottomSheetBinding::bind)
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet, container, true)
-    }
-
-    override fun getTheme(): Int {
-        return R.style.BottomSheetDialogStyle
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,15 +41,6 @@ class CommentBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        super.onCancel(dialog)
-        callback?.onResult(null)
-    }
-
-    private interface Callback {
-        fun onResult(result: String?)
-    }
-
     companion object {
         private const val TAG = "CafeAddressListBottomSheet"
 
@@ -78,7 +50,7 @@ class CommentBottomSheet : BottomSheetDialogFragment() {
         ) = suspendCoroutine { continuation ->
             CommentBottomSheet().apply {
                 this.comment = comment
-                callback = object : Callback {
+                callback = object : Callback<String> {
                     override fun onResult(result: String?) {
                         continuation.resume(result)
                         dismiss()
