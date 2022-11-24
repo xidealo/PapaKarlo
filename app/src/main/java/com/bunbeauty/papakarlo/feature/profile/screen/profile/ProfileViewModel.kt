@@ -11,6 +11,14 @@ import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.profile.Profile
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
