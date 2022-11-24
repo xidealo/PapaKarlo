@@ -111,7 +111,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
     }
 
     override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
-        return getDataWithAuth(
+        return getData(
             path = "address",
             serializer = ListServer.serializer(AddressServer.serializer()),
             token = token

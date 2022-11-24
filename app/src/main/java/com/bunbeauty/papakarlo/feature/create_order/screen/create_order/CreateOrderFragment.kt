@@ -296,7 +296,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     )
                 }
                 is OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent -> {
-                    viewModel.showError(resources.getString(R.string.error_create_order_user), true)
+                    viewModel.showError(resources.getString(R.string.error_user), true)
                 }
                 is OrderCreationUiState.Event.OrderCreatedEvent -> {
                     viewModel.showMessage(
