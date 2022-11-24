@@ -284,7 +284,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                         fragmentManager = childFragmentManager,
                         deferredTime = event.deferredTime,
                         minTime = event.minTime,
-                        title =  resources.getString(titleId)
+                        title = resources.getString(titleId)
                     )?.let { deferredTime ->
                         viewModel.onDeferredTimeSelected(deferredTime)
                     }
