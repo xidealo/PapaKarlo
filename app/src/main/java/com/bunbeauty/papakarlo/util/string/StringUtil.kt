@@ -1,14 +1,13 @@
 package com.bunbeauty.papakarlo.util.string
 
-import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
-import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.model.order.OrderStatus.*
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.date_time.DateTime
-import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider
@@ -33,11 +32,11 @@ class StringUtil(
             val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
             val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
             userAddress.street.name +
-                    getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
-                    getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
-                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
-                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
-                    getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+                getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
+                getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
+                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
+                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
+                getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
         }
     }
 
@@ -100,13 +99,13 @@ class StringUtil(
 
     override fun getOrderStatusName(orderStatus: OrderStatus): String {
         return when (orderStatus) {
-            NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
-            ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
-            PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
-            SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
-            DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
-            DONE -> resourcesProvider.getString(R.string.msg_status_done)
-            CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
+            OrderStatus.NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
+            OrderStatus.ACCEPTED -> resourcesProvider.getString(R.string.msg_status_accepted)
+            OrderStatus.PREPARING -> resourcesProvider.getString(R.string.msg_status_preparing)
+            OrderStatus.SENT_OUT -> resourcesProvider.getString(R.string.msg_status_sent_out)
+            OrderStatus.DELIVERED -> resourcesProvider.getString(R.string.msg_status_delivered)
+            OrderStatus.DONE -> resourcesProvider.getString(R.string.msg_status_done)
+            OrderStatus.CANCELED -> resourcesProvider.getString(R.string.msg_status_canceled)
         }
     }
 

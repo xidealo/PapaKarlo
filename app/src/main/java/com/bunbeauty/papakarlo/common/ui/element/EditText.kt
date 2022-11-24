@@ -135,6 +135,5 @@ fun EditTextPreview() {
         labelStringId = R.string.hint_create_order_comment,
         editTextType = EditTextType.TEXT
     ) {
-
     }
 }

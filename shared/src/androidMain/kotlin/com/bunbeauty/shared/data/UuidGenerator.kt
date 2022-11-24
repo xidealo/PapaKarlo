@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.data
 
-import java.util.*
+import java.util.UUID
 
 actual class UuidGenerator {
 

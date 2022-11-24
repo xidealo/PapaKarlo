@@ -1,14 +1,18 @@
 package com.bunbeauty.papakarlo.feature.order.screen.order_list
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
 import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
-import kotlinx.coroutines.flow.*
+import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class OrderListViewModel(
@@ -39,5 +43,4 @@ class OrderListViewModel(
     fun onOrderClicked(orderItem: OrderItem) {
         router.navigate(toOrderDetailsFragment(orderItem.uuid, orderItem.code))
     }
-
 }

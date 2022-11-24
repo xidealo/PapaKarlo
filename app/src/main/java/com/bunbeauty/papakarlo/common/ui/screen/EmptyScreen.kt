@@ -68,4 +68,3 @@ private fun EmptyScreenPreview() {
         buttonTextId = R.string.action_consumer_cart_menu,
     )
 }
-
