@@ -98,11 +98,16 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     @Composable
     private fun AddressCard(orderCreationState: OrderCreationUiState) {
+        val labelStringId = if (orderCreationState.isDelivery) {
+            R.string.delivery_address
+        } else {
+            R.string.cafe_address
+        }
         if (orderCreationState.isDelivery) {
             if (orderCreationState.deliveryAddress == null) {
                 NavigationCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = orderCreationState.addressLabelId,
+                    labelStringId = labelStringId,
                     isClickable = !orderCreationState.isLoading
                 ) {
                     viewModel.onUserAddressClicked()
@@ -110,7 +115,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
             } else {
                 NavigationTextCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    hintStringId = orderCreationState.addressLabelId,
+                    hintStringId = labelStringId,
                     label = orderCreationState.deliveryAddress,
                     isClickable = !orderCreationState.isLoading
                 ) {
@@ -120,7 +125,7 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
         } else {
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                hintStringId = orderCreationState.addressLabelId,
+                hintStringId = labelStringId,
                 label = orderCreationState.pickupAddress ?: "",
                 isClickable = !orderCreationState.isLoading
             ) {
@@ -167,9 +172,14 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
 
     @Composable
     private fun DeferredTimeCard(orderCreationState: OrderCreationUiState) {
+        val hintStringId = if (orderCreationState.isDelivery) {
+            R.string.delivery_time
+        } else {
+            R.string.pickup_time
+        }
         NavigationTextCard(
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = orderCreationState.deferredTimeLabelId,
+            hintStringId = hintStringId,
             label = orderCreationState.deferredTime,
             isClickable = !orderCreationState.isLoading
         ) {
@@ -265,17 +275,28 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     }
                 }
                 is OrderCreationUiState.Event.ShowDeferredTimeEvent -> {
+                    val titleId = if (event.isDelivery) {
+                        R.string.delivery_time
+                    } else {
+                        R.string.pickup_time
+                    }
                     DeferredTimeBottomSheet.show(
                         fragmentManager = childFragmentManager,
                         deferredTime = event.deferredTime,
                         minTime = event.minTime,
-                        title = event.title,
+                        title =  resources.getString(titleId)
                     )?.let { deferredTime ->
                         viewModel.onDeferredTimeSelected(deferredTime)
                     }
                 }
-                is OrderCreationUiState.Event.ShowErrorEvent -> {
-                    viewModel.showError(event.message, true)
+                is OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent -> {
+                    viewModel.showError(
+                        resources.getString(R.string.error_something_went_wrong),
+                        true
+                    )
+                }
+                is OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent -> {
+                    viewModel.showError(resources.getString(R.string.error_create_order_user), true)
                 }
                 is OrderCreationUiState.Event.OrderCreatedEvent -> {
                     viewModel.showMessage(

@@ -1,18 +1,14 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
-import androidx.annotation.StringRes
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,
-    @StringRes val addressLabelId: Int = R.string.delivery_address,
     val deliveryAddress: String? = null,
     val pickupAddress: String? = null,
     val comment: String? = null,
-    @StringRes val deferredTimeLabelId: Int = R.string.delivery_time,
     val deferredTime: String = "",
     val totalCost: String? = null,
     val deliveryCost: String? = null,
@@ -35,11 +31,12 @@ data class OrderCreationUiState(
         class ShowDeferredTimeEvent(
             val deferredTime: TimeUI,
             val minTime: TimeUI.Time,
-            val title: String
+            val isDelivery: Boolean
         ) : Event
 
         class ShowCommentInputEvent(val comment: String?) : Event
-        class ShowErrorEvent(val message: String) : Event
+        object ShowUserUnauthorizedErrorEvent : Event
+        object ShowSomethingWentWrongErrorEvent : Event
         class OrderCreatedEvent(val code: String) : Event
     }
 

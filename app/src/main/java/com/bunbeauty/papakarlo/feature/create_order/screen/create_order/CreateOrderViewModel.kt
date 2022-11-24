@@ -1,8 +1,6 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
-import android.content.res.Resources
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
@@ -41,8 +39,7 @@ class CreateOrderViewModel(
     private val getUserAddressList: GetUserAddressListUseCase,
     private val getCafeList: GetCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
-    private val getMinTime: GetMinTimeUseCase,
-    private val resources: Resources
+    private val getMinTime: GetMinTimeUseCase
 ) : BaseViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
@@ -65,19 +62,7 @@ class CreateOrderViewModel(
     fun onSwitcherPositionChanged(position: Int) {
         (position == 0).let { isDelivery ->
             mutableOrderCreationState.update { state ->
-                state.copy(
-                    isDelivery = isDelivery,
-                    addressLabelId = if (isDelivery) {
-                        R.string.delivery_address
-                    } else {
-                        R.string.cafe_address
-                    },
-                    deferredTimeLabelId = if (isDelivery) {
-                        R.string.delivery_time
-                    } else {
-                        R.string.pickup_time
-                    }
-                )
+                state.copy(isDelivery = isDelivery)
             }
         }
         withLoading {
@@ -123,15 +108,14 @@ class CreateOrderViewModel(
     }
 
     fun onDeferredTimeClicked() {
-        val title = resources.getString(mutableOrderCreationState.value.deferredTimeLabelId)
         val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
         viewModelScope.launch {
-            val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
-                deferredTime = deferredTime,
-                minTime = timeMapper.toUiModel(getMinTime()),
-                title = title
-            )
             mutableOrderCreationState.update { state ->
+                val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
+                    deferredTime = deferredTime,
+                    minTime = timeMapper.toUiModel(getMinTime()),
+                    isDelivery = state.isDelivery
+                )
                 state + event
             }
         }
@@ -192,9 +176,7 @@ class CreateOrderViewModel(
                     },
                 )
                 if (orderCode == null) {
-                    val event = OrderCreationUiState.Event.ShowErrorEvent(
-                        message = resources.getString(R.string.error_something_went_wrong)
-                    )
+                    val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
                     mutableOrderCreationState.update { it + event }
                 } else {
                     cartProductInteractor.removeAllProductsFromCart()
@@ -203,9 +185,7 @@ class CreateOrderViewModel(
                     mutableOrderCreationState.update { it + event }
                 }
             } else {
-                val event = OrderCreationUiState.Event.ShowErrorEvent(
-                    message = resources.getString(R.string.error_create_order_user)
-                )
+                val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
                 mutableOrderCreationState.update { it + event }
             }
         }
@@ -267,10 +247,7 @@ class CreateOrderViewModel(
                 )
             }
         } catch (exception: Exception) {
-            val event = OrderCreationUiState.Event.ShowErrorEvent(
-                message = exception.message
-                    ?: resources.getString(R.string.error_something_went_wrong)
-            )
+            val event = OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent
             mutableOrderCreationState.update { state ->
                 state + event
             }
