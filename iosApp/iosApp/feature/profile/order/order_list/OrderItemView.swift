@@ -11,27 +11,34 @@ struct OrderItemView<Content: View>: View {
     
     let orderItem:OrderItem
     let destination:Content
-
+    
     var body: some View {
         NavigationLink(
             destination:destination
         ){
-        HStack{
-            Text(orderItem.code).foregroundColor(Color("onSurface"))
-                .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
-                .frame(width: 60)
-            
-            OrderChip(orderStatus: orderItem.status)
-            
-            Spacer()
-            Text(orderItem.dateTime)
-                .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
-                .foregroundColor(Color("onSurface"))
-            
-        }.frame(maxWidth:.infinity)
-        .padding(Diems.MEDIUM_PADDING)
-        .background(Color("surface"))
-        .cornerRadius(Diems.MEDIUM_RADIUS)
+            HStack(spacing:0){
+                Text(orderItem.code)
+                    .foregroundColor(Color("onSurface"))
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+                
+                OrderChip(orderStatus: orderItem.status)
+                    .padding(.leading, Diems.SMALL_PADDING)
+                
+                Spacer()
+                
+                Text(orderItem.dateTime)
+                    .font(
+                        .system(
+                            size: Diems.SMALL_TEXT_SIZE,
+                                weight: .thin,
+                                design: .default
+                        )
+                    )
+                    .foregroundColor(Color("onSurface"))
+            }.frame(maxWidth:.infinity)
+                .padding(Diems.MEDIUM_PADDING)
+                .background(Color("surface"))
+                .cornerRadius(Diems.MEDIUM_RADIUS)
         }
     }
 }

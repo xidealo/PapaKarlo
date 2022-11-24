@@ -10,12 +10,12 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
-import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -31,7 +31,8 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         interactorModule(),
         useCaseModule(),
         utilModule(),
-        platformModule()
+        platformModule(),
+        useCaseModule()
     )
 }
 
@@ -43,7 +44,8 @@ fun initKoin() = startKoin {
         repositoryModule(),
         interactorModule(),
         utilModule(),
-        platformModule()
+        platformModule(),
+        useCaseModule()
     )
 }
 
@@ -59,4 +61,5 @@ class IosComponent:KoinComponent {
     fun provideIOrderInteractor(): IOrderInteractor = get()
     fun provideIAddressInteractor(): IAddressInteractor = get()
     fun provideIStreetInteractor(): IStreetInteractor = get()
+    fun provideDisableUserUseCase(): DisableUserUseCase = get()
 }

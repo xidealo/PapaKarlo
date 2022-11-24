@@ -11,28 +11,37 @@ import shared
 struct AboutAppView: View {
     
     let version:String
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     init(){
-        version = "1.0.0"
+        version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "error"
     }
     
     var body: some View {
-        
-        VStack{
-            ToolbarView(title: Strings.TITLE_ABOUT_APP, cost: "220 R", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+        VStack(spacing:0){
+            ToolbarView(
+                title: Strings.TITLE_ABOUT_APP,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
-            VStack{
+            VStack(spacing:0){
                 ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: Constants.init().BB_VK_LINK)!)
                 }
                 
-                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: true)
+                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: false)
+                    .padding(.top, Diems.SMALL_PADDING)
                 
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()
         }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
     }
 }
 

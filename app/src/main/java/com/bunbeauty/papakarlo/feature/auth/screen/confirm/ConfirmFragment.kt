@@ -39,6 +39,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
     override val viewModel: ConfirmViewModel by stateViewModel(state = {
         arguments ?: bundleOf()
     })
+
     override val viewBinding by viewBinding(FragmentConfirmBinding::bind)
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()

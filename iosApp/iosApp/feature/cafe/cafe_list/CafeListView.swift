@@ -10,17 +10,16 @@ import SwiftUI
 struct CafeListView: View {
     
     @ObservedObject private var viewModel = viewModelStore.getCafeListViewModelViewModel()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-            VStack{
-                ToolbarView(title: Strings.TITLE_CAFE_LIST, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-        
+            VStack(spacing:0){
                 if viewModel.cafeViewState.isLoading{
                     LoadingView()
                 }
                 else{
                     ScrollView {
-                        LazyVStack{
+                        LazyVStack(spacing:0){
                             ForEach(viewModel.cafeViewState.cafeItemList){ cafe in
                                 NavigationLink(
                                     destination: CafeOptionsView(phone: cafe.phone, address: cafe.address, latitude: cafe.latitude, longitude: cafe.longitude)
@@ -30,10 +29,9 @@ struct CafeListView: View {
                                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 }
                             }
-                        }
-                    }.padding(.top, Diems.MEDIUM_PADDING)
+                        }.padding(.top, Diems.MEDIUM_PADDING)
+                    }
                 }
-                BottomBarView(isSelected: 0)
             }.background(Color("background")).hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.fetchData()

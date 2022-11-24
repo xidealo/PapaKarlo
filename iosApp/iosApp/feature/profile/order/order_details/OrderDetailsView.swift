@@ -11,17 +11,25 @@ import Kingfisher
 struct OrderDetailsView: View {
     
     @ObservedObject private var viewModel : OrderDetailsViewModel
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     init(orderUuid:String){
         viewModel = OrderDetailsViewModel(uuid: orderUuid)
     }
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: viewModel.orderDetailsViewState.code, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: viewModel.orderDetailsViewState.code,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
             ZStack(alignment: .bottom){
-                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
                 
                 ScrollView {
                     LazyVStack(spacing: 0){
@@ -34,18 +42,24 @@ struct OrderDetailsView: View {
                             .padding(.top, Diems.MEDIUM_PADDING)
                             .padding(.bottom, Diems.SMALL_PADDING)
                         
-                        ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
-                            OrderProductItemView(orderProductItem: orderProductItem)
-                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                .padding(.top, Diems.SMALL_PADDING)
+                        VStack(spacing: 0){
+                            ForEach(viewModel.orderDetailsViewState.orderProductList){ orderProductItem in
+                                OrderProductItemView(orderProductItem: orderProductItem)
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    .padding(.top, Diems.SMALL_PADDING)
+                            }
                         }
-                        
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
                 }
+                
+                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
+                    .frame(height:20)
+
             }
-            VStack{
+            VStack(spacing:0){
                 if(viewModel.orderDetailsViewState.deliveryCost != nil){
-                    HStack{
+                    HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                         Spacer()
                         Text(viewModel.orderDetailsViewState.deliveryCost ?? "0")
@@ -54,7 +68,7 @@ struct OrderDetailsView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                 }
                 
-                HStack{
+                HStack(spacing:0){
                     BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                     Spacer()
                     BoldText(text: viewModel.orderDetailsViewState.newAmountToPay)
@@ -64,8 +78,15 @@ struct OrderDetailsView: View {
                 .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
             
-        }.background(Color("background"))
-            .hiddenNavigationBarStyle()
+        }
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
+        .onAppear(){
+            viewModel.subscribeOnOrders()
+        }
+        .onDisappear(){
+            viewModel.unsubscribeFromOrders()
+        }
     }
 }
 

@@ -12,12 +12,13 @@ var consumerCartView = ConsumerCartView()
 
 class ConsumerCartViewModel : ObservableObject  {
     
-    @Published var consumerCartViewState:ConsumerCartViewState = ConsumerCartViewState(
+    @Published var consumerCartViewState : ConsumerCartViewState = ConsumerCartViewState(
         forFreeDelivery: "",
         cartProductList: [],
         oldTotalCost: nil,
         newTotalCost: "",
-        consumerCartState: ConsumerCartState.loading
+        consumerCartState: ConsumerCartState.loading,
+        actions: []
     )
     
     var closable : Ktor_ioCloseable? = nil
@@ -51,13 +52,27 @@ class ConsumerCartViewModel : ObservableObject  {
     }
     
     func getConsumerCartViewState(cartWithProducts:ConsumerCart.WithProducts?) -> ConsumerCartViewState {
-        return ConsumerCartViewState(forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0), cartProductList: getCartProductItems(cartWithProducts: cartWithProducts), oldTotalCost: cartWithProducts?.oldTotalCost as? Int, newTotalCost: String(cartWithProducts?.newTotalCost ?? 0) + Strings.CURRENCY, consumerCartState: ConsumerCartState.hasData
+        return ConsumerCartViewState(
+            forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0),
+            cartProductList: getCartProductItems(cartWithProducts: cartWithProducts),
+            oldTotalCost: cartWithProducts?.oldTotalCost as? Int,
+            newTotalCost: String(cartWithProducts?.newTotalCost ?? 0) + Strings.CURRENCY,
+            consumerCartState: ConsumerCartState.hasData,
+            actions: []
         )
     }
     
     func getCartProductItems(cartWithProducts:ConsumerCart.WithProducts?) -> [CartProductItem]{
         return cartWithProducts?.cartProductList.map({ lightCartProduct in
-            CartProductItem(id: lightCartProduct.uuid, name: lightCartProduct.name, newCost: String(lightCartProduct.newCost) + Strings.CURRENCY, oldCost: lightCartProduct.oldCost as? Int, photoLink: lightCartProduct.photoLink, count: Int(lightCartProduct.count) , menuProductUuid: lightCartProduct.menuProductUuid)
+            CartProductItem(
+                id: lightCartProduct.uuid,
+                name: lightCartProduct.name,
+                newCost: String(lightCartProduct.newCost) + Strings.CURRENCY,
+                oldCost: lightCartProduct.oldCost as? Int,
+                photoLink: lightCartProduct.photoLink,
+                count: Int(lightCartProduct.count),
+                menuProductUuid: lightCartProduct.menuProductUuid
+            )
         }) ?? []
     }
     
@@ -72,21 +87,33 @@ class ConsumerCartViewModel : ObservableObject  {
             print("minus product \(productUuid)")
         }
     }
+    
     func checkAuthorization(){
         iosComponent.provideIUserInteractor().isUserAuthorize { isAuthorized, err in
             if(isAuthorized == true){
                 (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
                     copiedState.cartProductList = []
-                    copiedState.consumerCartState = ConsumerCartState.goToCreateOrder
+                    copiedState.actions.append(ConsumerCartAction.openCreateOrderAction)
                     self.consumerCartViewState = copiedState
                 }
             }else{
                 (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
                     copiedState.cartProductList = []
-                    copiedState.consumerCartState = ConsumerCartState.goToLogin
+                    copiedState.actions.append(ConsumerCartAction.openLoginAction)
                     self.consumerCartViewState = copiedState
                 }
             }
         }
     }
+    
+    func consumeActions(){
+        (self.consumerCartViewState.copy() as! ConsumerCartViewState).apply { copiedState in
+            copiedState.actions = []
+            self.consumerCartViewState = copiedState
+        }
+    }
+}
+
+enum ConsumerCartAction {
+    case openCreateOrderAction, openLoginAction
 }

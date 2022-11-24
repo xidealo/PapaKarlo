@@ -13,7 +13,7 @@ struct CategoryItemView: View {
     let action: (_ tagName:String) -> Void
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             if(categoryItemModel.isSelected){
                 Button(action:{
                     action(categoryItemModel.name)
@@ -26,8 +26,8 @@ struct CategoryItemView: View {
                 }
             }else{
                 Button(action: {
-                    action(categoryItemModel.name)}
-                ) {
+                    action(categoryItemModel.name)
+                }) {
                     Text(categoryItemModel.name)
                         .padding(Diems.SMALL_PADDING)
                         .background(Color("surface"))

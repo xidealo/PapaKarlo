@@ -46,4 +46,10 @@ internal fun useCaseModule() = module {
             dataStoreRepo = get(),
         )
     }
+    factory {
+        DisableUserUseCase(
+            userRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
 }

@@ -9,13 +9,12 @@ import SwiftUI
 
 struct MenuView: View {
     
-    @ObservedObject private var viewModel = viewModelStore.getMenuViewModel()
+    @ObservedObject private var viewModel = MenuViewModel()//viewModelStore.getMenuViewModel()
     @State var lastShowCategory = ""
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack(spacing:0){
-            ToolbarView(title: Strings.TITLE_MENU, cost: viewModel.toolbarViewState.cost, count: viewModel.toolbarViewState.count,  isShowBackArrow: false, isCartVisible: true, isLogoutVisible: false)
-            
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
@@ -34,9 +33,9 @@ struct MenuView: View {
                         .onChange(of: viewModel.menuViewState, perform: { menuState in
                             print("select horizontal tag")
                             print(menuState.scrollToPostion)
-                                withAnimation(.spring()){
-                                    scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
-                                }
+                            withAnimation(.spring()){
+                                scrollReader.scrollTo(menuState.scrollToHorizontalPostion)
+                            }
                         })
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)
@@ -44,14 +43,14 @@ struct MenuView: View {
                 ScrollView {
                     ScrollViewReader{ scrollReader in
                         LazyVStack(spacing:0){
-                            ForEach(viewModel.menuViewState.menuItems){ menuItem in
+                            ForEach(viewModel.menuViewState.menuItems.indices){  i in
                                 Section(
                                     header: LargeHeaderText(
-                                        text:menuItem.categorySectionItem.name
-                                    ).id(menuItem.categorySectionItem.id)
+                                        text:viewModel.menuViewState.menuItems[i].categorySectionItem.name
+                                    ).id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
                                         .padding(.horizontal,  Diems.MEDIUM_PADDING)
                                         .padding(.top, Diems.MEDIUM_PADDING)){
-                                            ForEach(menuItem.categorySectionItem.menuProdctItems){ menuProductItem in
+                                            ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                                 NavigationLink(
                                                     destination:ProductDetailsView(menuProductUuid: menuProductItem.id)
                                                 ){
@@ -61,12 +60,15 @@ struct MenuView: View {
                                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
+                                                .onAppear(){
+                                                    print("onAppear \(i)")
+                                                    viewModel.checkAppear(index: i)
+                                                }
+                                                .onDisappear(){
+                                                    print("onDisappear \(i)")
+                                                    viewModel.checkDisappear(index: i)
+                                                }
                                             }
-                                        }
-                                        .onAppear(){
-                                            print("show tag")
-                                            print(menuItem.categorySectionItem.name)
-                                            viewModel.selectTagWithHorizontalScroll(tagName: menuItem.categorySectionItem.name)
                                         }
                             }
                         }.onChange(of: viewModel.menuViewState, perform: { menuState in
@@ -80,13 +82,13 @@ struct MenuView: View {
                     }
                 }
             }
-            BottomBarView(isSelected: 1)
-        }.background(Color("background"))
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+        }
+        .background(Color("background"))
+        .navigationBarTitle("")
+        .hiddenNavigationBarStyle()
+        .preferredColorScheme(.light)
     }
 }
-
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {

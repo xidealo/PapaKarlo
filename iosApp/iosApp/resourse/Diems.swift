@@ -18,7 +18,6 @@ class Diems {
     static let MEDIUM_TEXT_SIZE:CGFloat = 16
     static let SMALL_TEXT_SIZE:CGFloat = 14
 
-    
     static let LARGE_RADIUS:CGFloat = 16
     static let MEDIUM_RADIUS:CGFloat = 8
     static let SMALL_RADIUS:CGFloat = 6

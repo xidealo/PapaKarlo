@@ -11,17 +11,25 @@ import shared
 struct SelectCityView: View {
     
     @ObservedObject private var viewModel = SelectCityViewModel()
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
         VStack{
             NavigationLink(
-                destination:MenuView(),
+                destination:ContainerView(selection: 1),
                 isActive: $viewModel.selectCityViewState.isGoToMenu
             ){
                 EmptyView()
             }
             
-            ToolbarView(title: Strings.TITLE_SELECT_CITY_CITY,  cost: "", count: "", isShowBackArrow: false, isCartVisible: false, isLogoutVisible: false)
+            ToolbarView(
+                title: Strings.TITLE_SELECT_CITY_CITY,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                })
             if viewModel.selectCityViewState.isLoading{
                 LoadingView()
             }else{
@@ -40,16 +48,21 @@ struct SelectCitySuccessView : View {
     
     var body: some View {
         ScrollView {
-            LazyVStack{
+            LazyVStack(spacing:0){
                 ForEach(cityList){ city in
                     Button {
                         viewModel.saveSelectedCity(city: city.city)
                     } label: {
-                        CityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        CityItemView(city: city)
+                            .padding(.bottom, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
                 }
             }
-        }.padding(.top, Diems.MEDIUM_PADDING)
+        }
+        .padding(.top, Diems.MEDIUM_PADDING)
+        .preferredColorScheme(.light)
+
     }
 }
 

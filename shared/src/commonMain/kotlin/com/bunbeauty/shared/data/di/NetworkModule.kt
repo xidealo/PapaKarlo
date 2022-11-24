@@ -29,12 +29,6 @@ fun networkModule() = module {
     single {
         HttpClient(httpClientEngine) {
 
-//        engine {
-//            preconfigured = OkHttpClient.Builder()
-//                .pingInterval(20, TimeUnit.SECONDS)
-//                .build()
-//        }
-
             install(ContentNegotiation) {
                 json(
                     Json {

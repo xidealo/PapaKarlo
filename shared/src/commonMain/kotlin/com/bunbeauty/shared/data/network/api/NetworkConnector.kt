@@ -39,7 +39,11 @@ interface NetworkConnector {
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
 
+    suspend fun patchDisableUser(
+        token: String,
+        patchUserServer: PatchUserServer
+    ): ApiResult<ProfileServer>
+
     fun subscribeOnOrderUpdates(token: String): Flow<OrderServer>
     suspend fun unsubscribeOnOrderUpdates()
-
 }

@@ -10,18 +10,21 @@ import SwiftUI
 
 struct BottomBarView: View {
     
-    @State var isSelected:Int
+    @Binding var selection:Int
+    @Binding var title:String
+
     let iconSize = CGFloat(22)
     let iconBlockHeight = CGFloat(24)
     let iconTopPaddig = CGFloat(8)
-
+    
     var body: some View {
         HStack(spacing:0){
-            NavigationLink(
-                destination:CafeListView()
-            ){
-                VStack{
-                    if(isSelected == 0){
+            Button {
+                selection = 0
+                title = Strings.TITLE_CAFE_LIST
+            } label: {
+                VStack(spacing:0){
+                    if(selection == 0){
                         ZStack{
                             IconImage(width: 20, height: 24, imageName: "CafesIcon")
                                 .padding(.top, iconTopPaddig)
@@ -44,11 +47,13 @@ struct BottomBarView: View {
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
-            NavigationLink(
-                destination:MenuView()
-            ){
-                VStack{
-                    if(isSelected == 1){
+
+            Button {
+                selection = 1
+                title = Strings.TITLE_MENU
+            } label: {
+                VStack(spacing:0){
+                    if(selection == 1){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "MenuIcon")
                                 .padding(.top, iconTopPaddig)
@@ -72,11 +77,12 @@ struct BottomBarView: View {
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
             
-            NavigationLink(
-                destination:ProfileView(show: false)
-            ){
-                VStack{
-                    if(isSelected == 2){
+            Button {
+                selection = 2
+                title = Strings.TITLE_PROFILE
+            } label: {
+                VStack(spacing:0){
+                    if(selection == 2){
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "ProfileIcon")
                                 .padding(.top, iconTopPaddig)
@@ -95,12 +101,7 @@ struct BottomBarView: View {
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
+          
         }.background(Color("surface"))
-    }
-}
-
-struct BottomBarView_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomBarView(isSelected: 1)
     }
 }

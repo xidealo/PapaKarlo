@@ -10,44 +10,68 @@ import SwiftUI
 struct ConsumerCartView: View {
     
     @ObservedObject var viewModel: ConsumerCartViewModel = viewModelStore.getConsumerCartViewModel()
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @State var openCreateOrder:Bool = false
+    @State var openLogin:Bool = false
+
     var body: some View {
-        VStack{
-            ToolbarView(title: Strings.TITLE_CART_PRODUCTS, cost: "", count: "",  isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+        VStack(spacing:0){
+            ToolbarView(
+                title: Strings.TITLE_CART_PRODUCTS,
+                cost: "",
+                count: "",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
+            NavigationLink(
+                destination:LoginView(isGoToProfile: false),
+                isActive: $openLogin
+            ){
+                EmptyView()
+            }
+            NavigationLink(
+                destination:CreateOrderView(),
+                isActive: $openCreateOrder
+            ){
+                EmptyView()
+            }
             
             switch viewModel.consumerCartViewState.consumerCartState{
             case .loading: LoadingView()
             case .notAuthorized: EmptyView()
             case .empty: ConsumerCartEmptyScreen()
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
-            case .goToLogin:NavigationLink(
-                destination:LoginView(isGoToProfile: false),
-                isActive: .constant(true)
-            ){
-                EmptyView()
-            }
-            case .goToCreateOrder:NavigationLink(
-                destination:CreateOrderView(),
-                isActive: .constant(true)
-            ){
-                EmptyView()
-            }
             }
         }
         .background(Color("background"))
-        .navigationBarHidden(true)
+        .hiddenNavigationBarStyle()
         .onAppear() {
             viewModel.fetchData()
         }
         .onDisappear(){
             viewModel.removeListener()
         }
+        .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
+            consumerCartViewState.actions.forEach { action in
+                switch(action){
+                case ConsumerCartAction.openLoginAction : openLogin = true
+                case ConsumerCartAction.openCreateOrderAction : openCreateOrder = true
+                }
+                
+                if !consumerCartViewState.actions.isEmpty{
+                    viewModel.consumeActions()
+                }
+            }
+        })
     }
 }
 
 struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
-        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData), viewModel: ConsumerCartViewModel())
+        ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData, actions: []), viewModel: ConsumerCartViewModel())
     }
 }
 
@@ -56,6 +80,7 @@ struct ConsumerCartViewEmpty_Previews: PreviewProvider {
         ConsumerCartEmptyScreen()
     }
 }
+
 struct ConsumerCartSuccessScreen: View {
     
     let consumerCartUI : ConsumerCartViewState
@@ -64,29 +89,32 @@ struct ConsumerCartSuccessScreen: View {
     var body: some View {
         VStack(spacing:0){
             ZStack(alignment: .bottom){
-                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom).frame(height:20)
-                
                 ScrollView {
                     LazyVStack(spacing:0){
-                        
-                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)")
+                        Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)\(Strings.CURRENCY)")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
-                        
-                        ForEach(consumerCartUI.cartProductList){ cartProductItem in
-                            CartProductView(cartProductItem: cartProductItem, plusAction: {
-                                viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }, minusAction: {
-                                viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
-                            }).padding(.horizontal, Diems.MEDIUM_PADDING)
+                        VStack(spacing: 0){
+                            ForEach(consumerCartUI.cartProductList){ cartProductItem in
+                                CartProductView(cartProductItem: cartProductItem, plusAction: {
+                                    viewModel.plusProduct(productUuid: cartProductItem.menuProductUuid)
+                                }, minusAction: {
+                                    viewModel.minusProduct(productUuid: cartProductItem.menuProductUuid)
+                                })
+                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                .padding(.bottom, Diems.SMALL_PADDING)
+                            }
                         }
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
                 }
+                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
+                    .frame(height:20)
             }
             
-            VStack{
-                HStack{
+            VStack(spacing:0){
+                HStack(spacing:0){
                     BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                     Spacer()
                     
@@ -127,7 +155,7 @@ struct ConsumerCartEmptyScreen: View {
             Button {
                 presentationMode.wrappedValue.dismiss()
             } label: {
-                Text(Strings.ACTION_CART_PRODUCT_MENU).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_CART_PRODUCT_BACK).frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))

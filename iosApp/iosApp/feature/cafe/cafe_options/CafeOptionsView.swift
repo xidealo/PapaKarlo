@@ -12,12 +12,21 @@ struct CafeOptionsView: View {
     let address:String
     let latitude:Float
     let longitude : Float
-    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+
     var body: some View {
-        VStack{
-            ToolbarView(title: Strings.TITLE_CAFE_OPTIONS, cost: "", count: "2", isShowBackArrow: true, isCartVisible: false, isLogoutVisible: false)
+        VStack(spacing:0){
+            ToolbarView(
+                title: Strings.TITLE_CAFE_OPTIONS,
+                cost: "",
+                count: "2",
+                isCartVisible: false,
+                back: {
+                    self.mode.wrappedValue.dismiss()
+                }
+            )
             
-            VStack{
+            VStack(spacing:0){
                 ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false, isShowRightArrow: true){
                     UIApplication.shared.open(URL(string: "tel://" + phone.removeWhitespace())!)
                 }
@@ -26,15 +35,22 @@ struct CafeOptionsView: View {
                     
                     UIApplication.shared.open(URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(latitude),\(longitude)")!)
                 }
+                .padding(.top, Diems.SMALL_PADDING)
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()
-        }.frame(maxWidth:.infinity, maxHeight: .infinity).background(Color("background"))
-        .navigationBarHidden(true)    }
+        }
+        .frame(maxWidth:.infinity, maxHeight: .infinity)
+        .background(Color("background"))
+        .hiddenNavigationBarStyle()
+
+    }
 }
 
 struct CafeOptionsView_Previews: PreviewProvider {
     static var previews: some View {
-        CafeOptionsView(phone: "8-996-922-41-86", address: "Chapaevo 22a", latitude: 0, longitude: 0)
+        CafeOptionsView(
+            phone: "8-996-922-41-86", address: "Chapaevo 22a", latitude: 0, longitude: 0
+        )
     }
 }

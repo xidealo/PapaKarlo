@@ -17,13 +17,23 @@ struct SplashView: View {
     }
     
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             switch viewModel.splashViewState.splashState {
             case .isGoSelectCity:NavigationView{
-                SelectCityView()
+                NavigationLink(
+                    destination:SelectCityView(),
+                    isActive: .constant(true)
+                ){
+                    EmptyView()
+                }
             }
             case .isGoMenu: NavigationView{
-                MenuView()
+                NavigationLink(
+                    destination:ContainerView(selection: 1),
+                    isActive: .constant(true)
+                ){
+                    EmptyView()
+                }
             }
             default : EmptyView()
             }
@@ -37,6 +47,7 @@ struct HiddenNavigationBar: ViewModifier {
             .navigationBarHidden(true)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle("", displayMode: .inline)
+            .preferredColorScheme(.light)
     }
 }
 

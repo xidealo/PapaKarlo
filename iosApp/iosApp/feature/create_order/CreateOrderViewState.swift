@@ -21,6 +21,7 @@ class CreateOrderViewState: NSObject, NSCopying {
     var cafeUuid:String?
     var createOrderState:CreateOrderState
     var notNeedDeferredTime:Bool
+    var actionList:[CreateOrderAction]
 
     init(
         isDelivery:Bool,
@@ -34,7 +35,8 @@ class CreateOrderViewState: NSObject, NSCopying {
         userUuid:String?,
         cafeUuid:String?,
         createOrderState:CreateOrderState,
-        notNeedDeferredTime:Bool
+        notNeedDeferredTime:Bool,
+        actionList:[CreateOrderAction]
     ){
         self.isDelivery = isDelivery
         self.address = address
@@ -48,6 +50,7 @@ class CreateOrderViewState: NSObject, NSCopying {
         self.cafeUuid = cafeUuid
         self.createOrderState = createOrderState
         self.notNeedDeferredTime = notNeedDeferredTime
+        self.actionList = actionList
     }
     
     func copy(with zone: NSZone? = nil) -> Any {
@@ -63,7 +66,8 @@ class CreateOrderViewState: NSObject, NSCopying {
             userUuid : userUuid,
             cafeUuid : cafeUuid,
             createOrderState:createOrderState,
-            notNeedDeferredTime:notNeedDeferredTime
+            notNeedDeferredTime:notNeedDeferredTime,
+            actionList:actionList
         )
         return copy
     }
