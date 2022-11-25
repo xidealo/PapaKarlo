@@ -63,6 +63,7 @@ kotlin {
                 implementation(DataStore.dataStorePreferences)
                 implementation(Ktor.clientAndroid)
                 implementation(Ktor.clientOkhttp)
+                implementation(Lifecycle.viewmodel)
 
                 implementation(SqlDelight.androidDriver)
             }
