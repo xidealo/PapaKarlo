@@ -1,18 +1,20 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
+import com.bunbeauty.shared.domain.model.Street
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,
-    val deliveryAddress: String? = null,
+    val deliveryAddress: UserAddressUi? = null,
     val pickupAddress: String? = null,
     val comment: String? = null,
-    val deferredTime: String = "",
-    val totalCost: String? = null,
-    val deliveryCost: String? = null,
-    val finalCost: String? = null,
+    val deferredTime: TimeUI = TimeUI.ASAP,
+    val totalCost: Int? = null,
+    val deliveryCost: Int? = null,
+    val finalCost: Int? = null,
     val isAddressErrorShown: Boolean = false,
     val isLoading: Boolean = false,
     val eventList: List<Event> = emptyList(),
@@ -26,7 +28,7 @@ data class OrderCreationUiState(
 
     sealed interface Event {
         object OpenCreateAddressEvent : Event
-        class ShowUserAddressListEvent(val addressList: List<UserAddressItem>) : Event
+        class ShowUserAddressListEvent(val addressList: List<UserAddressUi>) : Event
         class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
         class ShowDeferredTimeEvent(
             val deferredTime: TimeUI,

@@ -1,15 +1,9 @@
 package com.bunbeauty.papakarlo.feature.create_order.mapper
 
-import android.content.res.Resources
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.date_time.Time
 
-class TimeMapper(
-    private val resources: Resources,
-    private val stringUtil: IStringUtil
-) {
+class TimeMapper {
 
     fun toUiModel(time: Time?): TimeUI {
         return if (time == null) {
@@ -36,17 +30,6 @@ class TimeMapper(
                     hours = time.hours,
                     minutes = time.minutes,
                 )
-            }
-        }
-    }
-
-    fun toString(time: TimeUI): String {
-        return when (time) {
-            is TimeUI.ASAP -> {
-                resources.getString(R.string.asap)
-            }
-            is TimeUI.Time -> {
-                stringUtil.getTimeString(time)
             }
         }
     }

@@ -31,7 +31,6 @@ class CreateOrderViewModel(
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
     private val deferredTimeInteractor: IDeferredTimeInteractor,
-    private val stringUtil: IStringUtil,
     private val timeMapper: TimeMapper,
     private val userAddressMapper: UserAddressMapper,
     private val getSelectedUserAddress: GetSelectedUserAddressUseCase,
@@ -45,12 +44,6 @@ class CreateOrderViewModel(
     private val orderCreationData = MutableStateFlow(OrderCreationData())
     private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
     val orderCreationState = mutableOrderCreationState.asStateFlow()
-
-    init {
-        mutableOrderCreationState.update { state ->
-            state.copy(deferredTime = timeMapper.toString(TimeUI.ASAP))
-        }
-    }
 
     fun update() {
         withLoading {
@@ -72,12 +65,11 @@ class CreateOrderViewModel(
 
     fun onUserAddressClicked() {
         val addressList = orderCreationData.value.userAddressList
-        val event = if (addressList.isEmpty()) {
+        val addressUiList = addressList.mapNotNull(userAddressMapper::toUiModel)
+        val event = if (addressUiList.isEmpty()) {
             OrderCreationUiState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationUiState.Event.ShowUserAddressListEvent(
-                addressList.map(userAddressMapper::toUserAddressItem)
-            )
+            OrderCreationUiState.Event.ShowUserAddressListEvent(addressUiList)
         }
         mutableOrderCreationState.update { state ->
             state + event
@@ -127,7 +119,7 @@ class CreateOrderViewModel(
             data.copy(selectedDeferredTime = deferredTime)
         }
         mutableOrderCreationState.update { state ->
-            state.copy(deferredTime = timeMapper.toString(deferredTimeUi))
+            state.copy(deferredTime = deferredTimeUi)
         }
     }
 
@@ -150,7 +142,8 @@ class CreateOrderViewModel(
         val stateValue = mutableOrderCreationState.value
         val data = orderCreationData.value
         val address = if (stateValue.isDelivery) {
-            stringUtil.getUserAddressString(data.selectedUserAddress)
+            "" // TODO send address data instead of string
+            //stringUtil.getUserAddressString(data.selectedUserAddress)
         } else {
             data.selectedCafe?.address
         }
@@ -216,7 +209,7 @@ class CreateOrderViewModel(
             data.copy(selectedUserAddress = selectedUserAddress)
         }
         mutableOrderCreationState.update { state ->
-            state.copy(deliveryAddress = stringUtil.getUserAddressString(selectedUserAddress))
+            state.copy(deliveryAddress = userAddressMapper.toUiModel(selectedUserAddress))
         }
         if (selectedUserAddress != null) {
             mutableOrderCreationState.update { state ->
@@ -241,9 +234,9 @@ class CreateOrderViewModel(
             val cartTotal = getCartTotal(isDelivery)
             mutableOrderCreationState.update { state ->
                 state.copy(
-                    totalCost = stringUtil.getCostString(cartTotal.totalCost),
-                    deliveryCost = stringUtil.getCostString(cartTotal.deliveryCost),
-                    finalCost = stringUtil.getCostString(cartTotal.finalCost),
+                    totalCost = cartTotal.totalCost,
+                    deliveryCost = cartTotal.deliveryCost,
+                    finalCost = cartTotal.finalCost,
                 )
             }
         } catch (exception: Exception) {

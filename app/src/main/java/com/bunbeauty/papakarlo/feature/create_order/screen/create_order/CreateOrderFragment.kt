@@ -32,6 +32,9 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
+import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
@@ -40,12 +43,18 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.Deferre
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
+import com.bunbeauty.papakarlo.util.string.IStringUtil
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_order) {
 
     val viewModel: CreateOrderViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
+
+    val stringUtil: IStringUtil by inject()
+
+    val userAddressItemMapper: UserAddressItemMapper by inject()
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -117,7 +126,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 NavigationTextCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = labelStringId,
-                    label = orderCreationState.deliveryAddress,
+                    label = stringUtil.getUserAddressString(orderCreationState.deliveryAddress),
                     isClickable = !orderCreationState.isLoading
                 ) {
                     viewModel.onUserAddressClicked()
@@ -181,7 +190,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         NavigationTextCard(
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
             hintStringId = hintStringId,
-            label = orderCreationState.deferredTime,
+            label = stringUtil.getTimeString(orderCreationState.deferredTime),
             isClickable = !orderCreationState.isLoading
         ) {
             viewModel.onDeferredTimeClicked()
@@ -204,7 +213,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 )
                 if (orderCreationState.totalCost != null) {
                     Text(
-                        text = orderCreationState.totalCost,
+                        text = stringUtil.getCostString(orderCreationState.totalCost),
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
@@ -220,7 +229,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     )
                     if (orderCreationState.deliveryCost != null) {
                         Text(
-                            text = orderCreationState.deliveryCost,
+                            text = stringUtil.getCostString(orderCreationState.deliveryCost),
                             style = FoodDeliveryTheme.typography.body1,
                             color = FoodDeliveryTheme.colors.onSurface
                         )
@@ -236,7 +245,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 )
                 if (orderCreationState.finalCost != null) {
                     Text(
-                        text = orderCreationState.finalCost,
+                        text = stringUtil.getCostString(orderCreationState.finalCost),
                         style = FoodDeliveryTheme.typography.h2,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
@@ -259,10 +268,12 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     findNavController().navigate(toCreateAddressFragment())
                 }
                 is OrderCreationUiState.Event.ShowUserAddressListEvent -> {
-                    UserAddressListBottomSheet.show(childFragmentManager, event.addressList)
-                        ?.let { result ->
-                            handleUserAddressListResult(result)
-                        }
+                    UserAddressListBottomSheet.show(
+                        childFragmentManager,
+                        event.addressList.map(userAddressItemMapper::toItem)
+                    )?.let { result ->
+                        handleUserAddressListResult(result)
+                    }
                 }
                 is OrderCreationUiState.Event.ShowCafeAddressListEvent -> {
                     CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
@@ -339,7 +350,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 isDelivery = true,
                 deliveryAddress = null,
                 comment = null,
-                deferredTime = "Как можно скорее",
+                deferredTime = TimeUI.ASAP,
                 totalCost = null,
                 deliveryCost = null,
                 finalCost = null,
@@ -354,12 +365,20 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         CreateOrderScreen(
             orderCreationState = OrderCreationUiState(
                 isDelivery = true,
-                deliveryAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                deliveryAddress = UserAddressUi(
+                    uuid = "1",
+                    street = "улица Чапаева",
+                    house = "22аб",
+                    flat = "55",
+                    entrance = "1",
+                    floor = "1",
+                    comment = "код домофона 555",
+                ),
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "Как можно скорее",
-                totalCost = "250 ₽",
-                deliveryCost = "100 ₽",
-                finalCost = "350 ₽",
+                deferredTime = TimeUI.ASAP,
+                totalCost = 250,
+                deliveryCost = 100,
+                finalCost = 350,
                 isLoading = false,
             )
         )
@@ -373,7 +392,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 isDelivery = false,
                 pickupAddress = null,
                 comment = null,
-                deferredTime = "10:30",
+                deferredTime = TimeUI.Time(10, 30),
                 totalCost = null,
                 deliveryCost = null,
                 finalCost = null,
@@ -390,10 +409,10 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 isDelivery = false,
                 pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
                 comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "Как можно скорее",
-                totalCost = "250 ₽",
-                deliveryCost = "100 ₽",
-                finalCost = "350 ₽",
+                deferredTime = TimeUI.ASAP,
+                totalCost = 250,
+                deliveryCost = 100,
+                finalCost = 350,
                 isLoading = true,
             )
         )

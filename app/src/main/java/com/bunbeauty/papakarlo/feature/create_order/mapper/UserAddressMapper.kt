@@ -1,13 +1,24 @@
 package com.bunbeauty.papakarlo.feature.create_order.mapper
 
+import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.address.UserAddress
 
-class UserAddressMapper(private val stringUtil: IStringUtil) {
+class UserAddressMapper {
 
-    fun toUserAddressItem(userAddress: UserAddress) = UserAddressItem(
-        uuid = userAddress.uuid,
-        address = stringUtil.getUserAddressString(userAddress) ?: ""
-    )
+    fun toUiModel(userAddress: UserAddress?): UserAddressUi? {
+        return userAddress?.let {
+            UserAddressUi(
+                uuid = userAddress.uuid,
+                street = userAddress.street.name,
+                house = userAddress.house,
+                flat = userAddress.flat,
+                entrance = userAddress.entrance,
+                floor = userAddress.floor,
+                comment = userAddress.comment,
+            )
+        }
+    }
+
 }

@@ -55,7 +55,6 @@ fun viewModelModule() = module {
             cafeInteractor = get(),
             userInteractor = get(),
             deferredTimeInteractor = get(),
-            stringUtil = get(),
             timeMapper = get(),
             userAddressMapper = get(),
             getSelectedUserAddress = get(),
