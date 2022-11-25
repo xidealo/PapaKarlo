@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+@Deprecated("Use SharedViewModel")
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     @Deprecated("Use action navigation on Fragments, example MenuFragment")
@@ -30,12 +31,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     private val mutableError: MutableSharedFlow<Message> = MutableSharedFlow(replay = 0)
     val error: SharedFlow<Message> = mutableError.asSharedFlow()
-
-    protected fun <T> MutableSharedFlow<T>.launchEmit(value: T) {
-        viewModelScope.launch {
-            emit(value)
-        }
-    }
 
     fun showMessage(message: String, isTop: Boolean) {
         viewModelScope.launch {

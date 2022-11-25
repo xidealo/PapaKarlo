@@ -24,13 +24,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
+import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
@@ -41,9 +42,9 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.Use
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
+class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_order) {
 
-    override val viewModel: CreateOrderViewModel by viewModel()
+    val viewModel: CreateOrderViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
 
     @SuppressLint("SetTextI18n")
@@ -290,17 +291,26 @@ class CreateOrderFragment : BaseFragment(R.layout.fragment_create_order) {
                     }
                 }
                 is OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent -> {
-                    viewModel.showError(
+                    viewBinding.root.showSnackbar(
                         resources.getString(R.string.error_something_went_wrong),
+                        resourcesProvider.getColorByAttr(R.attr.colorError),
+                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
                         true
                     )
                 }
                 is OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent -> {
-                    viewModel.showError(resources.getString(R.string.error_user), true)
+                    viewBinding.root.showSnackbar(
+                        resources.getString(R.string.error_user),
+                        resourcesProvider.getColorByAttr(R.attr.colorError),
+                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
+                        true
+                    )
                 }
                 is OrderCreationUiState.Event.OrderCreatedEvent -> {
-                    viewModel.showMessage(
+                    viewBinding.root.showSnackbar(
                         resources.getString(R.string.msg_order_code, event.code),
+                        resourcesProvider.getColorByAttr(R.attr.colorError),
+                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
                         false
                     )
                     findNavController().navigate(toProfileFragment())
