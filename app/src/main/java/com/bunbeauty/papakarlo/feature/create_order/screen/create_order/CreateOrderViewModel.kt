@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
@@ -19,6 +18,7 @@ import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.ui.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -40,7 +40,7 @@ class CreateOrderViewModel(
     private val getCafeList: GetCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
     private val getMinTime: GetMinTimeUseCase
-) : BaseViewModel() {
+) : SharedViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
     private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
