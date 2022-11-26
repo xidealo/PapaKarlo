@@ -3,8 +3,6 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
-import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
-import com.bunbeauty.shared.domain.model.Street
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,
