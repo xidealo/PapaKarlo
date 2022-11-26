@@ -12,5 +12,4 @@ class UserAddressItemMapper(private val stringUtil: IStringUtil) {
             address = stringUtil.getUserAddressString(userAddress) ?: ""
         )
     }
-
 }

@@ -142,7 +142,7 @@ class CreateOrderViewModel(
         val data = orderCreationData.value
         val address = if (stateValue.isDelivery) {
             "" // TODO send address data instead of string
-            //stringUtil.getUserAddressString(data.selectedUserAddress)
+            // stringUtil.getUserAddressString(data.selectedUserAddress)
         } else {
             data.selectedCafe?.address
         }
