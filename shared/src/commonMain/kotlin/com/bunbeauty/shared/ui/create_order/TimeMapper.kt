@@ -1,7 +1,7 @@
-package com.bunbeauty.papakarlo.feature.create_order.mapper
+package com.bunbeauty.shared.ui.create_order
 
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
 import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
 
 class TimeMapper {
 

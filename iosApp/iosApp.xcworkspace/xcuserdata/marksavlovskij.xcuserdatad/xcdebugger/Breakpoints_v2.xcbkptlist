@@ -350,8 +350,8 @@
             filePath = "iosApp/feature/create_order/CreateOrderViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "getAddressList(isDelivery:totalCost:deliveryCost:amountToPay:amountToPayWithDeliveryCost:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -366,8 +366,8 @@
             filePath = "iosApp/feature/create_order/CreateOrderViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "getAddressList(isDelivery:totalCost:deliveryCost:amountToPay:amountToPayWithDeliveryCost:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -382,8 +382,8 @@
             filePath = "iosApp/feature/create_order/CreateOrderViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "getAddressList(isDelivery:totalCost:deliveryCost:amountToPay:amountToPayWithDeliveryCost:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -391,32 +391,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DDA5C0B4-6158-4CE3-9A8A-7C30DD5736F1"
+            uuid = "EBC20730-C7E8-41D4-B606-C397B97E9F31"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/feature/create_order/CreateOrderViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "loadData()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CACD8B41-8F7B-4D88-99EC-AAE81F057537"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iosApp/feature/create_order/CreateOrderViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
-            landmarkName = "loadData()"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "init()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

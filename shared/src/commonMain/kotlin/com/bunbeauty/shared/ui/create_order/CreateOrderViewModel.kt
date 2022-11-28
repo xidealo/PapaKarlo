@@ -1,10 +1,7 @@
-package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
+package com.bunbeauty.shared.ui.create_order
 
-import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.feature.create_order.mapper.CafeAddressMapper
-import com.bunbeauty.papakarlo.feature.create_order.mapper.TimeMapper
-import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressMapper
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -18,8 +15,9 @@ import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInterac
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.ui.SharedViewModel
+import com.bunbeauty.shared.ui.cafe_address_list.CafeAddressMapper
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -42,7 +40,7 @@ class CreateOrderViewModel(
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
     private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
-    val orderCreationState = mutableOrderCreationState.asStateFlow()
+    val orderCreationState = mutableOrderCreationState.asCommonStateFlow()
 
     fun update() {
         withLoading {
@@ -100,7 +98,7 @@ class CreateOrderViewModel(
 
     fun onDeferredTimeClicked() {
         val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
-        viewModelScope.launch {
+        sharedScope.launch {
             mutableOrderCreationState.update { state ->
                 val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
                     deferredTime = deferredTime,
@@ -247,7 +245,7 @@ class CreateOrderViewModel(
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {
-        viewModelScope.launch {
+        sharedScope.launch {
             mutableOrderCreationState.update { state ->
                 state.copy(isLoading = true)
             }

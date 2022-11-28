@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.util.string
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.UserAddress

@@ -3,6 +3,8 @@ package com.bunbeauty.shared.ui
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
+import platform.darwin.dispatch_async
+import platform.darwin.dispatch_get_main_queue
 import kotlin.native.internal.GC
 
 @ThreadLocal

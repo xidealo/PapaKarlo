@@ -53,9 +53,6 @@ struct ConsumerCartView: View {
         .onAppear() {
             viewModel.fetchData()
         }
-        .onDisappear(){
-            viewModel.removeListener()
-        }
         .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
             consumerCartViewState.actions.forEach { action in
                 switch(action){

@@ -1,8 +1,8 @@
-package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
+package com.bunbeauty.shared.ui.create_order
 
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
-import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
+import com.bunbeauty.shared.ui.cafe_address_list.CafeAddressItem
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,

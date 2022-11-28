@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
+package com.bunbeauty.shared.ui.create_order
 
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe

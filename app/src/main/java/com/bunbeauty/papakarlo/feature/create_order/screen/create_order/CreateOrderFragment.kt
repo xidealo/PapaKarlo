@@ -33,8 +33,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
-import com.bunbeauty.papakarlo.feature.create_order.model.UserAddressUi
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
@@ -44,6 +44,8 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.Use
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.ui.create_order.OrderCreationUiState
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -212,11 +214,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 if (orderCreationState.totalCost != null) {
-                    Text(
-                        text = stringUtil.getCostString(orderCreationState.totalCost),
-                        style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
+                    stringUtil.getCostString(orderCreationState.totalCost)?.let {
+                        Text(
+                            text = it,
+                            style = FoodDeliveryTheme.typography.body1,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
                 }
             }
             if (orderCreationState.isDelivery) {
@@ -228,11 +232,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                     if (orderCreationState.deliveryCost != null) {
-                        Text(
-                            text = stringUtil.getCostString(orderCreationState.deliveryCost),
-                            style = FoodDeliveryTheme.typography.body1,
-                            color = FoodDeliveryTheme.colors.onSurface
-                        )
+                        stringUtil.getCostString(orderCreationState.deliveryCost)?.let {
+                            Text(
+                                text = it,
+                                style = FoodDeliveryTheme.typography.body1,
+                                color = FoodDeliveryTheme.colors.onSurface
+                            )
+                        }
                     }
                 }
             }
@@ -244,11 +250,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 if (orderCreationState.finalCost != null) {
-                    Text(
-                        text = stringUtil.getCostString(orderCreationState.finalCost),
-                        style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurface
-                    )
+                    stringUtil.getCostString(orderCreationState.finalCost)?.let {
+                        Text(
+                            text = it,
+                            style = FoodDeliveryTheme.typography.h2,
+                            color = FoodDeliveryTheme.colors.onSurface
+                        )
+                    }
                 }
             }
             LoadingButton(

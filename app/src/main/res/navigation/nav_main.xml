@@ -303,7 +303,7 @@
             app:argType="string" />
         <argument
             android:name="selectedTime"
-            app:argType="com.bunbeauty.papakarlo.feature.create_order.model.TimeUI"
+            app:argType="com.bunbeauty.shared.ui.create_order.model.TimeUI"
             app:nullable="true" />
     </dialog>
 

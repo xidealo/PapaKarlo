@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import shared
 
 struct CreateOrderView: View {
     
-    @ObservedObject private var viewModel = CreateOrderViewModel()
+    @StateObject private var viewModel = CreateOrderHolder()
     @State var showCreatedAddress:Bool = false
     @State var showAddressError:Bool = false
     @State var showCommonError:Bool = false
@@ -36,7 +37,7 @@ struct CreateOrderView: View {
             ){
                 EmptyView()
             }
-
+            
             NavigationLink(
                 destination:CafeAddressListView(isClickable: true),
                 isActive: $goToCafeAddress
@@ -51,7 +52,7 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             
-            if(viewModel.creationOrderViewState.createOrderState == CreateOrderState.loading){
+            if(viewModel.creationOrderViewState.isLoading){
                 LoadingView()
             }else{
                 CreateOrderSuccessView(
@@ -67,6 +68,9 @@ struct CreateOrderView: View {
         }
         .background(Color("background"))
         .hiddenNavigationBarStyle()
+        .onAppear(){
+            viewModel.kmmViewModel.update()
+        }
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Адрес добавлен"),
@@ -96,7 +100,7 @@ struct CreateOrderView: View {
 
 struct CreateOrderSuccessView:View {
     
-    @ObservedObject var viewModel:CreateOrderViewModel
+    @ObservedObject var viewModel:CreateOrderHolder
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
     @Binding var showCreatedAddress:Bool
     @Binding var showAddressError:Bool
@@ -104,67 +108,80 @@ struct CreateOrderSuccessView:View {
     @Binding var goToProfile:Bool
     @Binding var goToUserAddress:Bool
     @Binding var goToCafeAddress:Bool
+    @State var isDelivery = true
+    @State var comment = ""
     
     var body: some View{
-        
         VStack(spacing:0){
-            
-            Switcher(leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY, rightTitle: Strings.MSG_CREATION_ORDER_PICKUP, isLeftSelected:  $viewModel.creationOrderViewState.isDelivery){ isDelivery in
-                viewModel.getAddressList(
-                    isDelivery: isDelivery,
-                    totalCost: viewModel.creationOrderViewState.totalCost,
-                    deliveryCost: viewModel.creationOrderViewState.deliveryCost,
-                    amountToPay: viewModel.creationOrderViewState.amountToPay,
-                    amountToPayWithDeliveryCost: viewModel.creationOrderViewState.amountToPayWithDeliveryCost
-                )
+            Switcher(
+                leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY,
+                rightTitle: Strings.MSG_CREATION_ORDER_PICKUP,
+                isLeftSelected: $isDelivery
+            ){ isDelivery in
+                if(isDelivery){
+                    viewModel.kmmViewModel.onSwitcherPositionChanged(position: 0)
+                }else{
+                    viewModel.kmmViewModel.onSwitcherPositionChanged(position: 1)
+                }
             }
             .padding(.top, Diems.MEDIUM_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             
-            if viewModel.creationOrderViewState.address == nil{
-                NavigationCardView(
-                    icon: nil,
-                    label: addressLable,
-                    destination: CreateAddressView(show: $showCreatedAddress)
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            if(viewModel.creationOrderViewState.isDelivery){
+                if viewModel.creationOrderViewState.deliveryAddress == nil{
+                    NavigationCardView(
+                        icon: nil,
+                        label: addressLable,
+                        destination: CreateAddressView(show: $showCreatedAddress)
+                    )
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                }else{
+                    ActionTextCardView(
+                        placeHolder: addressLable,
+                        text: viewModel.getUserAddressList()
+                    ){
+                        viewModel.goToAddress()
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                }
             }else{
                 ActionTextCardView(
                     placeHolder: addressLable,
-                    text: viewModel.creationOrderViewState.address!
+                    text: "\(viewModel.creationOrderViewState.pickupAddress ?? "")"
                 ){
                     viewModel.goToAddress()
                 }
                 .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)           
             }
             
             EditTextView(
                 hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                text:$viewModel.creationOrderViewState.comment,
+                text: $comment,
                 limit: 255,
                 hasError: .constant(false)
             )
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             
-            Toggle("Как можно скорее", isOn: $viewModel.creationOrderViewState.notNeedDeferredTime)
-                .toggleStyle(.automatic)
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
-            if(!viewModel.creationOrderViewState.notNeedDeferredTime){
-                if(viewModel.creationOrderViewState.isDelivery){
-                    DatePicker("Время доставки", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                }else{
-                    DatePicker("Время самовывоза", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                }
-            }
+            //            Toggle("Как можно скорее", isOn: (viewModel.creationOrderViewState.deferredTime is TimeUIASAP))
+            //                .toggleStyle(.automatic)
+            //                .padding(.top, Diems.SMALL_PADDING)
+            //                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            //
+            //            if(!viewModel.creationOrderViewState.notNeedDeferredTime){
+            //                if(viewModel.creationOrderViewState.isDelivery){
+            //                    DatePicker("Время доставки", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+            //                        .padding(.top, Diems.SMALL_PADDING)
+            //                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+            //                }else{
+            //                    DatePicker("Время самовывоза", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+            //                        .padding(.top, Diems.SMALL_PADDING)
+            //                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+            //                }
+            //            }
             
             
             Spacer()
@@ -179,31 +196,30 @@ struct CreateOrderSuccessView:View {
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
                         .foregroundColor(Color("onSurface"))
                     Spacer()
-                    Text(viewModel.creationOrderViewState.totalCost)
+                    Text("\(viewModel.creationOrderViewState.totalCost ?? 0)")
                         .foregroundColor(Color("onSurface"))
-                }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                }
+                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
                 
                 if(viewModel.creationOrderViewState.isDelivery){
                     HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                             .foregroundColor(Color("onSurface"))
                         Spacer()
-                        Text(viewModel.creationOrderViewState.deliveryCost)
+                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)")
                             .foregroundColor(Color("onSurface"))
-                    }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                    HStack(spacing:0){
-                        BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
-                        Spacer()
-                        BoldText(text:viewModel.creationOrderViewState.amountToPayWithDeliveryCost)
-                    }.padding(.top, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
-                }else{
-                    HStack(spacing:0){
-                        BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
-                        Spacer()
-                        BoldText(text:viewModel.creationOrderViewState.amountToPay)
-                    }.padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
+                HStack(spacing:0){
+                    BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                    Spacer()
+                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0)")
+                }
+                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
                 Button(
                     action: {
                         viewModel.createOrder()
@@ -226,22 +242,22 @@ struct CreateOrderSuccessView:View {
                 }else{
                     addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
                 }
-                print("LSIT \(creationOrderViewState.actionList)")
-
-                creationOrderViewState.actionList.forEach { action in
-                    switch(action){
-                    case CreateOrderAction.showAddressError : showAddressError = true
-                    case CreateOrderAction.showCommonError : showCommonError = true
-                    case CreateOrderAction.goToProfile : goToProfile = true
-                    case CreateOrderAction.goToCafeAddressList : goToCafeAddress = true
-                    case CreateOrderAction.goToUserAddressList : goToUserAddress = true
-                    }
-                }
-                print("PROFILE \(goToProfile)")
-                
-                if !creationOrderViewState.actionList.isEmpty{
-                    viewModel.clearActions()
-                }
+                //                print("LSIT \(creationOrderViewState.actionList)")
+                //
+                //                creationOrderViewState.actionList.forEach { action in
+                //                    switch(action){
+                //                    case CreateOrderAction.showAddressError : showAddressError = true
+                //                    case CreateOrderAction.showCommonError : showCommonError = true
+                //                    case CreateOrderAction.goToProfile : goToProfile = true
+                //                    case CreateOrderAction.goToCafeAddressList : goToCafeAddress = true
+                //                    case CreateOrderAction.goToUserAddressList : goToUserAddress = true
+                //                    }
+                //                }
+                //                print("PROFILE \(goToProfile)")
+                //
+                //                if !creationOrderViewState.actionList.isEmpty{
+                //                    viewModel.clearActions()
+                //                }
             })
         }
     }

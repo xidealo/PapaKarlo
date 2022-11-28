@@ -1,6 +1,5 @@
-package com.bunbeauty.papakarlo.feature.create_order.mapper
+package com.bunbeauty.shared.ui.cafe_address_list
 
-import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressItem
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 
 object CafeAddressMapper {

@@ -13,7 +13,7 @@ class Strings{
     static let TITLE_MENU = "Меню"
     static let TITLE_PROFILE = "Профиль"
     static let TITLE_MY_ADDRESSES = "Мои адреса"
-    static let TITLE_CAFE_ADDRESSES = "Адреса Кафе"
+    static let TITLE_CAFE_ADDRESSES = "Адреса кафе"
     static let TITLE_MY_ORDERS = "Мои заказы"
     static let TITLE_SETTINGS = "Настройки"
     static let TITLE_CART_PRODUCTS = "Корзина"

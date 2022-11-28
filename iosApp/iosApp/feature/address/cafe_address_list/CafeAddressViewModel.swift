@@ -25,7 +25,7 @@ class CafeAddressViewModel: ObservableObject {
     }
     
     func selectAddress(uuid:String){
-        iosComponent.provideCafeInteractor().selectCafe(cafeUuid: uuid) { err in
+        iosComponent.provideCafeInteractor().saveSelectedCafe(cafeUuid: uuid) { err in
             (self.cafeAddressViewState.copy() as! CafeAddressViewState).apply { copiedState in
                 copiedState.cafeAddressState = CafeAddressState.goBack
                 self.cafeAddressViewState = copiedState

@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewM
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.ChangeCityViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsViewModel
