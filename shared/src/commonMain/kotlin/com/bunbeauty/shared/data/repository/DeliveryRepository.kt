@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
 class DeliveryRepository(

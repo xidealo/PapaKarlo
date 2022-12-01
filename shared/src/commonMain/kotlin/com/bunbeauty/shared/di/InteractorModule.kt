@@ -27,7 +27,6 @@ import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.shared.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.interactor.user.UserInteractor
-import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 internal fun interactorModule() = module {

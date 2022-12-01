@@ -2,6 +2,7 @@ package com.bunbeauty.shared.ui.create_order
 
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -11,8 +12,6 @@ import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
-import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.ui.SharedViewModel
 import com.bunbeauty.shared.ui.cafe_address_list.CafeAddressMapper
@@ -24,10 +23,8 @@ import kotlinx.coroutines.launch
 class CreateOrderViewModel(
     private val addressInteractor: IAddressInteractor,
     private val cartProductInteractor: ICartProductInteractor,
-    private val orderInteractor: IOrderInteractor,
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
-    private val deferredTimeInteractor: IDeferredTimeInteractor,
     private val timeMapper: TimeMapper,
     private val userAddressMapper: UserAddressMapper,
     private val getSelectedUserAddress: GetSelectedUserAddressUseCase,
@@ -35,7 +32,8 @@ class CreateOrderViewModel(
     private val getUserAddressList: GetUserAddressListUseCase,
     private val getCafeList: GetCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
-    private val getMinTime: GetMinTimeUseCase
+    private val getMinTime: GetMinTimeUseCase,
+    private val createOrderUseCase: CreateOrderUseCase,
 ) : SharedViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
@@ -144,6 +142,7 @@ class CreateOrderViewModel(
         } else {
             data.selectedCafe?.address
         }
+        orderCreationData.value.selectedCafe
         mutableOrderCreationState.update { state ->
             val isDeliveryAddressNotSelected =
                 stateValue.isDelivery && (data.selectedUserAddress == null)
@@ -155,18 +154,15 @@ class CreateOrderViewModel(
 
         withLoading {
             if (userInteractor.isUserAuthorize()) {
-                val orderCode = orderInteractor.createOrder(
+                val orderCode = createOrderUseCase(
                     isDelivery = stateValue.isDelivery,
-                    userAddressUuid = data.selectedUserAddress?.uuid,
-                    cafeUuid = data.selectedCafe?.uuid,
-                    addressDescription = address,
+                    selectedUserAddress = data.selectedUserAddress,
+                    selectedCafe = data.selectedCafe,
                     comment = stateValue.comment,
-                    deferredTime = data.selectedDeferredTime?.let { deferredTime ->
-                        deferredTimeInteractor.getDeferredTimeMillis(deferredTime)
-                    },
+                    deferredTime = data.selectedDeferredTime
                 )
                 if (orderCode == null) {
-                    val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
+                    val event = OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent
                     mutableOrderCreationState.update { it + event }
                 } else {
                     cartProductInteractor.removeAllProductsFromCart()

@@ -3,10 +3,15 @@ package com.bunbeauty.shared.data.mapper.order
 import com.bunbeauty.shared.data.mapper.order_product.IOrderProductMapper
 import com.bunbeauty.shared.data.network.model.order.get.OrderProductServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
+import com.bunbeauty.shared.data.network.model.order.post.OrderAddressPostServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
-import com.bunbeauty.shared.domain.model.order.*
+import com.bunbeauty.shared.domain.model.order.CreatedOrder
+import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.domain.model.order.Order
+import com.bunbeauty.shared.domain.model.order.OrderCode
+import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
 class OrderMapper(
@@ -25,7 +30,7 @@ class OrderMapper(
             time = orderServer.time,
             timeZone = orderServer.timeZone,
             code = orderServer.code,
-            address = orderServer.addressDescription,
+            address = orderServer.address.description ?: "-",
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             deferredTime = orderServer.deferredTime,
@@ -101,7 +106,7 @@ class OrderMapper(
             deferredTime = orderServer.deferredTime?.let { millis ->
                 dateTimeUtil.toTime(millis, orderServer.timeZone)
             },
-            address = orderServer.addressDescription,
+            address = orderServer.address.description ?: "-",
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
@@ -111,11 +116,18 @@ class OrderMapper(
     override fun toOrderPostServer(createdOrder: CreatedOrder): OrderPostServer {
         return OrderPostServer(
             isDelivery = createdOrder.isDelivery,
-            addressDescription = createdOrder.addressDescription,
+            address = OrderAddressPostServer(
+                uuid = createdOrder.address.uuid,
+                description = createdOrder.address.description,
+                street = createdOrder.address.street,
+                house = createdOrder.address.house,
+                flat = createdOrder.address.flat,
+                entrance = createdOrder.address.entrance,
+                floor = createdOrder.address.floor,
+                comment = createdOrder.address.comment,
+            ),
             comment = createdOrder.comment,
             deferredTime = createdOrder.deferredTime,
-            addressUuid = createdOrder.userAddressUuid,
-            cafeUuid = createdOrder.cafeUuid,
             orderProducts = createdOrder.orderProducts.map(orderProductMapper::toPostServerModel),
         )
     }

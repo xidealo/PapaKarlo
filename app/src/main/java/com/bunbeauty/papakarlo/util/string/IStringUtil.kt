@@ -1,11 +1,11 @@
 package com.bunbeauty.papakarlo.util.string
 
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 
 interface IStringUtil {
 

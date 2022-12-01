@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.create_order.mapper
 
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressItem
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 
 class UserAddressItemMapper(private val stringUtil: IStringUtil) {
 

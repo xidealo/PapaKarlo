@@ -1,10 +1,28 @@
 package com.bunbeauty.shared.data.di
 
-import com.bunbeauty.shared.data.repository.UserRepository
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
-import com.bunbeauty.shared.data.repository.*
-import com.bunbeauty.shared.domain.repo.*
+import com.bunbeauty.shared.data.repository.CafeRepository
+import com.bunbeauty.shared.data.repository.CartProductRepository
+import com.bunbeauty.shared.data.repository.CityRepository
+import com.bunbeauty.shared.data.repository.DeliveryRepository
+import com.bunbeauty.shared.data.repository.MenuProductRepository
+import com.bunbeauty.shared.data.repository.OrderRepository
+import com.bunbeauty.shared.data.repository.PaymentRepository
+import com.bunbeauty.shared.data.repository.StreetRepository
+import com.bunbeauty.shared.data.repository.UserAddressRepository
+import com.bunbeauty.shared.data.repository.UserRepository
+import com.bunbeauty.shared.data.repository.VersionRepository
+import com.bunbeauty.shared.domain.repo.CafeRepo
+import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.shared.domain.repo.CityRepo
+import com.bunbeauty.shared.domain.repo.DeliveryRepo
+import com.bunbeauty.shared.domain.repo.MenuProductRepo
+import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.shared.domain.repo.StreetRepo
+import com.bunbeauty.shared.domain.repo.UserAddressRepo
+import com.bunbeauty.shared.domain.repo.UserRepo
+import com.bunbeauty.shared.domain.repo.VersionRepo
 import org.koin.dsl.module
 
 fun repositoryModule() = module {

@@ -1,18 +1,18 @@
 package com.bunbeauty.shared.data.repository
 
+import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.dao.cafe.ICafeDao
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.db.SelectedCafeUuidEntity
 import com.bunbeauty.shared.domain.model.address.CafeAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.repo.CafeRepo
-import com.bunbeauty.shared.DataStoreRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 
 class CafeRepository(
     private val networkConnector: NetworkConnector,
@@ -67,7 +67,10 @@ class CafeRepository(
         }
     }
 
-    override suspend fun getSelectedCafeByUserAndCityUuid(userUuid: String, cityUuid: String): Cafe? {
+    override suspend fun getSelectedCafeByUserAndCityUuid(
+        userUuid: String,
+        cityUuid: String
+    ): Cafe? {
         return cafeDao.getSelectedCafeByUserAndCityUuid(userUuid, cityUuid)?.let { cafeEntity ->
             cafeMapper.toCafe(cafeEntity)
         }
@@ -92,12 +95,14 @@ class CafeRepository(
             .mapFlow(cafeMapper::toCafe)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeCafeList(): Flow<List<Cafe>> {
         return dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
             cafeDao.observeCafeListByCityUuid(selectedCityUuid ?: "")
         }.mapListFlow(cafeMapper::toCafe)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeCafeAddressList(): Flow<List<CafeAddress>> {
         return dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
             cafeDao.observeCafeListByCityUuid(selectedCityUuid ?: "")

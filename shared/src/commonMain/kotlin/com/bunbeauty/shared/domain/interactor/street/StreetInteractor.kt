@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.street
 
-import com.bunbeauty.shared.domain.model.Street
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.model.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 
 class StreetInteractor(

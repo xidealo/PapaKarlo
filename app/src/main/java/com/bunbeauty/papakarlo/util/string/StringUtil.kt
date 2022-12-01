@@ -1,14 +1,14 @@
 package com.bunbeauty.papakarlo.util.string
 
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider

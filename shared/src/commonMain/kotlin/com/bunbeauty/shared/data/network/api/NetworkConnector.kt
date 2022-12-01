@@ -1,7 +1,17 @@
 package com.bunbeauty.shared.data.network.api
 
 import com.bunbeauty.shared.data.network.ApiResult
-import com.bunbeauty.shared.data.network.model.*
+import com.bunbeauty.shared.data.network.model.AddressServer
+import com.bunbeauty.shared.data.network.model.CafeServer
+import com.bunbeauty.shared.data.network.model.CategoryServer
+import com.bunbeauty.shared.data.network.model.CityServer
+import com.bunbeauty.shared.data.network.model.DeliveryServer
+import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
+import com.bunbeauty.shared.data.network.model.ListServer
+import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.StreetServer
+import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer

@@ -2,7 +2,6 @@ package com.bunbeauty.shared.domain.interactor.address
 
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import kotlinx.coroutines.flow.Flow
 
 interface IAddressInteractor {
 

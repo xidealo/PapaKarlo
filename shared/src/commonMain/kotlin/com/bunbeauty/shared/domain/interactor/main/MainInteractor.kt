@@ -3,13 +3,10 @@ package com.bunbeauty.shared.domain.interactor.main
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.repo.OrderRepo
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.withContext
 
 class MainInteractor(
     private val orderRepo: OrderRepo,

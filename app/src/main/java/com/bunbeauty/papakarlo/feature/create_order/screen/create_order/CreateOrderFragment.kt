@@ -33,8 +33,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
@@ -46,6 +44,8 @@ import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.ui.create_order.OrderCreationUiState
+import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -311,26 +311,26 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 }
                 is OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent -> {
                     viewBinding.root.showSnackbar(
-                        resources.getString(R.string.error_something_went_wrong),
-                        resourcesProvider.getColorByAttr(R.attr.colorError),
-                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        true
+                        message = resources.getString(R.string.error_something_went_wrong),
+                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
+                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
+                        isTop = true
                     )
                 }
                 is OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent -> {
                     viewBinding.root.showSnackbar(
-                        resources.getString(R.string.error_user),
-                        resourcesProvider.getColorByAttr(R.attr.colorError),
-                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        true
+                        message = resources.getString(R.string.error_user),
+                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
+                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
+                        isTop = true
                     )
                 }
                 is OrderCreationUiState.Event.OrderCreatedEvent -> {
                     viewBinding.root.showSnackbar(
-                        resources.getString(R.string.msg_order_code, event.code),
-                        resourcesProvider.getColorByAttr(R.attr.colorError),
-                        resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        false
+                        message = resources.getString(R.string.msg_order_code, event.code),
+                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
+                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
+                        isTop = false
                     )
                     findNavController().navigate(toProfileFragment())
                 }

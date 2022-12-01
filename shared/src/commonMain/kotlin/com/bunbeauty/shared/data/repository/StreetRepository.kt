@@ -17,8 +17,8 @@ class StreetRepository(
     override suspend fun getStreetList(selectedCityUuid: String): List<Street> {
         return getCacheOrListData(
             isCacheValid = { cacheList ->
-                cacheList.all { cafe ->
-                    cafe.cityUuid == selectedCityUuid
+                cacheList.all { street ->
+                    street.cityUuid == selectedCityUuid
                 }
             },
             onApiRequest = {

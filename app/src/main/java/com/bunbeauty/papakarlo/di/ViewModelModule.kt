@@ -11,7 +11,6 @@ import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewM
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.ChangeCityViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
-import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsViewModel
@@ -22,6 +21,7 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
+import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -51,10 +51,8 @@ fun viewModelModule() = module {
         CreateOrderViewModel(
             addressInteractor = get(),
             cartProductInteractor = get(),
-            orderInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
-            deferredTimeInteractor = get(),
             timeMapper = get(),
             userAddressMapper = get(),
             getSelectedUserAddress = get(),
@@ -63,6 +61,7 @@ fun viewModelModule() = module {
             getCafeList = get(),
             getCartTotal = get(),
             getMinTime = get(),
+            createOrderUseCase = get(),
         )
     }
     viewModel {

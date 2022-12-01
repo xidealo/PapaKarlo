@@ -4,6 +4,7 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.model.profile.Settings
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -17,6 +18,7 @@ class SettingsInteractor(
         return observeSettings().first()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeSettings(): Flow<Settings?> {
         return cityInteractor.observeSelectedCity().flatMapLatest { city ->
             userInteractor.observeUser().mapFlow { user ->
