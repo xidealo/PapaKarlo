@@ -30,7 +30,7 @@ class OrderMapper(
             time = orderServer.time,
             timeZone = orderServer.timeZone,
             code = orderServer.code,
-            address = orderServer.address.description ?: "-",
+            address = orderServer.addressDescription,
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             deferredTime = orderServer.deferredTime,
@@ -106,7 +106,7 @@ class OrderMapper(
             deferredTime = orderServer.deferredTime?.let { millis ->
                 dateTimeUtil.toTime(millis, orderServer.timeZone)
             },
-            address = orderServer.address.description ?: "-",
+            address = orderServer.addressDescription,
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
