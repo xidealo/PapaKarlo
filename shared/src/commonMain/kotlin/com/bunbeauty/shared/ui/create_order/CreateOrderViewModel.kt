@@ -136,19 +136,13 @@ class CreateOrderViewModel(
     fun onCreateOrderClicked() {
         val stateValue = mutableOrderCreationState.value
         val data = orderCreationData.value
-        val address = if (stateValue.isDelivery) {
-            "" // TODO send address data instead of string
-            // stringUtil.getUserAddressString(data.selectedUserAddress)
-        } else {
-            data.selectedCafe?.address
-        }
-        orderCreationData.value.selectedCafe
+
+        val isDeliveryAddressNotSelected =
+            stateValue.isDelivery && (data.selectedUserAddress == null)
         mutableOrderCreationState.update { state ->
-            val isDeliveryAddressNotSelected =
-                stateValue.isDelivery && (data.selectedUserAddress == null)
             state.copy(isAddressErrorShown = isDeliveryAddressNotSelected)
         }
-        if (address == null) {
+        if (isDeliveryAddressNotSelected) {
             return
         }
 
@@ -188,7 +182,8 @@ class CreateOrderViewModel(
         val cafeList = getCafeList()
         orderCreationData.update { data ->
             data.copy(
-                userAddressList = userAddressList, cafeList = cafeList
+                userAddressList = userAddressList,
+                cafeList = cafeList
             )
         }
 
