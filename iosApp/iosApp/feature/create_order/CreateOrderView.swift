@@ -110,7 +110,11 @@ struct CreateOrderSuccessView:View {
     @Binding var goToCafeAddress:Bool
     @State var isDelivery = true
     @State var comment = ""
+    @State var faster = true
+    @State var deferredTime: Foundation.Date = Foundation.Date()
     
+    let calendar = Calendar.current
+
     var body: some View{
         VStack(spacing:0){
             Switcher(
@@ -154,111 +158,144 @@ struct CreateOrderSuccessView:View {
                     viewModel.goToAddress()
                 }
                 .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)           
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             
             EditTextView(
                 hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                text: $comment,
+                text: $comment.onChange({ comment in
+                    viewModel.kmmViewModel.onCommentChanged(comment: comment)
+                }),
                 limit: 255,
                 hasError: .constant(false)
             )
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             
-            //            Toggle("Как можно скорее", isOn: (viewModel.creationOrderViewState.deferredTime is TimeUIASAP))
-            //                .toggleStyle(.automatic)
-            //                .padding(.top, Diems.SMALL_PADDING)
-            //                .padding(.horizontal, Diems.MEDIUM_PADDING)
-            //
-            //            if(!viewModel.creationOrderViewState.notNeedDeferredTime){
-            //                if(viewModel.creationOrderViewState.isDelivery){
-            //                    DatePicker("Время доставки", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
-            //                        .padding(.top, Diems.SMALL_PADDING)
-            //                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-            //                }else{
-            //                    DatePicker("Время самовывоза", selection: $viewModel.creationOrderViewState.deferredTime, in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
-            //                        .padding(.top, Diems.SMALL_PADDING)
-            //                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-            //                }
-            //            }
-            
-            
-            Spacer()
-            
-            LinearGradient(
-                gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom
-            )
-            .frame(height:20)
-            
-            VStack(spacing:0){
-                HStack(spacing:0){
-                    Text(Strings.MSG_CREATION_ORDER_RESULT)
-                        .foregroundColor(Color("onSurface"))
-                    Spacer()
-                    Text("\(viewModel.creationOrderViewState.totalCost ?? 0)")
-                        .foregroundColor(Color("onSurface"))
+            Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
+                if(faster) {
+                    viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
+                }else{
+                    let date =  Date.now + 60 * 60
+                    
+                    viewModel.kmmViewModel.onDeferredTimeSelected(
+                        deferredTimeUi: TimeUITime(
+                            hours: Int32(calendar.component(.hour, from: date)),
+                            minutes: Int32(calendar.component(.minute, from: date)
+                                     )
+                        )
+                    )
                 }
+            }))
+                .toggleStyle(.automatic)
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                
+            
+            if(!faster){
                 if(viewModel.creationOrderViewState.isDelivery){
-                    HStack(spacing:0){
-                        Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-                            .foregroundColor(Color("onSurface"))
-                        Spacer()
-                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)")
-                            .foregroundColor(Color("onSurface"))
-                    }
+                    DatePicker("Время доставки", selection: $deferredTime.onChange({ date in
+                        viewModel.kmmViewModel.onDeferredTimeSelected(
+                            deferredTimeUi: TimeUITime(
+                                hours: Int32(calendar.component(.hour, from: date)),
+                                minutes: Int32(calendar.component(.minute, from: date)
+                                              )
+                            )
+                        )
+                    }), in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
+                }else{
+                    DatePicker("Время самовывоза", selection: $deferredTime.onChange({ date in
+                        
+                        viewModel.kmmViewModel.onDeferredTimeSelected(
+                            deferredTimeUi: TimeUITime(
+                                hours: Int32(calendar.component(.hour, from: date)),
+                                minutes: Int32(calendar.component(.minute, from: date)
+                                              )
+                            )
+                        )
+                    }), in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
+            }
+        }
+        
+        Spacer()
+        
+        LinearGradient(
+            gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom
+        )
+        .frame(height:20)
+        
+        VStack(spacing:0){
+            HStack(spacing:0){
+                Text(Strings.MSG_CREATION_ORDER_RESULT)
+                    .foregroundColor(Color("onSurface"))
+                Spacer()
+                Text("\(viewModel.creationOrderViewState.totalCost ?? 0)")
+                    .foregroundColor(Color("onSurface"))
+            }
+            .padding(.top, Diems.SMALL_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            
+            if(viewModel.creationOrderViewState.isDelivery){
                 HStack(spacing:0){
-                    BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                    Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                        .foregroundColor(Color("onSurface"))
                     Spacer()
-                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0)")
+                    Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)")
+                        .foregroundColor(Color("onSurface"))
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                Button(
-                    action: {
-                        viewModel.createOrder()
-                    }, label: {
-                        Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("primary"))
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                    }
-                )
-                .padding(.top, Diems.MEDIUM_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
-            .background(Color("surface"))
-            .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
-                if(creationOrderViewState.isDelivery){
-                    addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
-                }else{
-                    addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
+            HStack(spacing:0){
+                BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                Spacer()
+                BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0)")
+            }
+            .padding(.top, Diems.SMALL_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            Button(
+                action: {
+                    viewModel.createOrder()
+                }, label: {
+                    Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
+                        .padding()
+                        .foregroundColor(Color("surface"))
+                        .background(Color("primary"))
+                        .cornerRadius(Diems.MEDIUM_RADIUS)
+                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }
-                //                print("LSIT \(creationOrderViewState.actionList)")
-                //
-                //                creationOrderViewState.actionList.forEach { action in
-                //                    switch(action){
-                //                    case CreateOrderAction.showAddressError : showAddressError = true
-                //                    case CreateOrderAction.showCommonError : showCommonError = true
-                //                    case CreateOrderAction.goToProfile : goToProfile = true
-                //                    case CreateOrderAction.goToCafeAddressList : goToCafeAddress = true
-                //                    case CreateOrderAction.goToUserAddressList : goToUserAddress = true
-                //                    }
-                //                }
-                //                print("PROFILE \(goToProfile)")
-                //
-                //                if !creationOrderViewState.actionList.isEmpty{
-                //                    viewModel.clearActions()
-                //                }
-            })
+            )
+            .padding(.top, Diems.MEDIUM_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
         }
+        .background(Color("surface"))
+        .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
+            if(creationOrderViewState.isDelivery){
+                addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
+            }else{
+                addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
+            }
+            
+            creationOrderViewState.eventList.forEach { event in
+                switch(event){
+                    //case CreateOrderAction.showAddressError : showAddressError = true
+                case is OrderCreationUiStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
+                case is OrderCreationUiStateEventOrderCreatedEvent : goToProfile = true
+                case is OrderCreationUiStateEventShowCafeAddressListEvent : goToCafeAddress = true
+                case is OrderCreationUiStateEventShowUserAddressListEvent : goToUserAddress = true
+                default:
+                    print("def")
+                }
+            }
+            
+            if !creationOrderViewState.eventList.isEmpty{
+                viewModel.kmmViewModel.consumeEventList(eventList: creationOrderViewState.eventList)
+            }
+        })
     }
 }
+

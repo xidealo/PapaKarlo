@@ -6,6 +6,7 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -81,6 +82,7 @@ class IosComponent:KoinComponent {
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
     fun provideTimeMapper(): TimeMapper = get()
     fun provideUserAddressMapper(): UserAddressMapper = get()
+    fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
 
     fun provideCreateOrderViewModel(): CreateOrderViewModel = get()
 }
