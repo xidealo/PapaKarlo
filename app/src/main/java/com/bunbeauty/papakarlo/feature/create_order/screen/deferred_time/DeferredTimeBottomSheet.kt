@@ -18,7 +18,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.color.MaterialColors
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog

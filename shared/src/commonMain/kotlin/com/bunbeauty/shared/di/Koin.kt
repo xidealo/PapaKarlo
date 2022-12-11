@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.data.di.databaseModule
-import com.bunbeauty.shared.data.di.mapperModule
+import com.bunbeauty.shared.data.di.dataMapperModule
 import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
@@ -25,8 +25,8 @@ import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
-import com.bunbeauty.shared.ui.create_order.TimeMapper
+import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin
@@ -37,13 +37,13 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     modules(
         databaseModule(),
         networkModule(),
-        mapperModule(),
+        dataMapperModule(),
         repositoryModule(),
         interactorModule(),
         useCaseModule(),
         utilModule(),
         platformModule(),
-        useCaseModule()
+        domainMapperModule(),
     )
 }
 
@@ -51,7 +51,7 @@ fun initKoin() = startKoin {
     modules(
         databaseModule(),
         networkModule(),
-        mapperModule(),
+        dataMapperModule(),
         repositoryModule(),
         interactorModule(),
         utilModule(),

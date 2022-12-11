@@ -34,6 +34,7 @@ interface NetworkConnector {
     suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>>
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
+    suspend fun getOrderList(token: String, count: Int): ApiResult<ListServer<OrderServer>>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
@@ -54,6 +55,6 @@ interface NetworkConnector {
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
 
-    fun subscribeOnOrderUpdates(token: String): Flow<OrderServer>
-    suspend fun unsubscribeOnOrderUpdates()
+    suspend fun startOrderUpdatesObservation(token: String): Flow<OrderServer>
+    suspend fun stopOrderUpdatesObservation()
 }

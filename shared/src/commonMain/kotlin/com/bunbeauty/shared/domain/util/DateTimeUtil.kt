@@ -91,7 +91,7 @@ class DateTimeUtil : IDateTimeUtil {
         get() = DateTime(
             time = time,
             date = Date(
-                datOfMonth = dayOfMonth,
+                dayOfMonth = dayOfMonth,
                 monthNumber = monthNumber,
                 year = year
             )

@@ -22,11 +22,11 @@ class MainInteractor(
                     if (token != null) {
                         orderRepo.observeOrderUpdates(token)
                     } else {
-                        orderRepo.stopCheckOrderUpdates()
+                        orderRepo.stopOrderUpdatesObservation()
                         flow { }
                     }
                 } else {
-                    orderRepo.stopCheckOrderUpdates()
+                    orderRepo.stopOrderUpdatesObservation()
                     flow { }
                 }
             }.launchIn(this)
@@ -34,6 +34,6 @@ class MainInteractor(
     }
 
     override suspend fun stopCheckOrderUpdates() {
-        orderRepo.stopCheckOrderUpdates()
+        orderRepo.stopOrderUpdatesObservation()
     }
 }

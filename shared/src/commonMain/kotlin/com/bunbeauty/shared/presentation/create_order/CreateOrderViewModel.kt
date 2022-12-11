@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.create_order
+package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
@@ -13,9 +13,9 @@ import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.ui.SharedViewModel
-import com.bunbeauty.shared.ui.cafe_address_list.CafeAddressMapper
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressMapper
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

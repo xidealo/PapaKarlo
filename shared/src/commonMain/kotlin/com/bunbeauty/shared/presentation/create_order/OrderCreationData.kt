@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.create_order
+package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe

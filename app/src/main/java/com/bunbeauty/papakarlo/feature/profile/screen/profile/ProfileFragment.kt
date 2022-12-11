@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,10 +26,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -36,17 +38,24 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
-import com.bunbeauty.papakarlo.feature.profile.model.ProfileUI
+import com.bunbeauty.shared.domain.model.date_time.Date
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.profile.ProfileState
+import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.google.android.material.transition.MaterialFadeThrough
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
+class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profile) {
 
-    override val viewModel: ProfileViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentProfileBinding::bind)
+    private val viewModel: ProfileViewModel by viewModel()
+
+    private val orderItemMapper: OrderItemMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,39 +66,95 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getProfile()
+        viewModel.update()
         viewBinding.fragmentProfileCvMain.compose {
-            val state: State<ProfileUI> by viewModel.profileUIState.collectAsState()
+            val state by viewModel.profileState.collectAsState()
             ProfileScreen(state)
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.observeLastOrder()
+    }
+
+    override fun onStop() {
+        viewModel.stopLastOrderObservation()
+        super.onStop()
+    }
+
     @Composable
-    private fun ProfileScreen(profileState: State<ProfileUI>) {
+    private fun ProfileScreen(profileState: ProfileState) {
+        LaunchedEffect(profileState.eventList) {
+            handleEventList(profileState.eventList)
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.background)
         ) {
-            when (profileState) {
-                is State.Success -> SuccessProfileScreen(profileState.data)
-                is State.Empty -> EmptyProfileScreen()
-                is State.Loading -> LoadingScreen()
-                is State.Error -> ErrorScreen(profileState.message) {
-                    viewModel.getProfile()
+            when (profileState.state) {
+                ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(profileState)
+                ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
+                ProfileState.State.LOADING -> LoadingScreen()
+                ProfileState.State.ERROR -> ErrorScreen(
+                    message = stringResource(R.string.error_profile_loading)
+                ) {
+                    viewModel.update()
                 }
             }
         }
     }
 
+    private fun handleEventList(eventList: List<ProfileState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is ProfileState.Event.OpenOrderDetails -> {
+                    findNavController().navigate(
+                        ProfileFragmentDirections.toOrderDetailsFragment(
+                            event.orderUuid,
+                            event.orderCode
+                        )
+                    )
+                }
+                ProfileState.Event.OpenSettings -> {
+                    findNavController().navigate(ProfileFragmentDirections.toSettingsFragment())
+                }
+                ProfileState.Event.OpenAddressList -> {
+                    findNavController().navigate(ProfileFragmentDirections.toNavAddress(false))
+                }
+                ProfileState.Event.OpenOrderList -> {
+                    findNavController().navigate(ProfileFragmentDirections.toOrdersFragment())
+                }
+                ProfileState.Event.ShowPayment -> {
+                    findNavController().navigate(ProfileFragmentDirections.toPaymentBottomSheet())
+                }
+                ProfileState.Event.ShowFeedback -> {
+                    findNavController().navigate(ProfileFragmentDirections.toFeedbackBottomSheet())
+                }
+                ProfileState.Event.ShowAboutApp -> {
+                    findNavController().navigate(ProfileFragmentDirections.toAboutAppBottomSheet())
+                }
+                ProfileState.Event.OpenLogin -> {
+                    findNavController().navigate(
+                        ProfileFragmentDirections.toLoginFragment(
+                            SuccessLoginDirection.BACK_TO_PROFILE
+                        )
+                    )
+                }
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
     @Composable
-    private fun SuccessProfileScreen(profile: ProfileUI) {
+    private fun AuthorizedProfileScreen(profile: ProfileState) {
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)) {
-                profile.lastOrderItem?.let { lastOrderItem ->
+                profile.lastOrder?.let { lastOrder ->
                     item {
-                        OrderItem(orderItem = lastOrderItem) {
-                            viewModel.onLastOrderClicked(lastOrderItem)
+                        OrderItem(orderItem = orderItemMapper.toItem(lastOrder)) {
+                            viewModel.onLastOrderClicked(lastOrder)
                         }
                         Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace))
                     }
@@ -125,7 +190,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
                         iconDescription = R.string.description_ic_my_orders,
                         labelStringId = R.string.action_profile_my_orders
                     ) {
-                        viewModel.onOrderHistoryClicked(profile.userUuid)
+                        viewModel.onOrderHistoryClicked()
                     }
                 }
                 item {
@@ -150,7 +215,7 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
     }
 
     @Composable
-    private fun EmptyProfileScreen() {
+    private fun UnauthorizedProfileScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -217,53 +282,71 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     @Preview
     @Composable
-    private fun ProfileScreenWithAddressesAndLastOrderPreview() {
+    private fun AuthorizedProfileScreenWithLastOrderPreview() {
         ProfileScreen(
-            State.Success(
-                ProfileUI(
-                    userUuid = "",
-                    hasAddresses = true,
-                    lastOrderItem = OrderItem(
-                        uuid = "",
-                        status = OrderStatus.NOT_ACCEPTED,
-                        statusName = "Обрабатывается",
-                        code = "А-12",
-                        dateTime = "30 января 12:59",
-                    )
-                )
+            ProfileState(
+                lastOrder = LightOrder(
+                    uuid = "",
+                    status = OrderStatus.NOT_ACCEPTED,
+                    code = "А-12",
+                    dateTime = DateTime(
+                        Date(
+                            dayOfMonth = 1,
+                            monthNumber = 0,
+                            year = 2020
+                        ),
+                        Time(
+                            hours = 10,
+                            minutes = 30,
+                        )
+                    ),
+                ),
+                state = ProfileState.State.AUTHORIZED
             )
         )
     }
 
     @Preview
     @Composable
-    private fun ProfileScreenWithoutAddressesAndLastOrderPreview() {
+    private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
         ProfileScreen(
-            State.Success(
-                ProfileUI(
-                    userUuid = "",
-                    hasAddresses = false,
-                    lastOrderItem = null
-                )
+            ProfileState(
+                lastOrder = null,
+                state = ProfileState.State.AUTHORIZED
             )
         )
     }
 
     @Preview
     @Composable
-    private fun EmptyProfileScreenPreview() {
-        ProfileScreen(State.Empty())
+    private fun UnauthorizedProfileScreenPreview() {
+        ProfileScreen(
+            ProfileState(
+                lastOrder = null,
+                state = ProfileState.State.UNAUTHORIZED
+            )
+        )
     }
 
     @Preview
     @Composable
     private fun LoadingProfileScreenPreview() {
-        ProfileScreen(State.Loading())
+        ProfileScreen(
+            ProfileState(
+                lastOrder = null,
+                state = ProfileState.State.LOADING
+            )
+        )
     }
 
     @Preview
     @Composable
     private fun ErrorProfileScreenPreview() {
-        ProfileScreen(State.Error("Не удалось загрузить профиль"))
+        ProfileScreen(
+            ProfileState(
+                lastOrder = null,
+                state = ProfileState.State.ERROR
+            )
+        )
     }
 }

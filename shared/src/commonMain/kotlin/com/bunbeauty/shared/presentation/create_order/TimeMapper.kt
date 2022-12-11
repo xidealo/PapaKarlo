@@ -1,7 +1,7 @@
-package com.bunbeauty.shared.ui.create_order
+package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.domain.model.date_time.Time
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
 class TimeMapper {
 

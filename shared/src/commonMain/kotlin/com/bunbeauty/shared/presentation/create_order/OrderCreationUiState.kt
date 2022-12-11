@@ -1,8 +1,8 @@
-package com.bunbeauty.shared.ui.create_order
+package com.bunbeauty.shared.presentation.create_order
 
-import com.bunbeauty.shared.ui.cafe_address_list.CafeAddressItem
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
+import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 data class OrderCreationUiState(
     val isDelivery: Boolean = true,

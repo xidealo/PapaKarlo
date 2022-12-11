@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.cafe_address_list
+package com.bunbeauty.shared.presentation.cafe_address_list
 
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 

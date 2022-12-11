@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val cartProductInteractor: ICartProductInteractor,
-    private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,
     private val networkUtil: INetworkUtil
 ) : BaseViewModel(), DefaultLifecycleObserver {
@@ -35,20 +34,6 @@ class MainViewModel(
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
-    }
-
-    override fun onStart(owner: LifecycleOwner) {
-        super.onStart(owner)
-        viewModelScope.launch() {
-            mainInteractor.startCheckOrderUpdates()
-        }
-    }
-
-    override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-        viewModelScope.launch() {
-            mainInteractor.stopCheckOrderUpdates()
-        }
     }
 
     private fun observeTotalCartCount() {

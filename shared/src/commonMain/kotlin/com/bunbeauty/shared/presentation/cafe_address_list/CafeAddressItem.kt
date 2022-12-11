@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.cafe_address_list
+package com.bunbeauty.shared.presentation.cafe_address_list
 
 class CafeAddressItem(
     val uuid: String,

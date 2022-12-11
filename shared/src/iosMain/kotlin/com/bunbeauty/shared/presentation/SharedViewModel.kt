@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui
+package com.bunbeauty.shared.presentation
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

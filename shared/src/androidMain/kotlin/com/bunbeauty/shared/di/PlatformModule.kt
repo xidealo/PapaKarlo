@@ -9,7 +9,13 @@ import org.koin.dsl.module
 
 actual fun platformModule() = module {
     single {
-        FoodDeliveryDatabase(DatabaseDriverFactory(context = get()).createDriver())
+        val driver = DatabaseDriverFactory(context = get()).createDriver()
+        FoodDeliveryDatabase.Schema.migrate(
+            driver,
+            0,
+            FoodDeliveryDatabase.Schema.version,
+        )
+        FoodDeliveryDatabase(driver)
     }
     single<DataStoreRepo> {
         DataStoreRepository()

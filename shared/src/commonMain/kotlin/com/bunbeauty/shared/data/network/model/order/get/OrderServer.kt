@@ -27,8 +27,8 @@ class OrderServer(
     @SerialName("deferredTime")
     val deferredTime: Long?,
 
-    @SerialName("addressDescription")
-    val addressDescription: String,
+    @SerialName("address")
+    val address: OrderAddressServer,
 
     @SerialName("comment")
     val comment: String?,
@@ -63,6 +63,9 @@ class OrderAddressServer(
 
     @SerialName("floor")
     val floor: String?,
+
+    @SerialName("comment")
+    val comment: String?,
 )
 
 @Serializable

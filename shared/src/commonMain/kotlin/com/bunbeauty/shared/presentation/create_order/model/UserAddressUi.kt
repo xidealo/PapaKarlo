@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.ui.create_order.model
+package com.bunbeauty.shared.presentation.create_order.model
 
 class UserAddressUi(
     val uuid: String,

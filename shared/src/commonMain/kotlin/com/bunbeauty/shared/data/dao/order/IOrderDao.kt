@@ -15,7 +15,7 @@ interface IOrderDao {
     fun observeOrderWithProductListByUuid(uuid: String): Flow<List<OrderWithProductEntity>>
     fun observeLastOrderByUserUuid(userUuid: String): Flow<OrderEntity?>
 
-    fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity>
+    suspend fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity>
 
-    fun updateOrderStatusByUuid(uuid: String, status: String)
+    suspend fun updateOrderStatusByUuid(uuid: String, status: String)
 }

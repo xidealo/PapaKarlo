@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.mapper.order
+package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
@@ -8,11 +8,11 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderWithAmounts
 
-class OrderUIMapper(
+class OrderItemMapper(
     private val stringUtil: IStringUtil
-) : IOrderUIMapper {
+) {
 
-    override fun toItem(order: LightOrder): OrderItem {
+    fun toItem(order: LightOrder): OrderItem {
         return OrderItem(
             uuid = order.uuid,
             status = order.status,
@@ -22,7 +22,7 @@ class OrderUIMapper(
         )
     }
 
-    override fun toOrderUI(orderWithAmounts: OrderWithAmounts): OrderUI {
+    fun toOrderUI(orderWithAmounts: OrderWithAmounts): OrderUI {
         return OrderUI(
             code = orderWithAmounts.code,
             status = orderWithAmounts.status,

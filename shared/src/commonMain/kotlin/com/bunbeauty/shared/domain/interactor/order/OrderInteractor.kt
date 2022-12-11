@@ -49,7 +49,7 @@ class OrderInteractor(
                 dateTime = order.dateTime,
                 isDelivery = order.isDelivery,
                 deferredTime = order.deferredTime,
-                address = order.address,
+                address = order.address.description ?: "",
                 comment = order.comment,
                 deliveryCost = order.deliveryCost,
                 orderProductList = order.orderProductList.map { orderProduct ->

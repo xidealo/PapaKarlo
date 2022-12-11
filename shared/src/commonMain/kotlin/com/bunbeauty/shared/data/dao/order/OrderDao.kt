@@ -26,6 +26,12 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                         timeZone = firstOrderWithProduct.timeZone,
                         code = firstOrderWithProduct.code,
                         address = firstOrderWithProduct.address,
+                        addressStreet = firstOrderWithProduct.addressStreet,
+                        addressHouse = firstOrderWithProduct.addressHouse,
+                        addressFlat = firstOrderWithProduct.addressFlat,
+                        addressEntrance = firstOrderWithProduct.addressEntrance,
+                        addressFloor = firstOrderWithProduct.addressFloor,
+                        addressComment = firstOrderWithProduct.addressComment,
                         comment = firstOrderWithProduct.comment,
                         deliveryCost = firstOrderWithProduct.deliveryCost,
                         deferredTime = firstOrderWithProduct.deferredTime,
@@ -75,11 +81,11 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
             .mapToOneOrNull()
     }
 
-    override fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {
+    override suspend fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {
         return orderEntityQueries.getOrderWithProductByUuid(uuid).executeAsList()
     }
 
-    override fun updateOrderStatusByUuid(uuid: String, status: String) {
+    override suspend fun updateOrderStatusByUuid(uuid: String, status: String) {
         orderEntityQueries.updateOrderStatusByUuid(
             uuid = uuid,
             status = status

@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.di
 
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -60,6 +61,13 @@ internal fun useCaseModule() = module {
             cartProductRepo = get(),
             dateTimeUtil = get(),
             orderRepo = get(),
+        )
+    }
+    factory {
+        ObserveLastOrderUseCase(
+            dataStoreRepo = get(),
+            orderRepo = get(),
+            lightOrderMapper = get(),
         )
     }
 }

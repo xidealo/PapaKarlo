@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api.NetworkConnectorImpl
+import com.bunbeauty.shared.data.network.socket.SocketService
 import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
@@ -26,8 +27,18 @@ import com.bunbeauty.shared.domain.repo.VersionRepo
 import org.koin.dsl.module
 
 fun repositoryModule() = module {
+    single {
+        SocketService(
+            client = get(),
+            json = get(),
+        )
+    }
     single<NetworkConnector> {
-        NetworkConnectorImpl()
+        NetworkConnectorImpl(
+            client = get(),
+            json = get(),
+            socketService = get(),
+        )
     }
     single<CartProductRepo> {
         CartProductRepository(

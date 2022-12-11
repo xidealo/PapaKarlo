@@ -42,10 +42,10 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.Use
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
-import com.bunbeauty.shared.ui.create_order.OrderCreationUiState
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
+import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.create_order.OrderCreationUiState
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
