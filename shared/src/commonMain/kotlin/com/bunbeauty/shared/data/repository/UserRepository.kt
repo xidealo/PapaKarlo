@@ -1,7 +1,6 @@
 package com.bunbeauty.shared.data.repository
 
 import com.bunbeauty.shared.DataStoreRepo
-import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.user.IUserDao

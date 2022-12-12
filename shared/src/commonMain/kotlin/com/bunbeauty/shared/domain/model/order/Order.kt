@@ -3,8 +3,6 @@ package com.bunbeauty.shared.domain.model.order
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.product.OrderProduct
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 data class Order(
     val uuid: String,

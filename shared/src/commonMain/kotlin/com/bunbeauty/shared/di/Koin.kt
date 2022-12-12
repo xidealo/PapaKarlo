@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.dataMapperModule
+import com.bunbeauty.shared.data.di.databaseModule
 import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
