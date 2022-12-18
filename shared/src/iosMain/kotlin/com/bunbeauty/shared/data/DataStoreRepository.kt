@@ -3,8 +3,10 @@ package com.bunbeauty.shared.data
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
 import com.bunbeauty.shared.domain.model.Payment
+import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.koin.core.component.KoinComponent
@@ -121,6 +123,45 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
+
+    actual override val settings: Flow<Settings?> = flow {
+        emit(
+            Settings(
+                userUuid = NSUserDefaults.standardUserDefaults.stringForKey(
+                    USER_UUID_KEY
+                ).toString(),
+                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(
+                    SETTINGS_PHONE_NUMBER_KEY
+                ).toString(),
+                email = NSUserDefaults.standardUserDefaults.stringForKey(
+                    SETTINGS_EMAIL_KEY
+                ).toString(),
+            )
+        )
+    }
+
+    actual override suspend fun getSettings(): Settings? {
+        return settings.firstOrNull()
+    }
+
+    actual override suspend fun saveSettings(settings: Settings) {
+        NSUserDefaults.standardUserDefaults.setObject(settings.userUuid, SETTINGS_USER_UUID_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(settings.phoneNumber, SETTINGS_PHONE_NUMBER_KEY)
+        NSUserDefaults.standardUserDefaults.setObject(settings.email, SETTINGS_EMAIL_KEY)
+    }
+
+    actual override suspend fun clearUserData() {
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(TOKEN_KEY)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(USER_UUID_KEY)
+        removeUserSettings()
+    }
+
+    private fun removeUserSettings(){
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_USER_UUID_KEY)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_PHONE_NUMBER_KEY)
+        NSUserDefaults.standardUserDefaults.removeObjectForKey(SETTINGS_EMAIL_KEY)
+    }
+
     companion object {
         const val TOKEN_KEY = "TOKEN_KEY"
         const val SELECTED_CITY_UUID_KEY = "SELECTED_CITY_UUID_KEY"
@@ -130,6 +171,9 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
         const val PAYMENT_PHONE_NUMBER_KEY = "PAYMENT_PHONE_NUMBER_KEY"
         const val PAYMENT_CARD_NUMBER_KEY = "PAYMENT_CARD_NUMBER_KEY"
+        private const val SETTINGS_USER_UUID_KEY = "SETTINGS_USER_UUID_KEY"
+        private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
+        private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"
     }
 
 

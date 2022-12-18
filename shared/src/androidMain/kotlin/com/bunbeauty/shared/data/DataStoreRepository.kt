@@ -116,7 +116,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-
     actual override val userUuid: Flow<String?> = context.userUuidDataStore.data.map {
         it[USER_UUID_KEY]
     }

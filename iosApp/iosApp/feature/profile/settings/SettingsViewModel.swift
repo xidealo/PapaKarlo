@@ -18,9 +18,9 @@ class SettingsViewModel: ObservableObject {
     )
     
     init(){
-        iosComponent.provideISettingsInteractor().getSettings { settings, err in
-            self.settingsViewState = SettingsViewState(phone: settings?.user.phone ?? "" , email: settings?.user.email , city: settings?.cityName ?? "")
-        }
+//        iosComponent.provideISettingsInteractor().getSettings { settings, err in
+//            self.settingsViewState = SettingsViewState(phone: settings?.user.phone ?? "" , email: settings?.user.email , city: settings?.cityName ?? "")
+//        }
     }
     
     

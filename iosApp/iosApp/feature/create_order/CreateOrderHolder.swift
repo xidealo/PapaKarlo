@@ -9,9 +9,9 @@
 import Foundation
 import shared
 
-class CreateOrderHolder:ObservableObject {
+class CreateOrderHolder: ObservableObject {
     
-    @Published var creationOrderViewState = OrderCreationUiState(
+    @Published var creationOrderViewState = OrderCreationState(
         isDelivery: true,
         deliveryAddress: nil,
         pickupAddress: nil,
@@ -38,7 +38,8 @@ class CreateOrderHolder:ObservableObject {
         getCafeList: iosComponent.provideGetCafeListUseCase(),
         getCartTotal: iosComponent.provideGetCartTotalUseCase(),
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
-        createOrderUseCase: iosComponent.provideCreateOrderUseCase()
+        createOrderUseCase : iosComponent.provideCreateOrderUseCase(),
+        getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase()
     )
     
     init(){
@@ -81,8 +82,6 @@ class CreateOrderHolder:ObservableObject {
     }
     
     func createOrder(){
-        print("CREATE ORDER \(kmmViewModel.orderCreationState.value)")
-        print("CREATE ORDER \(kmmViewModel.orderCreationState.value)")
         kmmViewModel.onCreateOrderClicked()
     }
     

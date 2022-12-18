@@ -245,7 +245,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 containerColor = FoodDeliveryTheme.colors.surface,
                 titleContentColor = FoodDeliveryTheme.colors.onSurface
             ),
-            //elevation = FoodDeliveryTheme.dimensions.elevation
+            // elevation = FoodDeliveryTheme.dimensions.elevation
         )
     }
 

@@ -24,8 +24,8 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
+import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine

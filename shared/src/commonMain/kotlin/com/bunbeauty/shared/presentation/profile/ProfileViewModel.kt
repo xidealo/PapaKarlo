@@ -1,6 +1,8 @@
 package com.bunbeauty.shared.presentation.profile
 
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.repo.OrderRepo
@@ -14,11 +16,11 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
-    private val orderRepo: OrderRepo,
+    private val stopObserveLastOrderUseCase: StopObserveLastOrderUseCase
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
-    val profileState = mutableProfileState.asStateFlow()
+    val profileState = mutableProfileState.asCommonStateFlow()
 
     fun update() {
         mutableProfileState.update { profileState ->
@@ -47,7 +49,7 @@ class ProfileViewModel(
 
     fun stopLastOrderObservation() {
         sharedScope.launch {
-            orderRepo.stopOrderUpdatesObservation()
+            stopObserveLastOrderUseCase()
         }
     }
 

@@ -10,25 +10,37 @@ import shared
 
 struct ProfileView: View {
     
-    @StateObject private var viewModel = ProfileViewModel()
+    @State var profileState = ProfileState(
+        lastOrder: nil,
+        state: ProfileState.State.loading,
+        eventList: []
+    )
+    
+    var viewModel = ProfileViewModel(
+        userInteractor: iosComponent.provideIUserInteractor(),
+        observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
+        stopObserveLastOrderUseCase: iosComponent.provideStopObserveLastOrderUseCase()
+    )
+    
     @Binding var showOrderCreated:Bool
-    @Binding var showCreatedAddress:Bool 
+    @Binding var showCreatedAddress:Bool
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive:Bool = false
-
+    
     var body: some View {
         VStack(spacing:0){
-            switch(viewModel.profileViewState.profieState){
-            case ProfileState.loading : LoadingProfileView()
-            case ProfileState.success : SuccessProfileView(profileViewState:  viewModel.profileViewState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
-            case ProfileState.notAuthorize : EmptyProfileView(isActive: $isActive)
+            switch(profileState.state){
+            case ProfileState.State.loading : LoadingProfileView()
+            case ProfileState.State.authorized : SuccessProfileView(profileViewState:  profileState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
+            case ProfileState.State.unauthorized : EmptyProfileView(isActive: $isActive)
+            default: EmptyView()
             }
             
             NavigationLink(
                 destination:LoginView(rootIsActive: self.$isActive, isGoToCreateOrder: .constant(false)),
                 isActive: self.$isActive
             ){
-               EmptyView()
+                EmptyView()
             }
             .isDetailLink(false)
         }
@@ -36,12 +48,17 @@ struct ProfileView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.fetchProfile()
-            viewModel.subscribeOnOrders()
+            viewModel.update()
             viewModel.observeLastOrder()
+            viewModel.profileState.watch { profileStateVM in
+                if(profileStateVM != nil ){
+                    profileState = profileStateVM!
+                }
+                // work with actions
+            }
         }
         .onDisappear(){
-            viewModel.unsubscribeFromOrders()
+            viewModel.stopLastOrderObservation()
         }
         
     }
@@ -49,7 +66,7 @@ struct ProfileView: View {
 
 struct EmptyProfileView: View {
     @Binding var isActive:Bool
-
+    
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
@@ -84,42 +101,31 @@ struct EmptyProfileView: View {
 
 struct LoadingProfileView: View {
     var body: some View {
-        VStack{
-            LoadingView()
-        }
+        LoadingView()
     }
 }
 
 struct SuccessProfileView: View {
-    let profileViewState:ProfileViewState
+    let profileViewState:ProfileState
     @Binding var showOrderCreated:Bool
     @Binding var showCreatedAddress:Bool
     
     var body: some View {
         VStack(spacing:0){
             if(profileViewState.lastOrder != nil){
-                OrderItemView(orderItem: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.id))
+                LightOrderItemView(lightOrder: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid))
             }
             
             NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
                 .padding(.top, Diems.SMALL_PADDING)
             
-            if(profileViewState.hasAddresses){
-                NavigationCardView(
-                    icon: "AddressIcon",
-                    label: Strings.TITLE_PROFILE_YOUR_ADDRESSES,
-                    destination: UserAddressListView(isClickable: false),
-                    isSystem: false
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-            }else{
-                NavigationCardView(
-                    icon: "plus",
-                    label: Strings.TITLE_PROFILE_ADD_ADDRESSES,
-                    destination: CreateAddressView(show: $showCreatedAddress)
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-            }
+            NavigationCardView(
+                icon: "AddressIcon",
+                label: Strings.TITLE_PROFILE_YOUR_ADDRESSES,
+                destination: UserAddressListView(isClickable: false),
+                isSystem: false
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())
                 .padding(.top, Diems.SMALL_PADDING)

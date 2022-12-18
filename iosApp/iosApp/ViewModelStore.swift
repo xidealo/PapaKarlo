@@ -13,7 +13,6 @@ class ViewModelStore{
     var consumerCartViewModel : ConsumerCartViewModel? = nil
     var menuViewModel : MenuViewModel? = nil
     var cafeListViewModel : CafeViewModel? = nil
-    var profileViewModel : ProfileViewModel? = nil
 
      func getConsumerCartViewModel() -> ConsumerCartViewModel {
         if(consumerCartViewModel == nil){
@@ -41,14 +40,4 @@ class ViewModelStore{
        }
        return cafeListViewModel!
    }
-    
-    func getProfileViewModelViewModel() -> ProfileViewModel {
-       if(profileViewModel == nil){
-           let newConsumerCartViewModel = ProfileViewModel()
-           self.profileViewModel = newConsumerCartViewModel
-           return newConsumerCartViewModel
-       }
-       return profileViewModel!
-   }
-    
 }

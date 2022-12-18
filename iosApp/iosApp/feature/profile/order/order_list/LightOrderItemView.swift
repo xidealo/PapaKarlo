@@ -1,16 +1,17 @@
 //
-//  OrderItem.swift
-//  PapaKarloSwift
+//  LightOrderItemView.swift
+//  iosApp
 //
-//  Created by Марк Шавловский on 12.03.2022.
+//  Created by Марк Шавловский on 18.12.2022.
+//  Copyright © 2022 orgName. All rights reserved.
 //
 
 import SwiftUI
 import shared
 
-struct OrderItemView<Content: View>: View {
+struct LightOrderItemView<Content: View>: View{
     
-    let orderItem:OrderItem
+    let lightOrder:LightOrder
     let destination:Content
     
     var body: some View {
@@ -18,16 +19,16 @@ struct OrderItemView<Content: View>: View {
             destination:destination
         ){
             HStack(spacing:0){
-                Text(orderItem.code)
+                Text(lightOrder.code)
                     .foregroundColor(Color("onSurface"))
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
                 
-                OrderChip(orderStatus: orderItem.status)
+                OrderChip(orderStatus: lightOrder.status)
                     .padding(.leading, Diems.SMALL_PADDING)
                 
                 Spacer()
                 
-                Text(orderItem.dateTime)
+                Text(dateUtil.getDateTimeString(dateTime: lightOrder.dateTime))
                     .font(
                         .system(
                             size: Diems.SMALL_TEXT_SIZE,
@@ -41,11 +42,5 @@ struct OrderItemView<Content: View>: View {
                 .background(Color("surface"))
                 .cornerRadius(Diems.MEDIUM_RADIUS)
         }
-    }
-}
-
-struct OrderItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        OrderItemView(orderItem: OrderItem(id: "UUID", status: OrderStatus.notAccepted, code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView(orderUuid: ""))
     }
 }

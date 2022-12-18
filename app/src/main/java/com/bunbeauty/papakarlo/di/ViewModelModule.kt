@@ -18,10 +18,10 @@ import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewMode
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
-import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -114,7 +114,7 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             observeLastOrderUseCase = get(),
-            orderRepo = get(),
+            stopObserveLastOrderUseCase = get(),
         )
     }
     viewModel { parameters ->

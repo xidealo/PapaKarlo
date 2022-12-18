@@ -6,7 +6,11 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.LightOrderMapper
+import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -22,6 +26,7 @@ import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteracto
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
@@ -54,7 +59,8 @@ fun initKoin() = startKoin {
         interactorModule(),
         utilModule(),
         platformModule(),
-        useCaseModule()
+        useCaseModule(),
+        domainMapperModule(),
     )
 }
 
@@ -79,6 +85,8 @@ class IosComponent:KoinComponent {
     fun provideTimeMapper(): TimeMapper = get()
     fun provideUserAddressMapper(): UserAddressMapper = get()
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
+    fun provideGetSelectedCityTimeZoneUseCase(): GetSelectedCityTimeZoneUseCase = get()
+    fun provideStopObserveLastOrderUseCase(): StopObserveLastOrderUseCase = get()
 
-    fun provideCreateOrderViewModel(): CreateOrderViewModel = get()
+    fun provideObserveLastOrderUseCase(): ObserveLastOrderUseCase = get()
 }
