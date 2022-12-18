@@ -13,7 +13,7 @@ data class AppDimensions(
     val verySmallSpace: Dp = 4.dp,
     val smallSpace: Dp = 8.dp,
     val mediumSpace: Dp = 16.dp,
-    val elevation: Dp = 2.dp,
+    val elevation: Dp = 1.dp,
     val codeWidth: Dp = 56.dp,
     val cardHeight: Dp = 40.dp,
     val buttonSize: Dp = 40.dp,
@@ -42,7 +42,13 @@ data class AppDimensions(
     }
 
     @Composable
-    fun cardEvaluation(): CardElevation {
-       return  CardDefaults.cardElevation(defaultElevation = elevation)
+    fun cardEvaluation(hasShadow: Boolean = true): CardElevation {
+        return CardDefaults.cardElevation(
+            defaultElevation = if (hasShadow) {
+                elevation
+            } else {
+                0.dp
+            }
+        )
     }
 }

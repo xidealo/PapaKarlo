@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.common.ui.element.card
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -11,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 @Composable
 fun TextCard(
@@ -21,8 +22,10 @@ fun TextCard(
     label: String
 ) {
     Card(
-        modifier = modifier.card(true),
-       colors = FoodDeliveryTheme.colors.cardColors()
+        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        shape = mediumRoundedCornerShape,
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation()
     ) {
         Column(
             modifier = Modifier
