@@ -41,7 +41,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentSettingsCvMain.compose {
+        viewBinding.root.compose {
             val settingsState by viewModel.settingsState.collectAsState()
             LaunchedEffect(settingsState.eventList) {
                 handleEventList(settingsState.eventList)

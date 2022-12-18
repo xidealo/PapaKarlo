@@ -21,11 +21,6 @@ abstract class BaseFragmentWithSharedViewModel(@LayoutRes layoutId: Int) : Fragm
     var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,7 +49,4 @@ abstract class BaseFragmentWithSharedViewModel(@LayoutRes layoutId: Int) : Fragm
         isBackPressedOverridden = true
     }
 
-    protected inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
-        startedLaunch(viewLifecycleOwner, block)
-    }
 }
