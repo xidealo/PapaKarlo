@@ -6,8 +6,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -40,7 +40,7 @@ fun NavigationCard(
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Row(
             modifier = Modifier

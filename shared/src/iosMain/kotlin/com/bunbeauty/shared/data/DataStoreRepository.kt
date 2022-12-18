@@ -68,31 +68,23 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         emit(NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY))
     }
 
-    actual override val selectedCityTimeZone: Flow<String> = flow {
-        emit(
-            NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_TIME_ZONE_KEY).toString()
-        )
-    }
-
-    actual override suspend fun saveSelectedCityUuid(cityUuid: String, cityTimeZone: String) {
+    actual override suspend fun saveSelectedCityUuid(cityUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(cityUuid, SELECTED_CITY_UUID_KEY)
-        NSUserDefaults.standardUserDefaults.setObject(cityTimeZone, SELECTED_CITY_TIME_ZONE_KEY)
     }
 
     actual override suspend fun getSelectedCityUuid(): String? {
         return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
     }
 
-    actual override suspend fun getSelectedCityTimeZone(): String {
-        return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_TIME_ZONE_KEY)
-            .toString()
-    }
-
-    actual override val payment: Flow<Payment?> = flow{
+    actual override val payment: Flow<Payment?> = flow {
         emit(
             Payment(
-                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(PAYMENT_PHONE_NUMBER_KEY),
-                cardNumber = NSUserDefaults.standardUserDefaults.stringForKey(PAYMENT_CARD_NUMBER_KEY)
+                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(
+                    PAYMENT_PHONE_NUMBER_KEY
+                ),
+                cardNumber = NSUserDefaults.standardUserDefaults.stringForKey(
+                    PAYMENT_CARD_NUMBER_KEY
+                )
             )
         )
     }

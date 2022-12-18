@@ -16,8 +16,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -157,8 +157,8 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
                     shape = mediumRoundedCornerShape
                 )
                 .clip(mediumRoundedCornerShape),
-            backgroundColor = FoodDeliveryTheme.colors.surface,
-            elevation = FoodDeliveryTheme.dimensions.elevation,
+            colors = FoodDeliveryTheme.colors.cardColors(),
+            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
         ) {
             Column(
                 modifier = Modifier

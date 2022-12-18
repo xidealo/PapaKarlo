@@ -10,6 +10,7 @@ import com.bunbeauty.shared.data.repository.DeliveryRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
+import com.bunbeauty.shared.data.repository.SettingsRepository
 import com.bunbeauty.shared.data.repository.StreetRepository
 import com.bunbeauty.shared.data.repository.UserAddressRepository
 import com.bunbeauty.shared.data.repository.UserRepository
@@ -119,6 +120,13 @@ fun repositoryModule() = module {
         PaymentRepository(
             networkConnector = get(),
             dataStoreRepo = get(),
+        )
+    }
+    single {
+        SettingsRepository(
+            dataStoreRepo = get(),
+            networkConnector = get(),
+            settingsMapper = get(),
         )
     }
 }

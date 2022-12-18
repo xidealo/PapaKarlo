@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -212,6 +214,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         startedLaunch(this@MainActivity, block)
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun TopBar(modifier: Modifier = Modifier) {
         TopAppBar(
@@ -238,9 +241,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     )
                 }
             },
-            backgroundColor = FoodDeliveryTheme.colors.surface,
-            contentColor = FoodDeliveryTheme.colors.onSurface,
-            elevation = FoodDeliveryTheme.dimensions.elevation
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = FoodDeliveryTheme.colors.surface,
+                titleContentColor = FoodDeliveryTheme.colors.onSurface
+            ),
+            //elevation = FoodDeliveryTheme.dimensions.elevation
         )
     }
 

@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -36,7 +36,7 @@ fun OrderItem(
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Row(
             modifier = Modifier

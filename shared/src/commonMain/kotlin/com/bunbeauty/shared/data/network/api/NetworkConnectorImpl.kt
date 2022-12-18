@@ -16,6 +16,7 @@ import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
@@ -55,18 +56,6 @@ class NetworkConnectorImpl(
             serializer = ForceUpdateVersionServer.serializer(),
             path = "force_update_version",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
-        )
-    }
-
-    override suspend fun patchDisableUser(
-        token: String,
-        patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer> {
-        return patchData(
-            path = "client",
-            patchBody = patchUserServer,
-            serializer = ProfileServer.serializer(),
-            token = token
         )
     }
 
@@ -151,6 +140,14 @@ class NetworkConnectorImpl(
         )
     }
 
+    override suspend fun getSettings(token: String): ApiResult<SettingsServer> {
+        return getData(
+            serializer = SettingsServer.serializer(),
+            path = "client/settings",
+            token = token
+        )
+    }
+
     // POST
 
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
@@ -184,15 +181,25 @@ class NetworkConnectorImpl(
 
     // PATCH
 
-    override suspend fun patchProfileEmail(
+    override suspend fun patchUser(
         token: String,
-        userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer> {
         return patchData(
             serializer = ProfileServer.serializer(),
             path = "client",
-            parameters = hashMapOf(UUID_PARAMETER to userUuid),
+            patchBody = patchUserServer,
+            token = token
+        )
+    }
+
+    override suspend fun patchSettings(
+        token: String,
+        patchUserServer: PatchUserServer
+    ): ApiResult<SettingsServer> {
+        return patchData(
+            serializer = SettingsServer.serializer(),
+            path = "client/settings",
             patchBody = patchUserServer,
             token = token
         )

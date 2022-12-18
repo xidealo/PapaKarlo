@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
@@ -34,10 +35,11 @@ class CreateOrderViewModel(
     private val getCartTotal: GetCartTotalUseCase,
     private val getMinTime: GetMinTimeUseCase,
     private val createOrderUseCase: CreateOrderUseCase,
+    private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
 ) : SharedViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
-    private val mutableOrderCreationState = MutableStateFlow(OrderCreationUiState())
+    private val mutableOrderCreationState = MutableStateFlow(OrderCreationState())
     val orderCreationState = mutableOrderCreationState.asCommonStateFlow()
 
     fun update() {
@@ -62,9 +64,9 @@ class CreateOrderViewModel(
         val addressList = orderCreationData.value.userAddressList
         val addressUiList = addressList.mapNotNull(userAddressMapper::toUiModel)
         val event = if (addressUiList.isEmpty()) {
-            OrderCreationUiState.Event.OpenCreateAddressEvent
+            OrderCreationState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationUiState.Event.ShowUserAddressListEvent(addressUiList)
+            OrderCreationState.Event.ShowUserAddressListEvent(addressUiList)
         }
         mutableOrderCreationState.update { state ->
             state + event
@@ -79,7 +81,7 @@ class CreateOrderViewModel(
     }
 
     fun onCafeAddressClicked() {
-        val event = OrderCreationUiState.Event.ShowCafeAddressListEvent(
+        val event = OrderCreationState.Event.ShowCafeAddressListEvent(
             orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem)
         )
         mutableOrderCreationState.update { state ->
@@ -97,10 +99,11 @@ class CreateOrderViewModel(
     fun onDeferredTimeClicked() {
         val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
         sharedScope.launch {
+            val timeZone = getSelectedCityTimeZoneUseCase()
             mutableOrderCreationState.update { state ->
-                val event = OrderCreationUiState.Event.ShowDeferredTimeEvent(
+                val event = OrderCreationState.Event.ShowDeferredTimeEvent(
                     deferredTime = deferredTime,
-                    minTime = timeMapper.toUiModel(getMinTime()),
+                    minTime = timeMapper.toUiModel(getMinTime(timeZone)),
                     isDelivery = state.isDelivery
                 )
                 state + event
@@ -119,7 +122,7 @@ class CreateOrderViewModel(
     }
 
     fun onCommentClicked() {
-        val event = OrderCreationUiState.Event.ShowCommentInputEvent(
+        val event = OrderCreationState.Event.ShowCommentInputEvent(
             comment = mutableOrderCreationState.value.comment
         )
         mutableOrderCreationState.update { state ->
@@ -153,25 +156,26 @@ class CreateOrderViewModel(
                     selectedUserAddress = data.selectedUserAddress,
                     selectedCafe = data.selectedCafe,
                     comment = stateValue.comment,
-                    deferredTime = data.selectedDeferredTime
+                    deferredTime = data.selectedDeferredTime,
+                    timeZone = getSelectedCityTimeZoneUseCase()
                 )
                 if (orderCode == null) {
-                    val event = OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent
+                    val event = OrderCreationState.Event.ShowSomethingWentWrongErrorEvent
                     mutableOrderCreationState.update { it + event }
                 } else {
                     cartProductInteractor.removeAllProductsFromCart()
 
-                    val event = OrderCreationUiState.Event.OrderCreatedEvent(code = orderCode.code)
+                    val event = OrderCreationState.Event.OrderCreatedEvent(code = orderCode.code)
                     mutableOrderCreationState.update { it + event }
                 }
             } else {
-                val event = OrderCreationUiState.Event.ShowUserUnauthorizedErrorEvent
+                val event = OrderCreationState.Event.ShowUserUnauthorizedErrorEvent
                 mutableOrderCreationState.update { it + event }
             }
         }
     }
 
-    fun consumeEventList(eventList: List<OrderCreationUiState.Event>) {
+    fun consumeEventList(eventList: List<OrderCreationState.Event>) {
         mutableOrderCreationState.update { state ->
             state.copy(eventList = state.eventList - eventList.toSet())
         }
@@ -228,7 +232,7 @@ class CreateOrderViewModel(
                 )
             }
         } catch (exception: Exception) {
-            val event = OrderCreationUiState.Event.ShowSomethingWentWrongErrorEvent
+            val event = OrderCreationState.Event.ShowSomethingWentWrongErrorEvent
             mutableOrderCreationState.update { state ->
                 state + event
             }

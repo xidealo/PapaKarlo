@@ -18,7 +18,7 @@ import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewMode
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewModel
+import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
@@ -61,11 +61,13 @@ fun viewModelModule() = module {
             getCartTotal = get(),
             getMinTime = get(),
             createOrderUseCase = get(),
+            getSelectedCityTimeZoneUseCase = get(),
         )
     }
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
+            getSelectedCityTimeZoneUseCase = get(),
         )
     }
     viewModel {
@@ -132,8 +134,11 @@ fun viewModelModule() = module {
     }
     viewModel {
         SettingsViewModel(
-            userInteractor = get(),
-            settingsInteractor = get(),
+            observeSettingsUseCase = get(),
+            observeSelectedCityUseCase = get(),
+            updateEmailUseCase = get(),
+            getCityListUseCase = get(),
+            saveSelectedCityUseCase = get(),
         )
     }
     viewModel { parameters ->

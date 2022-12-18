@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.shared.data.mapper.SettingsMapper
 import com.bunbeauty.shared.data.mapper.cafe.CafeMapper
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.mapper.cart_product.CartProductMapper
@@ -40,5 +41,8 @@ fun dataMapperModule() = module {
     single<IOrderProductMapper> { OrderProductMapper() }
     single {
         TimeMapper()
+    }
+    factory {
+        SettingsMapper()
     }
 }

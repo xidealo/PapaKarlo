@@ -17,11 +17,9 @@ import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.interactor.deferred_time.IDeferredTimeInteractor
 import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.interactor.settings.ISettingsInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
@@ -68,12 +66,10 @@ class IosComponent:KoinComponent {
     fun provideCafeInteractor(): ICafeInteractor = get()
     fun provideCartProductInteractor(): ICartProductInteractor = get()
     fun provideIUserInteractor(): IUserInteractor = get()
-    fun provideISettingsInteractor(): ISettingsInteractor = get()
     fun provideIOrderInteractor(): IOrderInteractor = get()
     fun provideIAddressInteractor(): IAddressInteractor = get()
     fun provideIStreetInteractor(): IStreetInteractor = get()
     fun provideDisableUserUseCase(): DisableUserUseCase = get()
-    fun provideIDeferredTimeInteractor(): IDeferredTimeInteractor = get()
     fun provideGetSelectedUserAddressUseCase(): GetSelectedUserAddressUseCase = get()
     fun provideGetSelectedCafeUseCase(): GetSelectedCafeUseCase = get()
     fun provideGetUserAddressListUseCase(): GetUserAddressListUseCase = get()

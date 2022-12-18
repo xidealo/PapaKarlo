@@ -4,7 +4,7 @@ import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
-data class OrderCreationUiState(
+data class OrderCreationState(
     val isDelivery: Boolean = true,
     val deliveryAddress: UserAddressUi? = null,
     val pickupAddress: String? = null,

@@ -1,7 +1,14 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
+import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
+import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
@@ -44,10 +51,7 @@ internal fun useCaseModule() = module {
         )
     }
     factory {
-        GetMinTimeUseCase(
-            dateTimeUtil = get(),
-            dataStoreRepo = get(),
-        )
+        GetMinTimeUseCase(dateTimeUtil = get())
     }
     factory {
         DisableUserUseCase(
@@ -68,6 +72,46 @@ internal fun useCaseModule() = module {
             dataStoreRepo = get(),
             orderRepo = get(),
             lightOrderMapper = get(),
+        )
+    }
+    factory {
+        ObserveSettingsUseCase(
+            settingsRepository = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    factory {
+        UpdateEmailUseCase(
+            settingsRepository = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    factory {
+        GetCityListUseCase(
+            cityRepo = get()
+        )
+    }
+    factory {
+        GetSelectedCityTimeZoneUseCase(
+            cityRepo = get(),
+            dataStoreRepo = get()
+        )
+    }
+    factory {
+        GetSelectedCityUseCase(
+            cityRepo = get(),
+            dataStoreRepo = get()
+        )
+    }
+    factory {
+        ObserveSelectedCityUseCase(
+            cityRepo = get(),
+            dataStoreRepo = get()
+        )
+    }
+    factory {
+        SaveSelectedCityUseCase(
+            dataStoreRepo = get()
         )
     }
 }

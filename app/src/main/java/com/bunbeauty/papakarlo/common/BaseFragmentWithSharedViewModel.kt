@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
+import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.flow.Flow
 import org.koin.android.ext.android.inject
 
@@ -19,6 +20,11 @@ abstract class BaseFragmentWithSharedViewModel(@LayoutRes layoutId: Int) : Fragm
 
     var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialFadeThrough()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

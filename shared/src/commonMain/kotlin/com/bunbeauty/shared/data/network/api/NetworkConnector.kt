@@ -10,6 +10,7 @@ import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
@@ -35,6 +36,7 @@ interface NetworkConnector {
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
     suspend fun getOrderList(token: String, count: Int): ApiResult<ListServer<OrderServer>>
+    suspend fun getSettings(token: String): ApiResult<SettingsServer>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
@@ -44,16 +46,16 @@ interface NetworkConnector {
 
     suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
 
-    suspend fun patchProfileEmail(
+    @Deprecated("use patchSettings")
+    suspend fun patchUser(
         token: String,
-        userUuid: String,
         patchUserServer: PatchUserServer
     ): ApiResult<ProfileServer>
 
-    suspend fun patchDisableUser(
+    suspend fun patchSettings(
         token: String,
         patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer>
+    ): ApiResult<SettingsServer>
 
     suspend fun startOrderUpdatesObservation(token: String): Flow<OrderServer>
     suspend fun stopOrderUpdatesObservation()

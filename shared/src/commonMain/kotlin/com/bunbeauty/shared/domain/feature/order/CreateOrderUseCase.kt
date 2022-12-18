@@ -24,7 +24,8 @@ class CreateOrderUseCase(
         selectedUserAddress: UserAddress?,
         selectedCafe: Cafe?,
         comment: String?,
-        deferredTime: Time?
+        deferredTime: Time?,
+        timeZone: String,
     ): OrderCode? {
         val token = dataStoreRepo.getToken() ?: return null
         val cartProductList = cartProductRepo.getCartProductList()
@@ -53,10 +54,7 @@ class CreateOrderUseCase(
             address = createdOrderAddress,
             comment = comment,
             deferredTime = deferredTime?.let {
-                dateTimeUtil.getMillisByTime(
-                    deferredTime,
-                    dataStoreRepo.getSelectedCityTimeZone()
-                )
+                dateTimeUtil.getMillisByTime(deferredTime, timeZone)
             },
             orderProducts = cartProductList.map { cartProduct ->
                 CreatedOrderProduct(

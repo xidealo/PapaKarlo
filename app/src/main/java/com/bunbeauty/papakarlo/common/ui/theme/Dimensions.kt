@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.ButtonElevation
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -42,17 +42,7 @@ data class AppDimensions(
     }
 
     @Composable
-    fun getButtonEvaluation(hasShadow: Boolean): ButtonElevation {
-        return if (hasShadow) {
-            ButtonDefaults.elevation()
-        } else {
-            ButtonDefaults.elevation(
-                defaultElevation = 0.dp,
-                pressedElevation = 0.dp,
-                disabledElevation = 0.dp,
-                hoveredElevation = 0.dp,
-                focusedElevation = 0.dp,
-            )
-        }
+    fun cardEvaluation(): CardElevation {
+       return  CardDefaults.cardElevation(defaultElevation = elevation)
     }
 }

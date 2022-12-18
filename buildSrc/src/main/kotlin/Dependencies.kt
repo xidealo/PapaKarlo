@@ -23,10 +23,12 @@ object Versions {
     const val timePicker = "4.2.3"
 
     const val composeCompiler = "1.3.2"
-    const val composeMaterial = "1.2.1"
-    const val composeAnimation = "1.2.1"
-    const val composeUi = "1.2.1"
-    const val composeThemeAdapter = "1.1.4"
+    const val composeBom = "2022.12.00"
+    const val composeMaterial3 = "1.1.0-alpha03"
+    const val composeUiTooling = "1.3.2"
+    const val composeUiToolingPreview = "1.3.2"
+    const val activityCompose = "1.6.1"
+    const val lifecycleRuntimeCompose = "2.6.0-alpha03"
 
     const val dataStorePreferences = "1.0.0"
 
@@ -105,20 +107,21 @@ object Google {
 }
 
 object Compose {
-    const val material = "androidx.compose.material:material:${Versions.composeMaterial}"
-    const val animation = "androidx.compose.animation:animation:${Versions.composeAnimation}"
-    const val ui = "androidx.compose.ui:ui-tooling:${Versions.composeUi}"
-    const val materialThemeAdapter =
-        "com.google.android.material:compose-theme-adapter:${Versions.composeThemeAdapter}"
+    const val bom = "androidx.compose:compose-bom:${Versions.composeBom}"
+    const val foundation = "androidx.compose.foundation:foundation"
+    const val ui = "androidx.compose.ui:ui"
+    const val material3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
+    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeUiTooling}"
+    const val uiToolingPreview =
+        "androidx.compose.ui:ui-tooling-preview:${Versions.composeUiToolingPreview}"
+    const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
+    const val lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
 }
 
 object Lifecycle {
     const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
     const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
-    const val viewmodelCompose =
-        "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewmodel}"
     const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
-    const val activityCompose = "androidx.activity:activity-compose:${Versions.activity}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
