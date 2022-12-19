@@ -114,7 +114,7 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             observeLastOrderUseCase = get(),
-            stopObserveLastOrderUseCase = get(),
+            stopObserveLastOrderUseCase = get()
         )
     }
     viewModel { parameters ->
@@ -139,6 +139,9 @@ fun viewModelModule() = module {
             updateEmailUseCase = get(),
             getCityListUseCase = get(),
             saveSelectedCityUseCase = get(),
+            firebaseAuthRepository = get(),
+            disableUserUseCase = get(),
+            userInteractor = get(),
         )
     }
     viewModel { parameters ->

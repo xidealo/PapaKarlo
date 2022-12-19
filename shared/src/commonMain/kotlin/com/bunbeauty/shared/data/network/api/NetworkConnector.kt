@@ -46,12 +46,6 @@ interface NetworkConnector {
 
     suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
 
-    @Deprecated("use patchSettings")
-    suspend fun patchUser(
-        token: String,
-        patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer>
-
     suspend fun patchSettings(
         token: String,
         patchUserServer: PatchUserServer

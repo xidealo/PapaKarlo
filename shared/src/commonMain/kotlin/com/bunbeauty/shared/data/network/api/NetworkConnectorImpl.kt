@@ -181,18 +181,6 @@ class NetworkConnectorImpl(
 
     // PATCH
 
-    override suspend fun patchUser(
-        token: String,
-        patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer> {
-        return patchData(
-            serializer = ProfileServer.serializer(),
-            path = "client",
-            patchBody = patchUserServer,
-            token = token
-        )
-    }
-
     override suspend fun patchSettings(
         token: String,
         patchUserServer: PatchUserServer

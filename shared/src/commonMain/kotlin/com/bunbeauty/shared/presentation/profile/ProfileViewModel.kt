@@ -5,10 +5,8 @@ import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,7 +15,7 @@ class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveLastOrderUseCase: StopObserveLastOrderUseCase
-) : SharedViewModel() {
+    ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
     val profileState = mutableProfileState.asCommonStateFlow()

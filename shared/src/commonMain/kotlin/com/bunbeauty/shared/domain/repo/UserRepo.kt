@@ -17,8 +17,6 @@ interface UserRepo {
         token: String
     ): Profile.Authorized?
 
-    suspend fun updateUserEmail(token: String, userUuid: String, email: String): User?
-
     suspend fun clearUserCache()
 
     suspend fun disableUser(token: String)

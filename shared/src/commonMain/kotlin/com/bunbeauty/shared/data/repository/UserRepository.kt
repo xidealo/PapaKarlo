@@ -74,21 +74,12 @@ class UserRepository(
         return profile
     }
 
-    override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
-        val patchUserServer = userMapper.toPatchServerModel(email)
-        return networkConnector.patchUser(token, patchUserServer)
-            .getNullableResult { profile ->
-                userDao.updateUserEmailByUuid(userUuid, email)
-                userMapper.toUser(profile)
-            }
-    }
-
     override suspend fun clearUserCache() {
         dataStoreRepo.clearUserData()
     }
 
     override suspend fun disableUser(token: String) {
-        networkConnector.patchUser(token, PatchUserServer(isActive = false))
+        networkConnector.patchSettings(token, PatchUserServer(isActive = false))
     }
 
     suspend fun saveProfileLocally(profile: ProfileServer?) {

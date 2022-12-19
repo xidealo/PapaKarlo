@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 import shared
 
 struct ToolbarView: View {

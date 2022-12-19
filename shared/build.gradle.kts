@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.types.error.ErrorModuleDescriptor.platform
+
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -23,6 +25,7 @@ kotlin {
             baseName = "shared"
             isStatic = false
         }
+        pod("FirebaseAuth")
     }
 
     sourceSets {
@@ -48,7 +51,6 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
-                //implementation("dev.gitlive:firebase-auth:1.6.2")
             }
         }
         val commonTest by getting {
@@ -63,6 +65,10 @@ kotlin {
                 implementation(Ktor.clientAndroid)
                 implementation(Ktor.clientOkhttp)
                 implementation(Lifecycle.viewmodel)
+
+                implementation(project.dependencies.platform(Firebase.bom))
+                implementation(Firebase.auth)
+                implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.androidDriver)
             }

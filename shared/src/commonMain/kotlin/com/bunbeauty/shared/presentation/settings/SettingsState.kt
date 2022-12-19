@@ -16,6 +16,7 @@ data class SettingsState(
         class ShowCityListEvent(val cityList: List<City>): Event
         object ShowEmailChangedSuccessfullyEvent: Event
         object ShowEmailChangingFailedEvent: Event
+        object Back: Event
     }
 
     enum class State {

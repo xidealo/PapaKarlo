@@ -1,18 +1,17 @@
-package com.bunbeauty.papakarlo.feature.auth
+package com.bunbeauty.shared.data
 
 import com.google.firebase.auth.FirebaseAuth
 
-@Deprecated("Use class in shared module")
-class FirebaseAuthRepository(
+actual class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth
 ) {
-    val firebaseUserUuid: String?
+    actual val firebaseUserUuid: String?
         get() = firebaseAuth.currentUser?.uid
 
-    val firebaseUserPhone: String?
+    actual val firebaseUserPhone: String?
         get() = firebaseAuth.currentUser?.phoneNumber
 
-    fun signOut() {
+    actual fun signOut(){
         firebaseAuth.signOut()
     }
 }

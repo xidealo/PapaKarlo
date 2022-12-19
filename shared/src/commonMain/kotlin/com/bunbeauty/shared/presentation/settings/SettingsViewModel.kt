@@ -1,10 +1,14 @@
 package com.bunbeauty.shared.presentation.settings
 
+import com.bunbeauty.shared.data.FirebaseAuthRepository
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,10 +24,13 @@ class SettingsViewModel(
     private val updateEmailUseCase: UpdateEmailUseCase,
     private val getCityListUseCase: GetCityListUseCase,
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
+    private val disableUserUseCase: DisableUserUseCase,
+    private val userInteractor: IUserInteractor,
+    private val firebaseAuthRepository: FirebaseAuthRepository
 ) : SharedViewModel() {
 
     private val mutableSettingsState = MutableStateFlow(SettingsState())
-    val settingsState = mutableSettingsState.asStateFlow()
+    val settingsState = mutableSettingsState.asCommonStateFlow()
 
     init {
         observeSettings()
@@ -64,6 +71,23 @@ class SettingsViewModel(
     fun consumeEventList(eventList: List<SettingsState.Event>) {
         mutableSettingsState.update { settingsState ->
             settingsState - eventList
+        }
+    }
+
+    fun logout(){
+        sharedScope.launch {
+            firebaseAuthRepository.signOut()
+            userInteractor.clearUserCache()
+            mutableSettingsState.update { settingsState ->
+                settingsState + SettingsState.Event.Back
+            }
+        }
+    }
+
+    fun disableUser(){
+        sharedScope.launch {
+            disableUserUseCase()
+            logout()
         }
     }
 

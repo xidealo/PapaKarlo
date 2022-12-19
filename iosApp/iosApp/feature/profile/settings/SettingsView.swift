@@ -6,13 +6,30 @@
 //
 
 import SwiftUI
+import shared
 
 struct SettingsView: View {
     
-    @ObservedObject private var viewModel = SettingsViewModel()
-    @State private var showingAlert = false
+    var viewModel = SettingsViewModel(
+        observeSettingsUseCase: iosComponent.provideObserveSettingsUseCase(),
+        observeSelectedCityUseCase: iosComponent.provideObserveSelectedCityUseCase(),
+        updateEmailUseCase: iosComponent.provideUpdateEmailUseCase(),
+        getCityListUseCase: iosComponent.provideGetCityListUseCase(),
+        saveSelectedCityUseCase: iosComponent.provideSaveSelectedCityUseCase(),
+        disableUserUseCase: iosComponent.provideDisableUserUseCase(),
+        userInteractor: iosComponent.provideIUserInteractor(),
+        firebaseAuthRepository: iosComponent.provideFirebaseAuthRepository()
+    )
     
-    private let authManager = AuthManager()
+    @State var state = SettingsState(
+        settings: nil,
+        selectedCity: nil,
+        cityList: [],
+        state: SettingsState.State.loading,
+        eventList: []
+    )
+    
+    @State private var showingAlert = false
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -24,7 +41,7 @@ struct SettingsView: View {
                 count: "2",
                 isCartVisible: false,
                 logout : {
-                    logout()
+                    viewModel.logout()
                 },
                 back: {
                     self.mode.wrappedValue.dismiss()
@@ -32,12 +49,17 @@ struct SettingsView: View {
             )
             
             VStack(spacing:0){
-                TextCard(placeHolder: Strings.HINT_SETTINGS_PHONE, text: viewModel.settingsViewState.phone)
+                TextCard(placeHolder: Strings.HINT_SETTINGS_PHONE, text: state.settings?.phoneNumber ?? "")
                 
                 //TODO(Add Email in next Version)
                 
-                NavigationTextCard(placeHolder: Strings.HINT_SETTINGS_CITY, text: viewModel.settingsViewState.city, destination:ChangeCityView())
-                    .padding(.top, Diems.SMALL_PADDING)
+                NavigationTextCard(
+                    placeHolder: Strings.HINT_SETTINGS_CITY,
+                    text: state.selectedCity?.name ?? "",
+                    destination:ChangeCityView()
+                )
+                .padding(.top, Diems.SMALL_PADDING)
+                
                 Spacer()
                 Button(action: {
                     showingAlert = true
@@ -49,13 +71,7 @@ struct SettingsView: View {
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
                     Button("Да") {
-                        viewModel.disableUser { isSuccess in
-                            if isSuccess{
-                                DispatchQueue.main.async {
-                                    logout()
-                                }
-                            }
-                        }
+                        viewModel.disableUser()
                     }
                     Button("Нет", role: .cancel) { }
                 }
@@ -64,12 +80,23 @@ struct SettingsView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-    }
-    
-    func logout(){
-        authManager.logout()
-        iosComponent.provideIUserInteractor().clearUserCache { err in
-            self.mode.wrappedValue.dismiss()
+        .onAppear(){
+            viewModel.settingsState.watch { settingsStateVM in
+                if(settingsStateVM != nil ){
+                    state = settingsStateVM!
+                    settingsStateVM!.eventList.forEach { event in
+                        switch(event){
+                        case is SettingsStateEventBack : self.mode.wrappedValue.dismiss()
+                        default:
+                            print("def")
+                        }
+                    }
+                    
+                    if !settingsStateVM!.eventList.isEmpty{
+                        viewModel.consumeEventList(eventList: settingsStateVM!.eventList)
+                    }
+                }
+            }
         }
     }
 }

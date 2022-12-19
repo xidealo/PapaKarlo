@@ -60,13 +60,4 @@ class UserInteractor(
         }
     }
 
-    override suspend fun updateUserEmail(email: String): User? {
-        val userUuid = dataStoreRepo.getUserUuid()
-        val token = dataStoreRepo.getToken()
-        return if (isUserAuthorize() && userUuid != null && token != null) {
-            userRepo.updateUserEmail(token, userUuid, email)
-        } else {
-            null
-        }
-    }
 }
