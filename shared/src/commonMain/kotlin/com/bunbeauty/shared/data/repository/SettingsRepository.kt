@@ -3,7 +3,6 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.data.mapper.SettingsMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.domain.model.Settings
 import kotlinx.coroutines.flow.Flow

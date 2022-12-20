@@ -12,7 +12,6 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.LightOrderMapper
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
@@ -32,11 +31,8 @@ import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteracto
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
-import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
-import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.context.startKoin

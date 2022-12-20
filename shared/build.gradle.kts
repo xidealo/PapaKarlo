@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.types.error.ErrorModuleDescriptor.platform
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
