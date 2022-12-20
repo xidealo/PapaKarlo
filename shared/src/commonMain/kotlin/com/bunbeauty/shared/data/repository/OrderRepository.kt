@@ -12,6 +12,7 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
@@ -36,14 +37,14 @@ class OrderRepository(
     }
 
     override suspend fun observeOrderUpdates(token: String): Flow<Order> {
-        return networkConnector.startOrderUpdatesObservation(token).onEach { orderServer ->
+        return networkConnector.startOrderUpdatesObservation(token).onEach { orderUpdateServer ->
             orderDao.updateOrderStatusByUuid(
-                uuid = orderServer.uuid,
-                status = orderServer.status,
+                uuid = orderUpdateServer.uuid,
+                status = orderUpdateServer.status,
             )
-        }.map { orderServer ->
-            orderMapper.toOrder(orderServer)
-        }
+        }.map { orderUpdateServer ->
+            orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
+        }.filterNotNull()
     }
 
     override suspend fun stopOrderUpdatesObservation() {

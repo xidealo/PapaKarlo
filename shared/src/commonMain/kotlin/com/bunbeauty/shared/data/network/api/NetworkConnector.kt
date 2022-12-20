@@ -16,6 +16,7 @@ import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
@@ -51,6 +52,6 @@ interface NetworkConnector {
         patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer>
 
-    suspend fun startOrderUpdatesObservation(token: String): Flow<OrderServer>
+    suspend fun startOrderUpdatesObservation(token: String): Flow<OrderUpdateServer>
     suspend fun stopOrderUpdatesObservation()
 }

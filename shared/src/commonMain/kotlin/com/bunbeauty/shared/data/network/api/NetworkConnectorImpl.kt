@@ -3,7 +3,6 @@ package com.bunbeauty.shared.data.network.api
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
@@ -22,6 +21,7 @@ import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
@@ -131,7 +131,10 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getOrderList(token: String, count: Int): ApiResult<ListServer<OrderServer>> {
+    override suspend fun getOrderList(
+        token: String,
+        count: Int
+    ): ApiResult<ListServer<OrderServer>> {
         return getData(
             serializer = ListServer.serializer(OrderServer.serializer()),
             path = "v2/client/order",
@@ -195,10 +198,10 @@ class NetworkConnectorImpl(
 
     // WEB_SOCKET
 
-    override suspend fun startOrderUpdatesObservation(token: String): Flow<OrderServer> {
+    override suspend fun startOrderUpdatesObservation(token: String): Flow<OrderUpdateServer> {
         return socketService.observeSocketMessages(
-            path = "client/order/subscribe",
-            serializer = OrderServer.serializer(),
+            path = "client/order/v2/subscribe",
+            serializer = OrderUpdateServer.serializer(),
             token
         )
     }
