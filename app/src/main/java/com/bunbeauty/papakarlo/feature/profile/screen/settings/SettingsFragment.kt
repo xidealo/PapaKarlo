@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
@@ -135,6 +136,9 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                         backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
                         isTop = false
                     )
+                }
+                SettingsState.Event.Back -> {
+                    findNavController().navigateUp()
                 }
             }
         }
