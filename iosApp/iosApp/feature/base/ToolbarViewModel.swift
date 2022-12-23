@@ -11,12 +11,22 @@ import shared
 class ToolbarViewModel : ObservableObject {
     @Published var toolbarViewState:ToolbarViewState = ToolbarViewState(count: "", cost: "")
     
-    init(){
-        iosComponent.provideCartProductInteractor().observeTotalCartCountForIos().watch { count in
+    var subOnTotalCartCount : Closeable? = nil
+    var subOnTotalCartCost : Closeable? = nil
+
+    func subscribeOnFlow(){
+        subOnTotalCartCount =  iosComponent.provideCartProductInteractor().observeTotalCartCount().watch { count in
             self.toolbarViewState = ToolbarViewState(count: String(count as? Int ?? 0), cost: self.toolbarViewState.cost)
         }
-        iosComponent.provideCartProductInteractor().observeNewTotalCartCostForIos().watch { cost in
+        subOnTotalCartCost = iosComponent.provideCartProductInteractor().observeNewTotalCartCost().watch { cost in
             self.toolbarViewState = ToolbarViewState(count: self.toolbarViewState.count, cost: String(cost as? Int ?? 0))
         }
+    }
+    
+    func unsubFromFlows(){
+        subOnTotalCartCost?.close()
+        subOnTotalCartCost = nil
+        subOnTotalCartCount?.close()
+        subOnTotalCartCount = nil
     }
 }

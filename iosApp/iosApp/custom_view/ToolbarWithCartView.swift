@@ -23,7 +23,7 @@ struct ToolbarWithCartView: View {
     
     var body: some View {
         HStack(spacing:0){
-            ToolbarView(title: title)
+            ToolbarView(title: title, back: back)
             
             NavigationLink(
                 destination:ConsumerCartView(

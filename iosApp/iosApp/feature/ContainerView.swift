@@ -34,5 +34,11 @@ struct ContainerView: View {
             }
             BottomBarView(selection: $selection, title: $title)
         }
+        .onAppear(){
+            viewModel.subscribeOnFlow()
+        }
+        .onDisappear(){
+            viewModel.unsubFromFlows()
+        }
     }
 }

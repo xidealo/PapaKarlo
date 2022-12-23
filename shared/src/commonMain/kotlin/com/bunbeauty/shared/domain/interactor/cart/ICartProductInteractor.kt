@@ -12,13 +12,9 @@ interface ICartProductInteractor {
 
     fun observeConsumerCart(): CommonFlow<ConsumerCart?>
 
-    fun observeNewTotalCartCost(): Flow<Int>
+    fun observeNewTotalCartCost(): CommonFlow<Int>
 
-    fun observeNewTotalCartCostForIos(): CommonFlow<Int>
-
-    fun observeTotalCartCount(): Flow<Int>
-
-    fun observeTotalCartCountForIos(): CommonFlow<Int>
+    fun observeTotalCartCount(): CommonFlow<Int>
 
     fun observeDeliveryCost(): Flow<Int>
 

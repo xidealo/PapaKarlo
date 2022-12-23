@@ -109,5 +109,11 @@ struct ProductDetailsView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
+        .onAppear(){
+            viewModel.subscribeOnFlow()
+        }
+        .onDisappear(){
+            viewModel.unsubFromFlows()
+        }
     }
 }
