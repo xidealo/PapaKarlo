@@ -17,9 +17,6 @@ struct ChangeCityView: View {
         VStack{
             ToolbarView(
                 title: Strings.TITLE_SELECT_CITY_CITY,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.presentationMode.wrappedValue.dismiss()
                 }

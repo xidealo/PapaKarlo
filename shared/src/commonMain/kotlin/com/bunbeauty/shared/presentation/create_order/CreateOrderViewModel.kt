@@ -17,6 +17,7 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.presentation.SharedViewModel
 import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressMapper
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -164,9 +165,14 @@ class CreateOrderViewModel(
                     mutableOrderCreationState.update { it + event }
                 } else {
                     cartProductInteractor.removeAllProductsFromCart()
-
-                    val event = OrderCreationState.Event.OrderCreatedEvent(code = orderCode.code)
-                    mutableOrderCreationState.update { it + event }
+                    // Delay for IOS version,
+                    // Try to remove it when ConsumerCartViewModel.kt will be shared
+                    //delay(50)
+                    mutableOrderCreationState.update {
+                        it + OrderCreationState.Event.OrderCreatedEvent(
+                            code = orderCode.code
+                        )
+                    }
                 }
             } else {
                 val event = OrderCreationState.Event.ShowUserUnauthorizedErrorEvent

@@ -24,9 +24,6 @@ struct SelectCityView: View {
             
             ToolbarView(
                 title: Strings.TITLE_SELECT_CITY_CITY,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 })

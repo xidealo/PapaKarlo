@@ -19,12 +19,9 @@ struct UserAddressListView: View {
     }
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_MY_ADDRESSES,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -81,7 +78,7 @@ struct SuccessAddressListView: View {
 
                         }
                     }
-                }
+                }.padding(.top, Diems.SMALL_PADDING)
             }
             
             NavigationLink(

@@ -14,19 +14,20 @@ struct CreateOrderView: View {
     @State var showCreatedAddress:Bool = false
     @State var showAddressError:Bool = false
     @State var showCommonError:Bool = false
-    @State var goToProfile:Bool = false
     @State var goToUserAddress:Bool = false
     @State var goToCafeAddress:Bool = false
     
+    //for back after createOrder
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
                 title: Strings.TITLE_CREATION_ORDER,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -45,13 +46,6 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             
-            NavigationLink(
-                destination:ContainerView(selection: 2, showOrderCreated:true),
-                isActive: $goToProfile
-            ){
-                EmptyView()
-            }
-            
             if(viewModel.creationOrderViewState.isLoading){
                 LoadingView()
             }else{
@@ -60,9 +54,11 @@ struct CreateOrderView: View {
                     showCreatedAddress: $showCreatedAddress,
                     showAddressError: $showAddressError,
                     showCommonError: $showCommonError,
-                    goToProfile:$goToProfile,
                     goToUserAddress:$goToUserAddress,
-                    goToCafeAddress:$goToCafeAddress
+                    goToCafeAddress:$goToCafeAddress,
+                    isRootActive: $isRootActive,
+                    selection: $selection,
+                    showOrderCreated: $showOrderCreated
                 )
             }
         }
@@ -105,7 +101,6 @@ struct CreateOrderSuccessView:View {
     @Binding var showCreatedAddress:Bool
     @Binding var showAddressError:Bool
     @Binding var showCommonError:Bool
-    @Binding var goToProfile:Bool
     @Binding var goToUserAddress:Bool
     @Binding var goToCafeAddress:Bool
     @State var isDelivery = true
@@ -113,6 +108,10 @@ struct CreateOrderSuccessView:View {
     @State var faster = true
     @State var deferredTime: Foundation.Date = Foundation.Date()
     
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+
     let calendar = Calendar.current
 
     var body: some View{
@@ -280,11 +279,15 @@ struct CreateOrderSuccessView:View {
                 addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_CAFE
             }
             
+            print(creationOrderViewState.eventList)
+            
             creationOrderViewState.eventList.forEach { event in
                 switch(event){
                     //case CreateOrderAction.showAddressError : showAddressError = true
                 case is OrderCreationStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
-                case is OrderCreationStateEventOrderCreatedEvent : goToProfile = true
+                case is OrderCreationStateEventOrderCreatedEvent : isRootActive = false
+                    selection = 2
+                    showOrderCreated = true
                 case is OrderCreationStateEventShowCafeAddressListEvent : goToCafeAddress = true
                 case is OrderCreationStateEventShowUserAddressListEvent : goToUserAddress = true
                 default:

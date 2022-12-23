@@ -18,9 +18,6 @@ struct CafeOptionsView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_CAFE_OPTIONS,
-                cost: "",
-                count: "2",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

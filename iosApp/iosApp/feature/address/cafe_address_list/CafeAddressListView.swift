@@ -21,9 +21,6 @@ struct CafeAddressListView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_CAFE_ADDRESSES,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -56,7 +53,7 @@ struct SuccessCafeAddressListView: View {
     var body: some View {
         VStack(spacing:0){
             ScrollView {
-                LazyVStack{
+                LazyVStack(spacing:0){
                     ForEach(viewModel.cafeAddressViewState.addressItemList){ address in
                         if(address.isClickable){
                             Button(action: {
@@ -66,15 +63,16 @@ struct SuccessCafeAddressListView: View {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                     .padding(.top, Diems.SMALL_PADDING)
+                                    .padding(.bottom, Diems.SMALL_PADDING)
                             }
                         }else{
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
+                                .padding(.bottom, Diems.SMALL_PADDING)
                         }
-                   
                     }
-                }
+                }.padding(.top, Diems.SMALL_PADDING)
             }
         }
     }

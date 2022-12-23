@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CafeListView: View {
     
-    @ObservedObject private var viewModel = viewModelStore.getCafeListViewModelViewModel()
+    @StateObject private var viewModel = CafeViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {

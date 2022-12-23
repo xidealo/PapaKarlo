@@ -8,8 +8,6 @@
 import Foundation
 import shared
 
-var consumerCartView = ConsumerCartView()
-
 class ConsumerCartViewModel : ObservableObject  {
     
     @Published var consumerCartViewState : ConsumerCartViewState = ConsumerCartViewState(

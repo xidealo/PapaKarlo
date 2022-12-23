@@ -9,19 +9,21 @@ import SwiftUI
 
 struct ConsumerCartView: View {
     
-    @ObservedObject var viewModel: ConsumerCartViewModel = viewModelStore.getConsumerCartViewModel()
+    @StateObject var viewModel: ConsumerCartViewModel = ConsumerCartViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var openCreateOrder:Bool = false
     @State var openLogin:Bool = false
+    
+    //for back after createOrder
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
 
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_CART_PRODUCTS,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -33,9 +35,13 @@ struct ConsumerCartView: View {
                 EmptyView()
             }
             .isDetailLink(false)
-
+            
             NavigationLink(
-                destination:CreateOrderView(),
+                destination:CreateOrderView(
+                    isRootActive: self.$isRootActive,
+                    selection: self.$selection,
+                    showOrderCreated: $showOrderCreated
+                ),
                 isActive: $openCreateOrder
             ){
                 EmptyView()

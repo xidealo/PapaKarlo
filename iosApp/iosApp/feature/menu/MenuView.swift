@@ -13,6 +13,11 @@ struct MenuView: View {
     @State var lastShowCategory = ""
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    //for back after createOrder
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+
     var body: some View {
         VStack(spacing:0){
             if viewModel.menuViewState.isLoading {
@@ -52,7 +57,12 @@ struct MenuView: View {
                                         .padding(.top, Diems.MEDIUM_PADDING)){
                                             ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                                 NavigationLink(
-                                                    destination:ProductDetailsView(menuProductUuid: menuProductItem.productUuid)
+                                                    destination:ProductDetailsView(
+                                                        menuProductUuid: menuProductItem.productUuid,
+                                                        isRootActive: self.$isRootActive,
+                                                        selection: self.$selection,
+                                                        showOrderCreated: $showOrderCreated
+                                                    )
                                                 ){
                                                     MenuItemView(menuProductItem: menuProductItem, action: {
                                                         viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
@@ -88,11 +98,5 @@ struct MenuView: View {
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
-    }
-}
-
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView()
     }
 }

@@ -65,9 +65,6 @@ struct ConfirmViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: "",
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

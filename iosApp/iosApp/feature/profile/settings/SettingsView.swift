@@ -37,9 +37,6 @@ struct SettingsView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_SETTINGS,
-                cost: "",
-                count: "2",
-                isCartVisible: false,
                 logout : {
                     viewModel.logout()
                 },
