@@ -16,9 +16,6 @@ struct FeedbackView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_FEEDBACK,
-                cost: "",
-                count: "2",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

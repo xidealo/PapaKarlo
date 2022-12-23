@@ -1,27 +1,26 @@
 package com.bunbeauty.papakarlo.feature.order.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material.Card
-import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.StatusChip
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OrderItem(
     modifier: Modifier = Modifier,
@@ -29,14 +28,11 @@ fun OrderItem(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier
-            .card(true)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(),
-                onClick = onClick
-            ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        shape = mediumRoundedCornerShape,
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier

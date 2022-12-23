@@ -5,7 +5,13 @@ CREATE TABLE orderEntity (
     time INTEGER NOT NULL,
     timeZone TEXT NOT NULL,
     code TEXT NOT NULL,
-    address TEXT NOT NULL,
+    address TEXT,
+    addressStreet TEXT,
+    addressHouse TEXT,
+    addressFlat TEXT,
+    addressEntrance TEXT,
+    addressFloor TEXT,
+    addressComment TEXT,
     comment TEXT,
     deliveryCost INTEGER AS Int,
     deferredTime INTEGER,
@@ -33,7 +39,7 @@ JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
 isnsertOrder:
 INSERT OR REPLACE
 INTO orderEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 insertOrderProduct:
 INSERT OR REPLACE

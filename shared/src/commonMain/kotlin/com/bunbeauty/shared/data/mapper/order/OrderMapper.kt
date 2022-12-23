@@ -10,6 +10,7 @@ import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
+import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
@@ -30,7 +31,13 @@ class OrderMapper(
             time = orderServer.time,
             timeZone = orderServer.timeZone,
             code = orderServer.code,
-            address = orderServer.address.description ?: "-",
+            address = orderServer.address.description,
+            addressStreet = orderServer.address.street,
+            addressHouse = orderServer.address.house,
+            addressFlat = orderServer.address.flat,
+            addressEntrance = orderServer.address.entrance,
+            addressFloor = orderServer.address.floor,
+            addressComment = orderServer.address.comment,
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             deferredTime = orderServer.deferredTime,
@@ -88,7 +95,15 @@ class OrderMapper(
                 deferredTime = firstOrderWithProductEntity.deferredTime?.let { millis ->
                     dateTimeUtil.toTime(millis, firstOrderWithProductEntity.timeZone)
                 },
-                address = firstOrderWithProductEntity.address,
+                address = OrderAddress(
+                    description = firstOrderWithProductEntity.address,
+                    street = firstOrderWithProductEntity.addressStreet,
+                    house = firstOrderWithProductEntity.addressHouse,
+                    flat = firstOrderWithProductEntity.addressFlat,
+                    entrance = firstOrderWithProductEntity.addressEntrance,
+                    floor = firstOrderWithProductEntity.addressFloor,
+                    comment = firstOrderWithProductEntity.addressComment,
+                ),
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
                 orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
@@ -106,7 +121,15 @@ class OrderMapper(
             deferredTime = orderServer.deferredTime?.let { millis ->
                 dateTimeUtil.toTime(millis, orderServer.timeZone)
             },
-            address = orderServer.address.description ?: "-",
+            address = OrderAddress(
+                description = orderServer.address.description,
+                street = orderServer.address.street,
+                house = orderServer.address.house,
+                flat = orderServer.address.flat,
+                entrance = orderServer.address.entrance,
+                floor = orderServer.address.floor,
+                comment = orderServer.address.comment,
+            ),
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),

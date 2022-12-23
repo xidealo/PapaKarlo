@@ -46,6 +46,13 @@ class MenuProductRepository(
             .mapFlow(menuProductMapper::toMenuProduct)
     }
 
+    override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
+        return menuProductDao.getMenuProductByUuid(uuid = menuProductUuid).let {
+            if (it == null) return null
+            menuProductMapper.toMenuProduct(it)
+        }
+    }
+
     suspend fun saveMenuLocally(menuProductServerList: List<MenuProductServer>) {
         menuProductMapper.toCategoryEntityList(menuProductServerList)
             .let { categoryEntityList ->

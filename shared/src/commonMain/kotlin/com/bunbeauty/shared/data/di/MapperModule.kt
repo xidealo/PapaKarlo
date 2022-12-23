@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.data.di
 
+import com.bunbeauty.shared.data.mapper.SettingsMapper
 import com.bunbeauty.shared.data.mapper.cafe.CafeMapper
 import com.bunbeauty.shared.data.mapper.cafe.ICafeMapper
 import com.bunbeauty.shared.data.mapper.cart_product.CartProductMapper
@@ -19,10 +20,10 @@ import com.bunbeauty.shared.data.mapper.street.StreetMapper
 import com.bunbeauty.shared.data.mapper.user.IUserMapper
 import com.bunbeauty.shared.data.mapper.user.UserMapper
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
-import com.bunbeauty.shared.ui.create_order.TimeMapper
+import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.dsl.module
 
-fun mapperModule() = module {
+fun dataMapperModule() = module {
     single<ICafeMapper> { CafeMapper() }
     single<IMenuProductMapper> { MenuProductMapper() }
     single<ICartProductMapper> { CartProductMapper() }
@@ -40,5 +41,8 @@ fun mapperModule() = module {
     single<IOrderProductMapper> { OrderProductMapper() }
     single {
         TimeMapper()
+    }
+    factory {
+        SettingsMapper()
     }
 }

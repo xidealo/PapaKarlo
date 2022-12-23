@@ -18,10 +18,10 @@ import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewMode
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
-import com.bunbeauty.shared.ui.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.profile.ProfileViewModel
+import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -35,7 +35,6 @@ fun viewModelModule() = module {
     viewModel {
         MainViewModel(
             cartProductInteractor = get(),
-            mainInteractor = get(),
             stringUtil = get(),
             networkUtil = get()
         )
@@ -62,11 +61,13 @@ fun viewModelModule() = module {
             getCartTotal = get(),
             getMinTime = get(),
             createOrderUseCase = get(),
+            getSelectedCityTimeZoneUseCase = get(),
         )
     }
     viewModel {
         CafeListViewModel(
             cafeInteractor = get(),
+            getSelectedCityTimeZoneUseCase = get(),
         )
     }
     viewModel {
@@ -112,8 +113,8 @@ fun viewModelModule() = module {
     viewModel {
         ProfileViewModel(
             userInteractor = get(),
-            orderInteractor = get(),
-            orderUIMapper = get(),
+            observeLastOrderUseCase = get(),
+            stopObserveLastOrderUseCase = get()
         )
     }
     viewModel { parameters ->
@@ -133,8 +134,14 @@ fun viewModelModule() = module {
     }
     viewModel {
         SettingsViewModel(
+            observeSettingsUseCase = get(),
+            observeSelectedCityUseCase = get(),
+            updateEmailUseCase = get(),
+            getCityListUseCase = get(),
+            saveSelectedCityUseCase = get(),
+            firebaseAuthRepository = get(),
+            disableUserUseCase = get(),
             userInteractor = get(),
-            settingsInteractor = get(),
         )
     }
     viewModel { parameters ->

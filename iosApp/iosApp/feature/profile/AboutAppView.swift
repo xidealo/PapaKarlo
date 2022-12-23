@@ -21,9 +21,6 @@ struct AboutAppView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_ABOUT_APP,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

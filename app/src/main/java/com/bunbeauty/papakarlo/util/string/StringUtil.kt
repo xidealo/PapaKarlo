@@ -7,8 +7,8 @@ import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.ui.create_order.model.TimeUI
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider
@@ -72,7 +72,7 @@ class StringUtil(
         }.let { monthResourceId ->
             resourcesProvider.getString(monthResourceId)
         }
-        return "${dateTime.date.datOfMonth} $monthName ${getTimeString(dateTime.time)}"
+        return "${dateTime.date.dayOfMonth} $monthName ${getTimeString(dateTime.time)}"
     }
 
     override fun getTimeString(time: Time): String {

@@ -1,23 +1,19 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val cartProductInteractor: ICartProductInteractor,
-    private val mainInteractor: IMainInteractor,
     private val stringUtil: IStringUtil,
     private val networkUtil: INetworkUtil
 ) : BaseViewModel(), DefaultLifecycleObserver {
@@ -35,20 +31,6 @@ class MainViewModel(
         observeTotalCartCount()
         observeTotalCartCost()
         observeNetworkConnection()
-    }
-
-    override fun onStart(owner: LifecycleOwner) {
-        super.onStart(owner)
-        viewModelScope.launch() {
-            mainInteractor.startCheckOrderUpdates()
-        }
-    }
-
-    override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-        viewModelScope.launch() {
-            mainInteractor.stopCheckOrderUpdates()
-        }
     }
 
     private fun observeTotalCartCount() {

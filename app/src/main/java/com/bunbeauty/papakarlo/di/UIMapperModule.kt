@@ -1,13 +1,12 @@
 package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
-import com.bunbeauty.papakarlo.mapper.order.OrderUIMapper
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.OrderItemMapper
 import org.koin.dsl.module
 
 fun uiMapperModule() = module {
-    single<IOrderUIMapper> {
-        OrderUIMapper(
+    single {
+        OrderItemMapper(
             stringUtil = get()
         )
     }

@@ -30,30 +30,21 @@ class CartProductInteractor(
         }.asCommonFlow()
     }
 
-    override fun observeTotalCartCount(): Flow<Int> {
+    override fun observeTotalCartCount(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             getTotalCount(cartProductList)
-        }
+        }.asCommonFlow()
     }
-
-    override fun observeTotalCartCountForIos(): CommonFlow<Int> {
-        return observeTotalCartCount().asCommonFlow()
-    }
-
-    override fun observeNewTotalCartCost(): Flow<Int> {
+    override fun observeNewTotalCartCost(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getNewTotalCost(cartProductList)
-        }
+        }.asCommonFlow()
     }
 
-    override fun observeNewTotalCartCostForIos(): CommonFlow<Int> {
-        return observeNewTotalCartCost().asCommonFlow()
-    }
-
-    override fun observeDeliveryCost(): Flow<Int> {
+    override fun observeDeliveryCost(): CommonFlow<Int> {
         return cartProductRepo.observeCartProductList().map { cartProductList ->
             productInteractor.getDeliveryCost(cartProductList)
-        }
+        }.asCommonFlow()
     }
 
     override suspend fun getCartTotal(): CartTotal {

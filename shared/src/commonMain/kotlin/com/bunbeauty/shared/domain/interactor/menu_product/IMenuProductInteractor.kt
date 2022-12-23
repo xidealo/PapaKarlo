@@ -11,5 +11,6 @@ interface IMenuProductInteractor {
     fun observeMenuProductByUuid(menuProductUuid: String): Flow<MenuProduct?>
 
     fun observeMenuProductByUuidForSwift(menuProductUuid: String): CommonFlow<MenuProduct?>
+    suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct?
 
 }

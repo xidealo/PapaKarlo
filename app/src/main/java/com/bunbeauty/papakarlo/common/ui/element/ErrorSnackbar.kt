@@ -1,10 +1,10 @@
 package com.bunbeauty.papakarlo.common.ui.element
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.SnackbarHost
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -21,11 +21,11 @@ fun ErrorSnackbar(
         snackbar = { snackbarData ->
             Card(
                 shape = mediumRoundedCornerShape,
-                backgroundColor = FoodDeliveryTheme.colors.error
+                colors = FoodDeliveryTheme.colors.cardColors()
             ) {
                 Text(
                     modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                    text = snackbarData.message,
+                    text = snackbarData.visuals.message,
                     style = FoodDeliveryTheme.typography.body1,
                     color = FoodDeliveryTheme.colors.onError
                 )

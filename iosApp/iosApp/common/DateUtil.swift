@@ -32,7 +32,7 @@ class DateUtil {
             
         }
    
-        return "\(dateTime.date.datOfMonth) \(monthName) \(getTimeString(time: dateTime.time))"
+        return "\(dateTime.date.dayOfMonth) \(monthName) \(getTimeString(time: dateTime.time))"
     }
     
     func getTimeString(time: Time) -> String {

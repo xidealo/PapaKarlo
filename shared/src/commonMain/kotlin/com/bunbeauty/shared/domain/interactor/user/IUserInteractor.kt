@@ -13,5 +13,4 @@ interface IUserInteractor {
     fun observeIsUserAuthorize(): CommonFlow<Boolean>
     fun observeUser(): Flow<User?>
     suspend fun getProfile(): Profile?
-    suspend fun updateUserEmail(email: String): User?
 }

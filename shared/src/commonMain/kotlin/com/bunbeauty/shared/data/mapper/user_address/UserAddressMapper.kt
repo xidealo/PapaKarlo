@@ -6,7 +6,7 @@ import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.ui.create_order.model.UserAddressUi
+import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 class UserAddressMapper(
     private val streetMapper: IStreetMapper

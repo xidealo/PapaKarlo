@@ -63,6 +63,9 @@ class OrderAddressServer(
 
     @SerialName("floor")
     val floor: String?,
+
+    @SerialName("comment")
+    val comment: String?,
 )
 
 @Serializable

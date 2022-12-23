@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICafeInteractor {
 
-    fun observeCafeList(): Flow<List<Cafe>?>
+    fun observeCafeList(timeZone: String): Flow<List<Cafe>?>
     fun observeCafeAddressList(): CommonFlow<List<CafeAddress>>
     fun observeSelectedCafeAddress(): CommonFlow<CafeAddress>
     suspend fun getCafeList(): List<Cafe>?
-    suspend fun getCafeStatus(cafe: Cafe): CafeStatus
-    suspend fun isClosed(cafe: Cafe): Boolean
-    suspend fun getCloseIn(cafe: Cafe): Int?
+    suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeStatus
+    suspend fun isClosed(cafe: Cafe, timeZone: String): Boolean
+    suspend fun getCloseIn(cafe: Cafe, timeZone: String): Int?
     fun getCafeTime(daySeconds: Int): String
     suspend fun getCafeByUuid(cafeUuid: String): Cafe?
     suspend fun saveSelectedCafe(cafeUuid: String)

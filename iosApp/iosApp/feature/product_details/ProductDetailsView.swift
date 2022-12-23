@@ -27,24 +27,32 @@ struct ProductDetailsView: View {
     
     @StateObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
-    
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    init(menuProductUuid:String) {
+    init(menuProductUuid:String, isRootActive: Binding<Bool>, selection: Binding<Int>, showOrderCreated: Binding<Bool> ) {
         self._viewModel = StateObject(wrappedValue: ProductDetailsViewModel(productUuid: menuProductUuid))
         self.menuProductUuid = menuProductUuid
+        self._isRootActive = isRootActive
+        self._selection = selection
+        self._showOrderCreated =  showOrderCreated
     }
     
     var body: some View {
         VStack{
-            ToolbarView(
+            ToolbarWithCartView(
                 title: viewModel.productDetailsViewState.name,
                 cost: viewModel.toolbarViewState.cost,
                 count: viewModel.toolbarViewState.count,
-                isCartVisible: true,
                 back: {
                     self.mode.wrappedValue.dismiss()
-                }
+                },
+                isRootActive: $isRootActive,
+                selection: $selection,
+                showOrderCreated: $showOrderCreated
             )
             
             VStack{
@@ -101,11 +109,11 @@ struct ProductDetailsView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct ProductDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductDetailsView(menuProductUuid: "")
+        .onAppear(){
+            viewModel.subscribeOnFlow()
+        }
+        .onDisappear(){
+            viewModel.unsubFromFlows()
+        }
     }
 }

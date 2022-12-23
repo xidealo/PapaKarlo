@@ -27,7 +27,12 @@ struct LoginView: View {
                 LoadingView()
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone, rootIsActive: self.$rootIsActive, isGoToCreateOrder: $isGoToCreateOrder),
+                    destination:ConfirmView(
+                        auth: auth,
+                        phone: phone,
+                        rootIsActive: self.$rootIsActive,
+                        isGoToCreateOrder: $isGoToCreateOrder
+                    ),
                     isActive: $goToConfirm
                 ){
                     EmptyView()
@@ -61,9 +66,6 @@ struct LoginViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(
                 title:"",
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

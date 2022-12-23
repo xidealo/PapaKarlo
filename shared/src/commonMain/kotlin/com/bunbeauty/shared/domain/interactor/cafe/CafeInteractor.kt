@@ -23,8 +23,8 @@ class CafeInteractor(
     private val dataTimeUtil: IDateTimeUtil
 ) : ICafeInteractor {
 
-    override fun observeCafeList(): Flow<List<Cafe>?> {
-        return observeMinutesOfDay().map {
+    override fun observeCafeList(timeZone: String): Flow<List<Cafe>?> {
+        return observeMinutesOfDay(timeZone).map {
             getCafeList()
         }
     }
@@ -55,8 +55,8 @@ class CafeInteractor(
         }
     }
 
-    override suspend fun getCafeStatus(cafe: Cafe): CafeStatus {
-        return getCurrentMinuteOfDay().let { minuteOfDay ->
+    override suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeStatus {
+        return getCurrentMinuteOfDay(timeZone).let { minuteOfDay ->
             if (isClosed(cafe.fromTime, cafe.toTime, minuteOfDay)) {
                 CafeStatus.CLOSED
             } else {
@@ -69,12 +69,12 @@ class CafeInteractor(
         }
     }
 
-    override suspend fun isClosed(cafe: Cafe): Boolean {
-        return isClosed(cafe.fromTime, cafe.toTime, getCurrentMinuteOfDay())
+    override suspend fun isClosed(cafe: Cafe, timeZone: String): Boolean {
+        return isClosed(cafe.fromTime, cafe.toTime, getCurrentMinuteOfDay(timeZone))
     }
 
-    override suspend fun getCloseIn(cafe: Cafe): Int? {
-        val beforeClose = (cafe.toTime / SECONDS_IN_MINUTE) - getCurrentMinuteOfDay()
+    override suspend fun getCloseIn(cafe: Cafe, timeZone: String): Int? {
+        val beforeClose = (cafe.toTime / SECONDS_IN_MINUTE) - getCurrentMinuteOfDay(timeZone)
 
         return if (beforeClose in 1 until 60) {
             beforeClose % 60
@@ -96,21 +96,17 @@ class CafeInteractor(
         }
     }
 
-    suspend fun getCurrentMinuteOfDay(): Int {
-        val timeZone = dataStoreRepo.getSelectedCityTimeZone()
+    fun getCurrentMinuteOfDay(timeZone: String): Int {
         return dataTimeUtil.getCurrentMinuteSecond(timeZone).minuteOfDay
     }
 
-    fun observeMinutesOfDay(): Flow<Int> =
-        dataStoreRepo.selectedCityTimeZone.flatMapLatest { timeZone ->
-            flow {
-                while (true) {
-                    val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond(timeZone)
-                    emit(currentMinuteSecond.minuteOfDay)
-                    delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
-                }
-            }
+    fun observeMinutesOfDay(timeZone: String): Flow<Int> = flow {
+        while (true) {
+            val currentMinuteSecond = dataTimeUtil.getCurrentMinuteSecond(timeZone)
+            emit(currentMinuteSecond.minuteOfDay)
+            delay((60 - currentMinuteSecond.secondOfMinute) * 1_000L)
         }
+    }
 
     fun observeCafe(): Flow<Cafe?> {
         return dataStoreRepo.observeUserAndCityUuid().flatMapLatest { userCityUuid ->
@@ -143,7 +139,7 @@ class CafeInteractor(
 
     fun isClosed(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
         return (minutesOfDay < fromTime / SECONDS_IN_MINUTE)
-                || (minutesOfDay > toTime / SECONDS_IN_MINUTE)
+            || (minutesOfDay > toTime / SECONDS_IN_MINUTE)
     }
 
     fun isCloseSoon(toTime: Int, minutesOfDay: Int): Boolean {

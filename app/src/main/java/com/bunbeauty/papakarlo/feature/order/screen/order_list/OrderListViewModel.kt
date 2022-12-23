@@ -5,7 +5,7 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
-import com.bunbeauty.papakarlo.mapper.order.IOrderUIMapper
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.OrderItemMapper
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class OrderListViewModel(
-    private val orderUIMapper: IOrderUIMapper,
+    private val orderUIMapper: OrderItemMapper,
     private val orderInteractor: IOrderInteractor,
     private val userInteractor: IUserInteractor,
 ) : BaseViewModel() {

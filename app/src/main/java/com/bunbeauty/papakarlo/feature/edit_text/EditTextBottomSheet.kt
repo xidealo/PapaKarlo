@@ -5,7 +5,7 @@ import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -105,7 +105,7 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
             EditTextSettings(
                 titleStringId = R.string.title_settings_edit_email,
                 infoText = "Отредактируйте его",
-                labelStringId = R.string.hint_settings_email,
+                labelStringId = R.string.common_email,
                 type = EditTextType.EMAIL,
                 inputText = "aaa@aa.com",
                 buttonStringId = R.string.action_settings_save,
@@ -122,7 +122,7 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
             EditTextSettings(
                 titleStringId = R.string.title_settings_edit_email,
                 infoText = null,
-                labelStringId = R.string.hint_settings_email,
+                labelStringId = R.string.common_email,
                 type = EditTextType.EMAIL,
                 inputText = "aaa@aa.com",
                 buttonStringId = R.string.action_settings_save,

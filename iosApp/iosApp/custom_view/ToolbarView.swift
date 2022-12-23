@@ -6,16 +6,11 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 import shared
 
 struct ToolbarView: View {
     
     let title:String
-    let cost:String
-    let count:String
-    
-    let isCartVisible:Bool
     
     var logout: (() -> Void)? = nil
     var back: (() -> Void)? = nil
@@ -50,33 +45,6 @@ struct ToolbarView: View {
                 }
             }
             
-            if(isCartVisible){
-                NavigationLink(
-                    destination:consumerCartView
-                ){
-                    HStack{
-                        Text(cost).foregroundColor(Color("onSurface"))
-                        
-                        Image(systemName: "cart").foregroundColor(Color("onSurface"))
-                        Text(count).foregroundColor(Color("colorOnPrimary"))
-                            .padding(3)
-                            .background(Color("primary"))
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .padding(.bottom, Diems.SMALL_PADDING)
-                            .padding(.leading, -12)
-                            .font(.system(size: Diems.SMALL_TEXT_SIZE, design: .default))
-                    }
-                }
-                .isDetailLink(false)
-                .padding(.vertical, Diems.SMALL_PADDING)
-                .padding(.trailing, Diems.SMALL_PADDING)
-            }
         }.background(Color("surface"))
-    }
-}
-
-struct ToolbarView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToolbarView(title: "Title", cost: "220R", count: "2", isCartVisible: false)
     }
 }

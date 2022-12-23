@@ -28,9 +28,6 @@ struct CreateAddressView: View {
             VStack{
                 ToolbarView(
                     title: Strings.TITLE_CREATION_ADDRESS,
-                    cost: "",
-                    count: "",
-                    isCartVisible: false,
                     back: {
                         self.presentationMode.wrappedValue.dismiss()
                     }

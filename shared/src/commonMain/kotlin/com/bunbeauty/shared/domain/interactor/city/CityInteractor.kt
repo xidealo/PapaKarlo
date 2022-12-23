@@ -22,7 +22,7 @@ class CityInteractor(
     }
 
     override suspend fun saveSelectedCity(city: City) {
-        dataStoreRepo.saveSelectedCityUuid(city.uuid, city.timeZone)
+        dataStoreRepo.saveSelectedCityUuid(city.uuid)
     }
 
     override fun observeCityList(): CommonFlow<List<City>> {

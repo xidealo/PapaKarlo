@@ -21,9 +21,6 @@ struct OrderDetailsView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: viewModel.orderDetailsViewState.code,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

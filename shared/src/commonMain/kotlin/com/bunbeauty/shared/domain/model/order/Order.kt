@@ -11,8 +11,18 @@ data class Order(
     val dateTime: DateTime,
     val isDelivery: Boolean,
     val deferredTime: Time?,
-    val address: String,
+    val address: OrderAddress,
     val comment: String?,
     val deliveryCost: Int?,
     val orderProductList: List<OrderProduct>
+)
+
+data class OrderAddress(
+    val description: String?,
+    val street: String?,
+    val house: String?,
+    val flat: String?,
+    val entrance: String?,
+    val floor: String?,
+    val comment: String?,
 )

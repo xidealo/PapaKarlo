@@ -69,27 +69,17 @@ class UserRepository(
             onSaveLocally = ::saveProfileLocally,
             serverToDomainModel = profileMapper::toProfile
         )
-        //cachedUserUuid = profile?.userUuid
+        cachedUserUuid = profile?.userUuid
 
         return profile
     }
 
-    override suspend fun updateUserEmail(token: String, userUuid: String, email: String): User? {
-        val patchUserServer = userMapper.toPatchServerModel(email)
-        return networkConnector.patchProfileEmail(token, userUuid, patchUserServer)
-            .getNullableResult { profile ->
-                userDao.updateUserEmailByUuid(userUuid, email)
-                userMapper.toUser(profile)
-            }
-    }
-
     override suspend fun clearUserCache() {
-        dataStoreRepo.clearToken()
-        dataStoreRepo.clearUserUuid()
+        dataStoreRepo.clearUserData()
     }
 
     override suspend fun disableUser(token: String) {
-        networkConnector.patchDisableUser(token, PatchUserServer(isActive = false))
+        networkConnector.patchSettings(token, PatchUserServer(isActive = false))
     }
 
     suspend fun saveProfileLocally(profile: ProfileServer?) {
