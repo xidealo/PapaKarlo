@@ -12,8 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
@@ -29,16 +27,13 @@ fun CafeItem(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.elevation,
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+        shape = mediumRoundedCornerShape,
         colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Column(

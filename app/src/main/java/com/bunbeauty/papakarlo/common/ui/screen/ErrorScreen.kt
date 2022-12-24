@@ -21,7 +21,7 @@ internal fun ErrorScreen(message: String, onClick: (() -> Unit)? = null) {
         Card(
             modifier = Modifier
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                .card(true)
+                .card()
                 .align(Alignment.Center)
                 .clickable(
                     enabled = onClick != null,

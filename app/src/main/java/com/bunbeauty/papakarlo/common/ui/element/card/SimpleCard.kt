@@ -25,7 +25,7 @@ fun SimpleCard(
 ) {
     Card(
         modifier = modifier
-            .card(hasShadow)
+            .card()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),

@@ -109,7 +109,8 @@ private fun CityListScreen(
                         top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
                     address = city.name,
-                    isClickable = true
+                    isClickable = true,
+                    hasShadow = false
                 ) {
                     onAddressClicked(city)
                 }

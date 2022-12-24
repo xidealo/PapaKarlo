@@ -29,7 +29,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.consumer_cart.CountPicker
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 
 @Composable
@@ -42,7 +41,7 @@ fun CartProductItem(
 ) {
     Card(
         modifier = modifier
-            .card(true)
+            .card()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),

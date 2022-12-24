@@ -38,7 +38,7 @@ fun IconCard(
 ) {
     Card(
         modifier = modifier
-            .card(false)
+            .card()
             .clickable(
                 enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },

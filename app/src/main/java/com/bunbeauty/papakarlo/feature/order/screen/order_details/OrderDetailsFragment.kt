@@ -23,8 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -151,14 +149,10 @@ class OrderDetailsFragment : BaseFragment(R.layout.fragment_order_details) {
         orderUI: OrderUI
     ) {
         Card(
-            modifier = modifier
-                .shadow(
-                    elevation = FoodDeliveryTheme.dimensions.elevation,
-                    shape = mediumRoundedCornerShape
-                )
-                .clip(mediumRoundedCornerShape),
+            modifier = modifier,
             colors = FoodDeliveryTheme.colors.cardColors(),
-            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
+            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+            shape = mediumRoundedCornerShape,
         ) {
             Column(
                 modifier = Modifier

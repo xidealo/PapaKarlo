@@ -27,6 +27,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.order.model.OrderProductItem
 
 @Composable
@@ -34,7 +35,12 @@ fun OrderProductItem(
     modifier: Modifier = Modifier,
     orderProductItem: OrderProductItem
 ) {
-    Card(modifier = modifier.card(true)) {
+    Card(
+        modifier = modifier.card(),
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+        shape = mediumRoundedCornerShape
+    ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier

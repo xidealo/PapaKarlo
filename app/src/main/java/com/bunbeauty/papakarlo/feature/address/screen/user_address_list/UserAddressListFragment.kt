@@ -91,7 +91,8 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
                         address = addressItemModel.address,
-                        isClickable = addressItemModel.isClickable
+                        isClickable = addressItemModel.isClickable,
+                        hasShadow = true
                     ) {
                         setFragmentResult(
                             USER_ADDRESS_REQUEST_KEY,

@@ -16,13 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
-import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
 @Composable
@@ -35,17 +32,14 @@ fun CategoryItem(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize)
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.getEvaluation(true),
-                shape = mediumRoundedCornerShape
-            )
-            .clip(smallRoundedCornerShape)
             .clickable(
                 enabled = !categoryItem.isSelected,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+        shape = mediumRoundedCornerShape,
         colors = CardDefaults.cardColors(
             containerColor = if (categoryItem.isSelected) {
                 FoodDeliveryTheme.colors.primary
