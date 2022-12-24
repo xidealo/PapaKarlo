@@ -99,7 +99,8 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                 .fillMaxWidth()
                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
             shape = mediumRoundedCornerShape,
-            colors = FoodDeliveryTheme.colors.cardColors()
+            colors = FoodDeliveryTheme.colors.cardColors(),
+            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
         ) {
             Column {
                 AsyncImage(
