@@ -17,7 +17,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
-import com.bunbeauty.papakarlo.common.ui.smallIcon
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
@@ -53,7 +53,7 @@ fun NavigationCard(
                 color = FoodDeliveryTheme.colors.onSurface
             )
             Icon(
-                modifier = Modifier.smallIcon(),
+                modifier = Modifier.icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
                 contentDescription = stringResource(R.string.description_ic_next),
                 tint = FoodDeliveryTheme.colors.onSurfaceVariant

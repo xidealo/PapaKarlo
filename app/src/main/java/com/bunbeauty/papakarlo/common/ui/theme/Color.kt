@@ -237,7 +237,8 @@ class AppColors(
 
     @Composable
     fun cardColors() = CardDefaults.cardColors(
-        containerColor = FoodDeliveryTheme.colors.surface
+        containerColor = FoodDeliveryTheme.colors.surface,
+        disabledContainerColor = FoodDeliveryTheme.colors.surface,
     )
 
     @Composable

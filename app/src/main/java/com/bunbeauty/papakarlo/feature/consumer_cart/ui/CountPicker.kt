@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.smallIcon
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
@@ -47,7 +47,7 @@ fun CountPicker(
         ) {
             Icon(
                 modifier = Modifier
-                    .smallIcon(),
+                    .icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_minus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_decrease),
                 tint = FoodDeliveryTheme.colors.onPrimary
@@ -71,7 +71,7 @@ fun CountPicker(
         ) {
             Icon(
                 modifier = Modifier
-                    .smallIcon(),
+                    .icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_plus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_increase),
                 tint = FoodDeliveryTheme.colors.onPrimary
