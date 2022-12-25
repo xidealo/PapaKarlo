@@ -20,7 +20,6 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                 orderWithProduct.uuid
             }.forEach { (_, groupedOrderWithProductList) ->
                 groupedOrderWithProductList.first().let { firstOrderWithProduct ->
-                    Logger.logD("testTag", "firstOrderWithProduct.userUuid ${firstOrderWithProduct.userUuid}")
                     orderEntityQueries.isnsertOrder(
                         OrderEntity(
                             uuid = firstOrderWithProduct.uuid,
@@ -30,16 +29,16 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                             timeZone = firstOrderWithProduct.timeZone,
                             code = firstOrderWithProduct.code,
                             address = firstOrderWithProduct.address,
+                            comment = firstOrderWithProduct.comment,
+                            deliveryCost = firstOrderWithProduct.deliveryCost,
+                            deferredTime = firstOrderWithProduct.deferredTime,
+                            userUuid = firstOrderWithProduct.userUuid,
                             addressStreet = firstOrderWithProduct.addressStreet,
                             addressHouse = firstOrderWithProduct.addressHouse,
                             addressFlat = firstOrderWithProduct.addressFlat,
                             addressEntrance = firstOrderWithProduct.addressEntrance,
                             addressFloor = firstOrderWithProduct.addressFloor,
                             addressComment = firstOrderWithProduct.addressComment,
-                            comment = firstOrderWithProduct.comment,
-                            deliveryCost = firstOrderWithProduct.deliveryCost,
-                            deferredTime = firstOrderWithProduct.deferredTime,
-                            userUuid = firstOrderWithProduct.userUuid,
                         )
                     )
                 }

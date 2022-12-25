@@ -6,16 +6,16 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     timeZone TEXT NOT NULL,
     code TEXT NOT NULL,
     address TEXT,
+    comment TEXT,
+    deliveryCost INTEGER AS Int,
+    deferredTime INTEGER,
+    userUuid TEXT NOT NULL,
     addressStreet TEXT,
     addressHouse TEXT,
     addressFlat TEXT,
     addressEntrance TEXT,
     addressFloor TEXT,
     addressComment TEXT,
-    comment TEXT,
-    deliveryCost INTEGER AS Int,
-    deferredTime INTEGER,
-    userUuid TEXT NOT NULL,
     FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
 );
 
