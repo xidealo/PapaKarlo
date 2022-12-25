@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
@@ -21,20 +20,24 @@ fun AddressItem(
     modifier: Modifier = Modifier,
     address: String,
     isClickable: Boolean,
-    onClick: (() -> Unit)
+    hasShadow: Boolean,
+    onClick: (() -> Unit),
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight)
-            .clip(mediumRoundedCornerShape)
             .clickable(
                 enabled = isClickable,
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme
+            .dimensions
+            .cardEvaluation(hasShadow),
+        shape = mediumRoundedCornerShape,
+        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Text(
             modifier = Modifier
@@ -52,6 +55,7 @@ fun AddressItem(
 fun AddressItemPreview() {
     AddressItem(
         address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-        isClickable = false
+        isClickable = false,
+        hasShadow = false
     ) {}
 }

@@ -124,7 +124,5 @@ android {
 sqldelight {
     database("FoodDeliveryDatabase") {
         packageName = "com.bunbeauty.shared.db"
-        sourceFolders = listOf("sqldelight")
-        linkSqlite = true
     }
 }

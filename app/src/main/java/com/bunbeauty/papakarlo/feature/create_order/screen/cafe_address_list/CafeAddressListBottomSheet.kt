@@ -109,7 +109,8 @@ private fun CafeAddressListScreen(
                         top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
                     address = addressItem.address,
-                    isClickable = true
+                    isClickable = true,
+                    hasShadow = false
                 ) {
                     onAddressClicked(addressItem)
                 }

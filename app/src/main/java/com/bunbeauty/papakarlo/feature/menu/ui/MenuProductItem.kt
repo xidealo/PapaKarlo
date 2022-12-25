@@ -25,6 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.SmallButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 
 @Composable
@@ -36,13 +37,15 @@ fun MenuProductItem(
 ) {
     Card(
         modifier = modifier
-            .card(true)
+            .card()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        colors = FoodDeliveryTheme.colors.cardColors()
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+        shape = mediumRoundedCornerShape
     ) {
         Column {
             AsyncImage(
