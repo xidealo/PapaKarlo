@@ -1,7 +1,9 @@
 package com.bunbeauty.shared.data.dao.order
 
+import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.OrderEntity
+import com.bunbeauty.shared.db.OrderProductEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
@@ -18,40 +20,45 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                 orderWithProduct.uuid
             }.forEach { (_, groupedOrderWithProductList) ->
                 groupedOrderWithProductList.first().let { firstOrderWithProduct ->
+                    Logger.logD("testTag", "firstOrderWithProduct.userUuid ${firstOrderWithProduct.userUuid}")
                     orderEntityQueries.isnsertOrder(
-                        uuid = firstOrderWithProduct.uuid,
-                        status = firstOrderWithProduct.status,
-                        isDelivery = firstOrderWithProduct.isDelivery,
-                        time = firstOrderWithProduct.time,
-                        timeZone = firstOrderWithProduct.timeZone,
-                        code = firstOrderWithProduct.code,
-                        address = firstOrderWithProduct.address,
-                        addressStreet = firstOrderWithProduct.addressStreet,
-                        addressHouse = firstOrderWithProduct.addressHouse,
-                        addressFlat = firstOrderWithProduct.addressFlat,
-                        addressEntrance = firstOrderWithProduct.addressEntrance,
-                        addressFloor = firstOrderWithProduct.addressFloor,
-                        addressComment = firstOrderWithProduct.addressComment,
-                        comment = firstOrderWithProduct.comment,
-                        deliveryCost = firstOrderWithProduct.deliveryCost,
-                        deferredTime = firstOrderWithProduct.deferredTime,
-                        userUuid = firstOrderWithProduct.userUuid,
+                        OrderEntity(
+                            uuid = firstOrderWithProduct.uuid,
+                            status = firstOrderWithProduct.status,
+                            isDelivery = firstOrderWithProduct.isDelivery,
+                            time = firstOrderWithProduct.time,
+                            timeZone = firstOrderWithProduct.timeZone,
+                            code = firstOrderWithProduct.code,
+                            address = firstOrderWithProduct.address,
+                            addressStreet = firstOrderWithProduct.addressStreet,
+                            addressHouse = firstOrderWithProduct.addressHouse,
+                            addressFlat = firstOrderWithProduct.addressFlat,
+                            addressEntrance = firstOrderWithProduct.addressEntrance,
+                            addressFloor = firstOrderWithProduct.addressFloor,
+                            addressComment = firstOrderWithProduct.addressComment,
+                            comment = firstOrderWithProduct.comment,
+                            deliveryCost = firstOrderWithProduct.deliveryCost,
+                            deferredTime = firstOrderWithProduct.deferredTime,
+                            userUuid = firstOrderWithProduct.userUuid,
+                        )
                     )
                 }
                 groupedOrderWithProductList.onEach { orderWithProduct ->
                     orderEntityQueries.insertOrderProduct(
-                        uuid = orderWithProduct.orderProductUuid,
-                        count = orderWithProduct.orderProductCount,
-                        name = orderWithProduct.orderProductName,
-                        newPrice = orderWithProduct.orderProductNewPrice,
-                        oldPrice = orderWithProduct.orderProductOldPrice,
-                        utils = orderWithProduct.orderProductUtils,
-                        nutrition = orderWithProduct.orderProductNutrition,
-                        description = orderWithProduct.orderProductDescription,
-                        comboDescription = orderWithProduct.orderProductComboDescription,
-                        photoLink = orderWithProduct.orderProductPhotoLink,
-                        barcode = orderWithProduct.orderProductBarcode,
-                        orderUuid = orderWithProduct.orderUuid,
+                        OrderProductEntity(
+                            uuid = orderWithProduct.orderProductUuid,
+                            count = orderWithProduct.orderProductCount,
+                            name = orderWithProduct.orderProductName,
+                            newPrice = orderWithProduct.orderProductNewPrice,
+                            oldPrice = orderWithProduct.orderProductOldPrice,
+                            utils = orderWithProduct.orderProductUtils,
+                            nutrition = orderWithProduct.orderProductNutrition,
+                            description = orderWithProduct.orderProductDescription,
+                            comboDescription = orderWithProduct.orderProductComboDescription,
+                            photoLink = orderWithProduct.orderProductPhotoLink,
+                            barcode = orderWithProduct.orderProductBarcode,
+                            orderUuid = orderWithProduct.orderUuid,
+                        )
                     )
                 }
             }
@@ -59,9 +66,9 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
     }
 
     override suspend fun getLastOrderByUserUuid(userUuid: String): OrderEntity? {
-        val query = orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
-        val order = query.executeAsOneOrNull()
-        return order
+        return orderEntityQueries
+            .getLastOrderWithProductListByUserUuid(userUuid)
+            .executeAsOneOrNull()
     }
 
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {

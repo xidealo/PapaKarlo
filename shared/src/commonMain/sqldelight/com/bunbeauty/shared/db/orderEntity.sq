@@ -1,4 +1,4 @@
-CREATE TABLE orderEntity (
+CREATE TABLE IF NOT EXISTS orderEntity (
     uuid TEXT NOT NULL PRIMARY KEY,
     status TEXT NOT NULL,
     isDelivery INTEGER AS Boolean NOT NULL,
@@ -39,12 +39,12 @@ JOIN orderProductEntity ON orderEntity.uuid = orderProductEntity.orderUuid;
 isnsertOrder:
 INSERT OR REPLACE
 INTO orderEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES ?;
 
 insertOrderProduct:
 INSERT OR REPLACE
 INTO orderProductEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES ?;
 
 getOrderWithProductListByUserUuid:
 SELECT *
