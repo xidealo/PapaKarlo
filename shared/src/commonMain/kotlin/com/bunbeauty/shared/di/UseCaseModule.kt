@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -117,6 +118,13 @@ internal fun useCaseModule() = module {
     factory {
         StopObserveLastOrderUseCase(
             orderRepo = get()
+        )
+    }
+    factory {
+        ObserveOrderListUseCase(
+            dataStoreRepo = get(),
+            orderRepo = get(),
+            lightOrderMapper = get(),
         )
     }
 }

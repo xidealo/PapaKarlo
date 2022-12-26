@@ -14,12 +14,12 @@ import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsViewModel
-import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewModel
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -72,9 +72,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         OrderListViewModel(
-            orderUIMapper = get(),
-            orderInteractor = get(),
-            userInteractor = get(),
+            observeOrderListUseCase = get(),
         )
     }
     viewModel {

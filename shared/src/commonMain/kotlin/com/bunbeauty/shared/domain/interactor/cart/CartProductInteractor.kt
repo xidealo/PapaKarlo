@@ -10,7 +10,6 @@ import com.bunbeauty.shared.domain.model.cart.ConsumerCart
 import com.bunbeauty.shared.domain.model.cart.LightCartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class CartProductInteractor(

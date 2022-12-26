@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.data.dao.order
 
-import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.OrderEntity
 import com.bunbeauty.shared.db.OrderProductEntity
@@ -68,6 +67,14 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
         return orderEntityQueries
             .getLastOrderWithProductListByUserUuid(userUuid)
             .executeAsOneOrNull()
+    }
+
+    override suspend fun getOrderListByUserUuid(userUuid: String): List<OrderEntity> {
+        return orderEntityQueries.getOrderListByUserUuid(userUuid).executeAsList()
+    }
+
+    override suspend fun getOrderWithProductListByUserUuid(userUuid: String): List<OrderWithProductEntity> {
+        return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid).executeAsList()
     }
 
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {

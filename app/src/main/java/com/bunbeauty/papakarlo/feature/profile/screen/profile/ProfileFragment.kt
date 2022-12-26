@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -39,6 +40,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
+import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.shared.domain.model.date_time.Date
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -62,14 +64,18 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         enterTransition = MaterialFadeThrough()
     }
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
         viewBinding.fragmentProfileCvMain.compose {
-            val state by viewModel.profileState.collectAsState()
-            ProfileScreen(state)
+            val profileState by viewModel.profileState.collectAsStateWithLifecycle()
+            ProfileScreen(profileState)
+            LaunchedEffect(profileState.eventList) {
+                handleEventList(profileState.eventList)
+            }
         }
     }
 
@@ -85,9 +91,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
 
     @Composable
     private fun ProfileScreen(profileState: ProfileState) {
-        LaunchedEffect(profileState.eventList) {
-            handleEventList(profileState.eventList)
-        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -121,7 +124,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     findNavController().navigate(ProfileFragmentDirections.toSettingsFragment())
                 }
                 ProfileState.Event.OpenAddressList -> {
-                    findNavController().navigate(ProfileFragmentDirections.toNavAddress(false))
+                    findNavController().navigate(
+                        ProfileFragmentDirections.toNavAddress(
+                            false
+                        )
+                    )
                 }
                 ProfileState.Event.OpenOrderList -> {
                     findNavController().navigate(ProfileFragmentDirections.toOrdersFragment())

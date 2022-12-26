@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.order.model.OrderUI
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.OrderItemMapper
+import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

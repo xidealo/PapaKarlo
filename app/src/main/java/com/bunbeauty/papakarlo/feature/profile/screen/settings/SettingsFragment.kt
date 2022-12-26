@@ -9,11 +9,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -39,15 +40,16 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     override val viewBinding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsViewModel by viewModel()
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.root.compose {
-            val settingsState by viewModel.settingsState.collectAsState()
+            val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
+            SettingsScreen(settingsState)
             LaunchedEffect(settingsState.eventList) {
                 handleEventList(settingsState.eventList)
             }
-            SettingsScreen(settingsState)
         }
     }
 

@@ -17,7 +17,6 @@ import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.presentation.SharedViewModel
 import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressMapper
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch

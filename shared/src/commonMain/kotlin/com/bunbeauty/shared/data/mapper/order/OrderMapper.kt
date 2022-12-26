@@ -31,7 +31,7 @@ class OrderMapper(
             time = orderServer.time,
             timeZone = orderServer.timeZone,
             code = orderServer.code,
-            address = orderServer.address.description,
+            address = orderServer.address.description ?: "",
             addressStreet = orderServer.address.street,
             addressHouse = orderServer.address.house,
             addressFlat = orderServer.address.flat,

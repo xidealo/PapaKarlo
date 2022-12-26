@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     time INTEGER NOT NULL,
     timeZone TEXT NOT NULL,
     code TEXT NOT NULL,
-    address TEXT,
+    address TEXT NOT NULL,
     comment TEXT,
     deliveryCost INTEGER AS Int,
     deferredTime INTEGER,
