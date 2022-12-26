@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.di
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressViewModel
-import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
@@ -22,6 +21,7 @@ import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -84,9 +84,7 @@ fun viewModelModule() = module {
     }
     viewModel { parameters ->
         UserAddressListViewModel(
-            addressInteractor = get(),
-            stringUtil = get(),
-            savedStateHandle = parameters.get()
+            getUserAddressList = get(),
         )
     }
     viewModel {

@@ -22,7 +22,7 @@ class OrderListViewModel(
 
     fun onOrderClicked(order: LightOrder) {
         mutableOrderListState.update { state ->
-            state + OrderListState.OpenOrderDetails(order.uuid, order.code)
+            state + OrderListState.OpenOrderDetailsEvent(order.uuid, order.code)
         }
     }
 

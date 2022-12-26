@@ -105,7 +105,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
     private fun handleEventList(eventList: List<OrderListState.Event>) {
         eventList.forEach { event ->
             when (event) {
-                is OrderListState.OpenOrderDetails -> {
+                is OrderListState.OpenOrderDetailsEvent -> {
                     findNavController().navigate(
                         toOrderDetailsFragment(event.orderUuid, event.orderCode)
                     )

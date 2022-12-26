@@ -10,55 +10,61 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
-import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.address.model.AddressItem
+import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
-import com.bunbeauty.shared.Constants.RESULT_USER_ADDRESS_KEY
-import com.bunbeauty.shared.Constants.USER_ADDRESS_REQUEST_KEY
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
+import com.bunbeauty.shared.domain.model.Street
+import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
+import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_list) {
+class UserAddressListFragment :
+    BaseFragmentWithSharedViewModel(R.layout.bottom_sheet_user_address_list) {
 
-    override val viewModel: UserAddressListViewModel by stateViewModel(state = {
-        arguments ?: bundleOf()
-    })
     override val viewBinding by viewBinding(BottomSheetUserAddressListBinding::bind)
+    private val viewModel: UserAddressListViewModel by viewModel()
 
+    val userAddressItemMapper: UserAddressItemMapper by inject()
+
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.update()
         viewBinding.fragmentUserAddressListCvMain.compose {
-            val addressItemModelListState by viewModel.addressListState.collectAsState()
-            UserAddressListScreen(addressItemModelListState)
+            val addressListState by viewModel.addressListState.collectAsStateWithLifecycle()
+            UserAddressListScreen(addressListState)
+            LaunchedEffect(addressListState.eventList) {
+                handleEventList(addressListState.eventList)
+            }
         }
     }
 
     @Composable
-    private fun UserAddressListScreen(addressItemListState: State<List<AddressItem>>) {
-        when (addressItemListState) {
-            is State.Success -> {
-                UserAddressListSuccessScreen(addressItemListState.data)
+    private fun UserAddressListScreen(userAddressListState: UserAddressListState) {
+        when (userAddressListState.state) {
+            UserAddressListState.State.SUCCESS -> {
+                UserAddressListSuccessScreen(userAddressListState)
             }
-            is State.Loading -> {
-                LoadingScreen()
-            }
-            is State.Empty -> {
+            UserAddressListState.State.EMPTY -> {
                 EmptyScreen(
                     imageId = R.drawable.empty_page,
                     imageDescriptionId = R.string.description_cafe_addresses_empty,
@@ -67,14 +73,15 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                     onClick = viewModel::onCreateAddressClicked
                 )
             }
-            is State.Error -> {
-                ErrorScreen(message = addressItemListState.message)
+            UserAddressListState.State.LOADING -> {
+                LoadingScreen()
+
             }
         }
     }
 
     @Composable
-    private fun UserAddressListSuccessScreen(addressItemList: List<AddressItem>) {
+    private fun UserAddressListSuccessScreen(userAddressListState: UserAddressListState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -85,21 +92,16 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
                 modifier = Modifier.weight(1f),
                 contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                itemsIndexed(addressItemList) { i, addressItemModel ->
+                itemsIndexed(userAddressListState.userAddressList) { i, userAddress ->
+                    val userAddressItem = userAddressItemMapper.toItem(userAddress)
                     AddressItem(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
-                        address = addressItemModel.address,
-                        isClickable = addressItemModel.isClickable,
+                        address = userAddressItem.address,
+                        isClickable = false,
                         hasShadow = true
-                    ) {
-                        setFragmentResult(
-                            USER_ADDRESS_REQUEST_KEY,
-                            bundleOf(RESULT_USER_ADDRESS_KEY to addressItemModel.uuid)
-                        )
-                        viewModel.goBack()
-                    }
+                    ) {}
                 }
             }
             MainButton(
@@ -111,22 +113,43 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
         }
     }
 
+    private fun handleEventList(eventList: List<UserAddressListState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                UserAddressListState.OpenCreateAddressEvent -> {
+                    findNavController().navigate(toCreateAddressFragment())
+                }
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
     @Preview
     @Composable
     private fun UserAddressListSuccessScreenPreview() {
-        val addressItemModel = AddressItem(
+        val addressItemModel = UserAddress(
             uuid = "",
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            isClickable = false,
+            street = Street(
+                uuid = "",
+                name = "улица Чапаева",
+                cityUuid = ""
+            ),
+            house = "22аб",
+            flat = "55",
+            entrance = "1",
+            floor = "1",
+            comment = "",
+            userUuid = "",
         )
         UserAddressListScreen(
-            addressItemListState = State.Success(
-                listOf(
+            UserAddressListState(
+                userAddressList = listOf(
                     addressItemModel,
                     addressItemModel,
                     addressItemModel,
                     addressItemModel,
-                )
+                ),
+                state = UserAddressListState.State.SUCCESS
             )
         )
     }
@@ -134,12 +157,20 @@ class UserAddressListFragment : BaseFragment(R.layout.bottom_sheet_user_address_
     @Preview
     @Composable
     private fun UserAddressListEmptyScreenPreview() {
-        UserAddressListScreen(addressItemListState = State.Empty())
+        UserAddressListScreen(
+            userAddressListState = UserAddressListState(
+                state = UserAddressListState.State.EMPTY
+            )
+        )
     }
 
     @Preview
     @Composable
     private fun UserAddressListLoadingScreenPreview() {
-        UserAddressListScreen(addressItemListState = State.Loading())
+        UserAddressListScreen(
+            userAddressListState = UserAddressListState(
+                state = UserAddressListState.State.LOADING
+            )
+        )
     }
 }
