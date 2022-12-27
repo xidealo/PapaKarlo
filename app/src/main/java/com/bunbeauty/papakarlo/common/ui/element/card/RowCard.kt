@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -87,7 +88,7 @@ fun RowCard(
             if (endIconId != null) {
                 Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.mediumSpace))
                 Icon(
-                    modifier = Modifier.icon24(),
+                    modifier = Modifier.icon16(),
                     painter = painterResource(endIconId),
                     tint = endIconTint,
                     contentDescription = null

@@ -119,8 +119,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
             if (orderCreationState.deliveryAddress == null) {
                 NavigationCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = labelStringId,
-                    isClickable = !orderCreationState.isLoading
+                    enabled = !orderCreationState.isLoading,
+                    labelStringId = labelStringId
                 ) {
                     viewModel.onUserAddressClicked()
                 }
@@ -165,8 +165,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         if (orderCreationState.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = R.string.comment,
-                isClickable = !orderCreationState.isLoading
+                enabled = !orderCreationState.isLoading,
+                labelStringId = R.string.comment
             ) {
                 viewModel.onCommentClicked()
             }
