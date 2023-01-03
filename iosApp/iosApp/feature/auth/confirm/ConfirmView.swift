@@ -35,7 +35,7 @@ struct ConfirmView: View {
         .onReceive(viewModel.$confirmViewState, perform: { confirmViewState in
             confirmViewState.actionList.forEach { action in
                 switch(action){
-                case ConfirmAction.back : self.rootIsActive = false
+                case ConfirmAction.back : rootIsActive = false
                     isGoToCreateOrder = true
                 }
             }

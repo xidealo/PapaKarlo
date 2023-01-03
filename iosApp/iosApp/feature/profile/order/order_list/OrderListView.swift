@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderListView: View {
     
-    @ObservedObject private var viewModel  = OrderListViewModel()
+    @ObservedObject private var viewModel = OrderListViewModel()
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
@@ -20,7 +20,6 @@ struct OrderListView: View {
                 back: {
                     self.mode.wrappedValue.dismiss()
                 })
-            
             if(viewModel.orderListViewState.orderList.count == 0){
                 EmptyOrderListView()
             }else{

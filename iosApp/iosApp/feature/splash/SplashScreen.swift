@@ -35,7 +35,6 @@ struct SplashView: View {
                 ){
                     EmptyView()
                 }.isDetailLink(false)
-
             }
             default : EmptyView()
             }

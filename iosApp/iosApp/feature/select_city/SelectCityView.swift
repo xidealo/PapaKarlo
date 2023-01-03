@@ -14,13 +14,13 @@ struct SelectCityView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             NavigationLink(
                 destination:ContainerView(selection: 1),
                 isActive: $viewModel.selectCityViewState.isGoToMenu
             ){
                 EmptyView()
-            }
+            }.isDetailLink(false)
             
             ToolbarView(
                 title: Strings.TITLE_SELECT_CITY_CITY,
