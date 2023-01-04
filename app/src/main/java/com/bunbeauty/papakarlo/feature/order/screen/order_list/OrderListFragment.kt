@@ -58,6 +58,16 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.observeOrders()
+    }
+
+    override fun onStop() {
+        viewModel.stopObserveOrders()
+        super.onStop()
+    }
+
     @Composable
     private fun OrderListScreen(orderListState: OrderListState) {
         when (orderListState.state) {

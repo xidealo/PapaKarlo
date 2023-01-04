@@ -5,10 +5,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
-import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
-import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
-import com.bunbeauty.shared.domain.feature.order.StopObserveLastOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
@@ -117,6 +114,11 @@ internal fun useCaseModule() = module {
     }
     factory {
         StopObserveLastOrderUseCase(
+            orderRepo = get()
+        )
+    }
+    factory {
+        StopObserveOrdersUseCase(
             orderRepo = get()
         )
     }

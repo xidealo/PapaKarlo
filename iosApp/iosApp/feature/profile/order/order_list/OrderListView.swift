@@ -6,13 +6,23 @@
 //
 
 import SwiftUI
+import shared
 
 struct OrderListView: View {
     
-    @ObservedObject private var viewModel = OrderListViewModel()
+    @State var orderListState = OrderListState(
+        orderList: [],
+        eventList: [],
+        state: OrderListState.State.loading
+    )
+    
+    var viewModel = OrderListViewModel(
+        observeOrderListUseCase: iosComponent.provideObserveOrderListUseCase(),
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
+    )
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     var body: some View {
         VStack(spacing: 0 ){
             ToolbarView(
@@ -20,10 +30,15 @@ struct OrderListView: View {
                 back: {
                     self.mode.wrappedValue.dismiss()
                 })
-            if(viewModel.orderListViewState.orderList.count == 0){
-                EmptyOrderListView()
-            }else{
-                SuccessOrderListView(orderList: viewModel.orderListViewState.orderList)
+            
+            switch(orderListState.state){
+            case OrderListState.State.loading : LoadingView()
+            case OrderListState.State.empty : EmptyOrderListView()
+            case OrderListState.State.success :   SuccessOrderListView(orderList: orderListState.orderList.map({ lightOrder in
+                OrderItem(id: lightOrder.uuid, status: lightOrder.status, code: lightOrder.code, dateTime: dateUtil.getDateTimeString(dateTime: lightOrder.dateTime))
+            }))
+            default:
+                EmptyView()
             }
         }
         .background(Color("background"))
@@ -32,10 +47,17 @@ struct OrderListView: View {
         )
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.subscribeOnOrders()
+            viewModel.observeOrders()
+            
+            viewModel.orderListState.watch { orderListVM in
+                if(orderListVM != nil ){
+                    orderListState = orderListVM!
+                }
+                // work with actions
+            }
         }
         .onDisappear(){
-            viewModel.unsubscribeFromOrders()
+            //viewModel.unsubscribeFromOrders()
         }
     }
 }
@@ -53,9 +75,12 @@ struct SuccessOrderListView: View {
         ScrollView {
             LazyVStack(spacing:0){
                 ForEach(orderList){ order in
-                    OrderItemView(orderItem:  order, destination: OrderDetailsView(orderUuid: order.id))
-                        .padding(.bottom, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    OrderItemView(
+                        orderItem:  order,
+                        destination: OrderDetailsView(orderUuid: order.id)
+                    )
+                    .padding(.bottom, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
             }.padding(.top, Diems.MEDIUM_PADDING)
         }

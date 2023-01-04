@@ -75,7 +75,6 @@ class UserAddressListFragment :
             }
             UserAddressListState.State.LOADING -> {
                 LoadingScreen()
-
             }
         }
     }
