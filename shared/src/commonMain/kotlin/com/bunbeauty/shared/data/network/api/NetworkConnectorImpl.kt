@@ -133,7 +133,7 @@ class NetworkConnectorImpl(
 
     override suspend fun getOrderList(
         token: String,
-        count: Int
+        count: Int?
     ): ApiResult<ListServer<OrderServer>> {
         return getData(
             serializer = ListServer.serializer(OrderServer.serializer()),

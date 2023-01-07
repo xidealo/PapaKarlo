@@ -6,17 +6,26 @@
 //
 
 import SwiftUI
+import shared
 
 struct UserAddressListView: View {
     
-    @ObservedObject private var viewModel : UserAddressListViewModel
+    var viewModel = UserAddressListViewModel(
+        getUserAddressList: iosComponent.provideGetUserAddressListUseCase(),
+        addressInteractor: iosComponent.provideIAddressInteractor()
+    )
+    
+    @State var userAddressViewState = UserAddressListState(
+        userAddressList: [],
+        eventList: [],
+        state: UserAddressListState.State.loading
+    )
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var show:Bool = false
-
-    init(isClickable:Bool){
-        viewModel = UserAddressListViewModel(isClickable: isClickable)
-    }
+    
+    @State var isClickable:Bool
     
     var body: some View {
         VStack(spacing:0){
@@ -26,44 +35,66 @@ struct UserAddressListView: View {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-            
-            switch(viewModel.userAddressViewState.userAddressState){
-            case UserAddressState.loading: LoadingView()
-            case UserAddressState.empty: EmptyAddressListView(show: show)
-            case UserAddressState.success : SuccessAddressListView(viewModel: viewModel, show: show)
-            case UserAddressState.goBack : EmptyView()
+            switch(userAddressViewState.state){
+            case UserAddressListState.State.loading: LoadingView()
+            case UserAddressListState.State.empty: EmptyAddressListView(show: show)
+            case UserAddressListState.State.success : SuccessAddressListView(
+                addressItemList: userAddressViewState.userAddressList.map({ userAddress in
+                    AddressItem(id: userAddress.uuid, address: userAddress.getAddress(), isClickable: isClickable)
+                }),
+                show: show,
+                viewModel: viewModel,
+                userAddressListState: userAddressViewState
+            )
+            default : EmptyView()
             }
-            
-        }.onReceive(viewModel.$userAddressViewState, perform: { userAddressViewState in
-            if(userAddressViewState.userAddressState == UserAddressState.goBack){
-                self.mode.wrappedValue.dismiss()
-            }
-        })
+        }
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-
-    }
-}
-
-struct UserAddressListView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserAddressListView(isClickable: false)
+        .onAppear(){
+            viewModel.addressListState.watch { addressListVM in
+                if(addressListVM != nil ){
+                    userAddressViewState = addressListVM!
+                }
+                // work with actions
+                //почему-то тут
+//                print("eventsS \(userAddressViewState.state)")
+//                userAddressViewState.eventList.forEach { event in
+//                    switch(event){
+//                    case is UserAddressListStateEventGoBack :  self.mode.wrappedValue.dismiss()
+//                    default:
+//                        print("def")
+//                    }
+//                }
+//
+//                if !userAddressViewState.eventList.isEmpty{
+//                    viewModel.consumeEventList(eventList: userAddressViewState.eventList)
+//                }
+                
+            }
+            viewModel.update()
+        }
     }
 }
 
 struct SuccessAddressListView: View {
-    @ObservedObject var viewModel:UserAddressListViewModel
+    
+    let addressItemList: [AddressItem]
+    
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     @State var show:Bool
-
+    let viewModel : UserAddressListViewModel
+    @State var userAddressListState : UserAddressListState
+    
     var body: some View {
         VStack(spacing:0){
             ScrollView {
                 LazyVStack(spacing:0){
-                    ForEach(viewModel.userAddressViewState.addressItemList){ address in
+                    ForEach(addressItemList){ address in
                         if(address.isClickable){
                             Button(action: {
-                                viewModel.selectAddress(uuid: address.id)
+                                viewModel.onUserAddressChanged(userAddressUuid: address.id)
                             }) {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -80,7 +111,7 @@ struct SuccessAddressListView: View {
                     }
                 }.padding(.top, Diems.SMALL_PADDING)
             }
-            
+        
             NavigationLink(
                 destination:CreateAddressView(show: $show)
             ){
@@ -91,11 +122,29 @@ struct SuccessAddressListView: View {
                     .cornerRadius(Diems.MEDIUM_RADIUS)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
+        }.onAppear(){
+            viewModel.addressListState.watch { addressListVM in
+                if(addressListVM != nil ){
+                    userAddressListState = addressListVM!
+                }
+                // work with actions
+                print("eventsS \(userAddressListState.state)")
+                userAddressListState.eventList.forEach { event in
+                    switch(event){
+                    case is UserAddressListStateEventGoBack : self.mode.wrappedValue.dismiss()
+                    default:
+                        print("def")
+                    }
+                }
+
+                if !userAddressListState.eventList.isEmpty{
+                    viewModel.consumeEventList(eventList: userAddressListState.eventList)
+                }
+            }
         }.overlay(overlayView: ToastView(
-            toast: Toast(title: "Адрес добавлен \(viewModel.userAddressViewState.addressItemList.last?.address ?? "")"),
+            toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
             show: $show, backgroundColor:Color("primary"),
             foregaroundColor: Color("onPrimary")), show: $show)
-        
     }
 }
 
@@ -103,7 +152,7 @@ struct EmptyAddressListView: View {
     @State var show:Bool
 
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             Spacer()
             
             Image("EmptyPage")

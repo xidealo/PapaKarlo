@@ -146,8 +146,8 @@ private fun DeferredTimeScreen(
             }
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                elevated = false,
                 labelStringId = R.string.action_deferred_time_select_time,
-                hasShadow = false
             ) {
                 onSelectTimeClicked()
             }

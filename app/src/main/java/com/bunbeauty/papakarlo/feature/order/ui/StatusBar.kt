@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.StatusChip
-import com.bunbeauty.papakarlo.common.ui.icon
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
@@ -100,7 +100,7 @@ fun DoneStep(
     ) {
         Icon(
             modifier = Modifier
-                .icon()
+                .icon24()
                 .padding(
                     vertical = FoodDeliveryTheme.dimensions.verySmallSpace
                 )

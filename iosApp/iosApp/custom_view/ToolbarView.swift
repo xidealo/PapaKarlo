@@ -27,7 +27,6 @@ struct ToolbarView: View {
                 }
             }.padding(Diems.SMALL_PADDING)
             
-            
             Text(title)
                 .foregroundColor(Color("onSurface"))
                 .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .bold, design: .default))

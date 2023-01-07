@@ -8,8 +8,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
-fun Modifier.icon() = this.size(24.dp)
-fun Modifier.smallIcon() = this.size(16.dp)
+fun Modifier.icon24() = this.size(24.dp)
+fun Modifier.icon16() = this.size(16.dp)
 
 fun Modifier.card() = composed {
     fillMaxWidth()

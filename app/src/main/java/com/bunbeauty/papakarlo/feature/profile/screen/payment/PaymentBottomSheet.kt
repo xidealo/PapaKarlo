@@ -21,7 +21,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.Title
-import com.bunbeauty.papakarlo.common.ui.element.card.IconCard
+import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetPaymentBinding
 import com.bunbeauty.papakarlo.extensions.compose
@@ -56,10 +56,11 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Title(textStringId = R.string.title_payment)
             Text(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_payment_description),
                 style = FoodDeliveryTheme.typography.body1
             )
@@ -70,14 +71,16 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
                         .align(CenterHorizontally)
                 )
             } else {
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                        .fillMaxWidth()
+                ) {
                     payment?.cardNumber?.let { cardNumber ->
-                        IconCard(
-                            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        StartIconCard(
+                            elevated = false,
                             label = cardNumber,
-                            iconId = R.drawable.ic_copy,
-                            iconDescriptionStringId = R.string.description_payment_copy,
-                            isClickable = true
+                            iconId = R.drawable.ic_copy
                         ) {
                             copyToBuffer(CARD_NUMBER_LABEL, cardNumber)
                             viewModel.showMessage(
@@ -87,15 +90,11 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
                         }
                     }
                     payment?.phoneNumber?.let { phoneNumber ->
-                        IconCard(
-                            modifier = Modifier.padding(
-                                top = FoodDeliveryTheme.dimensions.smallSpace,
-                                bottom = FoodDeliveryTheme.dimensions.mediumSpace,
-                            ),
+                        StartIconCard(
+                            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                            elevated = false,
                             label = phoneNumber,
-                            iconId = R.drawable.ic_copy,
-                            iconDescriptionStringId = R.string.description_payment_copy,
-                            isClickable = true
+                            iconId = R.drawable.ic_copy
                         ) {
                             copyToBuffer(PHONE_NUMBER_LABEL, phoneNumber)
                             viewModel.showMessage(

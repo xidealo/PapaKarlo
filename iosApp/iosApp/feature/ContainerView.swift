@@ -16,6 +16,7 @@ struct ContainerView: View {
     @State var showCreatedAddress:Bool = false
 
     @State var goToCreateOrder = false
+    @State var isShowLogo:Bool = true
     
     var body: some View {
         VStack(spacing:0){
@@ -23,6 +24,7 @@ struct ContainerView: View {
                 title: title,
                 cost: viewModel.toolbarViewState.cost,
                 count: viewModel.toolbarViewState.count,
+                isShowLogo: $isShowLogo,
                 isRootActive: $goToCreateOrder,
                 selection: $selection,
                 showOrderCreated: $showOrderCreated
@@ -39,6 +41,8 @@ struct ContainerView: View {
         }
         .onDisappear(){
             viewModel.unsubFromFlows()
+        }.onChange(of: selection) { newValue in
+            isShowLogo = newValue == 1
         }
     }
 }

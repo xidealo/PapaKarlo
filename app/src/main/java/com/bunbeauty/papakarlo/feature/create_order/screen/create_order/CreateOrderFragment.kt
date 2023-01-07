@@ -15,12 +15,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -58,19 +59,18 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
 
     val userAddressItemMapper: UserAddressItemMapper by inject()
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
         viewBinding.fragmentCreateOrderCvMain.setContent {
-            val orderCreationState by viewModel.orderCreationState.collectAsState()
-
-            LaunchedEffect(key1 = orderCreationState.eventList) {
+            val orderCreationState by viewModel.orderCreationState.collectAsStateWithLifecycle()
+            CreateOrderScreen(orderCreationState)
+            LaunchedEffect(orderCreationState.eventList) {
                 handleEventList(orderCreationState.eventList)
             }
-
-            CreateOrderScreen(orderCreationState)
         }
     }
 
@@ -119,8 +119,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
             if (orderCreationState.deliveryAddress == null) {
                 NavigationCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = labelStringId,
-                    isClickable = !orderCreationState.isLoading
+                    enabled = !orderCreationState.isLoading,
+                    labelStringId = labelStringId
                 ) {
                     viewModel.onUserAddressClicked()
                 }
@@ -165,8 +165,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         if (orderCreationState.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                labelStringId = R.string.comment,
-                isClickable = !orderCreationState.isLoading
+                enabled = !orderCreationState.isLoading,
+                labelStringId = R.string.comment
             ) {
                 viewModel.onCommentClicked()
             }

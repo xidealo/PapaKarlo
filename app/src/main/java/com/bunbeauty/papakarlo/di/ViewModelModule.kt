@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.di
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressViewModel
-import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
@@ -14,14 +13,15 @@ import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsViewModel
-import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListViewModel
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -72,9 +72,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         OrderListViewModel(
-            orderUIMapper = get(),
-            orderInteractor = get(),
-            userInteractor = get(),
+            observeOrderListUseCase = get(),
         )
     }
     viewModel {
@@ -86,9 +84,7 @@ fun viewModelModule() = module {
     }
     viewModel { parameters ->
         UserAddressListViewModel(
-            addressInteractor = get(),
-            stringUtil = get(),
-            savedStateHandle = parameters.get()
+            getUserAddressList = get(),
         )
     }
     viewModel {

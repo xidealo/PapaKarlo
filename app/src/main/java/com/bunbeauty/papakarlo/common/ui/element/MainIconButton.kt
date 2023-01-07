@@ -14,7 +14,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.icon
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
@@ -33,7 +33,7 @@ fun MainIconButton(
         onClick = onClick
     ) {
         Icon(
-            modifier = Modifier.icon(),
+            modifier = Modifier.icon24(),
             imageVector = ImageVector.vectorResource(iconId),
             contentDescription = stringResource(iconDescriptionStringId),
             tint = FoodDeliveryTheme.colors.onPrimary

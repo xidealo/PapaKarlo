@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.OrderItemMapper
+import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import org.koin.dsl.module
 
 fun uiMapperModule() = module {

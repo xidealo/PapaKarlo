@@ -27,7 +27,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.smallIcon
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 
@@ -94,7 +94,7 @@ fun EditText(
             if (textFieldValue.text.isNotEmpty()) {
                 Icon(
                     modifier = Modifier
-                        .smallIcon()
+                        .icon16()
                         .clickable {
                             onTextChanged(TextFieldValue(""))
                         },
