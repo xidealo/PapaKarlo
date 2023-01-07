@@ -115,8 +115,11 @@ class UserAddressListFragment :
     private fun handleEventList(eventList: List<UserAddressListState.Event>) {
         eventList.forEach { event ->
             when (event) {
-                UserAddressListState.OpenCreateAddressEvent -> {
+                UserAddressListState.Event.OpenCreateAddressEvent -> {
                     findNavController().navigate(toCreateAddressFragment())
+                }
+                UserAddressListState.Event.GoBack -> {
+                    //this event are used for ios
                 }
             }
         }

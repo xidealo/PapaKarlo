@@ -1,18 +1,20 @@
 package com.bunbeauty.shared.presentation.user_address_list
 
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
+import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
-    private val getUserAddressList: GetUserAddressListUseCase
+    private val getUserAddressList: GetUserAddressListUseCase,
+    private val addressInteractor: IAddressInteractor
 ) : SharedViewModel() {
 
     private val mutableAddressListState = MutableStateFlow(UserAddressListState())
-    val addressListState = mutableAddressListState.asStateFlow()
+    val addressListState = mutableAddressListState.asCommonStateFlow()
 
     fun update() {
         mutableAddressListState.update { state ->
@@ -34,7 +36,7 @@ class UserAddressListViewModel(
 
     fun onCreateAddressClicked() {
         mutableAddressListState.update { state ->
-            state + UserAddressListState.OpenCreateAddressEvent
+            state + UserAddressListState.Event.OpenCreateAddressEvent
         }
     }
 
@@ -43,5 +45,17 @@ class UserAddressListViewModel(
             state - eventList
         }
     }
-
+    //using for ios
+    fun onUserAddressChanged(userAddressUuid: String) {
+        sharedScope.launch {
+            addressInteractor.saveSelectedUserAddress(userAddressUuid)
+            mutableAddressListState.update { state ->
+                state + UserAddressListState.Event.GoBack
+            }
+            mutableAddressListState.update { state ->
+                state.copy(state = UserAddressListState.State.LOADING)
+            }
+            println("EVENTS ${addressListState.value.eventList}")
+        }
+    }
 }

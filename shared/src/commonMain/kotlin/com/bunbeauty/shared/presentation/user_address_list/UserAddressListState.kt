@@ -14,8 +14,10 @@ data class UserAddressListState(
         LOADING,
     }
 
-    sealed interface Event
-    object OpenCreateAddressEvent : Event
+    sealed interface Event{
+        object OpenCreateAddressEvent : Event
+        object GoBack : Event
+    }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
     operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())

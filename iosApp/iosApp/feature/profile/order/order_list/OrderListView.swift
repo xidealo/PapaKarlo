@@ -57,7 +57,7 @@ struct OrderListView: View {
             }
         }
         .onDisappear(){
-            //viewModel.unsubscribeFromOrders()
+            viewModel.stopObserveOrders()
         }
     }
 }

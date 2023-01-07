@@ -47,6 +47,7 @@ struct ProductDetailsView: View {
                 title: viewModel.productDetailsViewState.name,
                 cost: viewModel.toolbarViewState.cost,
                 count: viewModel.toolbarViewState.count,
+                isShowLogo: .constant(false),
                 back: {
                     self.mode.wrappedValue.dismiss()
                 },
