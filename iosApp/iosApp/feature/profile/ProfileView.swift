@@ -26,7 +26,8 @@ struct ProfileView: View {
     @Binding var showCreatedAddress:Bool
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive:Bool = false
-    
+    @State var listener: Closeable? = nil
+
     var body: some View {
         VStack(spacing:0){
             switch(profileState.state){
@@ -50,7 +51,7 @@ struct ProfileView: View {
         .onAppear(){
             viewModel.update()
             viewModel.observeLastOrder()
-            viewModel.profileState.watch { profileStateVM in
+            listener = viewModel.profileState.watch { profileStateVM in
                 if(profileStateVM != nil ){
                     profileState = profileStateVM!
                 }
@@ -59,6 +60,8 @@ struct ProfileView: View {
         }
         .onDisappear(){
             viewModel.stopLastOrderObservation()
+            listener?.close()
+            listener = nil
         }
         
     }

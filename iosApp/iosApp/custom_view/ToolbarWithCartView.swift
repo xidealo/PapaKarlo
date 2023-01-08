@@ -24,8 +24,6 @@ struct ToolbarWithCartView: View {
     
     var body: some View {
         ZStack{
-            
-            
             HStack(spacing:0){
                 ToolbarView(title: title, back: back)
             

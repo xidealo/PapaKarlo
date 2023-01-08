@@ -57,7 +57,7 @@ struct UserAddressListView: View {
                     userAddressViewState = addressListVM!
                 }
                 // work with actions
-                //почему-то тут
+                //почему-то тут не хочет слушать экшены (уточнить у ребят)
 //                print("eventsS \(userAddressViewState.state)")
 //                userAddressViewState.eventList.forEach { event in
 //                    switch(event){
