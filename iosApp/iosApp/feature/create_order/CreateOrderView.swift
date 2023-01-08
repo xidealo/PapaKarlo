@@ -65,7 +65,10 @@ struct CreateOrderView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.kmmViewModel.update()
+            viewModel.update()
+        }
+        .onDisappear(){
+            viewModel.removeListener()
         }
         .overlay(
             overlayView: ToastView(

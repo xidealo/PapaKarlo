@@ -42,12 +42,20 @@ class CreateOrderHolder: ObservableObject {
         getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase()
     )
         
-    init(){
-        kmmViewModel.orderCreationState.watch { orderCreationUiState in
+    var listener: Closeable? = nil
+    
+    func update(){
+        kmmViewModel.update()
+        listener = kmmViewModel.orderCreationState.watch { orderCreationUiState in
             if let checkedOrderCreationUiState = orderCreationUiState {
                 self.creationOrderViewState = checkedOrderCreationUiState
             }
         }
+    }
+    
+    func removeListener(){
+        listener?.close()
+        listener = nil
     }
 
     func getUserAddressList() -> String {
