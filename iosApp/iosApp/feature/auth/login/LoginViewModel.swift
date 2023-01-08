@@ -23,8 +23,7 @@ class LoginViewModel:ObservableObject {
     
     func sendCodeToPhone(phone:String){
         
-        if(phone.count < 17){
-                        
+        if(phone.count < 18){
             (self.loginViewState.copy() as! LoginViewState).apply { copiedState in
                 copiedState.isLoading = false
                 copiedState.actionList.append(LoginAction.hasError)

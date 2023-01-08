@@ -85,7 +85,7 @@ struct LoginViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
-                    text:$phone, limit: 17,
+                    text:$phone, limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,
                     errorMessage: "Введите номер телефона"
@@ -119,7 +119,7 @@ struct LoginViewSuccessView: View {
         if phone.count < 2 {
             phone = String("+7")
         }else{
-            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
+            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-##-##", replacementCharacter: "#")
         }
     }
 }

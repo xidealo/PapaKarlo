@@ -58,23 +58,23 @@ class CreateOrderHolder: ObservableObject {
         var address : String = creationOrderViewState.deliveryAddress?.street ?? ""
         
         if(creationOrderViewState.deliveryAddress?.house != nil){
-            address += " д. " + (creationOrderViewState.deliveryAddress?.house ?? "")
+            address += ", д. " + (creationOrderViewState.deliveryAddress?.house ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.flat != nil && creationOrderViewState.deliveryAddress?.flat != ""){
-            address += " кв. " + (creationOrderViewState.deliveryAddress?.flat ?? "")
+            address += ", кв. " + (creationOrderViewState.deliveryAddress?.flat ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.entrance != nil && creationOrderViewState.deliveryAddress?.entrance != ""){
-            address += " подъезд " + (creationOrderViewState.deliveryAddress?.entrance ?? "")
+            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.entrance ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.floor != nil && creationOrderViewState.deliveryAddress?.floor != ""){
-            address += " этаж. " + (creationOrderViewState.deliveryAddress?.floor ?? "")
+            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.floor ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.comment != nil && creationOrderViewState.deliveryAddress?.comment != ""){
-            address += (creationOrderViewState.deliveryAddress?.comment ?? "")
+            address += ", \(creationOrderViewState.deliveryAddress?.comment ?? "")"
         }
         
         return address

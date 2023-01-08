@@ -69,17 +69,28 @@ struct EmptyProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
-            NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
+            NavigationCardView(
+                icon: "star",
+                label: Strings.TITLE_PROFILE_FEEDBACK,
+                destination: FeedbackView()
+            )
             
-            NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "info.circle",
+                label: Strings.TITLE_PROFILE_ABOUT_APP,
+                destination: AboutAppView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
             DefaultImage(imageName: "NotLoginnedProfile")
             
-            Text(Strings.MSG_PROFILE_NO_PROFILE).multilineTextAlignment(.center)
-                .padding(.top, Diems.SMALL_PADDING)
+            Text(
+                Strings.MSG_PROFILE_NO_PROFILE
+            )
+            .multilineTextAlignment(.center)
+            .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
@@ -87,7 +98,8 @@ struct EmptyProfileView: View {
                 action: {
                     isActive = true
                 }, label: {
-                    Text(Strings.ACTION_PROFILE_LOGIN).frame(maxWidth: .infinity)
+                    Text(Strings.ACTION_PROFILE_LOGIN)
+                        .frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(Color("surface"))
                         .background(Color("primary"))
@@ -113,31 +125,54 @@ struct SuccessProfileView: View {
     var body: some View {
         VStack(spacing:0){
             if(profileViewState.lastOrder != nil){
-                LightOrderItemView(lightOrder: profileViewState.lastOrder!, destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid))
+                LightOrderItemView(
+                    lightOrder: profileViewState.lastOrder!,
+                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
+                )
             }
             
-            NavigationCardView(icon: "gearshape", label: Strings.TITLE_PROFILE_SETTINGS, destination: SettingsView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "gearshape",
+                label: Strings.TITLE_PROFILE_SETTINGS,
+                destination: SettingsView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(
                 icon: "AddressIcon",
-                label: Strings.TITLE_PROFILE_YOUR_ADDRESSES,
+                label: Strings.TITLE_PROFILE_MY_ADDRESSES,
                 destination: UserAddressListView(isClickable: false),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
-            NavigationCardView(icon: "clock.arrow.circlepath", label: Strings.TITLE_PROFILE_ORDER_HISTORY, destination: OrderListView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "clock.arrow.circlepath",
+                label: Strings.TITLE_PROFILE_MY_ORDERS,
+                destination: OrderListView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
-            NavigationCardView(icon: "dollarsign.circle", label: Strings.TITLE_PROFILE_PAYMENT, destination: PaymentView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "dollarsign.circle",
+                label: Strings.TITLE_PROFILE_PAYMENT,
+                destination: PaymentView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
-            NavigationCardView(icon: "star", label: Strings.TITLE_PROFILE_FEEDBACK, destination: FeedbackView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "star",
+                label: Strings.TITLE_PROFILE_FEEDBACK,
+                destination: FeedbackView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
-            NavigationCardView(icon: "info.circle", label: Strings.TITLE_PROFILE_ABOUT_APP, destination: AboutAppView())
-                .padding(.top, Diems.SMALL_PADDING)
+            NavigationCardView(
+                icon: "info.circle",
+                label: Strings.TITLE_PROFILE_ABOUT_APP,
+                destination: AboutAppView()
+            )
+            .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
             
