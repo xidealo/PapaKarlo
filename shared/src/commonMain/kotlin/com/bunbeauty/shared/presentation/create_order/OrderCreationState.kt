@@ -26,18 +26,19 @@ data class OrderCreationState(
 
     sealed interface Event {
         object OpenCreateAddressEvent : Event
-        class ShowUserAddressListEvent(val addressList: List<UserAddressUi>) : Event
-        class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
-        class ShowDeferredTimeEvent(
+        data class ShowUserAddressListEvent(val addressList: List<UserAddressUi>) : Event
+        data class ShowCafeAddressListEvent(val addressList: List<CafeAddressItem>) : Event
+        data class ShowDeferredTimeEvent(
             val deferredTime: TimeUI,
             val minTime: TimeUI.Time,
             val isDelivery: Boolean
         ) : Event
 
-        class ShowCommentInputEvent(val comment: String?) : Event
+        data class ShowCommentInputEvent(val comment: String?) : Event
         object ShowUserUnauthorizedErrorEvent : Event
         object ShowSomethingWentWrongErrorEvent : Event
-        class OrderCreatedEvent(val code: String) : Event
+        data class OrderCreatedEvent(val code: String) : Event
+        object ShowUserAddressError : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)

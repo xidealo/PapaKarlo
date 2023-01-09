@@ -27,7 +27,6 @@ struct OrderDetailsView: View {
             )
             
             ZStack(alignment: .bottom){
-                
                 ScrollView {
                     LazyVStack(spacing: 0){
                         OrderStatusBar(orderStatus: viewModel.orderDetailsViewState.status, orderStatusName: viewModel.orderDetailsViewState.statusName)

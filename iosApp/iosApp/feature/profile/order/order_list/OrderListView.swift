@@ -23,6 +23,8 @@ struct OrderListView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @State var listener: Closeable? = nil
+    
     var body: some View {
         VStack(spacing: 0 ){
             ToolbarView(
@@ -48,8 +50,8 @@ struct OrderListView: View {
         .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.observeOrders()
-            
-            viewModel.orderListState.watch { orderListVM in
+
+            listener = viewModel.orderListState.watch { orderListVM in
                 if(orderListVM != nil ){
                     orderListState = orderListVM!
                 }
@@ -58,7 +60,10 @@ struct OrderListView: View {
         }
         .onDisappear(){
             viewModel.stopObserveOrders()
+            listener?.close()
+            listener = nil
         }
+     
     }
 }
 

@@ -42,12 +42,20 @@ class CreateOrderHolder: ObservableObject {
         getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase()
     )
         
-    init(){
-        kmmViewModel.orderCreationState.watch { orderCreationUiState in
+    var listener: Closeable? = nil
+    
+    func update(){
+        kmmViewModel.update()
+        listener = kmmViewModel.orderCreationState.watch { orderCreationUiState in
             if let checkedOrderCreationUiState = orderCreationUiState {
                 self.creationOrderViewState = checkedOrderCreationUiState
             }
         }
+    }
+    
+    func removeListener(){
+        listener?.close()
+        listener = nil
     }
 
     func getUserAddressList() -> String {
@@ -58,23 +66,23 @@ class CreateOrderHolder: ObservableObject {
         var address : String = creationOrderViewState.deliveryAddress?.street ?? ""
         
         if(creationOrderViewState.deliveryAddress?.house != nil){
-            address += " д. " + (creationOrderViewState.deliveryAddress?.house ?? "")
+            address += ", д. " + (creationOrderViewState.deliveryAddress?.house ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.flat != nil && creationOrderViewState.deliveryAddress?.flat != ""){
-            address += " кв. " + (creationOrderViewState.deliveryAddress?.flat ?? "")
+            address += ", кв. " + (creationOrderViewState.deliveryAddress?.flat ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.entrance != nil && creationOrderViewState.deliveryAddress?.entrance != ""){
-            address += " подъезд " + (creationOrderViewState.deliveryAddress?.entrance ?? "")
+            address += ", подъезд " + (creationOrderViewState.deliveryAddress?.entrance ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.floor != nil && creationOrderViewState.deliveryAddress?.floor != ""){
-            address += " этаж. " + (creationOrderViewState.deliveryAddress?.floor ?? "")
+            address += ", этаж. " + (creationOrderViewState.deliveryAddress?.floor ?? "")
         }
         
         if(creationOrderViewState.deliveryAddress?.comment != nil && creationOrderViewState.deliveryAddress?.comment != ""){
-            address += (creationOrderViewState.deliveryAddress?.comment ?? "")
+            address += ", \(creationOrderViewState.deliveryAddress?.comment ?? "")"
         }
         
         return address

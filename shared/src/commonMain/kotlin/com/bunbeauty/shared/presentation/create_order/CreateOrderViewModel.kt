@@ -145,7 +145,11 @@ class CreateOrderViewModel(
         mutableOrderCreationState.update { state ->
             state.copy(isAddressErrorShown = isDeliveryAddressNotSelected)
         }
+
         if (isDeliveryAddressNotSelected) {
+            mutableOrderCreationState.update { state ->
+               state + OrderCreationState.Event.ShowUserAddressError
+            }
             return
         }
 

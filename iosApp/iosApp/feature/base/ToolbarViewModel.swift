@@ -15,7 +15,7 @@ class ToolbarViewModel : ObservableObject {
     var subOnTotalCartCost : Closeable? = nil
 
     func subscribeOnFlow(){
-        subOnTotalCartCount =  iosComponent.provideCartProductInteractor().observeTotalCartCount().watch { count in
+        subOnTotalCartCount = iosComponent.provideCartProductInteractor().observeTotalCartCount().watch { count in
             self.toolbarViewState = ToolbarViewState(count: String(count as? Int ?? 0), cost: self.toolbarViewState.cost)
         }
         subOnTotalCartCost = iosComponent.provideCartProductInteractor().observeNewTotalCartCost().watch { cost in

@@ -42,7 +42,7 @@ struct ProductDetailsView: View {
     }
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarWithCartView(
                 title: viewModel.productDetailsViewState.name,
                 cost: viewModel.toolbarViewState.cost,
@@ -56,13 +56,13 @@ struct ProductDetailsView: View {
                 showOrderCreated: $showOrderCreated
             )
             
-            VStack{
+            VStack(spacing:0){
                 KFImage(URL(string: viewModel.productDetailsViewState.imageLink))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 
                 Group{
-                    HStack{
+                    HStack(spacing:0){
                         Text(viewModel.productDetailsViewState.name)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color("onSurface"))
@@ -70,17 +70,21 @@ struct ProductDetailsView: View {
                         Text(viewModel.productDetailsViewState.size)
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
-                    }.padding(.top, Diems.SMALL_PADDING)
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
                     
-                    HStack{
+                    HStack(spacing:0){
                         if viewModel.productDetailsViewState.oldPrice != nil{
                             StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY)
+                                .padding(.trailing, Diems.SMALL_RADIUS)
                         }
                         Text(viewModel.productDetailsViewState.newPrice )
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, Diems.SMALL_PADDING)
+                            
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, Diems.SMALL_PADDING)
                     
                     Text(viewModel.productDetailsViewState.description)
                         .frame(maxWidth: .infinity, alignment: .leading)

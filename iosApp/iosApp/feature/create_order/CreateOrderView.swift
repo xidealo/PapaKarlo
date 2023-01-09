@@ -21,7 +21,7 @@ struct CreateOrderView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -65,7 +65,10 @@ struct CreateOrderView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.kmmViewModel.update()
+            viewModel.update()
+        }
+        .onDisappear(){
+            viewModel.removeListener()
         }
         .overlay(
             overlayView: ToastView(
@@ -111,9 +114,9 @@ struct CreateOrderSuccessView:View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-
+    
     let calendar = Calendar.current
-
+    
     var body: some View{
         VStack(spacing:0){
             Switcher(
@@ -181,41 +184,54 @@ struct CreateOrderSuccessView:View {
                         deferredTimeUi: TimeUITime(
                             hours: Int32(calendar.component(.hour, from: date)),
                             minutes: Int32(calendar.component(.minute, from: date)
-                                     )
+                                          )
                         )
                     )
                 }
             }))
-                .toggleStyle(.automatic)
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
+            .toggleStyle(.automatic)
+            .padding(.top, Diems.SMALL_PADDING)
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
             
             if(!faster){
                 if(viewModel.creationOrderViewState.isDelivery){
-                    DatePicker("Время доставки", selection: $deferredTime.onChange({ date in
-                        viewModel.kmmViewModel.onDeferredTimeSelected(
-                            deferredTimeUi: TimeUITime(
-                                hours: Int32(calendar.component(.hour, from: date)),
-                                minutes: Int32(calendar.component(.minute, from: date)
-                                              )
-                            )
-                        )
-                    }), in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
+                    DatePicker(
+                        "Время доставки",
+                        selection: $deferredTime.onChange(
+                            { date in
+                                viewModel.kmmViewModel.onDeferredTimeSelected(
+                                    deferredTimeUi: TimeUITime(
+                                        hours: Int32(calendar.component(.hour, from: date)),
+                                        minutes: Int32(calendar.component(.minute, from: date)
+                                                      )
+                                    )
+                                )
+                            }
+                        ),
+                        in: (Date.now + 60 * 60)...,
+                        displayedComponents: .hourAndMinute
+                    )
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }else{
-                    DatePicker("Время самовывоза", selection: $deferredTime.onChange({ date in
-                        
-                        viewModel.kmmViewModel.onDeferredTimeSelected(
-                            deferredTimeUi: TimeUITime(
-                                hours: Int32(calendar.component(.hour, from: date)),
-                                minutes: Int32(calendar.component(.minute, from: date)
-                                              )
-                            )
-                        )
-                    }), in: (Date.now + 60 * 60)..., displayedComponents: .hourAndMinute)
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    DatePicker(
+                        "Время самовывоза",
+                        selection: $deferredTime.onChange(
+                            { date in
+                                viewModel.kmmViewModel.onDeferredTimeSelected(
+                                    deferredTimeUi: TimeUITime(
+                                        hours: Int32(calendar.component(.hour, from: date)),
+                                        minutes: Int32(calendar.component(.minute, from: date)
+                                                      )
+                                    )
+                                )
+                            }
+                        ),
+                        in: (Date.now + 60 * 60)...,
+                        displayedComponents: .hourAndMinute
+                    )
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
             }
         }
@@ -268,7 +284,7 @@ struct CreateOrderSuccessView:View {
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                 }
             )
-            .padding(.top, Diems.MEDIUM_PADDING)
+            .padding(.vertical, Diems.MEDIUM_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
         }
         .background(Color("surface"))
@@ -283,7 +299,7 @@ struct CreateOrderSuccessView:View {
             
             creationOrderViewState.eventList.forEach { event in
                 switch(event){
-                    //case CreateOrderAction.showAddressError : showAddressError = true
+                case is OrderCreationStateEventShowUserAddressError : showAddressError = true
                 case is OrderCreationStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
                 case is OrderCreationStateEventOrderCreatedEvent : isRootActive = false
                     selection = 2

@@ -334,6 +334,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     )
                     findNavController().navigate(toProfileFragment())
                 }
+                is OrderCreationState.Event.ShowUserAddressError -> {
+                    //TODO (show address error)
+                }
             }
         }
         viewModel.consumeEventList(eventList)

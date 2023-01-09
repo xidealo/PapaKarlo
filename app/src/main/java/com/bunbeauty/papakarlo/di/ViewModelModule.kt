@@ -73,6 +73,7 @@ fun viewModelModule() = module {
     viewModel {
         OrderListViewModel(
             observeOrderListUseCase = get(),
+            stopObserveOrdersUseCase = get()
         )
     }
     viewModel {
@@ -85,6 +86,7 @@ fun viewModelModule() = module {
     viewModel { parameters ->
         UserAddressListViewModel(
             getUserAddressList = get(),
+            addressInteractor = get()
         )
     }
     viewModel {

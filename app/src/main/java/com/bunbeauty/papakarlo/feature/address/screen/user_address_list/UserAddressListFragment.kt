@@ -119,7 +119,7 @@ class UserAddressListFragment :
                     findNavController().navigate(toCreateAddressFragment())
                 }
                 UserAddressListState.Event.GoBack -> {
-                    //this event are used for ios
+                    // this event are used for ios
                 }
             }
         }

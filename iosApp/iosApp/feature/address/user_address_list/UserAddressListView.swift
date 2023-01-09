@@ -27,6 +27,8 @@ struct UserAddressListView: View {
     
     @State var isClickable:Bool
     
+    @State var listener: Closeable? = nil
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -52,12 +54,12 @@ struct UserAddressListView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.addressListState.watch { addressListVM in
+           listener = viewModel.addressListState.watch { addressListVM in
                 if(addressListVM != nil ){
                     userAddressViewState = addressListVM!
                 }
                 // work with actions
-                //почему-то тут
+                //почему-то тут не хочет слушать экшены (уточнить у ребят)
 //                print("eventsS \(userAddressViewState.state)")
 //                userAddressViewState.eventList.forEach { event in
 //                    switch(event){
@@ -74,6 +76,10 @@ struct UserAddressListView: View {
             }
             viewModel.update()
         }
+        .onDisappear(){
+            listener?.close()
+            listener = nil
+        }
     }
 }
 
@@ -86,7 +92,8 @@ struct SuccessAddressListView: View {
     @State var show:Bool
     let viewModel : UserAddressListViewModel
     @State var userAddressListState : UserAddressListState
-    
+    @State var listener: Closeable? = nil
+
     var body: some View {
         VStack(spacing:0){
             ScrollView {
@@ -141,6 +148,10 @@ struct SuccessAddressListView: View {
                     viewModel.consumeEventList(eventList: userAddressListState.eventList)
                 }
             }
+        }
+        .onDisappear(){
+            listener?.close()
+            listener = nil
         }.overlay(overlayView: ToastView(
             toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
             show: $show, backgroundColor:Color("primary"),
