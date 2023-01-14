@@ -21,8 +21,10 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: ./gradlew assembleDebug
-        with:
-          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
+      - name: Download APK Debug - ${{ env.repository_name }}
+          uses: actions/download-artifact@v3
+          with:
+            path: ${{ env.main_project_module }}/build/outputs/apk/debug/
 
   check_lint_job:
     runs-on: ubuntu-latest
