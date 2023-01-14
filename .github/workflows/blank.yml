@@ -23,6 +23,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug
   static_analysis:
+    runs-on: ubuntu-latest
+    steps:
     - name: check ktLint
       run: ./gradlew --continue ktlintCheck
     - name: check android lint
