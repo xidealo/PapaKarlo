@@ -1,8 +1,8 @@
 name: Android CI
 
-on:
-pull_request:
-  - 'develop'
+on: [ pull_request:
+        - 'develop' ]
+
 
 jobs:
   build_job:
