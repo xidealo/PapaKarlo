@@ -19,4 +19,6 @@ jobs:
         run: ./gradlew assembleDebug
       - name: check ktLint
         run: ./gradlew --continue ktlintCheck
+      - name: check android lint
+        run: ./gradlew --continue :app:lint
 

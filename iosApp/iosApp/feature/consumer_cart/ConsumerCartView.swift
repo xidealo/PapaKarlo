@@ -19,7 +19,8 @@ struct ConsumerCartView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-
+    //--
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -50,7 +51,7 @@ struct ConsumerCartView: View {
             switch viewModel.consumerCartViewState.consumerCartState{
             case .loading: LoadingView()
             case .notAuthorized: EmptyView()
-            case .empty: ConsumerCartEmptyScreen()
+            case .empty: ConsumerCartEmptyScreen(isRootActive: $isRootActive, selection: $selection)
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             }
         }
@@ -77,12 +78,6 @@ struct ConsumerCartView: View {
 struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
         ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData, actions: []), viewModel: ConsumerCartViewModel())
-    }
-}
-
-struct ConsumerCartViewEmpty_Previews: PreviewProvider {
-    static var previews: some View {
-        ConsumerCartEmptyScreen()
     }
 }
 
@@ -148,19 +143,27 @@ struct ConsumerCartSuccessScreen: View {
 struct ConsumerCartEmptyScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             Spacer()
             
             DefaultImage(imageName: "runMan")
             
-            Text(Strings.MSG_CART_PRODUCT_EMPTY).multilineTextAlignment(.center)
+            Text(Strings.MSG_CART_PRODUCT_EMPTY)
+                .multilineTextAlignment(.center)
+                .padding(.top, Diems.SMALL_PADDING)
+
             Spacer()
             
             Button {
-                presentationMode.wrappedValue.dismiss()
+                selection = 1
+                isRootActive = false
             } label: {
-                Text(Strings.ACTION_CART_PRODUCT_BACK).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_CART_PRODUCT_MENU)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
