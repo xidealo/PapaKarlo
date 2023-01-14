@@ -2,11 +2,6 @@ name: Android CI
 
 on: [push]
 
-stages:
-  - build
-  - checking
-  - test
-
 jobs:
   build:
     runs-on: ubuntu-latest
