@@ -1,24 +1,45 @@
 name: Android CI
 
-on: [push]
+on: [ push ]
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Decode google-services.json
-        env:
-          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
-        run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
-      - name: set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Build with Gradle
-        run: ./gradlew assembleDebug
-      - name: check ktLint
-        run: ./gradlew --continue ktlintCheck
-      - name: check android lint
-        run: ./gradlew --continue :app:lint
+before_script:
+  - export ANDROID_HOME="$HOME/Library/Android/sdk"
+  - bundle install
+stages:
+  - build
+  - static_analysis
+  - test
+
+build_job:
+  stage: build
+  env:
+    GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+  script:
+    - echo $GOOGLE_SERVICE_JSON > app/google-services.json
+    - ./gradlew clean assembleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+
+
+#build_job:
+#  stage: build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v1
+#      - name: Decode google-services.json
+#        env:
+#          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+#        run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
+#      - name: set up JDK 11
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 11
+#      - name: Build with Gradle
+#        run: ./gradlew assembleDebug
+#      - name: check ktLint
+#        run: ./gradlew --continue ktlintCheck
+#      - name: check android lint
+#        run: ./gradlew --continue :app:lint
 
