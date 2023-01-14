@@ -22,11 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_job
     steps:
+      - uses: actions/checkout@v2
+
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
-      - uses: actions/checkout@v2
       - name: check android lint
         run: ./gradlew --continue :app:lint
   check_ktLint_job:
