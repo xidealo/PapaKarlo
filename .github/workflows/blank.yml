@@ -9,17 +9,17 @@ stages:
   - build
   - static_analysis
   - test
-
-build_job:
-  stage: build
-  env:
-    GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
-  script:
-    - echo $GOOGLE_SERVICE_JSON > app/google-services.json
-    - ./gradlew clean assembleRelease
-  artifacts:
-    paths:
-      - app/build/outputs/
+jobs:
+  build_job:
+    stage: build
+    env:
+      GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+    script:
+      - echo $GOOGLE_SERVICE_JSON > app/google-services.json
+      - ./gradlew clean assembleRelease
+    artifacts:
+      paths:
+        - app/build/outputs/
 
 
 
