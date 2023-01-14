@@ -1,5 +1,9 @@
 name: Android CI
 
+env:
+  # The name of the main module repository
+  main_project_module: app
+
 on: [ push ]
 
 jobs:
@@ -18,7 +22,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew assembleDebug
         with:
-          path: ./build/outputs/apk/debug/
+          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
 
   check_lint_job:
     runs-on: ubuntu-latest
