@@ -84,8 +84,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
             label = cafeOptions.showOnMap,
             hasShadow = false
         ) {
-            val uri =
-                Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
+            val uri = Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
             goByUri(uri, Intent.ACTION_VIEW)
         }
     }
