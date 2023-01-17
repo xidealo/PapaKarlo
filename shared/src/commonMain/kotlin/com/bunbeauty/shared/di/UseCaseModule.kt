@@ -129,4 +129,10 @@ internal fun useCaseModule() = module {
             lightOrderMapper = get(),
         )
     }
+    factory {
+        ObserveOrderUseCase(
+            dataStoreRepo = get(),
+            orderRepo = get(),
+        )
+    }
 }
