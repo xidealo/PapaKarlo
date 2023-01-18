@@ -61,7 +61,18 @@ struct OrderDetailsView: View {
                             }
 
                             VStack(spacing: 0){
-                                ForEach(orderDetailsState.orderDetailsList){ orderProductItem in
+                                ForEach(orderDetailsState.orderDetailsList.map({ order in
+                                    OrderProductItem(
+                                        id: order.uuid,
+                                        name: order.name,
+                                        newPrice: order.newPrice,
+                                        oldPrice: order.oldPrice,
+                                        newCost: order.newCost,
+                                        oldCost: order.oldCost,
+                                        photoLink: order.photoLink,
+                                        count: String(order.count)
+                                    )
+                                })){ orderProductItem in
                                     OrderProductItemView(orderProductItem: orderProductItem)
                                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                                         .padding(.top, Diems.SMALL_PADDING)
@@ -89,7 +100,7 @@ struct OrderDetailsView: View {
                     HStack(spacing:0){
                         BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                         Spacer()
-                        BoldText(text: orderDetailsState?.finalCost ?? "")
+                        BoldText(text: orderDetailsState.finalCost ?? "")
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.top, Diems.SMALL_PADDING)
@@ -101,9 +112,8 @@ struct OrderDetailsView: View {
         .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.loadOrder(orderUuid: orderUuid)
-            
             listener = viewModel.orderState.watch { orderDetailsStateVM in
-                if(orderListVM != nil ){
+                if(orderDetailsStateVM != nil ){
                     orderDetailsState = orderDetailsStateVM!
                 }
                 // work with actions
@@ -141,6 +151,7 @@ struct OrderProductItemView :View {
                     }
                     Text(orderProductItem.newPrice)
                         .foregroundColor(Color("onSurface"))
+                    Text(" x ")
                     Text(orderProductItem.count)
                         .foregroundColor(Color("onSurface"))
                     
@@ -168,48 +179,55 @@ struct OrderDetailsTextView: View {
     
     var body: some View {
         VStack(spacing:0){
-//            HStack(spacing:0){
-//                VStack(spacing:0){
-//                    PlaceholderText(text: "Время заказа")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                    Text(orderDetails.dateTime)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                }
-//                .padding(.top, Diems.HALF_SMALL_PADDING)
-//
-//                if(orderDetails.deferredTime != nil){
-//                    VStack(spacing:0){
-//                        PlaceholderText(text: orderDetails.deferredTimeHintString)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-//                        Text(orderDetails.deferredTime!)
-//                            .frame(maxWidth: .infinity, alignment: .leading)
-//                    }
-//                    .padding(.top, Diems.HALF_SMALL_PADDING)
-//                }
-//            }
-//            VStack(spacing:0){
-//                PlaceholderText(text: "Способ получения")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                Text(orderDetails.pickupMethod)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            }
-//            .padding(.top, Diems.HALF_SMALL_PADDING)
-//
-//            VStack(spacing:0){
-//                PlaceholderText(text: "Адрес")
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                Text(orderDetails.address)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//            }
-//            .padding(.top, Diems.HALF_SMALL_PADDING)
-//            if(orderDetails.comment != nil && orderDetails.comment != ""){
-//                VStack(spacing:0){
-//                    PlaceholderText(text: "Комментарий")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                    Text(orderDetails.comment ?? "")
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                }.padding(.top, Diems.HALF_SMALL_PADDING)
-//            }
+            HStack(spacing:0){
+                VStack(spacing:0){
+                    PlaceholderText(text: "Время заказа")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(dateUtil.getDateTimeString(dateTime: orderDetails.dateTime))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.top, Diems.HALF_SMALL_PADDING)
+
+                if(orderDetails.deferredTime != nil && orderDetails.deferredTime is TimeUITime){
+                    VStack(spacing:0){
+                        PlaceholderText(
+                            text: dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime)
+                        )
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text(orderDetails.deferredTime! as! DateInterval)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .padding(.top, Diems.HALF_SMALL_PADDING)
+                }
+            }
+            VStack(spacing:0){
+                PlaceholderText(text: "Способ получения")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if(orderDetails.isDelivery){
+                    Text("Доставка")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }else{
+                    Text("Самовывоз")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.top, Diems.HALF_SMALL_PADDING)
+
+            VStack(spacing:0){
+                PlaceholderText(text: "Адрес")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(orderDetails.address.getAddress())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.top, Diems.HALF_SMALL_PADDING)
+            if(orderDetails.comment != nil && orderDetails.comment != ""){
+                VStack(spacing:0){
+                    PlaceholderText(text: "Комментарий")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(orderDetails.comment ?? "")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }.padding(.top, Diems.HALF_SMALL_PADDING)
+            }
         }.frame(maxWidth: .infinity, alignment: .leading)
             .padding(Diems.MEDIUM_PADDING)
             .background(Color("surface"))

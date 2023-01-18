@@ -54,3 +54,31 @@ extension UserAddress {
     }
 }
 
+
+extension OrderAddress {
+    func getAddress() -> String {
+        
+        var address = self.street ?? ""
+        address += ", д. " + (self.house ?? "")
+        
+        if(self.flat != nil && self.flat != ""){
+            address += ", кв. " + (self.flat ?? "")
+        }
+        
+        if(self.entrance != nil && self.entrance != ""){
+            address += ", подъезд " + (self.entrance ?? "")
+        }
+        
+        if(self.floor != nil && self.floor != ""){
+            address += ", этаж. " + (self.floor ?? "")
+        }
+        
+        if(self.comment != nil && self.comment != ""){
+            address += ", \(self.comment ?? "")"
+        }
+        
+        return address
+    }
+}
+
+

@@ -39,6 +39,12 @@ class DateUtil {
         return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
        }
     
+    
+    func getTimeString(time: TimeUITime) -> String {
+        return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
+       }
+    
+    
     func addFirstZero(number: Int) -> String {
             if (number < 10) {
                 return "0\(number)"

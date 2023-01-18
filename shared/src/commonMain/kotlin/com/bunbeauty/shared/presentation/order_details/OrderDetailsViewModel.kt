@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.order_details
 
+import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.presentation.SharedViewModel
@@ -17,7 +18,7 @@ class OrderDetailsViewModel(
 ) : SharedViewModel() {
 
     private val mutableOrderState = MutableStateFlow(OrderDetailsState())
-    val orderState = mutableOrderState.asStateFlow()
+    val orderState = mutableOrderState.asCommonStateFlow()
 
     var observeOrderJob: Job? = null
 
