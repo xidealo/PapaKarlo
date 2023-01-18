@@ -104,7 +104,8 @@ fun viewModelModule() = module {
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
-            orderDetailsMapper = get(),
+            timeMapper = get(),
+            stopObserveOrdersUseCase = get(),
         )
     }
     viewModel {

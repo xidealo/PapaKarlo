@@ -21,7 +21,7 @@ class OrderDetailsViewModel(
     private val mutableOrderState = MutableStateFlow(OrderDetailsState())
     val orderState = mutableOrderState.asCommonStateFlow()
 
-    var observeOrderJob: Job? = null
+    private var observeOrderJob: Job? = null
 
     fun loadOrder(orderUuid: String) {
         observeOrderJob?.cancel()
@@ -33,9 +33,12 @@ class OrderDetailsViewModel(
                 if (order != null) {
                     mutableOrderState.update { state ->
                         state.copy(
-                            orderDetailsList = getProductList(order),
+                            orderProductItemList = getProductList(order),
                             orderInfo = getOrderInfo(order),
-                            isLoading = false,
+                            deliveryCost = order.deliveryCost?.toString(),
+                            totalCost = getTotalCost(order),
+                            finalCost = getFinalCost(order),
+                            isLoading = false
                         )
                     }
                 }
@@ -47,6 +50,25 @@ class OrderDetailsViewModel(
         sharedScope.launch {
             stopObserveOrdersUseCase()
         }
+    }
+
+    private fun getTotalCost(order: Order): String? {
+        val isTotalCostEnabled = order.orderProductList.any { orderProduct ->
+            orderProduct.product.oldPrice != null
+        }
+        return if (isTotalCostEnabled) {
+            order.orderProductList.sumOf { orderProduct ->
+                (orderProduct.product.oldPrice
+                    ?: orderProduct.product.newPrice) * orderProduct.count
+            }.toString()
+        } else null
+    }
+
+    private fun getFinalCost(order: Order): String {
+        val cost = order.orderProductList.sumOf { orderProduct ->
+            orderProduct.product.newPrice * orderProduct.count
+        }
+        return (cost + (order.deliveryCost ?: 0)).toString()
     }
 
     private fun getOrderInfo(order: Order) =
@@ -72,7 +94,7 @@ class OrderDetailsViewModel(
                     (oldPrice * orderProduct.count).toString()
                 },
                 photoLink = orderProduct.product.photoLink,
-                count = orderProduct.count,
+                count = orderProduct.count.toString(),
             )
         }
 }

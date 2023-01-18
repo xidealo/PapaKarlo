@@ -6,7 +6,7 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
 data class OrderDetailsState(
-    val orderDetailsList: List<OrderProductItem> = emptyList(),
+    val orderProductItemList: List<OrderProductItem> = emptyList(),
     val orderInfo: OrderInfo? = null,
     val totalCost: String? = null,
     val deliveryCost: String? = null,
@@ -32,6 +32,6 @@ data class OrderDetailsState(
         val newCost: String,
         val oldCost: String?,
         val photoLink: String,
-        val count: Int
+        val count: String
     )
 }

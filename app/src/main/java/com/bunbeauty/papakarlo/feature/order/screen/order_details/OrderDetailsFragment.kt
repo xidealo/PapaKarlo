@@ -4,7 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -88,27 +95,28 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
                 ) {
-                    item {
-//                        Column {
-//                            OrderStatusBar(
-//                                orderStatus = state.orderInfo.status,
-//                                orderStatusName = stringUtil.getOrderStatusName(state.orderInfo.status)
-//                            )
-//                            OrderInfoCard(
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-//                                orderInfo = state.orderInfo
-//                            )
-//                        }
+                    state.orderInfo?.let { orderInfo ->
+                        item {
+                            Column {
+                                OrderStatusBar(
+                                    orderStatus = orderInfo.status,
+                                    orderStatusName = stringUtil.getOrderStatusName(orderInfo.status)
+                                )
+                                OrderInfoCard(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                                    orderInfo = orderInfo
+                                )
+                            }
+                        }
                     }
-                    items(state.orderDetailsList) { orderDetailsItem ->
-//                        OrderProductItem(
-//                            modifier = Modifier.padding(
-//                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-//                            ),
-//                            orderProductItem = orderDetailsItem
-//                        )
+
+                    items(state.orderProductItemList) { orderProductItem ->
+                        OrderProductItem(
+                            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                            orderProductItem = orderProductItem
+                        )
                     }
                 }
                 BlurLine(modifier = Modifier.align(BottomCenter))
