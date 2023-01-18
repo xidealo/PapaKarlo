@@ -4,15 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -26,15 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.fragment.app.viewModels
-import androidx.navigation.navArgument
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.delegates.argument
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
-import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
@@ -45,11 +33,8 @@ import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.presentation.order_details.OrderDetails
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
-import com.bunbeauty.shared.presentation.order_details.OrderInfo
-import com.bunbeauty.shared.presentation.order_details.OrderProductItem
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -78,12 +63,12 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         if (orderDetailsState.isLoading) {
             LoadingScreen()
         } else {
-            OrderDetailsSuccessScreen(orderDetailsState.orderDetailsList)
+            OrderDetailsSuccessScreen(orderDetailsState)
         }
     }
 
     @Composable
-    private fun OrderDetailsSuccessScreen(orderDetailsList: List<OrderDetails>) {
+    private fun OrderDetailsSuccessScreen(state: OrderDetailsState) {
         Column(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
@@ -94,31 +79,27 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
                 ) {
-                    items(orderDetailsList) { orderDetails ->
-                        when (orderDetails) {
-                            is OrderInfo -> {
-                                Column {
-                                    OrderStatusBar(
-                                        orderStatus = orderDetails.status,
-                                        orderStatusName = stringUtil.getOrderStatusName(orderDetails.status)
-                                    )
-                                    OrderInfoCard(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                                        orderInfo = orderDetails
-                                    )
-                                }
-                            }
-                            is OrderProductItem -> {
-//                                OrderProductItem(
-//                                    modifier = Modifier.padding(
-//                                        top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-//                                    ),
-//                                    orderProductItem = orderDetails
-//                                )
-                            }
-                        }
+                    item {
+//                        Column {
+//                            OrderStatusBar(
+//                                orderStatus = state.orderInfo.status,
+//                                orderStatusName = stringUtil.getOrderStatusName(state.orderInfo.status)
+//                            )
+//                            OrderInfoCard(
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+//                                orderInfo = state.orderInfo
+//                            )
+//                        }
+                    }
+                    items(state.orderDetailsList) { orderDetailsItem ->
+//                        OrderProductItem(
+//                            modifier = Modifier.padding(
+//                                top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
+//                            ),
+//                            orderProductItem = orderDetailsItem
+//                        )
                     }
                 }
                 BlurLine(modifier = Modifier.align(BottomCenter))
@@ -151,7 +132,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderInfo
+        orderInfo: OrderDetailsState.OrderInfo
     ) {
         Card(
             modifier = modifier,
@@ -313,16 +294,16 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     }
 
     private fun getOrderUI(): OrderUI {
-        val orderProductItemModel = OrderProductItem(
-            uuid = "",
-            name = "Бэргер с вкусной свинкой ням ням ням ням",
-            newPrice = 50,
-            oldPrice = 100,
-            newCost = 100,
-            oldCost = 200,
-            photoLink = "",
-            count = 2
-        )
+//        val orderProductItemModel = OrderProductItem(
+//            uuid = "",
+//            name = "Бэргер с вкусной свинкой ням ням ням ням",
+//            newPrice = 50,
+//            oldPrice = 100,
+//            newCost = 100,
+//            oldCost = 200,
+//            photoLink = "",
+//            count = 2
+//        )
         return OrderUI(
             code = "",
             status = OrderStatus.PREPARING,
