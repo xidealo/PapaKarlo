@@ -2,19 +2,20 @@ package com.bunbeauty.shared.presentation.order_details
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
+import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.presentation.SharedViewModel
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class OrderDetailsViewModel(
     private val observeOrderUseCase: ObserveOrderUseCase,
-    private val timeMapper: TimeMapper
+    private val timeMapper: TimeMapper,
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
 ) : SharedViewModel() {
 
     private val mutableOrderState = MutableStateFlow(OrderDetailsState())
@@ -34,11 +35,17 @@ class OrderDetailsViewModel(
                         state.copy(
                             orderDetailsList = getProductList(order),
                             orderInfo = getOrderInfo(order),
-                            isLoading = false
+                            isLoading = false,
                         )
                     }
                 }
             }
+        }
+    }
+
+    fun stopObserveOrders() {
+        sharedScope.launch {
+            stopObserveOrdersUseCase()
         }
     }
 
@@ -68,5 +75,4 @@ class OrderDetailsViewModel(
                 count = orderProduct.count,
             )
         }
-
 }

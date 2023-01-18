@@ -58,6 +58,10 @@ extension UserAddress {
 extension OrderAddress {
     func getAddress() -> String {
         
+        if(street == nil){
+            return self.description_ ?? ""
+        }
+        
         var address = self.street ?? ""
         address += ", д. " + (self.house ?? "")
         

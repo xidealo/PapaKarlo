@@ -51,11 +51,20 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.loadOrder(orderUuid)
         viewBinding.fragmentOrderDetailsCvMain.compose {
             val orderState by viewModel.orderState.collectAsState()
             OrderDetailsScreen(orderState)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadOrder(orderUuid)
+    }
+
+    override fun onStop() {
+        viewModel.stopObserveOrders()
+        super.onStop()
     }
 
     @Composable

@@ -24,7 +24,8 @@ struct OrderDetailsView: View {
     
     var viewModel = OrderDetailsViewModel(
         observeOrderUseCase: iosComponent.provideObserveOrderUseCase(),
-        timeMapper: iosComponent.provideTimeMapper()
+        timeMapper: iosComponent.provideTimeMapper(),
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
     
     @State var listener: Closeable? = nil
@@ -113,6 +114,7 @@ struct OrderDetailsView: View {
         .onAppear(){
             viewModel.loadOrder(orderUuid: orderUuid)
             listener = viewModel.orderState.watch { orderDetailsStateVM in
+                print(orderDetailsStateVM)
                 if(orderDetailsStateVM != nil ){
                     orderDetailsState = orderDetailsStateVM!
                 }
@@ -120,9 +122,7 @@ struct OrderDetailsView: View {
             }
         }
         .onDisappear(){
-            //viewModel.unsubscribeFromOrders()
-            
-            //viewModel.stopObserveOrders()
+            viewModel.stopObserveOrders()
             listener?.close()
             listener = nil
         }
