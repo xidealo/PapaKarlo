@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -39,7 +39,12 @@ import com.bunbeauty.papakarlo.feature.order.model.OrderUI
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.domain.model.date_time.Date
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import org.koin.android.ext.android.inject
@@ -51,6 +56,8 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     override val viewBinding by viewBinding(FragmentOrderDetailsBinding::bind)
 
     val stringUtil: IStringUtil by inject()
+
+    val orderProductItemMapper: OrderProductItemMapper by inject()
 
     val orderUuid: String by argument()
 
@@ -115,13 +122,13 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     items(state.orderProductItemList) { orderProductItem ->
                         OrderProductItem(
                             modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                            orderProductItem = orderProductItem
+                            orderProductItem = orderProductItemMapper.toItem(orderProductItem)
                         )
                     }
                 }
                 BlurLine(modifier = Modifier.align(BottomCenter))
             }
-            //BottomAmountBar(orderUI)
+            BottomAmountBar(state)
         }
     }
 
@@ -208,55 +215,54 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     }
 
     @Composable
-    private fun BottomAmountBar(orderUI: OrderUI) {
+    private fun BottomAmountBar(orderDetailsState: OrderDetailsState) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(FoodDeliveryTheme.colors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
-            if (orderUI.isDelivery && orderUI.deliveryCost != null) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = FoodDeliveryTheme.dimensions.smallSpace)
-                ) {
+            orderDetailsState.deliveryCost?.let { deliveryCost ->
+                Row {
                     Text(
                         text = stringResource(R.string.msg_order_details_delivery_cost),
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
+                    Spacer(modifier = Modifier.weight(1f))
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = orderUI.deliveryCost,
+                        text = stringUtil.getCostString(deliveryCost),
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface,
                         textAlign = TextAlign.End
                     )
                 }
             }
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+            ) {
                 Text(
                     text = stringResource(R.string.msg_order_details_order_cost),
                     style = FoodDeliveryTheme.typography.h2,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
-                Row(
-                    modifier = Modifier.weight(1f),
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    orderUI.oldAmountToPay?.let {
-                        Text(
-                            modifier = Modifier
-                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = orderUI.oldAmountToPay,
-                            style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurfaceVariant,
-                            textDecoration = TextDecoration.LineThrough
-                        )
-                    }
+                Spacer(modifier = Modifier.weight(1f))
+                orderDetailsState.totalCost?.let { totalCost ->
                     Text(
-                        text = orderUI.newAmountToPay,
+                        modifier = Modifier
+                            .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                        text = stringUtil.getCostString(totalCost),
+                        style = FoodDeliveryTheme.typography.h2,
+                        color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                        textDecoration = TextDecoration.LineThrough
+                    )
+                }
+                orderDetailsState.finalCost?.let { finalCost ->
+                    Text(
+                        text = stringUtil.getCostString(finalCost),
                         style = FoodDeliveryTheme.typography.h2,
                         color = FoodDeliveryTheme.colors.onSurface,
                     )
@@ -277,82 +283,103 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     @Preview
     @Composable
     private fun OrderInfoCardPreview() {
-        //OrderInfoCard(orderInfo = getOrderUI())
+        OrderInfoCard(orderInfo = getOrderInfo())
     }
 
     @Preview
     @Composable
     private fun OrderInfoCardWithoutDeferredTimeAndCommentPreview() {
-        //OrderInfoCard(orderInfo = orderUIMinimal)
+        OrderInfoCard(
+            orderInfo = getOrderInfo().copy(
+                deferredTime = null,
+                comment = null
+            )
+        )
     }
 
     @Preview
     @Composable
     private fun BottomAmountBarPreview() {
-        BottomAmountBar(orderUI = getOrderUI())
+        BottomAmountBar(orderDetailsState = getOrderDetails())
     }
 
     @Preview
     @Composable
     private fun BottomAmountBarWithoutDeliveryPreview() {
-        BottomAmountBar(orderUI = orderUIMinimal)
+        BottomAmountBar(
+            orderDetailsState = getOrderDetails().copy(
+                deliveryCost = null,
+                totalCost = null
+            )
+        )
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsSuccessScreenPreview() {
-        //OrderDetailsScreen(orderState = State.Success(getOrderUI()))
+        OrderDetailsScreen(orderDetailsState = getOrderDetails())
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsLoadingScreenPreview() {
-        //OrderDetailsScreen(orderState = State.Loading())
+        OrderDetailsScreen(orderDetailsState = getOrderDetails().copy(
+            isLoading = true
+        ))
     }
 
-    private fun getOrderUI(): OrderUI {
-//        val orderProductItemModel = OrderProductItem(
-//            uuid = "",
-//            name = "Бэргер с вкусной свинкой ням ням ням ням",
-//            newPrice = 50,
-//            oldPrice = 100,
-//            newCost = 100,
-//            oldCost = 200,
-//            photoLink = "",
-//            count = 2
-//        )
-        return OrderUI(
-            code = "",
-            status = OrderStatus.PREPARING,
-            statusName = "Готовится",
-            dateTime = "20 февраля 18:15",
-            pickupMethod = "Доставка",
-            deferredTimeHintStringId = R.string.msg_order_details_deferred_time_delivery,
-            deferredTime = "20:30",
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            comment = "Позвонить за 5 минут",
-            deliveryCost = "100 ₽",
-            orderProductList = listOf(),
-            isDelivery = true,
-            oldAmountToPay = "450 ₽",
-            newAmountToPay = "390 ₽",
+    private fun getOrderDetails(): OrderDetailsState {
+        return OrderDetailsState(
+            orderProductItemList = listOf(
+                OrderDetailsState.OrderProductItem(
+                    uuid = "",
+                    name = "Product 1",
+                    newPrice = "100",
+                    oldPrice = "150",
+                    newCost = "200",
+                    oldCost = "300",
+                    photoLink = "",
+                    count = "2"
+                ),
+                OrderDetailsState.OrderProductItem(
+                    uuid = "",
+                    name = "Product 2",
+                    newPrice = "150",
+                    oldPrice = null,
+                    newCost = "150",
+                    oldCost = null,
+                    photoLink = "",
+                    count = "1"
+                ),
+            ),
+            orderInfo = getOrderInfo(),
+            totalCost = "450",
+            deliveryCost = "100",
+            finalCost = "550",
+            isLoading = false
         )
     }
 
-    private val orderUIMinimal = OrderUI(
-        code = "",
-        status = OrderStatus.PREPARING,
-        statusName = "Готовится",
-        dateTime = "20 февраля 18:15",
-        pickupMethod = "Доставка",
-        deferredTimeHintStringId = R.string.msg_order_details_deferred_time_delivery,
-        deferredTime = null,
-        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-        comment = null,
-        deliveryCost = "100 ₽",
-        orderProductList = listOf(),
-        isDelivery = false,
-        oldAmountToPay = "450 ₽",
-        newAmountToPay = "390 ₽",
-    )
+    private fun getOrderInfo(): OrderDetailsState.OrderInfo {
+        return OrderDetailsState.OrderInfo(
+            code = "A-40",
+            status = OrderStatus.PREPARING,
+            dateTime = DateTime(
+                Date(1, 1, 2023),
+                Time(1, 30)
+            ),
+            deferredTime = TimeUI.Time(10, 30),
+            address = OrderAddress(
+                description = "",
+                street = "ул. Лука",
+                house = "2",
+                flat = "10",
+                entrance = "1",
+                floor = "3",
+                comment = "тест",
+            ),
+            comment = "давай кушать",
+            isDelivery = true,
+        )
+    }
 }

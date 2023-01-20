@@ -18,7 +18,9 @@ interface IStringUtil {
     fun getTimeString(time: TimeUI): String
     fun getCostString(cost: Int?): String?
     fun getCostString(cost: Int): String
+    fun getCostString(cost: String): String
     fun getCountString(count: Int): String
+    fun getCountString(count: String): String
     fun getOrderStatusName(orderStatus: OrderStatus): String
     fun getPickupMethodString(isDelivery: Boolean): String
     fun getDeferredString(isDelivery: Boolean): String

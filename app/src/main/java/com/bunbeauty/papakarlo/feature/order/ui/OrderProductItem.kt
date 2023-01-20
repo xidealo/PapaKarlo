@@ -28,12 +28,12 @@ import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
-import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
+import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUiItem
 
 @Composable
 fun OrderProductItem(
     modifier: Modifier = Modifier,
-    orderProductItem: OrderDetailsState.OrderProductItem
+    orderProductItem: OrderProductUiItem
 ) {
     Card(
         modifier = modifier.card(),

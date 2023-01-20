@@ -25,6 +25,10 @@ class StringUtil(
         return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
     }
 
+    override fun getCostString(cost: String): String {
+        return cost + resourcesProvider.getString(R.string.part_ruble)
+    }
+
     override fun getUserAddressString(userAddress: UserAddress?): String? {
         return userAddress?.let {
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
@@ -133,6 +137,10 @@ class StringUtil(
     }
 
     override fun getCountString(count: Int): String {
+        return "× $count"
+    }
+
+    override fun getCountString(count: String): String {
         return "× $count"
     }
 
