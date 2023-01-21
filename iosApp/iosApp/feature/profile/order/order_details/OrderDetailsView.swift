@@ -14,7 +14,7 @@ struct OrderDetailsView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var orderDetailsState = OrderDetailsState(
-        orderDetailsList: [],
+        orderProductItemList: [],
         orderInfo: nil,
         totalCost: nil,
         deliveryCost: nil,
@@ -62,7 +62,7 @@ struct OrderDetailsView: View {
                             }
 
                             VStack(spacing: 0){
-                                ForEach(orderDetailsState.orderDetailsList.map({ order in
+                                ForEach(orderDetailsState.orderProductItemList.map({ order in
                                     OrderProductItem(
                                         id: order.uuid,
                                         name: order.name,
@@ -114,7 +114,6 @@ struct OrderDetailsView: View {
         .onAppear(){
             viewModel.loadOrder(orderUuid: orderUuid)
             listener = viewModel.orderState.watch { orderDetailsStateVM in
-                print(orderDetailsStateVM)
                 if(orderDetailsStateVM != nil ){
                     orderDetailsState = orderDetailsStateVM!
                 }
@@ -151,6 +150,8 @@ struct OrderProductItemView :View {
                     }
                     Text(orderProductItem.newPrice)
                         .foregroundColor(Color("onSurface"))
+                        .padding(.leading, Diems.HALF_SMALL_PADDING)
+
                     Text(" x ")
                     Text(orderProductItem.count)
                         .foregroundColor(Color("onSurface"))
@@ -159,8 +160,11 @@ struct OrderProductItemView :View {
                         if orderProductItem.oldCost != nil {
                             StrikeText(text: orderProductItem.oldCost!)
                         }
+                        
                         Text(orderProductItem.newCost)
                             .foregroundColor(Color("onSurface"))
+                            .padding(.leading, Diems.HALF_SMALL_PADDING)
+
                     }.frame(maxWidth:.infinity, alignment: .topTrailing)
                         .padding(.trailing, Diems.SMALL_PADDING)
                     
