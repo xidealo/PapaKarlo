@@ -57,10 +57,11 @@ class OrderDetailsViewModel(
             orderProduct.product.oldPrice != null
         }
         return if (isTotalCostEnabled) {
-            order.orderProductList.sumOf { orderProduct ->
+            val cost = order.orderProductList.sumOf { orderProduct ->
                 (orderProduct.product.oldPrice
                     ?: orderProduct.product.newPrice) * orderProduct.count
-            }.toString()
+            }
+            (cost + (order.deliveryCost ?: 0)).toString()
         } else null
     }
 
