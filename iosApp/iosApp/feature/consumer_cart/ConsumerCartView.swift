@@ -122,6 +122,7 @@ struct ConsumerCartSuccessScreen: View {
                         StrikeText(text: String(consumerCartUI.oldTotalCost!) + Strings.CURRENCY)
                     }
                     BoldText(text: consumerCartUI.newTotalCost)
+                        .padding(Diems.SMALL_PADDING)
                 }.padding()
                 
                 Button {

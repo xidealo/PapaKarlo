@@ -92,7 +92,7 @@ struct OrderDetailsView: View {
                         HStack(spacing:0){
                             Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                             Spacer()
-                            Text(orderDetailsState.deliveryCost ?? "0")
+                            Text((orderDetailsState.deliveryCost ?? "0") + Strings.CURRENCY)
                         }
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -101,7 +101,7 @@ struct OrderDetailsView: View {
                     HStack(spacing:0){
                         BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                         Spacer()
-                        BoldText(text: orderDetailsState.finalCost ?? "")
+                        BoldText(text: (orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.top, Diems.SMALL_PADDING)
@@ -146,11 +146,11 @@ struct OrderProductItemView :View {
                 
                 HStack(spacing:0){
                     if orderProductItem.oldPrice != nil {
-                        StrikeText(text: orderProductItem.oldPrice!)
+                        StrikeText(text: orderProductItem.oldPrice! + Strings.CURRENCY)
                     }
-                    Text(orderProductItem.newPrice)
+                    Text(orderProductItem.newPrice + Strings.CURRENCY)
                         .foregroundColor(Color("onSurface"))
-                        .padding(.leading, Diems.HALF_SMALL_PADDING)
+                        .padding(.leading, Diems.SMALL_PADDING)
 
                     Text(" x ")
                     Text(orderProductItem.count)
@@ -158,12 +158,12 @@ struct OrderProductItemView :View {
                     
                     HStack(spacing:0){
                         if orderProductItem.oldCost != nil {
-                            StrikeText(text: orderProductItem.oldCost!)
+                            StrikeText(text: orderProductItem.oldCost! + Strings.CURRENCY)
                         }
                         
-                        Text(orderProductItem.newCost)
+                        Text(orderProductItem.newCost + Strings.CURRENCY)
                             .foregroundColor(Color("onSurface"))
-                            .padding(.leading, Diems.HALF_SMALL_PADDING)
+                            .padding(.leading, Diems.SMALL_PADDING)
 
                     }.frame(maxWidth:.infinity, alignment: .topTrailing)
                         .padding(.trailing, Diems.SMALL_PADDING)
@@ -171,7 +171,6 @@ struct OrderProductItemView :View {
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
                 .padding(.leading, Diems.SMALL_PADDING)
-            
         }.frame(maxWidth:.infinity, alignment: .topLeading)
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
@@ -190,15 +189,14 @@ struct OrderDetailsTextView: View {
                     Text(dateUtil.getDateTimeString(dateTime: orderDetails.dateTime))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.top, Diems.HALF_SMALL_PADDING)
 
                 if(orderDetails.deferredTime != nil && orderDetails.deferredTime is TimeUITime){
                     VStack(spacing:0){
                         PlaceholderText(
-                            text: dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime)
-                        )
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text(orderDetails.deferredTime! as! DateInterval)
+                            text: "Ко времени"
+                        ).frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text(dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .padding(.top, Diems.HALF_SMALL_PADDING)
