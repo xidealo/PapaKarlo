@@ -51,7 +51,9 @@ struct ConsumerCartView: View {
             switch viewModel.consumerCartViewState.consumerCartState{
             case .loading: LoadingView()
             case .notAuthorized: EmptyView()
-            case .empty: ConsumerCartEmptyScreen(isRootActive: $isRootActive, selection: $selection)
+            case .empty: ConsumerCartEmptyScreen(
+                isRootActive: $isRootActive, selection: $selection
+            )
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             }
         }
@@ -134,8 +136,9 @@ struct ConsumerCartSuccessScreen: View {
                         .background(Color("primary"))
                         .cornerRadius(Diems.MEDIUM_RADIUS)
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                }.padding(Diems.MEDIUM_PADDING)
-                
+                }
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
         }
     }
@@ -156,12 +159,13 @@ struct ConsumerCartEmptyScreen: View {
             Text(Strings.MSG_CART_PRODUCT_EMPTY)
                 .multilineTextAlignment(.center)
                 .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
 
             Spacer()
             
             Button {
-                selection = 1
                 isRootActive = false
+                selection = 1
             } label: {
                 Text(Strings.ACTION_CART_PRODUCT_MENU)
                     .frame(maxWidth: .infinity)

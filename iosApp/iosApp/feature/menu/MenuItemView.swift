@@ -18,22 +18,28 @@ struct MenuItemView: View {
             KFImage(URL(string: menuProductItem.photoLink))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+                .frame(
+                    maxWidth: Diems.IMAGE_ELEMENT_WIDTH,
+                    maxHeight: Diems.IMAGE_ELEMENT_HEIGHT
+                )
             
-            VStack{
+            VStack(spacing:0){
                 Text(menuProductItem.name)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
                     .foregroundColor(Color("onSurface"))
+                    .padding(.top, Diems.SMALL_PADDING)
                     .multilineTextAlignment(.leading)
-                HStack{
+                HStack(spacing:0){
                     if menuProductItem.oldPrice != nil{
                         StrikeText(text: String(menuProductItem.oldPrice ?? 0) + Strings.CURRENCY)
+                            .padding(.trailing, Diems.SMALL_PADDING)
                     }
                     Text(menuProductItem.newPrice)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
                         .foregroundColor(Color("onSurface"))
                 }
+                Spacer()
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
                 .padding(.leading, Diems.SMALL_PADDING)
             
@@ -47,18 +53,17 @@ struct MenuItemView: View {
                         .stroke(Color("primary"), lineWidth: 2))
                     .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                     .padding(.leading, Diems.HALF_SMALL_PADDING)
-
-                
             }.padding(.trailing, Diems.MEDIUM_PADDING)
             
         }.frame(maxWidth:.infinity, alignment: .topLeading)
-            .background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS)
+            .background(Color("surface"))
+            .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
 
 struct MenuItemView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, productUuid: "asd", name: "Burger sdlmdkm dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "")) {
+        MenuItemView(menuProductItem:MenuProductItem(id: UUID().uuidString, productUuid: "asd", name: "Burger  sdl,fld,sf dkmk", newPrice: "200 R", oldPrice: 250, photoLink: "")) {
             print("btn pressed")
         }
     }

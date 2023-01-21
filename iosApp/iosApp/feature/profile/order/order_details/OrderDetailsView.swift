@@ -101,6 +101,10 @@ struct OrderDetailsView: View {
                     HStack(spacing:0){
                         BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
                         Spacer()
+                        if orderDetailsState.totalCost != nil {
+                            StrikeText(text: (orderDetailsState.totalCost ?? "") + Strings.CURRENCY)
+                                .padding(.trailing, Diems.SMALL_PADDING)
+                        }
                         BoldText(text: (orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -147,10 +151,10 @@ struct OrderProductItemView :View {
                 HStack(spacing:0){
                     if orderProductItem.oldPrice != nil {
                         StrikeText(text: orderProductItem.oldPrice! + Strings.CURRENCY)
+                            .padding(.trailing, Diems.SMALL_PADDING)
                     }
                     Text(orderProductItem.newPrice + Strings.CURRENCY)
                         .foregroundColor(Color("onSurface"))
-                        .padding(.leading, Diems.SMALL_PADDING)
 
                     Text(" x ")
                     Text(orderProductItem.count)
@@ -159,12 +163,11 @@ struct OrderProductItemView :View {
                     HStack(spacing:0){
                         if orderProductItem.oldCost != nil {
                             StrikeText(text: orderProductItem.oldCost! + Strings.CURRENCY)
+                                .padding(.trailing, Diems.SMALL_PADDING)
                         }
                         
                         Text(orderProductItem.newCost + Strings.CURRENCY)
                             .foregroundColor(Color("onSurface"))
-                            .padding(.leading, Diems.SMALL_PADDING)
-
                     }.frame(maxWidth:.infinity, alignment: .topTrailing)
                         .padding(.trailing, Diems.SMALL_PADDING)
                     
