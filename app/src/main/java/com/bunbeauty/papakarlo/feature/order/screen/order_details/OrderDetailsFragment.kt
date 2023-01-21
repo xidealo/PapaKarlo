@@ -35,7 +35,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.order.model.OrderUI
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
 import com.bunbeauty.papakarlo.util.string.IStringUtil
@@ -323,9 +322,11 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsLoadingScreenPreview() {
-        OrderDetailsScreen(orderDetailsState = getOrderDetails().copy(
-            isLoading = true
-        ))
+        OrderDetailsScreen(
+            orderDetailsState = getOrderDetails().copy(
+                isLoading = true
+            )
+        )
     }
 
     private fun getOrderDetails(): OrderDetailsState {
