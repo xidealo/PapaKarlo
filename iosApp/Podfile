@@ -13,7 +13,6 @@ target 'iosApp' do
   pod 'Firebase/Crashlytics', '~> 9.5.0'
   pod 'FirebaseCore', '~> 9.5.0'
   pod 'GoogleUtilities'
-  pod 'FirebaseAuth', '~> 9.5.0'
   pod 'Kingfisher'
   pod 'shared', :path => '../shared'
 end
