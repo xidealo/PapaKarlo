@@ -117,7 +117,6 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		519FA430AD60D9093BD7E594 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85E0A31218632C5D243A56B6 /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		C93C8D3BE4685EDEA721F2B8 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18F6E44ED93C3A1D28564C4A /* Pods_iosApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1029,7 +1028,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = 77HLJ933B9;
+				DEVELOPMENT_TEAM = F3V3AFUB25;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
