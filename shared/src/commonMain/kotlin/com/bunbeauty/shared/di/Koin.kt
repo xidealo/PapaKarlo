@@ -66,9 +66,9 @@ fun initKoin() = startKoin {
 }
 
 class IosComponent:KoinComponent {
+    // Interactors
     fun provideMainInteractor(): IMainInteractor = get()
     fun provideCityInteractor(): ICityInteractor = get()
-    fun provideApiRepo(): NetworkConnector = get()
     fun provideMenuInteractor(): IMenuProductInteractor = get()
     fun provideCafeInteractor(): ICafeInteractor = get()
     fun provideCartProductInteractor(): ICartProductInteractor = get()
@@ -76,6 +76,8 @@ class IosComponent:KoinComponent {
     fun provideIOrderInteractor(): IOrderInteractor = get()
     fun provideIAddressInteractor(): IAddressInteractor = get()
     fun provideIStreetInteractor(): IStreetInteractor = get()
+
+    //Use cases
     fun provideDisableUserUseCase(): DisableUserUseCase = get()
     fun provideGetSelectedUserAddressUseCase(): GetSelectedUserAddressUseCase = get()
     fun provideGetSelectedCafeUseCase(): GetSelectedCafeUseCase = get()
@@ -83,8 +85,6 @@ class IosComponent:KoinComponent {
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()
     fun provideGetCartTotalUseCase(): GetCartTotalUseCase = get()
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
-    fun provideTimeMapper(): TimeMapper = get()
-    fun provideUserAddressMapper(): UserAddressMapper = get()
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
     fun provideGetSelectedCityTimeZoneUseCase(): GetSelectedCityTimeZoneUseCase = get()
     fun provideStopObserveLastOrderUseCase(): StopObserveLastOrderUseCase = get()
@@ -94,7 +94,16 @@ class IosComponent:KoinComponent {
     fun provideGetCityListUseCase(): GetCityListUseCase = get()
     fun provideSaveSelectedCityUseCase(): SaveSelectedCityUseCase = get()
     fun provideObserveLastOrderUseCase(): ObserveLastOrderUseCase = get()
-    fun provideFirebaseAuthRepository(): FirebaseAuthRepository = get()
-    fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
     fun provideStopObserveOrdersUseCase(): StopObserveOrdersUseCase = get()
+    fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
+    fun provideObserveOrderUseCase(): ObserveOrderUseCase = get()
+
+    //Mapper
+    fun provideTimeMapper(): TimeMapper = get()
+    fun provideUserAddressMapper(): UserAddressMapper = get()
+
+    //Other
+    fun provideFirebaseAuthRepository(): FirebaseAuthRepository = get()
+    fun provideApiRepo(): NetworkConnector = get()
+
 }

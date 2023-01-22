@@ -57,7 +57,8 @@ class CreateOrderHolder: ObservableObject {
         listener?.close()
         listener = nil
     }
-
+    
+    //todo remove
     func getUserAddressList() -> String {
         if(creationOrderViewState.deliveryAddress == nil){
             return ""

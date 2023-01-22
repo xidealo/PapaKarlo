@@ -32,7 +32,11 @@ struct ProfileView: View {
         VStack(spacing:0){
             switch(profileState.state){
             case ProfileState.State.loading : LoadingProfileView()
-            case ProfileState.State.authorized : SuccessProfileView(profileViewState:  profileState, showOrderCreated: $showOrderCreated, showCreatedAddress: $showCreatedAddress)
+            case ProfileState.State.authorized : SuccessProfileView(
+                profileViewState:  profileState,
+                showOrderCreated: $showOrderCreated,
+                showCreatedAddress: $showCreatedAddress
+            )
             case ProfileState.State.unauthorized : EmptyProfileView(isActive: $isActive)
             default: EmptyView()
             }

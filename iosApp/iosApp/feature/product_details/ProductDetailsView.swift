@@ -57,9 +57,11 @@ struct ProductDetailsView: View {
             )
             
             VStack(spacing:0){
-                KFImage(URL(string: viewModel.productDetailsViewState.imageLink))
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+                KFImage(
+                    URL(string: viewModel.productDetailsViewState.imageLink)
+                )
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 
                 Group{
                     HStack(spacing:0){
@@ -103,12 +105,14 @@ struct ProductDetailsView: View {
             Button(action: {
                 viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)
             }) {
-                Text(Strings.ACTION_PRODUCT_DETAILS_ADD).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_PRODUCT_DETAILS_ADD)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
                     .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default)
+                        .smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

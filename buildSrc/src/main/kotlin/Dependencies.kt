@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.2.2"
-    const val kotlin = "1.7.20"
+    const val kotlin = "1.8.0"
     const val googleServices = "4.3.10"
     const val crashlytics = "2.8.1"
     const val navigation = "2.5.1"
@@ -10,7 +10,7 @@ object Versions {
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
 
-    const val sqlDelight = "1.5.3"
+    const val sqlDelight = "1.5.5"
 
     const val constraintLayout = "2.1.3"
 
@@ -22,7 +22,7 @@ object Versions {
     const val coil = "2.1.0"
     const val timePicker = "4.2.3"
 
-    const val composeCompiler = "1.3.2"
+    const val composeCompiler = "1.4.0"
     const val composeBom = "2022.12.00"
     const val composeMaterial3 = "1.1.0-alpha03"
     const val composeUiTooling = "1.3.2"

@@ -39,9 +39,6 @@ fun dataMapperModule() = module {
     single<ICityMapper> { CityMapper() }
     single<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
     single<IOrderProductMapper> { OrderProductMapper() }
-    single {
-        TimeMapper()
-    }
     factory {
         SettingsMapper()
     }

@@ -57,20 +57,24 @@ struct MenuView: View {
                                         .padding(.top, Diems.MEDIUM_PADDING)){
                                             ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
                                                 NavigationLink(
-                                                    destination:ProductDetailsView(
+                                                    destination:
+                                                    ProductDetailsView(
                                                         menuProductUuid: menuProductItem.productUuid,
                                                         isRootActive: self.$isRootActive,
                                                         selection: self.$selection,
                                                         showOrderCreated: $showOrderCreated
                                                     )
                                                 ){
-                                                    MenuItemView(menuProductItem: menuProductItem, action: {
-                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                                    MenuItemView(
+                                                        menuProductItem: menuProductItem,
+                                                        action: {
+                                                            viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
                                                     })
                                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
-                                                .buttonStyle(FlatLinkStyle()) 
+                                                .isDetailLink(false)
+                                                .buttonStyle(FlatLinkStyle())
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)

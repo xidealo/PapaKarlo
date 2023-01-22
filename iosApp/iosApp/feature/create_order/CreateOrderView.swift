@@ -184,7 +184,7 @@ struct CreateOrderSuccessView:View {
                         deferredTimeUi: TimeUITime(
                             hours: Int32(calendar.component(.hour, from: date)),
                             minutes: Int32(calendar.component(.minute, from: date)
-                                          )
+                            )
                         )
                     )
                 }

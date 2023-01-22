@@ -6,6 +6,7 @@ import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
@@ -22,6 +23,10 @@ class StringUtil(
 
     override fun getCostString(cost: Int): String {
         return cost.toString() + resourcesProvider.getString(R.string.part_ruble)
+    }
+
+    override fun getCostString(cost: String): String {
+        return cost + resourcesProvider.getString(R.string.part_ruble)
     }
 
     override fun getUserAddressString(userAddress: UserAddress?): String? {
@@ -51,6 +56,23 @@ class StringUtil(
                 getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
                 getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
                 getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+        }
+    }
+
+    override fun getOrderAddressString(orderAddress: OrderAddress): String {
+        return if (orderAddress.description.isNullOrEmpty()) {
+            val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
+            val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
+            val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
+            val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
+            orderAddress.street +
+                getStringPart(ADDRESS_DIVIDER, houseShort, orderAddress.house) +
+                getStringPart(ADDRESS_DIVIDER, flatShort, orderAddress.flat) +
+                getInvertedStringPart(ADDRESS_DIVIDER, orderAddress.entrance, entranceShort) +
+                getInvertedStringPart(ADDRESS_DIVIDER, orderAddress.floor, floorShort) +
+                getStringPart(ADDRESS_DIVIDER, "", orderAddress.comment)
+        } else {
+            orderAddress.description ?: ""
         }
     }
 
@@ -118,6 +140,10 @@ class StringUtil(
         return "× $count"
     }
 
+    override fun getCountString(count: String): String {
+        return "× $count"
+    }
+
     override fun getOrderStatusName(orderStatus: OrderStatus): String {
         return when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> resourcesProvider.getString(R.string.msg_status_not_accepted)
@@ -135,6 +161,14 @@ class StringUtil(
             resourcesProvider.getString(R.string.msg_delivery)
         } else {
             resourcesProvider.getString(R.string.msg_pickup)
+        }
+    }
+
+    override fun getDeferredString(isDelivery: Boolean): String {
+        return if (isDelivery) {
+            resourcesProvider.getString(R.string.delivery_time)
+        } else {
+            resourcesProvider.getString(R.string.pickup_time)
         }
     }
 }
