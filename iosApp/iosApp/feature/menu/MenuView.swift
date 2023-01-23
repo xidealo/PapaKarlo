@@ -74,7 +74,6 @@ struct MenuView: View {
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
                                                 .isDetailLink(false)
-                                                .buttonStyle(FlatLinkStyle())
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)
