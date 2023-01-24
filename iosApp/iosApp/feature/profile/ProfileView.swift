@@ -8,6 +8,7 @@
 import SwiftUI
 import shared
 
+
 struct ProfileView: View {
     
     @State var profileState = ProfileState(
@@ -27,7 +28,9 @@ struct ProfileView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isActive:Bool = false
     @State var listener: Closeable? = nil
-
+    
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         VStack(spacing:0){
             switch(profileState.state){
@@ -53,21 +56,37 @@ struct ProfileView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.update()
-            viewModel.observeLastOrder()
-            listener = viewModel.profileState.watch { profileStateVM in
-                if(profileStateVM != nil ){
-                    profileState = profileStateVM!
-                }
-                // work with actions
-            }
+            subscribe()
         }
         .onDisappear(){
-            viewModel.stopLastOrderObservation()
-            listener?.close()
-            listener = nil
+            unsubscribe()
         }
-        
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+               subscribe()
+            } else if newPhase == .inactive {
+                unsubscribe()
+            } else if newPhase == .background {
+                unsubscribe()
+            }
+        }
+    }
+    
+    func subscribe(){
+        viewModel.update()
+        viewModel.observeLastOrder()
+        listener = viewModel.profileState.watch { profileStateVM in
+            if(profileStateVM != nil ){
+                profileState = profileStateVM!
+            }
+            // work with actions
+        }
+    }
+    
+    func unsubscribe(){
+        viewModel.stopLastOrderObservation()
+        listener?.close()
+        listener = nil
     }
 }
 

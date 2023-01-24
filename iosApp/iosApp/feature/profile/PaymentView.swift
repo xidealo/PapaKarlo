@@ -24,6 +24,10 @@ struct PaymentView: View {
             )
             
             VStack(spacing:0){
+                Text("Вы можете оплатить заказ наличным, а также переводом по номеру карты или по номеру телефона")
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, Diems.SMALL_PADDING)
+                
                 ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_PHONE, isSystemImageName: false, isShowRightArrow: false){
                     self.show = true
                     self.toastText = "Номер телефона скопирован"
