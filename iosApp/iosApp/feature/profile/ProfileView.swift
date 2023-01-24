@@ -79,7 +79,6 @@ struct ProfileView: View {
             if(profileStateVM != nil ){
                 profileState = profileStateVM!
             }
-            // work with actions
         }
     }
     

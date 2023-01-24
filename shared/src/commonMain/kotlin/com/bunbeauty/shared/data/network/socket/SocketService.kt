@@ -12,6 +12,7 @@ import io.ktor.websocket.WebSocketSession
 import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
@@ -29,31 +30,28 @@ class SocketService(
         serializer: KSerializer<S>,
         token: String
     ): Flow<S> {
-        return try {
-            flow {
-                client.webSocket(
-                    method = HttpMethod.Get,
-                    port = 80,
-                    path = path,
-                    request = {
-                        header(AUTHORIZATION_HEADER, BEARER + token)
-                    }
-                ) {
-                    Logger.logD(Logger.WEB_SOCKET_TAG, "Connect")
-                    socketSessionMap[path] = this
-                    while (true) {
-                        val frame = incoming.receive() as? Frame.Text
-                        if (frame != null) {
-                            Logger.logD(Logger.WEB_SOCKET_TAG, "Message: ${frame.readText()}")
-                            emit(json.decodeFromString(serializer, frame.readText()))
-                        }
+        return flow {
+            client.webSocket(
+                method = HttpMethod.Get,
+                port = 80,
+                path = path,
+                request = {
+                    header(AUTHORIZATION_HEADER, BEARER + token)
+                }
+            ) {
+                Logger.logD(Logger.WEB_SOCKET_TAG, "Connect")
+                socketSessionMap[path] = this
+                while (true) {
+                    val frame = incoming.receive() as? Frame.Text
+                    if (frame != null) {
+                        Logger.logD(Logger.WEB_SOCKET_TAG, "Message: ${frame.readText()}")
+                        emit(json.decodeFromString(serializer, frame.readText()))
                     }
                 }
             }
-        } catch (exception: Exception) {
-            Logger.logE(Logger.WEB_SOCKET_TAG, "exception ${exception.message}")
+        }.catch { throwable ->
             socketSessionMap[path]?.close()
-            flow { }
+            Logger.logE(Logger.WEB_SOCKET_TAG, "exception ${throwable.message}")
         }
     }
 
