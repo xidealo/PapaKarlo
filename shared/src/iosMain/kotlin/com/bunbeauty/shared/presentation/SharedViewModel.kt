@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
@@ -9,7 +10,7 @@ import kotlin.native.internal.GC
 
 @ThreadLocal
 internal var createViewModelScope: () -> CoroutineScope = {
-    CoroutineScope(createUIDispatcher())
+    CoroutineScope(SupervisorJob() + createUIDispatcher())
 }
 
 internal fun createUIDispatcher(): CoroutineDispatcher = UIDispatcher()
