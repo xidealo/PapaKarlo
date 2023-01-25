@@ -32,6 +32,8 @@ struct OrderDetailsView: View {
 
     @State var orderUuid:String
     
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         VStack(spacing:0){
             if(orderDetailsState.isLoading){
@@ -116,19 +118,35 @@ struct OrderDetailsView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.loadOrder(orderUuid: orderUuid)
-            listener = viewModel.orderState.watch { orderDetailsStateVM in
-                if(orderDetailsStateVM != nil ){
-                    orderDetailsState = orderDetailsStateVM!
-                }
-                // work with actions
-            }
+            subscribe()
         }
         .onDisappear(){
-            viewModel.stopObserveOrders()
-            listener?.close()
-            listener = nil
+            unsubscribe()
         }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+               subscribe()
+            } else if newPhase == .inactive {
+                unsubscribe()
+            } else if newPhase == .background {
+                unsubscribe()
+            }
+        }
+    }
+    
+    func subscribe(){
+        viewModel.loadOrder(orderUuid: orderUuid)
+        listener = viewModel.orderState.watch { orderDetailsStateVM in
+            if(orderDetailsStateVM != nil ){
+                orderDetailsState = orderDetailsStateVM!
+            }
+        }
+    }
+    
+    func unsubscribe(){
+        viewModel.stopObserveOrders()
+        listener?.close()
+        listener = nil
     }
 }
 

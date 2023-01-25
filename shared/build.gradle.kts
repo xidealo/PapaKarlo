@@ -60,7 +60,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(DataStore.dataStorePreferences)
-                implementation(Ktor.clientAndroid)
                 implementation(Ktor.clientOkhttp)
                 implementation(Lifecycle.viewmodel)
 
@@ -83,7 +82,7 @@ kotlin {
         val iosMain by creating {
             dependencies {
                 implementation(SqlDelight.nativeDriver)
-                implementation(Ktor.clientIos)
+                implementation(Ktor.clientDarwin)
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)

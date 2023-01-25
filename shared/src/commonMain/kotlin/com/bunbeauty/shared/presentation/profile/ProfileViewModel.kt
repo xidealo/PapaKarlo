@@ -15,7 +15,7 @@ class ProfileViewModel(
     private val userInteractor: IUserInteractor,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveLastOrderUseCase: StopObserveLastOrderUseCase
-    ) : SharedViewModel() {
+) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
     val profileState = mutableProfileState.asCommonStateFlow()

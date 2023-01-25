@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import shared
 
 struct MenuView: View {
     
@@ -17,7 +18,7 @@ struct MenuView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-
+    
     var body: some View {
         VStack(spacing:0){
             if viewModel.menuViewState.isLoading {
@@ -74,7 +75,6 @@ struct MenuView: View {
                                                     .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 }
                                                 .isDetailLink(false)
-                                                .buttonStyle(FlatLinkStyle())
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)

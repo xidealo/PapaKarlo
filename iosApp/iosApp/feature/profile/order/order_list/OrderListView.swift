@@ -25,6 +25,8 @@ struct OrderListView: View {
     
     @State var listener: Closeable? = nil
     
+    @Environment(\.scenePhase) var scenePhase
+    
     var body: some View {
         VStack(spacing: 0 ){
             ToolbarView(
@@ -49,21 +51,37 @@ struct OrderListView: View {
         )
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.observeOrders()
-
-            listener = viewModel.orderListState.watch { orderListVM in
-                if(orderListVM != nil ){
-                    orderListState = orderListVM!
-                }
-                // work with actions
-            }
+            subscribe()
         }
         .onDisappear(){
-            viewModel.stopObserveOrders()
-            listener?.close()
-            listener = nil
+            unsubscribe()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+               subscribe()
+            } else if newPhase == .inactive {
+                unsubscribe()
+            } else if newPhase == .background {
+                unsubscribe()
+            }
         }
      
+    }
+    
+    func subscribe(){
+        viewModel.observeOrders()
+
+        listener = viewModel.orderListState.watch { orderListVM in
+            if(orderListVM != nil ){
+                orderListState = orderListVM!
+            }
+        }
+    }
+    
+    func unsubscribe(){
+        viewModel.stopObserveOrders()
+        listener?.close()
+        listener = nil
     }
 }
 
