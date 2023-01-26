@@ -84,7 +84,7 @@ struct SettingsView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.loadCityList()
+            viewModel.loadData()
             listener = viewModel.settingsState.watch { settingsStateVM in
                 if(settingsStateVM != nil ){
                     state = settingsStateVM!
