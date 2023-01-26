@@ -31,6 +31,8 @@ struct SettingsView: View {
     
     @State private var showingAlert = false
     
+    @State var listener: Closeable? = nil
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -46,8 +48,10 @@ struct SettingsView: View {
             )
             
             VStack(spacing:0){
-                TextCard(placeHolder: Strings.HINT_SETTINGS_PHONE, text: state.settings?.phoneNumber ?? "")
-                
+                TextCard(
+                    placeHolder: Strings.HINT_SETTINGS_PHONE,
+                    text: state.settings?.phoneNumber ?? ""
+                )
                 //TODO(Add Email in next Version)
                 
                 NavigationTextCard(
@@ -58,10 +62,12 @@ struct SettingsView: View {
                 .padding(.top, Diems.SMALL_PADDING)
                 
                 Spacer()
+                
                 Button(action: {
                     showingAlert = true
                 }) {
-                    Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT).frame(maxWidth: .infinity)
+                    Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
+                        .frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(Color("errorColor"))
                         .cornerRadius(Diems.MEDIUM_RADIUS)
@@ -78,7 +84,8 @@ struct SettingsView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            viewModel.settingsState.watch { settingsStateVM in
+            viewModel.loadCityList()
+            listener = viewModel.settingsState.watch { settingsStateVM in
                 if(settingsStateVM != nil ){
                     state = settingsStateVM!
                     settingsStateVM!.eventList.forEach { event in
@@ -88,12 +95,16 @@ struct SettingsView: View {
                             print("def")
                         }
                     }
-                    
                     if !settingsStateVM!.eventList.isEmpty{
-                        viewModel.consumeEventList(eventList: settingsStateVM!.eventList)
+                        viewModel
+                            .consumeEventList(eventList: settingsStateVM!.eventList)
                     }
                 }
             }
+        }
+        .onDisappear(){
+            listener?.close()
+            listener = nil
         }
     }
 }

@@ -109,7 +109,7 @@ class SettingsViewModel(
         }.launchIn(sharedScope)
     }
 
-    private fun loadCityList() {
+    fun loadCityList() {
         sharedScope.launch {
             mutableSettingsState.update { settingsState ->
                 settingsState.copy(cityList = getCityListUseCase())
