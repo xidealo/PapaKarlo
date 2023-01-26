@@ -14,7 +14,7 @@ struct ChangeCityView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_SELECT_CITY_CITY,
                 back: {
@@ -25,13 +25,15 @@ struct ChangeCityView: View {
             switch(viewModel.changeCityViewState.changeCityState){
             case ChangeCityState.loading : LoadingView()
             case ChangeCityState.success : ScrollView {
-                LazyVStack{
+                LazyVStack(spacing:0){
                     ForEach(viewModel.changeCityViewState.cityList){ city in
                         Button(action:{
                             viewModel.selectCity(uuid: city.id)
                         }
                         ){
-                            ChangeCityItemView(city: city).padding(.bottom, Diems.SMALL_PADDING).padding(.horizontal, Diems.MEDIUM_PADDING)
+                            ChangeCityItemView(city: city)
+                                .padding(.bottom, Diems.SMALL_PADDING)
+                                .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
                     }
                 }

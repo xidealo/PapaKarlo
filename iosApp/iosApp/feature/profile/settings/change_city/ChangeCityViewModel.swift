@@ -37,7 +37,8 @@ class ChangeCityViewModel: ObservableObject {
     }
     
     func selectCity(uuid:String){
-        iosComponent.provideCityInteractor().saveSelectedCity(city: cityList.first(where: {$0.uuid == uuid})!) { err in
+        iosComponent.provideCityInteractor()
+            .saveSelectedCity(city: cityList.first(where: {$0.uuid == uuid})!) { err in
             if(err != nil){
                 print(err ?? "empty err")
             }

@@ -27,7 +27,7 @@ class SelectCityViewModel : ObservableObject {
     }
     
     func saveSelectedCity(city:City){
-        (selectCityViewState.copy() as!SelectCityViewState).apply { newState in
+        (selectCityViewState.copy() as! SelectCityViewState).apply { newState in
             newState.isGoToMenu = true
             selectCityViewState = newState
         }
