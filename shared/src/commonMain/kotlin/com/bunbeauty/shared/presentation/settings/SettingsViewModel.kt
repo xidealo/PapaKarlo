@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.settings
 
+import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
@@ -31,7 +32,7 @@ class SettingsViewModel(
     private val mutableSettingsState = MutableStateFlow(SettingsState())
     val settingsState = mutableSettingsState.asCommonStateFlow()
 
-    init {
+    fun loadData(){
         observeSettings()
         loadCityList()
     }
@@ -94,11 +95,13 @@ class SettingsViewModel(
         observeSelectedCityUseCase().flatMapLatest { city ->
             observeSettingsUseCase().map { settings ->
                 mutableSettingsState.update { settingsState ->
+
                     val state = if (city == null || settings == null) {
                         SettingsState.State.ERROR
                     } else {
                         SettingsState.State.SUCCESS
                     }
+
                     settingsState.copy(
                         settings = settings,
                         selectedCity = city,

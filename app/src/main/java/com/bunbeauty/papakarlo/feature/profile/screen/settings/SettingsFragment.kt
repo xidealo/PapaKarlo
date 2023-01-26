@@ -43,7 +43,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.loadData()
         viewBinding.root.compose {
             val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
             SettingsScreen(settingsState)
