@@ -107,10 +107,14 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
+    override suspend fun getUserAddressListByCityUuid(
+        token: String,
+        cityUuid: String
+    ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
             serializer = ListServer.serializer(AddressServer.serializer()),
+            parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
             token = token
         )
     }
