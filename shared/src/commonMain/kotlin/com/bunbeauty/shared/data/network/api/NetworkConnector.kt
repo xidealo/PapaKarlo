@@ -52,6 +52,6 @@ interface NetworkConnector {
         patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer>
 
-    suspend fun startOrderUpdatesObservation(token: String): Flow<OrderUpdateServer>
-    suspend fun stopOrderUpdatesObservation()
+    suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>>
+    suspend fun stopOrderUpdatesObservation(uuid: String)
 }

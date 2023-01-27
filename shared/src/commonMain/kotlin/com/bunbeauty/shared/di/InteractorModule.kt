@@ -8,8 +8,6 @@ import com.bunbeauty.shared.domain.interactor.cart.CartProductInteractor
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.CityInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
-import com.bunbeauty.shared.domain.interactor.main.MainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
@@ -26,13 +24,6 @@ import com.bunbeauty.shared.domain.interactor.user.UserInteractor
 import org.koin.dsl.module
 
 internal fun interactorModule() = module {
-    single<IMainInteractor> {
-        MainInteractor(
-            orderRepo = get(),
-            userInteractor = get(),
-            dataStoreRepo = get(),
-        )
-    }
     single<IUserInteractor> {
         UserInteractor(
             userRepo = get(),

@@ -37,14 +37,16 @@ class OrderRepository(
         return orderDao.observeOrderWithProductListByUuid(orderUuid).mapFlow(orderMapper::toOrder)
     }
 
-    override suspend fun observeOrderUpdates(token: String): Flow<Order> {
-        return observeOrderUpdatesServer(token).map { orderUpdateServer ->
+    override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
+        val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
+        return uuid to orderUpdatesFlow.map { orderUpdateServer ->
             orderMapper.toOrder(orderDao.getOrderWithProductListByUuid(orderUpdateServer.uuid))
         }.filterNotNull()
     }
 
-    override suspend fun observeOrderListUpdates(token: String, userUuid: String): Flow<List<Order>> {
-        return observeOrderUpdatesServer(token).map {
+    override suspend fun observeOrderListUpdates(token: String, userUuid: String): Pair<String?, Flow<List<Order>>> {
+        val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
+        return uuid to orderUpdatesFlow.map {
             orderDao.getOrderWithProductListByUserUuid(userUuid).groupBy { orderWithProductEntity ->
                 orderWithProductEntity.orderUuid
             }.map { (_, orderWithProductEntityList) ->
@@ -53,8 +55,8 @@ class OrderRepository(
         }
     }
 
-    override suspend fun stopOrderUpdatesObservation() {
-        networkConnector.stopOrderUpdatesObservation()
+    override suspend fun stopOrderUpdatesObservation(uuid: String) {
+        networkConnector.stopOrderUpdatesObservation(uuid)
     }
 
     override suspend fun getOrderByUuid(orderUuid: String): Order? {
@@ -97,8 +99,9 @@ class OrderRepository(
         }
     }
 
-    private suspend fun observeOrderUpdatesServer(token: String): Flow<OrderUpdateServer> {
-        return networkConnector.startOrderUpdatesObservation(token).onEach { orderUpdateServer ->
+    private suspend fun observeOrderUpdatesServer(token: String): Pair<String?, Flow<OrderUpdateServer>> {
+        val (uuid, orderUpdatesFlow) = networkConnector.startOrderUpdatesObservation(token)
+        return uuid to orderUpdatesFlow.onEach { orderUpdateServer ->
             orderDao.updateOrderStatusByUuid(
                 uuid = orderUpdateServer.uuid,
                 status = orderUpdateServer.status,

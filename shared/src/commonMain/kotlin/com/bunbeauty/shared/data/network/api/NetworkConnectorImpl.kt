@@ -202,16 +202,16 @@ class NetworkConnectorImpl(
 
     // WEB_SOCKET
 
-    override suspend fun startOrderUpdatesObservation(token: String): Flow<OrderUpdateServer> {
+    override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         return socketService.observeSocketMessages(
             path = "client/order/v2/subscribe",
             serializer = OrderUpdateServer.serializer(),
-            token
+            token = token
         )
     }
 
-    override suspend fun stopOrderUpdatesObservation() {
-        socketService.closeSession("client/order/subscribe")
+    override suspend fun stopOrderUpdatesObservation(uuid: String) {
+        socketService.closeSession(uuid)
     }
 
     // COMMON

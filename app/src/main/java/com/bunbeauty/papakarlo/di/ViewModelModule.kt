@@ -112,7 +112,7 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             observeLastOrderUseCase = get(),
-            stopObserveLastOrderUseCase = get()
+            stopObserveOrdersUseCase = get()
         )
     }
     viewModel { parameters ->

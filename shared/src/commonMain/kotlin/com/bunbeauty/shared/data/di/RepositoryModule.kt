@@ -30,6 +30,7 @@ import org.koin.dsl.module
 fun repositoryModule() = module {
     single {
         SocketService(
+            uuidGenerator = get(),
             client = get(),
             json = get(),
         )
