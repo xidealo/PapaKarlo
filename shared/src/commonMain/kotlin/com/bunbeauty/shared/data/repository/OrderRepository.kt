@@ -59,10 +59,6 @@ class OrderRepository(
         networkConnector.stopOrderUpdatesObservation(uuid)
     }
 
-    override suspend fun getOrderByUuid(orderUuid: String): Order? {
-        return orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
-    }
-
     override suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder> {
         return networkConnector.getOrderList(token = token).getNullableResult(
             onError = {
@@ -86,6 +82,20 @@ class OrderRepository(
                 orderServerList.results.firstOrNull()?.let { orderServer ->
                     saveOrderLocally(orderServer)
                     orderMapper.toLightOrder(orderServer)
+                }
+            }
+        )
+    }
+
+    override suspend fun getOrderByUuid(token: String, orderUuid: String): Order? {
+        return networkConnector.getOrderList(token = token, uuid = orderUuid).getNullableResult(
+            onError = {
+                orderDao.getOrderWithProductListByUuid(orderUuid).let(orderMapper::toOrder)
+            },
+            onSuccess = { orderServerList ->
+                orderServerList.results.firstOrNull()?.let { orderServer ->
+                    saveOrderLocally(orderServer)
+                    orderMapper.toOrder(orderServer)
                 }
             }
         )

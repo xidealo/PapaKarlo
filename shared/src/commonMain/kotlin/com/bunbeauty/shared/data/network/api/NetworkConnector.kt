@@ -36,7 +36,7 @@ interface NetworkConnector {
     suspend fun getUserAddressListByCityUuid(token: String, cityUuid: String): ApiResult<ListServer<AddressServer>>
     suspend fun getPayment(token: String): ApiResult<PaymentServer>
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
-    suspend fun getOrderList(token: String, count: Int? = null): ApiResult<ListServer<OrderServer>>
+    suspend fun getOrderList(token: String, count: Int? = null, uuid: String? = null): ApiResult<ListServer<OrderServer>>
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>

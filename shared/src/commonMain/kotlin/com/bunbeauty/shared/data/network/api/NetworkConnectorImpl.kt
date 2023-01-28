@@ -137,12 +137,20 @@ class NetworkConnectorImpl(
 
     override suspend fun getOrderList(
         token: String,
-        count: Int?
+        count: Int?,
+        uuid: String?,
     ): ApiResult<ListServer<OrderServer>> {
         return getData(
             serializer = ListServer.serializer(OrderServer.serializer()),
             path = "v2/client/order",
-            parameters = mapOf("count" to count.toString()),
+            parameters = buildMap {
+                if (count != null) {
+                    put("count", count)
+                }
+                if (uuid != null) {
+                    put("uuid", uuid)
+                }
+            },
             token = token
         )
     }

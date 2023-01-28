@@ -29,7 +29,7 @@ class OrderDetailsViewModel(
             state.copy(isLoading = true)
         }
         observeOrderJob = sharedScope.launch {
-            val (uuid, orderFlow) = observeOrderUseCase(orderUuid, "order details")
+            val (uuid, orderFlow) = observeOrderUseCase(orderUuid)
             orderObservationUuid = uuid
             orderFlow.collectLatest { order ->
                 if (order != null) {

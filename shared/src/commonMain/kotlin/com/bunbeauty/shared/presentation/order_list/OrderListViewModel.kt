@@ -36,7 +36,7 @@ class OrderListViewModel(
 
     fun observeOrders() {
         observeOrdersJob = sharedScope.launch {
-            val (uuid, orderListFlow) = observeOrderListUseCase("order list")
+            val (uuid, orderListFlow) = observeOrderListUseCase()
             orderObservationUuid = uuid
             orderListFlow.collectLatest { orderList ->
                 mutableOrderListState.update { state ->

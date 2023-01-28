@@ -13,10 +13,9 @@ class ObserveOrderUseCase(
     private val orderRepo: OrderRepo
 ) {
 
-    suspend operator fun invoke(orderUuid: String, tag: String): Pair<String?, Flow<Order?>> {
+    suspend operator fun invoke(orderUuid: String): Pair<String?, Flow<Order?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
-        // TODO get from server
-        val order = orderRepo.getOrderByUuid(orderUuid = orderUuid)
+        val order = orderRepo.getOrderByUuid(token = token, orderUuid = orderUuid)
 
         return if (order == null) {
             null to flow { emit(null) }

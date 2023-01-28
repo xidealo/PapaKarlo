@@ -17,7 +17,7 @@ interface OrderRepo {
 
     suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder>
     suspend fun getLastOrderByUserUuid(token: String, userUuid: String): LightOrder?
-    suspend fun getOrderByUuid(orderUuid: String): Order?
+    suspend fun getOrderByUuid(token: String, orderUuid: String): Order?
 
     suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode?
 
