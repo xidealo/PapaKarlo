@@ -29,8 +29,8 @@ import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.android.ext.android.inject
