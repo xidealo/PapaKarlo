@@ -8,6 +8,7 @@ import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.UserAddressCache
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import kotlinx.coroutines.flow.Flow
 
@@ -15,9 +16,11 @@ class UserAddressRepository(
     private val networkConnector: NetworkConnector,
     private val userAddressDao: IUserAddressDao,
     private val userAddressMapper: UserAddressMapper
-) : CacheListRepository<UserAddress>(), UserAddressRepo {
+) : BaseRepository(), UserAddressRepo {
 
     override val tag: String = "USER_ADDRESS_TAG"
+
+    private var userAddressCache: UserAddressCache? = null
 
     override suspend fun saveUserAddress(
         token: String,
@@ -30,10 +33,10 @@ class UserAddressRepository(
                 userAddressDao.insertUserAddress(userAddressEntity)
 
                 val userAddress = userAddressMapper.toUserAddress(addressServer)
-                updateCache { cache ->
-                    cache?.let {
-                        cache + userAddress
-                    }
+                userAddressCache?.let { cache ->
+                    userAddressCache = cache.copy(
+                        userAddressList = cache.userAddressList + userAddress
+                    )
                 }
 
                 userAddress
@@ -78,26 +81,33 @@ class UserAddressRepository(
         cityUuid: String,
         token: String
     ): List<UserAddress> {
-        return getCacheOrListData(
-            isCacheValid = { cacheList ->
-                cacheList.all { userAddress ->
-                    userAddress.userUuid == userUuid
+        val cache = userAddressCache
+        return if (cache != null
+            && cache.userUuid == userUuid
+            && cache.cityUuid == cityUuid
+        ) {
+            cache.userAddressList
+        } else {
+            networkConnector.getUserAddressListByCityUuid(token, cityUuid).getListResult(
+                onError = {
+                    userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, cityUuid)
+                        .map(userAddressMapper::toUserAddress)
+                },
+                onSuccess = { userAddressSeverList ->
+                    userAddressDao.insertUserAddressList(
+                        userAddressSeverList.map(userAddressMapper::toUserAddressEntity)
+                    )
+                    userAddressSeverList.map(userAddressMapper::toUserAddress)
+                        .also { userAddressList ->
+                            userAddressCache = UserAddressCache(
+                                userAddressList = userAddressList,
+                                userUuid = userUuid,
+                                cityUuid = cityUuid,
+                            )
+                        }
                 }
-            },
-            onApiRequest = {
-                networkConnector.getUserAddressList(token)
-            },
-            onLocalRequest = {
-                userAddressDao.getUserAddressListByUserAndCityUuid(userUuid, cityUuid)
-                    .map(userAddressMapper::toUserAddress)
-            },
-            onSaveLocally = { userAddressSeverList ->
-                userAddressDao.insertUserAddressList(
-                    userAddressSeverList.map(userAddressMapper::toUserAddressEntity)
-                )
-            },
-            serverToDomainModel = userAddressMapper::toUserAddress
-        )
+            )
+        }
     }
 
     override fun observeSelectedUserAddressByUserAndCityUuid(

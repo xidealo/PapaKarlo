@@ -24,7 +24,6 @@ import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.interactor.main.IMainInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
@@ -65,9 +64,8 @@ fun initKoin() = startKoin {
     )
 }
 
-class IosComponent:KoinComponent {
+class IosComponent : KoinComponent {
     // Interactors
-    fun provideMainInteractor(): IMainInteractor = get()
     fun provideCityInteractor(): ICityInteractor = get()
     fun provideMenuInteractor(): IMenuProductInteractor = get()
     fun provideCafeInteractor(): ICafeInteractor = get()
@@ -87,7 +85,6 @@ class IosComponent:KoinComponent {
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()
     fun provideGetSelectedCityTimeZoneUseCase(): GetSelectedCityTimeZoneUseCase = get()
-    fun provideStopObserveLastOrderUseCase(): StopObserveLastOrderUseCase = get()
     fun provideObserveSettingsUseCase(): ObserveSettingsUseCase = get()
     fun provideObserveSelectedCityUseCase(): ObserveSelectedCityUseCase = get()
     fun provideUpdateEmailUseCase(): UpdateEmailUseCase = get()

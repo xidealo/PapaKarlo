@@ -107,10 +107,14 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
+    override suspend fun getUserAddressListByCityUuid(
+        token: String,
+        cityUuid: String
+    ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
             serializer = ListServer.serializer(AddressServer.serializer()),
+            parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
             token = token
         )
     }
@@ -198,16 +202,16 @@ class NetworkConnectorImpl(
 
     // WEB_SOCKET
 
-    override suspend fun startOrderUpdatesObservation(token: String): Flow<OrderUpdateServer> {
+    override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> {
         return socketService.observeSocketMessages(
             path = "client/order/v2/subscribe",
             serializer = OrderUpdateServer.serializer(),
-            token
+            token = token
         )
     }
 
-    override suspend fun stopOrderUpdatesObservation() {
-        socketService.closeSession("client/order/subscribe")
+    override suspend fun stopOrderUpdatesObservation(uuid: String) {
+        socketService.closeSession(uuid)
     }
 
     // COMMON

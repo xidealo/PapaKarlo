@@ -22,14 +22,16 @@ class OrderDetailsViewModel(
     val orderState = mutableOrderState.asCommonStateFlow()
 
     private var observeOrderJob: Job? = null
+    private var orderObservationUuid: String? = null
 
     fun loadOrder(orderUuid: String) {
-        observeOrderJob?.cancel()
         mutableOrderState.update { state ->
             state.copy(isLoading = true)
         }
         observeOrderJob = sharedScope.launch {
-            observeOrderUseCase(orderUuid).collectLatest { order ->
+            val (uuid, orderFlow) = observeOrderUseCase(orderUuid, "order details")
+            orderObservationUuid = uuid
+            orderFlow.collectLatest { order ->
                 if (order != null) {
                     mutableOrderState.update { state ->
                         state.copy(
@@ -47,9 +49,13 @@ class OrderDetailsViewModel(
     }
 
     fun stopObserveOrders() {
-        sharedScope.launch {
-            stopObserveOrdersUseCase()
+        observeOrderJob?.cancel()
+        orderObservationUuid?.let { uuid ->
+            sharedScope.launch {
+                stopObserveOrdersUseCase(uuid)
+            }
         }
+        orderObservationUuid = null
     }
 
     private fun getTotalCost(order: Order): String? {

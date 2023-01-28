@@ -2,6 +2,7 @@ package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -15,17 +16,18 @@ class ObserveLastOrderUseCase(
     private val lightOrderMapper: LightOrderMapper,
 ) {
 
-    suspend operator fun invoke(): Flow<LightOrder?> {
-        val token = dataStoreRepo.getToken() ?: return flow {}
-        val userUuid = dataStoreRepo.getUserUuid() ?: return flow {}
+    suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow {}
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
         val lastOrder = orderRepo.getLastOrderByUserUuid(token = token, userUuid = userUuid)
 
         return if (lastOrder == null) {
-            flow { emit(null) }
+            null to flow { emit(null) }
         } else {
-            merge(
+            val (uuid, orderUpdatesFlow) = orderRepo.observeOrderUpdates(token)
+            uuid to merge(
                 flow { emit(lastOrder) },
-                orderRepo.observeOrderUpdates(token).filter { order ->
+                orderUpdatesFlow.filter { order ->
                     order.uuid == lastOrder.uuid
                 }.map(lightOrderMapper::toLightOrder)
             )

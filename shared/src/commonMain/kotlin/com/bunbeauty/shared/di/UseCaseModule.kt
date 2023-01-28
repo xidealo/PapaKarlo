@@ -113,11 +113,6 @@ internal fun useCaseModule() = module {
         )
     }
     factory {
-        StopObserveLastOrderUseCase(
-            orderRepo = get()
-        )
-    }
-    factory {
         StopObserveOrdersUseCase(
             orderRepo = get()
         )

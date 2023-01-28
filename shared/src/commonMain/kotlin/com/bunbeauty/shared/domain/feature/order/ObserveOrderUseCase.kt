@@ -13,17 +13,18 @@ class ObserveOrderUseCase(
     private val orderRepo: OrderRepo
 ) {
 
-    suspend operator fun invoke(orderUuid: String): Flow<Order?> {
-        val token = dataStoreRepo.getToken() ?: return flow {}
+    suspend operator fun invoke(orderUuid: String, tag: String): Pair<String?, Flow<Order?>> {
+        val token = dataStoreRepo.getToken() ?: return null to flow {}
         // TODO get from server
         val order = orderRepo.getOrderByUuid(orderUuid = orderUuid)
 
         return if (order == null) {
-            flow { emit(null) }
+            null to flow { emit(null) }
         } else {
-            merge(
+            val (uuid, orderUpdatesFlow) = orderRepo.observeOrderUpdates(token)
+            uuid to merge(
                 flow { emit(order) },
-                orderRepo.observeOrderUpdates(token).filter { orderUpdate ->
+                orderUpdatesFlow.filter { orderUpdate ->
                     orderUpdate.uuid == order.uuid
                 }
             )
