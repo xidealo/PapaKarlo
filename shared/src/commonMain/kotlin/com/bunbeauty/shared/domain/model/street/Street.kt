@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.model
+package com.bunbeauty.shared.domain.model.street
 
 data class Street(
     val uuid: String,
