@@ -20,7 +20,7 @@ struct ProfileView: View {
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
-        stopObserveLastOrderUseCase: iosComponent.provideStopObserveLastOrderUseCase()
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
     
     @Binding var showOrderCreated:Bool
