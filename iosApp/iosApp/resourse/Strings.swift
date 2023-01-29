@@ -13,11 +13,11 @@ class Strings{
     static let TITLE_MENU = "Меню"
     static let TITLE_PROFILE = "Профиль"
     static let TITLE_MY_ADDRESSES = "Мои адреса"
-    static let TITLE_CAFE_ADDRESSES = "Адреса Кафе"
+    static let TITLE_CAFE_ADDRESSES = "Адреса кафе"
     static let TITLE_MY_ORDERS = "Мои заказы"
     static let TITLE_SETTINGS = "Настройки"
     static let TITLE_CART_PRODUCTS = "Корзина"
-    static let TITLE_CREATION_ORDER = "Создание заказа"
+    static let TITLE_CREATION_ORDER = "Оформление заказа"
     static let TITLE_NEW_VERSION = "Новая версия"
     static let TITLE_CREATION_ADDRESS = "Добавление адреса"
     static let TITLE_ABOUT_APP = "О приложении"
@@ -30,9 +30,9 @@ class Strings{
     
     //PROFILE
     static let TITLE_PROFILE_SETTINGS = "Настройки"
-    static let TITLE_PROFILE_YOUR_ADDRESSES = "Ваши адреса"
+    static let TITLE_PROFILE_MY_ADDRESSES = "Мои адреса"
     static let TITLE_PROFILE_ADD_ADDRESSES = "Добавить адрес"
-    static let TITLE_PROFILE_ORDER_HISTORY = "История заказов"
+    static let TITLE_PROFILE_MY_ORDERS = "Мои заказы"
     static let TITLE_PROFILE_PAYMENT = "Оплата"
     static let TITLE_PROFILE_FEEDBACK = "Отзывы"
     static let TITLE_PROFILE_ABOUT_APP = "О приложении"
@@ -73,7 +73,7 @@ class Strings{
     
     
     //CART PRODUCT
-    static let ACTION_CART_PRODUCT_BACK = "Назад"
+    static let ACTION_CART_PRODUCT_MENU = "Меню"
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
     static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "

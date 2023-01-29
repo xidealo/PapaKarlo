@@ -5,14 +5,12 @@ import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.mapFlow
-import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.order.OrderWithAmounts
-import com.bunbeauty.shared.domain.model.product.CreatedOrderProduct
 import com.bunbeauty.shared.domain.model.product.OrderProductWithCosts
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 
@@ -28,12 +26,14 @@ class OrderInteractor(
         return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeLastOrder(): CommonFlow<LightOrder?> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             orderRepo.observeLastOrderByUserUuid(userUuid ?: "")
         }.asCommonFlow()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeOrderListSwift(): CommonFlow<List<LightOrder>> {
         return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
             orderRepo.observeOrderListByUserUuid(userUuid ?: "")
@@ -49,7 +49,7 @@ class OrderInteractor(
                 dateTime = order.dateTime,
                 isDelivery = order.isDelivery,
                 deferredTime = order.deferredTime,
-                address = order.address,
+                address = order.address.description ?: "",
                 comment = order.comment,
                 deliveryCost = order.deliveryCost,
                 orderProductList = order.orderProductList.map { orderProduct ->
@@ -71,33 +71,6 @@ class OrderInteractor(
                 ),
             )
         }.asCommonFlow()
-    }
-
-    override suspend fun createOrder(
-        isDelivery: Boolean,
-        userAddressUuid: String?,
-        cafeUuid: String?,
-        addressDescription: String,
-        comment: String?,
-        deferredTime: Long?
-    ): OrderCode? {
-        val token = dataStoreRepo.getToken() ?: return null
-        val cartProductList = cartProductRepo.getCartProductList()
-        val createdOrder = CreatedOrder(
-            isDelivery = isDelivery,
-            userAddressUuid = userAddressUuid,
-            cafeUuid = cafeUuid,
-            addressDescription = addressDescription,
-            comment = comment,
-            deferredTime = deferredTime,
-            orderProducts = cartProductList.map { cartProduct ->
-                CreatedOrderProduct(
-                    menuProductUuid = cartProduct.product.uuid,
-                    count = cartProduct.count
-                )
-            },
-        )
-        return orderRepo.createOrder(token, createdOrder)
     }
 
 }

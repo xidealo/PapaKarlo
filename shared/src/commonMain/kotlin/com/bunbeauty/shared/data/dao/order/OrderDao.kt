@@ -2,10 +2,10 @@ package com.bunbeauty.shared.data.dao.order
 
 import com.bunbeauty.shared.db.FoodDeliveryDatabase
 import com.bunbeauty.shared.db.OrderEntity
+import com.bunbeauty.shared.db.OrderProductEntity
 import com.bunbeauty.shared.db.OrderWithProductEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.Flow
 
@@ -20,33 +20,43 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
             }.forEach { (_, groupedOrderWithProductList) ->
                 groupedOrderWithProductList.first().let { firstOrderWithProduct ->
                     orderEntityQueries.isnsertOrder(
-                        uuid = firstOrderWithProduct.uuid,
-                        status = firstOrderWithProduct.status,
-                        isDelivery = firstOrderWithProduct.isDelivery,
-                        time = firstOrderWithProduct.time,
-                        timeZone = firstOrderWithProduct.timeZone,
-                        code = firstOrderWithProduct.code,
-                        address = firstOrderWithProduct.address,
-                        comment = firstOrderWithProduct.comment,
-                        deliveryCost = firstOrderWithProduct.deliveryCost,
-                        deferredTime = firstOrderWithProduct.deferredTime,
-                        userUuid = firstOrderWithProduct.userUuid,
+                        OrderEntity(
+                            uuid = firstOrderWithProduct.uuid,
+                            status = firstOrderWithProduct.status,
+                            isDelivery = firstOrderWithProduct.isDelivery,
+                            time = firstOrderWithProduct.time,
+                            timeZone = firstOrderWithProduct.timeZone,
+                            code = firstOrderWithProduct.code,
+                            address = firstOrderWithProduct.address,
+                            comment = firstOrderWithProduct.comment,
+                            deliveryCost = firstOrderWithProduct.deliveryCost,
+                            deferredTime = firstOrderWithProduct.deferredTime,
+                            userUuid = firstOrderWithProduct.userUuid,
+                            addressStreet = firstOrderWithProduct.addressStreet,
+                            addressHouse = firstOrderWithProduct.addressHouse,
+                            addressFlat = firstOrderWithProduct.addressFlat,
+                            addressEntrance = firstOrderWithProduct.addressEntrance,
+                            addressFloor = firstOrderWithProduct.addressFloor,
+                            addressComment = firstOrderWithProduct.addressComment,
+                        )
                     )
                 }
                 groupedOrderWithProductList.onEach { orderWithProduct ->
                     orderEntityQueries.insertOrderProduct(
-                        uuid = orderWithProduct.orderProductUuid,
-                        count = orderWithProduct.orderProductCount,
-                        name = orderWithProduct.orderProductName,
-                        newPrice = orderWithProduct.orderProductNewPrice,
-                        oldPrice = orderWithProduct.orderProductOldPrice,
-                        utils = orderWithProduct.orderProductUtils,
-                        nutrition = orderWithProduct.orderProductNutrition,
-                        description = orderWithProduct.orderProductDescription,
-                        comboDescription = orderWithProduct.orderProductComboDescription,
-                        photoLink = orderWithProduct.orderProductPhotoLink,
-                        barcode = orderWithProduct.orderProductBarcode,
-                        orderUuid = orderWithProduct.orderUuid,
+                        OrderProductEntity(
+                            uuid = orderWithProduct.orderProductUuid,
+                            count = orderWithProduct.orderProductCount,
+                            name = orderWithProduct.orderProductName,
+                            newPrice = orderWithProduct.orderProductNewPrice,
+                            oldPrice = orderWithProduct.orderProductOldPrice,
+                            utils = orderWithProduct.orderProductUtils,
+                            nutrition = orderWithProduct.orderProductNutrition,
+                            description = orderWithProduct.orderProductDescription,
+                            comboDescription = orderWithProduct.orderProductComboDescription,
+                            photoLink = orderWithProduct.orderProductPhotoLink,
+                            barcode = orderWithProduct.orderProductBarcode,
+                            orderUuid = orderWithProduct.orderUuid,
+                        )
                     )
                 }
             }
@@ -54,9 +64,17 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
     }
 
     override suspend fun getLastOrderByUserUuid(userUuid: String): OrderEntity? {
-        val query = orderEntityQueries.getLastOrderWithProductListByUserUuid(userUuid)
-        val order = query.executeAsOneOrNull()
-        return order
+        return orderEntityQueries
+            .getLastOrderWithProductListByUserUuid(userUuid)
+            .executeAsOneOrNull()
+    }
+
+    override suspend fun getOrderListByUserUuid(userUuid: String): List<OrderEntity> {
+        return orderEntityQueries.getOrderListByUserUuid(userUuid).executeAsList()
+    }
+
+    override suspend fun getOrderWithProductListByUserUuid(userUuid: String): List<OrderWithProductEntity> {
+        return orderEntityQueries.getOrderWithProductListByUserUuid(userUuid).executeAsList()
     }
 
     override fun observeOrderWithProductListByUserUuid(userUuid: String): Flow<List<OrderWithProductEntity>> {
@@ -76,11 +94,11 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
             .mapToOneOrNull()
     }
 
-    override fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {
+    override suspend fun getOrderWithProductListByUuid(uuid: String): List<OrderWithProductEntity> {
         return orderEntityQueries.getOrderWithProductByUuid(uuid).executeAsList()
     }
 
-    override fun updateOrderStatusByUuid(uuid: String, status: String) {
+    override suspend fun updateOrderStatusByUuid(uuid: String, status: String) {
         orderEntityQueries.updateOrderStatusByUuid(
             uuid = uuid,
             status = status

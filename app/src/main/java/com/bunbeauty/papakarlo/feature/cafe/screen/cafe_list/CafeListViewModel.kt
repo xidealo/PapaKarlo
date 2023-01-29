@@ -6,6 +6,7 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
+import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import kotlinx.coroutines.Job
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class CafeListViewModel(
     private val cafeInteractor: ICafeInteractor,
+    private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
 ) : CartViewModel() {
 
     private val mutableCafeItemList: MutableStateFlow<State<List<CafeItem>>> =
@@ -31,7 +33,8 @@ class CafeListViewModel(
 
             mutableCafeItemList.value = cafeInteractor.getCafeList().toState()
             if (mutableCafeItemList.value is State.Success) {
-                observeMinutesOfDayJob = cafeInteractor.observeCafeList().launchOnEach { cafeList ->
+                val timeZone = getSelectedCityTimeZoneUseCase()
+                observeMinutesOfDayJob = cafeInteractor.observeCafeList(timeZone).launchOnEach { cafeList ->
                     mutableCafeItemList.value = cafeList.toState()
                 }
             }
@@ -51,16 +54,17 @@ class CafeListViewModel(
     private suspend fun toItemModel(cafe: Cafe): CafeItem {
         val fromTime = cafeInteractor.getCafeTime(cafe.fromTime)
         val toTime = cafeInteractor.getCafeTime(cafe.toTime)
-        val isOpenMessage = if (cafeInteractor.isClosed(cafe)) {
+        val timeZone = getSelectedCityTimeZoneUseCase()
+        val isOpenMessage = if (cafeInteractor.isClosed(cafe, timeZone)) {
             resourcesProvider.getString(R.string.msg_cafe_closed)
         } else {
-            cafeInteractor.getCloseIn(cafe)?.let { closeIn ->
+            cafeInteractor.getCloseIn(cafe, timeZone)?.let { closeIn ->
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
                     closeIn +
                     getMinuteString(closeIn)
             } ?: resourcesProvider.getString(R.string.msg_cafe_open)
         }
-        val cafeStatus = cafeInteractor.getCafeStatus(cafe)
+        val cafeStatus = cafeInteractor.getCafeStatus(cafe, timeZone)
 
         return CafeItem(
             uuid = cafe.uuid,

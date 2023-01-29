@@ -27,33 +27,44 @@ struct ProductDetailsView: View {
     
     @StateObject private var viewModel:ProductDetailsViewModel
     let menuProductUuid:String
-    
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
-    init(menuProductUuid:String) {
+    init(menuProductUuid:String, isRootActive: Binding<Bool>, selection: Binding<Int>, showOrderCreated: Binding<Bool> ) {
         self._viewModel = StateObject(wrappedValue: ProductDetailsViewModel(productUuid: menuProductUuid))
         self.menuProductUuid = menuProductUuid
+        self._isRootActive = isRootActive
+        self._selection = selection
+        self._showOrderCreated =  showOrderCreated
     }
     
     var body: some View {
-        VStack{
-            ToolbarView(
+        VStack(spacing:0){
+            ToolbarWithCartView(
                 title: viewModel.productDetailsViewState.name,
                 cost: viewModel.toolbarViewState.cost,
                 count: viewModel.toolbarViewState.count,
-                isCartVisible: true,
+                isShowLogo: .constant(false),
                 back: {
                     self.mode.wrappedValue.dismiss()
-                }
+                },
+                isRootActive: $isRootActive,
+                selection: $selection,
+                showOrderCreated: $showOrderCreated
             )
             
-            VStack{
-                KFImage(URL(string: viewModel.productDetailsViewState.imageLink))
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            VStack(spacing:0){
+                KFImage(
+                    URL(string: viewModel.productDetailsViewState.imageLink)
+                )
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 
                 Group{
-                    HStack{
+                    HStack(spacing:0){
                         Text(viewModel.productDetailsViewState.name)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .foregroundColor(Color("onSurface"))
@@ -61,17 +72,21 @@ struct ProductDetailsView: View {
                         Text(viewModel.productDetailsViewState.size)
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
-                    }.padding(.top, Diems.SMALL_PADDING)
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
                     
-                    HStack{
+                    HStack(spacing:0){
                         if viewModel.productDetailsViewState.oldPrice != nil{
                             StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY)
+                                .padding(.trailing, Diems.SMALL_RADIUS)
                         }
                         Text(viewModel.productDetailsViewState.newPrice )
                             .foregroundColor(Color("onSurface"))
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, Diems.SMALL_PADDING)
+                            
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.top, Diems.SMALL_PADDING)
                     
                     Text(viewModel.productDetailsViewState.description)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,22 +105,24 @@ struct ProductDetailsView: View {
             Button(action: {
                 viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)
             }) {
-                Text(Strings.ACTION_PRODUCT_DETAILS_ADD).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_PRODUCT_DETAILS_ADD)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
                     .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default)
+                        .smallCaps())
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-    }
-}
-
-struct ProductDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductDetailsView(menuProductUuid: "")
+        .onAppear(){
+            viewModel.subscribeOnFlow()
+        }
+        .onDisappear(){
+            viewModel.unsubFromFlows()
+        }
     }
 }

@@ -5,7 +5,6 @@ import com.bunbeauty.papakarlo.feature.address.ui.auto_complete_text_field.AutoC
 data class StreetItem(
     val uuid: String,
     val name: String,
-    val cityUuid: String,
 ) : AutoCompleteEntity {
 
     override val value: String = name

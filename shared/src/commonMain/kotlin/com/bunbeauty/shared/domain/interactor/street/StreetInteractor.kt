@@ -1,7 +1,7 @@
 package com.bunbeauty.shared.domain.interactor.street
 
-import com.bunbeauty.shared.domain.model.Street
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 
 class StreetInteractor(
@@ -10,8 +10,12 @@ class StreetInteractor(
 ) : IStreetInteractor {
 
     override suspend fun getStreetList(): List<Street>? {
-        return dataStoreRepo.getSelectedCityUuid()?.let { selectedCityUuid ->
-            streetRepo.getStreetList(selectedCityUuid).ifEmpty { null }
-        }
+        val userUuid = dataStoreRepo.getUserUuid() ?: return null
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return null
+
+        return streetRepo.getStreetList(
+            userUuid = userUuid,
+            cityUuid = cityUuid
+        ).ifEmpty { null }
     }
 }

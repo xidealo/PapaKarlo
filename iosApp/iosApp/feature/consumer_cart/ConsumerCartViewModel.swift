@@ -8,8 +8,6 @@
 import Foundation
 import shared
 
-var consumerCartView = ConsumerCartView()
-
 class ConsumerCartViewModel : ObservableObject  {
     
     @Published var consumerCartViewState : ConsumerCartViewState = ConsumerCartViewState(
@@ -20,9 +18,7 @@ class ConsumerCartViewModel : ObservableObject  {
         consumerCartState: ConsumerCartState.loading,
         actions: []
     )
-    
-    var closable : Ktor_ioCloseable? = nil
-    
+        
     init(){
         print("CreateOrderViewModel")
     }
@@ -34,7 +30,7 @@ class ConsumerCartViewModel : ObservableObject  {
             consumerCartViewState = newState
         }
         
-        closable = iosComponent.provideCartProductInteractor().observeConsumerCart().watch{ consumerCart in
+        iosComponent.provideCartProductInteractor().observeConsumerCart().watch{ consumerCart in
             if(consumerCart is ConsumerCart.WithProducts){
                 self.consumerCartViewState = self.getConsumerCartViewState(cartWithProducts: consumerCart as? ConsumerCart.WithProducts)
             }else{
@@ -46,11 +42,7 @@ class ConsumerCartViewModel : ObservableObject  {
             }
         }
     }
-    
-    func removeListener(){
-        closable?.close()
-    }
-    
+
     func getConsumerCartViewState(cartWithProducts:ConsumerCart.WithProducts?) -> ConsumerCartViewState {
         return ConsumerCartViewState(
             forFreeDelivery: String(cartWithProducts?.forFreeDelivery ?? 0),

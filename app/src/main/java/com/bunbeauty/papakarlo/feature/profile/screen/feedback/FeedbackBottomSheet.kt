@@ -46,15 +46,15 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
     @Composable
     private fun FeedbackScreen() {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Title(textStringId = R.string.title_feedback)
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        horizontal = FoodDeliveryTheme.dimensions.mediumSpace
-                    )
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 NavigationIconCard(
                     iconId = R.drawable.ic_vk,
@@ -65,9 +65,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                     goByLink(VK_LINK)
                 }
                 NavigationIconCard(
-                    modifier = Modifier.padding(
-                        top = FoodDeliveryTheme.dimensions.smallSpace,
-                    ),
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     iconId = R.drawable.ic_instagram,
                     iconDescription = R.string.description_feedback_instagram,
                     labelStringId = R.string.action_feedback_instagram,
@@ -76,10 +74,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                     goByLink(INSTAGRAM_LINK)
                 }
                 NavigationIconCard(
-                    modifier = Modifier.padding(
-                        top = FoodDeliveryTheme.dimensions.smallSpace,
-                        bottom = FoodDeliveryTheme.dimensions.mediumSpace,
-                    ),
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     iconId = R.drawable.ic_play_market,
                     iconDescription = R.string.description_feedback_play_market,
                     labelStringId = R.string.action_feedback_play_market,

@@ -10,11 +10,13 @@ import shared
 
 class ProductDetailsViewModel : ToolbarViewModel {
     
-    @Published var productDetailsViewState:ProductDetailsViewState = ProductDetailsViewState(name: "", size: "", oldPrice: nil, newPrice: "", description: "", imageLink: "")
+    @Published var productDetailsViewState:ProductDetailsViewState = ProductDetailsViewState(
+        name: "", size: "", oldPrice: nil, newPrice: "", description: "", imageLink: ""
+    )
     
     init(productUuid:String){
         super.init()
-        iosComponent.provideMenuInteractor().observeMenuProductByUuidForSwift(menuProductUuid: productUuid).watch { menuProduct in
+        iosComponent.provideMenuInteractor().getMenuProductByUuid(menuProductUuid: productUuid) { menuProduct, err  in
             self.productDetailsViewState = self.getProductDetailsViewState(menuProduct: menuProduct!)
         }
     }

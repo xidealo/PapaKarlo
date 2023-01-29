@@ -6,10 +6,11 @@ import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
@@ -18,7 +19,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
-import com.bunbeauty.papakarlo.feature.create_order.model.TimeUI
+import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.color.MaterialColors
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -138,15 +139,15 @@ private fun DeferredTimeScreen(
         Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
             SimpleCard(
                 modifier = Modifier.clip(mediumRoundedCornerShape),
-                label = R.string.action_deferred_time_asap,
+                text = stringResource(R.string.action_deferred_time_asap),
                 hasShadow = false
             ) {
                 onAsapClicked()
             }
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                elevated = false,
                 labelStringId = R.string.action_deferred_time_select_time,
-                hasShadow = false
             ) {
                 onSelectTimeClicked()
             }

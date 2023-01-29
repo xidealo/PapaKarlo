@@ -3,7 +3,7 @@ package com.bunbeauty.shared.data.mapper.street
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.db.StreetEntity
 import com.bunbeauty.shared.db.UserAddressEntity
-import com.bunbeauty.shared.domain.model.Street
+import com.bunbeauty.shared.domain.model.street.Street
 
 interface IStreetMapper {
 

@@ -29,7 +29,6 @@ abstract class BaseRepository {
         onError: (suspend (ApiError) -> R),
         onSuccess: (suspend (List<T>) -> R)
     ): R {
-       // logD(tag, "ApiResult = $this")
         return when (this) {
             is ApiResult.Success -> {
                 data?.let {

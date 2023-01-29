@@ -30,6 +30,12 @@ class CityRepository(
         )
     }
 
+    override suspend fun getCityByUuid(cityUuid: String): City? {
+        return cityDao.getCityByUuid(cityUuid)?.let { cityEntity ->
+            cityMapper.toCity(cityEntity)
+        }
+    }
+
     override fun observeCityList(): Flow<List<City>> {
         return cityDao.observeCityList().mapListFlow(cityMapper::toCity)
     }

@@ -9,6 +9,7 @@ import SwiftUI
 import shared
 
 let iosComponent = IosComponent()
+let dateUtil = DateUtil()
 
 @main
 struct PapaKarloSwiftApp: App {

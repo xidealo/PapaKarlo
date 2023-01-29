@@ -81,7 +81,8 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
                         address = addressItem.address,
-                        isClickable = true
+                        isClickable = true,
+                        hasShadow = false
                     ) {
                         setFragmentResult(
                             CAFE_ADDRESS_REQUEST_KEY,

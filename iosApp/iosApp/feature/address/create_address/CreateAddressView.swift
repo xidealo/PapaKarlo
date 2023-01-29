@@ -25,12 +25,9 @@ struct CreateAddressView: View {
     
     var body: some View {
         ZStack(alignment: .bottom){
-            VStack{
+            VStack(spacing:0){
                 ToolbarView(
                     title: Strings.TITLE_CREATION_ADDRESS,
-                    cost: "",
-                    count: "",
-                    isCartVisible: false,
                     back: {
                         self.presentationMode.wrappedValue.dismiss()
                     }
@@ -95,8 +92,9 @@ struct CreateAddressView: View {
                         }
                     }
                 }
-                
-                Button(action: {
+       
+                Button(
+                    action: {
                     viewModel.onCreateAddressClicked(streetName: street, house: house, flat: flat, entrance: entarance, floor: floor, comment: comment){ isBack in
                         if(isBack){
                             DispatchQueue.main.async {
@@ -109,13 +107,20 @@ struct CreateAddressView: View {
                         
                     }
                 }) {
-                    Text(Strings.ACTION_CREATION_ADDRESS_ADD).frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    if(viewModel.createAddressViewState.isLoading){
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
+                            .scaleEffect(1.5)
+                    }else{
+                        Text(Strings.ACTION_CREATION_ADDRESS_ADD).frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(Color("surface"))
+                            .background(Color("primary"))
+                            .cornerRadius(Diems.MEDIUM_RADIUS)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    }
                 }.padding(Diems.MEDIUM_PADDING)
+                .disabled(viewModel.createAddressViewState.isLoading)
             }
             .hiddenNavigationBarStyle()
             .background(Color("background"))

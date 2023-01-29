@@ -5,21 +5,13 @@ import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
-fun Modifier.icon() = this.size(24.dp)
-fun Modifier.smallIcon() = this.size(16.dp)
+fun Modifier.icon24() = this.size(24.dp)
+fun Modifier.icon16() = this.size(16.dp)
 
-fun Modifier.card(hasShadow: Boolean) = composed {
+fun Modifier.card() = composed {
     fillMaxWidth()
         .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
-        .shadow(
-            elevation = FoodDeliveryTheme.dimensions.getEvaluation(hasShadow),
-            shape = mediumRoundedCornerShape
-        )
-        .clip(mediumRoundedCornerShape)
 }

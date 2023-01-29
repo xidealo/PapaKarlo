@@ -5,9 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -26,11 +27,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.smallIcon
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun EditText(
     modifier: Modifier = Modifier,
@@ -93,7 +94,7 @@ fun EditText(
             if (textFieldValue.text.isNotEmpty()) {
                 Icon(
                     modifier = Modifier
-                        .smallIcon()
+                        .icon16()
                         .clickable {
                             onTextChanged(TextFieldValue(""))
                         },

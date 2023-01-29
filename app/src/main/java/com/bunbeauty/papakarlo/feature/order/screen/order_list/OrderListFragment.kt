@@ -10,63 +10,85 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
-import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
 import com.bunbeauty.papakarlo.extensions.compose
-import com.bunbeauty.papakarlo.feature.order.model.OrderItem
+import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
+import com.bunbeauty.papakarlo.mapper.OrderItemMapper
+import com.bunbeauty.shared.domain.model.date_time.Date
+import com.bunbeauty.shared.domain.model.date_time.DateTime
+import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.order_list.OrderListState
+import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
+class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_order_list) {
 
-    override val viewModel: OrderListViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentOrderListBinding::bind)
+    private val viewModel: OrderListViewModel by viewModel()
 
+    private val orderItemMapper: OrderItemMapper by inject()
+
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentOrderListCvMain.compose {
-            val orderListState by viewModel.orderListState.collectAsState()
+            val orderListState by viewModel.orderListState.collectAsStateWithLifecycle()
             OrderListScreen(orderListState)
+            LaunchedEffect(orderListState.eventList) {
+                handleEventList(orderListState.eventList)
+            }
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.observeOrders()
+    }
+
+    override fun onStop() {
+        viewModel.stopObserveOrders()
+        super.onStop()
+    }
+
     @Composable
-    private fun OrderListScreen(orderListState: State<List<OrderItem>>) {
-        when (orderListState) {
-            is State.Success -> {
-                OrderListScreenSuccess(orderListState.data)
+    private fun OrderListScreen(orderListState: OrderListState) {
+        when (orderListState.state) {
+            OrderListState.State.SUCCESS -> {
+                OrderListScreenSuccess(orderListState.orderList)
             }
-            is State.Empty -> {
+            OrderListState.State.EMPTY -> {
                 EmptyScreen(
                     imageId = R.drawable.empty_page,
                     imageDescriptionId = R.string.description_cafe_addresses_empty,
                     textId = R.string.msg_order_list_empty
                 )
             }
-            is State.Loading -> {
+            OrderListState.State.LOADING -> {
                 LoadingScreen()
-            }
-            is State.Error -> {
-                ErrorScreen(message = orderListState.message)
             }
         }
     }
 
     @Composable
-    private fun OrderListScreenSuccess(orderItemList: List<OrderItem>) {
+    private fun OrderListScreenSuccess(orderItemList: List<LightOrder>) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,76 +98,104 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
-                itemsIndexed(orderItemList) { i, orderItemModel ->
+                itemsIndexed(orderItemList) { i, lightOrder ->
                     OrderItem(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
-                        orderItem = orderItemModel
+                        orderItem = orderItemMapper.toItem(lightOrder)
                     ) {
-                        viewModel.onOrderClicked(orderItemModel)
+                        viewModel.onOrderClicked(lightOrder)
                     }
                 }
             }
         }
     }
 
+    private fun handleEventList(eventList: List<OrderListState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is OrderListState.OpenOrderDetailsEvent -> {
+                    findNavController().navigate(
+                        toOrderDetailsFragment(event.orderUuid, event.orderCode)
+                    )
+                }
+            }
+        }
+        viewModel.consumeEvents(eventList)
+    }
+
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenSuccessPreview() {
         OrderListScreen(
-            State.Success(
-                listOf(
-                    OrderItem(
+            OrderListState(
+                orderList = listOf(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.NOT_ACCEPTED,
-                        statusName = "Обрабатывется",
-                        code = "О-01",
-                        dateTime = "30 января 12:59"
+                        code = "А-01",
+                        dateTime = DateTime(
+                            Date(27, 1, 2022),
+                            Time(10, 0)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.ACCEPTED,
-                        statusName = "Принят",
-                        code = "П-02",
-                        dateTime = "29 января 12:59"
+                        code = "Б-02",
+                        dateTime = DateTime(
+                            Date(2, 2, 2022),
+                            Time(11, 5)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.PREPARING,
-                        statusName = "Готовится",
-                        code = "Г-03",
-                        dateTime = "28 января 12:59"
+                        code = "В-03",
+                        dateTime = DateTime(
+                            Date(10, 2, 2022),
+                            Time(12, 59)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.DONE,
-                        statusName = "Готов",
                         code = "Г-04",
-                        dateTime = "27 января 12:59"
+                        dateTime = DateTime(
+                            Date(10, 2, 2022),
+                            Time(13, 0)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.SENT_OUT,
-                        statusName = "В пути",
-                        code = "В-05",
-                        dateTime = "26 января 12:59"
+                        code = "Д-05",
+                        dateTime = DateTime(
+                            Date(11, 2, 2022),
+                            Time(14, 30)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.DELIVERED,
-                        statusName = "Выдан",
-                        code = "В-06",
-                        dateTime = "25 января 12:59"
+                        code = "Е-06",
+                        dateTime = DateTime(
+                            Date(11, 2, 2022),
+                            Time(15, 35)
+                        )
                     ),
-                    OrderItem(
+                    LightOrder(
                         uuid = "",
                         status = OrderStatus.CANCELED,
-                        statusName = "Отменен",
-                        code = "О-07",
-                        dateTime = "24 января 12:59"
-                    ),
-                )
+                        code = "Ж-07",
+                        dateTime = DateTime(
+                            Date(1, 3, 2022),
+                            Time(0, 0)
+                        )
+                    )
+                ),
+                state = OrderListState.State.SUCCESS
             )
         )
     }
@@ -153,12 +203,12 @@ class OrderListFragment : BaseFragment(R.layout.fragment_order_list) {
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenEmptyPreview() {
-        OrderListScreen(State.Empty())
+        OrderListScreen(OrderListState(state = OrderListState.State.EMPTY))
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenLoadingPreview() {
-        OrderListScreen(State.Loading())
+        OrderListScreen(OrderListState(state = OrderListState.State.LOADING))
     }
 }

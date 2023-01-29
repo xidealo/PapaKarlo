@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.model.address
 
-import com.bunbeauty.shared.domain.model.Street
+import com.bunbeauty.shared.domain.model.street.Street
 
 data class UserAddress(
     val uuid: String,

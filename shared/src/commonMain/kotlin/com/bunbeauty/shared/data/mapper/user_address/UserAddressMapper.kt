@@ -6,12 +6,27 @@ import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 class UserAddressMapper(
     private val streetMapper: IStreetMapper
-) : IUserAddressMapper {
+) {
 
-    override fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
+    fun toUiModel(userAddress: UserAddress?): UserAddressUi? {
+        return userAddress?.let {
+            UserAddressUi(
+                uuid = userAddress.uuid,
+                street = userAddress.street.name,
+                house = userAddress.house,
+                flat = userAddress.flat,
+                entrance = userAddress.entrance,
+                floor = userAddress.floor,
+                comment = userAddress.comment,
+            )
+        }
+    }
+    
+     fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
         return UserAddress(
             uuid = userAddressEntity.uuid,
             street = streetMapper.toStreet(userAddressEntity),
@@ -24,7 +39,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddress(addressServer: AddressServer): UserAddress {
+     fun toUserAddress(addressServer: AddressServer): UserAddress {
         return UserAddress(
             uuid = addressServer.uuid,
             street = streetMapper.toStreet(addressServer.street),
@@ -37,7 +52,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
+     fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = addressServer.uuid,
             streetUuid = addressServer.street.uuid,
@@ -52,7 +67,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddressEntity(userAddress: UserAddress): UserAddressEntity {
+     fun toUserAddressEntity(userAddress: UserAddress): UserAddressEntity {
         return UserAddressEntity(
             uuid = userAddress.uuid,
             streetUuid = userAddress.street.uuid,
@@ -67,7 +82,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toAddressServer(userAddress: UserAddress): AddressServer {
+     fun toAddressServer(userAddress: UserAddress): AddressServer {
         return AddressServer(
             uuid = userAddress.uuid,
             street = streetMapper.toStreetServer(userAddress.street),
@@ -80,7 +95,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toAddressServer(userAddressEntity: UserAddressEntity): AddressServer {
+     fun toAddressServer(userAddressEntity: UserAddressEntity): AddressServer {
         return AddressServer(
             uuid = userAddressEntity.uuid,
             street = streetMapper.toStreetServer(userAddressEntity),
@@ -93,7 +108,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddressPostServer(userAddressEntity: UserAddressEntity): UserAddressPostServer {
+     fun toUserAddressPostServer(userAddressEntity: UserAddressEntity): UserAddressPostServer {
         return UserAddressPostServer(
             streetUuid = userAddressEntity.streetUuid,
             house = userAddressEntity.house,
@@ -105,7 +120,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddressPostServer(userAddress: UserAddress): UserAddressPostServer {
+     fun toUserAddressPostServer(userAddress: UserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             streetUuid = userAddress.street.uuid,
             house = userAddress.house,
@@ -117,7 +132,7 @@ class UserAddressMapper(
         )
     }
 
-    override fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
+     fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,

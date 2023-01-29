@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -24,6 +24,7 @@ import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.coroutines.resume
@@ -114,7 +115,8 @@ private fun UserAddressListScreen(
                         top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
                     address = addressItem.address,
-                    isClickable = true
+                    isClickable = true,
+                    hasShadow = false
                 ) {
                     onAddressClicked(addressItem)
                 }

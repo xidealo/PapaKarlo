@@ -1,44 +1,53 @@
 package com.bunbeauty.shared.data.network.api
 
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
-import com.bunbeauty.shared.Constants.BEARER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
-import com.bunbeauty.shared.Constants.UUID_PARAMETER
-import com.bunbeauty.shared.Logger.WEB_SOCKET_TAG
-import com.bunbeauty.shared.Logger.logD
-import com.bunbeauty.shared.Logger.logE
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
-import com.bunbeauty.shared.data.network.model.*
+import com.bunbeauty.shared.data.network.model.AddressServer
+import com.bunbeauty.shared.data.network.model.CafeServer
+import com.bunbeauty.shared.data.network.model.CategoryServer
+import com.bunbeauty.shared.data.network.model.CityServer
+import com.bunbeauty.shared.data.network.model.DeliveryServer
+import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
+import com.bunbeauty.shared.data.network.model.ListServer
+import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.data.network.model.PaymentServer
+import com.bunbeauty.shared.data.network.model.SettingsServer
+import com.bunbeauty.shared.data.network.model.StreetServer
+import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
+import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.data.network.model.order.post.OrderPostServer
 import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
-import io.ktor.client.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.client.statement.readText
-import io.ktor.http.*
-import io.ktor.websocket.*
+import com.bunbeauty.shared.data.network.socket.SocketService
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.get
+import io.ktor.client.request.header
+import io.ktor.client.request.parameter
+import io.ktor.client.request.patch
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class NetworkConnectorImpl : KoinComponent, NetworkConnector {
-
-    private val client: HttpClient by inject()
-    private val json: Json by inject()
-
-    private var webSocketSession: DefaultClientWebSocketSession? = null
+class NetworkConnectorImpl(
+    private val client: HttpClient,
+    private val json: Json,
+    private val socketService: SocketService
+) : KoinComponent, NetworkConnector {
 
     // GET
 
@@ -47,18 +56,6 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
             serializer = ForceUpdateVersionServer.serializer(),
             path = "force_update_version",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
-        )
-    }
-
-    override suspend fun patchDisableUser(
-        token: String,
-        patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer> {
-        return patchData(
-            path = "client",
-            patchBody = patchUserServer,
-            serializer = ProfileServer.serializer(),
-            token = token
         )
     }
 
@@ -110,10 +107,14 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         )
     }
 
-    override suspend fun getUserAddressList(token: String): ApiResult<ListServer<AddressServer>> {
+    override suspend fun getUserAddressListByCityUuid(
+        token: String,
+        cityUuid: String
+    ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
             serializer = ListServer.serializer(AddressServer.serializer()),
+            parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
             token = token
         )
     }
@@ -130,6 +131,34 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         return getData(
             serializer = ProfileServer.serializer(),
             path = "client",
+            token = token
+        )
+    }
+
+    override suspend fun getOrderList(
+        token: String,
+        count: Int?,
+        uuid: String?,
+    ): ApiResult<ListServer<OrderServer>> {
+        return getData(
+            serializer = ListServer.serializer(OrderServer.serializer()),
+            path = "v2/client/order",
+            parameters = buildMap {
+                if (count != null) {
+                    put("count", count)
+                }
+                if (uuid != null) {
+                    put("uuid", uuid)
+                }
+            },
+            token = token
+        )
+    }
+
+    override suspend fun getSettings(token: String): ApiResult<SettingsServer> {
+        return getData(
+            serializer = SettingsServer.serializer(),
+            path = "client/settings",
             token = token
         )
     }
@@ -159,7 +188,7 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
             serializer = OrderServer.serializer(),
-            path = "order",
+            path = "v2/order",
             postBody = order,
             token = token
         )
@@ -167,15 +196,13 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
 
     // PATCH
 
-    override suspend fun patchProfileEmail(
+    override suspend fun patchSettings(
         token: String,
-        userUuid: String,
         patchUserServer: PatchUserServer
-    ): ApiResult<ProfileServer> {
+    ): ApiResult<SettingsServer> {
         return patchData(
-            serializer = ProfileServer.serializer(),
-            path = "client",
-            parameters = hashMapOf(UUID_PARAMETER to userUuid),
+            serializer = SettingsServer.serializer(),
+            path = "client/settings",
             patchBody = patchUserServer,
             token = token
         )
@@ -183,57 +210,24 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
 
     // WEB_SOCKET
 
-    override fun subscribeOnOrderUpdates(token: String): Flow<OrderServer> {
-        return subscribeOnWebSocket(
-            path = "client/order/subscribe",
-            serializer = OrderServer.serializer(),
-            token
+    override suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>> {
+        return socketService.observeSocketMessages(
+            path = "client/order/v2/subscribe",
+            serializer = OrderUpdateServer.serializer(),
+            token = token
         )
     }
 
-    override suspend fun unsubscribeOnOrderUpdates() {
-        if (webSocketSession != null) {
-            webSocketSession?.close(CloseReason(CloseReason.Codes.NORMAL, "User logout"))
-            webSocketSession = null
-        }
+    override suspend fun stopOrderUpdatesObservation(uuid: String) {
+        socketService.closeSession(uuid)
     }
 
     // COMMON
 
-    private fun <S> subscribeOnWebSocket(path: String, serializer: KSerializer<S>, token: String): Flow<S> {
-        return flow {
-            try {
-                client.webSocket(
-                    HttpMethod.Get,
-                    path = path,
-                    port = 80,
-                    request = {
-                        header(AUTHORIZATION_HEADER, BEARER + token)
-                    }
-                ) {
-                    logD(WEB_SOCKET_TAG, "WebSocket connected")
-                    webSocketSession = this
-                    while (true) {
-                        val message = incoming.receive() as? Frame.Text ?: continue
-                        logD(WEB_SOCKET_TAG, "Message: ${message.readText()}")
-                        val serverModel = json.decodeFromString(serializer, message.readText())
-                        emit(serverModel)
-                    }
-                }
-            } catch (e: WebSocketException) {
-                logE(WEB_SOCKET_TAG, "WebSocketException: ${e.message}")
-            } catch (e: Throwable) {
-                logE(WEB_SOCKET_TAG, "Exception: ${e.message}")
-            } finally {
-                unsubscribeOnOrderUpdates()
-            }
-        }
-    }
-
     suspend fun <T> getData(
         serializer: KSerializer<T>,
         path: String,
-        parameters: Map<String, String> = mapOf(),
+        parameters: Map<String, Any> = mapOf(),
         token: String? = null
     ): ApiResult<T> {
         return handleNetworkCall(serializer) {
@@ -294,13 +288,13 @@ class NetworkConnectorImpl : KoinComponent, NetworkConnector {
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Throwable) {
-            ApiResult.Error(ApiError(0, "Bad Internet"))
+            ApiResult.Error(ApiError(0, exception.message ?: "Bad Internet"))
         }
     }
 
     private fun HttpRequestBuilder.buildRequest(
         path: String,
-        parameters: Map<String, String> = mapOf(),
+        parameters: Map<String, Any> = mapOf(),
         body: Any? = null,
         token: String? = null
     ) {

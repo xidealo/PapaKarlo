@@ -29,6 +29,10 @@ class MenuProductInteractor(
         return menuProductRepo.observeMenuProductByUuid(menuProductUuid).asCommonFlow()
     }
 
+    override suspend fun getMenuProductByUuid(menuProductUuid: String): MenuProduct? {
+        return menuProductRepo.getMenuProductByUuid(menuProductUuid = menuProductUuid)
+    }
+
     fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
         return menuProductList.flatMap { menuProduct ->
             menuProduct.categoryList.map { category ->

@@ -18,6 +18,8 @@
     <string name="description_product">Фото блюда</string>
     <string name="description_back_icon">Назад</string>
     <string name="error_common">Ошибка</string>
+    <string name="common_email">Почта</string>
+    <string name="common_city">Город</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -205,12 +207,11 @@
     <string name="title_settings">Настройки</string>
     <string name="hint_settings_phone">Номер телефона</string>
     <string name="action_settings_add_email">Добавить почту</string>
-    <string name="hint_settings_email">Почта</string>
     <string name="title_settings_add_email">Добавление почты</string>
     <string name="title_settings_edit_email">Редактирование почты</string>
     <string name="action_settings_save">Сохранить</string>
-    <string name="hint_settings_city">Город</string>
     <string name="error_settings_email">Не удалось сменить почту</string>
+    <string name="error_settings_loading">Не удалось загрузить данные</string>
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
 
     <!-- ORDERS -->

@@ -27,7 +27,12 @@ struct LoginView: View {
                 LoadingView()
             }else{
                 NavigationLink(
-                    destination:ConfirmView(auth: auth, phone: phone, rootIsActive: self.$rootIsActive, isGoToCreateOrder: $isGoToCreateOrder),
+                    destination:ConfirmView(
+                        auth: auth,
+                        phone: phone,
+                        rootIsActive: self.$rootIsActive,
+                        isGoToCreateOrder: $isGoToCreateOrder
+                    ),
                     isActive: $goToConfirm
                 ){
                     EmptyView()
@@ -61,9 +66,6 @@ struct LoginViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(
                 title:"",
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -83,7 +85,7 @@ struct LoginViewSuccessView: View {
                 
                 EditTextView(
                     hint: Strings.HINT_LOGIN_PHONE,
-                    text:$phone, limit: 17,
+                    text:$phone, limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,
                     errorMessage: "Введите номер телефона"
@@ -117,7 +119,7 @@ struct LoginViewSuccessView: View {
         if phone.count < 2 {
             phone = String("+7")
         }else{
-            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-####", replacementCharacter: "#")
+            phone = phone.applyPatternOnNumbers(pattern: "+# (###) ###-##-##", replacementCharacter: "#")
         }
     }
 }

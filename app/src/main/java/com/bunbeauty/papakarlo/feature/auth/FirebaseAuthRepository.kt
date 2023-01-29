@@ -2,10 +2,10 @@ package com.bunbeauty.papakarlo.feature.auth
 
 import com.google.firebase.auth.FirebaseAuth
 
+@Deprecated("Use class in shared module")
 class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth
 ) {
-
     val firebaseUserUuid: String?
         get() = firebaseAuth.currentUser?.uid
 

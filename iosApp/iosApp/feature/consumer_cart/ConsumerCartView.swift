@@ -9,19 +9,22 @@ import SwiftUI
 
 struct ConsumerCartView: View {
     
-    @ObservedObject var viewModel: ConsumerCartViewModel = viewModelStore.getConsumerCartViewModel()
+    @StateObject var viewModel: ConsumerCartViewModel = ConsumerCartViewModel()
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var openCreateOrder:Bool = false
     @State var openLogin:Bool = false
-
+    
+    //for back after createOrder
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
+    //--
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
                 title: Strings.TITLE_CART_PRODUCTS,
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -33,9 +36,13 @@ struct ConsumerCartView: View {
                 EmptyView()
             }
             .isDetailLink(false)
-
+            
             NavigationLink(
-                destination:CreateOrderView(),
+                destination:CreateOrderView(
+                    isRootActive: self.$isRootActive,
+                    selection: self.$selection,
+                    showOrderCreated: $showOrderCreated
+                ),
                 isActive: $openCreateOrder
             ){
                 EmptyView()
@@ -44,7 +51,9 @@ struct ConsumerCartView: View {
             switch viewModel.consumerCartViewState.consumerCartState{
             case .loading: LoadingView()
             case .notAuthorized: EmptyView()
-            case .empty: ConsumerCartEmptyScreen()
+            case .empty: ConsumerCartEmptyScreen(
+                isRootActive: $isRootActive, selection: $selection
+            )
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             }
         }
@@ -52,9 +61,6 @@ struct ConsumerCartView: View {
         .hiddenNavigationBarStyle()
         .onAppear() {
             viewModel.fetchData()
-        }
-        .onDisappear(){
-            viewModel.removeListener()
         }
         .onReceive(viewModel.$consumerCartViewState, perform: { consumerCartViewState in
             consumerCartViewState.actions.forEach { action in
@@ -74,12 +80,6 @@ struct ConsumerCartView: View {
 struct ConsumerCartSuccess_Previews: PreviewProvider {
     static var previews: some View {
         ConsumerCartSuccessScreen(consumerCartUI: ConsumerCartViewState(forFreeDelivery: "100", cartProductList: [CartProductItem(id: "1", name: "Burger", newCost: "100", oldCost: nil, photoLink: "https://canapeclub.ru/buffet-sets/burger/bolshoy-burger", count: 10, menuProductUuid: "uuid")], oldTotalCost: nil, newTotalCost: "100", consumerCartState: ConsumerCartState.hasData, actions: []), viewModel: ConsumerCartViewModel())
-    }
-}
-
-struct ConsumerCartViewEmpty_Previews: PreviewProvider {
-    static var previews: some View {
-        ConsumerCartEmptyScreen()
     }
 }
 
@@ -124,6 +124,7 @@ struct ConsumerCartSuccessScreen: View {
                         StrikeText(text: String(consumerCartUI.oldTotalCost!) + Strings.CURRENCY)
                     }
                     BoldText(text: consumerCartUI.newTotalCost)
+                        .padding(Diems.SMALL_PADDING)
                 }.padding()
                 
                 Button {
@@ -135,8 +136,9 @@ struct ConsumerCartSuccessScreen: View {
                         .background(Color("primary"))
                         .cornerRadius(Diems.MEDIUM_RADIUS)
                         .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                }.padding(Diems.MEDIUM_PADDING)
-                
+                }
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.bottom, Diems.MEDIUM_PADDING)
             }.background(Color("surface"))
         }
     }
@@ -145,19 +147,28 @@ struct ConsumerCartSuccessScreen: View {
 struct ConsumerCartEmptyScreen: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             Spacer()
             
             DefaultImage(imageName: "runMan")
             
-            Text(Strings.MSG_CART_PRODUCT_EMPTY).multilineTextAlignment(.center)
+            Text(Strings.MSG_CART_PRODUCT_EMPTY)
+                .multilineTextAlignment(.center)
+                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+
             Spacer()
             
             Button {
-                presentationMode.wrappedValue.dismiss()
+                isRootActive = false
+                selection = 1
             } label: {
-                Text(Strings.ACTION_CART_PRODUCT_BACK).frame(maxWidth: .infinity)
+                Text(Strings.ACTION_CART_PRODUCT_MENU)
+                    .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))

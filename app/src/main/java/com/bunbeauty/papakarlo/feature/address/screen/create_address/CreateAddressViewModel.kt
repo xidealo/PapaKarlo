@@ -31,7 +31,6 @@ class CreateAddressViewModel(
                 StreetItem(
                     uuid = street.uuid,
                     name = street.name,
-                    cityUuid = street.cityUuid,
                 )
             }.toState(resourcesProvider.getString(R.string.error_create_address_loading))
         }

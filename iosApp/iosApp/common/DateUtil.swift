@@ -32,12 +32,18 @@ class DateUtil {
             
         }
    
-        return "\(dateTime.date.datOfMonth) \(monthName) \(getTimeString(time: dateTime.time))"
+        return "\(dateTime.date.dayOfMonth) \(monthName) \(getTimeString(time: dateTime.time))"
     }
     
     func getTimeString(time: Time) -> String {
         return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
        }
+    
+    
+    func getTimeString(time: TimeUITime) -> String {
+        return "\(addFirstZero(number: Int(time.hours))):\(addFirstZero(number : Int(time.minutes)))"
+       }
+    
     
     func addFirstZero(number: Int) -> String {
             if (number < 10) {

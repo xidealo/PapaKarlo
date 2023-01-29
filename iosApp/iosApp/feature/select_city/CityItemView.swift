@@ -12,7 +12,7 @@ struct CityItemView: View {
     var city: CityItem
 
     var body: some View {
-        ElementCard(text: city.city.name).padding(.top, 2)
+        ElementCard(text: city.city.name)
     }
 }
 

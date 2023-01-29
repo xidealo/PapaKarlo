@@ -1,17 +1,15 @@
 package com.bunbeauty.papakarlo.common.ui.element.card
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,10 +17,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.card
-import com.bunbeauty.papakarlo.common.ui.smallIcon
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationTextCard(
     modifier: Modifier = Modifier,
@@ -32,15 +31,12 @@ fun NavigationTextCard(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = modifier
-            .card(true)
-            .clickable(
-                enabled = isClickable,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(),
-                onClick = onClick
-            ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        shape = mediumRoundedCornerShape,
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
+        enabled = isClickable,
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier.padding(
@@ -66,7 +62,7 @@ fun NavigationTextCard(
                 )
             }
             Icon(
-                modifier = Modifier.smallIcon(),
+                modifier = Modifier.icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
                 contentDescription = stringResource(R.string.description_ic_next),
                 tint = FoodDeliveryTheme.colors.onSurfaceVariant
@@ -75,10 +71,11 @@ fun NavigationTextCard(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun TextNavigationCardPreview() {
     NavigationTextCard(
+        modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
         hintStringId = R.string.hint_settings_phone,
         label = "+7 999 000-00-00"
     ) {}

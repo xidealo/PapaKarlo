@@ -95,7 +95,7 @@ object Constants {
     const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
     const val BB_VK_LINK = "https://vk.com/bunbeauty"
-    const val APP_STORE_LINK = "https://apps.apple.com/us/app/%D0%BF%D0%B0%D0%BF%D0%B0-%D0%BA%D0%B0%D1%80%D0%BB%D0%BE/id6443966083"
+    const val APP_STORE_LINK = "https://itunes.apple.com/app/id6443966083"
 
     // ERROR_KEY
 

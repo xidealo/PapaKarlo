@@ -8,13 +8,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -22,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.StatusChip
-import com.bunbeauty.papakarlo.common.ui.icon
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
@@ -37,13 +36,10 @@ fun OrderStatusBar(
     Card(
         modifier = modifier
             .height(IntrinsicSize.Min)
-            .fillMaxWidth()
-            .shadow(
-                elevation = FoodDeliveryTheme.dimensions.elevation,
-                shape = mediumRoundedCornerShape
-            )
-            .clip(mediumRoundedCornerShape),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+            .fillMaxWidth(),
+        colors = FoodDeliveryTheme.colors.cardColors(),
+        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+        shape = mediumRoundedCornerShape,
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
@@ -104,7 +100,7 @@ fun DoneStep(
     ) {
         Icon(
             modifier = Modifier
-                .icon()
+                .icon24()
                 .padding(
                     vertical = FoodDeliveryTheme.dimensions.verySmallSpace
                 )

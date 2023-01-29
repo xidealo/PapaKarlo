@@ -11,8 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -99,7 +99,8 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                 .fillMaxWidth()
                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
             shape = mediumRoundedCornerShape,
-            backgroundColor = FoodDeliveryTheme.colors.surface
+            colors = FoodDeliveryTheme.colors.cardColors(),
+            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
         ) {
             Column {
                 AsyncImage(

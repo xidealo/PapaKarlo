@@ -10,17 +10,17 @@ import SwiftUI
 
 struct CommentView: View {
     //TODO(Make 
-    @ObservedObject var createOrderViewModel:CreateOrderViewModel
+    @ObservedObject var createOrderViewModel:CreateOrderHolder
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
         VStack{
-            EditTextView(
-                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                text:$createOrderViewModel.creationOrderViewState.comment,
-                limit: 255,
-                hasError: .constant(false)
-            )
+//            EditTextView(
+//                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+//                text:$createOrderViewModel.creationOrderViewState.comment,
+//                limit: 255,
+//                hasError: .constant(false)
+//            )
             Spacer()
             
             Button {
@@ -43,6 +43,6 @@ struct CommentView: View {
 
 struct CommentView_Previews: PreviewProvider {
     static var previews: some View {
-        CommentView(createOrderViewModel: CreateOrderViewModel())
+        CommentView(createOrderViewModel: CreateOrderHolder())
     }
 }

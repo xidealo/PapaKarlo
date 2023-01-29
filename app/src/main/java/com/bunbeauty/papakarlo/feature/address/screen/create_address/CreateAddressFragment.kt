@@ -232,8 +232,7 @@ class CreateAddressFragment : BaseFragment(R.layout.fragment_create_address) {
     private fun CreateAddressSuccessScreenPreview() {
         val streetItem = StreetItem(
             uuid = "",
-            name = "улица Чапаева",
-            cityUuid = "",
+            name = "улица Чапаева"
         )
         CreateAddressScreen(
             State.Success(

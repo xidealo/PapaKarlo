@@ -22,8 +22,8 @@ class Diems {
     static let MEDIUM_RADIUS:CGFloat = 8
     static let SMALL_RADIUS:CGFloat = 6
 
-    static let IMAGE_ELEMENT_WIDTH:CGFloat = 108
-    static let IMAGE_ELEMENT_HEIGHT:CGFloat = 72
+    static let IMAGE_ELEMENT_WIDTH:CGFloat = 118
+    static let IMAGE_ELEMENT_HEIGHT:CGFloat = 80
 
     static let BUTTON_HEIGHT:CGFloat = 20
     static let BUTTON_WIDTH:CGFloat = 70

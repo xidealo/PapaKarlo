@@ -35,7 +35,6 @@ struct SplashView: View {
                 ){
                     EmptyView()
                 }.isDetailLink(false)
-
             }
             default : EmptyView()
             }
@@ -77,5 +76,17 @@ struct ContentView_Previews: PreviewProvider {
 struct FlatLinkStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+    }
+}
+
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { self.wrappedValue },
+            set: { newValue in
+                self.wrappedValue = newValue
+                handler(newValue)
+            }
+        )
     }
 }

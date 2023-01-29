@@ -7,7 +7,7 @@ class DisableUserUseCase(
     private val userRepo: UserRepo,
     private val dataStoreRepo: DataStoreRepo
 ) {
-    suspend fun invoke() {
+    suspend operator fun invoke() {
         dataStoreRepo.getToken()?.let { token ->
             userRepo.disableUser(token = token)
         }

@@ -1,10 +1,14 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.TextFieldColors
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -194,41 +198,32 @@ class AppColors(
     )
 
     @Composable
-    fun mainButtonColors(): ButtonColors {
-        return ButtonDefaults.buttonColors(
-            backgroundColor = primary,
-            contentColor = onPrimary,
-            disabledBackgroundColor = primary.copy(alpha = 0.8f),
-            disabledContentColor = onPrimary.copy(alpha = 0.8f)
-        )
-    }
-
-    @Composable
     fun switcherButtonColors(): ButtonColors {
         return ButtonDefaults.buttonColors(
-            backgroundColor = secondary,
+            containerColor = secondary,
             contentColor = onSecondary,
-            disabledBackgroundColor = primary,
+            disabledContainerColor = primary,
             disabledContentColor = onPrimary
         )
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun textFieldColors(): TextFieldColors {
         return TextFieldDefaults.textFieldColors(
             textColor = onSurface,
             disabledTextColor = onSurfaceVariant,
-            backgroundColor = surface,
+            containerColor = surface,
             cursorColor = primary,
             errorCursorColor = error,
             focusedIndicatorColor = primary,
             unfocusedIndicatorColor = onSurfaceVariant,
             disabledIndicatorColor = onSurfaceVariant,
             errorIndicatorColor = error,
-            leadingIconColor = onSurfaceVariant,
+            focusedLeadingIconColor = onSurfaceVariant,
             disabledLeadingIconColor = onSurfaceVariant,
             errorLeadingIconColor = error,
-            trailingIconColor = onSurfaceVariant,
+            focusedTrailingIconColor = onSurfaceVariant,
             disabledTrailingIconColor = onSurfaceVariant,
             errorTrailingIconColor = error,
             focusedLabelColor = primary,
@@ -241,21 +236,49 @@ class AppColors(
     }
 
     @Composable
+    fun cardColors() = CardDefaults.cardColors(
+        containerColor = FoodDeliveryTheme.colors.surface,
+        disabledContainerColor = FoodDeliveryTheme.colors.surface,
+    )
+
+    @Composable
+    fun secondaryCardColors() = CardDefaults.cardColors(
+        containerColor = FoodDeliveryTheme.colors.secondary
+    )
+
+    @Composable
+    fun mainButtonColors() = ButtonDefaults.buttonColors(
+        containerColor = FoodDeliveryTheme.colors.primary,
+        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
+        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
+        contentColor = FoodDeliveryTheme.colors.onPrimary
+    )
+
+    @Composable
+    fun iconButtonColors() = IconButtonDefaults.iconButtonColors(
+        containerColor = FoodDeliveryTheme.colors.primary,
+        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
+        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
+        contentColor = FoodDeliveryTheme.colors.onPrimary
+    )
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
     fun smsTextFieldColors(): TextFieldColors {
         return TextFieldDefaults.textFieldColors(
             textColor = onSurface,
             disabledTextColor = onSurfaceVariant,
-            backgroundColor = surface,
+            containerColor = surface,
             cursorColor = Color.Transparent,
             errorCursorColor = error,
             focusedIndicatorColor = primary,
             unfocusedIndicatorColor = onSurfaceVariant,
             disabledIndicatorColor = onSurfaceVariant,
             errorIndicatorColor = error,
-            leadingIconColor = onSurfaceVariant,
+            focusedLeadingIconColor = onSurfaceVariant,
             disabledLeadingIconColor = onSurfaceVariant,
             errorLeadingIconColor = error,
-            trailingIconColor = onSurfaceVariant,
+            focusedTrailingIconColor = onSurfaceVariant,
             disabledTrailingIconColor = onSurfaceVariant,
             errorTrailingIconColor = error,
             focusedLabelColor = primary,
@@ -287,12 +310,15 @@ class AppColors(
         }
     }
 
-    fun switcherButtonColor(enabled: Boolean): Color {
-        return if (enabled) {
-            secondary
-        } else {
-            primary
-        }
+    @Composable
+    fun switcherButtonColor(enabled: Boolean): CardColors {
+        return CardDefaults.cardColors(
+            containerColor = if (enabled) {
+                secondary
+            } else {
+                primary
+            }
+        )
     }
 
     fun switcherButtonTextColor(enabled: Boolean): Color {

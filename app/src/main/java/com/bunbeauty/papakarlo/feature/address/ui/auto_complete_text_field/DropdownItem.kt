@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,7 +35,7 @@ fun DropdownItem(
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             OverflowingText(

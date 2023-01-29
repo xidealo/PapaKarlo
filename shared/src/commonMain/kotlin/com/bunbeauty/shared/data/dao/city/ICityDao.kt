@@ -9,6 +9,8 @@ interface ICityDao {
 
     fun getCityList(): List<CityEntity>
 
+    fun getCityByUuid(uuid: String): CityEntity?
+
     fun observeCityList(): Flow<List<CityEntity>>
 
     fun observeCityByUuid(uuid: String): Flow<CityEntity?>

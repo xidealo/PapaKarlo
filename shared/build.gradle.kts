@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -20,6 +19,12 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
+        val firebaseVersion = "9.5.0"
+
+        pod("FirebaseAuth"){
+            version = firebaseVersion
+        }
+
         framework {
             baseName = "shared"
             isStatic = false
@@ -49,7 +54,6 @@ kotlin {
 
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
-                //implementation("dev.gitlive:firebase-auth:1.6.2")
             }
         }
         val commonTest by getting {
@@ -61,26 +65,24 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(DataStore.dataStorePreferences)
-                implementation(Ktor.clientAndroid)
                 implementation(Ktor.clientOkhttp)
                 implementation(Lifecycle.viewmodel)
+
+                implementation(project.dependencies.platform(Firebase.bom))
+                implementation(Firebase.auth)
+                implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.androidDriver)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
+        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependencies {
                 implementation(SqlDelight.nativeDriver)
-                implementation(Ktor.clientIos)
+                implementation(Ktor.clientDarwin)
             }
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
@@ -121,7 +123,5 @@ android {
 sqldelight {
     database("FoodDeliveryDatabase") {
         packageName = "com.bunbeauty.shared.db"
-        sourceFolders = listOf("sqldelight")
-        linkSqlite = true
     }
 }

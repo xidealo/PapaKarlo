@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -29,7 +29,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.consumer_cart.CountPicker
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 
 @Composable
@@ -42,13 +41,13 @@ fun CartProductItem(
 ) {
     Card(
         modifier = modifier
-            .card(true)
+            .card()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = rememberRipple(),
                 onClick = onClick
             ),
-        backgroundColor = FoodDeliveryTheme.colors.surface
+        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(

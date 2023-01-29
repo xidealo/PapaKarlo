@@ -17,9 +17,9 @@ struct ToastView: View {
     @Binding var show :Bool
     let backgroundColor: Color
     let foregaroundColor: Color
-
+    
     var body: some View {
-        VStack{
+        VStack(spacing:0){
             Spacer()
             Text(toast.title)
                 .padding(Diems.MEDIUM_PADDING)
@@ -33,7 +33,7 @@ struct ToastView: View {
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))
         .onAppear(){
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                withAnimation {
+                if(self.show){
                     self.show = false
                 }
             }

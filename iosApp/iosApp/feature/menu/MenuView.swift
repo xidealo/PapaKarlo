@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import shared
 
 struct MenuView: View {
     
     @StateObject private var viewModel = MenuViewModel()
     @State var lastShowCategory = ""
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    
+    //for back after createOrder
+    @Binding var isRootActive:Bool
+    @Binding var selection:Int
+    @Binding var showOrderCreated:Bool
     
     var body: some View {
         VStack(spacing:0){
@@ -51,16 +57,17 @@ struct MenuView: View {
                                         .padding(.horizontal,  Diems.MEDIUM_PADDING)
                                         .padding(.top, Diems.MEDIUM_PADDING)){
                                             ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                                NavigationLink(
-                                                    destination:ProductDetailsView(menuProductUuid: menuProductItem.productUuid)
-                                                ){
-                                                    MenuItemView(menuProductItem: menuProductItem, action: {
+                                                
+                                                MenuItemView(
+                                                    menuProductItem: menuProductItem,
+                                                    isRootActive : $isRootActive,
+                                                    selection : $selection,
+                                                    showOrderCreated : $showOrderCreated,
+                                                    action: {
                                                         viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
                                                     })
-                                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                                    .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                                                }
-                                                .buttonStyle(FlatLinkStyle()) 
+                                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                                .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)
@@ -88,11 +95,5 @@ struct MenuView: View {
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
-    }
-}
-
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView()
     }
 }

@@ -35,7 +35,7 @@ struct ConfirmView: View {
         .onReceive(viewModel.$confirmViewState, perform: { confirmViewState in
             confirmViewState.actionList.forEach { action in
                 switch(action){
-                case ConfirmAction.back : self.rootIsActive = false
+                case ConfirmAction.back : rootIsActive = false
                     isGoToCreateOrder = true
                 }
             }
@@ -65,9 +65,6 @@ struct ConfirmViewSuccessView: View {
         VStack(spacing:0){
             ToolbarView(
                 title: "",
-                cost: "",
-                count: "",
-                isCartVisible: false,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
