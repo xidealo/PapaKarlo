@@ -17,7 +17,7 @@ class Strings{
     static let TITLE_MY_ORDERS = "Мои заказы"
     static let TITLE_SETTINGS = "Настройки"
     static let TITLE_CART_PRODUCTS = "Корзина"
-    static let TITLE_CREATION_ORDER = "Создание заказа"
+    static let TITLE_CREATION_ORDER = "Оформление заказа"
     static let TITLE_NEW_VERSION = "Новая версия"
     static let TITLE_CREATION_ADDRESS = "Добавление адреса"
     static let TITLE_ABOUT_APP = "О приложении"

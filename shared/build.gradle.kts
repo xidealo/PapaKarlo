@@ -19,11 +19,16 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
+        val firebaseVersion = "9.5.0"
+
+        pod("FirebaseAuth"){
+            version = firebaseVersion
+        }
+
         framework {
             baseName = "shared"
             isStatic = false
         }
-        pod("FirebaseAuth")
     }
 
     sourceSets {
@@ -70,12 +75,7 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
             }
         }
-        val androidTest by getting {
-            dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
-            }
-        }
+        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

@@ -57,24 +57,17 @@ struct MenuView: View {
                                         .padding(.horizontal,  Diems.MEDIUM_PADDING)
                                         .padding(.top, Diems.MEDIUM_PADDING)){
                                             ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                                NavigationLink(
-                                                    destination:
-                                                    ProductDetailsView(
-                                                        menuProductUuid: menuProductItem.productUuid,
-                                                        isRootActive: self.$isRootActive,
-                                                        selection: self.$selection,
-                                                        showOrderCreated: $showOrderCreated
-                                                    )
-                                                ){
-                                                    MenuItemView(
-                                                        menuProductItem: menuProductItem,
-                                                        action: {
-                                                            viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                                
+                                                MenuItemView(
+                                                    menuProductItem: menuProductItem,
+                                                    isRootActive : $isRootActive,
+                                                    selection : $selection,
+                                                    showOrderCreated : $showOrderCreated,
+                                                    action: {
+                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
                                                     })
-                                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                                    .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                                                }
-                                                .isDetailLink(false)
+                                                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                                .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 .onAppear(){
                                                     print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)
