@@ -12,6 +12,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
+@Suppress("UnstableApiUsage")
 android {
 
     signingConfigs {
@@ -24,12 +25,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = Application.applicationId
         minSdk = AndroidSdk.min
         compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
-        versionCode = Application.versionCode
-        versionName = Application.versionName
     }
     buildTypes {
         applicationVariants.all {
@@ -53,6 +51,21 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+        }
+    }
+
+    flavorDimensions.add("default")
+    productFlavors {
+        create("papaKarlo") {
+            applicationId = PapaKarloApplication.applicationId
+            versionCode = PapaKarloApplication.versionCode
+            versionName = PapaKarloApplication.versionName
+        }
+
+        create("cheddar") {
+            applicationId = CheddarApplication.applicationId
+            versionCode = CheddarApplication.versionCode
+            versionName = CheddarApplication.versionName
         }
     }
 

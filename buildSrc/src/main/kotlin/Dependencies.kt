@@ -51,7 +51,7 @@ object Versions {
     const val pinEntryEditText = "2.0.6"
 }
 
-object Application {
+object PapaKarloApplication {
     const val versionMajor = 1
     const val versionMinor = 2
     const val versionPatch = 4
@@ -59,6 +59,16 @@ object Application {
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
     const val versionCode = 124
+}
+
+object CheddarApplication {
+    const val versionMajor = 1
+    const val versionMinor = 2
+    const val versionPatch = 3
+
+    const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
+    const val applicationId = "com.bunbeuaty.cheddar"
+    const val versionCode = 123
 }
 
 object AndroidSdk {
