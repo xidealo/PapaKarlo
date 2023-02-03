@@ -1,15 +1,15 @@
 package com.bunbeauty.papakarlo.feature.auth.phone_verification
 
 import android.app.Activity
-import com.bunbeauty.common.Logger.AUTH_TAG
-import com.bunbeauty.common.Logger.logD
-import com.bunbeauty.common.Logger.logE
 import com.bunbeauty.papakarlo.feature.auth.event.AuthErrorEvent
 import com.bunbeauty.papakarlo.feature.auth.event.AuthSuccessEvent
 import com.bunbeauty.papakarlo.feature.auth.event.CodeSentEvent
 import com.bunbeauty.shared.Constants.SOMETHING_WENT_WRONG
 import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.shared.Constants.WRONG_CODE
+import com.bunbeauty.shared.Logger.AUTH_TAG
+import com.bunbeauty.shared.Logger.logD
+import com.bunbeauty.shared.Logger.logE
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.PhoneAuthCredential

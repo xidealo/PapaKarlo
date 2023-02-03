@@ -15,30 +15,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.google.android.material.snackbar.Snackbar
 
-fun View.invisible(): View {
-    visibility = View.INVISIBLE
-    return this
-}
-
-fun View.visible(): View {
-    visibility = View.VISIBLE
-    return this
-}
-
-fun View.gone(): View {
-    visibility = View.GONE
-    return this
-}
-
-fun View.showOrGone(isVisible: Boolean): View {
-    if (isVisible) {
-        this.visible()
-    } else {
-        this.gone()
-    }
-    return this
-}
-
 fun View.showSnackbar(
     message: String,
     @ColorInt textColor: Int,

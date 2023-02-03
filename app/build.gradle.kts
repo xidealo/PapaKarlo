@@ -90,7 +90,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 dependencies {
-    implementation(project(":common"))
     implementation(project(":shared"))
 
     implementation(Google.material)

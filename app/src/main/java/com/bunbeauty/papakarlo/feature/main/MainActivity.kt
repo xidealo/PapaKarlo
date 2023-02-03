@@ -19,6 +19,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.FloatingWindow
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -36,7 +38,6 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.ActivityMainBinding
-import com.bunbeauty.papakarlo.extensions.showOrGone
 import com.bunbeauty.papakarlo.extensions.startedLaunch
 import com.bunbeauty.papakarlo.feature.profile.screen.settings.SettingsFragmentDirections.toLogoutBottomSheet
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
@@ -157,17 +158,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setupNavigationListener(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination !is FloatingWindow) {
-                val isToolbarVisible = destination.id in toolbarFragmentIdList
-                viewBinding.activityMainTbToolbar.showOrGone(isToolbarVisible)
-                val isLogoVisible = destination.id in logoFragmentIdList
-                viewBinding.activityMainIvLogo.showOrGone(isLogoVisible)
-                val isCartVisible = destination.id in cartFragmentIdList
-                viewBinding.activityMainClCart.showOrGone(isCartVisible)
-                viewBinding.activityMainIvCart.showOrGone(isCartVisible)
-                val isBottomNavigationVisible = destination.id in bottomNavigationFragmentIdList
-                viewBinding.activityMainBnvBottomNavigation.showOrGone(
-                    isBottomNavigationVisible
-                )
+                viewBinding.activityMainTbToolbar.isVisible =
+                    (destination.id in toolbarFragmentIdList)
+                viewBinding.activityMainIvLogo.isVisible = (destination.id in logoFragmentIdList)
+                viewBinding.activityMainClCart.isVisible = (destination.id in cartFragmentIdList)
+                viewBinding.activityMainIvCart.isVisible = (destination.id in cartFragmentIdList)
+                viewBinding.activityMainBnvBottomNavigation.isVisible =
+                    (destination.id in bottomNavigationFragmentIdList)
             }
         }
     }
@@ -206,7 +203,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun observeIsOnline() {
         viewModel.isOnline.startedLaunch { isOnline ->
-            viewBinding.activityMainTvInternetWarning.showOrGone(!isOnline)
+            viewBinding.activityMainTvInternetWarning.isGone = isOnline
         }
     }
 

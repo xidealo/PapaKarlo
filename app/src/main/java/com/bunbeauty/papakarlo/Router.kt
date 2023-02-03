@@ -8,7 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
-import com.bunbeauty.common.Logger.NAV_TAG
+import com.bunbeauty.shared.Logger.NAV_TAG
+import com.bunbeauty.shared.Logger.logD
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -47,7 +48,7 @@ class Router : CoroutineScope {
         launch(Main) {
             hideKeyboard()
             findNavController()?.navigateUp()
-            Log.d(NAV_TAG, "navigateUp")
+            logD(NAV_TAG, "navigateUp")
         }
     }
 

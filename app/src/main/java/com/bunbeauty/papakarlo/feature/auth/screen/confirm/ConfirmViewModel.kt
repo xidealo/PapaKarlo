@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.common.Logger.AUTH_TAG
-import com.bunbeauty.common.Logger.logD
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
@@ -14,6 +12,8 @@ import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.shared.Constants.WRONG_CODE
+import com.bunbeauty.shared.Logger.AUTH_TAG
+import com.bunbeauty.shared.Logger.logD
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.Job
