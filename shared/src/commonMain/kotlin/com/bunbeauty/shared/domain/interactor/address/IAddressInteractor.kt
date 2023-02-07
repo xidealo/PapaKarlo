@@ -4,7 +4,6 @@ import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.model.address.UserAddress
 
 interface IAddressInteractor {
-
     suspend fun createAddress(
         streetName: String,
         house: String,

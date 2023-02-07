@@ -12,7 +12,9 @@ class MenuProductInteractor(
 ) : IMenuProductInteractor {
 
     override suspend fun getMenuSectionList(): List<MenuSection>? {
-        return menuProductRepo.getMenuProductList().let { menuProductList ->
+        return menuProductRepo.getMenuProductList().filter {
+            it.visible
+        }.let { menuProductList ->
             if (menuProductList.isEmpty()) {
                 null
             } else {
@@ -33,7 +35,7 @@ class MenuProductInteractor(
         return menuProductRepo.getMenuProductByUuid(menuProductUuid = menuProductUuid)
     }
 
-    fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
+    private fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
         return menuProductList.flatMap { menuProduct ->
             menuProduct.categoryList.map { category ->
                 category to menuProduct
