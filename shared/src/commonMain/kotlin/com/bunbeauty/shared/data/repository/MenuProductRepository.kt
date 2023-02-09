@@ -17,7 +17,7 @@ class MenuProductRepository(
     private val menuProductDao: IMenuProductDao,
     private val categoryDao: ICategoryDao,
     private val menuProductCategoryReferenceDao: IMenuProductCategoryReferenceDao,
-    private val menuProductMapper: IMenuProductMapper
+    private val menuProductMapper: IMenuProductMapper,
 ) : CacheListRepository<MenuProduct>(), MenuProductRepo {
 
     override val tag: String = "MENU_PRODUCT_TAG"

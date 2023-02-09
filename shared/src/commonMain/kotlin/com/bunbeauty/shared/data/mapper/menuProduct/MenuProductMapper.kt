@@ -59,7 +59,8 @@ class MenuProductMapper : IMenuProductMapper {
             description = menuProduct.description,
             comboDescription = menuProduct.comboDescription,
             photoLink = menuProduct.photoLink,
-            categoryList = emptyList()
+            categoryList = emptyList(),
+            visible = menuProduct.visible
         )
     }
 
@@ -80,7 +81,8 @@ class MenuProductMapper : IMenuProductMapper {
                     name = categoryServer.name,
                     priority = categoryServer.priority,
                 )
-            }
+            },
+            visible = menuProductServer.isVisible
         )
     }
 
@@ -106,7 +108,8 @@ class MenuProductMapper : IMenuProductMapper {
                         name = menuProductWithCategoryEntity.categoryName,
                         priority = menuProductWithCategoryEntity.priority
                     )
-                }
+                },
+                visible = firstMenuProductWithCategoryEntity.visible
             )
         }
     }

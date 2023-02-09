@@ -5,19 +5,25 @@ import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,
 ) : IMenuProductInteractor {
 
     override suspend fun getMenuSectionList(): List<MenuSection>? {
-        return menuProductRepo.getMenuProductList().let { menuProductList ->
-            if (menuProductList.isEmpty()) {
-                null
-            } else {
-                toMenuSectionList(menuProductList)
-            }
+        return withContext(Dispatchers.Default) {
+            menuProductRepo.getMenuProductList()
+                .filter { it.visible }
+                .let { menuProductList ->
+                    if (menuProductList.isEmpty()) {
+                        null
+                    } else {
+                        toMenuSectionList(menuProductList)
+                    }
+                }
         }
     }
 
@@ -33,7 +39,7 @@ class MenuProductInteractor(
         return menuProductRepo.getMenuProductByUuid(menuProductUuid = menuProductUuid)
     }
 
-    fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
+    private fun toMenuSectionList(menuProductList: List<MenuProduct>): List<MenuSection> {
         return menuProductList.flatMap { menuProduct ->
             menuProduct.categoryList.map { category ->
                 category to menuProduct

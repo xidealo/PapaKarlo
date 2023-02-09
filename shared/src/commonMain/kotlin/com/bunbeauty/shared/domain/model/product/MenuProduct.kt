@@ -12,5 +12,6 @@ data class MenuProduct(
     val description: String,
     val comboDescription: String?,
     val photoLink: String,
-    val categoryList: List<Category>
+    val categoryList: List<Category>,
+    val visible: Boolean,
 ) : Product()
