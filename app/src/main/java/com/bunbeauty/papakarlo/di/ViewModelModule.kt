@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
-import com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressViewModel
+import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
@@ -48,7 +48,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateOrderViewModel(
-            addressInteractor = get(),
             cartProductInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
@@ -62,6 +61,7 @@ fun viewModelModule() = module {
             getMinTime = get(),
             createOrderUseCase = get(),
             getSelectedCityTimeZoneUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel {
@@ -78,15 +78,15 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateAddressViewModel(
-            textValidator = get(),
-            streetInteractor = get(),
-            addressInteractor = get()
+            getStreetsUseCase = get(),
+            createAddressUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel { parameters ->
         UserAddressListViewModel(
             getUserAddressList = get(),
-            addressInteractor = get()
+            saveSelectedUserAddressUseCase = get(),
         )
     }
     viewModel {

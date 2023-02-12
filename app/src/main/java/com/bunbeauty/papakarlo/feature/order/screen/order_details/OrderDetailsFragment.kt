@@ -56,7 +56,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
     val stringUtil: IStringUtil by inject()
 
-    val orderProductItemMapper: OrderProductItemMapper by inject()
+    private val orderProductItemMapper: OrderProductItemMapper by inject()
 
     val orderUuid: String by argument()
 

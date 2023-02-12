@@ -1,7 +1,5 @@
 package com.bunbeauty.shared.di
 
-import com.bunbeauty.shared.domain.interactor.address.AddressInteractor
-import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.CafeInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.CartProductInteractor
@@ -15,8 +13,6 @@ import com.bunbeauty.shared.domain.interactor.order.OrderInteractor
 import com.bunbeauty.shared.domain.interactor.payment.PaymentInteractor
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.interactor.product.ProductInteractor
-import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
-import com.bunbeauty.shared.domain.interactor.street.StreetInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import com.bunbeauty.shared.domain.interactor.update.UpdateInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -66,20 +62,6 @@ internal fun interactorModule() = module {
             cartProductRepo = get(),
             dataStoreRepo = get(),
             productInteractor = get(),
-        )
-    }
-    single<IAddressInteractor> {
-        AddressInteractor(
-            dataStoreRepo = get(),
-            streetRepo = get(),
-            userAddressRepo = get(),
-            userInteractor = get(),
-        )
-    }
-    single<IStreetInteractor> {
-        StreetInteractor(
-            streetRepo = get(),
-            dataStoreRepo = get(),
         )
     }
     single<IMenuProductInteractor> {

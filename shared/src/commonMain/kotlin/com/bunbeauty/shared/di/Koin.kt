@@ -17,7 +17,6 @@ import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
@@ -26,7 +25,7 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.interactor.street.IStreetInteractor
+import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
@@ -72,8 +71,6 @@ class IosComponent : KoinComponent {
     fun provideCartProductInteractor(): ICartProductInteractor = get()
     fun provideIUserInteractor(): IUserInteractor = get()
     fun provideIOrderInteractor(): IOrderInteractor = get()
-    fun provideIAddressInteractor(): IAddressInteractor = get()
-    fun provideIStreetInteractor(): IStreetInteractor = get()
 
     //Use cases
     fun provideDisableUserUseCase(): DisableUserUseCase = get()
@@ -94,6 +91,7 @@ class IosComponent : KoinComponent {
     fun provideStopObserveOrdersUseCase(): StopObserveOrdersUseCase = get()
     fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
     fun provideObserveOrderUseCase(): ObserveOrderUseCase = get()
+    fun provideGetStreetsUseCase(): GetStreetsUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

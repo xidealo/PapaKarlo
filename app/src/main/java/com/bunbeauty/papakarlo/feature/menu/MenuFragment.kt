@@ -92,9 +92,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 MenuSuccessScreen(menuState.data)
             }
             is State.Error -> {
-                ErrorScreen(menuState.message) {
+               /* ErrorScreen(menuState.message) {
                     viewModel.getMenu()
-                }
+                }*/
             }
             else -> {
                 LoadingScreen()

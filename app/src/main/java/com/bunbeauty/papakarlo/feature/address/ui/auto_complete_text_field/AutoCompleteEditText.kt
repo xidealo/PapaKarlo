@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
+import com.bunbeauty.shared.presentation.create_address.AutoCompleteEntity
 
 @Composable
 fun <T : AutoCompleteEntity> AutoCompleteEditText(

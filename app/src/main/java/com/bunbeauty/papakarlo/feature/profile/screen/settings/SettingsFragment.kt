@@ -60,7 +60,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                 SettingsScreenSuccessPreview(settingsState)
             }
             SettingsState.State.ERROR -> {
-                ErrorScreen(message = stringResource(R.string.error_settings_loading))
+                //ErrorScreen(message = stringResource(R.string.error_settings_loading))
             }
             SettingsState.State.LOADING -> {
                 LoadingScreen()
