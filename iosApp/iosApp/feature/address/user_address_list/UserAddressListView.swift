@@ -12,7 +12,7 @@ struct UserAddressListView: View {
     
     var viewModel = UserAddressListViewModel(
         getUserAddressList: iosComponent.provideGetUserAddressListUseCase(),
-        addressInteractor: iosComponent.provideIAddressInteractor()
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
     
     @State var userAddressViewState = UserAddressListState(

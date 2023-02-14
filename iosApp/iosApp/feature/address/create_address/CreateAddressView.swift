@@ -6,6 +6,17 @@
 //
 
 import SwiftUI
+import shared
+
+
+class CreateAddressHolder: ObservableObject {
+    var viewModel = CreateAddressViewModel(
+        getStreetsUseCase: iosComponent.provideGetStreetsUseCase(),
+        createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
+    )
+}
+
 
 struct CreateAddressView: View {
     
@@ -20,12 +31,30 @@ struct CreateAddressView: View {
     
     @State var showError:Bool = false
     
-    @ObservedObject private var viewModel = CreateAddressViewModel()
+    @StateObject var viewModel:CreateAddressHolder = CreateAddressHolder()
+
+    @State var listener: Closeable? = nil
+    
+    @State var createAddressState = CreateAddressState(
+        streetItemList: [],
+        state: CreateAddressState.StateLoading(),
+        hasStreetError: false,
+        hasHouseError: nil,
+        hasFlatError: false,
+        hasEntranceError: false,
+        hasFloorError: false,
+        hasCommentError: false,
+        isCreateLoading: false,
+        eventList: []
+    )
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         ZStack(alignment: .bottom){
-            VStack(spacing:0){
+            switch(createAddressState.state){
+            case CreateAddressState.StateLoading(): LoadingView()
+            case CreateAddressState.StateSuccess(): VStack(spacing:0){
                 ToolbarView(
                     title: Strings.TITLE_CREATION_ADDRESS,
                     back: {
@@ -40,8 +69,13 @@ struct CreateAddressView: View {
                                 hint: Strings.HINT_CREATION_ADDRESS_STREET,
                                 text: $street,
                                 limit: 100,
-                                list: $viewModel.createAddressViewState.streetList,
-                                hasError: $viewModel.createAddressViewState.hasStreetError,
+                                list: createAddressState.streetItemList.map({ street in
+                                    StreetItem(
+                                        id: street.uuid,
+                                        name: street.name
+                                    )
+                                }),
+                                hasError: createAddressState.hasStreetError,
                                 errorMessage: "Выберите улицу из списка"
                             )
                             .padding(.top, Diems.MEDIUM_PADDING)
@@ -52,62 +86,65 @@ struct CreateAddressView: View {
                                     hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
                                     text: $house,
                                     limit: 5,
-                                    hasError: $viewModel.createAddressViewState.hasHouseError,
+                                    hasError: .constant(false),
+                                    hasErrorState: (createAddressState.hasHouseError == CreateAddressState.FieldError.incorrect),
                                     errorMessage: "Введите номер дома"
                                 )
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_FLAT,
                                     text: $flat,
                                     limit: 5,
-                                    hasError: $viewModel.createAddressViewState.hasFlatError,
+                                    hasError: .constant(false),
+                                    hasErrorState: createAddressState.hasFlatError,
                                     errorMessage: "Максимальная длина поля 5"
                                 )
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
                                     text: $entarance,
                                     limit: 5,
-                                    hasError: $viewModel.createAddressViewState.hasEntranceError,
+                                    hasError: .constant(false),
+                                    hasErrorState: createAddressState.hasEntranceError,
                                     errorMessage: "Максимальная длина поля 5"
                                 )
                                 EditTextView(
                                     hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
                                     text: $floor,
                                     limit: 5,
-                                    hasError: $viewModel.createAddressViewState.hasFloorError,
+                                    hasError: .constant(false),
+                                    hasErrorState: createAddressState.hasFloorError,
                                     errorMessage: "Максимальная длина поля 5"
                                 )
                             }
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
-
+                            
                             
                             EditTextView(
                                 hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
                                 text: $comment,
                                 limit: 100,
-                                hasError: $viewModel.createAddressViewState.hasCommentError,
+                                hasError: .constant(false),
+                                hasErrorState: createAddressState.hasCommentError,
                                 errorMessage: "Максимальная длина поля 100")
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                             .padding(.vertical, Diems.SMALL_PADDING)
                         }
                     }
                 }
-       
+                
                 Button(
                     action: {
-                    viewModel.onCreateAddressClicked(streetName: street, house: house, flat: flat, entrance: entarance, floor: floor, comment: comment){ isBack in
-                        if(isBack){
-                            DispatchQueue.main.async {
-                                presentationMode.wrappedValue.dismiss()
-                                show = true
-                            }
-                        }else{
-                            showError = !isBack
-                        }
-                        
+                        viewModel.viewModel.onCreateAddressClicked(
+                            streetName: street,
+                            house: house,
+                            flat: flat,
+                            entrance: entarance,
+                            floor: floor,
+                            comment: comment
+                        )
                     }
-                }) {
-                    if(viewModel.createAddressViewState.isLoading){
+                ) {
+                    if(createAddressState.isCreateLoading){
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
                             .scaleEffect(1.5)
@@ -120,7 +157,6 @@ struct CreateAddressView: View {
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                     }
                 }.padding(Diems.MEDIUM_PADDING)
-                .disabled(viewModel.createAddressViewState.isLoading)
             }
             .hiddenNavigationBarStyle()
             .background(Color("background"))
@@ -131,12 +167,22 @@ struct CreateAddressView: View {
                     backgroundColor: Color("errorColor"),
                     foregaroundColor: Color("onErrorColor")),
                 show: $showError)
+                
+            default : EmptyView()
+            }
+            
+        }
+        .onAppear(){
+            viewModel.viewModel.getStreetList()
+            listener = viewModel.viewModel.streetListState.watch { createAddressStateVM in
+                if(createAddressStateVM != nil ){
+                    print(createAddressStateVM)
+                    createAddressState = createAddressStateVM!
+                }
+            }
+        }.onDisappear(){
+            listener?.close()
+            listener = nil
         }.ignoresSafeArea(.keyboard)
-    }
-}
-
-struct CreateAddressView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateAddressView(show: .constant(true))
     }
 }

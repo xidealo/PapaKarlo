@@ -14,9 +14,7 @@ import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
+import com.bunbeauty.shared.domain.interactor.address.*
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
@@ -92,6 +90,8 @@ class IosComponent : KoinComponent {
     fun provideObserveOrderListUseCase(): ObserveOrderListUseCase = get()
     fun provideObserveOrderUseCase(): ObserveOrderUseCase = get()
     fun provideGetStreetsUseCase(): GetStreetsUseCase = get()
+    fun provideCreateAddressUseCase(): CreateAddressUseCase = get()
+    fun provideSaveSelectedUserAddressUseCase(): SaveSelectedUserAddressUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

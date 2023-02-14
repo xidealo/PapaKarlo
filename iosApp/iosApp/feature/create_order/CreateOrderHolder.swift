@@ -26,7 +26,6 @@ class CreateOrderHolder: ObservableObject {
     )
     
     let kmmViewModel = CreateOrderViewModel(
-        addressInteractor: iosComponent.provideIAddressInteractor(),
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         cafeInteractor: iosComponent.provideCafeInteractor(),
         userInteractor: iosComponent.provideIUserInteractor(),
@@ -39,7 +38,8 @@ class CreateOrderHolder: ObservableObject {
         getCartTotal: iosComponent.provideGetCartTotalUseCase(),
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
         createOrderUseCase : iosComponent.provideCreateOrderUseCase(),
-        getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase()
+        getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
+        saveSelectedUserAddressUseCase : iosComponent.provideSaveSelectedUserAddressUseCase()
     )
         
     var listener: Closeable? = nil

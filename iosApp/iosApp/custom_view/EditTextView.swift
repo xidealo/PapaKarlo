@@ -14,15 +14,18 @@ struct EditTextView: View {
     @Binding var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
+    
+    //Deprecated (use hasErrorState instead of this)
     @Binding var hasError:Bool
+    
+    @State var hasErrorState:Bool = false
     
     @State var errorMessage:String = "Ошибка"
     
     var body: some View {
         
         VStack{
-            
-            if(hasError){
+            if(hasError || hasErrorState){
                 TextField(hint, text: $text)
                     .padding()
                     .lineLimit(5)

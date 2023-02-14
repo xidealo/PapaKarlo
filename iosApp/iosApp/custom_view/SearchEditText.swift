@@ -17,12 +17,12 @@ struct SearchEditTextView: View {
     @Binding var text: String
     let limit:Int
     
-    @Binding var list:[StreetItem]
+    @State var list:[StreetItem]
     
     @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""
     
-    @Binding var hasError:Bool
+    @State var hasError:Bool
     @State var errorMessage:String = ""
     
     var body: some View {
