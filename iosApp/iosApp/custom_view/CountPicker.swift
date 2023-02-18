@@ -27,7 +27,7 @@ struct CountPicker: View {
         }.padding(.horizontal, 8)
             .padding(.vertical, Diems.SMALL_PADDING)
             .background(Color("primary"))
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+            .cornerRadius(Diems.BUTTON_RADIUS)
     }
     
 }

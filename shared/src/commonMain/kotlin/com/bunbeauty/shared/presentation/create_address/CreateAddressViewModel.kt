@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.create_address
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
@@ -21,11 +22,11 @@ class CreateAddressViewModel(
     val streetListState = mutableStreetListState.asCommonStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
-        println("ERROR IN exceptionHandler")
 
         mutableStreetListState.update {
             it.copy(
-                state = CreateAddressState.State.Error(throwable)
+                state = CreateAddressState.State.Error(throwable),
+                isCreateLoading = false
             )
         }
     }
@@ -116,7 +117,6 @@ class CreateAddressViewModel(
         floor: String,
         comment: String,
     ) {
-        println("onCreateAddressClicked mtstreet ${mutableStreetListState.value} \n street ${streetListState.value}")
         mutableStreetListState.update { oldState ->
             oldState.copy(
                 hasStreetError = false,
@@ -128,7 +128,6 @@ class CreateAddressViewModel(
                 isCreateLoading = true
             )
         }
-        println("onCreateAddressClicked ")
 
         mutableStreetListState.update { oldState ->
             oldState.copy(
@@ -142,8 +141,6 @@ class CreateAddressViewModel(
         }
 
         if (streetListState.value.hasError) {
-            println("onCreateAddressClicked HAS ERROR street $streetName house $house state ${mutableStreetListState.value}")
-
             mutableStreetListState.update { oldState ->
                 oldState.copy(
                     isCreateLoading = false
@@ -153,9 +150,7 @@ class CreateAddressViewModel(
         }
 
         sharedScope.launch(exceptionHandler) {
-
-            println("onCreateAddressClicked in sharedScope")
-
+            throw CreateAddressUseCase.NoSelectedCityUuidThrow
             val userAddress = createAddressUseCase(
                 streetName,
                 house,

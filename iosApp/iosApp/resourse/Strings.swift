@@ -27,7 +27,8 @@ class Strings{
 
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
-    
+    static let ACTION_RETRU = "Повторить попытку"
+
     //PROFILE
     static let TITLE_PROFILE_SETTINGS = "Настройки"
     static let TITLE_PROFILE_MY_ADDRESSES = "Мои адреса"
