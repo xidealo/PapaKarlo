@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
-import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
@@ -16,6 +15,7 @@ import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
+import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel

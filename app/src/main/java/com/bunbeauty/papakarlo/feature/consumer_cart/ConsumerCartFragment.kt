@@ -30,7 +30,6 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
-import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding

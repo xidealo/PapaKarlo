@@ -10,14 +10,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
@@ -28,7 +26,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -36,17 +33,11 @@ import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.address.ui.auto_complete_text_field.AutoCompleteEditText
-import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
-import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections
-import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
-import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.presentation.create_address.CreateAddressState
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
-import com.bunbeauty.shared.presentation.create_order.OrderCreationState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_address) {
@@ -108,7 +99,6 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                         }
                     }
                 }
-
             }
             is CreateAddressState.State.Empty -> {
                 ErrorScreen(mainTextId = R.string.error_create_address_loading) {
@@ -258,7 +248,6 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         }
     }
 
-
     private fun handleEventList(eventList: List<CreateAddressState.Event>) {
         eventList.forEach { event ->
             when (event) {
@@ -283,7 +272,6 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         }
         viewModel.consumeEventList(eventList)
     }
-
 
     @Preview(showSystemUi = true)
     @Composable

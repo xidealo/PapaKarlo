@@ -91,6 +91,5 @@ private fun ErrorScreenPreview() {
         mainTextId = R.string.common_error,
         extraTextId = R.string.internet_error
     ) {
-
     }
 }
