@@ -134,8 +134,7 @@ struct ConsumerCartSuccessScreen: View {
                         .padding()
                         .foregroundColor(Color("surface"))
                         .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                        .cornerRadius(Diems.BUTTON_RADIUS)
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.bottom, Diems.MEDIUM_PADDING)

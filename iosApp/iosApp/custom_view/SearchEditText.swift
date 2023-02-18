@@ -17,7 +17,7 @@ struct SearchEditTextView: View {
     @Binding var text: String
     let limit:Int
     
-    @Binding var list:[StreetItem]
+    @State var list:[StreetItem]
     
     @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""

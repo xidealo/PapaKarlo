@@ -12,7 +12,7 @@ struct UserAddressListView: View {
     
     var viewModel = UserAddressListViewModel(
         getUserAddressList: iosComponent.provideGetUserAddressListUseCase(),
-        addressInteractor: iosComponent.provideIAddressInteractor()
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
     
     @State var userAddressViewState = UserAddressListState(
@@ -59,7 +59,7 @@ struct UserAddressListView: View {
                     userAddressViewState = addressListVM!
                 }
                 // work with actions
-                //почему-то тут не хочет слушать экшены (уточнить у ребят)
+                //UPDATE (переделать через StateObject как на создании адреса)
 //                print("eventsS \(userAddressViewState.state)")
 //                userAddressViewState.eventList.forEach { event in
 //                    switch(event){
@@ -133,7 +133,6 @@ struct SuccessAddressListView: View {
                     userAddressListState = addressListVM!
                 }
                 // work with actions
-                print("eventsS \(userAddressListState.state)")
                 userAddressListState.eventList.forEach { event in
                     switch(event){
                     case is UserAddressListStateEventGoBack : self.mode.wrappedValue.dismiss()
@@ -164,9 +163,13 @@ struct EmptyAddressListView: View {
         VStack(spacing:0){
             Spacer()
             
-            Image("EmptyPage")
-            
-            Text(Strings.MSG_ADDRESS_LIST_EMPTY_ADDRESSES).multilineTextAlignment(.center)
+            DefaultImage(imageName: "EmptyPage")
+
+            Text(Strings.MSG_ADDRESS_LIST_EMPTY_ADDRESSES)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.top, Diems.SMALL_PADDING)
+
             Spacer()
             
             NavigationLink(

@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.create_address
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
@@ -17,15 +18,15 @@ class CreateAddressViewModel(
     private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedViewModel() {
 
-    private val mutableStreetListState: MutableStateFlow<CreateAddressState> =
-        MutableStateFlow(CreateAddressState())
-    val streetListState: StateFlow<CreateAddressState> =
-        mutableStreetListState.asCommonStateFlow()
+    private val mutableStreetListState = MutableStateFlow(CreateAddressState())
+    val streetListState = mutableStreetListState.asCommonStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+
         mutableStreetListState.update {
             it.copy(
-                state = CreateAddressState.State.Error(throwable)
+                state = CreateAddressState.State.Error(throwable),
+                isCreateLoading = false
             )
         }
     }
@@ -72,73 +73,40 @@ class CreateAddressViewModel(
             }
     }
 
-    fun checkStreetError(streetText: String) {
-        if (!isCorrect(streetText))
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasStreetError = true
-                )
-            }
+    fun hasStreetError(streetText: String): Boolean {
+        return !isCorrect(streetText)
     }
 
-    fun checkHouseError(houseText: String) {
-        if (houseText.isEmpty()) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasHouseError = CreateAddressState.FieldError.INCORRECT
-                )
-            }
+    fun hasIncorrectHouseError(houseText: String): CreateAddressState.FieldError? {
+        return if (houseText.isEmpty()) {
+            CreateAddressState.FieldError.INCORRECT
+        } else {
+            null
         }
     }
 
-    fun checkHouseMaxLengthError(houseText: String) {
-        if (houseText.length > 5) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasHouseError = CreateAddressState.FieldError.LENGTH
-                )
-            }
+    fun hasHouseMaxLengthError(houseText: String): CreateAddressState.FieldError? {
+        return if (houseText.isEmpty()) {
+            CreateAddressState.FieldError.LENGTH
+        } else {
+            null
         }
     }
 
-    fun checkFlatMaxLengthError(flatText: String) {
-        if (flatText.length > 5) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasFlatError = true
-                )
-            }
-        }
+    fun hasFlatMaxLengthError(flatText: String): Boolean {
+        return flatText.length > 5
     }
 
-    fun checkEntranceMaxLengthError(entranceText: String) {
-        if (entranceText.length > 5) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasEntranceError = true
-                )
-            }
-        }
+    fun hasEntranceMaxLengthError(entranceText: String): Boolean {
+        return entranceText.length > 5
     }
 
-    fun checkFloorMaxLengthError(floorText: String) {
-        if (floorText.length > 5) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasFloorError = true
-                )
-            }
-        }
+    fun hasFloorMaxLengthError(floorText: String): Boolean {
+        return floorText.length > 5
     }
 
-    fun checkCommentMaxLengthError(commentText: String) {
-        if (commentText.length > 100) {
-            mutableStreetListState.update { oldState ->
-                oldState.copy(
-                    hasCommentError = true
-                )
-            }
-        }
+    fun hasCommentMaxLengthError(commentText: String): Boolean {
+        return commentText.length > 100
     }
 
     fun onCreateAddressClicked(
@@ -161,13 +129,16 @@ class CreateAddressViewModel(
             )
         }
 
-        checkStreetError(streetName)
-        checkHouseError(house)
-        checkHouseMaxLengthError(house)
-        checkFlatMaxLengthError(flat)
-        checkEntranceMaxLengthError(entrance)
-        checkFloorMaxLengthError(floor)
-        checkCommentMaxLengthError(comment)
+        mutableStreetListState.update { oldState ->
+            oldState.copy(
+                hasStreetError = hasStreetError(streetName),
+                hasHouseError = hasIncorrectHouseError(house) ?: hasIncorrectHouseError(house),
+                hasFlatError = hasFlatMaxLengthError(flat),
+                hasEntranceError = hasEntranceMaxLengthError(entrance),
+                hasFloorError = hasFloorMaxLengthError(floor),
+                hasCommentError = hasCommentMaxLengthError(comment)
+            )
+        }
 
         if (streetListState.value.hasError) {
             mutableStreetListState.update { oldState ->
@@ -179,6 +150,7 @@ class CreateAddressViewModel(
         }
 
         sharedScope.launch(exceptionHandler) {
+            throw CreateAddressUseCase.NoSelectedCityUuidThrow
             val userAddress = createAddressUseCase(
                 streetName,
                 house,

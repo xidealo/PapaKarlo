@@ -128,8 +128,7 @@ struct EmptyProfileView: View {
                         .padding()
                         .foregroundColor(Color("surface"))
                         .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                        .cornerRadius(Diems.BUTTON_RADIUS)
                 }
             )
         }.padding(Diems.MEDIUM_PADDING)
