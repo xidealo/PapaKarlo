@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.create_address
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
@@ -30,11 +31,12 @@ class CreateAddressViewModel(
     }
 
     fun getStreetList() {
+
         sharedScope.launch(exceptionHandler) {
             val streets = getStreetsUseCase().ifEmpty {
                 mutableStreetListState.update { oldState ->
                     oldState.copy(
-                        state = CreateAddressState.State.Empty
+                        state = CreateAddressState.State.Error(EmptyStreetListException)
                     )
                 }
                 return@launch
@@ -118,7 +120,7 @@ class CreateAddressViewModel(
         mutableStreetListState.update { oldState ->
             oldState.copy(
                 hasStreetError = false,
-                hasHouseError = null,
+                houseFieldError = null,
                 hasFlatError = false,
                 hasEntranceError = false,
                 hasFloorError = false,
@@ -130,7 +132,7 @@ class CreateAddressViewModel(
         mutableStreetListState.update { oldState ->
             oldState.copy(
                 hasStreetError = hasStreetError(streetName),
-                hasHouseError = hasIncorrectHouseError(house) ?: hasHouseMaxLengthError(house),
+                houseFieldError = hasIncorrectHouseError(house) ?: hasHouseMaxLengthError(house),
                 hasFlatError = hasFlatMaxLengthError(flat),
                 hasEntranceError = hasEntranceMaxLengthError(entrance),
                 hasFloorError = hasFloorMaxLengthError(floor),
@@ -148,7 +150,6 @@ class CreateAddressViewModel(
         }
 
         sharedScope.launch(exceptionHandler) {
-            throw CreateAddressUseCase.NoSelectedCityUuidThrow
             val userAddress = createAddressUseCase(
                 streetName,
                 house,

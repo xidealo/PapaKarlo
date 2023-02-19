@@ -1,6 +1,10 @@
 package com.bunbeauty.shared.domain.interactor.address
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
+import com.bunbeauty.shared.domain.exeptions.NoTokenException
+import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.repo.StreetRepo
@@ -19,11 +23,11 @@ class CreateAddressUseCase(
         comment: String,
         floor: String,
     ): UserAddress? {
-        val token = dataStoreRepo.getToken() ?: throw NoUserUuidThrow
-        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidThrow
+        val token = dataStoreRepo.getToken() ?: throw NoTokenException
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException
         val street =
             streetRepo.getStreetByNameAndCityUuid(streetName, cityUuid)
-                ?: throw NoStreetByNameAndCityUuidThrow
+                ?: throw NoStreetByNameAndCityUuidException
         val createdUserAddress = CreatedUserAddress(
             house = house,
             flat = flat,
@@ -35,8 +39,4 @@ class CreateAddressUseCase(
         )
         return userAddressRepo.saveUserAddress(token, createdUserAddress)
     }
-
-    object NoUserUuidThrow : Throwable()
-    object NoSelectedCityUuidThrow : Throwable()
-    object NoStreetByNameAndCityUuidThrow : Throwable()
 }

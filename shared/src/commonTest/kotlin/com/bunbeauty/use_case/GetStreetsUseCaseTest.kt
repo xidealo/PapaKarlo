@@ -1,6 +1,8 @@
 package com.bunbeauty.use_case
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.model.category.Category
 import com.bunbeauty.shared.domain.model.product.MenuProduct
@@ -46,23 +48,23 @@ internal class GetStreetsUseCaseTest {
     }
 
     @Test
-    fun `return NoUserUuidThrow when user has no uuid`() = runTest {
+    fun `return NoUserUuidException when user has no uuid`() = runTest {
         coEvery { dataStoreRepo.getUserUuid() } returns null
         coEvery { streetRepo.getStreetList(any(), any()) } returns testStreetList
 
         assertFailsWith(
-            exceptionClass = GetStreetsUseCase.NoUserUuidThrow::class,
+            exceptionClass = NoUserUuidException::class,
             block = { getStreetsUseCase() }
         )
     }
 
     @Test
-    fun `return NoSelectedCityUuidThrow when city is not selected has no uuid`() = runTest {
+    fun `return NoSelectedCityUuidException when city is not selected has no uuid`() = runTest {
         coEvery { dataStoreRepo.getSelectedCityUuid() } returns null
         coEvery { streetRepo.getStreetList(any(), any()) } returns testStreetList
 
         assertFailsWith(
-            exceptionClass = GetStreetsUseCase.NoSelectedCityUuidThrow::class,
+            exceptionClass = NoSelectedCityUuidException::class,
             block = { getStreetsUseCase() }
         )
     }

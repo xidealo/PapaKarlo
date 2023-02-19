@@ -4,7 +4,7 @@ data class CreateAddressState(
     val streetItemList: List<StreetItem> = emptyList(),
     val state: State = State.Loading,
     val hasStreetError: Boolean = false,
-    val hasHouseError: FieldError? = null,
+    val houseFieldError: FieldError? = null,
     val hasFlatError: Boolean = false,
     val hasEntranceError: Boolean = false,
     val hasFloorError: Boolean = false,
@@ -14,7 +14,7 @@ data class CreateAddressState(
 ) {
 
     val hasError =
-        hasStreetError || hasHouseError != null
+        hasStreetError || houseFieldError != null
                 || hasFlatError || hasEntranceError || hasFloorError || hasCommentError
 
     enum class FieldError {
@@ -25,7 +25,6 @@ data class CreateAddressState(
     sealed class State {
         object Success : State()
         object Loading : State()
-        object Empty : State()
         data class Error(val throwable: Throwable) : State()
     }
 

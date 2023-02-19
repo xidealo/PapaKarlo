@@ -34,8 +34,10 @@ import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.address.ui.auto_complete_text_field.AutoCompleteEditText
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
-import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
+import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
+import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
+import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.presentation.create_address.CreateAddressState
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,7 +68,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
             is CreateAddressState.State.Loading -> LoadingScreen()
             is CreateAddressState.State.Error -> {
                 when (state.throwable) {
-                    is GetStreetsUseCase.NoSelectedCityUuidThrow, CreateAddressUseCase.NoSelectedCityUuidThrow -> {
+                    is NoSelectedCityUuidException -> {
                         ErrorScreen(
                             mainTextId = R.string.error_create_address_no_selected_city,
                             extraTextId = R.string.error_create_address_no_selected_city_help
@@ -74,7 +76,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                             viewModel.getStreetList()
                         }
                     }
-                    is GetStreetsUseCase.NoUserUuidThrow, CreateAddressUseCase.NoUserUuidThrow -> {
+                    is NoUserUuidException -> {
                         ErrorScreen(
                             mainTextId = R.string.error_create_address_no_selected_city,
                             extraTextId = R.string.error_create_address_no_selected_city_help
@@ -82,11 +84,16 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                             viewModel.getStreetList()
                         }
                     }
-                    is CreateAddressUseCase.NoStreetByNameAndCityUuidThrow -> {
+                    is NoStreetByNameAndCityUuidException -> {
                         ErrorScreen(
                             mainTextId = R.string.error_create_address_no_street_by_city_uuid_and_name,
                             extraTextId = R.string.error_create_address_no_street_by_city_uuid_and_name_help
                         ) {
+                            viewModel.getStreetList()
+                        }
+                    }
+                    is EmptyStreetListException -> {
+                        ErrorScreen(mainTextId = R.string.error_create_address_loading) {
                             viewModel.getStreetList()
                         }
                     }
@@ -98,11 +105,6 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                             viewModel.getStreetList()
                         }
                     }
-                }
-            }
-            is CreateAddressState.State.Empty -> {
-                ErrorScreen(mainTextId = R.string.error_create_address_loading) {
-                    viewModel.getStreetList()
                 }
             }
         }
@@ -163,7 +165,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     textFieldValue = houseText,
                     labelStringId = R.string.hint_create_address_house,
                     editTextType = EditTextType.TEXT,
-                    errorMessageId = when (state.hasHouseError) {
+                    errorMessageId = when (state.houseFieldError) {
                         CreateAddressState.FieldError.INCORRECT -> R.string.error_create_address_house
                         CreateAddressState.FieldError.LENGTH -> R.string.error_create_address_house_max_length
                         else -> null
@@ -305,7 +307,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         CreateAddressScreen(
             CreateAddressState(
                 state = CreateAddressState.State.Error(
-                    GetStreetsUseCase.NoSelectedCityUuidThrow
+                    NoSelectedCityUuidException
                 )
             )
         )
