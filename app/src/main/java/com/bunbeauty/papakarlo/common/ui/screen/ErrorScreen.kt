@@ -24,7 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun ErrorScreen(
     @StringRes mainTextId: Int,
     @StringRes extraTextId: Int? = null,
-    action: () -> Unit,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -76,9 +76,7 @@ fun ErrorScreen(
             modifier = Modifier
                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            onClick = {
-                action.invoke()
-            },
+            onClick = onClick,
             textStringId = R.string.action_retry
         )
     }

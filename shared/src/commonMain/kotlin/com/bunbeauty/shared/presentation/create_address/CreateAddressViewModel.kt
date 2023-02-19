@@ -2,13 +2,11 @@ package com.bunbeauty.shared.presentation.create_address
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -56,7 +54,7 @@ class CreateAddressViewModel(
         }
     }
 
-    private fun isCorrect(streetText: String): Boolean {
+    private fun isStreetCorrect(streetText: String): Boolean {
         return streetListState.value
             .streetItemList
             .any { street ->
@@ -65,7 +63,7 @@ class CreateAddressViewModel(
     }
 
     fun onStreetTextChanged(streetText: String) {
-        if (isCorrect(streetText))
+        if (isStreetCorrect(streetText))
             mutableStreetListState.update { oldState ->
                 oldState.copy(
                     hasStreetError = false
@@ -74,7 +72,7 @@ class CreateAddressViewModel(
     }
 
     fun hasStreetError(streetText: String): Boolean {
-        return !isCorrect(streetText)
+        return !isStreetCorrect(streetText)
     }
 
     fun hasIncorrectHouseError(houseText: String): CreateAddressState.FieldError? {
@@ -132,7 +130,7 @@ class CreateAddressViewModel(
         mutableStreetListState.update { oldState ->
             oldState.copy(
                 hasStreetError = hasStreetError(streetName),
-                hasHouseError = hasIncorrectHouseError(house) ?: hasIncorrectHouseError(house),
+                hasHouseError = hasIncorrectHouseError(house) ?: hasHouseMaxLengthError(house),
                 hasFlatError = hasFlatMaxLengthError(flat),
                 hasEntranceError = hasEntranceMaxLengthError(entrance),
                 hasFloorError = hasFloorMaxLengthError(floor),

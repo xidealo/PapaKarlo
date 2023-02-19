@@ -30,7 +30,6 @@ internal class MenuProductInteractorTest {
     fun setup() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(Dispatchers.Unconfined)
-        //ConfigurableDispatchers.switchToTest()
     }
 
     @Test
