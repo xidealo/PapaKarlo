@@ -92,6 +92,7 @@ class IosComponent : KoinComponent {
     fun provideGetStreetsUseCase(): GetStreetsUseCase = get()
     fun provideCreateAddressUseCase(): CreateAddressUseCase = get()
     fun provideSaveSelectedUserAddressUseCase(): SaveSelectedUserAddressUseCase = get()
+    fun provideGetLastOrderUseCase(): GetLastOrderUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

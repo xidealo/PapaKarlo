@@ -18,7 +18,7 @@ class ObserveLastOrderUseCase(
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
-        val lastOrder = orderRepo.getLastOrderByUserUuid(token = token, userUuid = userUuid)
+        val lastOrder = orderRepo.getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
 
         return if (lastOrder == null) {
             null to flow { emit(null) }

@@ -11,6 +11,6 @@ class GetLastOrderUseCase(
     suspend operator fun invoke(): LightOrder? {
         val token = dataStoreRepo.getToken() ?: return null
         val userUuid = dataStoreRepo.getUserUuid() ?: return null
-        return orderRepo.getLastOrderByUserUuid(token = token, userUuid = userUuid)
+        return orderRepo.getLastOrderByUserUuidLocalFirst(token = token, userUuid = userUuid)
     }
 }

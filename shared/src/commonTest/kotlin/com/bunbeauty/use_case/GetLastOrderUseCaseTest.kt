@@ -52,7 +52,7 @@ class GetLastOrderUseCaseTest {
 
     @Test
     fun `return null when user are authorized but doesn't have last order `() = runTest {
-        coEvery { orderRepo.getLastOrderByUserUuid(any(), any()) } returns null
+        coEvery { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns null
         assertEquals(null, getLastOrderUseCase())
     }
 
@@ -68,7 +68,7 @@ class GetLastOrderUseCaseTest {
             code = code,
             dateTime = dateTime
         )
-        coEvery { orderRepo.getLastOrderByUserUuid(any(), any()) } returns lightOrder
+        coEvery { orderRepo.getLastOrderByUserUuidLocalFirst(any(), any()) } returns lightOrder
 
         assertEquals(lightOrder, getLastOrderUseCase())
     }
