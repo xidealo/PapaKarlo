@@ -34,6 +34,7 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
@@ -100,11 +101,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
                 ProfileState.State.LOADING -> LoadingScreen()
                 ProfileState.State.ERROR -> {
-                    /*ErrorScreen(
-                        message = stringResource(R.string.error_profile_loading)
+                    ErrorScreen(
+                        mainTextId = R.string.error_profile_loading
                     ) {
                         viewModel.update()
-                    }*/
+                    }
                 }
             }
         }

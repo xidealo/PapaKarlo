@@ -16,6 +16,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
@@ -53,9 +54,9 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
             is State.Success -> CafeListSuccessScreen(cafeItemListState.data)
             is State.Loading -> LoadingScreen()
             is State.Error -> {
-                /*ErrorScreen(cafeItemListState.message) {
+                ErrorScreen(mainTextId = R.string.error_cafe_list_loading) {
                     viewModel.getCafeItemList()
-                }*/
+                }
             }
             else -> Unit
         }

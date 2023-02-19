@@ -30,6 +30,7 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
@@ -68,9 +69,9 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 )
             }
             is State.Error -> {
-                /*ErrorScreen(message = consumerCartState.message) {
+                ErrorScreen(mainTextId = R.string.error_consumer_cart_loading) {
                     viewModel.getConsumerCart()
-                }*/
+                }
             }
         }
     }

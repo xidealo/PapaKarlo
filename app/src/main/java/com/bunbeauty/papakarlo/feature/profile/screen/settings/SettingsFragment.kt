@@ -21,6 +21,7 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
@@ -58,7 +59,9 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                 SettingsScreenSuccessPreview(settingsState)
             }
             SettingsState.State.ERROR -> {
-                // ErrorScreen(message = stringResource(R.string.error_settings_loading))
+                ErrorScreen(mainTextId = R.string.error_settings_loading) {
+                    viewModel.loadData()
+                }
             }
             SettingsState.State.LOADING -> {
                 LoadingScreen()

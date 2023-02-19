@@ -114,7 +114,7 @@
     <string name="action_create_address_save">Сохранить</string>
     <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
     <string name="error_create_address_no_selected_city">Ууупс, кажется, у вас не выбран город</string>
-    <string name="error_create_address_no_selected_city_help">Зайдите в настройки, расположенные в профиле, там можно выбрать город</string>
+    <string name="error_create_address_no_selected_city_help">Выберите город в настройках профиля</string>
     <string name="error_create_address_no_user_uuid">Ууупс, кажется, у вас проблемы с авторизацией</string>
     <string name="error_create_address_no_user_uuid_help">Попробуйте авторизоваться повторно в настройках профиля</string>
     <string name="error_create_address_no_street_by_city_uuid_and_name">Ууупс, кажется, мы не смогли добавить адрес</string>
