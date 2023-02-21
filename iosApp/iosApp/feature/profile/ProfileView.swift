@@ -19,7 +19,7 @@ struct ProfileView: View {
     
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
-        observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
+        getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
     
@@ -63,7 +63,7 @@ struct ProfileView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-               subscribe()
+                subscribe()
             } else if newPhase == .inactive {
                 unsubscribe()
             } else if newPhase == .background {
