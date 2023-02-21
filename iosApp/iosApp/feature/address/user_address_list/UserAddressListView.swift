@@ -148,7 +148,8 @@ struct SuccessAddressListView: View {
         .onDisappear(){
             listener?.close()
             listener = nil
-        }.overlay(overlayView: ToastView(
+        }.overlay(
+            overlayView: ToastView(
             toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
             show: $show, backgroundColor:Color("primary"),
             foregaroundColor: Color("onPrimary")), show: $show)

@@ -148,11 +148,21 @@ struct SuccessProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
+            
+            if(profileViewState.lastOrder != nil){
+                LightOrderItemView(
+                    lightOrder: profileViewState.lastOrder!,
+                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
+                )
+            }
+            
             NavigationCardView(
                 icon: "gearshape",
                 label: Strings.TITLE_PROFILE_SETTINGS,
                 destination: SettingsView()
             )
+            .padding(.top, Diems.SMALL_PADDING)
+
             
             NavigationCardView(
                 icon: "AddressIcon",
@@ -189,14 +199,6 @@ struct SuccessProfileView: View {
                 destination: AboutAppView()
             )
             .padding(.top, Diems.SMALL_PADDING)
-            
-            if(profileViewState.lastOrder != nil){
-                LightOrderItemView(
-                    lightOrder: profileViewState.lastOrder!,
-                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-            }
             
             Spacer()
             

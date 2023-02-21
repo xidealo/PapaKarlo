@@ -35,6 +35,8 @@ struct CreateAddressView: View {
     
     @Binding var show:Bool
     
+    @FocusState private var isTextFieldFocused: Bool
+
     @State var showError:Bool = false
     
     @StateObject var viewModel:CreateAddressHolder = CreateAddressHolder()
@@ -67,74 +69,81 @@ struct CreateAddressView: View {
             )
             switch(createAddressState.state){
             case is CreateAddressState.StateLoading: LoadingView()
-            case is CreateAddressState.StateSuccess: VStack{
-                VStack(spacing:0){
-                    SearchEditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_STREET,
-                        text: $street,
-                        limit: 100,
-                        list: createAddressState.streetItemList.map({ street in
-                            StreetItem(
-                                id: street.uuid,
-                                name: street.name
-                            )
-                        }),
-                        hasError: $hasStreetError,
-                        errorMessage: "Выберите улицу из списка"
-                    )
-                    .padding(.top, Diems.MEDIUM_PADDING)
-                    
-                    EditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
-                        text: $house,
-                        limit: 5,
-                        hasError: $hasHouseError,
-                        errorMessage: "Введите номер дома"
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    
-                    EditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_FLAT,
-                        text: $flat,
-                        limit: 5,
-                        hasError: $hasFlatError,
-                        errorMessage: "Максимальная длина поля 5"
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .keyboardType(.numberPad)
-                    
-                    EditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
-                        text: $entarance,
-                        limit: 5,
-                        hasError: $hasEntaranceError,
-                        errorMessage: "Максимальная длина поля 5"
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .keyboardType(.numberPad)
-                    
-                    EditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
-                        text: $floor,
-                        limit: 5,
-                        hasError: $hasFloorError,
-                        errorMessage: "Максимальная длина поля 5"
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .keyboardType(.numberPad)
-                    
-                    EditTextView(
-                        hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
-                        text: $comment,
-                        limit: 100,
-                        hasError: $hasCommentError,
-                        errorMessage: "Максимальная длина поля 100"
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
+            case is CreateAddressState.StateSuccess: ZStack (alignment: .bottom){
+                ScrollView{
+                    VStack(spacing:0){
+                        SearchEditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_STREET,
+                            text: $street,
+                            limit: 100,
+                            list: createAddressState.streetItemList.map({ street in
+                                StreetItem(
+                                    id: street.uuid,
+                                    name: street.name
+                                )
+                            }),
+                            hasError: $hasStreetError,
+                            errorMessage: "Выберите улицу из списка"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.MEDIUM_PADDING)
+                        
+                        EditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
+                            text: $house,
+                            limit: 5,
+                            hasError: $hasHouseError,
+                            errorMessage: "Введите номер дома"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        
+                        EditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_FLAT,
+                            text: $flat,
+                            limit: 5,
+                            hasError: $hasFlatError,
+                            errorMessage: "Максимальная длина поля 5"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .keyboardType(.numberPad)
+                        
+                        EditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
+                            text: $entarance,
+                            limit: 5,
+                            hasError: $hasEntaranceError,
+                            errorMessage: "Максимальная длина поля 5"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .keyboardType(.numberPad)
+                        
+                        EditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
+                            text: $floor,
+                            limit: 5,
+                            hasError: $hasFloorError,
+                            errorMessage: "Максимальная длина поля 5"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .keyboardType(.numberPad)
+                        
+                        EditTextView(
+                            hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
+                            text: $comment,
+                            limit: 100,
+                            hasError: $hasCommentError,
+                            errorMessage: "Максимальная длина поля 100"
+                        )
+                        .focused($isTextFieldFocused)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.bottom, isTextFieldFocused ? 60 :  0)
+                    }
                 }
-                
-                Spacer()
-                
+                                
                 Button(
                     action: {
                         viewModel.viewModel.onCreateAddressClicked(
@@ -159,8 +168,8 @@ struct CreateAddressView: View {
                             .cornerRadius(Diems.BUTTON_RADIUS)
                     }
                 }
-                .padding(.bottom, Diems.MEDIUM_PADDING)
             }
+            .padding(.bottom, Diems.MEDIUM_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
             .overlay(
                 overlayView: ToastView(
