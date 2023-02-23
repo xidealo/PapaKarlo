@@ -11,7 +11,6 @@ import com.bunbeauty.papakarlo.feature.auth.FirebaseAuthRepository
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
-import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginState
 import com.bunbeauty.shared.Constants.WRONG_CODE
 import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
