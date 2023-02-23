@@ -13,27 +13,40 @@ import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
-    private val mutableIsLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = mutableIsLoading.asStateFlow()
+    private val mutableLoginState = MutableStateFlow(LoginState())
+    val loginState = mutableLoginState.asStateFlow()
+
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                state = LoginState.State.Error(throwable)
+            )
+        }
+    }
 
     private val successLoginDirection: SuccessLoginDirection by lazy {
         savedStateHandle["successLoginDirection"] ?: BACK_TO_PROFILE
     }
 
     fun setNotLoading() {
-        mutableIsLoading.value = false
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                state = LoginState.State.Success
+            )
+        }
     }
 
     fun formatPhoneNumber(inputPhoneNumber: String): String {
@@ -115,25 +128,41 @@ class LoginViewModel(
     }
 
     fun onNextClick() {
-        mutableIsLoading.value = true
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                state = LoginState.State.Loading
+            )
+        }
     }
 
     fun onSuccessVerified() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             userInteractor.login(
                 firebaseUserUuid = firebaseAuthRepository.firebaseUserUuid,
                 firebaseUserPhone = firebaseAuthRepository.firebaseUserPhone
             )
 
             when (successLoginDirection) {
-                BACK_TO_PROFILE -> router.navigate(LoginFragmentDirections.backToProfileFragment())
-                TO_CREATE_ORDER -> router.navigate(LoginFragmentDirections.toCreateOrderFragment())
+                BACK_TO_PROFILE -> mutableLoginState.update { state ->
+                    state.copy(
+                        eventList = state.eventList + LoginState.Event.NavigateBackToProfileFragment
+                    )
+                }
+                TO_CREATE_ORDER -> mutableLoginState.update { state ->
+                    state.copy(
+                        eventList = state.eventList + LoginState.Event.NavigateToCreateOrderFragment
+                    )
+                }
             }
         }
     }
 
     fun onVerificationError(error: String) {
-        mutableIsLoading.value = false
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                state = LoginState.State.Success
+            )
+        }
         val errorResId = when (error) {
             TOO_MANY_REQUESTS -> {
                 R.string.error_login_too_many_requests
@@ -148,16 +177,24 @@ class LoginViewModel(
     fun onCodeSent(
         phone: String,
         verificationId: String,
-        resendToken: PhoneAuthProvider.ForceResendingToken
+        resendToken: PhoneAuthProvider.ForceResendingToken,
     ) {
-        router.navigate(
-            LoginFragmentDirections.toConfirmFragment(
-                phone,
-                verificationId,
-                resendToken,
-                successLoginDirection
+        mutableLoginState.update { state ->
+            state.copy(
+                eventList = state.eventList + LoginState.Event.NavigateToConfirmFragment(
+                    phone = phone,
+                    verificationId = verificationId,
+                    resendToken = resendToken,
+                    successLoginDirection = successLoginDirection,
+                )
             )
-        )
+        }
+    }
+
+    fun consumeEventList(eventList: List<LoginState.Event>) {
+        mutableLoginState.update { state ->
+            state.copy(eventList = state.eventList - eventList.toSet())
+        }
     }
 
     private fun Char.isNumber(): Boolean {

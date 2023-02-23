@@ -21,7 +21,7 @@ import org.koin.core.component.inject
 @Deprecated("Use SharedViewModel")
 abstract class BaseViewModel : ViewModel(), KoinComponent {
 
-    @Deprecated("Use action navigation on Fragments, example MenuFragment")
+    @Deprecated("Use event navigation on Fragments, example MenuFragment")
     val router: Router by inject()
 
     val resourcesProvider: IResourcesProvider by inject()
@@ -43,6 +43,7 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    @Deprecated("Use event")
     fun showError(error: String, isTop: Boolean) {
         viewModelScope.launch {
             mutableError.emit(
@@ -66,7 +67,7 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     protected fun <T : Any?> T?.toState(errorMessage: String? = null): State<T> {
         return if (this == null) {
-            State.Error(errorMessage ?: resourcesProvider.getString(R.string.error_common))
+            State.Error(errorMessage ?: resourcesProvider.getString(R.string.common_error))
         } else {
             if (this is List<*> && isEmpty()) {
                 State.Empty()
