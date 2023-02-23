@@ -44,7 +44,10 @@ class OrderRepository(
         }.filterNotNull()
     }
 
-    override suspend fun observeOrderListUpdates(token: String, userUuid: String): Pair<String?, Flow<List<Order>>> {
+    override suspend fun observeOrderListUpdates(
+        token: String,
+        userUuid: String,
+    ): Pair<String?, Flow<List<Order>>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
         return uuid to orderUpdatesFlow.map {
             orderDao.getOrderWithProductListByUserUuid(userUuid).groupBy { orderWithProductEntity ->
@@ -73,7 +76,10 @@ class OrderRepository(
         ) ?: emptyList()
     }
 
-    override suspend fun getLastOrderByUserUuid(token: String, userUuid: String): LightOrder? {
+    override suspend fun getLastOrderByUserUuidNetworkFirst(
+        token: String,
+        userUuid: String,
+    ): LightOrder? {
         return networkConnector.getOrderList(token = token, count = 1).getNullableResult(
             onError = {
                 orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
@@ -85,6 +91,24 @@ class OrderRepository(
                 }
             }
         )
+    }
+
+    override suspend fun getLastOrderByUserUuidLocalFirst(
+        token: String,
+        userUuid: String,
+    ): LightOrder? {
+        return orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
+            ?: networkConnector.getOrderList(token = token, count = 1).getNullableResult(
+                onError = {
+                    null
+                },
+                onSuccess = { orderServerList ->
+                    orderServerList.results.firstOrNull()?.let { orderServer ->
+                        saveOrderLocally(orderServer)
+                        orderMapper.toLightOrder(orderServer)
+                    }
+                }
+            )
     }
 
     override suspend fun getOrderByUuid(token: String, orderUuid: String): Order? {

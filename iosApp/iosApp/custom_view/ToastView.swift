@@ -26,7 +26,7 @@ struct ToastView: View {
                 .frame(maxWidth: .infinity)
                 .background(backgroundColor)
                 .foregroundColor(foregaroundColor)
-                .cornerRadius(Diems.MEDIUM_RADIUS)
+                .cornerRadius(Diems.BUTTON_RADIUS)
                 .padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth: .infinity)
