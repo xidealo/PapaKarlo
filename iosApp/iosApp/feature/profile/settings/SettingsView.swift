@@ -47,38 +47,42 @@ struct SettingsView: View {
                 }
             )
             
-            VStack(spacing:0){
-                TextCard(
-                    placeHolder: Strings.HINT_SETTINGS_PHONE,
-                    text: state.settings?.phoneNumber ?? ""
-                )
-                //TODO(Add Email in next Version)
-                
-                NavigationTextCard(
-                    placeHolder: Strings.HINT_SETTINGS_CITY,
-                    text: state.selectedCity?.name ?? "",
-                    destination:ChangeCityView()
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-                
-                Spacer()
-                
-                Button(action: {
-                    showingAlert = true
-                }) {
-                    Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("errorColor"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
-                    Button("Да") {
-                        viewModel.disableUser()
+            if(state.state == SettingsState.State.loading){
+                LoadingView()
+            }else{
+                VStack(spacing:0){
+                    TextCard(
+                        placeHolder: Strings.HINT_SETTINGS_PHONE,
+                        text: state.settings?.phoneNumber ?? ""
+                    )
+                    //TODO(Add Email in next Version)
+                    
+                    NavigationTextCard(
+                        placeHolder: Strings.HINT_SETTINGS_CITY,
+                        text: state.selectedCity?.name ?? "",
+                        destination:ChangeCityView()
+                    )
+                    .padding(.top, Diems.SMALL_PADDING)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        showingAlert = true
+                    }) {
+                        Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(Color("errorColor"))
+                            .cornerRadius(Diems.MEDIUM_RADIUS)
+                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
+                        Button("Да") {
+                            viewModel.disableUser()
+                        }
+                        Button("Нет", role: .cancel) { }
                     }
-                    Button("Нет", role: .cancel) { }
-                }
-            }.padding(Diems.MEDIUM_PADDING)
+                }.padding(Diems.MEDIUM_PADDING)
+            }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))

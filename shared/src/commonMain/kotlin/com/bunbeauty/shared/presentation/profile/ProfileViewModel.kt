@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -14,8 +15,9 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userInteractor: IUserInteractor,
+    private val getLastOrderUseCase: GetLastOrderUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
@@ -31,7 +33,10 @@ class ProfileViewModel(
         sharedScope.launch {
             mutableProfileState.update { profileState ->
                 if (userInteractor.isUserAuthorize()) {
-                    profileState.copy(state = ProfileState.State.AUTHORIZED)
+                    profileState.copy(
+                        state = ProfileState.State.AUTHORIZED,
+                        lastOrder = getLastOrderUseCase()
+                    )
                 } else {
                     profileState.copy(state = ProfileState.State.UNAUTHORIZED)
                 }
