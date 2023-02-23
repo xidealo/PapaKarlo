@@ -124,8 +124,7 @@ struct SuccessAddressListView: View {
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    .cornerRadius(Diems.BUTTON_RADIUS)
             }.padding(Diems.MEDIUM_PADDING)
         }.onAppear(){
             viewModel.addressListState.watch { addressListVM in
@@ -149,7 +148,8 @@ struct SuccessAddressListView: View {
         .onDisappear(){
             listener?.close()
             listener = nil
-        }.overlay(overlayView: ToastView(
+        }.overlay(
+            overlayView: ToastView(
             toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
             show: $show, backgroundColor:Color("primary"),
             foregaroundColor: Color("onPrimary")), show: $show)

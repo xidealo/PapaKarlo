@@ -15,7 +15,7 @@ class UserInteractor(
     private val userRepo: UserRepo,
     private val dataStoreRepo: DataStoreRepo,
 ) : IUserInteractor {
-
+    @Throws(Throwable::class)
     override suspend fun login(firebaseUserUuid: String?, firebaseUserPhone: String?) {
         if (firebaseUserUuid != null && firebaseUserPhone != null) {
             val loginResponse = userRepo.login(firebaseUserUuid, firebaseUserPhone)

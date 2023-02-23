@@ -152,4 +152,10 @@ internal fun useCaseModule() = module {
             userAddressRepo = get(),
         )
     }
+    factory{
+        GetLastOrderUseCase(
+            dataStoreRepo = get(),
+            orderRepo = get()
+        )
+    }
 }

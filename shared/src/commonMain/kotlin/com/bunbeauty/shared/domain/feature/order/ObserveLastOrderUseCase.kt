@@ -2,7 +2,6 @@ package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.order.LightOrder
-import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -19,7 +18,7 @@ class ObserveLastOrderUseCase(
     suspend operator fun invoke(): Pair<String?, Flow<LightOrder?>> {
         val token = dataStoreRepo.getToken() ?: return null to flow {}
         val userUuid = dataStoreRepo.getUserUuid() ?: return null to flow {}
-        val lastOrder = orderRepo.getLastOrderByUserUuid(token = token, userUuid = userUuid)
+        val lastOrder = orderRepo.getLastOrderByUserUuidNetworkFirst(token = token, userUuid = userUuid)
 
         return if (lastOrder == null) {
             null to flow { emit(null) }
