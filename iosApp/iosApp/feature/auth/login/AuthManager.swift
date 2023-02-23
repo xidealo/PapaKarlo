@@ -8,9 +8,6 @@
 import Foundation
 import FirebaseAuth
 
-
-
-
 class AuthManager {
     private let auth = Auth.auth()
 

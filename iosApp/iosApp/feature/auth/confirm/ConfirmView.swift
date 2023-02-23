@@ -16,6 +16,8 @@ struct ConfirmView: View {
     private let phone:String
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
+    
+    @State var showLoginError:Bool = false
 
     init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         viewModel = ConfirmViewModel(auth: auth)
@@ -37,13 +39,23 @@ struct ConfirmView: View {
                 switch(action){
                 case ConfirmAction.back : rootIsActive = false
                     isGoToCreateOrder = true
+                case ConfirmAction.showCodeError: showLoginError = true
+                case ConfirmAction.showLoginError : showLoginError = true
                 }
+                
             }
             
             if !confirmViewState.actionList.isEmpty{
                 viewModel.clearActions()
             }
         })
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
+                show: $showLoginError,
+                backgroundColor:Color("errorColor"),
+                foregaroundColor: Color("onErrorColor")
+            ), show: $showLoginError)
      
     }
 }
