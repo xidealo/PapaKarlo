@@ -58,6 +58,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.setSuccessState()
         viewBinding.fragmentLoginCvMain.compose {
             val loginState by viewModel.loginState.collectAsStateWithLifecycle()
             LoginScreen(loginState)
@@ -97,6 +98,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                             event.resendToken,
                             event.successLoginDirection
                         )
+                    )
+                }
+                is LoginState.Event.SendCode -> {
+                    phoneVerificationUtil.sendVerificationCode(
+                        phone = event.phone,
+                        activity = requireActivity()
                     )
                 }
             }
@@ -190,11 +197,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             MainButton(textStringId = R.string.action_login_continue) {
                 phoneError = viewModel.checkPhoneNumberError(phoneText.text)
                 if (phoneError == null) {
-                    phoneVerificationUtil.sendVerificationCode(
-                        phone = phoneText.text,
-                        activity = requireActivity()
-                    )
-                    viewModel.onCodeSentClick()
+                    viewModel.onNextClick(phone = phoneText.text)
                 }
             }
         }

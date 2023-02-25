@@ -127,10 +127,11 @@ class LoginViewModel(
         }
     }
 
-    fun onCodeSentClick() {
+    fun onNextClick(phone: String) {
         mutableLoginState.update { oldState ->
             oldState.copy(
-                state = LoginState.State.Loading
+                state = LoginState.State.Loading,
+                eventList = oldState.eventList + LoginState.Event.SendCode(phone = phone)
             )
         }
     }
@@ -187,7 +188,6 @@ class LoginViewModel(
                     resendToken = resendToken,
                     successLoginDirection = successLoginDirection,
                 ),
-                state = LoginState.State.Success
             )
         }
     }
