@@ -31,8 +31,13 @@ class CreateAddressViewModel(
     }
 
     fun getStreetList() {
-
         sharedScope.launch(exceptionHandler) {
+            mutableStreetListState.update { oldState ->
+                oldState.copy(
+                    state = CreateAddressState.State.Loading
+                )
+            }
+
             val streets = getStreetsUseCase().ifEmpty {
                 mutableStreetListState.update { oldState ->
                     oldState.copy(

@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.CartViewModel
 import com.bunbeauty.papakarlo.common.view_model.send
@@ -48,7 +47,7 @@ class MenuViewModel(
                         selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
                     }
                     toMenu(menuSectionList)
-                }.toState(resourcesProvider.getString(R.string.error_menu_loading))
+                }.toState()
         }
     }
 
