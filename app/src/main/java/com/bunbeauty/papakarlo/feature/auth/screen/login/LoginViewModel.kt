@@ -41,7 +41,7 @@ class LoginViewModel(
         savedStateHandle["successLoginDirection"] ?: BACK_TO_PROFILE
     }
 
-    fun setNotLoading() {
+    fun setSuccessState() {
         mutableLoginState.update { oldState ->
             oldState.copy(
                 state = LoginState.State.Success
@@ -127,7 +127,7 @@ class LoginViewModel(
         }
     }
 
-    fun onNextClick() {
+    fun onCodeSentClick() {
         mutableLoginState.update { oldState ->
             oldState.copy(
                 state = LoginState.State.Loading
@@ -186,7 +186,8 @@ class LoginViewModel(
                     verificationId = verificationId,
                     resendToken = resendToken,
                     successLoginDirection = successLoginDirection,
-                )
+                ),
+                state = LoginState.State.Success
             )
         }
     }
