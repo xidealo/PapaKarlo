@@ -27,15 +27,27 @@ class ConfirmViewModel: ObservableObject {
         
         auth.verifyCode(smsCode: code) { result in
             if(result){
-                iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
-                    if(err == nil){
-                        DispatchQueue.main.async{
-                            self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
+               iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
+                        if(err == nil){
+                            DispatchQueue.main.async{
+                                self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
+                            }
+                        }else{
+                            if(err is NotAuthorizeException){
+                                self.confirmViewState  = ConfirmViewState(
+                                    confirmState: ConfirmState.error,
+                                    actionList: [ConfirmAction.showLoginError]
+                                )
+                            }else{
+                                self.confirmViewState  = ConfirmViewState(
+                                    confirmState: ConfirmState.success,
+                                    actionList: [ConfirmAction.showCodeError]
+                                )
+                            }
+                            
                         }
-                    }else{
-                        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
                     }
-                }
+            
             }else{
                 self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
             }
@@ -52,5 +64,5 @@ enum ConfirmState{
 }
 
 enum ConfirmAction {
-   case back
+   case back, showLoginError, showCodeError
 }

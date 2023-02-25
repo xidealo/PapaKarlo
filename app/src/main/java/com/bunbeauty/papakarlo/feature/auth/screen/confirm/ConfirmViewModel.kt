@@ -16,17 +16,19 @@ import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseViewModel() {
 
     private val successLoginDirection: SuccessLoginDirection =
@@ -48,6 +50,14 @@ class ConfirmViewModel(
             )
         )
     val confirmState: StateFlow<Confirmation> = mutableConfirmState.asStateFlow()
+
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        showError(resourcesProvider.getString(R.string.error_something_went_wrong), true)
+
+        mutableConfirmState.update { oldState ->
+            oldState.copy(isCodeChecking = false)
+        }
+    }
 
     init {
         startResendTimer()
@@ -83,7 +93,7 @@ class ConfirmViewModel(
     }
 
     fun onSuccessVerified() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             userInteractor.login(
                 firebaseUserUuid = firebaseAuthRepository.firebaseUserUuid,
                 firebaseUserPhone = firebaseAuthRepository.firebaseUserPhone
@@ -98,7 +108,7 @@ class ConfirmViewModel(
 
     private fun startResendTimer() {
         mutableConfirmState.value = mutableConfirmState.value.copy(resendSeconds = timerSecondCount)
-        timerJob = viewModelScope.launch {
+        timerJob = viewModelScope.launch(exceptionHandler) {
             while (mutableConfirmState.value.resendSeconds > 0) {
                 delay(timerIntervalMillis)
                 mutableConfirmState.value = mutableConfirmState.value.run {

@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,11 +26,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
@@ -50,13 +54,17 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     })
     override val viewBinding by viewBinding(FragmentLoginBinding::bind)
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.setNotLoading()
+        viewModel.setSuccessState()
         viewBinding.fragmentLoginCvMain.compose {
-            val isLoading by viewModel.isLoading.collectAsState()
-            LoginScreen(isLoading)
+            val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+            LoginScreen(loginState)
+            LaunchedEffect(loginState.eventList) {
+                handleEventList(loginState.eventList)
+            }
         }
         phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
             viewModel.onCodeSent(
@@ -73,12 +81,53 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
     }
 
+    private fun handleEventList(eventList: List<LoginState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is LoginState.Event.NavigateToCreateOrderFragment -> {
+                    findNavController().navigate(LoginFragmentDirections.toCreateOrderFragment())
+                }
+                is LoginState.Event.NavigateBackToProfileFragment -> {
+                    findNavController().navigate(LoginFragmentDirections.backToProfileFragment())
+                }
+                is LoginState.Event.NavigateToConfirmFragment -> {
+                    findNavController().navigate(
+                        LoginFragmentDirections.toConfirmFragment(
+                            event.phone,
+                            event.verificationId,
+                            event.resendToken,
+                            event.successLoginDirection
+                        )
+                    )
+                }
+                is LoginState.Event.SendCode -> {
+                    phoneVerificationUtil.sendVerificationCode(
+                        phone = event.phone,
+                        activity = requireActivity()
+                    )
+                }
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
     @Composable
-    private fun LoginScreen(isLoading: Boolean) {
-        if (isLoading) {
-            LoadingScreen(background = FoodDeliveryTheme.colors.surface)
-        } else {
-            LoginSuccessScreen()
+    private fun LoginScreen(loginState: LoginState) {
+        when (loginState.state) {
+            is LoginState.State.Loading -> {
+                LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+            }
+            is LoginState.State.Success -> {
+                LoginSuccessScreen()
+            }
+            is LoginState.State.Error -> {
+                ErrorScreen(
+                    mainTextId = R.string.common_error,
+                    extraTextId = R.string.internet_error
+                ) {
+                    viewModel.setSuccessState()
+                }
+            }
         }
     }
 
@@ -148,11 +197,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             MainButton(textStringId = R.string.action_login_continue) {
                 phoneError = viewModel.checkPhoneNumberError(phoneText.text)
                 if (phoneError == null) {
-                    phoneVerificationUtil.sendVerificationCode(
-                        phone = phoneText.text,
-                        activity = requireActivity()
-                    )
-                    viewModel.onNextClick()
+                    viewModel.onNextClick(phone = phoneText.text)
                 }
             }
         }
@@ -161,12 +206,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenPreview() {
-        LoginScreen(false)
+        LoginScreen(
+            LoginState(
+                state = LoginState.State.Success
+            )
+        )
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenLoadingPreview() {
-        LoginScreen(true)
+        LoginScreen(
+            LoginState(
+                state = LoginState.State.Loading
+            )
+        )
     }
 }

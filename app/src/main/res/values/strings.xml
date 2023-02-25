@@ -17,7 +17,6 @@
     <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
     <string name="description_back_icon">Назад</string>
-    <string name="error_common">Ошибка</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
     <string name="action_retry">Повторить попытку</string>
