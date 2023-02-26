@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.city.screen.select_city
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityFragmentDirections.toMenuFragment
@@ -24,7 +23,7 @@ class SelectCityViewModel(
         mutableCityListState.value = State.Loading()
         viewModelScope.launch {
             mutableCityListState.value = cityInteractor.getCityList()
-                .toState(resourcesProvider.getString(R.string.error_select_city_loading))
+                .toState()
         }
     }
 

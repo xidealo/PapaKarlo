@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,6 +26,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -53,12 +54,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     })
     override val viewBinding by viewBinding(FragmentLoginBinding::bind)
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.setNotLoading()
+        viewModel.setSuccessState()
         viewBinding.fragmentLoginCvMain.compose {
-            val loginState by viewModel.loginState.collectAsState()
+            val loginState by viewModel.loginState.collectAsStateWithLifecycle()
             LoginScreen(loginState)
             LaunchedEffect(loginState.eventList) {
                 handleEventList(loginState.eventList)
@@ -98,6 +100,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                         )
                     )
                 }
+                is LoginState.Event.SendCode -> {
+                    phoneVerificationUtil.sendVerificationCode(
+                        phone = event.phone,
+                        activity = requireActivity()
+                    )
+                }
             }
         }
         viewModel.consumeEventList(eventList)
@@ -117,7 +125,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                     mainTextId = R.string.common_error,
                     extraTextId = R.string.internet_error
                 ) {
-                    viewModel.setNotLoading()
+                    viewModel.setSuccessState()
                 }
             }
         }
@@ -189,11 +197,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             MainButton(textStringId = R.string.action_login_continue) {
                 phoneError = viewModel.checkPhoneNumberError(phoneText.text)
                 if (phoneError == null) {
-                    phoneVerificationUtil.sendVerificationCode(
-                        phone = phoneText.text,
-                        activity = requireActivity()
-                    )
-                    viewModel.onNextClick()
+                    viewModel.onNextClick(phone = phoneText.text)
                 }
             }
         }

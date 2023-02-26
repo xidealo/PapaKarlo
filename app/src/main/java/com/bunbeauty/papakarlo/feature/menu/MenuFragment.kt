@@ -32,6 +32,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
@@ -91,9 +92,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 MenuSuccessScreen(menuState.data)
             }
             is State.Error -> {
-               /* ErrorScreen(menuState.message) {
+                ErrorScreen(R.string.error_menu_loading) {
                     viewModel.getMenu()
-                }*/
+                }
             }
             else -> {
                 LoadingScreen()
@@ -126,7 +127,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyListState,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -173,7 +174,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Composable
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyListState,
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

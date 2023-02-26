@@ -24,6 +24,7 @@ data class LoginState(
 
         object NavigateBackToProfileFragment : Event
         object NavigateToCreateOrderFragment : Event
+        data class SendCode(val phone: String) : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
