@@ -113,6 +113,7 @@ struct ConfirmViewSuccessView: View {
                     action: {
                         isEnabled = false
                         timeRemaining = 60
+                        viewModel.resendCode(phone: phone)
                     }
                 ){
                     if(isEnabled){

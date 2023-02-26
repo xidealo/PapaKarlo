@@ -57,6 +57,22 @@ class ConfirmViewModel: ObservableObject {
     func clearActions(){
         self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.success, actionList: [])
     }
+    
+    func resendCode(phone:String){
+        //combine with func on Login
+        let formattedPhone = phone.replace(string: "(", replacement: "")
+            .replace(string: ")", replacement: "")
+            .replace(string: "-", replacement: "")
+            .replace(string: " ", replacement: "")
+        
+        auth.startAuth(phoneNumber: formattedPhone) { result in
+            if(result){
+                print("resend success")
+            }else{
+                print("resend rejected")
+            }
+        }
+    }
 }
 
 enum ConfirmState{
