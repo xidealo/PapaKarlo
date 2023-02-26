@@ -29,6 +29,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         application.registerForRemoteNotifications()
         FirebaseApp.configure()
+        Auth.auth().settings?.isAppVerificationDisabledForTesting = true
         
         return true
     }
