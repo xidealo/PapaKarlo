@@ -46,9 +46,10 @@ fun <T : AutoCompleteEntity> AutoCompleteEditText(
                 listState = if (changedValue.text.isEmpty()) {
                     emptyList()
                 } else {
-                    list.filter { autoCompleteEntity ->
-                        autoCompleteEntity.filter(changedValue.text)
-                    }.take(3)
+//                    list.filter { autoCompleteEntity ->
+//                        autoCompleteEntity.filter(changedValue.text)
+//                    }.take(3)
+                    emptyList()
                 }
             }
         )

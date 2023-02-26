@@ -113,6 +113,24 @@ class CreateAddressViewModel(
         return commentText.length > 100
     }
 
+    fun filter(query: String) {
+        mutableStreetListState.update { oldState ->
+            oldState.copy(
+                suggestedStreetList = if (query.isEmpty()) {
+                    emptyList()
+                } else {
+                    oldState.streetItemList.filter {
+                        query.lowercase().split(" ").all { queryPart ->
+                            it.name.lowercase().split(" ").any { namePart ->
+                                namePart.startsWith(queryPart)
+                            }
+                        } && query != it.name
+                    }.take(3)
+                }
+            )
+        }
+    }
+
     fun onCreateAddressClicked(
         streetName: String,
         house: String,
@@ -136,7 +154,8 @@ class CreateAddressViewModel(
         mutableStreetListState.update { oldState ->
             oldState.copy(
                 hasStreetError = hasStreetError(streetName),
-                houseFieldError = hasIncorrectHouseError(house) ?: hasHouseMaxLengthError(house),
+                houseFieldError = hasIncorrectHouseError(house)
+                    ?: hasHouseMaxLengthError(house),
                 hasFlatError = hasFlatMaxLengthError(flat),
                 hasEntranceError = hasEntranceMaxLengthError(entrance),
                 hasFloorError = hasFloorMaxLengthError(floor),

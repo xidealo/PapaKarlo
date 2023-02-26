@@ -105,12 +105,7 @@ struct ProductDetailsView: View {
             Button(action: {
                 viewModel.addCartProductToCart(menuProductUuid: menuProductUuid)
             }) {
-                Text(Strings.ACTION_PRODUCT_DETAILS_ADD)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.BUTTON_RADIUS)
+                ButtonText(text: Strings.ACTION_PRODUCT_DETAILS_ADD)
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)

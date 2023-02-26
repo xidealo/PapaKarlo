@@ -11,6 +11,7 @@ data class CreateAddressState(
     val hasCommentError: Boolean = false,
     val isCreateLoading: Boolean = false,
     val eventList: List<Event> = emptyList(),
+    val suggestedStreetList: List<StreetItem> = emptyList(),
 ) {
 
     val hasError =
@@ -37,16 +38,7 @@ data class CreateAddressState(
         val uuid: String,
         val name: String,
     ) : AutoCompleteEntity {
-
         override val value: String = name
-
-        override fun filter(query: String): Boolean {
-            return query.lowercase().split(" ").all { queryPart ->
-                name.lowercase().split(" ").any { namePart ->
-                    namePart.startsWith(queryPart)
-                }
-            }
-        }
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)

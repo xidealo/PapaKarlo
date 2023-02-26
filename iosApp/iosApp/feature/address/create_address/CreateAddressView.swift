@@ -42,7 +42,6 @@ struct CreateAddressView: View {
     @StateObject var viewModel:CreateAddressHolder = CreateAddressHolder()
     
     @State var listener: Closeable? = nil
-
     
     @State var createAddressState = CreateAddressState(
         streetItemList: [],
@@ -54,8 +53,11 @@ struct CreateAddressView: View {
         hasFloorError: false,
         hasCommentError: false,
         isCreateLoading: false,
-        eventList: []
+        eventList: [],
+        suggestedStreetList: []
     )
+    
+    @State var filteredList : [StreetItem] = []
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -76,14 +78,12 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_STREET,
                             text: $street,
                             limit: 100,
-                            list: createAddressState.streetItemList.map({ street in
-                                StreetItem(
-                                    id: street.uuid,
-                                    name: street.name
-                                )
-                            }),
+                            list: $filteredList,
                             hasError: $hasStreetError,
-                            errorMessage: "Выберите улицу из списка"
+                            errorMessage: "Выберите улицу из списка",
+                            textChanged: { changedValue in
+                                viewModel.viewModel.filter(query: changedValue)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.MEDIUM_PADDING)
@@ -223,6 +223,12 @@ struct CreateAddressView: View {
                     hasEntaranceError = createAddressState.hasEntranceError
                     hasFloorError = createAddressState.hasFloorError
                     hasCommentError = createAddressState.hasCommentError
+                    filteredList = createAddressState.suggestedStreetList.map({ street in
+                        StreetItem(
+                            id: street.uuid,
+                            name: street.name
+                        )
+                    })
                 }
                 
                 createAddressState.eventList.forEach { event in

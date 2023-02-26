@@ -17,46 +17,28 @@ struct SearchEditTextView: View {
     @Binding var text: String
     let limit:Int
     
-    @State var list:[StreetItem]
+    @Binding var list:[StreetItem]
     
-    @State private var filteredList:[StreetItem] = []
     @State var prevSimbol = ""
     
     @Binding var hasError:Bool
     @State var errorMessage:String = ""
     
+    var textChanged: (String) -> Void
+
     var body: some View {
         VStack{
             EditTextView(hint: hint, text: $text, limit: limit, hasError: $hasError, errorMessage: errorMessage)
                 .onReceive(Just(text)) { str in
                     limitText(limit)
-                    if(str == "") {
-                        filteredList = []
-                        prevSimbol = ""
-                    }else{
-                        if(prevSimbol == str){
-                            return
-                        }else{
-                            prevSimbol = str
-                            filteredList =  Array(list.filter { streetItem in
-                                streetItem.name.lowercased().contains(
-                                    str.lowercased()
-                                        .trimingLeadingSpaces()
-                                        .trimingTrailingSpaces()
-                                )
-                            }.prefix(3))
-                        }
-                    }
+                    textChanged(str)
                 }
             
-            
             LazyVStack{
-                ForEach(filteredList){ street in
+                ForEach(list){ street in
                     Button {
                         prevSimbol = street.name
                         text = street.name
-                        filteredList = []
-                        //invokeAction
                     } label: {
                         Text(street.name)
                             .padding(Diems.SMALL_PADDING)
