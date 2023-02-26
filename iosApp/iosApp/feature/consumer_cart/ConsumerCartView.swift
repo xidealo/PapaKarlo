@@ -153,7 +153,10 @@ struct ConsumerCartEmptyScreen: View {
         VStack(spacing:0){
             Spacer()
             
-            DefaultImage(imageName: "runMan")
+            DefaultImage(imageName: "EmptyCart")
+            
+            BoldText(text: "Корзина пуста")
+                .padding(.top, 32)
             
             Text(Strings.MSG_CART_PRODUCT_EMPTY)
                 .multilineTextAlignment(.center)
@@ -171,8 +174,8 @@ struct ConsumerCartEmptyScreen: View {
                     .padding()
                     .foregroundColor(Color("surface"))
                     .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    .cornerRadius(Diems.BUTTON_RADIUS)
+
             }.padding(Diems.MEDIUM_PADDING)
         }
     }

@@ -23,7 +23,7 @@ struct ErrorView: View {
             BoldText(text: mainText)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.top, 64)
+                .padding(.top, 32)
 
             Text(extratext)
                 .multilineTextAlignment(.center)

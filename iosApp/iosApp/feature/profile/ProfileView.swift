@@ -111,6 +111,9 @@ struct EmptyProfileView: View {
             
             DefaultImage(imageName: "NotLoginnedProfile")
             
+            BoldText(text: "Войдите в профиль")
+                .padding(.top, 32)
+            
             Text(
                 Strings.MSG_PROFILE_NO_PROFILE
             )
