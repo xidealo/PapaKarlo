@@ -142,6 +142,7 @@ struct CreateAddressView: View {
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.bottom, isTextFieldFocused ? 60 :  0)
                     }
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
                                 
                 Button(
@@ -161,16 +162,12 @@ struct CreateAddressView: View {
                             .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
                             .scaleEffect(1.5)
                     }else{
-                        Text(Strings.ACTION_CREATION_ADDRESS_ADD).frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("primary"))
-                            .cornerRadius(Diems.BUTTON_RADIUS)
+                        ButtonText(text: Strings.ACTION_CREATION_ADDRESS_ADD)
                     }
                 }
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
             .padding(.bottom, Diems.MEDIUM_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
             .overlay(
                 overlayView: ToastView(
                     toast: Toast(title: "Что-то пошло не так"),

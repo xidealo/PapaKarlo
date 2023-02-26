@@ -130,11 +130,7 @@ struct ConsumerCartSuccessScreen: View {
                 Button {
                     viewModel.checkAuthorization()
                 } label: {
-                    Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.BUTTON_RADIUS)
+                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.bottom, Diems.MEDIUM_PADDING)
@@ -169,13 +165,7 @@ struct ConsumerCartEmptyScreen: View {
                 isRootActive = false
                 selection = 1
             } label: {
-                Text(Strings.ACTION_CART_PRODUCT_MENU)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.BUTTON_RADIUS)
-
+                ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
             }.padding(Diems.MEDIUM_PADDING)
         }
     }

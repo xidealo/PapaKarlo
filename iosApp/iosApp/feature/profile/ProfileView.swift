@@ -126,12 +126,7 @@ struct EmptyProfileView: View {
                 action: {
                     isActive = true
                 }, label: {
-                    Text(Strings.ACTION_PROFILE_LOGIN)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.BUTTON_RADIUS)
+                    ButtonText(text: Strings.ACTION_PROFILE_LOGIN)
                 }
             )
         }.padding(Diems.MEDIUM_PADDING)
@@ -166,7 +161,6 @@ struct SuccessProfileView: View {
             )
             .padding(.top, Diems.SMALL_PADDING)
 
-            
             NavigationCardView(
                 icon: "AddressIcon",
                 label: Strings.TITLE_PROFILE_MY_ADDRESSES,

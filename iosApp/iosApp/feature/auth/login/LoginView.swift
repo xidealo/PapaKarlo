@@ -102,12 +102,7 @@ struct LoginViewSuccessView: View {
                     hasError = false
                     viewModel.sendCodeToPhone(phone: phone)
                 } label: {
-                    Text(Strings.ACTION_LOGIN_LOGIN)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.BUTTON_RADIUS)
+                    ButtonText(text: Strings.ACTION_LOGIN_LOGIN)
                 }
             }.padding(Diems.MEDIUM_PADDING)
         }

@@ -35,12 +35,7 @@ struct ErrorView: View {
             Button {
                 action()
             } label: {
-                Text(Strings.ACTION_RETRU)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.BUTTON_RADIUS)
+                ButtonText(text: Strings.ACTION_RETRU)
             }
             .padding(.bottom, Diems.MEDIUM_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)

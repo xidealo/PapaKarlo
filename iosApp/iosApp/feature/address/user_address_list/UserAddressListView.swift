@@ -120,11 +120,7 @@ struct SuccessAddressListView: View {
             NavigationLink(
                 destination:CreateAddressView(show: $show)
             ){
-                Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.BUTTON_RADIUS)
+                ButtonText(text: Strings.ACTION_ADDRESS_LIST_ADD)
             }.padding(Diems.MEDIUM_PADDING)
         }.onAppear(){
             viewModel.addressListState.watch { addressListVM in
@@ -175,11 +171,7 @@ struct EmptyAddressListView: View {
             NavigationLink(
                 destination:CreateAddressView(show: $show)
             ){
-                Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.BUTTON_RADIUS)
+                ButtonText(text: Strings.ACTION_ADDRESS_LIST_ADD)
             }.padding(Diems.MEDIUM_PADDING)
         }
     }

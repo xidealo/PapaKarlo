@@ -117,21 +117,13 @@ struct ConfirmViewSuccessView: View {
                     }
                 ){
                     if(isEnabled){
-                        Text(Strings.ACTION_CONFIRM_GET_CODE)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("primary"))
-                            .cornerRadius(Diems.BUTTON_RADIUS)
+                        ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
-                        Text("Запросить код повторно \(timeRemaining) сек.")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("onPrimaryDisabled"))
-                            .cornerRadius(Diems.BUTTON_RADIUS)
-                            .multilineTextAlignment(.center)
+                        ButtonText(
+                            text: "Запросить код повторно \(timeRemaining) сек.",
+                                   background: Color("onPrimaryDisabled")
+                        )
                     }
                     
                 }.disabled(!isEnabled)

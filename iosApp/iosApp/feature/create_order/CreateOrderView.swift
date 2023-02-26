@@ -276,11 +276,7 @@ struct CreateOrderSuccessView:View {
                 action: {
                     viewModel.createOrder()
                 }, label: {
-                    Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.BUTTON_RADIUS)
+                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
             )
             .padding(.vertical, Diems.MEDIUM_PADDING)

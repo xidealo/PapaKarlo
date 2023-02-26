@@ -58,7 +58,9 @@ struct SearchEditTextView: View {
                         filteredList = []
                         //invokeAction
                     } label: {
-                        Text(street.name).padding(Diems.SMALL_PADDING).frame(maxWidth: .infinity, alignment: .leading)
+                        Text(street.name)
+                            .padding(Diems.SMALL_PADDING)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color("surface"))
                             .cornerRadius(Diems.MEDIUM_RADIUS)
                             .foregroundColor(Color("onSurface"))
