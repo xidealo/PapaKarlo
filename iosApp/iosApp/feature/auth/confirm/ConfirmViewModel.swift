@@ -23,7 +23,7 @@ class ConfirmViewModel: ObservableObject {
     }
     
     func checkCode(code:String){
-        confirmViewState  = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
+        confirmViewState = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
         
         auth.verifyCode(smsCode: code) { result in
             if(result){

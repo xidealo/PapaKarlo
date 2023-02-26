@@ -63,13 +63,11 @@ struct SuccessCafeAddressListView: View {
                                 AddressItemView(addressItem: address)
                                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                                     .padding(.top, Diems.SMALL_PADDING)
-                                    .padding(.bottom, Diems.SMALL_PADDING)
                             }
                         }else{
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
-                                .padding(.bottom, Diems.SMALL_PADDING)
                         }
                     }
                 }.padding(.top, Diems.SMALL_PADDING)
