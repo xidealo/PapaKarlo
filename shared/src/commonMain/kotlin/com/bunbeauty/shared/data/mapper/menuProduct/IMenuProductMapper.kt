@@ -8,7 +8,6 @@ import com.bunbeauty.shared.db.MenuProductWithCategoryEntity
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 interface IMenuProductMapper {
-
     fun toMenuProductCategoryReference(menuProduct: MenuProductServer): List<MenuProductCategoryReference>
     fun toMenuProductEntity(menuProduct: MenuProductServer): MenuProductEntity
     fun toCategoryEntityList(menuProductServerList: List<MenuProductServer>): List<CategoryEntity>

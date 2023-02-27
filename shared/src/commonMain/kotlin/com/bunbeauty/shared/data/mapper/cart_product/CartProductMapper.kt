@@ -21,7 +21,8 @@ class CartProductMapper : ICartProductMapper {
                 description = cartProductWithMenuProductEntity.description,
                 comboDescription = cartProductWithMenuProductEntity.comboDescription,
                 photoLink = cartProductWithMenuProductEntity.photoLink,
-                categoryList = emptyList()
+                categoryList = emptyList(),
+                visible = cartProductWithMenuProductEntity.visible
             )
         )
     }

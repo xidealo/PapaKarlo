@@ -12,11 +12,16 @@ interface OrderRepo {
     fun observeLastOrderByUserUuid(userUuid: String): Flow<LightOrder?>
     fun observeOrderByUuid(orderUuid: String): Flow<Order?>
     suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>>
-    suspend fun observeOrderListUpdates(token: String, userUuid: String): Pair<String?, Flow<List<Order>>>
+    suspend fun observeOrderListUpdates(
+        token: String,
+        userUuid: String,
+    ): Pair<String?, Flow<List<Order>>>
+
     suspend fun stopOrderUpdatesObservation(uuid: String)
 
     suspend fun getOrderListByUserUuid(token: String, userUuid: String): List<LightOrder>
-    suspend fun getLastOrderByUserUuid(token: String, userUuid: String): LightOrder?
+    suspend fun getLastOrderByUserUuidNetworkFirst(token: String, userUuid: String): LightOrder?
+    suspend fun getLastOrderByUserUuidLocalFirst(token: String, userUuid: String): LightOrder?
     suspend fun getOrderByUuid(token: String, orderUuid: String): Order?
 
     suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode?

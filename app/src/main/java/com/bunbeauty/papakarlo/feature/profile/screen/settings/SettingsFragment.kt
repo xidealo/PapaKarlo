@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -60,7 +59,9 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                 SettingsScreenSuccessPreview(settingsState)
             }
             SettingsState.State.ERROR -> {
-                ErrorScreen(message = stringResource(R.string.error_settings_loading))
+                ErrorScreen(mainTextId = R.string.error_settings_loading) {
+                    viewModel.loadData()
+                }
             }
             SettingsState.State.LOADING -> {
                 LoadingScreen()

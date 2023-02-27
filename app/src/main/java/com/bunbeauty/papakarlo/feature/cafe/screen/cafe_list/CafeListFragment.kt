@@ -53,8 +53,10 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         when (cafeItemListState) {
             is State.Success -> CafeListSuccessScreen(cafeItemListState.data)
             is State.Loading -> LoadingScreen()
-            is State.Error -> ErrorScreen(cafeItemListState.message) {
-                viewModel.getCafeItemList()
+            is State.Error -> {
+                ErrorScreen(mainTextId = R.string.error_cafe_list_loading) {
+                    viewModel.getCafeItemList()
+                }
             }
             else -> Unit
         }

@@ -60,13 +60,12 @@ struct MenuItemView: View {
                         .padding(.leading, Diems.SMALL_PADDING)
                     Button(action: action) {
                         Text(Strings.ACTION_MENU_PRODUCT_WANT)
-                            .frame(maxWidth:Diems.BUTTON_WIDTH, maxHeight:Diems.BUTTON_HEIGHT)
-                            .padding(.vertical, 10)
+                            .frame(maxWidth:Diems.BUTTON_WIDTH, maxHeight:32)
+                            .padding(.vertical, Diems.HALF_SMALL_PADDING)
                             .padding(.horizontal, 25)
                             .foregroundColor(Color("primary"))
-                            .overlay(RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                            .overlay(RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
                                 .stroke(Color("primary"), lineWidth: 2))
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                             .padding(.leading, Diems.HALF_SMALL_PADDING)
                     }.padding(.trailing, Diems.MEDIUM_PADDING)
                     

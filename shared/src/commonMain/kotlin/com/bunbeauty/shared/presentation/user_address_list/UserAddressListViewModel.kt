@@ -2,7 +2,7 @@ package com.bunbeauty.shared.presentation.user_address_list
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
     private val getUserAddressList: GetUserAddressListUseCase,
-    private val addressInteractor: IAddressInteractor
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedViewModel() {
 
     private val mutableAddressListState = MutableStateFlow(UserAddressListState())
@@ -45,10 +45,11 @@ class UserAddressListViewModel(
             state - eventList
         }
     }
+
     //using for ios
     fun onUserAddressChanged(userAddressUuid: String) {
         sharedScope.launch {
-            addressInteractor.saveSelectedUserAddress(userAddressUuid)
+            saveSelectedUserAddressUseCase(userAddressUuid)
             mutableAddressListState.update { state ->
                 state + UserAddressListState.Event.GoBack
             }

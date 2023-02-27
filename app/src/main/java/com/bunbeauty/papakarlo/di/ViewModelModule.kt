@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
-import com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
@@ -16,6 +15,7 @@ import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
+import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
@@ -48,7 +48,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateOrderViewModel(
-            addressInteractor = get(),
             cartProductInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
@@ -62,6 +61,7 @@ fun viewModelModule() = module {
             getMinTime = get(),
             createOrderUseCase = get(),
             getSelectedCityTimeZoneUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel {
@@ -78,15 +78,15 @@ fun viewModelModule() = module {
     }
     viewModel {
         CreateAddressViewModel(
-            textValidator = get(),
-            streetInteractor = get(),
-            addressInteractor = get()
+            getStreetsUseCase = get(),
+            createAddressUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel { parameters ->
         UserAddressListViewModel(
             getUserAddressList = get(),
-            addressInteractor = get()
+            saveSelectedUserAddressUseCase = get(),
         )
     }
     viewModel {
@@ -112,7 +112,8 @@ fun viewModelModule() = module {
         ProfileViewModel(
             userInteractor = get(),
             observeLastOrderUseCase = get(),
-            stopObserveOrdersUseCase = get()
+            stopObserveOrdersUseCase = get(),
+            getLastOrderUseCase = get()
         )
     }
     viewModel { parameters ->

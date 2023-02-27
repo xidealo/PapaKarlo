@@ -37,7 +37,11 @@ struct CartProductView: View {
                 }
             }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT).padding(.leading, Diems.SMALL_PADDING)
             
-            CountPicker(count: String(cartProductItem.count), plusAction: plusAction, minusAction: minusAction)
+            CountPicker(
+                count: String(cartProductItem.count),
+                plusAction: plusAction,
+                minusAction: minusAction
+            )
                 .padding(.trailing, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity, alignment: .topLeading)
         .background(Color("surface"))

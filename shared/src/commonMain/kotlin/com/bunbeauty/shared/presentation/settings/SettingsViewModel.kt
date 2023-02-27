@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.settings
 
-import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase

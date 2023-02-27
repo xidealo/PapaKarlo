@@ -97,17 +97,12 @@ struct LoginViewSuccessView: View {
                 .keyboardType(.phonePad)
                 
                 Spacer()
+                
                 Button {
                     hasError = false
                     viewModel.sendCodeToPhone(phone: phone)
                 } label: {
-                    Text(Strings.ACTION_LOGIN_LOGIN)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    ButtonText(text: Strings.ACTION_LOGIN_LOGIN)
                 }
             }.padding(Diems.MEDIUM_PADDING)
         }

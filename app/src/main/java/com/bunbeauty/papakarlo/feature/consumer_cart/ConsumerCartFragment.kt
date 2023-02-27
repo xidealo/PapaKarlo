@@ -68,8 +68,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     onClick = viewModel::onMenuClicked
                 )
             }
-            is State.Error -> ErrorScreen(message = consumerCartState.message) {
-                viewModel.getConsumerCart()
+            is State.Error -> {
+                ErrorScreen(mainTextId = R.string.error_consumer_cart_loading) {
+                    viewModel.getConsumerCart()
+                }
             }
         }
     }

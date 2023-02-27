@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
+import com.bunbeauty.shared.presentation.create_address.AutoCompleteEntity
 
 @Composable
 fun <T : AutoCompleteEntity> AutoCompleteEditText(
@@ -45,9 +46,10 @@ fun <T : AutoCompleteEntity> AutoCompleteEditText(
                 listState = if (changedValue.text.isEmpty()) {
                     emptyList()
                 } else {
-                    list.filter { autoCompleteEntity ->
-                        autoCompleteEntity.filter(changedValue.text)
-                    }.take(3)
+//                    list.filter { autoCompleteEntity ->
+//                        autoCompleteEntity.filter(changedValue.text)
+//                    }.take(3)
+                    emptyList()
                 }
             }
         )
