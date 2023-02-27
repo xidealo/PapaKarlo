@@ -30,7 +30,9 @@ struct Switcher: View {
                     isLeftSelected = false
                     action(false)
                 }) {
-                    Text(rightTitle).foregroundColor(Color("onSurfaceVariant")).frame(maxWidth:.infinity)
+                    Text(rightTitle)
+                        .foregroundColor(Color("onSurfaceVariant"))
+                        .frame(maxWidth:.infinity)
                 }
             }else{
                 Button(action: {
@@ -38,7 +40,9 @@ struct Switcher: View {
                     isLeftSelected = true
                     action(true)
                 }) {
-                    Text(leftTitle).foregroundColor(Color("onSurfaceVariant")).frame(maxWidth:.infinity)
+                    Text(leftTitle)
+                        .foregroundColor(Color("onSurfaceVariant"))
+                        .frame(maxWidth:.infinity)
                 }
                 
                 Button(action: {
@@ -49,7 +53,9 @@ struct Switcher: View {
                     SelectedSwicher(title: rightTitle).frame(maxWidth:.infinity)
                 }
             }
-        }.padding(3).background(Color("surface")).cornerRadius(Diems.MEDIUM_RADIUS).frame(maxWidth:.infinity)
+        }.padding(3).background(Color("surface"))
+            .cornerRadius(Diems.BUTTON_RADIUS)
+            .frame(maxWidth:.infinity)
     }
 }
 
@@ -67,6 +73,6 @@ struct SelectedSwicher: View {
             .frame(maxWidth:.infinity).padding(Diems.SMALL_PADDING)
             .background(Color("primary"))
             .foregroundColor(Color("onPrimary"))
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+            .cornerRadius(Diems.BUTTON_RADIUS)
     }
 }

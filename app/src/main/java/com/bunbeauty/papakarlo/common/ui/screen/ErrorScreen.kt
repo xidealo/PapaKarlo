@@ -1,49 +1,93 @@
 package com.bunbeauty.papakarlo.common.ui.screen
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.papakarlo.common.ui.card
+import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
-internal fun ErrorScreen(message: String, onClick: (() -> Unit)? = null) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Card(
+fun ErrorScreen(
+    @StringRes mainTextId: Int,
+    @StringRes extraTextId: Int? = null,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .background(
+                color = FoodDeliveryTheme.colors.background
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(
             modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                .card()
-                .align(Alignment.Center)
-                .clickable(
-                    enabled = onClick != null,
-                    onClick = onClick ?: {}
-                ),
-            colors = FoodDeliveryTheme.colors.cardColors()
-        ) {
+                .weight(1f)
+        )
+
+        Image(
+            painter = painterResource(R.drawable.error_image),
+            contentDescription = stringResource(R.string.description_empty_profile)
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+            text = stringResource(id = mainTextId),
+            style = FoodDeliveryTheme.typography.h2,
+            color = FoodDeliveryTheme.colors.onSurface,
+            textAlign = TextAlign.Center
+        )
+
+        extraTextId?.let {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                text = message,
-                style = FoodDeliveryTheme.typography.body1,
-                color = FoodDeliveryTheme.colors.error,
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(id = extraTextId),
+                style = FoodDeliveryTheme.typography.body2,
+                color = FoodDeliveryTheme.colors.onSurface,
                 textAlign = TextAlign.Center
             )
         }
+
+        Spacer(
+            modifier = Modifier
+                .weight(1f)
+        )
+
+        MainButton(
+            modifier = Modifier
+                .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+            onClick = onClick,
+            textStringId = R.string.action_retry
+        )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun ErrorScreenPreview() {
-    ErrorScreen("Ошибка загрузки")
+    ErrorScreen(
+        mainTextId = R.string.common_error,
+        extraTextId = R.string.internet_error
+    ) {
+    }
 }

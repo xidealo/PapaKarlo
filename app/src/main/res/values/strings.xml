@@ -17,9 +17,11 @@
     <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
     <string name="description_back_icon">Назад</string>
-    <string name="error_common">Ошибка</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
+    <string name="action_retry">Повторить попытку</string>
+    <string name="common_error">Не удается загрузить данные</string>
+    <string name="internet_error">Проверьте соединение и повторите попытку</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -110,6 +112,12 @@
     <string name="error_create_address_comment_max_length">Максимальная длинна для поля 100</string>
     <string name="action_create_address_save">Сохранить</string>
     <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
+    <string name="error_create_address_no_selected_city">Ууупс, кажется, у вас не выбран город</string>
+    <string name="error_create_address_no_selected_city_help">Выберите город в настройках профиля</string>
+    <string name="error_create_address_no_user_uuid">Ууупс, кажется, у вас проблемы с авторизацией</string>
+    <string name="error_create_address_no_user_uuid_help">Попробуйте авторизоваться повторно в настройках профиля</string>
+    <string name="error_create_address_no_street_by_city_uuid_and_name">Ууупс, кажется, мы не смогли добавить адрес</string>
+    <string name="error_create_address_no_street_by_city_uuid_and_name_help">Попробуйте добавить адрес еще раз</string>
 
     <!-- BOTTOM PANEL -->
     <string name="title_bottom_navigation_menu_cafe_list">Рестораны</string>

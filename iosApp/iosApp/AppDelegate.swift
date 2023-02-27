@@ -29,6 +29,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         
         application.registerForRemoteNotifications()
         FirebaseApp.configure()
+        //disable capcha on confirm
+        //Auth.auth().settings?.isAppVerificationDisabledForTesting = true
         
         return true
     }

@@ -19,7 +19,7 @@ struct ProfileView: View {
     
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
-        observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
+        getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
     )
     
@@ -63,7 +63,7 @@ struct ProfileView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-               subscribe()
+                subscribe()
             } else if newPhase == .inactive {
                 unsubscribe()
             } else if newPhase == .background {
@@ -111,6 +111,9 @@ struct EmptyProfileView: View {
             
             DefaultImage(imageName: "NotLoginnedProfile")
             
+            BoldText(text: "Войдите в профиль")
+                .padding(.top, 32)
+            
             Text(
                 Strings.MSG_PROFILE_NO_PROFILE
             )
@@ -123,13 +126,7 @@ struct EmptyProfileView: View {
                 action: {
                     isActive = true
                 }, label: {
-                    Text(Strings.ACTION_PROFILE_LOGIN)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    ButtonText(text: Strings.ACTION_PROFILE_LOGIN)
                 }
             )
         }.padding(Diems.MEDIUM_PADDING)
@@ -149,12 +146,21 @@ struct SuccessProfileView: View {
     
     var body: some View {
         VStack(spacing:0){
+            
+            if(profileViewState.lastOrder != nil){
+                LightOrderItemView(
+                    lightOrder: profileViewState.lastOrder!,
+                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
+                )
+            }
+            
             NavigationCardView(
                 icon: "gearshape",
                 label: Strings.TITLE_PROFILE_SETTINGS,
                 destination: SettingsView()
             )
-            
+            .padding(.top, Diems.SMALL_PADDING)
+
             NavigationCardView(
                 icon: "AddressIcon",
                 label: Strings.TITLE_PROFILE_MY_ADDRESSES,
@@ -190,14 +196,6 @@ struct SuccessProfileView: View {
                 destination: AboutAppView()
             )
             .padding(.top, Diems.SMALL_PADDING)
-            
-            if(profileViewState.lastOrder != nil){
-                LightOrderItemView(
-                    lightOrder: profileViewState.lastOrder!,
-                    destination: OrderDetailsView(orderUuid: profileViewState.lastOrder!.uuid)
-                )
-                .padding(.top, Diems.SMALL_PADDING)
-            }
             
             Spacer()
             

@@ -130,12 +130,7 @@ struct ConsumerCartSuccessScreen: View {
                 Button {
                     viewModel.checkAuthorization()
                 } label: {
-                    Text(Strings.ACTION_CART_PRODUCT_CREATE_ORDER).frame(maxWidth: .infinity)
-                        .padding()
-                        .foregroundColor(Color("surface"))
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.bottom, Diems.MEDIUM_PADDING)
@@ -154,7 +149,10 @@ struct ConsumerCartEmptyScreen: View {
         VStack(spacing:0){
             Spacer()
             
-            DefaultImage(imageName: "runMan")
+            DefaultImage(imageName: "EmptyCart")
+            
+            BoldText(text: "Корзина пуста")
+                .padding(.top, 32)
             
             Text(Strings.MSG_CART_PRODUCT_EMPTY)
                 .multilineTextAlignment(.center)
@@ -167,13 +165,7 @@ struct ConsumerCartEmptyScreen: View {
                 isRootActive = false
                 selection = 1
             } label: {
-                Text(Strings.ACTION_CART_PRODUCT_MENU)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                ButtonText(text: Strings.ACTION_CART_PRODUCT_MENU)
             }.padding(Diems.MEDIUM_PADDING)
         }
     }

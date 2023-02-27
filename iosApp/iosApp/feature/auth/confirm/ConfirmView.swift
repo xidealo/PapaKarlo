@@ -16,6 +16,8 @@ struct ConfirmView: View {
     private let phone:String
     @Binding var rootIsActive:Bool
     @Binding var isGoToCreateOrder:Bool
+    
+    @State var showLoginError:Bool = false
 
     init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         viewModel = ConfirmViewModel(auth: auth)
@@ -37,13 +39,23 @@ struct ConfirmView: View {
                 switch(action){
                 case ConfirmAction.back : rootIsActive = false
                     isGoToCreateOrder = true
+                case ConfirmAction.showCodeError: showLoginError = true
+                case ConfirmAction.showLoginError : showLoginError = true
                 }
+                
             }
             
             if !confirmViewState.actionList.isEmpty{
                 viewModel.clearActions()
             }
         })
+        .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
+                show: $showLoginError,
+                backgroundColor:Color("errorColor"),
+                foregaroundColor: Color("onErrorColor")
+            ), show: $showLoginError)
      
     }
 }
@@ -101,27 +113,17 @@ struct ConfirmViewSuccessView: View {
                     action: {
                         isEnabled = false
                         timeRemaining = 60
+                        viewModel.resendCode(phone: phone)
                     }
                 ){
                     if(isEnabled){
-                        Text(Strings.ACTION_CONFIRM_GET_CODE)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("primary"))
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                        
+                        ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
-                        Text("Запросить код повторно \(timeRemaining) сек.")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .foregroundColor(Color("surface"))
-                            .background(Color("onPrimaryDisabled"))
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
-                            .multilineTextAlignment(.center)
+                        ButtonText(
+                            text: "Запросить код повторно \(timeRemaining) сек.",
+                                   background: Color("onPrimaryDisabled")
+                        )
                     }
                     
                 }.disabled(!isEnabled)

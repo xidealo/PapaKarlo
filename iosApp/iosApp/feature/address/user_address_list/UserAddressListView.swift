@@ -12,7 +12,7 @@ struct UserAddressListView: View {
     
     var viewModel = UserAddressListViewModel(
         getUserAddressList: iosComponent.provideGetUserAddressListUseCase(),
-        addressInteractor: iosComponent.provideIAddressInteractor()
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
     
     @State var userAddressViewState = UserAddressListState(
@@ -59,7 +59,7 @@ struct UserAddressListView: View {
                     userAddressViewState = addressListVM!
                 }
                 // work with actions
-                //почему-то тут не хочет слушать экшены (уточнить у ребят)
+                //UPDATE (переделать через StateObject как на создании адреса)
 //                print("eventsS \(userAddressViewState.state)")
 //                userAddressViewState.eventList.forEach { event in
 //                    switch(event){
@@ -120,12 +120,7 @@ struct SuccessAddressListView: View {
             NavigationLink(
                 destination:CreateAddressView(show: $show)
             ){
-                Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                ButtonText(text: Strings.ACTION_ADDRESS_LIST_ADD)
             }.padding(Diems.MEDIUM_PADDING)
         }.onAppear(){
             viewModel.addressListState.watch { addressListVM in
@@ -133,7 +128,6 @@ struct SuccessAddressListView: View {
                     userAddressListState = addressListVM!
                 }
                 // work with actions
-                print("eventsS \(userAddressListState.state)")
                 userAddressListState.eventList.forEach { event in
                     switch(event){
                     case is UserAddressListStateEventGoBack : self.mode.wrappedValue.dismiss()
@@ -150,7 +144,8 @@ struct SuccessAddressListView: View {
         .onDisappear(){
             listener?.close()
             listener = nil
-        }.overlay(overlayView: ToastView(
+        }.overlay(
+            overlayView: ToastView(
             toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
             show: $show, backgroundColor:Color("primary"),
             foregaroundColor: Color("onPrimary")), show: $show)
@@ -164,20 +159,19 @@ struct EmptyAddressListView: View {
         VStack(spacing:0){
             Spacer()
             
-            Image("EmptyPage")
-            
-            Text(Strings.MSG_ADDRESS_LIST_EMPTY_ADDRESSES).multilineTextAlignment(.center)
+            DefaultImage(imageName: "EmptyPage")
+
+            Text(Strings.MSG_ADDRESS_LIST_EMPTY_ADDRESSES)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.top, Diems.SMALL_PADDING)
+
             Spacer()
             
             NavigationLink(
                 destination:CreateAddressView(show: $show)
             ){
-                Text(Strings.ACTION_ADDRESS_LIST_ADD).frame(maxWidth: .infinity)
-                    .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
+                ButtonText(text: Strings.ACTION_ADDRESS_LIST_ADD)
             }.padding(Diems.MEDIUM_PADDING)
         }
     }

@@ -51,7 +51,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
                 LoadingScreen()
             }
             is State.Error -> {
-                ErrorScreen(message = cityListState.message) {
+                ErrorScreen(R.string.error_select_city_loading) {
                     viewModel.getCityList()
                 }
             }

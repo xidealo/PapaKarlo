@@ -8,12 +8,15 @@ import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
+import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
+import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
+import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import org.koin.dsl.module
 
@@ -128,6 +131,31 @@ internal fun useCaseModule() = module {
         ObserveOrderUseCase(
             dataStoreRepo = get(),
             orderRepo = get(),
+        )
+    }
+    factory{
+        GetStreetsUseCase(
+            streetRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    factory{
+        CreateAddressUseCase(
+            streetRepo = get(),
+            dataStoreRepo = get(),
+            userAddressRepo = get(),
+        )
+    }
+    factory{
+        SaveSelectedUserAddressUseCase(
+            dataStoreRepo = get(),
+            userAddressRepo = get(),
+        )
+    }
+    factory{
+        GetLastOrderUseCase(
+            dataStoreRepo = get(),
+            orderRepo = get()
         )
     }
 }

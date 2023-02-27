@@ -57,7 +57,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
 
     val stringUtil: IStringUtil by inject()
 
-    val userAddressItemMapper: UserAddressItemMapper by inject()
+    private val userAddressItemMapper: UserAddressItemMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     @SuppressLint("SetTextI18n")

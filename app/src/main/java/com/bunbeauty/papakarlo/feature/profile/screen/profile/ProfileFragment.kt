@@ -100,10 +100,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(profileState)
                 ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
                 ProfileState.State.LOADING -> LoadingScreen()
-                ProfileState.State.ERROR -> ErrorScreen(
-                    message = stringResource(R.string.error_profile_loading)
-                ) {
-                    viewModel.update()
+                ProfileState.State.ERROR -> {
+                    ErrorScreen(
+                        mainTextId = R.string.error_profile_loading
+                    ) {
+                        viewModel.update()
+                    }
                 }
             }
         }

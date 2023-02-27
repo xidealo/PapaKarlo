@@ -23,19 +23,31 @@ class ConfirmViewModel: ObservableObject {
     }
     
     func checkCode(code:String){
-        confirmViewState  = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
+        confirmViewState = ConfirmViewState(confirmState: ConfirmState.loading, actionList: [])
         
         auth.verifyCode(smsCode: code) { result in
             if(result){
-                iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
-                    if(err == nil){
-                        DispatchQueue.main.async{
-                            self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
+               iosComponent.provideIUserInteractor().login(firebaseUserUuid: self.auth.getCurrentUserUuid(), firebaseUserPhone: self.auth.getCurrentUserPhone()) { err  in
+                        if(err == nil){
+                            DispatchQueue.main.async{
+                                self.confirmViewState = ConfirmViewState(confirmState: ConfirmState.success, actionList: [ConfirmAction.back])
+                            }
+                        }else{
+                            if(err is NotAuthorizeException){
+                                self.confirmViewState  = ConfirmViewState(
+                                    confirmState: ConfirmState.error,
+                                    actionList: [ConfirmAction.showLoginError]
+                                )
+                            }else{
+                                self.confirmViewState  = ConfirmViewState(
+                                    confirmState: ConfirmState.success,
+                                    actionList: [ConfirmAction.showCodeError]
+                                )
+                            }
+                            
                         }
-                    }else{
-                        self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
                     }
-                }
+            
             }else{
                 self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.error, actionList: [])
             }
@@ -45,6 +57,22 @@ class ConfirmViewModel: ObservableObject {
     func clearActions(){
         self.confirmViewState  = ConfirmViewState(confirmState: ConfirmState.success, actionList: [])
     }
+    
+    func resendCode(phone:String){
+        //combine with func on Login
+        let formattedPhone = phone.replace(string: "(", replacement: "")
+            .replace(string: ")", replacement: "")
+            .replace(string: "-", replacement: "")
+            .replace(string: " ", replacement: "")
+        
+        auth.startAuth(phoneNumber: formattedPhone) { result in
+            if(result){
+                print("resend success")
+            }else{
+                print("resend rejected")
+            }
+        }
+    }
 }
 
 enum ConfirmState{
@@ -52,5 +80,5 @@ enum ConfirmState{
 }
 
 enum ConfirmAction {
-   case back
+   case back, showLoginError, showCodeError
 }

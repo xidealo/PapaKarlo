@@ -14,14 +14,13 @@ struct EditTextView: View {
     @Binding var text: String
     let limit:Int
     var keyBoadrType = UIKeyboardType.default //default
-    @Binding var hasError:Bool
     
+    @Binding var hasError:Bool
+        
     @State var errorMessage:String = "Ошибка"
     
     var body: some View {
-        
         VStack{
-            
             if(hasError){
                 TextField(hint, text: $text)
                     .padding()

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group 48.svg",
+      "filename" : "error.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group 48-1.svg",
+      "filename" : "error-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group 48-2.svg",
+      "filename" : "error-3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

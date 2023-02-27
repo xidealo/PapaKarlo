@@ -92,7 +92,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 MenuSuccessScreen(menuState.data)
             }
             is State.Error -> {
-                ErrorScreen(menuState.message) {
+                ErrorScreen(R.string.error_menu_loading) {
                     viewModel.getMenu()
                 }
             }
@@ -127,7 +127,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyListState,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -174,7 +174,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Composable
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyListState,
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),

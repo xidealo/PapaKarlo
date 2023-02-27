@@ -7,7 +7,7 @@ import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.IAddressInteractor
+import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CreateOrderViewModel(
-    private val addressInteractor: IAddressInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val cafeInteractor: ICafeInteractor,
     private val userInteractor: IUserInteractor,
@@ -36,6 +35,7 @@ class CreateOrderViewModel(
     private val getMinTime: GetMinTimeUseCase,
     private val createOrderUseCase: CreateOrderUseCase,
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
+    private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
@@ -75,7 +75,7 @@ class CreateOrderViewModel(
 
     fun onUserAddressChanged(userAddressUuid: String) {
         withLoading {
-            addressInteractor.saveSelectedUserAddress(userAddressUuid)
+            saveSelectedUserAddressUseCase(userAddressUuid)
             updateSelectedUserAddress()
         }
     }
@@ -148,7 +148,7 @@ class CreateOrderViewModel(
 
         if (isDeliveryAddressNotSelected) {
             mutableOrderCreationState.update { state ->
-               state + OrderCreationState.Event.ShowUserAddressError
+                state + OrderCreationState.Event.ShowUserAddressError
             }
             return
         }

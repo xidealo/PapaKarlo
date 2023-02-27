@@ -27,7 +27,8 @@ class Strings{
 
     static let ACTION_PRODUCT_DETAILS_ADD = "Добавить"
     static let ACTION_MENU_PRODUCT_WANT = "Хочу"
-    
+    static let ACTION_RETRU = "Повторить попытку"
+
     //PROFILE
     static let TITLE_PROFILE_SETTINGS = "Настройки"
     static let TITLE_PROFILE_MY_ADDRESSES = "Мои адреса"
@@ -76,7 +77,7 @@ class Strings{
     static let ACTION_CART_PRODUCT_MENU = "Меню"
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
-    static let MSG_CART_PRODUCT_EMPTY = "Ваша корзина пуста, добавьте товар из \"Меню\" "
+    static let MSG_CART_PRODUCT_EMPTY = "Добавте товар из \"Меню\" "
     static let MSG_CART_PRODUCT_RESULT = "Итого"
     
     //CREATION ORDER
