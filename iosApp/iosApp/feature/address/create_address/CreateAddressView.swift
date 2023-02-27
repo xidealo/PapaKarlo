@@ -8,7 +8,6 @@
 import SwiftUI
 import shared
 
-
 class CreateAddressHolder: ObservableObject {
     var viewModel = CreateAddressViewModel(
         getStreetsUseCase: iosComponent.provideGetStreetsUseCase(),
