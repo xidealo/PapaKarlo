@@ -21,7 +21,7 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
         val firebaseVersion = "9.5.0"
 
-        pod("FirebaseAuth"){
+        pod("FirebaseAuth") {
             version = firebaseVersion
         }
 
@@ -58,8 +58,8 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation("io.mockk:mockk:1.12.5")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+                implementation(MockK.common)
+                implementation(Coroutine.test)
 
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
@@ -78,7 +78,7 @@ kotlin {
                 implementation(SqlDelight.androidDriver)
             }
         }
-        val androidTest by getting
+        //val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

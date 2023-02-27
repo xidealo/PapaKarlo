@@ -9,6 +9,7 @@ object Versions {
     const val ktor = "2.2.2"
     const val kotlinxSerialization = "1.3.2"
     const val koin = "3.1.5"
+    const val mockK = "1.12.5"
 
     const val sqlDelight = "1.5.5"
 
@@ -148,6 +149,10 @@ object Koin {
     const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 }
 
+object MockK{
+    const val common = "io.mockk:mockk-common:${Versions.mockK}"
+}
+
 object Navigation {
     const val navigationFragment =
         "androidx.navigation:navigation-fragment:${Versions.navigation}"
@@ -227,6 +232,7 @@ object SqlDelight {
 
 object Coroutine {
     const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
+    const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
 }
 
 object ViewBindingDelegate {
