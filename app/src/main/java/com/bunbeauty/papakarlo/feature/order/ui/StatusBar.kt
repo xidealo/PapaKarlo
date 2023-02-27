@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.StatusChip
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
@@ -31,15 +30,13 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 fun OrderStatusBar(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    orderStatusName: String
+    orderStatusName: String,
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .fillMaxWidth(),
-        colors = FoodDeliveryTheme.colors.cardColors(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
-        shape = mediumRoundedCornerShape,
+        enabled = false
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0

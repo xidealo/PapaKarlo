@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 
 @Composable
 fun SmallButton(
@@ -22,7 +22,7 @@ fun SmallButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         colors = FoodDeliveryTheme.colors.mainButtonColors(),
-        shape = mediumRoundedCornerShape,
+        shape = buttonRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
         enabled = isEnabled
     ) {

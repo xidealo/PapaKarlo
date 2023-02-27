@@ -1,19 +1,14 @@
 package com.bunbeauty.papakarlo.feature.address.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 @Composable
 fun AddressItem(
@@ -23,21 +18,13 @@ fun AddressItem(
     hasShadow: Boolean,
     onClick: (() -> Unit),
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight)
-            .clickable(
-                enabled = isClickable,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(),
-                onClick = onClick
-            ),
-        elevation = FoodDeliveryTheme
-            .dimensions
-            .cardEvaluation(hasShadow),
-        shape = mediumRoundedCornerShape,
-        colors = FoodDeliveryTheme.colors.cardColors()
+            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        onClick = onClick,
+        enabled = isClickable,
+        elevated = false
     ) {
         Text(
             modifier = Modifier

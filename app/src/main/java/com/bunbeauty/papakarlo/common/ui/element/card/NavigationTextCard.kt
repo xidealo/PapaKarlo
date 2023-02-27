@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationTextCard(
     modifier: Modifier = Modifier,
@@ -30,11 +26,9 @@ fun NavigationTextCard(
     isClickable: Boolean = true,
     onClick: () -> Unit
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
-        shape = mediumRoundedCornerShape,
         colors = FoodDeliveryTheme.colors.cardColors(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
         enabled = isClickable,
         onClick = onClick
     ) {

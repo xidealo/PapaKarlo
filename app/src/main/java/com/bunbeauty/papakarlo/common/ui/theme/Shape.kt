@@ -12,3 +12,5 @@ val bottomSheetShape: RoundedCornerShape = RoundedCornerShape(
     bottomEnd = 0.dp,
     bottomStart = 0.dp,
 )
+
+val buttonRoundedCornerShape: RoundedCornerShape = RoundedCornerShape(20.dp)

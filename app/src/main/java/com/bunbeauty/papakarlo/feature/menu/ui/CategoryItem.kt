@@ -1,52 +1,38 @@
 package com.bunbeauty.papakarlo.feature.menu.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
 @Composable
 fun CategoryItem(
     modifier: Modifier = Modifier,
     categoryItem: CategoryItem,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
-            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize)
-            .clickable(
-                enabled = !categoryItem.isSelected,
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(),
-                onClick = onClick
-            ),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
-        shape = mediumRoundedCornerShape,
-        colors = CardDefaults.cardColors(
-            containerColor = if (categoryItem.isSelected) {
-                FoodDeliveryTheme.colors.primary
-            } else {
-                FoodDeliveryTheme.colors.surface
-            }
-        )
+            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
+        onClick = onClick,
+        colors = if (categoryItem.isSelected) {
+            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.primary)
+        } else {
+            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.surface)
+        }
     ) {
         val style = if (categoryItem.isSelected) {
             FoodDeliveryTheme.typography.smallButton

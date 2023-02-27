@@ -1,16 +1,11 @@
 package com.bunbeauty.papakarlo.feature.menu.ui
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -24,8 +19,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.SmallButton
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 
 @Composable
@@ -35,17 +30,10 @@ fun MenuProductItem(
     onButtonClicked: () -> Unit,
     onClick: () -> Unit,
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier
-            .card()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple(),
-                onClick = onClick
-            ),
-        colors = FoodDeliveryTheme.colors.cardColors(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
-        shape = mediumRoundedCornerShape
+            .card(),
+        onClick = onClick,
     ) {
         Column {
             AsyncImage(

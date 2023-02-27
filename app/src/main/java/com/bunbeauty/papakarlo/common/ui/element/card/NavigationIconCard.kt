@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,9 +19,7 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationIconCard(
     modifier: Modifier = Modifier,
@@ -32,14 +28,12 @@ fun NavigationIconCard(
     @StringRes labelStringId: Int? = null,
     label: String = "",
     hasShadow: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
-        shape = mediumRoundedCornerShape,
-        colors = FoodDeliveryTheme.colors.cardColors(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(hasShadow),
-        onClick = onClick
+        onClick = onClick,
+        elevated = hasShadow
     ) {
         Row(
             modifier = Modifier

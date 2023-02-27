@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,20 +25,19 @@ import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUiItem
 
 @Composable
 fun OrderProductItem(
     modifier: Modifier = Modifier,
-    orderProductItem: OrderProductUiItem
+    orderProductItem: OrderProductUiItem,
 ) {
-    Card(
+    FoodDeliveryCard(
         modifier = modifier.card(),
         colors = FoodDeliveryTheme.colors.cardColors(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
-        shape = mediumRoundedCornerShape
+        enabled = false
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
