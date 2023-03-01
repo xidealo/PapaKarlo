@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 @Composable
 fun LoadingButton(

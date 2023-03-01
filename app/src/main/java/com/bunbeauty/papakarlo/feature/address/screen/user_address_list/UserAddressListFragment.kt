@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -33,15 +31,10 @@ import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
-import com.bunbeauty.papakarlo.util.string.StringUtil
-import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 
 class UserAddressListFragment :
     BaseFragmentWithSharedViewModel(R.layout.bottom_sheet_user_address_list) {
@@ -118,9 +111,9 @@ class UserAddressListFragment :
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(
                     top = FoodDeliveryTheme.dimensions.mediumSpace,
-                    bottom = FoodDeliveryTheme.dimensions.buttonHeight
-                            + FoodDeliveryTheme.dimensions.largeSpace
-                            + FoodDeliveryTheme.dimensions.verySmallSpace
+                    bottom = FoodDeliveryTheme.dimensions.buttonHeight +
+                        FoodDeliveryTheme.dimensions.largeSpace +
+                        FoodDeliveryTheme.dimensions.verySmallSpace
                 )
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
@@ -177,7 +170,6 @@ class UserAddressListFragment :
                 eventList = emptyList()
             ),
             onCreateAddressClick = {
-
             },
             userAddressItemMapper = null
         )
@@ -192,7 +184,6 @@ class UserAddressListFragment :
                 eventList = emptyList()
             ),
             onCreateAddressClick = {
-
             },
             userAddressItemMapper = null
         )
@@ -206,7 +197,6 @@ class UserAddressListFragment :
                 state = UserAddressListState.State.LOADING
             ),
             onCreateAddressClick = {
-
             },
             userAddressItemMapper = null
         )

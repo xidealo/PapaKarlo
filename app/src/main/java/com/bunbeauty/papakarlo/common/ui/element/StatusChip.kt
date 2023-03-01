@@ -10,7 +10,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.orderStatusCornerShape
-import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 @Composable
