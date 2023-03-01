@@ -30,7 +30,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.address.ui.auto_complete_text_field.AutoCompleteEditText
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
@@ -52,7 +52,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getStreetList()
-        viewBinding.fragmentCreateAddressCvMain.compose {
+        viewBinding.fragmentCreateAddressCvMain.setContentWithTheme {
             val streetListState by viewModel.streetListState.collectAsStateWithLifecycle()
             CreateAddressScreen(streetListState)
             LaunchedEffect(streetListState.eventList) {

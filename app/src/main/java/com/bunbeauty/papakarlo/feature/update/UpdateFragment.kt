@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.FragmentUpdateBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +38,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentUpdateCvMain.compose {
+        viewBinding.fragmentUpdateCvMain.setContentWithTheme {
             UpdateScreen()
         }
     }

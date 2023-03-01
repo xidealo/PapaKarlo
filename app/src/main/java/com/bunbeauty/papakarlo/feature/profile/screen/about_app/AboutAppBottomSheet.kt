@@ -17,7 +17,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.BottomSheetAboutAppBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
@@ -28,7 +28,7 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetAboutAppCvMain.compose {
+        viewBinding.bottomSheetAboutAppCvMain.setContentWithTheme {
             AboutAppScreen()
         }
     }

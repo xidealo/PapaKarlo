@@ -26,7 +26,7 @@ import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
@@ -47,7 +47,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentConfirmCvMain.compose {
+        viewBinding.fragmentConfirmCvMain.setContentWithTheme {
             val confirmState by viewModel.confirmState.collectAsState()
             ConfirmScreen(confirmState)
         }

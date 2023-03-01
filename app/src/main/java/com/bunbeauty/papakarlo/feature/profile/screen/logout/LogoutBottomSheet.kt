@@ -19,7 +19,7 @@ import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetLogoutBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LogoutBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_logout) {
@@ -30,7 +30,7 @@ class LogoutBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_logout) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetLogoutCvMain.compose {
+        viewBinding.bottomSheetLogoutCvMain.setContentWithTheme {
             LogoutScreen()
         }
     }

@@ -24,7 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetPaymentBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.CARD_NUMBER_LABEL
 import com.bunbeauty.shared.Constants.PHONE_NUMBER_LABEL
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,7 +37,7 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetPaymentCvMain.compose {
+        viewBinding.bottomSheetPaymentCvMain.setContentWithTheme {
             PaymentScreen()
         }
     }

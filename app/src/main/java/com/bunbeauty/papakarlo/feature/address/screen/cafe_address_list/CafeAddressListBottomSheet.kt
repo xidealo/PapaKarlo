@@ -27,7 +27,7 @@ import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeAddressListBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.AddressItem
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.shared.Constants.CAFE_ADDRESS_REQUEST_KEY
@@ -42,7 +42,7 @@ class CafeAddressListBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_ad
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetCafeAddressListCvMain.compose {
+        viewBinding.bottomSheetCafeAddressListCvMain.setContentWithTheme {
             val cafeAddressList by viewModel.cafeAddressList.collectAsState()
             CafeAddressListScreen(cafeAddressList)
         }

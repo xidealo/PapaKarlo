@@ -24,7 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
@@ -49,7 +49,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentOrderListCvMain.compose {
+        viewBinding.fragmentOrderListCvMain.setContentWithTheme {
             val orderListState by viewModel.orderListState.collectAsStateWithLifecycle()
             OrderListScreen(orderListState)
             LaunchedEffect(orderListState.eventList) {

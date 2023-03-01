@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
 import com.bunbeauty.shared.domain.model.City
@@ -43,7 +43,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadData()
-        viewBinding.root.compose {
+        viewBinding.root.setContentWithTheme {
             val settingsState by viewModel.settingsState.collectAsStateWithLifecycle()
             SettingsScreen(settingsState)
             LaunchedEffect(settingsState.eventList) {

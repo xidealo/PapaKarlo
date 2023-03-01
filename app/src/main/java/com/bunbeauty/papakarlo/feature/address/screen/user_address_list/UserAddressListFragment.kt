@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
@@ -49,7 +49,7 @@ class UserAddressListFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentUserAddressListCvMain.compose {
+        viewBinding.fragmentUserAddressListCvMain.setContentWithTheme {
             val addressListState by viewModel.addressListState.collectAsStateWithLifecycle()
             UserAddressListScreen(addressListState)
             LaunchedEffect(addressListState.eventList) {
