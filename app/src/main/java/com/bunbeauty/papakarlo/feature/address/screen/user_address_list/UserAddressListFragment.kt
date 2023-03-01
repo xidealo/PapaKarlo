@@ -3,15 +3,18 @@ package com.bunbeauty.papakarlo.feature.address.screen.user_address_list
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
@@ -26,15 +29,19 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
+import com.bunbeauty.papakarlo.util.resources.ResourcesProvider
+import com.bunbeauty.papakarlo.util.string.StringUtil
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class UserAddressListFragment :
     BaseFragmentWithSharedViewModel(R.layout.bottom_sheet_user_address_list) {
@@ -51,7 +58,17 @@ class UserAddressListFragment :
         viewModel.update()
         viewBinding.fragmentUserAddressListCvMain.compose {
             val addressListState by viewModel.addressListState.collectAsStateWithLifecycle()
-            UserAddressListScreen(addressListState)
+            UserAddressListScreen(
+                userAddressListState = UserAddressListAndroidState(
+                    userAddressItems = addressListState.userAddressList.map { userAddress ->
+                        userAddressItemMapper.toItem(userAddress)
+                    },
+                    state = addressListState.state,
+                    eventList = addressListState.eventList,
+                ),
+                onCreateAddressClick = viewModel::onCreateAddressClicked,
+                userAddressItemMapper = userAddressItemMapper
+            )
             LaunchedEffect(addressListState.eventList) {
                 handleEventList(addressListState.eventList)
             }
@@ -59,10 +76,17 @@ class UserAddressListFragment :
     }
 
     @Composable
-    private fun UserAddressListScreen(userAddressListState: UserAddressListState) {
+    private fun UserAddressListScreen(
+        userAddressListState: UserAddressListAndroidState,
+        onCreateAddressClick: () -> Unit,
+        userAddressItemMapper: UserAddressItemMapper?,
+    ) {
         when (userAddressListState.state) {
             UserAddressListState.State.SUCCESS -> {
-                UserAddressListSuccessScreen(userAddressListState)
+                UserAddressListSuccessScreen(
+                    userAddressListState.userAddressItems,
+                    onCreateAddressClick = onCreateAddressClick
+                )
             }
             UserAddressListState.State.EMPTY -> {
                 EmptyScreen(
@@ -70,7 +94,7 @@ class UserAddressListFragment :
                     imageDescriptionId = R.string.description_cafe_addresses_empty,
                     textId = R.string.msg_my_addresses_empty,
                     buttonTextId = R.string.action_add_addresses,
-                    onClick = viewModel::onCreateAddressClicked
+                    onClick = onCreateAddressClick
                 )
             }
             UserAddressListState.State.LOADING -> {
@@ -80,19 +104,26 @@ class UserAddressListFragment :
     }
 
     @Composable
-    private fun UserAddressListSuccessScreen(userAddressListState: UserAddressListState) {
-        Column(
+    private fun UserAddressListSuccessScreen(
+        userAddressItems: List<UserAddressItem>,
+        onCreateAddressClick: () -> Unit,
+    ) {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.background)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    top = FoodDeliveryTheme.dimensions.mediumSpace,
+                    bottom = FoodDeliveryTheme.dimensions.buttonHeight
+                            + FoodDeliveryTheme.dimensions.largeSpace
+                            + FoodDeliveryTheme.dimensions.verySmallSpace
+                )
             ) {
-                itemsIndexed(userAddressListState.userAddressList) { i, userAddress ->
-                    val userAddressItem = userAddressItemMapper.toItem(userAddress)
+                itemsIndexed(userAddressItems) { i, userAddressItem ->
                     AddressItem(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
@@ -104,11 +135,12 @@ class UserAddressListFragment :
                 }
             }
             MainButton(
-                modifier = Modifier.padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_add_addresses
-            ) {
-                viewModel.onCreateAddressClicked()
-            }
+                modifier = Modifier
+                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .align(Alignment.BottomCenter),
+                textStringId = R.string.action_add_addresses,
+                onClick = onCreateAddressClick
+            )
         }
     }
 
@@ -129,30 +161,25 @@ class UserAddressListFragment :
     @Preview
     @Composable
     private fun UserAddressListSuccessScreenPreview() {
-        val addressItemModel = UserAddress(
-            uuid = "",
-            street = Street(
-                uuid = "",
-                name = "улица Чапаева",
-                cityUuid = ""
-            ),
-            house = "22аб",
-            flat = "55",
-            entrance = "1",
-            floor = "1",
-            comment = "",
-            userUuid = "",
+        val addressItemModel = UserAddressItem(
+            uuid = "1",
+            address = "addddd"
         )
         UserAddressListScreen(
-            UserAddressListState(
-                userAddressList = listOf(
+            UserAddressListAndroidState(
+                userAddressItems = listOf(
                     addressItemModel,
                     addressItemModel,
                     addressItemModel,
                     addressItemModel,
                 ),
-                state = UserAddressListState.State.SUCCESS
-            )
+                state = UserAddressListState.State.SUCCESS,
+                eventList = emptyList()
+            ),
+            onCreateAddressClick = {
+
+            },
+            userAddressItemMapper = null
         )
     }
 
@@ -160,9 +187,14 @@ class UserAddressListFragment :
     @Composable
     private fun UserAddressListEmptyScreenPreview() {
         UserAddressListScreen(
-            userAddressListState = UserAddressListState(
-                state = UserAddressListState.State.EMPTY
-            )
+            userAddressListState = UserAddressListAndroidState(
+                state = UserAddressListState.State.EMPTY,
+                eventList = emptyList()
+            ),
+            onCreateAddressClick = {
+
+            },
+            userAddressItemMapper = null
         )
     }
 
@@ -170,9 +202,13 @@ class UserAddressListFragment :
     @Composable
     private fun UserAddressListLoadingScreenPreview() {
         UserAddressListScreen(
-            userAddressListState = UserAddressListState(
+            userAddressListState = UserAddressListAndroidState(
                 state = UserAddressListState.State.LOADING
-            )
+            ),
+            onCreateAddressClick = {
+
+            },
+            userAddressItemMapper = null
         )
     }
 }
