@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.databinding.BottomSheetCafeOptionsBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeOptions
 import com.bunbeauty.shared.Constants.COORDINATES_DIVIDER
 import com.bunbeauty.shared.Constants.MAPS_LINK
@@ -43,7 +43,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetCafeOptionsCvMain.compose {
+        viewBinding.bottomSheetCafeOptionsCvMain.setContentWithTheme {
             val cafeOptions by viewModel.cafeOptions.collectAsState()
             CafeOptionsScreen(cafeOptions)
         }

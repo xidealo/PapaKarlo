@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.product_details
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,17 +22,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.product_details.model.MenuProductUI
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
@@ -43,12 +47,13 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
     override val viewModel: ProductDetailsViewModel by stateViewModel(state = {
         arguments ?: bundleOf()
     })
+    private val args: ProductDetailsFragmentArgs by navArgs()
     override val viewBinding by viewBinding(FragmentProductDetailsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentProductDetailsCvMain.compose {
+        viewBinding.fragmentProductDetailsCvMain.setContentWithTheme {
             val menuProduct by viewModel.menuProduct.collectAsState()
             ProductDetailsScreen(menuProduct)
         }
@@ -56,13 +61,22 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
 
     @Composable
     private fun ProductDetailsScreen(menuProductUI: MenuProductUI?) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+        FoodDeliveryToolbarScreen(
+            title = args.menuProductName,
+            backActionClick = {
+                findNavController().popBackStack()
+            },
+            actions = listOf(
+                FoodDeliveryCartAction(
+                    count = "5",
+                    cost = "666 ₽"
+                ) {
+                    findNavController().navigate(globalConsumerCartFragment())
+                }
+            )
         ) {
             if (menuProductUI == null) {
-                CircularProgressBar(modifier = Modifier.align(Alignment.Center))
+                LoadingScreen()
             } else {
                 ProductDetailsSuccessScreen(menuProductUI)
             }

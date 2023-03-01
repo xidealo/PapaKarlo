@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         R.id.menuFragment,
         R.id.orderDetailsFragment,
         R.id.orderListFragment,
-        R.id.productFragment,
         R.id.profileFragment,
         R.id.userAddressListFragment,
         R.id.settingsFragment
@@ -209,46 +208,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
         startedLaunch(this@MainActivity, block)
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    private fun TopBar(modifier: Modifier = Modifier) {
-        TopAppBar(
-            modifier = modifier,
-            title = {
-                OverflowingText(
-                    text = "Title",
-                    style = FoodDeliveryTheme.typography.h1,
-                    color = FoodDeliveryTheme.colors.onSurface
-                )
-            },
-            navigationIcon = {
-                IconButton(
-                    modifier = Modifier
-                        .size(16.dp)
-                        .clip(largeRoundedCornerShape)
-                        .background(FoodDeliveryTheme.colors.done),
-                    onClick = { }
-                ) {
-                    Icon(
-                        modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-                        painter = painterResource(R.drawable.ic_back),
-                        contentDescription = stringResource(R.string.description_back_icon)
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = FoodDeliveryTheme.colors.surface,
-                titleContentColor = FoodDeliveryTheme.colors.onSurface
-            ),
-            // elevation = FoodDeliveryTheme.dimensions.elevation
-        )
-    }
-
-    @Preview
-    @Composable
-    private fun TopBarPreview() {
-        TopBar()
     }
 }

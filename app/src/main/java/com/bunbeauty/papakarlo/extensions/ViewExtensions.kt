@@ -50,7 +50,7 @@ private fun getPixels(context: Context, dp: Int): Int {
     return (dp * context.resources.displayMetrics.density).toInt()
 }
 
-inline fun ComposeView.compose(crossinline content: @Composable () -> Unit) {
+inline fun ComposeView.setContentWithTheme(crossinline content: @Composable () -> Unit) {
     setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
     setContent {
         FoodDeliveryTheme {

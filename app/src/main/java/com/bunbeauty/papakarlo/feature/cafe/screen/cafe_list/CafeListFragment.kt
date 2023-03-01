@@ -20,7 +20,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
@@ -42,7 +42,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCafeItemList()
-        viewBinding.fragmentCafeListCvMain.compose {
+        viewBinding.fragmentCafeListCvMain.setContentWithTheme {
             val cafeItemList by viewModel.cafeItemList.collectAsState()
             CafeListScreen(cafeItemList)
         }
