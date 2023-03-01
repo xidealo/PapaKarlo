@@ -15,3 +15,4 @@ val bottomSheetShape: RoundedCornerShape = RoundedCornerShape(
 
 val buttonRoundedCornerShape: RoundedCornerShape = RoundedCornerShape(20.dp)
 val orderStatusCornerShape: RoundedCornerShape = RoundedCornerShape(12.dp)
+val chipCornerShape: RoundedCornerShape = RoundedCornerShape(16.dp)

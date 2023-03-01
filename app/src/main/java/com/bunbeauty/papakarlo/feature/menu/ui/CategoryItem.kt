@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.chipCornerShape
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
 @Composable
@@ -32,7 +34,8 @@ fun CategoryItem(
             CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.primary)
         } else {
             CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.surface)
-        }
+        },
+        shape = chipCornerShape
     ) {
         val style = if (categoryItem.isSelected) {
             FoodDeliveryTheme.typography.smallButton
@@ -48,8 +51,8 @@ fun CategoryItem(
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(
-                    horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                    vertical = FoodDeliveryTheme.dimensions.smallSpace
+                    horizontal = 12.dp,
+                    vertical = 6.dp
                 )
         ) {
             Text(
