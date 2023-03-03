@@ -150,6 +150,7 @@ object Koin {
 }
 
 object MockK{
+    const val main = "io.mockk:mockk:${Versions.mockK}"
     const val common = "io.mockk:mockk-common:${Versions.mockK}"
 }
 

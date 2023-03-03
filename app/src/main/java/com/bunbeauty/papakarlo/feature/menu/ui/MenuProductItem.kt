@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.card
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
@@ -32,7 +32,8 @@ fun MenuProductItem(
 ) {
     FoodDeliveryCard(
         modifier = modifier
-            .card(),
+            .fillMaxWidth()
+            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
         onClick = onClick,
     ) {
         Column {

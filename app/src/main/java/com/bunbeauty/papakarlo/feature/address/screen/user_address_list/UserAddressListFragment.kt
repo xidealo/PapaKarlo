@@ -60,7 +60,6 @@ class UserAddressListFragment :
                     eventList = addressListState.eventList,
                 ),
                 onCreateAddressClick = viewModel::onCreateAddressClicked,
-                userAddressItemMapper = userAddressItemMapper
             )
             LaunchedEffect(addressListState.eventList) {
                 handleEventList(addressListState.eventList)
@@ -72,7 +71,6 @@ class UserAddressListFragment :
     private fun UserAddressListScreen(
         userAddressListState: UserAddressListAndroidState,
         onCreateAddressClick: () -> Unit,
-        userAddressItemMapper: UserAddressItemMapper?,
     ) {
         when (userAddressListState.state) {
             UserAddressListState.State.SUCCESS -> {
@@ -171,7 +169,6 @@ class UserAddressListFragment :
             ),
             onCreateAddressClick = {
             },
-            userAddressItemMapper = null
         )
     }
 
@@ -185,7 +182,6 @@ class UserAddressListFragment :
             ),
             onCreateAddressClick = {
             },
-            userAddressItemMapper = null
         )
     }
 
@@ -198,7 +194,6 @@ class UserAddressListFragment :
             ),
             onCreateAddressClick = {
             },
-            userAddressItemMapper = null
         )
     }
 }
