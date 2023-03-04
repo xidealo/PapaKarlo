@@ -81,7 +81,7 @@ class UserAddressListFragment :
             }
             UserAddressListState.State.EMPTY -> {
                 EmptyScreen(
-                    imageId = R.drawable.empty_page,
+                    imageId = R.drawable.empty,
                     imageDescriptionId = R.string.description_cafe_addresses_empty,
                     textId = R.string.msg_my_addresses_empty,
                     buttonTextId = R.string.action_add_addresses,

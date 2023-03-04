@@ -294,7 +294,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         Column(modifier = modifier) {
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
-                iconId = R.drawable.ic_feedback,
+                iconId = R.drawable.ic_star,
                 iconDescription = R.string.description_ic_feedback,
                 labelStringId = R.string.title_feedback
             ) {

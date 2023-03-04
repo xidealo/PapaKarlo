@@ -49,7 +49,7 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
                 StartIconCard(
                     enabled = false,
                     elevated = false,
-                    iconId = R.drawable.ic_bb_logo,
+                    iconId = R.drawable.ic_bb,
                     iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
                     labelStringId = R.string.msg_about_app_developer
                 )
