@@ -54,7 +54,6 @@ fun networkModule() = module {
             install(DefaultRequest) {
                 host = "food-delivery-api-bunbeauty.herokuapp.com"
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                contentType(ContentType.Application.Json)
 
                 url {
                     protocol = URLProtocol.HTTPS

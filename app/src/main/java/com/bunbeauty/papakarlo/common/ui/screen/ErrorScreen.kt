@@ -39,7 +39,7 @@ fun ErrorScreen(
         )
 
         Image(
-            painter = painterResource(R.drawable.error_image),
+            painter = painterResource(R.drawable.error),
             contentDescription = stringResource(R.string.description_empty_profile)
         )
 

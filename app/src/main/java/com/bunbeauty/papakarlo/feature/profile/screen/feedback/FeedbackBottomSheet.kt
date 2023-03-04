@@ -75,7 +75,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
                 }
                 NavigationIconCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_play_market,
+                    iconId = R.drawable.ic_gp,
                     iconDescription = R.string.description_feedback_play_market,
                     labelStringId = R.string.action_feedback_play_market,
                     hasShadow = false

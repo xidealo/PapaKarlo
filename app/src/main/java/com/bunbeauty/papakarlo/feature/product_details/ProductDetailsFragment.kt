@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,8 +31,8 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
 import com.bunbeauty.papakarlo.extensions.compose
 import com.bunbeauty.papakarlo.feature.product_details.model.MenuProductUI
@@ -94,13 +93,11 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
 
     @Composable
     private fun ProductCard(menuProductUI: MenuProductUI) {
-        Card(
+        FoodDeliveryCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-            shape = mediumRoundedCornerShape,
-            colors = FoodDeliveryTheme.colors.cardColors(),
-            elevation = FoodDeliveryTheme.dimensions.cardEvaluation(true),
+            enabled = false
         ) {
             Column {
                 AsyncImage(
