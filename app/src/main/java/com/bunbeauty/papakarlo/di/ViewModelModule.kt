@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewMod
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsViewModel
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
@@ -143,11 +143,11 @@ fun viewModelModule() = module {
             userInteractor = get(),
         )
     }
-    viewModel { parameters ->
+    viewModel {
         ProductDetailsViewModel(
-            menuProductInteractor = get(),
-            stringUtil = get(),
-            savedStateHandle = parameters.get()
+            getMenuProductByUuidUseCase = get(),
+            observeCartUseCase = get(),
+            addCartProductUseCase = get(),
         )
     }
     viewModel {

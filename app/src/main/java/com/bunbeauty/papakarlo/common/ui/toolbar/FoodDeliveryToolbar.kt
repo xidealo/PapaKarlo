@@ -94,7 +94,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
             Text(
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.onSurface,
-                text = action.cost
+                text = action.topCartUi.cost
             )
             Box {
                 Icon(
@@ -110,7 +110,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                 ) {
                     Text(
                         style = FoodDeliveryTheme.typography.labelSmall.medium,
-                        text = action.count
+                        text = action.topCartUi.count
                     )
                 }
             }

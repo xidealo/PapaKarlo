@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -21,103 +21,135 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
+import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
-import com.bunbeauty.papakarlo.feature.product_details.model.MenuProductUI
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
+import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
+class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_product_details) {
 
-    override val viewModel: ProductDetailsViewModel by stateViewModel(state = {
-        arguments ?: bundleOf()
-    })
+    private val viewModel: ProductDetailsViewModel by viewModel()
+
     private val args: ProductDetailsFragmentArgs by navArgs()
+
     override val viewBinding by viewBinding(FragmentProductDetailsBinding::bind)
+
+    private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getMenuProduct(args.menuProductUuid)
+
         viewBinding.fragmentProductDetailsCvMain.setContentWithTheme {
-            val menuProduct by viewModel.menuProduct.collectAsState()
-            ProductDetailsScreen(menuProduct)
+            val menuProductUiState by viewModel.menuProductUiState.collectAsState()
+            ProductDetailsScreen(
+                menuProductName = args.menuProductName,
+                menuProductUuid = args.menuProductUuid,
+                productDetailsUi = productDetailsUiStateMapper.map(menuProductUiState),
+                state = menuProductUiState.state
+            )
         }
     }
 
     @Composable
-    private fun ProductDetailsScreen(menuProductUI: MenuProductUI?) {
+    private fun ProductDetailsScreen(
+        menuProductName: String,
+        menuProductUuid: String,
+        productDetailsUi: ProductDetailsUi,
+        state: ProductDetailsState.State,
+    ) {
         FoodDeliveryToolbarScreen(
-            title = args.menuProductName,
+            title = menuProductName,
             backActionClick = {
                 findNavController().popBackStack()
             },
-            actions = listOf(
-                FoodDeliveryCartAction(
-                    count = "5",
-                    cost = "666 ₽"
-                ) {
-                    findNavController().navigate(globalConsumerCartFragment())
+            topActions = listOf(
+                FoodDeliveryCartAction(topCartUi = productDetailsUi.topCartUi) {
+                    val backQueue = findNavController().backQueue
+                    if ((backQueue.size > 1) &&
+                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
+                    ) {
+                        findNavController().popBackStack()
+                    } else {
+                        findNavController().navigate(globalConsumerCartFragment())
+                    }
                 }
-            )
+            ),
+            actionButton = {
+                if (state == ProductDetailsState.State.SUCCESS) {
+                    MainButton(
+                        modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        textStringId = R.string.action_product_details_want
+                    ) {
+                        viewModel.onWantClicked()
+                    }
+                }
+            }
         ) {
-            if (menuProductUI == null) {
-                LoadingScreen()
-            } else {
-                ProductDetailsSuccessScreen(menuProductUI)
+            when (state) {
+                ProductDetailsState.State.SUCCESS -> {
+                    ProductDetailsSuccessScreen(productDetailsUi.menuProductUi)
+                }
+                ProductDetailsState.State.LOADING -> {
+                    LoadingScreen()
+                }
+                ProductDetailsState.State.ERROR -> {
+                    ErrorScreen(mainTextId = R.string.common_error) {
+                        viewModel.getMenuProduct(menuProductUuid)
+                    }
+                }
             }
         }
     }
 
     @Composable
-    private fun ProductDetailsSuccessScreen(menuProductUI: MenuProductUI) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
+    private fun ProductDetailsSuccessScreen(menuProductUi: ProductDetailsUi.MenuProductUi?) {
+        menuProductUi?.let {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
-                    .weight(1f)
             ) {
-                ProductCard(menuProductUI)
-            }
-            MainButton(
-                textStringId = R.string.action_product_details_want
-            ) {
-                viewModel.onWantClicked(menuProductUI)
+                ProductCard(menuProductUi)
+                Spacer(modifier = Modifier.height(72.dp))
             }
         }
     }
 
     @Composable
-    private fun ProductCard(menuProductUI: MenuProductUI) {
+    private fun ProductCard(menuProductUi: ProductDetailsUi.MenuProductUi) {
         FoodDeliveryCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             enabled = false
         ) {
             Column {
                 AsyncImage(
                     modifier = Modifier.fillMaxWidth(),
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(menuProductUI.photoLink)
+                        .data(menuProductUi.photoLink)
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.placeholder),
@@ -125,18 +157,20 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                     contentScale = ContentScale.FillWidth
                 )
                 Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
-                    Row(verticalAlignment = Alignment.Bottom) {
+                    Row {
                         Text(
                             modifier = Modifier
                                 .weight(1f)
+                                .alignByBaseline()
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = menuProductUI.name,
-                            style = FoodDeliveryTheme.typography.h2,
+                            text = menuProductUi.name,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
                             color = FoodDeliveryTheme.colors.onSurface
                         )
                         Text(
-                            text = menuProductUI.size,
-                            style = FoodDeliveryTheme.typography.body2,
+                            modifier = Modifier.alignByBaseline(),
+                            text = menuProductUi.size,
+                            style = FoodDeliveryTheme.typography.bodySmall,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant
                         )
                     }
@@ -144,27 +178,27 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
                         modifier = Modifier
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                     ) {
-                        menuProductUI.oldPrice?.let {
+                        menuProductUi.oldPrice?.let {
                             Text(
                                 modifier = Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                text = menuProductUI.oldPrice,
-                                style = FoodDeliveryTheme.typography.body1,
+                                text = menuProductUi.oldPrice,
+                                style = FoodDeliveryTheme.typography.bodyLarge,
                                 color = FoodDeliveryTheme.colors.onSurfaceVariant,
                                 textDecoration = TextDecoration.LineThrough
                             )
                         }
                         Text(
-                            text = menuProductUI.newPrice,
-                            style = FoodDeliveryTheme.typography.body1,
+                            text = menuProductUi.newPrice,
+                            style = FoodDeliveryTheme.typography.bodyLarge.bold,
                             color = FoodDeliveryTheme.colors.onSurface
                         )
                     }
                     Text(
                         modifier = Modifier
                             .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = menuProductUI.description,
-                        style = FoodDeliveryTheme.typography.body1,
+                        text = menuProductUi.description,
+                        style = FoodDeliveryTheme.typography.bodyLarge,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                 }
@@ -172,26 +206,49 @@ class ProductDetailsFragment : BaseFragment(R.layout.fragment_product_details) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ProductDetailsSuccessScreenPreview() {
-        ProductDetailsScreen(
-            MenuProductUI(
-                uuid = "",
-                photoLink = "",
-                name = "Бэргер куриный Макс с экстра сырным соусом",
-                size = "300 г",
-                oldPrice = "320 ₽",
-                newPrice = "280 ₽",
-                description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                    "красный лук, салат, фирменный соус, булочка с кунжутом",
+        FoodDeliveryTheme {
+            ProductDetailsScreen(
+                menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
+                menuProductUuid = "",
+                productDetailsUi = ProductDetailsUi(
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
+                    menuProductUi = ProductDetailsUi.MenuProductUi(
+                        photoLink = "",
+                        name = "Бэргер куриный Макс с экстра сырным соусом",
+                        size = "300 г",
+                        oldPrice = "320 ₽",
+                        newPrice = "280 ₽",
+                        description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
+                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                    )
+                ),
+                state = ProductDetailsState.State.SUCCESS
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ProductDetailsLoadingScreenPreview() {
-        ProductDetailsScreen(null)
+        FoodDeliveryTheme {
+            ProductDetailsScreen(
+                menuProductName = "Бэргер куриный Макс с экстра сырным соусом",
+                menuProductUuid = "",
+                productDetailsUi = ProductDetailsUi(
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
+                    menuProductUi = null,
+                ),
+                state = ProductDetailsState.State.LOADING
+            )
+        }
     }
 }

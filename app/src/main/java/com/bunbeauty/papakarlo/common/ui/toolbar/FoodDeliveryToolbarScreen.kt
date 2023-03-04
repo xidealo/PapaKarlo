@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -19,7 +20,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun FoodDeliveryToolbarScreen(
     title: String,
     backActionClick: () -> Unit,
-    actions: List<FoodDeliveryToolbarActions> = emptyList(),
+    topActions: List<FoodDeliveryToolbarActions> = emptyList(),
+    actionButton: @Composable () -> Unit = {},
     content: (@Composable () -> Unit)
 ) {
     val appBarState = rememberTopAppBarState()
@@ -33,11 +35,13 @@ fun FoodDeliveryToolbarScreen(
                 title = title,
                 backActionClick = backActionClick,
                 scrollBehavior = scrollBehavior,
-                actions = actions
+                actions = topActions
             )
         },
+        containerColor = FoodDeliveryTheme.colors.background,
+        floatingActionButton = actionButton,
+        floatingActionButtonPosition = FabPosition.Center,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        containerColor = FoodDeliveryTheme.colors.background
     ) { padding ->
         Box(
             modifier = Modifier

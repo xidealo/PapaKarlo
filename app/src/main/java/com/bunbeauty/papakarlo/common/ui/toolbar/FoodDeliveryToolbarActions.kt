@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.toolbar
 
 import androidx.annotation.DrawableRes
-
+import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 
 sealed class FoodDeliveryToolbarActions
 
@@ -11,7 +11,6 @@ class FoodDeliveryAction(
 ): FoodDeliveryToolbarActions()
 
 class FoodDeliveryCartAction(
-    val count: String,
-    val cost: String,
+    val topCartUi: TopCartUi,
     val onClick: () -> Unit,
 ): FoodDeliveryToolbarActions()

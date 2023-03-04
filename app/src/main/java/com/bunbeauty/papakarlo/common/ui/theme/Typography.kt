@@ -64,6 +64,12 @@ data class AppTypography(
         fontSize = 11.sp,
         lineHeight = 16.sp,
     ),
+    val bodyLarge: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+    ),
     val bodySmall: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,

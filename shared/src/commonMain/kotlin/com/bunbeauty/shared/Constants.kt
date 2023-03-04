@@ -6,31 +6,15 @@ object Constants {
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"
     const val CITY_UUID_PARAMETER = "cityUuid"
-    const val UUID_PARAMETER = "uuid"
-
-    // NAV PARAMETER
-
-    const val ORDER_UUID = "orderUuid"
 
     // HEADER
 
     const val AUTHORIZATION_HEADER = "Authorization"
     const val BEARER = "Bearer "
 
-    const val PRODUCT_CODE = "productCode"
-    const val ORDERS = "ORDERS"
-    const val L_ORDERS = "orders"
-    const val USERS = "USERS"
-    const val EMAIL = "email"
-    const val ADDRESSES = "addresses"
-    const val COMPANY = "COMPANY"
-    const val CAFES = "cafes"
-    const val MENU_PRODUCTS = "menu_products"
-    const val DELIVERY = "delivery"
+    // CART
 
-    // LIMITS
-
-    const val PHONE_LENGTH = 15
+    const val CART_PRODUCT_LIMIT = 99
 
     // PAYMENT
 
