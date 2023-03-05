@@ -1,8 +1,8 @@
 package com.bunbeauty.papakarlo.feature.product_details
 
-import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 
 class ProductDetailsUiStateMapper(
     private val stringUtil: IStringUtil

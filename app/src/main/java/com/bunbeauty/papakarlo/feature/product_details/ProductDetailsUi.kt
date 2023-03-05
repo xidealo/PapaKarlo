@@ -15,5 +15,4 @@ data class ProductDetailsUi(
         val newPrice: String,
         val description: String
     )
-
 }
