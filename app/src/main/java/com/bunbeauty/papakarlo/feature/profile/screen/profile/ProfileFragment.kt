@@ -38,7 +38,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.shared.domain.model.date_time.Date
@@ -70,7 +70,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentProfileCvMain.compose {
+        viewBinding.fragmentProfileCvMain.setContentWithTheme {
             val profileState by viewModel.profileState.collectAsStateWithLifecycle()
             ProfileScreen(
                 profileState = profileState,

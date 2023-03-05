@@ -1,10 +1,13 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -156,6 +159,21 @@ internal fun useCaseModule() = module {
         GetLastOrderUseCase(
             dataStoreRepo = get(),
             orderRepo = get()
+        )
+    }
+    factory{
+        GetMenuProductByUuidUseCase(
+            menuProductRepo = get()
+        )
+    }
+    factory{
+        ObserveCartUseCase(
+            cartProductRepo = get()
+        )
+    }
+    factory{
+        AddCartProductUseCase(
+            cartProductRepo = get()
         )
     }
 }

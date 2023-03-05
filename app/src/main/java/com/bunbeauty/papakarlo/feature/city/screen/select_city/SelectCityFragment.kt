@@ -20,7 +20,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.City
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,7 +35,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCityList()
-        viewBinding.fragmentSelectCityCvMain.compose {
+        viewBinding.fragmentSelectCityCvMain.setContentWithTheme {
             val cityList by viewModel.cityListState.collectAsState()
             SelectCityScreen(cityList)
         }

@@ -36,7 +36,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuAction
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
@@ -63,7 +63,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getMenu()
-        viewBinding.fragmentMenuCvMain.compose {
+        viewBinding.fragmentMenuCvMain.setContentWithTheme {
             val menuState by viewModel.menuState.collectAsState()
             MenuScreen(menuState = menuState)
         }

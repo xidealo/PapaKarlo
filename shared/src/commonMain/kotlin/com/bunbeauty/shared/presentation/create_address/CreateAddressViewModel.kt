@@ -20,7 +20,7 @@ class CreateAddressViewModel(
     private val mutableStreetListState = MutableStateFlow(CreateAddressState())
     val streetListState = mutableStreetListState.asCommonStateFlow()
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         mutableStreetListState.update {
             it.copy(
                 state = CreateAddressState.State.Error(throwable),

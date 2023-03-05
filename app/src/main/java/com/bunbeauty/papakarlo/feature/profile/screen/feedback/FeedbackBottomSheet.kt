@@ -18,7 +18,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.INSTAGRAM_LINK
 import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
 import com.bunbeauty.shared.Constants.VK_LINK
@@ -32,7 +32,7 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetFeedbackCvMain.compose {
+        viewBinding.bottomSheetFeedbackCvMain.setContentWithTheme {
             FeedbackScreen()
         }
     }

@@ -38,7 +38,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
-import com.bunbeauty.papakarlo.extensions.compose
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.shared.Constants.PHONE_CODE
@@ -59,7 +59,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.setSuccessState()
-        viewBinding.fragmentLoginCvMain.compose {
+        viewBinding.fragmentLoginCvMain.setContentWithTheme {
             val loginState by viewModel.loginState.collectAsStateWithLifecycle()
             LoginScreen(loginState)
             LaunchedEffect(loginState.eventList) {
