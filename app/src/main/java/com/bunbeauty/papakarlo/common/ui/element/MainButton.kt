@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 
 @Composable
 fun MainButton(
@@ -25,7 +25,7 @@ fun MainButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         colors = FoodDeliveryTheme.colors.mainButtonColors(),
-        shape = mediumRoundedCornerShape,
+        shape = buttonRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
         enabled = isEnabled
     ) {

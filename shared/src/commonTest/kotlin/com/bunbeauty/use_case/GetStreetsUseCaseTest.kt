@@ -4,13 +4,10 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
 import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
-import com.bunbeauty.shared.domain.model.category.Category
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +16,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 

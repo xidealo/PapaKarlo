@@ -56,7 +56,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(R.drawable.new_version),
+                    painter = painterResource(R.drawable.google_play),
                     contentDescription = stringResource(R.string.description_consumer_cart_empty)
                 )
                 Text(

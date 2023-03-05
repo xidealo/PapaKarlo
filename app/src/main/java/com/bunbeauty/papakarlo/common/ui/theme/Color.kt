@@ -255,6 +255,13 @@ class AppColors(
     )
 
     @Composable
+    fun mainOutlineButtonColors() = ButtonDefaults.outlinedButtonColors(
+        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
+        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
+        contentColor = FoodDeliveryTheme.colors.primary
+    )
+
+    @Composable
     fun iconButtonColors() = IconButtonDefaults.iconButtonColors(
         containerColor = FoodDeliveryTheme.colors.primary,
         disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,

@@ -72,7 +72,14 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         viewModel.update()
         viewBinding.fragmentProfileCvMain.compose {
             val profileState by viewModel.profileState.collectAsStateWithLifecycle()
-            ProfileScreen(profileState)
+            ProfileScreen(
+                profileState = profileState,
+                onLastOrderClicked = viewModel::onLastOrderClicked,
+                onSettingsClicked = viewModel::onSettingsClicked,
+                onYourAddressesClicked = viewModel::onYourAddressesClicked,
+                onOrderHistoryClicked = viewModel::onOrderHistoryClicked,
+                onPaymentClicked = viewModel::onPaymentClicked,
+            )
             LaunchedEffect(profileState.eventList) {
                 handleEventList(profileState.eventList)
             }
@@ -90,14 +97,28 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     }
 
     @Composable
-    private fun ProfileScreen(profileState: ProfileState) {
+    private fun ProfileScreen(
+        profileState: ProfileState,
+        onLastOrderClicked: (LightOrder) -> Unit,
+        onSettingsClicked: () -> Unit,
+        onYourAddressesClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit,
+        onPaymentClicked: () -> Unit,
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.background)
         ) {
             when (profileState.state) {
-                ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(profileState)
+                ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
+                    profileState,
+                    onLastOrderClicked = onLastOrderClicked,
+                    onSettingsClick = onSettingsClicked,
+                    onYourAddressesClicked = onYourAddressesClicked,
+                    onOrderHistoryClicked = onOrderHistoryClicked,
+                    onPaymentClicked = onPaymentClicked,
+                )
                 ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
                 ProfileState.State.LOADING -> LoadingScreen()
                 ProfileState.State.ERROR -> {
@@ -157,13 +178,20 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     }
 
     @Composable
-    private fun AuthorizedProfileScreen(profile: ProfileState) {
+    private fun AuthorizedProfileScreen(
+        profile: ProfileState,
+        onLastOrderClicked: (LightOrder) -> Unit,
+        onSettingsClick: () -> Unit,
+        onYourAddressesClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit,
+        onPaymentClicked: () -> Unit,
+    ) {
         Box(modifier = Modifier.fillMaxSize()) {
             LazyColumn(contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)) {
                 profile.lastOrder?.let { lastOrder ->
                     item {
                         OrderItem(orderItem = orderItemMapper.toItem(lastOrder)) {
-                            viewModel.onLastOrderClicked(lastOrder)
+                            onLastOrderClicked(lastOrder)
                         }
                         Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace))
                     }
@@ -173,10 +201,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         modifier = Modifier.fillMaxWidth(),
                         iconId = R.drawable.ic_settings,
                         iconDescription = R.string.description_ic_settings,
-                        labelStringId = R.string.action_profile_settings
-                    ) {
-                        viewModel.onSettingsClicked()
-                    }
+                        labelStringId = R.string.action_profile_settings,
+                        onClick = onSettingsClick
+                    )
                 }
                 item {
                     NavigationIconCard(
@@ -185,10 +212,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                         iconId = R.drawable.ic_address,
                         iconDescription = R.string.description_ic_my_addresses,
-                        labelStringId = R.string.action_profile_my_addresses
-                    ) {
-                        viewModel.onYourAddressesClicked()
-                    }
+                        labelStringId = R.string.action_profile_my_addresses,
+                        onClick = onYourAddressesClicked
+                    )
                 }
                 item {
                     NavigationIconCard(
@@ -197,10 +223,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                         iconId = R.drawable.ic_history,
                         iconDescription = R.string.description_ic_my_orders,
-                        labelStringId = R.string.action_profile_my_orders
-                    ) {
-                        viewModel.onOrderHistoryClicked()
-                    }
+                        labelStringId = R.string.action_profile_my_orders,
+                        onClick = onOrderHistoryClicked
+                    )
                 }
                 item {
                     NavigationIconCard(
@@ -209,10 +234,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                         iconId = R.drawable.ic_payment,
                         iconDescription = R.string.description_ic_payment,
-                        labelStringId = R.string.action_profile_payment
-                    ) {
-                        viewModel.onPaymentClicked()
-                    }
+                        labelStringId = R.string.action_profile_payment,
+                        onClick = onPaymentClicked
+                    )
                 }
                 item {
                     ProfileInfoCards(
@@ -270,7 +294,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         Column(modifier = modifier) {
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
-                iconId = R.drawable.ic_feedback,
+                iconId = R.drawable.ic_star,
                 iconDescription = R.string.description_ic_feedback,
                 labelStringId = R.string.title_feedback
             ) {
@@ -311,7 +335,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     ),
                 ),
                 state = ProfileState.State.AUTHORIZED
-            )
+            ),
+            onLastOrderClicked = {},
+            onSettingsClicked = {},
+            onYourAddressesClicked = {},
+            onOrderHistoryClicked = {},
+            onPaymentClicked = {},
         )
     }
 
@@ -322,7 +351,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileState(
                 lastOrder = null,
                 state = ProfileState.State.AUTHORIZED
-            )
+            ),
+            onLastOrderClicked = {},
+            onSettingsClicked = {},
+            onYourAddressesClicked = {},
+            onOrderHistoryClicked = {},
+            onPaymentClicked = {},
         )
     }
 
@@ -333,7 +367,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileState(
                 lastOrder = null,
                 state = ProfileState.State.UNAUTHORIZED
-            )
+            ),
+            onLastOrderClicked = {},
+            onSettingsClicked = {},
+            onYourAddressesClicked = {},
+            onOrderHistoryClicked = {},
+            onPaymentClicked = {},
         )
     }
 
@@ -344,7 +383,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileState(
                 lastOrder = null,
                 state = ProfileState.State.LOADING
-            )
+            ),
+            onLastOrderClicked = {},
+            onSettingsClicked = {},
+            onYourAddressesClicked = {},
+            onOrderHistoryClicked = {},
+            onPaymentClicked = {},
         )
     }
 
@@ -355,7 +399,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileState(
                 lastOrder = null,
                 state = ProfileState.State.ERROR
-            )
+            ),
+            onLastOrderClicked = {},
+            onSettingsClicked = {},
+            onYourAddressesClicked = {},
+            onOrderHistoryClicked = {},
+            onPaymentClicked = {},
         )
     }
 }

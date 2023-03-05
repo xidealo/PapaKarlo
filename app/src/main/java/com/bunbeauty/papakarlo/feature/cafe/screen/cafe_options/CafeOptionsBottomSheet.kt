@@ -69,7 +69,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
     @Composable
     private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
         NavigationIconCard(
-            iconId = R.drawable.ic_phone,
+            iconId = R.drawable.ic_call,
             iconDescription = R.string.description_cafe_options_call,
             label = cafeOptions.callToCafe,
             hasShadow = false

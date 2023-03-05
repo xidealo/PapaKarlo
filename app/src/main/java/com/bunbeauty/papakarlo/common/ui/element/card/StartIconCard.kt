@@ -102,7 +102,7 @@ fun IconCardPreview() {
 @Composable
 fun OriginalColorIconCardPreview() {
     StartIconCard(
-        iconId = R.drawable.ic_bb_logo,
+        iconId = R.drawable.ic_bb,
         iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
         labelStringId = R.string.title_about_app
     )
