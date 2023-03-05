@@ -7,22 +7,22 @@ import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import org.koin.dsl.module
 
 fun uiMapperModule() = module {
-    single {
+    factory {
         OrderItemMapper(
             stringUtil = get()
         )
     }
-    single {
+    factory {
         UserAddressItemMapper(
             stringUtil = get()
         )
     }
-    single {
+    factory {
         OrderProductItemMapper(
             stringUtil = get()
         )
     }
-    single {
+    factory {
         ProductDetailsUiStateMapper(
             stringUtil = get()
         )

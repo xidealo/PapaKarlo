@@ -22,6 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -56,13 +58,14 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
 
     private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getMenuProduct(args.menuProductUuid)
 
         viewBinding.fragmentProductDetailsCvMain.setContentWithTheme {
-            val menuProductUiState by viewModel.menuProductUiState.collectAsState()
+            val menuProductUiState by viewModel.menuProductUiState.collectAsStateWithLifecycle()
             ProductDetailsScreen(
                 menuProductName = args.menuProductName,
                 menuProductUuid = args.menuProductUuid,

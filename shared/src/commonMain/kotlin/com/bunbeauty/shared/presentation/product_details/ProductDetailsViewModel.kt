@@ -6,9 +6,9 @@ import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.presentation.SharedViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,12 +21,18 @@ class ProductDetailsViewModel(
     private val mutableProductDetailsState = MutableStateFlow(ProductDetailsState())
     val menuProductUiState = mutableProductDetailsState.asCommonStateFlow()
 
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        mutableProductDetailsState.update { state ->
+            state.copy(state = ProductDetailsState.State.ERROR)
+        }
+    }
+
     init {
         observeCart()
     }
 
     fun getMenuProduct(menuProductUuid: String) {
-        sharedScope.launch {
+        sharedScope.launch(exceptionHandler) {
             val menuProduct = getMenuProductByUuidUseCase(menuProductUuid)
             mutableProductDetailsState.update { state ->
                 if (menuProduct == null) {
@@ -50,11 +56,13 @@ class ProductDetailsViewModel(
     }
 
     private fun observeCart() {
-        observeCartUseCase().onEach { cartTotalAndCount ->
-            mutableProductDetailsState.update { state ->
-                state.copy(cartCostAndCount = cartTotalAndCount)
+        sharedScope.launch(exceptionHandler) {
+            observeCartUseCase().collectLatest { cartTotalAndCount ->
+                mutableProductDetailsState.update { state ->
+                    state.copy(cartCostAndCount = cartTotalAndCount)
+                }
             }
-        }.launchIn(sharedScope)
+        }
     }
 
     private fun mapMenuProduct(menuProduct: MenuProduct): ProductDetailsState.MenuProduct {
