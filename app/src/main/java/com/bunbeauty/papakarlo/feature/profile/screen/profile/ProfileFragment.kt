@@ -37,6 +37,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
@@ -273,9 +274,18 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         }
                     }
                     Text(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 32.dp),
+                        text = stringResource(R.string.title_profile_no_profile),
+                        style = FoodDeliveryTheme.typography.titleMedium.bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        modifier = Modifier
+                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                         text = stringResource(R.string.msg_profile_no_profile),
-                        style = FoodDeliveryTheme.typography.body1,
+                        style = FoodDeliveryTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center
                     )
                 }

@@ -181,7 +181,8 @@
     <string name="action_profile_my_addresses">Мои адерса</string>
     <string name="action_profile_my_orders">Мои заказы</string>
     <string name="action_profile_payment">Оплата</string>
-    <string name="msg_profile_no_profile">В профиле будут отображаться адреса для доставки и история ваших заказов</string>
+    <string name="title_profile_no_profile">Войдите в профиль</string>
+    <string name="msg_profile_no_profile">В профиле будут отбражаться адреса для доставки и история ваших заказов</string>
     <string name="action_profile_login">Войти</string>
     <string name="description_ic_settings">Настройки</string>
     <string name="description_ic_my_addresses">Мои адерса</string>

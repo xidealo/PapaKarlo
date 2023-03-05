@@ -58,10 +58,10 @@ fun ErrorScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
-                style = FoodDeliveryTheme.typography.body2,
+                style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface,
                 textAlign = TextAlign.Center
             )
