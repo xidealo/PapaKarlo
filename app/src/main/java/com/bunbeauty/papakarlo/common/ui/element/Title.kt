@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
 fun Title(
@@ -28,7 +29,7 @@ fun Title(
     Text(
         modifier = modifier.fillMaxWidth(),
         text = text,
-        style = FoodDeliveryTheme.typography.h2,
+        style = FoodDeliveryTheme.typography.titleMedium.bold,
         textAlign = TextAlign.Center
     )
 }

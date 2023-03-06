@@ -23,6 +23,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
@@ -61,7 +62,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<UserAddressItem>
+            addressList: List<UserAddressItem>,
         ) = suspendCoroutine { continuation ->
             UserAddressListBottomSheet().apply {
                 this.addressList = addressList
@@ -95,14 +96,11 @@ private fun UserAddressListScreen(
         }
     }
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
+        Title(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.delivery_address),
-            style = FoodDeliveryTheme.typography.h2,
-            color = FoodDeliveryTheme.colors.onSurface
         )
         LazyColumn(
             modifier = Modifier.weight(1f, false),

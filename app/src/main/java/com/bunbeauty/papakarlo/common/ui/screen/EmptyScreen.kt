@@ -3,8 +3,10 @@ package com.bunbeauty.papakarlo.common.ui.screen
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -30,13 +32,14 @@ internal fun EmptyScreen(
     @StringRes buttonTextId: Int? = null,
     onClick: (() -> Unit)? = null,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(FoodDeliveryTheme.colors.background)
             .padding(FoodDeliveryTheme.dimensions.mediumSpace)
     ) {
+        Spacer(modifier = Modifier.weight(1f))
         Column(
-            modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
@@ -66,9 +69,9 @@ internal fun EmptyScreen(
                 textAlign = TextAlign.Center
             )
         }
+        Spacer(modifier = Modifier.weight(1f))
         buttonTextId?.let {
             MainButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
                 textStringId = buttonTextId
             ) {
                 onClick?.invoke()

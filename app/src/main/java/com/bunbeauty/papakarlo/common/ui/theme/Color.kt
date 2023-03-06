@@ -197,16 +197,6 @@ class AppColors(
         colors = listOf(Color.Transparent, surface)
     )
 
-    @Composable
-    fun switcherButtonColors(): ButtonColors {
-        return ButtonDefaults.buttonColors(
-            containerColor = secondary,
-            contentColor = onSecondary,
-            disabledContainerColor = primary,
-            disabledContentColor = onPrimary
-        )
-    }
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun textFieldColors(): TextFieldColors {
@@ -242,16 +232,19 @@ class AppColors(
     )
 
     @Composable
-    fun secondaryCardColors() = CardDefaults.cardColors(
-        containerColor = FoodDeliveryTheme.colors.secondary
-    )
-
-    @Composable
     fun mainButtonColors() = ButtonDefaults.buttonColors(
         containerColor = FoodDeliveryTheme.colors.primary,
         disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
         disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
         contentColor = FoodDeliveryTheme.colors.onPrimary
+    )
+
+    @Composable
+    fun secondaryButtonColors() = ButtonDefaults.buttonColors(
+        containerColor = FoodDeliveryTheme.colors.secondary,
+        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
+        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
+        contentColor = FoodDeliveryTheme.colors.onSecondary
     )
 
     @Composable

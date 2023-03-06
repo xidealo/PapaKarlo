@@ -86,9 +86,11 @@ fun ErrorScreen(
 @Preview(showSystemUi = true)
 @Composable
 private fun ErrorScreenPreview() {
-    ErrorScreen(
-        mainTextId = R.string.common_error,
-        extraTextId = R.string.internet_error
-    ) {
+    FoodDeliveryTheme {
+        ErrorScreen(
+            mainTextId = R.string.common_error,
+            extraTextId = R.string.internet_error
+        ) {
+        }
     }
 }

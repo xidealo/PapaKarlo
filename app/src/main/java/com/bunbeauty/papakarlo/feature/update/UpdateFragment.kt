@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -48,14 +49,14 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
 
     @Composable
     private fun UpdateScreen() {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.background)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
+            Spacer(modifier = Modifier.weight(1f))
             Column(
-                modifier = Modifier.align(Alignment.Center),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -85,8 +86,8 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                     textAlign = TextAlign.Center
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             MainButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
                 textStringId = R.string.action_update_update
             ) {
                 val uri = Uri.parse(PLAY_MARKET_LINK)

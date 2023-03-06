@@ -256,13 +256,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             ProfileInfoCards()
-            Box(
+            Spacer(modifier = Modifier.weight(1f))
+            Column(
                 modifier = Modifier
-                    .weight(1f)
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 Column(
-                    modifier = Modifier.align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     BoxWithConstraints {
@@ -290,8 +289,12 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.weight(1f))
+
             MainButton(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 textStringId = R.string.action_profile_login
             ) {
                 viewModel.onLoginClicked()

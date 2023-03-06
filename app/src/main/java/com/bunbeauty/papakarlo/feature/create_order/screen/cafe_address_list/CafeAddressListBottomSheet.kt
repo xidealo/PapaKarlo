@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
@@ -56,7 +57,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<CafeAddressItem>
+            addressList: List<CafeAddressItem>,
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
@@ -75,7 +76,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 private fun CafeAddressListScreen(
     addressList: List<CafeAddressItem>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (CafeAddressItem) -> Unit
+    onAddressClicked: (CafeAddressItem) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val itemPosition by remember {
@@ -89,14 +90,11 @@ private fun CafeAddressListScreen(
         }
     }
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
+        Title(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.cafe_address),
-            style = FoodDeliveryTheme.typography.h2,
-            color = FoodDeliveryTheme.colors.onSurface
         )
         LazyColumn(
             modifier = Modifier.weight(1f, false),

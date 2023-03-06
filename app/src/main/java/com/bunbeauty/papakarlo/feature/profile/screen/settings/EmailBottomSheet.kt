@@ -22,6 +22,7 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import kotlin.coroutines.resume
@@ -46,7 +47,7 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            email: String?
+            email: String?,
         ) = suspendCoroutine { continuation ->
             EmailBottomSheet().apply {
                 this.email = email
@@ -65,17 +66,15 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 @Composable
 private fun CommentScreen(
     email: String?,
-    onSaveClicked: (String) -> Unit
+    onSaveClicked: (String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
+        Title(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.common_email),
-            style = FoodDeliveryTheme.typography.h2,
-            color = FoodDeliveryTheme.colors.onSurface
         )
         val text = email ?: ""
         var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -109,8 +108,10 @@ private fun CommentScreen(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CommentScreenPreview() {
-    CommentScreen(email = "example@email.com") {}
+    FoodDeliveryTheme {
+        CommentScreen(email = "example@email.com") {}
+    }
 }
