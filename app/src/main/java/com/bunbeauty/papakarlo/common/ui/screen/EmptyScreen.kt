@@ -15,15 +15,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
 internal fun EmptyScreen(
     @DrawableRes imageId: Int,
     @StringRes imageDescriptionId: Int,
-    @StringRes textId: Int,
+    @StringRes mainTextId: Int,
+    @StringRes extraTextId: Int,
     @StringRes buttonTextId: Int? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -40,12 +43,27 @@ internal fun EmptyScreen(
                 painter = painterResource(imageId),
                 contentDescription = stringResource(imageDescriptionId)
             )
+
             Text(
                 modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                text = stringResource(textId),
-                textAlign = TextAlign.Center,
-                style = FoodDeliveryTheme.typography.body1
+                    .fillMaxWidth()
+                    .padding(top = 32.dp)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(id = mainTextId),
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.onSurface,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(id = extraTextId),
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.onSurface,
+                textAlign = TextAlign.Center
             )
         }
         buttonTextId?.let {
@@ -65,7 +83,8 @@ private fun EmptyScreenPreview() {
     EmptyScreen(
         imageId = R.drawable.empty_cart,
         imageDescriptionId = R.string.description_consumer_cart_empty,
-        textId = R.string.msg_consumer_cart_empty,
+        mainTextId = R.string.msg_consumer_cart_empty,
+        extraTextId = R.string.msg_consumer_cart_empty,
         buttonTextId = R.string.action_consumer_cart_menu,
     )
 }

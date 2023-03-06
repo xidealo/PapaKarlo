@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
 fun ErrorScreen(
@@ -49,7 +50,7 @@ fun ErrorScreen(
                 .padding(top = 32.dp)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(id = mainTextId),
-            style = FoodDeliveryTheme.typography.h2,
+            style = FoodDeliveryTheme.typography.titleMedium.bold,
             color = FoodDeliveryTheme.colors.onSurface,
             textAlign = TextAlign.Center
         )

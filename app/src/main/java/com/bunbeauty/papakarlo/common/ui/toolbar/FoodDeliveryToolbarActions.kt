@@ -8,9 +8,9 @@ sealed interface FoodDeliveryToolbarActions
 class FoodDeliveryAction(
     @DrawableRes val iconId: Int,
     val onClick: () -> Unit,
-): FoodDeliveryToolbarActions
+) : FoodDeliveryToolbarActions
 
 class FoodDeliveryCartAction(
     val topCartUi: TopCartUi,
     val onClick: () -> Unit,
-): FoodDeliveryToolbarActions
+) : FoodDeliveryToolbarActions

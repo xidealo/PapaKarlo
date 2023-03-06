@@ -78,6 +78,7 @@ class SettingsViewModel(
 
     fun logout(){
         sharedScope.launch {
+            observeSettingsJob?.cancel()
             firebaseAuthRepository.signOut()
             userInteractor.clearUserCache()
             mutableSettingsState.update { settingsState ->

@@ -33,7 +33,8 @@ fun SecondaryButton(
                 .fillMaxHeight()
                 .fillMaxWidth(),
             onClick = onClick,
-            colors = FoodDeliveryTheme.colors.secondaryCardColors()
+            colors = FoodDeliveryTheme.colors.secondaryCardColors(),
+            elevated = hasShadow
         ) {
             Box(
                 modifier = Modifier

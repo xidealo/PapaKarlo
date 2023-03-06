@@ -63,7 +63,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 EmptyScreen(
                     imageId = R.drawable.empty_cart,
                     imageDescriptionId = R.string.description_consumer_cart_empty,
-                    textId = R.string.msg_consumer_cart_empty,
+                    mainTextId = R.string.title_consumer_cart_empty,
+                    extraTextId = R.string.msg_consumer_cart_empty,
                     buttonTextId = R.string.action_consumer_cart_menu,
                     onClick = viewModel::onMenuClicked
                 )
