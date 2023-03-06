@@ -255,10 +255,10 @@ class AppColors(
 
     @Composable
     fun iconButtonColors() = IconButtonDefaults.iconButtonColors(
-        containerColor = FoodDeliveryTheme.colors.primary,
+        containerColor = FoodDeliveryTheme.colors.surface,
         disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
         disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.onPrimary
+        contentColor = FoodDeliveryTheme.colors.onSurfaceVariant
     )
 
     @OptIn(ExperimentalMaterial3Api::class)

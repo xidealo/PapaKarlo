@@ -1,6 +1,8 @@
 package com.bunbeauty.papakarlo.feature.consumer_cart.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -33,7 +36,11 @@ fun CountPicker(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .clip(buttonRoundedCornerShape)
-            .background(FoodDeliveryTheme.colors.primary),
+            .border(
+                BorderStroke(2.dp, FoodDeliveryTheme.colors.primary),
+                shape = buttonRoundedCornerShape
+            )
+            .background(FoodDeliveryTheme.colors.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
@@ -50,14 +57,14 @@ fun CountPicker(
                     .icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_minus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_decrease),
-                tint = FoodDeliveryTheme.colors.onPrimary
+                tint = FoodDeliveryTheme.colors.primary
             )
         }
         Text(
             modifier = Modifier.padding(FoodDeliveryTheme.dimensions.verySmallSpace),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.button,
-            color = FoodDeliveryTheme.colors.onPrimary,
+            color = FoodDeliveryTheme.colors.primary,
         )
 
         IconButton(
@@ -74,7 +81,7 @@ fun CountPicker(
                     .icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_plus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_increase),
-                tint = FoodDeliveryTheme.colors.onPrimary
+                tint = FoodDeliveryTheme.colors.primary
             )
         }
     }
