@@ -125,8 +125,7 @@ private fun CityListScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-private fun CityListScreenPreview(
-) {
+private fun CityListScreenPreview() {
     FoodDeliveryTheme {
         CityListScreen(
             cityList = listOf(
