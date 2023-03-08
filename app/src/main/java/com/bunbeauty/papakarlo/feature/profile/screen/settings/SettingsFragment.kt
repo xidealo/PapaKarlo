@@ -120,7 +120,11 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                     }
                 }
                 is SettingsState.Event.ShowCityListEvent -> {
-                    CityListBottomSheet.show(childFragmentManager, event.cityList)?.let { city ->
+                    CityListBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        cityList = event.cityList,
+                        selectedCityUuid = event.selectedCityUuid
+                    )?.let { city ->
                         viewModel.onCitySelected(city.uuid)
                     }
                 }

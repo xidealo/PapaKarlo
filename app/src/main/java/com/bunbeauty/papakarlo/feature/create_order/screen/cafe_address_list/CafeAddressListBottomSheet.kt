@@ -32,6 +32,7 @@ import kotlin.coroutines.suspendCoroutine
 class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
     private var addressList by argument<List<CafeAddressItem>>()
+    private var selectedCafeAddress by argument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +47,8 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
                 onAddressClicked = { addressItem ->
                     callback?.onResult(addressItem)
                     dismiss()
-                }
+                },
+                selectedCafeAddress = selectedCafeAddress
             )
         }
     }
@@ -57,9 +59,11 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             addressList: List<CafeAddressItem>,
+            selectedCafeAddress: String,
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
+                this.selectedCafeAddress = selectedCafeAddress
                 callback = object : Callback<CafeAddressItem> {
                     override fun onResult(result: CafeAddressItem?) {
                         continuation.resume(result)
@@ -74,6 +78,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 @Composable
 private fun CafeAddressListScreen(
     addressList: List<CafeAddressItem>,
+    selectedCafeAddress: String,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (CafeAddressItem) -> Unit,
 ) {
@@ -107,7 +112,8 @@ private fun CafeAddressListScreen(
                     ),
                     address = addressItem.address,
                     isClickable = true,
-                    hasShadow = false
+                    hasShadow = false,
+                    isSelected = addressItem.address == selectedCafeAddress
                 ) {
                     onAddressClicked(addressItem)
                 }

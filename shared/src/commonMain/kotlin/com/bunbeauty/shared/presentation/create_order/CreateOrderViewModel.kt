@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
@@ -66,7 +67,11 @@ class CreateOrderViewModel(
         val event = if (addressUiList.isEmpty()) {
             OrderCreationState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationState.Event.ShowUserAddressListEvent(addressUiList)
+            OrderCreationState.Event.ShowUserAddressListEvent(
+                addressList = addressUiList,
+                selectedUserAddressUuid = orderCreationState.value.deliveryAddress?.uuid
+                    ?: Constants.NOT_SELECTED
+            )
         }
         mutableOrderCreationState.update { state ->
             state + event
@@ -82,7 +87,9 @@ class CreateOrderViewModel(
 
     fun onCafeAddressClicked() {
         val event = OrderCreationState.Event.ShowCafeAddressListEvent(
-            orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem)
+            orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem),
+            selectedCafeAddress = orderCreationState.value.pickupAddress
+                ?: Constants.NOT_SELECTED
         )
         mutableOrderCreationState.update { state ->
             state + event

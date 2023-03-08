@@ -8,15 +8,15 @@ data class SettingsState(
     val selectedCity: City? = null,
     val cityList: List<City> = emptyList(),
     val state: State = State.LOADING,
-    val eventList: List<Event> = emptyList()
+    val eventList: List<Event> = emptyList(),
 ) {
 
     sealed interface Event {
-        class ShowEditEmailEvent(val email: String?): Event
-        class ShowCityListEvent(val cityList: List<City>): Event
-        object ShowEmailChangedSuccessfullyEvent: Event
-        object ShowEmailChangingFailedEvent: Event
-        object Back: Event
+        class ShowEditEmailEvent(val email: String?) : Event
+        class ShowCityListEvent(val cityList: List<City>, val selectedCityUuid: String) : Event
+        object ShowEmailChangedSuccessfullyEvent : Event
+        object ShowEmailChangingFailedEvent : Event
+        object Back : Event
     }
 
     enum class State {

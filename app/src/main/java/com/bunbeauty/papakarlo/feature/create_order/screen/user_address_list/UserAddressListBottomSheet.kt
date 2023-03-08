@@ -33,6 +33,7 @@ import kotlin.coroutines.suspendCoroutine
 class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 
     private var addressList by argument<List<UserAddressItem>>()
+    private var selectedUserAddressUuid by argument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +52,8 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
                 onAddAddressClicked = {
                     callback?.onResult(UserAddressListResult.AddNewAddress)
                     dismiss()
-                }
+                },
+                selectedUserAddressUuid = selectedUserAddressUuid
             )
         }
     }
@@ -62,9 +64,11 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             addressList: List<UserAddressItem>,
+            selectedUserAddressUuid: String,
         ) = suspendCoroutine { continuation ->
             UserAddressListBottomSheet().apply {
                 this.addressList = addressList
+                this.selectedUserAddressUuid = selectedUserAddressUuid
                 callback = object : Callback<UserAddressListResult> {
                     override fun onResult(result: UserAddressListResult?) {
                         continuation.resume(result)
@@ -79,6 +83,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 @Composable
 private fun UserAddressListScreen(
     addressList: List<UserAddressItem>,
+    selectedUserAddressUuid: String,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (UserAddressItem) -> Unit,
     onAddAddressClicked: () -> Unit,
@@ -113,7 +118,8 @@ private fun UserAddressListScreen(
                     ),
                     address = addressItem.address,
                     isClickable = true,
-                    hasShadow = false
+                    hasShadow = false,
+                    isSelected = addressItem.uuid == selectedUserAddressUuid
                 ) {
                     onAddressClicked(addressItem)
                 }
