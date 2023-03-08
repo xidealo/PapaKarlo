@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.common.ui.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -51,6 +49,7 @@ fun SmallButtonPreview() {
         SmallButton(
             modifier = Modifier.wrapContentSize(),
             textStringId = R.string.action_create_order_create_order,
-            onClick = { })
+            onClick = { }
+        )
     }
 }
