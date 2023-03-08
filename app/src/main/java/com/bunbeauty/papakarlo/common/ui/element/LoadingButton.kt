@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
 fun LoadingButton(
@@ -41,7 +42,7 @@ fun LoadingButton(
         } else {
             Text(
                 text = stringResource(textStringId),
-                style = FoodDeliveryTheme.typography.button,
+                style = FoodDeliveryTheme.typography.labelLarge.medium,
                 color = FoodDeliveryTheme.colors.onPrimary
             )
         }

@@ -285,9 +285,6 @@
         <action
             android:id="@+id/to_oneLineActionBottomSheet"
             app:destination="@id/oneLineActionBottomSheet" />
-        <action
-            android:id="@+id/to_cafeAddressesBottomSheet"
-            app:destination="@id/cafeAddressesBottomSheet" />
     </fragment>
 
     <dialog
@@ -303,11 +300,5 @@
             app:argType="com.bunbeauty.shared.presentation.create_order.model.TimeUI"
             app:nullable="true" />
     </dialog>
-
-    <dialog
-        android:id="@+id/cafeAddressesBottomSheet"
-        android:name="com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListBottomSheet"
-        android:label="CafeAddressesBottomSheet"
-        tools:layout="@layout/bottom_sheet_cafe_address_list" />
 
 </navigation>

@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -197,16 +196,6 @@ class AppColors(
         colors = listOf(Color.Transparent, surface)
     )
 
-    @Composable
-    fun switcherButtonColors(): ButtonColors {
-        return ButtonDefaults.buttonColors(
-            containerColor = secondary,
-            contentColor = onSecondary,
-            disabledContainerColor = primary,
-            disabledContentColor = onPrimary
-        )
-    }
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun textFieldColors(): TextFieldColors {
@@ -242,16 +231,19 @@ class AppColors(
     )
 
     @Composable
-    fun secondaryCardColors() = CardDefaults.cardColors(
-        containerColor = FoodDeliveryTheme.colors.secondary
-    )
-
-    @Composable
     fun mainButtonColors() = ButtonDefaults.buttonColors(
         containerColor = FoodDeliveryTheme.colors.primary,
         disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
         disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
         contentColor = FoodDeliveryTheme.colors.onPrimary
+    )
+
+    @Composable
+    fun secondaryButtonColors() = ButtonDefaults.buttonColors(
+        containerColor = FoodDeliveryTheme.colors.secondary,
+        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
+        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
+        contentColor = FoodDeliveryTheme.colors.onSecondary
     )
 
     @Composable
@@ -263,10 +255,10 @@ class AppColors(
 
     @Composable
     fun iconButtonColors() = IconButtonDefaults.iconButtonColors(
-        containerColor = FoodDeliveryTheme.colors.primary,
+        containerColor = FoodDeliveryTheme.colors.surface,
         disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
         disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.onPrimary
+        contentColor = FoodDeliveryTheme.colors.onSurfaceVariant
     )
 
     @OptIn(ExperimentalMaterial3Api::class)

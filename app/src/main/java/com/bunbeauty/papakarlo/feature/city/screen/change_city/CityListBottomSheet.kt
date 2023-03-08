@@ -18,11 +18,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.shared.domain.model.City
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -56,7 +59,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            cityList: List<City>
+            cityList: List<City>,
         ) = suspendCoroutine { continuation ->
             CityListBottomSheet().apply {
                 this.cityList = cityList
@@ -75,7 +78,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 private fun CityListScreen(
     cityList: List<City>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (City) -> Unit
+    onAddressClicked: (City) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val itemPosition by remember {
@@ -95,8 +98,9 @@ private fun CityListScreen(
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.common_city),
-            style = FoodDeliveryTheme.typography.h2,
-            color = FoodDeliveryTheme.colors.onSurface
+            style = FoodDeliveryTheme.typography.titleMedium.bold,
+            color = FoodDeliveryTheme.colors.onSurface,
+            textAlign = TextAlign.Center
         )
         LazyColumn(
             modifier = Modifier.weight(1f, false),
@@ -116,5 +120,28 @@ private fun CityListScreen(
                 }
             }
         }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun CityListScreenPreview() {
+    FoodDeliveryTheme {
+        CityListScreen(
+            cityList = listOf(
+                City(
+                    uuid = "1",
+                    name = "1",
+                    timeZone = "1",
+                ),
+                City(
+                    uuid = "2",
+                    name = "2",
+                    timeZone = "2",
+                ),
+            ),
+            scrolledToTop = {},
+            onAddressClicked = {},
+        )
     }
 }

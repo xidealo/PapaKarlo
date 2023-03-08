@@ -62,11 +62,11 @@ android {
             versionName = PapaKarloApplication.versionName
         }
 
-        create("cheddar") {
+    /*    create("cheddar") {
             applicationId = CheddarApplication.applicationId
             versionCode = CheddarApplication.versionCode
             versionName = CheddarApplication.versionName
-        }
+        }*/
     }
 
     kotlinOptions {

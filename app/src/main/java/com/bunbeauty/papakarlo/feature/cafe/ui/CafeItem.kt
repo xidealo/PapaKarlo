@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 
@@ -38,13 +39,13 @@ fun CafeItem(
             Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                 Text(
                     text = cafeItem.workingHours,
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface,
+                    style = FoodDeliveryTheme.typography.labelMedium.medium,
+                    color = FoodDeliveryTheme.colors.surfaceVariant,
                 )
                 Text(
                     modifier = Modifier.padding(start = FoodDeliveryTheme.dimensions.smallSpace),
                     text = cafeItem.isOpenMessage,
-                    style = FoodDeliveryTheme.typography.body1,
+                    style = FoodDeliveryTheme.typography.labelMedium.medium,
                     color = FoodDeliveryTheme.colors.cafeStatusColor(cafeItem.cafeStatus),
                 )
             }

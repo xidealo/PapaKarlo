@@ -26,7 +26,7 @@ fun ErrorSnackbar(
                 Text(
                     modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
                     text = snackbarData.visuals.message,
-                    style = FoodDeliveryTheme.typography.body1,
+                    style = FoodDeliveryTheme.typography.bodyLarge,
                     color = FoodDeliveryTheme.colors.onError
                 )
             }

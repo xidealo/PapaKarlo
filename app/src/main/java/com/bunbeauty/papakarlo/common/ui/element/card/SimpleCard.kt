@@ -33,7 +33,7 @@ fun SimpleCard(
             OverflowingText(
                 modifier = Modifier.fillMaxWidth(),
                 text = text,
-                style = FoodDeliveryTheme.typography.body1,
+                style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface
             )
         }

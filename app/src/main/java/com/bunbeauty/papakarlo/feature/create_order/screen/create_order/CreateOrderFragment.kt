@@ -154,7 +154,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     .padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.error_select_delivery_address),
-                style = FoodDeliveryTheme.typography.body2,
+                style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.negative
             )
         }

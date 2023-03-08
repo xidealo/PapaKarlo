@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.chipCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
 @Composable
@@ -37,11 +38,6 @@ fun CategoryItem(
         },
         shape = chipCornerShape
     ) {
-        val style = if (categoryItem.isSelected) {
-            FoodDeliveryTheme.typography.smallButton
-        } else {
-            FoodDeliveryTheme.typography.body2
-        }
         val color = if (categoryItem.isSelected) {
             FoodDeliveryTheme.colors.onPrimary
         } else {
@@ -58,7 +54,7 @@ fun CategoryItem(
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = categoryItem.name,
-                style = style,
+                style = FoodDeliveryTheme.typography.labelLarge.medium,
                 color = color,
                 textAlign = TextAlign.Center
             )

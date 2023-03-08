@@ -49,7 +49,12 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
                 .clip(bottomSheetShape)
                 .background(FoodDeliveryTheme.colors.surface)
         ) {
-            Title(textStringId = R.string.title_change_city)
+            Title(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                textStringId = R.string.title_change_city
+            )
             LazyColumn(
                 contentPadding = PaddingValues(
                     start = FoodDeliveryTheme.dimensions.mediumSpace,

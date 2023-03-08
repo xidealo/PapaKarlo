@@ -43,9 +43,15 @@ class LogoutBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_logout) {
                 .clip(bottomSheetShape)
                 .background(FoodDeliveryTheme.colors.surface)
         ) {
-            Title(textStringId = R.string.title_logout)
+            Title(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                textStringId = R.string.title_logout
+            )
             Column(
-                modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                modifier = Modifier
+                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 MainButton(
                     textStringId = R.string.action_logout,
@@ -67,9 +73,11 @@ class LogoutBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_logout) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun LogoutScreenPreview() {
-        LogoutScreen()
+        FoodDeliveryTheme {
+            LogoutScreen()
+        }
     }
 }

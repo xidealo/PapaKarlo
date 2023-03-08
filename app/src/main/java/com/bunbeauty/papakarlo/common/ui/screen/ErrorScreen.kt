@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 
 @Composable
 fun ErrorScreen(
@@ -49,7 +50,7 @@ fun ErrorScreen(
                 .padding(top = 32.dp)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(id = mainTextId),
-            style = FoodDeliveryTheme.typography.h2,
+            style = FoodDeliveryTheme.typography.titleMedium.bold,
             color = FoodDeliveryTheme.colors.onSurface,
             textAlign = TextAlign.Center
         )
@@ -58,10 +59,10 @@ fun ErrorScreen(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
-                style = FoodDeliveryTheme.typography.body2,
+                style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface,
                 textAlign = TextAlign.Center
             )
@@ -85,9 +86,11 @@ fun ErrorScreen(
 @Preview(showSystemUi = true)
 @Composable
 private fun ErrorScreenPreview() {
-    ErrorScreen(
-        mainTextId = R.string.common_error,
-        extraTextId = R.string.internet_error
-    ) {
+    FoodDeliveryTheme {
+        ErrorScreen(
+            mainTextId = R.string.common_error,
+            extraTextId = R.string.internet_error
+        ) {
+        }
     }
 }

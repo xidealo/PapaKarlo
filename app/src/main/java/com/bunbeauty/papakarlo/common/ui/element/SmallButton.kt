@@ -2,15 +2,18 @@ package com.bunbeauty.papakarlo.common.ui.element
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
 fun SmallButton(
@@ -21,7 +24,7 @@ fun SmallButton(
     isEnabled: Boolean = true,
 ) {
     OutlinedButton(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         onClick = onClick,
         colors = FoodDeliveryTheme.colors.mainOutlineButtonColors(),
         border = BorderStroke(
@@ -34,7 +37,19 @@ fun SmallButton(
     ) {
         Text(
             text = stringResource(textStringId),
-            style = FoodDeliveryTheme.typography.smallButton,
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
+        )
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun SmallButtonPreview() {
+    FoodDeliveryTheme {
+        SmallButton(
+            modifier = Modifier.wrapContentSize(),
+            textStringId = R.string.action_create_order_create_order,
+            onClick = { }
         )
     }
 }

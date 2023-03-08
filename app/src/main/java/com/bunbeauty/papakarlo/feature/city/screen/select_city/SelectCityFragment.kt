@@ -100,12 +100,16 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
     @Preview(showSystemUi = true)
     @Composable
     private fun SelectCityLoadingScreenPreview() {
-        SelectCityScreen(State.Loading())
+        FoodDeliveryTheme {
+            SelectCityScreen(State.Loading())
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun SelectCityErrorScreenPreview() {
-        SelectCityScreen(State.Error("Не удалось загрузить список городов"))
+        FoodDeliveryTheme {
+            SelectCityScreen(State.Error("Не удалось загрузить список городов"))
+        }
     }
 }

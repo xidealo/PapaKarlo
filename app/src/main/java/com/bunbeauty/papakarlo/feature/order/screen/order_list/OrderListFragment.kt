@@ -76,9 +76,10 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
             }
             OrderListState.State.EMPTY -> {
                 EmptyScreen(
-                    imageId = R.drawable.empty,
+                    imageId = R.drawable.empty_orders,
                     imageDescriptionId = R.string.description_cafe_addresses_empty,
-                    textId = R.string.msg_order_list_empty
+                    mainTextId = R.string.title_order_list_empty,
+                    extraTextId = R.string.msg_order_list_empty,
                 )
             }
             OrderListState.State.LOADING -> {

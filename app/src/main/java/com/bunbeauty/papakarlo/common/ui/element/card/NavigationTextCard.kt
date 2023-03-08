@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
 fun NavigationTextCard(
@@ -46,12 +47,12 @@ fun NavigationTextCard(
             ) {
                 Text(
                     text = stringResource(hintStringId),
-                    style = FoodDeliveryTheme.typography.hint,
+                    style = FoodDeliveryTheme.typography.labelSmall.medium,
                     color = FoodDeliveryTheme.colors.onSurfaceVariant
                 )
                 Text(
                     text = label ?: "",
-                    style = FoodDeliveryTheme.typography.body1,
+                    style = FoodDeliveryTheme.typography.bodyMedium,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
             }

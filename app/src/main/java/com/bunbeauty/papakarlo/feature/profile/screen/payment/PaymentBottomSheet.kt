@@ -62,7 +62,7 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
             Text(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_payment_description),
-                style = FoodDeliveryTheme.typography.body1
+                style = FoodDeliveryTheme.typography.bodyMedium
             )
             if (payment == null) {
                 CircularProgressBar(

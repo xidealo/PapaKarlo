@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.element.StatusChip
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
@@ -39,7 +40,7 @@ fun OrderItem(
                 modifier = Modifier
                     .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                style = FoodDeliveryTheme.typography.h2,
+                style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.onSurface
             )
             StatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)

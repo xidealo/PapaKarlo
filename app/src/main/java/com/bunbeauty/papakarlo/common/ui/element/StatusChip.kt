@@ -9,6 +9,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.common.ui.theme.orderStatusCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
@@ -30,7 +31,7 @@ fun StatusChip(
                     vertical = FoodDeliveryTheme.dimensions.verySmallSpace,
                     horizontal = FoodDeliveryTheme.dimensions.smallSpace
                 ),
-            style = FoodDeliveryTheme.typography.h3,
+            style = FoodDeliveryTheme.typography.labelSmall.medium,
             color = FoodDeliveryTheme.colors.onStatus,
             textAlign = TextAlign.Center
         )

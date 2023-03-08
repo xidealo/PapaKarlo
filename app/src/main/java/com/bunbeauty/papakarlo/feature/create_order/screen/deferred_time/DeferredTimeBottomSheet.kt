@@ -6,7 +6,6 @@ import android.view.View
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -15,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -126,26 +126,32 @@ private fun DeferredTimeScreen(
     onAsapClicked: () -> Unit,
     onSelectTimeClicked: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        Title(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = title,
-            style = FoodDeliveryTheme.typography.h2,
-            color = FoodDeliveryTheme.colors.onSurface
         )
-        Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+        Column(
+            modifier = Modifier
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        ) {
             SimpleCard(
-                modifier = Modifier.clip(mediumRoundedCornerShape),
+                modifier = Modifier
+                    .clip(mediumRoundedCornerShape),
                 text = stringResource(R.string.action_deferred_time_asap),
                 hasShadow = false
             ) {
                 onAsapClicked()
             }
             NavigationCard(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 elevated = false,
                 labelStringId = R.string.action_deferred_time_select_time,
             ) {
