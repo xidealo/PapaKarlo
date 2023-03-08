@@ -21,6 +21,7 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 
 @Composable
@@ -50,7 +51,7 @@ fun MenuProductItem(
             Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.smallSpace)) {
                 OverflowingText(
                     text = menuProductItem.name,
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
@@ -59,19 +60,20 @@ fun MenuProductItem(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
                             text = menuProductItem.oldPrice,
-                            style = FoodDeliveryTheme.typography.body2,
+                            style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )
                     }
                     Text(
                         text = menuProductItem.newPrice,
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                 }
                 SmallButton(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     textStringId = R.string.action_product_want,
                     hasShadow = false,

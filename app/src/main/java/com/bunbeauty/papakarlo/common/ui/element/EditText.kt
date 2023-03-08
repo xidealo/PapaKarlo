@@ -79,7 +79,7 @@ fun EditText(
         onValueChange = { changedValue ->
             onTextChanged(changedValue)
         },
-        textStyle = FoodDeliveryTheme.typography.body1,
+        textStyle = FoodDeliveryTheme.typography.bodyLarge,
         colors = FoodDeliveryTheme.colors.textFieldColors(),
         label = {
             Text(text = stringResource(labelStringId))
@@ -111,7 +111,7 @@ fun EditText(
             text = errorMessageId?.let {
                 stringResource(errorMessageId)
             } ?: "",
-            style = FoodDeliveryTheme.typography.body2,
+            style = FoodDeliveryTheme.typography.bodySmall,
             color = FoodDeliveryTheme.colors.error
         )
     }

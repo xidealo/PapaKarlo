@@ -28,6 +28,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUiItem
 
 @Composable
@@ -63,7 +64,7 @@ fun OrderProductItem(
             ) {
                 OverflowingText(
                     text = orderProductItem.name,
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.onSurface
                 )
                 Row(
@@ -122,18 +123,18 @@ fun OrderProductItem(
 @Preview
 @Composable
 private fun OrderProductItemPreview() {
-//    OrderProductItem(
-//        orderProductItem = OrderProductItem(
-//            uuid = "",
-//            name = "Бэргер с вкусной свинкой ням ням ням ням",
-//            newPrice = "50 ₽",
-//            oldPrice = "100 ₽",
-//            newCost = "100 ₽",
-//            oldCost = "200 ₽",
-//            photoLink = "",
-//            count = "× 2"
-//        )
-//    )
+    OrderProductItem(
+        orderProductItem = OrderProductUiItem(
+            uuid = "",
+            name = "Бэргер с вкусной свинкой ням ням ням ням",
+            newPrice = "50 ₽",
+            oldPrice = "100 ₽",
+            newCost = "100 ₽",
+            oldCost = "200 ₽",
+            photoLink = "",
+            count = "× 2"
+        )
+    )
 }
 
 @Preview

@@ -31,7 +31,7 @@ fun AddressItem(
                 .fillMaxWidth()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             text = address,
-            style = FoodDeliveryTheme.typography.body1,
+            style = FoodDeliveryTheme.typography.bodyLarge,
             color = FoodDeliveryTheme.colors.onSurface
         )
     }

@@ -37,7 +37,7 @@ fun CityItem(
                 .fillMaxWidth()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             text = cityName,
-            style = FoodDeliveryTheme.typography.body1,
+            style = FoodDeliveryTheme.typography.bodyLarge,
             color = FoodDeliveryTheme.colors.onSurface
         )
     }

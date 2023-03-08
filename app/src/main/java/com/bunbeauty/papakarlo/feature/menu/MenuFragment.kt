@@ -35,6 +35,7 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
@@ -199,7 +200,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                         Text(
                             modifier = Modifier.padding(top = topSpace),
                             text = menuItemModel.name,
-                            style = FoodDeliveryTheme.typography.h1,
+                            style = FoodDeliveryTheme.typography.titleMedium.bold,
                             color = FoodDeliveryTheme.colors.onBackground
                         )
                     }

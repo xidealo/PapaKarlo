@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.icon24
@@ -30,7 +32,7 @@ fun RowCard(
     @StringRes labelStringId: Int,
     @DrawableRes endIconId: Int? = null,
     endIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
-    onClick: (() -> Unit) = {}
+    onClick: (() -> Unit) = {},
 ) {
     RowCard(
         modifier = modifier,
@@ -55,7 +57,7 @@ fun RowCard(
     label: String,
     @DrawableRes endIconId: Int? = null,
     endIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
-    onClick: (() -> Unit) = {}
+    onClick: (() -> Unit) = {},
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -82,7 +84,7 @@ fun RowCard(
             OverflowingText(
                 modifier = Modifier.weight(1f),
                 text = label,
-                style = FoodDeliveryTheme.typography.body1,
+                style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface
             )
             if (endIconId != null) {
@@ -96,5 +98,13 @@ fun RowCard(
             }
             Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.mediumSpace))
         }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun RowCardPreview() {
+    FoodDeliveryTheme {
+        RowCard(labelStringId = R.string.common_error)
     }
 }

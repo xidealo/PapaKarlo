@@ -26,6 +26,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 
 @Composable
@@ -63,7 +64,7 @@ fun CartProductItem(
             ) {
                 OverflowingText(
                     text = cartProductItem.name,
-                    style = FoodDeliveryTheme.typography.h3,
+                    style = FoodDeliveryTheme.typography.titleSmall.bold,
                     color = FoodDeliveryTheme.colors.onSurface,
                     maxLines = 2
                 )
@@ -73,14 +74,14 @@ fun CartProductItem(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                             text = cartProductItem.oldCost,
-                            style = FoodDeliveryTheme.typography.body2,
+                            style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.onSurfaceVariant,
                         )
                     }
                     Text(
                         text = cartProductItem.newCost,
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
                 }

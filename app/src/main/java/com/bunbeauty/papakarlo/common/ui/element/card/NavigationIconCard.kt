@@ -55,7 +55,7 @@ fun NavigationIconCard(
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                     .weight(1f),
                 text = labelText,
-                style = FoodDeliveryTheme.typography.body1,
+                style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface
             )
             Icon(

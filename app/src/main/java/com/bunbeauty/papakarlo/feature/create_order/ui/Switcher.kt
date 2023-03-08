@@ -2,10 +2,7 @@ package com.bunbeauty.papakarlo.feature.create_order.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
 fun Switcher(
@@ -74,43 +72,34 @@ private fun SwitcherButton(
     enabled: Boolean,
     onClick: () -> Unit,
 ) {
-    Box(modifier = modifier.height(IntrinsicSize.Min)) {
-        Card(
-            modifier = Modifier
-                .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize)
-                .fillMaxHeight()
-                .fillMaxWidth(),
-            onClick = onClick,
-            shape = buttonRoundedCornerShape,
-            colors = FoodDeliveryTheme.colors.switcherButtonColor(enabled)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                        vertical = FoodDeliveryTheme.dimensions.smallSpace
-                    )
-            ) {
-                Text(
-                    modifier = Modifier.align(Alignment.Center),
-                    text = text,
-                    style = FoodDeliveryTheme.typography.button,
-                    color = FoodDeliveryTheme.colors.switcherButtonTextColor(enabled)
-                )
-            }
+    Card(
+        modifier = modifier
+            .height(40.dp),
+        onClick = onClick,
+        shape = buttonRoundedCornerShape,
+        colors = FoodDeliveryTheme.colors.switcherButtonColor(enabled),
+    ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = text,
+                style = FoodDeliveryTheme.typography.labelLarge.medium,
+                color = FoodDeliveryTheme.colors.switcherButtonTextColor(enabled),
+            )
         }
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun SwitcherPreview() {
-    Switcher(
-        variantStringIdList = listOf(
-            R.string.action_create_order_delivery,
-            R.string.action_create_order_pickup
-        ),
-        position = 1
-    ) { }
+    FoodDeliveryTheme {
+        Switcher(
+            variantStringIdList = listOf(
+                R.string.action_create_order_delivery,
+                R.string.action_create_order_pickup
+            ),
+            position = 1
+        ) { }
+    }
 }
