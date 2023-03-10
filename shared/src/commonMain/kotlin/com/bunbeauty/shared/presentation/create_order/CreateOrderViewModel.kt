@@ -70,7 +70,6 @@ class CreateOrderViewModel(
             OrderCreationState.Event.ShowUserAddressListEvent(
                 addressList = addressUiList,
                 selectedUserAddressUuid = orderCreationState.value.deliveryAddress?.uuid
-                    ?: Constants.NOT_SELECTED
             )
         }
         mutableOrderCreationState.update { state ->
@@ -89,7 +88,6 @@ class CreateOrderViewModel(
         val event = OrderCreationState.Event.ShowCafeAddressListEvent(
             orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem),
             selectedCafeAddress = orderCreationState.value.pickupAddress
-                ?: Constants.NOT_SELECTED
         )
         mutableOrderCreationState.update { state ->
             state + event

@@ -36,13 +36,23 @@ fun AddressItem(
         enabled = isClickable,
         elevated = false
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .padding(end = 16.dp)
+                .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
+        ) {
             Text(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
-                    .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
-                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                    .padding(
+                        end =
+                        if (isSelected) {
+                            FoodDeliveryTheme.dimensions.smallSpace
+                        } else {
+                            0.dp
+                        }
+                    ),
                 text = address,
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.onSurface
@@ -50,7 +60,6 @@ fun AddressItem(
             if (isSelected) {
                 Icon(
                     modifier = Modifier
-                        .padding(end = 16.dp)
                         .size(16.dp)
                         .align(CenterVertically),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_check),

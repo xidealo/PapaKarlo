@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
@@ -35,7 +36,7 @@ import kotlin.coroutines.suspendCoroutine
 class CityListBottomSheet : ComposeBottomSheet<City>() {
 
     private var cityList by argument<List<City>>()
-    private var selectedCityUuid by argument<String>()
+    private var selectedCityUuid by nullableArgument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,7 +63,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             cityList: List<City>,
-            selectedCityUuid: String,
+            selectedCityUuid: String?,
         ) = suspendCoroutine { continuation ->
             CityListBottomSheet().apply {
                 this.cityList = cityList
@@ -81,7 +82,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 @Composable
 private fun CityListScreen(
     cityList: List<City>,
-    selectedCityUuid: String,
+    selectedCityUuid: String?,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (City) -> Unit,
 ) {

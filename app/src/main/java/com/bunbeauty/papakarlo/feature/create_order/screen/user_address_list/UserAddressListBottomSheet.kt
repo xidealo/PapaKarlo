@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.Title
@@ -33,7 +34,7 @@ import kotlin.coroutines.suspendCoroutine
 class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 
     private var addressList by argument<List<UserAddressItem>>()
-    private var selectedUserAddressUuid by argument<String>()
+    private var selectedUserAddressUuid by nullableArgument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,7 +65,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             addressList: List<UserAddressItem>,
-            selectedUserAddressUuid: String,
+            selectedUserAddressUuid: String?,
         ) = suspendCoroutine { continuation ->
             UserAddressListBottomSheet().apply {
                 this.addressList = addressList
@@ -83,7 +84,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
 @Composable
 private fun UserAddressListScreen(
     addressList: List<UserAddressItem>,
-    selectedUserAddressUuid: String,
+    selectedUserAddressUuid: String?,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (UserAddressItem) -> Unit,
     onAddAddressClicked: () -> Unit,

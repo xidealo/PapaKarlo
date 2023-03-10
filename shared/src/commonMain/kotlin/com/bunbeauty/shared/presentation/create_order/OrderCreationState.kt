@@ -28,12 +28,12 @@ data class OrderCreationState(
         object OpenCreateAddressEvent : Event
         data class ShowUserAddressListEvent(
             val addressList: List<UserAddressUi>,
-            val selectedUserAddressUuid: String,
+            val selectedUserAddressUuid: String?,
         ) : Event
 
         data class ShowCafeAddressListEvent(
             val addressList: List<CafeAddressItem>,
-            val selectedCafeAddress: String,
+            val selectedCafeAddress: String?,
         ) : Event
 
         data class ShowDeferredTimeEvent(

@@ -94,7 +94,4 @@ object Constants {
 
     const val FORCE_UPDATE_VERSION = "forceUpdateVersion"
 
-    const val NOT_SELECTED = "not selected"
-
-
 }

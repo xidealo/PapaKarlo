@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -32,7 +33,7 @@ import kotlin.coroutines.suspendCoroutine
 class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
     private var addressList by argument<List<CafeAddressItem>>()
-    private var selectedCafeAddress by argument<String>()
+    private var selectedCafeAddress by nullableArgument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +60,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             addressList: List<CafeAddressItem>,
-            selectedCafeAddress: String,
+            selectedCafeAddress: String?,
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
@@ -78,7 +79,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 @Composable
 private fun CafeAddressListScreen(
     addressList: List<CafeAddressItem>,
-    selectedCafeAddress: String,
+    selectedCafeAddress: String?,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (CafeAddressItem) -> Unit,
 ) {

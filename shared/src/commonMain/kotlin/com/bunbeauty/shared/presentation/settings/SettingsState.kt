@@ -13,7 +13,7 @@ data class SettingsState(
 
     sealed interface Event {
         class ShowEditEmailEvent(val email: String?) : Event
-        class ShowCityListEvent(val cityList: List<City>, val selectedCityUuid: String) : Event
+        class ShowCityListEvent(val cityList: List<City>, val selectedCityUuid: String?) : Event
         object ShowEmailChangedSuccessfullyEvent : Event
         object ShowEmailChangingFailedEvent : Event
         object Back : Event

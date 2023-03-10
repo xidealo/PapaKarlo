@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.settings
 
-import com.bunbeauty.shared.Constants.NOT_SELECTED
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
@@ -64,7 +63,7 @@ class SettingsViewModel(
         mutableSettingsState.update { settingsState ->
             settingsState + SettingsState.Event.ShowCityListEvent(
                 cityList = settingsState.cityList,
-                selectedCityUuid = settingsState.selectedCity?.uuid ?: NOT_SELECTED
+                selectedCityUuid = settingsState.selectedCity?.uuid
             )
         }
     }
