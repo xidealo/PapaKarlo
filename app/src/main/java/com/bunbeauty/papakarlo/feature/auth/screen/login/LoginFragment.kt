@@ -15,13 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,15 +36,14 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.EditText
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
@@ -170,28 +173,32 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                         style = FoodDeliveryTheme.typography.body1,
                         color = FoodDeliveryTheme.colors.onSurface
                     )
-                    EditText(
+
+                    val focusRequester = remember { FocusRequester() }
+                    FoodDeliveryTextField(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                        focusRequester = focusRequester,
+                        value = phoneText,
                         labelStringId = R.string.hint_login_phone,
-                        textFieldValue = phoneText,
-                        editTextType = EditTextType.PHONE,
-                        onTextChanged = { changedValue ->
+                        keyboardType = KeyboardType.Phone,
+                        imeAction = ImeAction.Done,
+                        onValueChange = { value ->
                             phoneText = TextFieldValue(
-                                text = viewModel.formatPhoneNumber(changedValue.text),
+                                text = viewModel.formatPhoneNumber(value.text),
                                 selection = TextRange(
                                     viewModel.getNewPosition(
-                                        changedValue.text,
-                                        changedValue.selection.start
+                                        value.text,
+                                        value.selection.end
                                     )
                                 )
                             )
-                        },
-                        isLast = true,
-                        focus = true,
-                        errorMessageId = phoneError,
+                        }
                     )
+                    LaunchedEffect(Unit) {
+                        focusRequester.requestFocus()
+                    }
                 }
             }
             MainButton(textStringId = R.string.action_login_continue) {

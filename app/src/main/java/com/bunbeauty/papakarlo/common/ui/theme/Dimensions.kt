@@ -28,20 +28,13 @@ data class AppDimensions(
     val blurHeight: Dp = 16.dp,
     val smallProgressBarSize: Dp = 24.dp,
     val smsEditTextWidth: Dp = 320.dp,
+    val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp,
 ) {
     fun getItemSpaceByIndex(i: Int): Dp {
         return if (i == 0) {
             0.dp
         } else {
             smallSpace
-        }
-    }
-
-    fun getEvaluation(hasShadow: Boolean): Dp {
-        return if (hasShadow) {
-            elevation
-        } else {
-            0.dp
         }
     }
 
