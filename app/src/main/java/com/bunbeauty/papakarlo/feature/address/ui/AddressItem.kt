@@ -62,23 +62,27 @@ fun AddressItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun AddressItemPreview() {
-    AddressItem(
-        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-        isClickable = false,
-        hasShadow = false
-    ) {}
+    FoodDeliveryCard {
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            hasShadow = false
+        ) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun AddressItemSelectedPreview() {
-    AddressItem(
-        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-        isClickable = false,
-        hasShadow = false,
-        isSelected = true
-    ) {}
+    FoodDeliveryCard {
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            hasShadow = false,
+            isSelected = true
+        ) {}
+    }
 }
