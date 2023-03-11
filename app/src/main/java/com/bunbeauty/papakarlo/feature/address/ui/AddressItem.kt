@@ -38,7 +38,7 @@ fun AddressItem(
     ) {
         Row(
             modifier = Modifier
-                .padding(end = FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Text(
                 modifier = Modifier
