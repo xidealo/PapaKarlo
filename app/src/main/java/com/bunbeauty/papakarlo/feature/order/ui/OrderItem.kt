@@ -23,10 +23,11 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 fun OrderItem(
     modifier: Modifier = Modifier,
     orderItem: OrderItem,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
-        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        modifier = modifier
+            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
         onClick = onClick
     ) {
         Row(
