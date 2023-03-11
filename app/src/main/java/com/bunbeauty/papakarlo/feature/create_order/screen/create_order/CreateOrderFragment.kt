@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
@@ -60,7 +59,6 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
     private val userAddressItemMapper: UserAddressItemMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -242,7 +240,10 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     }
                 }
             }
-            Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+            Row(
+                modifier = Modifier
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+            ) {
                 Text(
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_create_order_amount_to_pay),
@@ -277,20 +278,27 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 }
                 is OrderCreationState.Event.ShowUserAddressListEvent -> {
                     UserAddressListBottomSheet.show(
-                        childFragmentManager,
-                        event.addressList.map(userAddressItemMapper::toItem)
+                        fragmentManager = childFragmentManager,
+                        addressList = event.addressList.map(userAddressItemMapper::toItem),
+                        selectedUserAddressUuid = event.selectedUserAddressUuid,
                     )?.let { result ->
                         handleUserAddressListResult(result)
                     }
                 }
                 is OrderCreationState.Event.ShowCafeAddressListEvent -> {
-                    CafeAddressListBottomSheet.show(childFragmentManager, event.addressList)
-                        ?.let { addressItem ->
-                            viewModel.onCafeAddressChanged(addressItem.uuid)
-                        }
+                    CafeAddressListBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        addressList = event.addressList,
+                        selectedCafeAddress = event.selectedCafeAddress
+                    )?.let { addressItem ->
+                        viewModel.onCafeAddressChanged(addressItem.uuid)
+                    }
                 }
                 is OrderCreationState.Event.ShowCommentInputEvent -> {
-                    CommentBottomSheet.show(childFragmentManager, event.comment)?.let { comment ->
+                    CommentBottomSheet.show(
+                        childFragmentManager,
+                        event.comment
+                    )?.let { comment ->
                         viewModel.onCommentChanged(comment)
                     }
                 }

@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
@@ -35,6 +36,7 @@ import kotlin.coroutines.suspendCoroutine
 class CityListBottomSheet : ComposeBottomSheet<City>() {
 
     private var cityList by argument<List<City>>()
+    private var selectedCityUuid by nullableArgument<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +51,8 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
                 onAddressClicked = { city ->
                     callback?.onResult(city)
                     dismiss()
-                }
+                },
+                selectedCityUuid = selectedCityUuid
             )
         }
     }
@@ -60,9 +63,11 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             cityList: List<City>,
+            selectedCityUuid: String?,
         ) = suspendCoroutine { continuation ->
             CityListBottomSheet().apply {
                 this.cityList = cityList
+                this.selectedCityUuid = selectedCityUuid
                 callback = object : Callback<City> {
                     override fun onResult(result: City?) {
                         continuation.resume(result)
@@ -77,6 +82,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
 @Composable
 private fun CityListScreen(
     cityList: List<City>,
+    selectedCityUuid: String?,
     scrolledToTop: (Boolean) -> Unit,
     onAddressClicked: (City) -> Unit,
 ) {
@@ -103,7 +109,8 @@ private fun CityListScreen(
             textAlign = TextAlign.Center
         )
         LazyColumn(
-            modifier = Modifier.weight(1f, false),
+            modifier = Modifier
+                .weight(1f, false),
             state = listState,
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
@@ -114,7 +121,8 @@ private fun CityListScreen(
                     ),
                     address = city.name,
                     isClickable = true,
-                    hasShadow = false
+                    hasShadow = false,
+                    isSelected = city.uuid == selectedCityUuid
                 ) {
                     onAddressClicked(city)
                 }
@@ -142,6 +150,7 @@ private fun CityListScreenPreview() {
             ),
             scrolledToTop = {},
             onAddressClicked = {},
+            selectedCityUuid = "1"
         )
     }
 }

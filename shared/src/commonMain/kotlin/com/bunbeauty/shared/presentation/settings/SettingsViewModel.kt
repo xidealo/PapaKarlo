@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 class SettingsViewModel(
     private val observeSettingsUseCase: ObserveSettingsUseCase,
     private val observeSelectedCityUseCase: ObserveSelectedCityUseCase,
@@ -26,7 +27,7 @@ class SettingsViewModel(
     private val saveSelectedCityUseCase: SaveSelectedCityUseCase,
     private val disableUserUseCase: DisableUserUseCase,
     private val userInteractor: IUserInteractor,
-    private val firebaseAuthRepository: FirebaseAuthRepository
+    private val firebaseAuthRepository: FirebaseAuthRepository,
 ) : SharedViewModel() {
 
     private val mutableSettingsState = MutableStateFlow(SettingsState())
@@ -34,7 +35,7 @@ class SettingsViewModel(
 
     var observeSettingsJob: Job? = null
 
-    fun loadData(){
+    fun loadData() {
         observeSettings()
         loadCityList()
     }
@@ -60,7 +61,10 @@ class SettingsViewModel(
 
     fun onCityClicked() {
         mutableSettingsState.update { settingsState ->
-            settingsState + SettingsState.Event.ShowCityListEvent(settingsState.cityList)
+            settingsState + SettingsState.Event.ShowCityListEvent(
+                cityList = settingsState.cityList,
+                selectedCityUuid = settingsState.selectedCity?.uuid
+            )
         }
     }
 
@@ -76,7 +80,7 @@ class SettingsViewModel(
         }
     }
 
-    fun logout(){
+    fun logout() {
         sharedScope.launch {
             observeSettingsJob?.cancel()
             firebaseAuthRepository.signOut()
@@ -87,7 +91,7 @@ class SettingsViewModel(
         }
     }
 
-    fun disableUser(){
+    fun disableUser() {
         sharedScope.launch {
             disableUserUseCase()
             logout()
