@@ -12,8 +12,8 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -25,6 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
@@ -58,8 +59,7 @@ class UserAddressListFragment :
                     },
                     state = addressListState.state,
                     eventList = addressListState.eventList,
-                ),
-                onCreateAddressClick = viewModel::onCreateAddressClicked,
+                )
             )
             LaunchedEffect(addressListState.eventList) {
                 handleEventList(addressListState.eventList)
@@ -68,38 +68,49 @@ class UserAddressListFragment :
     }
 
     @Composable
-    private fun UserAddressListScreen(
-        userAddressListState: UserAddressListAndroidState,
-        onCreateAddressClick: () -> Unit,
-    ) {
-        when (userAddressListState.state) {
-            UserAddressListState.State.SUCCESS -> {
-                UserAddressListSuccessScreen(
-                    userAddressListState.userAddressItems,
-                    onCreateAddressClick = onCreateAddressClick
-                )
+    private fun UserAddressListScreen(userAddressListState: UserAddressListAndroidState) {
+        FoodDeliveryToolbarScreen(
+            title = stringResource(R.string.title_my_addresses),
+            backActionClick = {
+                findNavController().popBackStack()
+            },
+            actionButton = {
+                if (userAddressListState.state != UserAddressListState.State.LOADING) {
+                    MainButton(
+                        modifier = Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        textStringId = R.string.action_add_addresses
+                    ) {
+                        viewModel.onCreateAddressClicked()
+                    }
+                }
             }
-            UserAddressListState.State.EMPTY -> {
-                EmptyScreen(
-                    imageId = R.drawable.empty_address,
-                    imageDescriptionId = R.string.description_cafe_addresses_empty,
-                    mainTextId = R.string.title_my_addresses_empty,
-                    extraTextId = R.string.msg_my_addresses_empty,
-                    buttonTextId = R.string.action_add_addresses,
-                    onClick = onCreateAddressClick
-                )
-            }
-            UserAddressListState.State.LOADING -> {
-                LoadingScreen()
+        ) {
+            when (userAddressListState.state) {
+                UserAddressListState.State.SUCCESS -> {
+                    UserAddressListSuccessScreen(userAddressListState.userAddressItems)
+                }
+                UserAddressListState.State.EMPTY -> {
+                    EmptyScreen(
+                        imageId = R.drawable.empty_address,
+                        imageDescriptionId = R.string.description_cafe_addresses_empty,
+                        mainTextId = R.string.title_my_addresses_empty,
+                        extraTextId = R.string.msg_my_addresses_empty,
+                        buttonTextId = R.string.action_add_addresses,
+                        onClick = {
+                            viewModel.update()
+                        }
+                    )
+                }
+                UserAddressListState.State.LOADING -> {
+                    LoadingScreen()
+                }
             }
         }
     }
 
     @Composable
-    private fun UserAddressListSuccessScreen(
-        userAddressItems: List<UserAddressItem>,
-        onCreateAddressClick: () -> Unit,
-    ) {
+    private fun UserAddressListSuccessScreen(userAddressItems: List<UserAddressItem>) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -110,9 +121,7 @@ class UserAddressListFragment :
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(
                     top = FoodDeliveryTheme.dimensions.mediumSpace,
-                    bottom = FoodDeliveryTheme.dimensions.buttonHeight +
-                        FoodDeliveryTheme.dimensions.largeSpace +
-                        FoodDeliveryTheme.dimensions.verySmallSpace
+                    bottom = FoodDeliveryTheme.dimensions.scrollScreenBottomSpace
                 )
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
@@ -126,13 +135,6 @@ class UserAddressListFragment :
                     ) {}
                 }
             }
-            MainButton(
-                modifier = Modifier
-                    .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace)
-                    .align(Alignment.BottomCenter),
-                textStringId = R.string.action_add_addresses,
-                onClick = onCreateAddressClick
-            )
         }
     }
 
@@ -150,51 +152,51 @@ class UserAddressListFragment :
         viewModel.consumeEventList(eventList)
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UserAddressListSuccessScreenPreview() {
-        val addressItemModel = UserAddressItem(
-            uuid = "1",
-            address = "addddd"
-        )
-        UserAddressListScreen(
-            UserAddressListAndroidState(
-                userAddressItems = listOf(
-                    addressItemModel,
-                    addressItemModel,
-                    addressItemModel,
-                    addressItemModel,
-                ),
-                state = UserAddressListState.State.SUCCESS,
-                eventList = emptyList()
-            ),
-            onCreateAddressClick = {
-            },
-        )
+        FoodDeliveryTheme {
+            val addressItemModel = UserAddressItem(
+                uuid = "1",
+                address = "addddd"
+            )
+            UserAddressListScreen(
+                UserAddressListAndroidState(
+                    userAddressItems = listOf(
+                        addressItemModel,
+                        addressItemModel,
+                        addressItemModel,
+                        addressItemModel,
+                    ),
+                    state = UserAddressListState.State.SUCCESS,
+                    eventList = emptyList()
+                )
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UserAddressListEmptyScreenPreview() {
-        UserAddressListScreen(
-            userAddressListState = UserAddressListAndroidState(
-                state = UserAddressListState.State.EMPTY,
-                eventList = emptyList()
-            ),
-            onCreateAddressClick = {
-            },
-        )
+        FoodDeliveryTheme {
+            UserAddressListScreen(
+                userAddressListState = UserAddressListAndroidState(
+                    state = UserAddressListState.State.EMPTY,
+                    eventList = emptyList()
+                )
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UserAddressListLoadingScreenPreview() {
-        UserAddressListScreen(
-            userAddressListState = UserAddressListAndroidState(
-                state = UserAddressListState.State.LOADING
-            ),
-            onCreateAddressClick = {
-            },
-        )
+        FoodDeliveryTheme {
+            UserAddressListScreen(
+                userAddressListState = UserAddressListAndroidState(
+                    state = UserAddressListState.State.LOADING
+                )
+            )
+        }
     }
 }

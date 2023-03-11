@@ -1,27 +1,29 @@
 package com.bunbeauty.shared.presentation.create_address
 
+import com.bunbeauty.shared.domain.model.street.Street
+import com.bunbeauty.shared.presentation.Suggestion
+
 data class CreateAddressState(
-    val streetItemList: List<StreetItem> = emptyList(),
+    val streetList: List<Street> = emptyList(),
+    val suggestedStreetList: List<Suggestion> = emptyList(),
     val state: State = State.Loading,
+
+    val street: String = "",
     val hasStreetError: Boolean = false,
-    val houseFieldError: FieldError? = null,
-    val hasFlatError: Boolean = false,
-    val hasEntranceError: Boolean = false,
-    val hasFloorError: Boolean = false,
-    val hasCommentError: Boolean = false,
+
+    val house: String = "",
+    val hasHouseError: Boolean = false,
+
+    val flat: String = "",
+    val entrance: String = "",
+    val floor: String = "",
+    val comment: String = "",
+
     val isCreateLoading: Boolean = false,
     val eventList: List<Event> = emptyList(),
-    val suggestedStreetList: List<StreetItem> = emptyList(),
 ) {
 
-    val hasError =
-        hasStreetError || houseFieldError != null
-                || hasFlatError || hasEntranceError || hasFloorError || hasCommentError
-
-    enum class FieldError {
-        INCORRECT,
-        LENGTH
-    }
+    val hasError = hasStreetError || hasHouseError
 
     sealed class State {
         object Success : State()

@@ -59,11 +59,12 @@ data class AppTypography(
         fontSize = 14.sp,
         lineHeight = 20.sp,
     ),
-    val bodyLarge: TextStyle = TextStyle(
+
+    val bodySmall: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
     ),
     val bodyMedium: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
@@ -71,13 +72,12 @@ data class AppTypography(
         fontSize = 14.sp,
         lineHeight = 20.sp,
     ),
-    val bodySmall: TextStyle = TextStyle(
+    val bodyLarge: TextStyle = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
     ),
-
 )
 
 val TextStyle.medium: TextStyle get() = this.copy(fontWeight = FontWeight.Medium)
