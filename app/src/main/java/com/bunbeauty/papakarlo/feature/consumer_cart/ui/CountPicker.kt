@@ -46,11 +46,6 @@ fun CountPicker(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = FoodDeliveryTheme.dimensions.smallButtonSize,
-                    minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
-                ),
             onClick = onCountDecreased,
             colors = FoodDeliveryTheme.colors.iconButtonColors(),
         ) {
@@ -72,11 +67,7 @@ fun CountPicker(
         )
 
         IconButton(
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = FoodDeliveryTheme.dimensions.smallButtonSize,
-                    minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
-                ),
+            modifier = Modifier,
             onClick = onCountIncreased,
             colors = FoodDeliveryTheme.colors.iconButtonColors(),
         ) {

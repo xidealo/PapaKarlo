@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.card
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -21,6 +22,7 @@ fun FoodDeliveryCard(
     onClick: (() -> Unit) = {},
     colors: CardColors = FoodDeliveryTheme.colors.cardColors(),
     shape: Shape = mediumRoundedCornerShape,
+    border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val elevation = if (elevated) 1.dp else 0.dp
@@ -31,6 +33,7 @@ fun FoodDeliveryCard(
         elevation = CardDefaults.cardElevation(elevation),
         enabled = enabled,
         onClick = onClick,
+        border =border,
         content = content
     )
 }
