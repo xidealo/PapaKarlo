@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
@@ -175,5 +176,8 @@ internal fun useCaseModule() = module {
         AddCartProductUseCase(
             cartProductRepo = get()
         )
+    }
+    factory{
+        GetFilteredStreetListUseCase()
     }
 }

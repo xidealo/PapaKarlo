@@ -6,24 +6,27 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.EditText
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.edit_text.model.EditTextType
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -75,6 +78,7 @@ private fun CommentScreen(
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.comment),
         )
+        val focusRequester = remember { FocusRequester() }
         val text = comment ?: ""
         var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
             mutableStateOf(
@@ -84,19 +88,23 @@ private fun CommentScreen(
                 )
             )
         }
-        EditText(
+        FoodDeliveryTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            textFieldValue = textFieldValue,
+            focusRequester = focusRequester,
+            value = textFieldValue,
             labelStringId = R.string.comment,
-            editTextType = EditTextType.TEXT,
-            isLast = true,
-            focus = true,
-        ) { newTextFieldValue ->
-            textFieldValue = newTextFieldValue
+            imeAction = ImeAction.Done,
+            onValueChange = { value ->
+                textFieldValue = value
+            }
+        )
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
         }
+
         MainButton(
             modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
             textStringId = R.string.action_settings_save,

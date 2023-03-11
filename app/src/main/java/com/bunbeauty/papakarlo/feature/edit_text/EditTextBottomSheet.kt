@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,7 +24,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.delegates.argument
-import com.bunbeauty.papakarlo.common.ui.element.EditText
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -64,6 +67,8 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
                         text = editTextSettings.infoText
                     )
                 }
+
+                val focusRequester = remember { FocusRequester() }
                 val inputText = editTextSettings.inputText ?: ""
                 var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
                     mutableStateOf(
@@ -73,16 +78,19 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
                         )
                     )
                 }
-                EditText(
+                FoodDeliveryTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    textFieldValue = textFieldValue,
+                    focusRequester = focusRequester,
+                    value = textFieldValue,
                     labelStringId = editTextSettings.labelStringId,
-                    editTextType = editTextSettings.type,
-                    isLast = true,
-                    focus = true
-                ) { changedValue ->
-                    textFieldValue = changedValue
+                    onValueChange = { value ->
+                        textFieldValue = value
+                    }
+                )
+                LaunchedEffect(Unit) {
+                    focusRequester.requestFocus()
                 }
+
                 MainButton(
                     modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_settings_save,
