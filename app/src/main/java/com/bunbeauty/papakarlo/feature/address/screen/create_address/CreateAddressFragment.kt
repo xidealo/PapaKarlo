@@ -158,15 +158,16 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     modifier = Modifier.fillMaxWidth(),
                     value = houseText,
                     labelStringId = R.string.hint_create_address_house,
+                    onValueChange = { value ->
+                        houseText = value
+                        viewModel.onHouseTextChanged(value)
+                    },
+                    maxSymbols = 5,
                     errorMessageId = if (state.hasHouseError) {
                         R.string.error_create_address_house
                     } else {
                         null
                     },
-                    onValueChange = { value ->
-                        houseText = value
-                        viewModel.onHouseTextChanged(value)
-                    }
                 )
 
                 var flatText by remember {
@@ -179,7 +180,8 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     onValueChange = { value ->
                         flatText = value
                         viewModel.onFlatTextChanged(value)
-                    }
+                    },
+                    maxSymbols = 5,
                 )
 
                 var entranceText by remember {
@@ -192,7 +194,8 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     onValueChange = { value ->
                         entranceText = value
                         viewModel.onEntranceTextChanged(value)
-                    }
+                    },
+                    maxSymbols = 5,
                 )
 
                 var floorText by remember {
@@ -205,7 +208,8 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     onValueChange = { value ->
                         floorText = value
                         viewModel.onFloorTextChanged(value)
-                    }
+                    },
+                    maxSymbols = 5,
                 )
 
                 var commentText by remember {
@@ -220,7 +224,8 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                     onValueChange = { value ->
                         commentText = value
                         viewModel.onCommentTextChanged(value)
-                    }
+                    },
+                    maxSymbols = 100,
                 )
             }
             Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))

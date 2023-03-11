@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.icon16
@@ -30,6 +31,7 @@ fun FoodDeliveryBaseTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     onValueChange: (value: String) -> Unit,
+    maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false
 ) {
@@ -37,11 +39,15 @@ fun FoodDeliveryBaseTextField(
         modifier = modifier,
         value = value,
         onValueChange = { changedValue ->
-            onValueChange(changedValue)
+            onValueChange(changedValue.take(maxSymbols))
         },
         textStyle = FoodDeliveryTheme.typography.bodyLarge,
         label = {
-            Text(text = stringResource(labelStringId))
+            Text(
+                text = stringResource(labelStringId),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         },
         trailingIcon = {
             if (value.isNotEmpty()) {
@@ -77,6 +83,7 @@ fun FoodDeliveryBaseTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     onValueChange: (value: TextFieldValue) -> Unit,
+    maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     isError: Boolean = false
 ) {
@@ -84,11 +91,19 @@ fun FoodDeliveryBaseTextField(
         modifier = modifier.fillMaxWidth(),
         value = value,
         onValueChange = { changedValue ->
-            onValueChange(changedValue)
+            onValueChange(
+                changedValue.copy(
+                    text = changedValue.text.take(maxSymbols)
+                )
+            )
         },
         textStyle = FoodDeliveryTheme.typography.bodyLarge,
         label = {
-            Text(text = stringResource(labelStringId))
+            Text(
+                text = stringResource(labelStringId),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
         },
         trailingIcon = {
             if (value.text.isNotEmpty()) {

@@ -28,6 +28,7 @@ fun FoodDeliveryTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     onValueChange: (value: String) -> Unit,
+    maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     @StringRes errorMessageId: Int? = null
 ) {
@@ -39,6 +40,7 @@ fun FoodDeliveryTextField(
             keyboardType = keyboardType,
             imeAction = imeAction,
             onValueChange = onValueChange,
+            maxSymbols = maxSymbols,
             maxLines = maxLines,
             isError = errorMessageId != null,
         )
@@ -64,6 +66,7 @@ fun FoodDeliveryTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     onValueChange: (value: TextFieldValue) -> Unit,
+    maxSymbols: Int = Int.MAX_VALUE,
     maxLines: Int = 1,
     @StringRes errorMessageId: Int? = null
 ) {
@@ -79,6 +82,7 @@ fun FoodDeliveryTextField(
             keyboardType = keyboardType,
             imeAction = imeAction,
             onValueChange = onValueChange,
+            maxSymbols = maxSymbols,
             maxLines = maxLines,
             isError = errorMessageId != null,
         )
