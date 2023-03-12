@@ -46,7 +46,7 @@ fun CafeItem(
                     modifier = Modifier.padding(start = FoodDeliveryTheme.dimensions.smallSpace),
                     text = cafeItem.isOpenMessage,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = FoodDeliveryTheme.colors.cafeStatusColor(cafeItem.cafeStatus),
+                    color = getCafeStatusColor(cafeItem.cafeStatus),
                 )
             }
         }

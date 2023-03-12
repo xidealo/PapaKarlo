@@ -38,7 +38,7 @@ fun LoadingButton(
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(FoodDeliveryTheme.dimensions.smallProgressBarSize),
-                color = FoodDeliveryTheme.colors.mainColors.onPrimaryDisabled
+                color = FoodDeliveryTheme.colors.mainColors.onDisabled
             )
         } else {
             Text(
