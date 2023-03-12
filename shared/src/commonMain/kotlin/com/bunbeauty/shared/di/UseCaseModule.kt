@@ -137,47 +137,47 @@ internal fun useCaseModule() = module {
             orderRepo = get(),
         )
     }
-    factory{
+    factory {
         GetStreetsUseCase(
             streetRepo = get(),
             dataStoreRepo = get(),
         )
     }
-    factory{
+    factory {
         CreateAddressUseCase(
             streetRepo = get(),
             dataStoreRepo = get(),
             userAddressRepo = get(),
         )
     }
-    factory{
+    factory {
         SaveSelectedUserAddressUseCase(
             dataStoreRepo = get(),
             userAddressRepo = get(),
         )
     }
-    factory{
+    factory {
         GetLastOrderUseCase(
             dataStoreRepo = get(),
             orderRepo = get()
         )
     }
-    factory{
+    factory {
         GetMenuProductByUuidUseCase(
             menuProductRepo = get()
         )
     }
-    factory{
+    factory {
         ObserveCartUseCase(
             cartProductRepo = get()
         )
     }
-    factory{
+    factory {
         AddCartProductUseCase(
             cartProductRepo = get()
         )
     }
-    factory{
+    factory {
         GetFilteredStreetListUseCase()
     }
 }

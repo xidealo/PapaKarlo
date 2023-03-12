@@ -41,16 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     )
 
     private val toolbarFragmentIdList = listOf(
-        R.id.updateFragment,
-        R.id.selectCityFragment,
-        R.id.cafeListFragment,
-        R.id.confirmFragment,
-        R.id.consumerCartFragment,
-        R.id.createOrderFragment,
-        R.id.loginFragment,
         R.id.menuFragment,
-        R.id.orderDetailsFragment,
-        R.id.orderListFragment,
         R.id.profileFragment,
         R.id.settingsFragment
     )

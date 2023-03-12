@@ -40,7 +40,7 @@ fun CafeItem(
                 Text(
                     text = cafeItem.workingHours,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = FoodDeliveryTheme.colors.surfaceVariant,
+                    color = FoodDeliveryTheme.colors.onSurfaceVariant,
                 )
                 Text(
                     modifier = Modifier.padding(start = FoodDeliveryTheme.dimensions.smallSpace),

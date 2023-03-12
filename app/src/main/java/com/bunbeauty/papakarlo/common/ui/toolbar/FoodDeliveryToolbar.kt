@@ -25,7 +25,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryToolbar(
-    title: String,
+    title: String?,
     backActionClick: (() -> Unit)? = null,
     scrollBehavior: TopAppBarScrollBehavior,
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
@@ -34,7 +34,7 @@ fun FoodDeliveryToolbar(
         colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
         title = {
             Text(
-                text = title,
+                text = title ?: "",
                 maxLines = 1,
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 overflow = TextOverflow.Ellipsis

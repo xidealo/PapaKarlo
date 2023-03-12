@@ -67,7 +67,6 @@ fun CountPicker(
         )
 
         IconButton(
-            modifier = Modifier,
             onClick = onCountIncreased,
             colors = FoodDeliveryTheme.colors.iconButtonColors(),
         ) {

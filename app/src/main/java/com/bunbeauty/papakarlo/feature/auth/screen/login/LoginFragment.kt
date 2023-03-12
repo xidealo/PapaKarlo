@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +46,7 @@ import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFiel
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
@@ -116,26 +122,43 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     @Composable
     private fun LoginScreen(loginState: LoginState) {
-        when (loginState.state) {
-            is LoginState.State.Loading -> {
-                LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+        FoodDeliveryToolbarScreen(
+            backActionClick = {
+                findNavController().popBackStack()
+            },
+            actionButton = {
+                if (loginState.state != LoginState.State.Loading) {
+                    MainButton(
+                        modifier = Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        textStringId = R.string.action_login_continue
+                    ) {
+                        viewModel.onNextClick()
+                    }
+                }
             }
-            is LoginState.State.Success -> {
-                LoginSuccessScreen()
-            }
-            is LoginState.State.Error -> {
-                ErrorScreen(
-                    mainTextId = R.string.common_error,
-                    extraTextId = R.string.internet_error
-                ) {
-                    viewModel.setSuccessState()
+        ) {
+            when (loginState.state) {
+                is LoginState.State.Loading -> {
+                    LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+                }
+                is LoginState.State.Success -> {
+                    LoginSuccessScreen(loginState)
+                }
+                is LoginState.State.Error -> {
+                    ErrorScreen(
+                        mainTextId = R.string.common_error,
+                        extraTextId = R.string.internet_error
+                    ) {
+                        viewModel.setSuccessState()
+                    }
                 }
             }
         }
     }
 
     @Composable
-    private fun LoginSuccessScreen() {
+    private fun LoginSuccessScreen(loginState: LoginState) {
         var phoneText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
             mutableStateOf(
                 TextFieldValue(
@@ -151,62 +174,58 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(FoodDeliveryTheme.colors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Box(modifier = Modifier.weight(1f)) {
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    BoxWithConstraints {
-                        if (maxHeight > 240.dp) {
-                            Image(
-                                painter = painterResource(R.drawable.logo_login_papa_k),
-                                contentDescription = stringResource(R.string.description_login_logo)
-                            )
-                        }
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = stringResource(R.string.msg_login_info),
-                        style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
+            BoxWithConstraints {
+                if (maxHeight > 240.dp) {
+                    Image(
+                        painter = painterResource(R.drawable.logo_login_papa_k),
+                        contentDescription = stringResource(R.string.description_login_logo)
                     )
+                }
+            }
+            Text(
+                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(R.string.msg_login_info),
+                style = FoodDeliveryTheme.typography.body1,
+                color = FoodDeliveryTheme.colors.onSurface
+            )
 
-                    val focusRequester = remember { FocusRequester() }
-                    FoodDeliveryTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                        focusRequester = focusRequester,
-                        value = phoneText,
-                        labelStringId = R.string.hint_login_phone,
-                        keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Done,
-                        onValueChange = { value ->
-                            phoneText = TextFieldValue(
-                                text = viewModel.formatPhoneNumber(value.text),
-                                selection = TextRange(
-                                    viewModel.getNewPosition(
-                                        value.text,
-                                        value.selection.end
-                                    )
-                                )
+            val focusRequester = remember { FocusRequester() }
+            FoodDeliveryTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                focusRequester = focusRequester,
+                value = phoneText,
+                labelStringId = R.string.hint_login_phone,
+                keyboardType = KeyboardType.Phone,
+                imeAction = ImeAction.Done,
+                onValueChange = { value ->
+                    phoneText = TextFieldValue(
+                        viewModel.formatPhoneNumber(value.text),
+                        selection = TextRange(
+                            viewModel.getNewPosition(
+                                value.text,
+                                value.selection.end
                             )
-                        }
+                        )
                     )
-                    LaunchedEffect(Unit) {
-                        focusRequester.requestFocus()
-                    }
+                    viewModel.onPhoneTextChanged(phoneText.text)
+                },
+                errorMessageId = if (loginState.hasPhoneError) {
+                    R.string.error_login_phone
+                } else {
+                    null
                 }
+            )
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
             }
-            MainButton(textStringId = R.string.action_login_continue) {
-                phoneError = viewModel.checkPhoneNumberError(phoneText.text)
-                if (phoneError == null) {
-                    viewModel.onNextClick(phone = phoneText.text)
-                }
-            }
+            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
         }
     }
 

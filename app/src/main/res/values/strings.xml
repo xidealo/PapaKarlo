@@ -32,7 +32,7 @@
     <string name="error_no_internet">Нет подключения к интернету</string>
 
     <!-- SELECT CITY -->
-    <string name="title_select_city">Выберите город</string>
+    <string name="title_select_city">Выбор города</string>
     <string name="error_select_city_loading">Не удалось загрузить список городов</string>
 
     <!-- UPDATE -->

@@ -19,16 +19,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginState
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.google.firebase.auth.PhoneAuthProvider
 import org.koin.android.ext.android.inject
@@ -64,16 +67,47 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
 
     @Composable
     private fun ConfirmScreen(confirmState: Confirmation) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+        FoodDeliveryToolbarScreen(
+            backActionClick = {
+                findNavController().popBackStack()
+            },
+            actionButton = {
+                if (!confirmState.isCodeChecking) {
+                    val buttonText = if (confirmState.isResendEnable) {
+                        stringResource(R.string.msg_request_code)
+                    } else {
+                        stringResource(R.string.msg_request_code) +
+                                " " +
+                                confirmState.resendSeconds +
+                                stringResource(R.string.msg_request_code_sec)
+                    }
+                    MainButton(
+                        modifier = Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        text = buttonText,
+                        isEnabled = confirmState.isResendEnable
+                    ) {
+                        viewModel.onResendCodeClicked()
+                        phoneVerificationUtil.resendVerificationCode(
+                            phone = confirmState.formattedPhoneNumber,
+                            activity = requireActivity(),
+                            token = confirmState.resendToken
+                        )
+                    }
+                }
+            }
         ) {
-            if (confirmState.isCodeChecking) {
-                CircularProgressBar(modifier = Modifier.align(Alignment.Center))
-            } else {
-                ConfirmScreenSuccess(confirmState)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(FoodDeliveryTheme.colors.surface)
+                    .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+            ) {
+                if (confirmState.isCodeChecking) {
+                    CircularProgressBar(modifier = Modifier.align(Alignment.Center))
+                } else {
+                    ConfirmScreenSuccess(confirmState)
+                }
             }
         }
     }
@@ -113,26 +147,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     }
                 }
             }
-            val buttonText = if (confirmation.isResendEnable) {
-                stringResource(R.string.msg_request_code)
-            } else {
-                stringResource(R.string.msg_request_code) +
-                    " " +
-                    confirmation.resendSeconds +
-                    stringResource(R.string.msg_request_code_sec)
-            }
-            MainButton(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                text = buttonText,
-                isEnabled = confirmation.isResendEnable
-            ) {
-                viewModel.onResendCodeClicked()
-                phoneVerificationUtil.resendVerificationCode(
-                    phone = confirmation.formattedPhoneNumber,
-                    activity = requireActivity(),
-                    token = confirmation.resendToken
-                )
-            }
+
         }
     }
 

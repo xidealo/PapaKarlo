@@ -18,11 +18,11 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryToolbarScreen(
-    title: String,
-    backActionClick: () -> Unit,
+    title: String? = null,
+    backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
     actionButton: @Composable () -> Unit = {},
-    content: (@Composable () -> Unit)
+    content: (@Composable () -> Unit),
 ) {
     val appBarState = rememberTopAppBarState()
     val behavior = TopAppBarDefaults.pinnedScrollBehavior(appBarState)

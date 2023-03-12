@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.order.screen.order_details
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
@@ -24,6 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
@@ -32,6 +33,7 @@ import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
@@ -58,13 +60,14 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     private val orderProductItemMapper: OrderProductItemMapper by inject()
 
     val orderUuid: String by argument()
+    val orderCode: String by argument()
 
-    @SuppressLint("ClickableViewAccessibility")
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.fragmentOrderDetailsCvMain.setContentWithTheme {
-            val orderState by viewModel.orderState.collectAsState()
+            val orderState by viewModel.orderState.collectAsStateWithLifecycle()
             OrderDetailsScreen(orderState)
         }
     }
@@ -81,10 +84,17 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
     @Composable
     private fun OrderDetailsScreen(orderDetailsState: OrderDetailsState) {
-        if (orderDetailsState.isLoading) {
-            LoadingScreen()
-        } else {
-            OrderDetailsSuccessScreen(orderDetailsState)
+        FoodDeliveryToolbarScreen(
+            title = orderCode,
+            backActionClick = {
+                findNavController().popBackStack()
+            }
+        ) {
+            if (orderDetailsState.isLoading) {
+                LoadingScreen()
+            } else {
+                OrderDetailsSuccessScreen(orderDetailsState)
+            }
         }
     }
 

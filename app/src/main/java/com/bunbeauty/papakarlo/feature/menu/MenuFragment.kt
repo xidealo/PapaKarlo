@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -156,9 +154,11 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 key = { _, categoryItemModel -> categoryItemModel.key }
             ) { i, categoryItemModel ->
                 CategoryItem(
-                    modifier = Modifier.padding(
-                        start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                    ),
+                    modifier = Modifier
+                        .padding(
+                            start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
+                        )
+                        .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
                     categoryItem = categoryItemModel
                 ) {
                     viewModel.onCategoryClicked(categoryItemModel)
