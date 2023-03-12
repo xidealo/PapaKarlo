@@ -28,16 +28,16 @@ fun CategoryItem(
             .heightIn(min = FoodDeliveryTheme.dimensions.smallButtonSize),
         onClick = onClick,
         colors = if (categoryItem.isSelected) {
-            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.primary)
+            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.mainColors.primary)
         } else {
-            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.surface)
+            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.mainColors.surface)
         },
         shape = chipCornerShape
     ) {
         val color = if (categoryItem.isSelected) {
-            FoodDeliveryTheme.colors.onPrimary
+            FoodDeliveryTheme.colors.mainColors.onPrimary
         } else {
-            FoodDeliveryTheme.colors.onSurface
+            FoodDeliveryTheme.colors.mainColors.onSurface
         }
         Box(
             modifier = Modifier

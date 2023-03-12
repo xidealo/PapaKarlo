@@ -19,7 +19,7 @@ fun FoodDeliveryCard(
     enabled: Boolean = true,
     elevated: Boolean = true,
     onClick: (() -> Unit) = {},
-    colors: CardColors = FoodDeliveryTheme.colors.cardColors(),
+    colors: CardColors = FoodDeliveryCardDefaults.cardColors,
     shape: Shape = mediumRoundedCornerShape,
     content: @Composable ColumnScope.() -> Unit,
 ) {

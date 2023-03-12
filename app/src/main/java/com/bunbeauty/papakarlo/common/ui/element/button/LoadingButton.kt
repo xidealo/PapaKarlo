@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -28,7 +29,7 @@ fun LoadingButton(
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryTheme.colors.mainButtonColors(),
+        colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = buttonRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
         enabled = !isLoading
@@ -37,13 +38,13 @@ fun LoadingButton(
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(FoodDeliveryTheme.dimensions.smallProgressBarSize),
-                color = FoodDeliveryTheme.colors.onPrimaryDisabled
+                color = FoodDeliveryTheme.colors.mainColors.onPrimaryDisabled
             )
         } else {
             Text(
                 text = stringResource(textStringId),
                 style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = FoodDeliveryTheme.colors.onPrimary
+                color = FoodDeliveryTheme.colors.mainColors.onPrimary
             )
         }
     }
@@ -52,7 +53,7 @@ fun LoadingButton(
 @Preview
 @Composable
 private fun LoadingButtonPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.background)) {
+    Box(Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = false
@@ -63,7 +64,7 @@ private fun LoadingButtonPreview() {
 @Preview
 @Composable
 private fun LoadingButtonLoadingPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.background)) {
+    Box(Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = true

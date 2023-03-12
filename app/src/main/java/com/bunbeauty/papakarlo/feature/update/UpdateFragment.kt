@@ -51,7 +51,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Spacer(modifier = Modifier.weight(1f))
@@ -70,7 +70,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                         .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     text = stringResource(id = R.string.msg_update_new_title_app_version),
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
-                    color = FoodDeliveryTheme.colors.onSurface,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     textAlign = TextAlign.Center
                 )
 
@@ -81,7 +81,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                         .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     text = stringResource(id = R.string.msg_update_new_app_version),
                     style = FoodDeliveryTheme.typography.bodyLarge,
-                    color = FoodDeliveryTheme.colors.onSurface,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     textAlign = TextAlign.Center
                 )
             }

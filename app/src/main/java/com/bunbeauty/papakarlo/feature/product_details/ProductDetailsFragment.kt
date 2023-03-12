@@ -167,13 +167,13 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                             text = menuProductUi.name,
                             style = FoodDeliveryTheme.typography.titleMedium.bold,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                         Text(
                             modifier = Modifier.alignByBaseline(),
                             text = menuProductUi.size,
                             style = FoodDeliveryTheme.typography.bodySmall,
-                            color = FoodDeliveryTheme.colors.onSurfaceVariant
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Row(
@@ -186,14 +186,14 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                 text = menuProductUi.oldPrice,
                                 style = FoodDeliveryTheme.typography.bodyLarge,
-                                color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 textDecoration = TextDecoration.LineThrough
                             )
                         }
                         Text(
                             text = menuProductUi.newPrice,
                             style = FoodDeliveryTheme.typography.bodyLarge.bold,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                     Text(
@@ -201,7 +201,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                             .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = menuProductUi.description,
                         style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
             }

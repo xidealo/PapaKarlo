@@ -140,13 +140,13 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
             Text(
                 text = hint,
                 style = FoodDeliveryTheme.typography.body2,
-                color = FoodDeliveryTheme.colors.onSurfaceVariant
+                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
             Text(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
                 text = info,
                 style = FoodDeliveryTheme.typography.body1,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
         }
     }
@@ -215,7 +215,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             orderDetailsState.deliveryCost?.let { deliveryCost ->
@@ -223,14 +223,14 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     Text(
                         text = stringResource(R.string.msg_order_details_delivery_cost),
                         style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
                         modifier = Modifier.weight(1f),
                         text = stringUtil.getCostString(deliveryCost),
                         style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                         textAlign = TextAlign.End
                     )
                 }
@@ -243,7 +243,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                 Text(
                     text = stringResource(R.string.msg_order_details_order_cost),
                     style = FoodDeliveryTheme.typography.h2,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 orderDetailsState.totalCost?.let { totalCost ->
@@ -252,7 +252,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = stringUtil.getCostString(totalCost),
                         style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         textDecoration = TextDecoration.LineThrough
                     )
                 }
@@ -260,7 +260,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     Text(
                         text = stringUtil.getCostString(finalCost),
                         style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurface,
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     )
                 }
             }

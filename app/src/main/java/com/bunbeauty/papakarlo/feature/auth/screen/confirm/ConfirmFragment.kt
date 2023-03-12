@@ -67,7 +67,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             if (confirmState.isCodeChecking) {

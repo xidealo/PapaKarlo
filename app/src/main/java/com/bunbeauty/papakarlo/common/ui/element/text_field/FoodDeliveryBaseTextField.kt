@@ -70,7 +70,7 @@ fun FoodDeliveryBaseTextField(
         ),
         singleLine = maxLines == 1,
         maxLines = maxLines,
-        colors = FoodDeliveryTheme.colors.textFieldColors(),
+        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
     )
 }
 
@@ -126,7 +126,7 @@ fun FoodDeliveryBaseTextField(
         ),
         singleLine = maxLines == 1,
         maxLines = maxLines,
-        colors = FoodDeliveryTheme.colors.textFieldColors(),
+        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
     )
 }
 

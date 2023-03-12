@@ -115,7 +115,7 @@ fun FutureStep(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxHeight()
             .clip(smallRoundedCornerShape)
-            .background(FoodDeliveryTheme.colors.surfaceVariant)
+            .background(FoodDeliveryTheme.colors.mainColors.surfaceVariant)
     )
 }
 

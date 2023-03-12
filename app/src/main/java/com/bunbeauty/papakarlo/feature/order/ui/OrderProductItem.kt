@@ -40,7 +40,6 @@ fun OrderProductItem(
         modifier = modifier
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
-        colors = FoodDeliveryTheme.colors.cardColors(),
         enabled = false
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
@@ -65,7 +64,7 @@ fun OrderProductItem(
                 OverflowingText(
                     text = orderProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 Row(
                     modifier = Modifier.fillMaxSize(),
@@ -78,7 +77,7 @@ fun OrderProductItem(
                             text = oldPrice,
                             style = FoodDeliveryTheme.typography.body2,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
                     }
                     Text(
@@ -86,14 +85,14 @@ fun OrderProductItem(
                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.body2,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Text(
                         modifier = Modifier
                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.count,
                         style = FoodDeliveryTheme.typography.body2,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Row(
                         modifier = Modifier.weight(1f),
@@ -105,13 +104,13 @@ fun OrderProductItem(
                                 text = oldCost,
                                 style = FoodDeliveryTheme.typography.body2,
                                 textDecoration = TextDecoration.LineThrough,
-                                color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                             )
                         }
                         Text(
                             text = orderProductItem.newCost,
                             style = FoodDeliveryTheme.typography.body2,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }

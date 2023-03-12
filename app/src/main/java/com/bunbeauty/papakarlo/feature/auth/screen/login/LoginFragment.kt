@@ -118,7 +118,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private fun LoginScreen(loginState: LoginState) {
         when (loginState.state) {
             is LoginState.State.Loading -> {
-                LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+                LoadingScreen(background = FoodDeliveryTheme.colors.mainColors.surface)
             }
             is LoginState.State.Success -> {
                 LoginSuccessScreen()
@@ -150,7 +150,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Box(modifier = Modifier.weight(1f)) {
@@ -171,7 +171,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                         modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(R.string.msg_login_info),
                         style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
 
                     val focusRequester = remember { FocusRequester() }

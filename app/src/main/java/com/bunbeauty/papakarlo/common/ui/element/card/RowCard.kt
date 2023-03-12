@@ -28,10 +28,10 @@ fun RowCard(
     enabled: Boolean = true,
     elevated: Boolean = true,
     @DrawableRes startIconId: Int? = null,
-    startIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    startIconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     @StringRes labelStringId: Int,
     @DrawableRes endIconId: Int? = null,
-    endIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    endIconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     onClick: (() -> Unit) = {},
 ) {
     RowCard(
@@ -53,10 +53,10 @@ fun RowCard(
     enabled: Boolean = true,
     elevated: Boolean = true,
     @DrawableRes startIconId: Int? = null,
-    startIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    startIconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     label: String,
     @DrawableRes endIconId: Int? = null,
-    endIconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    endIconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     onClick: (() -> Unit) = {},
 ) {
     FoodDeliveryCard(
@@ -85,7 +85,7 @@ fun RowCard(
                 modifier = Modifier.weight(1f),
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             if (endIconId != null) {
                 Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.mediumSpace))

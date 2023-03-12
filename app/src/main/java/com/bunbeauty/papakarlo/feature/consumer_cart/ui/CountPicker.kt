@@ -21,6 +21,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
@@ -39,10 +40,10 @@ fun CountPicker(
             )
             .clip(buttonRoundedCornerShape)
             .border(
-                BorderStroke(2.dp, FoodDeliveryTheme.colors.primary),
+                BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
                 shape = buttonRoundedCornerShape
             )
-            .background(FoodDeliveryTheme.colors.surface),
+            .background(FoodDeliveryTheme.colors.mainColors.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
@@ -52,14 +53,14 @@ fun CountPicker(
                     minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
                 ),
             onClick = onCountDecreased,
-            colors = FoodDeliveryTheme.colors.iconButtonColors(),
+            colors = FoodDeliveryButtonDefaults.iconButtonColors,
         ) {
             Icon(
                 modifier = Modifier
                     .size(12.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_minus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_decrease),
-                tint = FoodDeliveryTheme.colors.primary
+                tint = FoodDeliveryTheme.colors.mainColors.primary
             )
         }
         Text(
@@ -68,7 +69,7 @@ fun CountPicker(
                 .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.bodySmall.bold,
-            color = FoodDeliveryTheme.colors.primary,
+            color = FoodDeliveryTheme.colors.mainColors.primary,
         )
 
         IconButton(
@@ -78,14 +79,14 @@ fun CountPicker(
                     minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
                 ),
             onClick = onCountIncreased,
-            colors = FoodDeliveryTheme.colors.iconButtonColors(),
+            colors = FoodDeliveryButtonDefaults.iconButtonColors,
         ) {
             Icon(
                 modifier = Modifier
                     .size(12.dp),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_plus_16),
                 contentDescription = stringResource(R.string.description_consumer_cart_increase),
-                tint = FoodDeliveryTheme.colors.primary
+                tint = FoodDeliveryTheme.colors.mainColors.primary
             )
         }
     }

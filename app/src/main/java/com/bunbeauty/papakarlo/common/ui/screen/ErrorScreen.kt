@@ -30,7 +30,7 @@ fun ErrorScreen(
     Column(
         modifier = Modifier
             .background(
-                color = FoodDeliveryTheme.colors.background
+                color = FoodDeliveryTheme.colors.mainColors.background
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -51,7 +51,7 @@ fun ErrorScreen(
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(id = mainTextId),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
-            color = FoodDeliveryTheme.colors.onSurface,
+            color = FoodDeliveryTheme.colors.mainColors.onSurface,
             textAlign = TextAlign.Center
         )
 
@@ -63,7 +63,7 @@ fun ErrorScreen(
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
         }

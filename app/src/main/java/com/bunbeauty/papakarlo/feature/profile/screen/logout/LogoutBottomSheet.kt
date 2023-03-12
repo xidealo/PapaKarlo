@@ -41,7 +41,7 @@ class LogoutBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_logout) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(bottomSheetShape)
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
         ) {
             Title(
                 modifier = Modifier

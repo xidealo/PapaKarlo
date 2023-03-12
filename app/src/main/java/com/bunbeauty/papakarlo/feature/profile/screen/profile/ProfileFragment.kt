@@ -109,7 +109,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
         ) {
             when (profileState.state) {
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(

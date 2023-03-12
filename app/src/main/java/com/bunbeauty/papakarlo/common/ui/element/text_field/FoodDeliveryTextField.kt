@@ -51,7 +51,7 @@ fun FoodDeliveryTextField(
                     .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(errorMessageId),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.error
+                color = FoodDeliveryTheme.colors.mainColors.error
             )
         }
     }
@@ -93,7 +93,7 @@ fun FoodDeliveryTextField(
                     .padding(16.dp),
                 text = stringResource(errorMessageId),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.error
+                color = FoodDeliveryTheme.colors.mainColors.error
             )
         }
     }

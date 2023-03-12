@@ -35,12 +35,12 @@ fun TextCard(
             Text(
                 text = stringResource(hintStringId),
                 style = FoodDeliveryTheme.typography.labelSmall.medium,
-                color = FoodDeliveryTheme.colors.onSurfaceVariant
+                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
             Text(
                 text = label,
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
         }
     }
