@@ -37,7 +37,7 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(bottomSheetShape)
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
         ) {
             Title(
                 modifier = Modifier

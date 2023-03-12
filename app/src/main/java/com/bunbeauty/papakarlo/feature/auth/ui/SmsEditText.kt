@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.text.isDigitsOnly
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
@@ -50,7 +51,7 @@ fun SmsEditText(
     }
     Row(modifier = modifier) {
         CompositionLocalProvider(
-            LocalTextSelectionColors provides FoodDeliveryTheme.colors.smsTextSelectionColors
+            LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors
         ) {
             repeat(smsCodeLength) { i ->
                 if (i > 0) {
@@ -115,7 +116,7 @@ fun SmsDigitCell(
                 true
             }
             .focusRequester(focusRequester),
-        colors = FoodDeliveryTheme.colors.smsTextFieldColors(),
+        colors = FoodDeliveryTextFieldDefaults.smsCodeTextFieldColors,
         textStyle = FoodDeliveryTheme.typography.body1.copy(textAlign = TextAlign.Center),
         singleLine = true,
         value = TextFieldValue(value),

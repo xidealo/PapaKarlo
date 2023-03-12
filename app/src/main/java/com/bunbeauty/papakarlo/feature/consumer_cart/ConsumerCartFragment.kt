@@ -105,7 +105,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
                             text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCart.forFreeDelivery,
                             style = FoodDeliveryTheme.typography.body1,
-                            color = FoodDeliveryTheme.colors.onBackground,
+                            color = FoodDeliveryTheme.colors.mainColors.onBackground,
                             textAlign = TextAlign.Center
                         )
                     }
@@ -130,14 +130,14 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
             }
             Column(
                 modifier = Modifier
-                    .background(FoodDeliveryTheme.colors.surface)
+                    .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 Row {
                     Text(
                         text = stringResource(R.string.title_consumer_cart_total),
                         style = FoodDeliveryTheme.typography.h2,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Row(
                         modifier = Modifier.weight(1f),
@@ -149,14 +149,14 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                 text = oldTotalCost,
                                 style = FoodDeliveryTheme.typography.h2,
-                                color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 textDecoration = TextDecoration.LineThrough
                             )
                         }
                         Text(
                             text = consumerCart.newTotalCost,
                             style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }

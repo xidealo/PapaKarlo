@@ -41,7 +41,7 @@ fun FoodDeliveryToolbarScreen(
                 drawableId = drawableId
             )
         },
-        containerColor = FoodDeliveryTheme.colors.background,
+        containerColor = FoodDeliveryTheme.colors.mainColors.background,
         floatingActionButton = actionButton,
         floatingActionButtonPosition = FabPosition.Center,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),

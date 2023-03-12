@@ -114,7 +114,7 @@ class UserAddressListFragment :
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             LazyColumn(

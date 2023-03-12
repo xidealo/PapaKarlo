@@ -29,7 +29,6 @@ fun NavigationTextCard(
 ) {
     FoodDeliveryCard(
         modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
-        colors = FoodDeliveryTheme.colors.cardColors(),
         enabled = isClickable,
         onClick = onClick
     ) {
@@ -48,19 +47,19 @@ fun NavigationTextCard(
                 Text(
                     text = stringResource(hintStringId),
                     style = FoodDeliveryTheme.typography.labelSmall.medium,
-                    color = FoodDeliveryTheme.colors.onSurfaceVariant
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                 )
                 Text(
                     text = label ?: "",
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
             }
             Icon(
                 modifier = Modifier.icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
                 contentDescription = stringResource(R.string.description_ic_next),
-                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
         }
     }

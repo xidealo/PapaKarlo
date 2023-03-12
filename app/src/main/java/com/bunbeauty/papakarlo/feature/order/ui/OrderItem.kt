@@ -42,7 +42,7 @@ fun OrderItem(
                     .requiredWidthIn(min = FoodDeliveryTheme.dimensions.codeWidth)
                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             StatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
             Text(
@@ -51,7 +51,7 @@ fun OrderItem(
                     .wrapContentWidth(Alignment.End),
                 text = orderItem.dateTime,
                 style = FoodDeliveryTheme.typography.body2,
-                color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 textAlign = TextAlign.End
             )
         }

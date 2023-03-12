@@ -111,7 +111,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(mediumRoundedCornerShape)
-                    .background(FoodDeliveryTheme.colors.surface)
+                    .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(16.dp)
             ) {
                 val focusManager = LocalFocusManager.current

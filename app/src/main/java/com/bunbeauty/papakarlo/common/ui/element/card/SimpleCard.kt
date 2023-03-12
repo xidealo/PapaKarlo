@@ -23,7 +23,6 @@ fun SimpleCard(
             .fillMaxWidth()
             .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
         onClick = onClick,
-        colors = FoodDeliveryTheme.colors.cardColors()
     ) {
         Row(
             modifier = Modifier
@@ -34,7 +33,7 @@ fun SimpleCard(
                 modifier = Modifier.fillMaxWidth(),
                 text = text,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
         }
     }

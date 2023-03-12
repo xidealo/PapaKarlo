@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults.textSelectionColors
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -31,7 +32,7 @@ fun FoodDeliveryTheme(
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
-        LocalTextSelectionColors provides rememberedColors.textSelectionColors,
+        LocalTextSelectionColors provides textSelectionColors,
         content = content
     )
 }

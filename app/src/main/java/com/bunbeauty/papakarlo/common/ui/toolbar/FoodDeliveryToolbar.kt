@@ -109,20 +109,20 @@ private fun CardAction(action: FoodDeliveryCartAction) {
         ) {
             Text(
                 style = FoodDeliveryTheme.typography.bodyMedium,
-                color = FoodDeliveryTheme.colors.onSurface,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 text = action.topCartUi.cost
             )
             Box {
                 Icon(
                     modifier = Modifier.padding(4.dp),
                     painter = painterResource(id = R.drawable.ic_cart_24),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant,
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    containerColor = FoodDeliveryTheme.colors.primary,
-                    contentColor = FoodDeliveryTheme.colors.onPrimary,
+                    containerColor = FoodDeliveryTheme.colors.mainColors.primary,
+                    contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
                 ) {
                     Text(
                         style = FoodDeliveryTheme.typography.labelSmall.medium,

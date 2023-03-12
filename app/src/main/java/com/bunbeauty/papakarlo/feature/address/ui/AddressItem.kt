@@ -45,7 +45,7 @@ fun AddressItem(
                     .weight(1f),
                 text = address,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             if (isSelected) {
                 Icon(
@@ -55,7 +55,7 @@ fun AddressItem(
                         .align(CenterVertically),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_check),
                     contentDescription = stringResource(R.string.description_ic_checked),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                 )
             }
         }

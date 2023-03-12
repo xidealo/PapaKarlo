@@ -52,7 +52,7 @@ fun MenuProductItem(
                 OverflowingText(
                     text = menuProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
                     menuProductItem.oldPrice?.let {
@@ -62,13 +62,13 @@ fun MenuProductItem(
                             text = menuProductItem.oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
                     }
                     Text(
                         text = menuProductItem.newPrice,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
                 SmallButton(
