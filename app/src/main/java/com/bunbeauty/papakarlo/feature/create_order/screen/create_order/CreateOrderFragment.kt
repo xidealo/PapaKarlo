@@ -29,6 +29,7 @@ import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
@@ -40,7 +41,6 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOr
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
-import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.create_order.OrderCreationState
@@ -85,9 +85,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                         .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                         .verticalScroll(rememberScrollState())
                 ) {
-                    Switcher(
+                    FoodDeliverySwitcher(
                         modifier = Modifier.fillMaxWidth(),
-                        variantStringIdList = listOf(
+                        optionResIdList = listOf(
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
@@ -153,7 +153,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.error_select_delivery_address),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.negative
+                color = FoodDeliveryTheme.colors.mainColors.error
             )
         }
     }

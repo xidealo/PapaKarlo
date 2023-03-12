@@ -12,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.papakarlo.common.ui.element.StatusChip
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
@@ -44,7 +43,7 @@ fun OrderItem(
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
-            StatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
+            OrderStatusChip(orderStatus = orderItem.status, statusName = orderItem.statusName)
             Text(
                 modifier = Modifier
                     .weight(1f)
