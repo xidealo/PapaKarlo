@@ -23,8 +23,7 @@ class CafeListViewModel(
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
     private val getCafeListUseCase: GetCafeListUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
-
-    ) : CartViewModel() {
+) : CartViewModel() {
 
     private val mutableCafeItemListState = MutableStateFlow(CafeListState())
     val cafeListState = mutableCafeItemListState.asStateFlow()
@@ -100,8 +99,8 @@ class CafeListViewModel(
         } else {
             cafeInteractor.getCloseIn(cafe, timeZone)?.let { closeIn ->
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                        closeIn +
-                        getMinuteString(closeIn)
+                    closeIn +
+                    getMinuteString(closeIn)
             } ?: resourcesProvider.getString(R.string.msg_cafe_open)
         }
 
@@ -129,5 +128,4 @@ class CafeListViewModel(
             state.copy(eventList = state.eventList - eventList.toSet())
         }
     }
-
 }

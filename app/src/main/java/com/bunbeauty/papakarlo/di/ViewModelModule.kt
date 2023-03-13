@@ -30,6 +30,7 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             stringUtil = get(),
+            observeCartUseCase = get()
         )
     }
     viewModel {
@@ -116,7 +117,8 @@ fun viewModelModule() = module {
             userInteractor = get(),
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get(),
-            getLastOrderUseCase = get()
+            getLastOrderUseCase = get(),
+            observeCartUseCase = get()
         )
     }
     viewModel { parameters ->

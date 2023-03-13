@@ -13,7 +13,7 @@ class MenuProductInteractor(
     private val menuProductRepo: MenuProductRepo,
 ) : IMenuProductInteractor {
 
-    override suspend fun getMenuSectionList(): List<MenuSection>? {
+    override suspend fun getMenuSectionList(): List<MenuSection> {
         return withContext(Dispatchers.Default) {
             menuProductRepo.getMenuProductList()
                 .filter { it.visible }
@@ -23,7 +23,7 @@ class MenuProductInteractor(
                     } else {
                         toMenuSectionList(menuProductList)
                     }
-                }
+                } ?: emptyList()
         }
     }
 

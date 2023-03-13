@@ -20,42 +20,51 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuAction
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuUI
+import com.bunbeauty.papakarlo.feature.menu.model.MenuState
+import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
+import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
+import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
+import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     override val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(FragmentMenuBinding::bind)
+    private val menuUiStateMapper: MenuUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,46 +77,68 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
         viewModel.getMenu()
         viewBinding.fragmentMenuCvMain.setContentWithTheme {
-            val menuState by viewModel.menuState.collectAsState()
-            MenuScreen(menuState = menuState)
+            val menuState by viewModel.menuState.collectAsStateWithLifecycle()
+            MenuScreen(menuUi = menuUiStateMapper.map(menuState))
+            LaunchedEffect(menuState.eventList) {
+                handleEventList(menuState.eventList)
+            }
         }
-        handleActions()
     }
 
-    private fun handleActions() {
-        viewModel.actionFlow.startedLaunch { action ->
-            when (action) {
-                is MenuAction.GoToSelectedItem -> {
+    private fun handleEventList(eventList: List<MenuState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is MenuState.Event.GoToSelectedItem -> {
                     findNavController().navigate(
                         MenuFragmentDirections.toProductFragment(
-                            action.uuid,
-                            action.name
+                            event.uuid,
+                            event.name
                         )
                     )
                 }
             }
         }
+        viewModel.consumeEventList(eventList)
     }
 
     @Composable
-    private fun MenuScreen(menuState: State<MenuUI>) {
-        when (menuState) {
-            is State.Success -> {
-                MenuSuccessScreen(menuState.data)
-            }
-            is State.Error -> {
-                ErrorScreen(R.string.error_menu_loading) {
-                    viewModel.getMenu()
+    private fun MenuScreen(menuUi: MenuUi) {
+        FoodDeliveryToolbarScreen(
+            title = stringResource(R.string.title_menu),
+            drawableId = R.drawable.logo_top_papa_karlo,
+            topActions = listOf(
+                FoodDeliveryCartAction(
+                    topCartUi = menuUi.topCartUi,
+                ) {
+                    val backQueue = findNavController().backQueue
+                    if ((backQueue.size > 1) &&
+                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
+                    ) {
+                        findNavController().popBackStack()
+                    } else {
+                        findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                    }
                 }
-            }
-            else -> {
-                LoadingScreen()
+            ),
+        ) {
+            when (menuUi.state) {
+                is MenuState.State.Success -> {
+                    MenuSuccessScreen(menuUi)
+                }
+                is MenuState.State.Error -> {
+                    ErrorScreen(R.string.error_menu_loading) {
+                        viewModel.getMenu()
+                    }
+                }
+                else -> {
+                    LoadingScreen()
+                }
             }
         }
     }
 
     @Composable
-    private fun MenuSuccessScreen(menu: MenuUI) {
+    private fun MenuSuccessScreen(menu: MenuUi) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -184,7 +215,6 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 }
             }
         }
-
     }
 
     @Composable
@@ -281,21 +311,24 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         )
 
         MenuScreen(
-            menuState = State.Success(
-                MenuUI(
-                    categoryItemList = listOf(
-                        getCategoryItemModel("1"),
-                        getCategoryItemModel("2"),
-                        getCategoryItemModel("3"),
-                    ),
-                    menuItemList = listOf(
-                        getMenuCategoryHeaderItemModel("4"),
-                        getMenuProductPairItemModel("5"),
-                        getMenuProductPairItemModel("6"),
-                        getMenuCategoryHeaderItemModel("7"),
-                        getMenuProductPairItemModel("8"),
-                    )
-                )
+            menuUi = MenuUi(
+                categoryItemList = listOf(
+                    getCategoryItemModel("1"),
+                    getCategoryItemModel("2"),
+                    getCategoryItemModel("3"),
+                ),
+                menuItemList = listOf(
+                    getMenuCategoryHeaderItemModel("4"),
+                    getMenuProductPairItemModel("5"),
+                    getMenuProductPairItemModel("6"),
+                    getMenuCategoryHeaderItemModel("7"),
+                    getMenuProductPairItemModel("8"),
+                ),
+                state = MenuState.State.Success,
+                topCartUi = TopCartUi(
+                    cost = "100",
+                    count = "2",
+                ),
             )
         )
     }
@@ -303,12 +336,28 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenLoadingPreview() {
-        MenuScreen(menuState = State.Loading())
+        MenuScreen(
+            menuUi = MenuUi(
+                state = MenuState.State.Loading,
+                topCartUi = TopCartUi(
+                    cost = "100",
+                    count = "2",
+                ),
+            ),
+        )
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenErrorPreview() {
-        MenuScreen(menuState = State.Error("Не удалось загрузить меню"))
+        MenuScreen(
+            menuUi = MenuUi(
+                state = MenuState.State.Error(Throwable()),
+                topCartUi = TopCartUi(
+                    cost = "100",
+                    count = "2",
+                ),
+            )
+        )
     }
 }

@@ -1,7 +1,10 @@
 package com.bunbeauty.papakarlo.common.ui.toolbar
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
@@ -28,44 +32,56 @@ fun FoodDeliveryToolbar(
     title: String?,
     backActionClick: (() -> Unit)? = null,
     scrollBehavior: TopAppBarScrollBehavior,
+    @DrawableRes drawableId: Int? = null,
     actions: List<FoodDeliveryToolbarActions> = emptyList(),
 ) {
-    TopAppBar(
-        colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
-        title = {
-            Text(
-                text = title ?: "",
-                maxLines = 1,
-                style = FoodDeliveryTheme.typography.titleMedium.bold,
-                overflow = TextOverflow.Ellipsis
+    Box {
+        TopAppBar(
+            colors = FoodDeliveryTopAppBarDefaults.topAppBarColors(),
+            title = {
+                Text(
+                    text = title ?: "",
+                    maxLines = 1,
+                    style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    overflow = TextOverflow.Ellipsis
+                )
+            },
+            navigationIcon = {
+                backActionClick?.let {
+                    IconButton(
+                        onClick = { backActionClick() }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_back),
+                            contentDescription = null
+                        )
+                    }
+                }
+            },
+            actions = {
+                actions.forEach { action ->
+                    when (action) {
+                        is FoodDeliveryAction -> {
+                            Action(action)
+                        }
+                        is FoodDeliveryCartAction -> {
+                            CardAction(action)
+                        }
+                    }
+                }
+            },
+            scrollBehavior = scrollBehavior
+        )
+        drawableId?.let {
+            Image(
+                modifier = Modifier
+                    .height(40.dp)
+                    .align(Alignment.Center),
+                painter = painterResource(drawableId),
+                contentDescription = stringResource(R.string.description_company_logo)
             )
-        },
-        navigationIcon = {
-            backActionClick?.let {
-                IconButton(
-                    onClick = { backActionClick() }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back),
-                        contentDescription = null
-                    )
-                }
-            }
-        },
-        actions = {
-            actions.forEach { action ->
-                when (action) {
-                    is FoodDeliveryAction -> {
-                        Action(action)
-                    }
-                    is FoodDeliveryCartAction -> {
-                        CardAction(action)
-                    }
-                }
-            }
-        },
-        scrollBehavior = scrollBehavior
-    )
+        }
+    }
 }
 
 @Composable

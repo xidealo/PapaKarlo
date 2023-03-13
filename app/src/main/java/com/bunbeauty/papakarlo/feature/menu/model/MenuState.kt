@@ -1,12 +1,11 @@
-package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
+package com.bunbeauty.papakarlo.feature.menu.model
 
-import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 
-data class CafeListState(
-    // TODO(convert to CafeItem in CafeListUI)
-    val cafeList: List<CafeItem> = emptyList(),
+data class MenuState(
+    val categoryItemList: List<CategoryItem> = emptyList(),
     val cartCostAndCount: CartCostAndCount? = null,
+    val menuItemList: List<MenuItem> = emptyList(),
     val state: State = State.Loading,
     val eventList: List<Event> = emptyList(),
 ) {
@@ -17,7 +16,7 @@ data class CafeListState(
     }
 
     sealed interface Event {
-        data class OpenCafeOptionsBottomSheet(val uuid: String) : Event
+        data class GoToSelectedItem(val uuid: String, val name: String) : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)

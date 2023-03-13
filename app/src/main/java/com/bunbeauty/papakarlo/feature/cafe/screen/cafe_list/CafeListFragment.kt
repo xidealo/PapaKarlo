@@ -199,14 +199,16 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListErrorScreenPreview() {
-        CafeListScreen(cafeListState = CafeListUi(
-            state = CafeListState.State.Error(Throwable()),
-            topCartUi = TopCartUi(
-                cost = "100",
-                count = "2",
+        CafeListScreen(
+            cafeListState = CafeListUi(
+                state = CafeListState.State.Error(Throwable()),
+                topCartUi = TopCartUi(
+                    cost = "100",
+                    count = "2",
+                ),
             ),
-        ),
             onCafeClicked = {},
-            onRefreshClicked = {})
+            onRefreshClicked = {}
+        )
     }
 }

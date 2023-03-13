@@ -22,6 +22,7 @@
     <string name="action_retry">Повторить попытку</string>
     <string name="common_error">Не удается загрузить данные</string>
     <string name="internet_error">Проверьте соединение и повторите попытку</string>
+    <string name="description_company_logo">Лого компании</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>

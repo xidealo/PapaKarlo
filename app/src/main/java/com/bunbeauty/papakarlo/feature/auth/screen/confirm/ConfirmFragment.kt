@@ -31,7 +31,6 @@ import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
-import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginState
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.google.firebase.auth.PhoneAuthProvider
 import org.koin.android.ext.android.inject
@@ -77,9 +76,9 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                         stringResource(R.string.msg_request_code)
                     } else {
                         stringResource(R.string.msg_request_code) +
-                                " " +
-                                confirmState.resendSeconds +
-                                stringResource(R.string.msg_request_code_sec)
+                            " " +
+                            confirmState.resendSeconds +
+                            stringResource(R.string.msg_request_code_sec)
                     }
                     MainButton(
                         modifier = Modifier
@@ -147,7 +146,6 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     }
                 }
             }
-
         }
     }
 
