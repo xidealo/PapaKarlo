@@ -11,7 +11,6 @@ import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewMod
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutViewModel
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
@@ -165,12 +164,7 @@ fun viewModelModule() = module {
             cityInteractor = get(),
         )
     }
-    viewModel {
-        LogoutViewModel(
-            firebaseAuthRepository = get(),
-            userInteractor = get(),
-        )
-    }
+
     viewModel {
         SplashViewModel(
             updateInteractor = get(),

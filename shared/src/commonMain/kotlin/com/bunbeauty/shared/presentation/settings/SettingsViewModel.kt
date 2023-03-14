@@ -46,6 +46,12 @@ class SettingsViewModel(
         }
     }
 
+    fun onLogoutClicked(){
+        mutableSettingsState.update { settingsState ->
+            settingsState + SettingsState.Event.ShowLogoutEvent
+        }
+    }
+
     fun onEmailChanged(email: String) {
         sharedScope.launch {
             val isSuccess = updateEmailUseCase(email)
