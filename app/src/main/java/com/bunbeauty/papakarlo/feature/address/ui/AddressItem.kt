@@ -50,8 +50,8 @@ fun AddressItem(
             if (isSelected) {
                 Icon(
                     modifier = Modifier
-                        .size(16.dp)
                         .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
+                        .size(16.dp)
                         .align(CenterVertically),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_check),
                     contentDescription = stringResource(R.string.description_ic_checked),
