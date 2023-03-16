@@ -108,7 +108,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                style = FoodDeliveryTheme.typography.bodySmall,
+                style = FoodDeliveryTheme.typography.bodyMedium,
                 color = FoodDeliveryTheme.colors.onSurface,
                 text = action.topCartUi.cost
             )
