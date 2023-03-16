@@ -110,14 +110,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 FoodDeliveryCartAction(
                     topCartUi = menuUi.topCartUi,
                 ) {
-                    val backQueue = findNavController().backQueue
-                    if ((backQueue.size > 1) &&
-                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
-                    ) {
-                        findNavController().popBackStack()
-                    } else {
-                        findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
-                    }
+                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
         ) {

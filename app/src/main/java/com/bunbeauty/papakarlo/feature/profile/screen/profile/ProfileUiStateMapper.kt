@@ -9,19 +9,19 @@ class ProfileUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderItemMapper: OrderItemMapper,
 ) {
-    fun map(cafeListState: ProfileState): ProfileUiState {
-        return ProfileUiState(
+    fun map(profileState: ProfileState): ProfileUi {
+        return ProfileUi(
             topCartUi = TopCartUi(
-                cost = cafeListState.cartCostAndCount?.cost?.let { cost ->
+                cost = profileState.cartCostAndCount?.cost?.let { cost ->
                     stringUtil.getCostString(cost)
                 } ?: "",
-                count = cafeListState.cartCostAndCount?.count ?: ""
+                count = profileState.cartCostAndCount?.count ?: ""
             ),
-            orderItem = cafeListState.lastOrder?.let {
+            orderItem = profileState.lastOrder?.let {
                 orderItemMapper.toItem(it)
             },
-            state = cafeListState.state,
-            eventList = cafeListState.eventList,
+            state = profileState.state,
+            eventList = profileState.eventList,
         )
     }
 }

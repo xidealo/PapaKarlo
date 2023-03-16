@@ -55,7 +55,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         viewBinding.fragmentCafeListCvMain.setContentWithTheme {
             val cafeItemList by viewModel.cafeListState.collectAsStateWithLifecycle()
             CafeListScreen(
-                cafeListState = cafeListUiStateMapper.map(cafeItemList),
+                cafeListUi = cafeListUiStateMapper.map(cafeItemList),
                 onCafeClicked = viewModel::onCafeCardClicked,
                 onRefreshClicked = viewModel::getCafeItemList
             )
@@ -67,7 +67,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
 
     @Composable
     private fun CafeListScreen(
-        cafeListState: CafeListUi,
+        cafeListUi: CafeListUi,
         onCafeClicked: (CafeItem) -> Unit,
         onRefreshClicked: () -> Unit,
     ) {
@@ -75,22 +75,15 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
             title = stringResource(R.string.title_cafe_list),
             topActions = listOf(
                 FoodDeliveryCartAction(
-                    topCartUi = cafeListState.topCartUi,
+                    topCartUi = cafeListUi.topCartUi,
                 ) {
-                    val backQueue = findNavController().backQueue
-                    if ((backQueue.size > 1) &&
-                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
-                    ) {
-                        findNavController().popBackStack()
-                    } else {
-                        findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
-                    }
+                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
         ) {
-            when (cafeListState.state) {
+            when (cafeListUi.state) {
                 is CafeListState.State.Success -> CafeListSuccessScreen(
-                    cafeListState.cafeList,
+                    cafeListUi.cafeList,
                     onCafeClicked = onCafeClicked
                 )
                 is CafeListState.State.Loading -> LoadingScreen()
@@ -145,7 +138,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Composable
     private fun CafeListSuccessScreenPreview() {
         CafeListScreen(
-            cafeListState = CafeListUi(
+            cafeListUi = CafeListUi(
                 cafeList = listOf(
                     CafeItem(
                         uuid = "",
@@ -184,7 +177,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Composable
     private fun CafeListLoadingScreenPreview() {
         CafeListScreen(
-            cafeListState = CafeListUi(
+            cafeListUi = CafeListUi(
                 state = CafeListState.State.Loading,
                 topCartUi = TopCartUi(
                     cost = "100",
@@ -200,7 +193,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Composable
     private fun CafeListErrorScreenPreview() {
         CafeListScreen(
-            cafeListState = CafeListUi(
+            cafeListUi = CafeListUi(
                 state = CafeListState.State.Error(Throwable()),
                 topCartUi = TopCartUi(
                     cost = "100",

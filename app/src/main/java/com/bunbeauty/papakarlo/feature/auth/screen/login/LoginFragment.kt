@@ -126,7 +126,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 findNavController().popBackStack()
             },
             actionButton = {
-                if (loginState.state != LoginState.State.Loading) {
+                if (loginState.state == LoginState.State.Success) {
                     MainButton(
                         modifier = Modifier
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
@@ -224,7 +224,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             LaunchedEffect(Unit) {
                 focusRequester.requestFocus()
             }
-            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
+            Spacer(
+                modifier = Modifier
+                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
+            )
         }
     }
 

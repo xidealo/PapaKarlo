@@ -72,7 +72,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
         ) {
             when (settingsState.state) {
                 SettingsState.State.SUCCESS -> {
-                    SettingsScreenSuccessPreview(settingsState)
+                    SettingsScreenSuccess(settingsState)
                 }
                 SettingsState.State.ERROR -> {
                     ErrorScreen(mainTextId = R.string.error_settings_loading) {
@@ -87,7 +87,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     }
 
     @Composable
-    fun SettingsScreenSuccessPreview(settingsState: SettingsState) {
+    fun SettingsScreenSuccess(settingsState: SettingsState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -73,7 +73,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         viewBinding.fragmentProfileCvMain.setContentWithTheme {
             val profileState by viewModel.profileState.collectAsStateWithLifecycle()
             ProfileScreen(
-                profileState = profileUiStateMapper.map(profileState),
+                profileUi = profileUiStateMapper.map(profileState),
                 onLastOrderClicked = viewModel::onLastOrderClicked,
                 onSettingsClicked = viewModel::onSettingsClicked,
                 onYourAddressesClicked = viewModel::onYourAddressesClicked,
@@ -98,7 +98,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
 
     @Composable
     private fun ProfileScreen(
-        profileState: ProfileUiState,
+        profileUi: ProfileUi,
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
@@ -109,22 +109,15 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             title = stringResource(R.string.title_profile),
             topActions = listOf(
                 FoodDeliveryCartAction(
-                    topCartUi = profileState.topCartUi,
+                    topCartUi = profileUi.topCartUi,
                 ) {
-                    val backQueue = findNavController().backQueue
-                    if ((backQueue.size > 1) &&
-                        (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
-                    ) {
-                        findNavController().popBackStack()
-                    } else {
-                        findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
-                    }
+                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
         ) {
-            when (profileState.state) {
+            when (profileUi.state) {
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
-                    profileState,
+                    profileUi,
                     onLastOrderClicked = onLastOrderClicked,
                     onSettingsClick = onSettingsClicked,
                     onYourAddressesClicked = onYourAddressesClicked,
@@ -191,7 +184,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
 
     @Composable
     private fun AuthorizedProfileScreen(
-        profile: ProfileUiState,
+        profile: ProfileUi,
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
@@ -341,7 +334,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     @Composable
     private fun AuthorizedProfileScreenWithLastOrderPreview() {
         ProfileScreen(
-            ProfileUiState(
+            ProfileUi(
                 orderItem = OrderItem(
                     uuid = "",
                     status = OrderStatus.NOT_ACCEPTED,
@@ -367,7 +360,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     @Composable
     private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
         ProfileScreen(
-            ProfileUiState(
+            ProfileUi(
                 orderItem = null,
                 state = ProfileState.State.AUTHORIZED,
                 topCartUi = TopCartUi(
@@ -387,7 +380,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     @Composable
     private fun UnauthorizedProfileScreenPreview() {
         ProfileScreen(
-            ProfileUiState(
+            ProfileUi(
                 orderItem = null,
                 state = ProfileState.State.UNAUTHORIZED,
                 topCartUi = TopCartUi(
@@ -407,7 +400,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     @Composable
     private fun LoadingProfileScreenPreview() {
         ProfileScreen(
-            ProfileUiState(
+            ProfileUi(
                 orderItem = null,
                 state = ProfileState.State.LOADING,
                 topCartUi = TopCartUi(
@@ -427,7 +420,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     @Composable
     private fun ErrorProfileScreenPreview() {
         ProfileScreen(
-            ProfileUiState(
+            ProfileUi(
                 orderItem = null,
                 state = ProfileState.State.ERROR,
                 topCartUi = TopCartUi(

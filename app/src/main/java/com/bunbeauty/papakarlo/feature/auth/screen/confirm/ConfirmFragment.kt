@@ -5,10 +5,13 @@ import android.view.View
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -75,10 +78,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     val buttonText = if (confirmState.isResendEnable) {
                         stringResource(R.string.msg_request_code)
                     } else {
-                        stringResource(R.string.msg_request_code) +
-                            " " +
-                            confirmState.resendSeconds +
-                            stringResource(R.string.msg_request_code_sec)
+                        stringResource(R.string.msg_request_code_sec, confirmState.resendSeconds)
                     }
                     MainButton(
                         modifier = Modifier
@@ -113,39 +113,39 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
 
     @Composable
     private fun ConfirmScreenSuccess(confirmation: Confirmation) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = stringResource(R.string.msg_confirm_enter_code),
+                textAlign = TextAlign.Center
+            )
+            Text(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) {
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = stringResource(R.string.msg_confirm_enter_code),
-                        textAlign = TextAlign.Center
-                    )
-                    Text(
-                        modifier = Modifier
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                        text = stringResource(R.string.msg_confirm_phone_info) + confirmation.phoneNumber,
-                        textAlign = TextAlign.Center
-                    )
-                    SmsEditText(
-                        modifier = Modifier
-                            .widthIn(max = FoodDeliveryTheme.dimensions.smsEditTextWidth)
-                            .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                    ) { code ->
-                        viewModel.onCodeEntered()
-                        phoneVerificationUtil.verifyCode(
-                            code = code,
-                            verificationId = confirmation.verificationId
-                        )
-                    }
-                }
+                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                text = stringResource(R.string.msg_confirm_phone_info) + confirmation.phoneNumber,
+                textAlign = TextAlign.Center
+            )
+            SmsEditText(
+                modifier = Modifier
+                    .widthIn(max = FoodDeliveryTheme.dimensions.smsEditTextWidth)
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
+            ) { code ->
+                viewModel.onCodeEntered()
+                phoneVerificationUtil.verifyCode(
+                    code = code,
+                    verificationId = confirmation.verificationId
+                )
             }
+            Spacer(
+                modifier = Modifier
+                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
+            )
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 

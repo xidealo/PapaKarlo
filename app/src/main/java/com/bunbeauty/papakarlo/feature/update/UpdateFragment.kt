@@ -51,6 +51,16 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
     private fun UpdateScreen() {
         FoodDeliveryToolbarScreen(
             title = stringResource(R.string.title_update_new_app_version),
+            actionButton = {
+                MainButton(
+                    modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    textStringId = R.string.action_update_update
+                ) {
+                    val uri = Uri.parse(PLAY_MARKET_LINK)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            }
         ) {
             Column(
                 modifier = Modifier
@@ -90,13 +100,6 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                MainButton(
-                    textStringId = R.string.action_update_update
-                ) {
-                    val uri = Uri.parse(PLAY_MARKET_LINK)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
             }
         }
     }
