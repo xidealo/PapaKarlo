@@ -81,20 +81,16 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 findNavController().popBackStack()
             }
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(FoodDeliveryTheme.colors.background)
-            ) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 Box(modifier = Modifier.weight(1f)) {
                     Column(
                         modifier = Modifier
                             .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        Switcher(
+                        FoodDeliverySwitcher(
                             modifier = Modifier.fillMaxWidth(),
-                            variantStringIdList = listOf(
+                            optionResIdList = listOf(
                                 R.string.action_create_order_delivery,
                                 R.string.action_create_order_pickup
                             ),

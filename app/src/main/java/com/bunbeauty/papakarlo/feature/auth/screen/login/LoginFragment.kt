@@ -125,6 +125,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             backActionClick = {
                 findNavController().popBackStack()
             },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (loginState.state == LoginState.State.Success) {
                     MainButton(
@@ -139,7 +140,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         ) {
             when (loginState.state) {
                 is LoginState.State.Loading -> {
-                    LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+                    LoadingScreen()
                 }
                 is LoginState.State.Success -> {
                     LoginSuccessScreen(loginState)
@@ -166,13 +167,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 )
             )
         }
-        var phoneError: Int? by rememberSaveable {
-            mutableStateOf(null)
-        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.surface)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -189,15 +186,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             Text(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_login_info),
-                style = FoodDeliveryTheme.typography.body1,
-                color = FoodDeliveryTheme.colors.onSurface
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
 
             val focusRequester = remember { FocusRequester() }
             FoodDeliveryTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 focusRequester = focusRequester,
                 value = phoneText,
                 labelStringId = R.string.hint_login_phone,

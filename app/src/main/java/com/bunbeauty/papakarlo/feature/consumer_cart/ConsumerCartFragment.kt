@@ -88,11 +88,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
     @Composable
     private fun ConsumerCartSuccessScreen(consumerCart: ConsumerCartUI) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),

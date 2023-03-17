@@ -151,7 +151,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     .fillMaxWidth()
                     .zIndex(1f),
                 shadowElevation = 6.dp,
-                color = FoodDeliveryTheme.colors.surface
+                color = FoodDeliveryTheme.colors.mainColors.surface
             ) {
                 CategoryRow(menu.categoryItemList, menuLazyListState)
             }

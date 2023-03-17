@@ -29,7 +29,6 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
@@ -38,6 +37,7 @@ import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.google.firebase.auth.PhoneAuthProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 
 class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
 
@@ -73,6 +73,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
             backActionClick = {
                 findNavController().popBackStack()
             },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (!confirmState.isCodeChecking) {
                     val buttonText = if (confirmState.isResendEnable) {
@@ -99,7 +100,6 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(FoodDeliveryTheme.colors.surface)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 if (confirmState.isCodeChecking) {
@@ -141,11 +141,11 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     verificationId = confirmation.verificationId
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             Spacer(
                 modifier = Modifier
                     .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
             )
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 

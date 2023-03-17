@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo.common.ui.toolbar
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
@@ -22,6 +24,7 @@ fun FoodDeliveryToolbarScreen(
     title: String? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
+    backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
     content: (@Composable () -> Unit),
@@ -50,6 +53,7 @@ fun FoodDeliveryToolbarScreen(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
+                .background(backgroundColor)
         ) {
             content()
         }
