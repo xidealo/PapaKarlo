@@ -37,7 +37,7 @@ internal class MenuProductInteractorTest {
         coEvery { menuProductRepo.getMenuProductList() } returns testMenuProductList
         val menuList = menuProductInteractor.getMenuSectionList()
         coVerify { menuProductRepo.getMenuProductList() }
-        assertTrue(menuList?.size == 1)
+        assertTrue(menuList.size == 1)
     }
 
     @Test
@@ -45,7 +45,7 @@ internal class MenuProductInteractorTest {
         coEvery { menuProductRepo.getMenuProductList() } returns listOf()
         val menuList = menuProductInteractor.getMenuSectionList()
         coVerify { menuProductRepo.getMenuProductList() }
-        assertTrue(menuList == null)
+        assertTrue(menuList.isEmpty())
     }
 
     companion object {

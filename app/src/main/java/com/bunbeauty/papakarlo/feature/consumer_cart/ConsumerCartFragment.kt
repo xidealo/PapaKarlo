@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
@@ -33,6 +34,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
@@ -56,22 +58,29 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
     @Composable
     private fun ConsumerCartScreen(consumerCartState: State<ConsumerCartUI>) {
-        when (consumerCartState) {
-            is State.Loading -> LoadingScreen()
-            is State.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
-            is State.Empty -> {
-                EmptyScreen(
-                    imageId = R.drawable.empty_cart,
-                    imageDescriptionId = R.string.description_consumer_cart_empty,
-                    mainTextId = R.string.title_consumer_cart_empty,
-                    extraTextId = R.string.msg_consumer_cart_empty,
-                    buttonTextId = R.string.action_consumer_cart_menu,
-                    onClick = viewModel::onMenuClicked
-                )
+        FoodDeliveryToolbarScreen(
+            title = stringResource(id = R.string.title_cart),
+            backActionClick = {
+                findNavController().popBackStack()
             }
-            is State.Error -> {
-                ErrorScreen(mainTextId = R.string.error_consumer_cart_loading) {
-                    viewModel.getConsumerCart()
+        ) {
+            when (consumerCartState) {
+                is State.Loading -> LoadingScreen()
+                is State.Success -> ConsumerCartSuccessScreen(consumerCartState.data)
+                is State.Empty -> {
+                    EmptyScreen(
+                        imageId = R.drawable.empty_cart,
+                        imageDescriptionId = R.string.description_consumer_cart_empty,
+                        mainTextId = R.string.title_consumer_cart_empty,
+                        extraTextId = R.string.msg_consumer_cart_empty,
+                        buttonTextId = R.string.action_consumer_cart_menu,
+                        onClick = viewModel::onMenuClicked
+                    )
+                }
+                is State.Error -> {
+                    ErrorScreen(mainTextId = R.string.error_consumer_cart_loading) {
+                        viewModel.getConsumerCart()
+                    }
                 }
             }
         }
@@ -79,7 +88,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
     @Composable
     private fun ConsumerCartSuccessScreen(consumerCart: ConsumerCartUI) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.background)
+        ) {
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),

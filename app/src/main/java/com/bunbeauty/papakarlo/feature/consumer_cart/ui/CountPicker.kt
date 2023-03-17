@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,11 +45,6 @@ fun CountPicker(
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = FoodDeliveryTheme.dimensions.smallButtonSize,
-                    minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
-                ),
             onClick = onCountDecreased,
             colors = FoodDeliveryTheme.colors.iconButtonColors(),
         ) {
@@ -72,11 +66,6 @@ fun CountPicker(
         )
 
         IconButton(
-            modifier = Modifier
-                .defaultMinSize(
-                    minWidth = FoodDeliveryTheme.dimensions.smallButtonSize,
-                    minHeight = FoodDeliveryTheme.dimensions.smallButtonSize
-                ),
             onClick = onCountIncreased,
             colors = FoodDeliveryTheme.colors.iconButtonColors(),
         ) {

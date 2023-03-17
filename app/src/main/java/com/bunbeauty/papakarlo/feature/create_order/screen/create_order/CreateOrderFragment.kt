@@ -30,6 +30,7 @@ import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
@@ -74,35 +75,42 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
 
     @Composable
     private fun CreateOrderScreen(orderCreationState: OrderCreationState) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
-        ) {
-            Box(modifier = Modifier.weight(1f)) {
-                Column(
-                    modifier = Modifier
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Switcher(
-                        modifier = Modifier.fillMaxWidth(),
-                        variantStringIdList = listOf(
-                            R.string.action_create_order_delivery,
-                            R.string.action_create_order_pickup
-                        ),
-                        position = orderCreationState.switcherPosition
-                    ) { changedPosition ->
-                        viewModel.onSwitcherPositionChanged(changedPosition)
-                    }
-                    AddressCard(orderCreationState)
-                    DeliveryAddressError(orderCreationState)
-                    CommentCard(orderCreationState)
-                    DeferredTimeCard(orderCreationState)
-                }
-                BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
+        FoodDeliveryToolbarScreen(
+            title = stringResource(id = R.string.title_create_order),
+            backActionClick = {
+                findNavController().popBackStack()
             }
-            BottomAmountBar(orderCreationState)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(FoodDeliveryTheme.colors.background)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Switcher(
+                            modifier = Modifier.fillMaxWidth(),
+                            variantStringIdList = listOf(
+                                R.string.action_create_order_delivery,
+                                R.string.action_create_order_pickup
+                            ),
+                            position = orderCreationState.switcherPosition
+                        ) { changedPosition ->
+                            viewModel.onSwitcherPositionChanged(changedPosition)
+                        }
+                        AddressCard(orderCreationState)
+                        DeliveryAddressError(orderCreationState)
+                        CommentCard(orderCreationState)
+                        DeferredTimeCard(orderCreationState)
+                    }
+                    BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
+                }
+                BottomAmountBar(orderCreationState)
+            }
         }
     }
 

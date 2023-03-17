@@ -1,12 +1,14 @@
 package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.presentation.SharedViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -18,6 +20,7 @@ class ProfileViewModel(
     private val getLastOrderUseCase: GetLastOrderUseCase,
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
+    private val observeCartUseCase: ObserveCartUseCase,
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
@@ -25,6 +28,18 @@ class ProfileViewModel(
 
     var observeLastOrderJob: Job? = null
     private var orderObservationUuid: String? = null
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        mutableProfileState.update { oldState ->
+            oldState.copy(
+                state = ProfileState.State.ERROR
+            )
+        }
+    }
+
+    init {
+        observeCart()
+    }
 
     fun update() {
         mutableProfileState.update { profileState ->
@@ -56,6 +71,16 @@ class ProfileViewModel(
         }
     }
 
+    private fun observeCart() {
+        sharedScope.launch(exceptionHandler) {
+            observeCartUseCase().collectLatest { cartTotalAndCount ->
+                mutableProfileState.update { state ->
+                    state.copy(cartCostAndCount = cartTotalAndCount)
+                }
+            }
+        }
+    }
+
     fun stopLastOrderObservation() {
         observeLastOrderJob?.cancel()
         orderObservationUuid?.let { uuid ->
@@ -66,9 +91,9 @@ class ProfileViewModel(
         orderObservationUuid = null
     }
 
-    fun onLastOrderClicked(lastOrder: LightOrder) {
+    fun onLastOrderClicked(uuid: String, code: String) {
         mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.OpenOrderDetails(lastOrder.uuid, lastOrder.code)
+            profileState + ProfileState.Event.OpenOrderDetails(uuid, code)
         }
     }
 

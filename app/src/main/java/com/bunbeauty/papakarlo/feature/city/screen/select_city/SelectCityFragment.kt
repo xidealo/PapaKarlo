@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -19,6 +20,7 @@ import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
@@ -43,19 +45,23 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
 
     @Composable
     private fun SelectCityScreen(cityListState: State<List<City>>) {
-        when (cityListState) {
-            is State.Success -> {
-                SelectCitySuccessScreen(cityListState.data)
-            }
-            is State.Loading -> {
-                LoadingScreen()
-            }
-            is State.Error -> {
-                ErrorScreen(R.string.error_select_city_loading) {
-                    viewModel.getCityList()
+        FoodDeliveryToolbarScreen(
+            title = stringResource(R.string.title_select_city),
+        ) {
+            when (cityListState) {
+                is State.Success -> {
+                    SelectCitySuccessScreen(cityListState.data)
                 }
+                is State.Loading -> {
+                    LoadingScreen()
+                }
+                is State.Error -> {
+                    ErrorScreen(R.string.error_select_city_loading) {
+                        viewModel.getCityList()
+                    }
+                }
+                else -> Unit
             }
-            else -> Unit
         }
     }
 

@@ -119,15 +119,32 @@ class LoginViewModel(
         }
     }
 
-    fun checkPhoneNumberError(inputPhoneNumber: String): Int? {
-        return if (textValidator.isPhoneNumberCorrect(inputPhoneNumber)) {
-            null
-        } else {
-            R.string.error_login_phone
+    fun onPhoneTextChanged(phone: String) {
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                phone = phone
+            )
         }
     }
 
-    fun onNextClick(phone: String) {
+    fun onNextClick() {
+        val phone = mutableLoginState.value.phone
+
+        mutableLoginState.update { oldState ->
+            oldState.copy(
+                hasPhoneError = false,
+            )
+        }
+
+        if (!textValidator.isPhoneNumberCorrect(phone)) {
+            mutableLoginState.update { oldState ->
+                oldState.copy(
+                    hasPhoneError = true,
+                )
+            }
+            return
+        }
+
         mutableLoginState.update { oldState ->
             oldState.copy(
                 state = LoginState.State.Loading,

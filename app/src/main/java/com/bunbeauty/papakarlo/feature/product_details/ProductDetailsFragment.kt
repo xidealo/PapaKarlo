@@ -64,7 +64,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
         viewModel.getMenuProduct(args.menuProductUuid)
 
         viewBinding.fragmentProductDetailsCvMain.setContentWithTheme {
-            val menuProductUiState by viewModel.menuProductUiState.collectAsStateWithLifecycle()
+            val menuProductUiState by viewModel.menuProductDetailsState.collectAsStateWithLifecycle()
             ProductDetailsScreen(
                 menuProductName = args.menuProductName,
                 menuProductUuid = args.menuProductUuid,

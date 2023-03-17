@@ -4,6 +4,8 @@ import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.google.firebase.auth.PhoneAuthProvider
 
 data class LoginState(
+    val phone: String = "",
+    val hasPhoneError: Boolean = false,
     val state: State = State.Success,
     val eventList: List<Event> = emptyList(),
 ) {

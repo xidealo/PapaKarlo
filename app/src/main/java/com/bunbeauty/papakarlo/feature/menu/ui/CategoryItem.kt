@@ -1,12 +1,10 @@
 package com.bunbeauty.papakarlo.feature.menu.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,37 +21,31 @@ fun CategoryItem(
     categoryItem: CategoryItem,
     onClick: () -> Unit,
 ) {
+    val color = if (categoryItem.isSelected) {
+        FoodDeliveryTheme.colors.primary
+    } else {
+        FoodDeliveryTheme.colors.onSurfaceVariant
+    }
     FoodDeliveryCard(
         modifier = modifier
-            .heightIn(min = FoodDeliveryTheme.dimensions.smallButtonSize),
+            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
         onClick = onClick,
-        colors = if (categoryItem.isSelected) {
-            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.primary)
-        } else {
-            CardDefaults.cardColors(containerColor = FoodDeliveryTheme.colors.surface)
-        },
-        shape = chipCornerShape
+        shape = chipCornerShape,
+        border = BorderStroke(
+            width = 2.dp, color = color
+        )
     ) {
-        val color = if (categoryItem.isSelected) {
-            FoodDeliveryTheme.colors.onPrimary
-        } else {
-            FoodDeliveryTheme.colors.onSurface
-        }
-        Box(
+        Text(
             modifier = Modifier
                 .padding(
                     horizontal = 12.dp,
                     vertical = 6.dp
-                )
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = categoryItem.name,
-                style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = color,
-                textAlign = TextAlign.Center
-            )
-        }
+                ),
+            text = categoryItem.name,
+            style = FoodDeliveryTheme.typography.labelLarge.medium,
+            color = color,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
