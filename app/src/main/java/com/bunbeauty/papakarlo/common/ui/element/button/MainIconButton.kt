@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -27,7 +27,7 @@ fun MainIconButton(
 ) {
     Button(
         modifier = modifier.size(FoodDeliveryTheme.dimensions.buttonSize),
-        colors = FoodDeliveryTheme.colors.mainButtonColors(),
+        colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = mediumRoundedCornerShape,
         contentPadding = PaddingValues(0.dp),
         onClick = onClick
@@ -36,7 +36,7 @@ fun MainIconButton(
             modifier = Modifier.icon24(),
             imageVector = ImageVector.vectorResource(iconId),
             contentDescription = stringResource(iconDescriptionStringId),
-            tint = FoodDeliveryTheme.colors.onPrimary
+            tint = FoodDeliveryTheme.colors.mainColors.onPrimary
         )
     }
 }

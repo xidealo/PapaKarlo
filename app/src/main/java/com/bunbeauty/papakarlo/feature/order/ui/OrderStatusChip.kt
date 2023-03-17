@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.feature.order.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.orderStatusCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 @Composable
-fun StatusChip(
+fun OrderStatusChip(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
     statusName: String,
@@ -22,7 +22,7 @@ fun StatusChip(
     Surface(
         modifier = modifier
             .clip(orderStatusCornerShape),
-        color = FoodDeliveryTheme.colors.orderColor(orderStatus)
+        color = getOrderColor(orderStatus)
     ) {
         Text(
             text = statusName,
@@ -32,7 +32,7 @@ fun StatusChip(
                     horizontal = FoodDeliveryTheme.dimensions.smallSpace
                 ),
             style = FoodDeliveryTheme.typography.labelSmall.medium,
-            color = FoodDeliveryTheme.colors.onStatus,
+            color = FoodDeliveryTheme.colors.orderColors.onOrder,
             textAlign = TextAlign.Center
         )
     }
@@ -41,7 +41,7 @@ fun StatusChip(
 @Preview
 @Composable
 fun StatusChipPreview() {
-    StatusChip(
+    OrderStatusChip(
         orderStatus = OrderStatus.NOT_ACCEPTED,
         statusName = "Обрабатывается"
     )

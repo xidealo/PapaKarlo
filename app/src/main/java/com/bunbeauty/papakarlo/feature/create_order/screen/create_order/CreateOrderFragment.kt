@@ -26,9 +26,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
-import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
@@ -41,7 +42,6 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOr
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
-import com.bunbeauty.papakarlo.feature.create_order.ui.Switcher
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import com.bunbeauty.shared.presentation.create_order.OrderCreationState
@@ -81,20 +81,16 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                 findNavController().popBackStack()
             }
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(FoodDeliveryTheme.colors.background)
-            ) {
+            Column(modifier = Modifier.fillMaxSize()) {
                 Box(modifier = Modifier.weight(1f)) {
                     Column(
                         modifier = Modifier
                             .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                             .verticalScroll(rememberScrollState())
                     ) {
-                        Switcher(
+                        FoodDeliverySwitcher(
                             modifier = Modifier.fillMaxWidth(),
-                            variantStringIdList = listOf(
+                            optionResIdList = listOf(
                                 R.string.action_create_order_delivery,
                                 R.string.action_create_order_pickup
                             ),
@@ -161,7 +157,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.error_select_delivery_address),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.negative
+                color = FoodDeliveryTheme.colors.mainColors.error
             )
         }
     }
@@ -209,7 +205,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
     private fun BottomAmountBar(orderCreationState: OrderCreationState) {
         Column(
             modifier = Modifier
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Row {
@@ -217,14 +213,14 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_create_order_total_cost),
                     style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 if (orderCreationState.totalCost != null) {
                     stringUtil.getCostString(orderCreationState.totalCost)?.let {
                         Text(
                             text = it,
                             style = FoodDeliveryTheme.typography.body1,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }
@@ -235,14 +231,14 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                         modifier = Modifier.weight(1f),
                         text = stringResource(R.string.msg_create_order_delivery_cost),
                         style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     if (orderCreationState.deliveryCost != null) {
                         stringUtil.getCostString(orderCreationState.deliveryCost)?.let {
                             Text(
                                 text = it,
                                 style = FoodDeliveryTheme.typography.body1,
-                                color = FoodDeliveryTheme.colors.onSurface
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
                             )
                         }
                     }
@@ -256,14 +252,14 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_create_order_amount_to_pay),
                     style = FoodDeliveryTheme.typography.h2,
-                    color = FoodDeliveryTheme.colors.onSurface
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 if (orderCreationState.finalCost != null) {
                     stringUtil.getCostString(orderCreationState.finalCost)?.let {
                         Text(
                             text = it,
                             style = FoodDeliveryTheme.typography.h2,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }

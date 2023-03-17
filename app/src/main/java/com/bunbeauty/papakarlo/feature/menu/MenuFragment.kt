@@ -135,7 +135,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
         ) {
             val menuLazyListState = rememberLazyListState()
             val menuPosition by remember {
@@ -151,7 +151,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     .fillMaxWidth()
                     .zIndex(1f),
                 shadowElevation = 6.dp,
-                color = FoodDeliveryTheme.colors.surface
+                color = FoodDeliveryTheme.colors.mainColors.surface
             ) {
                 CategoryRow(menu.categoryItemList, menuLazyListState)
             }
@@ -235,7 +235,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                             modifier = Modifier.padding(top = topSpace),
                             text = menuItemModel.name,
                             style = FoodDeliveryTheme.typography.titleMedium.bold,
-                            color = FoodDeliveryTheme.colors.onSurface
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                     is MenuItem.MenuProductPairItem -> {

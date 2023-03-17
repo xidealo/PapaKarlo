@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.feature.auth.screen.login
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -40,7 +39,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -125,6 +124,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             backActionClick = {
                 findNavController().popBackStack()
             },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (loginState.state == LoginState.State.Success) {
                     MainButton(
@@ -139,7 +139,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         ) {
             when (loginState.state) {
                 is LoginState.State.Loading -> {
-                    LoadingScreen(background = FoodDeliveryTheme.colors.surface)
+                    LoadingScreen()
                 }
                 is LoginState.State.Success -> {
                     LoginSuccessScreen(loginState)
@@ -166,13 +166,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 )
             )
         }
-        var phoneError: Int? by rememberSaveable {
-            mutableStateOf(null)
-        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.surface)
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -189,15 +185,15 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             Text(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_login_info),
-                style = FoodDeliveryTheme.typography.body1,
-                color = FoodDeliveryTheme.colors.onSurface
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
 
             val focusRequester = remember { FocusRequester() }
             FoodDeliveryTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 focusRequester = focusRequester,
                 value = phoneText,
                 labelStringId = R.string.hint_login_phone,

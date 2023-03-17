@@ -65,7 +65,7 @@ fun CartProductItem(
                 OverflowingText(
                     text = cartProductItem.name,
                     style = FoodDeliveryTheme.typography.titleSmall.bold,
-                    color = FoodDeliveryTheme.colors.onSurface,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                     maxLines = 2
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
@@ -76,13 +76,13 @@ fun CartProductItem(
                             text = cartProductItem.oldCost,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
                     }
                     Text(
                         text = cartProductItem.newCost,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
-                        color = FoodDeliveryTheme.colors.onSurface
+                        color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
             }

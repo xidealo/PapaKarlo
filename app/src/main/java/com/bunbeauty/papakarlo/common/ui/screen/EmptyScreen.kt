@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 
@@ -34,7 +34,7 @@ internal fun EmptyScreen(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(FoodDeliveryTheme.colors.background)
+            .background(FoodDeliveryTheme.colors.mainColors.background)
             .padding(FoodDeliveryTheme.dimensions.mediumSpace)
     ) {
         Spacer(modifier = Modifier.weight(1f))
@@ -53,7 +53,7 @@ internal fun EmptyScreen(
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = mainTextId),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
-                color = FoodDeliveryTheme.colors.onSurface,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
 
@@ -64,7 +64,7 @@ internal fun EmptyScreen(
                     .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(id = extraTextId),
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
         }

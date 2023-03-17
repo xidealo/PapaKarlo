@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
@@ -65,7 +64,6 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(FoodDeliveryTheme.colors.background)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 Spacer(modifier = Modifier.weight(1f))
@@ -84,7 +82,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(id = R.string.msg_update_new_title_app_version),
                         style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.onSurface,
+                        color = FoodDeliveryTheme.colors.mainColors.onBackground,
                         textAlign = TextAlign.Center
                     )
 
@@ -95,7 +93,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
                             .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         text = stringResource(id = R.string.msg_update_new_app_version),
                         style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.onSurface,
+                        color = FoodDeliveryTheme.colors.mainColors.onBackground,
                         textAlign = TextAlign.Center
                     )
                 }

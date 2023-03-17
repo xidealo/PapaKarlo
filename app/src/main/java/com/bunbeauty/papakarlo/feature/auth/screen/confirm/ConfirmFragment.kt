@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +26,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentConfirmBinding
@@ -73,6 +72,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
             backActionClick = {
                 findNavController().popBackStack()
             },
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
             actionButton = {
                 if (!confirmState.isCodeChecking) {
                     val buttonText = if (confirmState.isResendEnable) {
@@ -99,7 +99,6 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(FoodDeliveryTheme.colors.surface)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 if (confirmState.isCodeChecking) {
@@ -141,11 +140,11 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_confirm) {
                     verificationId = confirmation.verificationId
                 )
             }
+            Spacer(modifier = Modifier.weight(1f))
             Spacer(
                 modifier = Modifier
                     .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
             )
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 

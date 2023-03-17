@@ -47,7 +47,7 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(bottomSheetShape)
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
         ) {
             Title(
                 modifier = Modifier

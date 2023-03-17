@@ -19,7 +19,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.StatusChip
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -64,7 +63,7 @@ fun OrderStatusBar(
                         )
                     }
                     (i == currentStep) -> {
-                        StatusChip(
+                        OrderStatusChip(
                             modifier = Modifier
                                 .padding(start = startSpace),
                             orderStatus = orderStatus,
@@ -93,7 +92,7 @@ fun DoneStep(
         modifier = modifier
             .fillMaxHeight()
             .clip(smallRoundedCornerShape)
-            .background(FoodDeliveryTheme.colors.orderColor(orderStatus))
+            .background(getOrderColor(orderStatus))
     ) {
         Icon(
             modifier = Modifier
@@ -104,7 +103,7 @@ fun DoneStep(
                 .align(Alignment.Center),
             imageVector = ImageVector.vectorResource(R.drawable.ic_check),
             contentDescription = stringResource(R.string.description_order_details_done),
-            tint = FoodDeliveryTheme.colors.onStatus
+            tint = FoodDeliveryTheme.colors.orderColors.onOrder
         )
     }
 }
@@ -115,7 +114,7 @@ fun FutureStep(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxHeight()
             .clip(smallRoundedCornerShape)
-            .background(FoodDeliveryTheme.colors.surfaceVariant)
+            .background(FoodDeliveryTheme.colors.mainColors.disabled)
     )
 }
 

@@ -1,135 +1,164 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CardColors
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
-import com.bunbeauty.shared.domain.model.order.OrderStatus
 
-val orange = Color(0xFFFF6900)
-val white = Color(0xFFFFFFFF)
-val black = Color(0xFF000000)
-val grey = Color(0xFF989898)
-val lightGrey = Color(0xFFD6D6D6)
-val cream = Color(0xFFF2F1F6)
-val red = Color(0xFFB1021D)
-val purple = Color(0xFF815FB1)
-val blue = Color(0xFF5C82E0)
-val lightRed = Color(0xFFDD6962)
-val yellow = Color(0xFFECA441)
-val lightGreen = Color(0xFF86BD47)
-val green = Color(0xFF62BC71)
-val darkGrey = Color(0xFF7B7A80)
-val lightBlue = Color(0xFF0AB9E8)
+private val orange = Color(0xFFFF6900)
+private val white = Color(0xFFFFFFFF)
+private val black = Color(0xFF000000)
+private val grey1 = Color(0xFFDDDDDD)
+private val grey2 = Color(0xFFA7A5A5)
+private val cream = Color(0xFFF2F1F6)
+private val red = Color(0xFFB1021D)
+private val purple = Color(0xFF815FB1)
+private val blue = Color(0xFF5C82E0)
+private val lightRed = Color(0xFFDD6962)
+private val yellow = Color(0xFFECA441)
+private val lightGreen = Color(0xFF86BD47)
+private val green = Color(0xFF62BC71)
+private val darkGrey = Color(0xFF7B7A80)
+private val lightBlue = Color(0xFF0AB9E8)
 
-val LightColors = AppColors(
-    primary = orange,
-    primaryDisabled = lightGrey,
-    secondary = white,
-    background = cream,
-    surface = white,
-    surfaceVariant = lightGrey,
-    error = red,
-    notAccepted = purple,
-    accepted = blue,
-    preparing = lightRed,
-    sentOut = yellow,
-    done = lightGreen,
-    delivered = green,
-    canceled = darkGrey,
+val PapaKarloColors = AppColors(
+    mainColors = MainColors(
+        primary = orange,
+        disabled = grey1,
+        secondary = white,
+        background = cream,
+        surface = white,
+        error = red,
+        onPrimary = white,
+        onDisabled = grey2,
+        onSecondary = grey2,
+        onBackground = black,
+        onSurface = black,
+        onSurfaceVariant = grey2,
+        onError = white,
+    ),
+    orderColors = OrderColors(
+        notAccepted = purple,
+        accepted = blue,
+        preparing = lightRed,
+        sentOut = yellow,
+        done = lightGreen,
+        delivered = green,
+        canceled = darkGrey,
+        onOrder = white,
+    ),
+    statusColors = StatusColors(
+        positive = green,
+        warning = yellow,
+        negative = lightRed,
+        onStatus = white,
+    ),
     bunBeautyBrandColor = lightBlue,
-    positive = green,
-    warning = yellow,
-    negative = lightRed,
-    onPrimary = white,
-    onPrimaryDisabled = grey,
-    onSecondary = grey,
-    onBackground = black,
-    onSurface = black,
-    onSurfaceVariant = grey,
-    onError = white,
-    onStatus = white,
     isLight = true
 )
 
-val DarkColors = AppColors(
-    primary = orange,
-    primaryDisabled = lightGrey,
-    secondary = white,
-    background = cream,
-    surface = white,
-    surfaceVariant = lightGrey,
-    error = red,
-    notAccepted = purple,
-    accepted = blue,
-    preparing = lightRed,
-    sentOut = yellow,
-    done = lightGreen,
-    delivered = green,
-    canceled = darkGrey,
+val CheddarColors = AppColors(
+    mainColors = MainColors(
+        primary = orange,
+        disabled = grey1,
+        secondary = white,
+        background = cream,
+        surface = white,
+        error = red,
+        onPrimary = white,
+        onDisabled = grey2,
+        onSecondary = grey2,
+        onBackground = black,
+        onSurface = black,
+        onSurfaceVariant = grey2,
+        onError = white,
+    ),
+    orderColors = OrderColors(
+        notAccepted = purple,
+        accepted = blue,
+        preparing = lightRed,
+        sentOut = yellow,
+        done = lightGreen,
+        delivered = green,
+        canceled = darkGrey,
+        onOrder = white,
+    ),
+    statusColors = StatusColors(
+        positive = green,
+        warning = yellow,
+        negative = lightRed,
+        onStatus = white,
+    ),
     bunBeautyBrandColor = lightBlue,
-    positive = green,
-    warning = yellow,
-    negative = lightRed,
-    onPrimary = white,
-    onPrimaryDisabled = grey,
-    onSecondary = grey,
-    onBackground = black,
-    onSurface = black,
-    onSurfaceVariant = grey,
-    onError = white,
-    onStatus = white,
     isLight = false
 )
 
-val LocalAppColors = staticCompositionLocalOf { LightColors }
+val LocalAppColors = staticCompositionLocalOf { PapaKarloColors }
 
 @Stable
 class AppColors(
+    mainColors: MainColors,
+    orderColors: OrderColors,
+    statusColors: StatusColors,
+    bunBeautyBrandColor: Color,
+    isLight: Boolean
+) {
+    var mainColors by mutableStateOf(mainColors)
+        private set
+    var orderColors by mutableStateOf(orderColors)
+        private set
+    var statusColors by mutableStateOf(statusColors)
+        private set
+    var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
+        private set
+    var isLight by mutableStateOf(isLight)
+        internal set
+
+    fun copy(
+        mainColors: MainColors = this.mainColors,
+        orderColors: OrderColors = this.orderColors,
+        statusColors: StatusColors = this.statusColors,
+        bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
+        isLight: Boolean = this.isLight,
+    ) = AppColors(
+        mainColors = mainColors,
+        orderColors = orderColors,
+        statusColors = statusColors,
+        bunBeautyBrandColor = bunBeautyBrandColor,
+        isLight = isLight,
+    )
+
+    fun update(other: AppColors) {
+        mainColors = other.mainColors
+        orderColors = other.orderColors
+        statusColors = other.statusColors
+        bunBeautyBrandColor = other.bunBeautyBrandColor
+        isLight = other.isLight
+    }
+}
+
+@Stable
+class MainColors(
     primary: Color,
-    primaryDisabled: Color,
+    disabled: Color,
     secondary: Color,
     background: Color,
     surface: Color,
-    surfaceVariant: Color,
     error: Color,
-    notAccepted: Color,
-    accepted: Color,
-    preparing: Color,
-    sentOut: Color,
-    done: Color,
-    delivered: Color,
-    canceled: Color,
-    bunBeautyBrandColor: Color,
-    positive: Color,
-    warning: Color,
-    negative: Color,
     onPrimary: Color,
-    onPrimaryDisabled: Color,
+    onDisabled: Color,
     onSecondary: Color,
     onBackground: Color,
     onSurface: Color,
     onSurfaceVariant: Color,
     onError: Color,
-    onStatus: Color,
-    isLight: Boolean
 ) {
+
     var primary by mutableStateOf(primary)
         private set
-    var primaryDisabled by mutableStateOf(primaryDisabled)
+    var disabled by mutableStateOf(disabled)
         private set
     var secondary by mutableStateOf(secondary)
         private set
@@ -137,10 +166,81 @@ class AppColors(
         private set
     var surface by mutableStateOf(surface)
         private set
-    var surfaceVariant by mutableStateOf(surfaceVariant)
-        private set
     var error by mutableStateOf(error)
         private set
+    var onPrimary by mutableStateOf(onPrimary)
+        private set
+    var onDisabled by mutableStateOf(onDisabled)
+        private set
+    var onSecondary by mutableStateOf(onSecondary)
+        private set
+    var onBackground by mutableStateOf(onBackground)
+        private set
+    var onSurface by mutableStateOf(onSurface)
+        private set
+    var onSurfaceVariant by mutableStateOf(onSurfaceVariant)
+        private set
+    var onError by mutableStateOf(onError)
+        private set
+
+    fun copy(
+        primary: Color = this.primary,
+        disabled: Color = this.disabled,
+        secondary: Color = this.secondary,
+        background: Color = this.background,
+        surface: Color = this.surface,
+        error: Color = this.error,
+        onPrimary: Color = this.onPrimary,
+        onDisabled: Color = this.onDisabled,
+        onSecondary: Color = this.onSecondary,
+        onBackground: Color = this.onBackground,
+        onSurface: Color = this.onSurface,
+        onSurfaceVariant: Color = this.onSurfaceVariant,
+        onError: Color = this.onError,
+    ) = MainColors(
+        primary = primary,
+        disabled = disabled,
+        secondary = secondary,
+        background = background,
+        surface = surface,
+        error = error,
+        onPrimary = onPrimary,
+        onDisabled = onDisabled,
+        onSecondary = onSecondary,
+        onBackground = onBackground,
+        onSurface = onSurface,
+        onSurfaceVariant = onSurfaceVariant,
+        onError = onError,
+    )
+
+    fun update(other: MainColors) {
+        primary = other.primary
+        disabled = other.disabled
+        secondary = other.secondary
+        background = other.background
+        surface = other.surface
+        error = other.error
+        onPrimary = other.onPrimary
+        onDisabled = other.onDisabled
+        onSecondary = other.onSecondary
+        onBackground = other.onBackground
+        onSurface = other.onSurface
+        onSurfaceVariant = other.onSurfaceVariant
+        onError = other.onError
+    }
+}
+
+@Stable
+class OrderColors(
+    notAccepted: Color,
+    accepted: Color,
+    preparing: Color,
+    sentOut: Color,
+    done: Color,
+    delivered: Color,
+    canceled: Color,
+    onOrder: Color,
+) {
     var notAccepted by mutableStateOf(notAccepted)
         private set
     var accepted by mutableStateOf(accepted)
@@ -155,187 +255,10 @@ class AppColors(
         private set
     var canceled by mutableStateOf(canceled)
         private set
-    var bunBeautyBrandColor by mutableStateOf(bunBeautyBrandColor)
+    var onOrder by mutableStateOf(onOrder)
         private set
-    var positive by mutableStateOf(positive)
-        private set
-    var warning by mutableStateOf(warning)
-        private set
-    var negative by mutableStateOf(negative)
-        private set
-    var onPrimary by mutableStateOf(onPrimary)
-        private set
-    var onPrimaryDisabled by mutableStateOf(onPrimaryDisabled)
-        private set
-    var onSecondary by mutableStateOf(onSecondary)
-        private set
-    var onBackground by mutableStateOf(onBackground)
-        private set
-    var onSurface by mutableStateOf(onSurface)
-        private set
-    var onSurfaceVariant by mutableStateOf(onSurfaceVariant)
-        private set
-    var onError by mutableStateOf(onError)
-        private set
-    var onStatus by mutableStateOf(onStatus)
-        private set
-    var isLight by mutableStateOf(isLight)
-        internal set
-
-    val textSelectionColors = TextSelectionColors(
-        handleColor = primary,
-        backgroundColor = primary.copy(alpha = 0.4f)
-    )
-
-    val smsTextSelectionColors = TextSelectionColors(
-        handleColor = Color.Transparent,
-        backgroundColor = Color.Transparent
-    )
-
-    val surfaceGradient = Brush.verticalGradient(
-        colors = listOf(Color.Transparent, surface)
-    )
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun textFieldColors(): TextFieldColors {
-        return TextFieldDefaults.textFieldColors(
-            textColor = onSurface,
-            disabledTextColor = onSurfaceVariant,
-            containerColor = surface,
-            cursorColor = primary,
-            errorCursorColor = error,
-            focusedIndicatorColor = primary,
-            unfocusedIndicatorColor = onSurfaceVariant,
-            disabledIndicatorColor = onSurfaceVariant,
-            errorIndicatorColor = error,
-            focusedLeadingIconColor = onSurfaceVariant,
-            disabledLeadingIconColor = onSurfaceVariant,
-            errorLeadingIconColor = error,
-            focusedTrailingIconColor = onSurfaceVariant,
-            disabledTrailingIconColor = onSurfaceVariant,
-            errorTrailingIconColor = error,
-            focusedLabelColor = primary,
-            unfocusedLabelColor = onSurfaceVariant,
-            disabledLabelColor = onSurfaceVariant,
-            errorLabelColor = error,
-            placeholderColor = onSurfaceVariant,
-            disabledPlaceholderColor = onSurfaceVariant
-        )
-    }
-
-    @Composable
-    fun cardColors() = CardDefaults.cardColors(
-        containerColor = FoodDeliveryTheme.colors.surface,
-        disabledContainerColor = FoodDeliveryTheme.colors.surface,
-    )
-
-    @Composable
-    fun mainButtonColors() = ButtonDefaults.buttonColors(
-        containerColor = FoodDeliveryTheme.colors.primary,
-        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
-        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.onPrimary
-    )
-
-    @Composable
-    fun secondaryButtonColors() = ButtonDefaults.buttonColors(
-        containerColor = FoodDeliveryTheme.colors.secondary,
-        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
-        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.onSecondary
-    )
-
-    @Composable
-    fun mainOutlineButtonColors() = ButtonDefaults.outlinedButtonColors(
-        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
-        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.primary
-    )
-
-    @Composable
-    fun iconButtonColors() = IconButtonDefaults.iconButtonColors(
-        containerColor = FoodDeliveryTheme.colors.surface,
-        disabledContainerColor = FoodDeliveryTheme.colors.primaryDisabled,
-        disabledContentColor = FoodDeliveryTheme.colors.onPrimaryDisabled,
-        contentColor = FoodDeliveryTheme.colors.onSurfaceVariant
-    )
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun smsTextFieldColors(): TextFieldColors {
-        return TextFieldDefaults.textFieldColors(
-            textColor = onSurface,
-            disabledTextColor = onSurfaceVariant,
-            containerColor = surface,
-            cursorColor = Color.Transparent,
-            errorCursorColor = error,
-            focusedIndicatorColor = primary,
-            unfocusedIndicatorColor = onSurfaceVariant,
-            disabledIndicatorColor = onSurfaceVariant,
-            errorIndicatorColor = error,
-            focusedLeadingIconColor = onSurfaceVariant,
-            disabledLeadingIconColor = onSurfaceVariant,
-            errorLeadingIconColor = error,
-            focusedTrailingIconColor = onSurfaceVariant,
-            disabledTrailingIconColor = onSurfaceVariant,
-            errorTrailingIconColor = error,
-            focusedLabelColor = primary,
-            unfocusedLabelColor = onSurfaceVariant,
-            disabledLabelColor = onSurfaceVariant,
-            errorLabelColor = error,
-            placeholderColor = onSurfaceVariant,
-            disabledPlaceholderColor = onSurfaceVariant
-        )
-    }
-
-    fun orderColor(orderStatus: OrderStatus): Color {
-        return when (orderStatus) {
-            OrderStatus.NOT_ACCEPTED -> notAccepted
-            OrderStatus.ACCEPTED -> accepted
-            OrderStatus.PREPARING -> preparing
-            OrderStatus.SENT_OUT -> sentOut
-            OrderStatus.DONE -> done
-            OrderStatus.DELIVERED -> delivered
-            OrderStatus.CANCELED -> canceled
-        }
-    }
-
-    fun cafeStatusColor(cafeStatus: CafeStatus): Color {
-        return when (cafeStatus) {
-            CafeStatus.OPEN -> positive
-            CafeStatus.CLOSE_SOON -> warning
-            CafeStatus.CLOSED -> negative
-        }
-    }
-
-    @Composable
-    fun switcherButtonColor(enabled: Boolean): CardColors {
-        return CardDefaults.cardColors(
-            containerColor = if (enabled) {
-                secondary
-            } else {
-                primary
-            }
-        )
-    }
-
-    fun switcherButtonTextColor(enabled: Boolean): Color {
-        return if (enabled) {
-            onSecondary
-        } else {
-            onPrimary
-        }
-    }
 
     fun copy(
-        primary: Color = this.primary,
-        primaryDisabled: Color = this.primaryDisabled,
-        secondary: Color = this.secondary,
-        background: Color = this.background,
-        surface: Color = this.surface,
-        surfaceVariant: Color = this.surfaceVariant,
-        error: Color = this.error,
         notAccepted: Color = this.notAccepted,
         accepted: Color = this.accepted,
         preparing: Color = this.preparing,
@@ -343,27 +266,8 @@ class AppColors(
         done: Color = this.done,
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
-        bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
-        positive: Color = this.positive,
-        warning: Color = this.warning,
-        negative: Color = this.negative,
-        onPrimary: Color = this.onPrimary,
-        onPrimaryDisabled: Color = this.onPrimaryDisabled,
-        onSecondary: Color = this.onSecondary,
-        onBackground: Color = this.onBackground,
-        onSurface: Color = this.onSurface,
-        onSurfaceVariant: Color = this.onSurfaceVariant,
-        onError: Color = this.onError,
-        onStatus: Color = this.onStatus,
-        isLight: Boolean = this.isLight,
-    ) = AppColors(
-        primary = primary,
-        primaryDisabled = primaryDisabled,
-        secondary = secondary,
-        background = background,
-        surface = surface,
-        surfaceVariant = surfaceVariant,
-        error = error,
+        onOrder: Color = this.onOrder,
+    ) = OrderColors(
         notAccepted = notAccepted,
         accepted = accepted,
         preparing = preparing,
@@ -371,29 +275,10 @@ class AppColors(
         done = done,
         delivered = delivered,
         canceled = canceled,
-        bunBeautyBrandColor = bunBeautyBrandColor,
-        positive = positive,
-        warning = warning,
-        negative = negative,
-        onPrimary = onPrimary,
-        onPrimaryDisabled = onPrimaryDisabled,
-        onSecondary = onSecondary,
-        onBackground = onBackground,
-        onSurface = onSurface,
-        onSurfaceVariant = onSurfaceVariant,
-        onError = onError,
-        onStatus = onStatus,
-        isLight = isLight,
+        onOrder = onOrder,
     )
 
-    fun update(other: AppColors) {
-        primary = other.primary
-        primaryDisabled = other.primaryDisabled
-        secondary = other.secondary
-        background = other.background
-        surface = other.surface
-        surfaceVariant = other.surfaceVariant
-        error = other.error
+    fun update(other: OrderColors) {
         notAccepted = other.notAccepted
         accepted = other.accepted
         preparing = other.preparing
@@ -401,18 +286,42 @@ class AppColors(
         done = other.done
         delivered = other.delivered
         canceled = other.canceled
-        bunBeautyBrandColor = other.bunBeautyBrandColor
+        onOrder = other.onOrder
+    }
+}
+
+@Stable
+class StatusColors(
+    positive: Color,
+    warning: Color,
+    negative: Color,
+    onStatus: Color,
+) {
+    var positive by mutableStateOf(positive)
+        private set
+    var warning by mutableStateOf(warning)
+        private set
+    var negative by mutableStateOf(negative)
+        private set
+    var onStatus by mutableStateOf(onStatus)
+        private set
+
+    fun copy(
+        positive: Color = this.positive,
+        warning: Color = this.warning,
+        negative: Color = this.negative,
+        onStatus: Color = this.onStatus,
+    ) = StatusColors(
+        positive = positive,
+        warning = warning,
+        negative = negative,
+        onStatus = onStatus
+    )
+
+    fun update(other: StatusColors) {
         positive = other.positive
         warning = other.warning
         negative = other.negative
-        onPrimary = other.onPrimary
-        onPrimaryDisabled = other.onPrimaryDisabled
-        onSecondary = other.onSecondary
-        onBackground = other.onBackground
-        onSurface = other.onSurface
-        onSurfaceVariant = other.onSurfaceVariant
-        onError = other.onError
         onStatus = other.onStatus
-        isLight = other.isLight
     }
 }

@@ -102,7 +102,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

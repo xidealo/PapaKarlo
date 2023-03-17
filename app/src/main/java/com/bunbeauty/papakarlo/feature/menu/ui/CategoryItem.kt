@@ -22,9 +22,9 @@ fun CategoryItem(
     onClick: () -> Unit,
 ) {
     val color = if (categoryItem.isSelected) {
-        FoodDeliveryTheme.colors.primary
+        FoodDeliveryTheme.colors.mainColors.primary
     } else {
-        FoodDeliveryTheme.colors.onSurfaceVariant
+        FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
     }
     FoodDeliveryCard(
         modifier = modifier

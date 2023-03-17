@@ -7,6 +7,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
@@ -21,13 +22,13 @@ fun ErrorSnackbar(
         snackbar = { snackbarData ->
             Card(
                 shape = mediumRoundedCornerShape,
-                colors = FoodDeliveryTheme.colors.cardColors()
+                colors = FoodDeliveryCardDefaults.cardColors
             ) {
                 Text(
                     modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
                     text = snackbarData.visuals.message,
                     style = FoodDeliveryTheme.typography.bodyLarge,
-                    color = FoodDeliveryTheme.colors.onError
+                    color = FoodDeliveryTheme.colors.mainColors.onError
                 )
             }
         }
