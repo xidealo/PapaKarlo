@@ -32,7 +32,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
-import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldWithMenu
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen

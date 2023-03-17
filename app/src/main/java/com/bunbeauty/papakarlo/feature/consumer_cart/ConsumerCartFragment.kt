@@ -29,7 +29,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.BlurLine
-import com.bunbeauty.papakarlo.common.ui.element.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -88,9 +88,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
 
     @Composable
     private fun ConsumerCartSuccessScreen(consumerCart: ConsumerCartUI) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .background(FoodDeliveryTheme.colors.mainColors.background)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(FoodDeliveryTheme.colors.mainColors.background)
         ) {
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -53,7 +52,7 @@ fun LoadingButton(
 @Preview
 @Composable
 private fun LoadingButtonPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+    Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = false
@@ -64,7 +63,7 @@ private fun LoadingButtonPreview() {
 @Preview
 @Composable
 private fun LoadingButtonLoadingPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+    Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
         LoadingButton(
             textStringId = R.string.action_create_order_create_order,
             isLoading = true

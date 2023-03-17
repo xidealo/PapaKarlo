@@ -39,5 +39,4 @@ object FoodDeliveryButtonDefaults {
             disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
             contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
         )
-
 }
