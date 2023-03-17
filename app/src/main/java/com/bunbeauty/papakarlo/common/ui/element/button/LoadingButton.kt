@@ -49,24 +49,28 @@ fun LoadingButton(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoadingButtonPreview() {
-    Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
-        LoadingButton(
-            textStringId = R.string.action_create_order_create_order,
-            isLoading = false
-        ) {}
+    FoodDeliveryTheme {
+        Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+            LoadingButton(
+                textStringId = R.string.action_create_order_create_order,
+                isLoading = false
+            ) {}
+        }
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoadingButtonLoadingPreview() {
-    Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
-        LoadingButton(
-            textStringId = R.string.action_create_order_create_order,
-            isLoading = true
-        ) {}
+    FoodDeliveryTheme {
+        Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+            LoadingButton(
+                textStringId = R.string.action_create_order_create_order,
+                isLoading = true
+            ) {}
+        }
     }
 }
