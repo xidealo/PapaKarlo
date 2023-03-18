@@ -15,7 +15,7 @@ fun StartIconCard(
     enabled: Boolean = true,
     elevated: Boolean = true,
     @DrawableRes iconId: Int,
-    iconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     @StringRes labelStringId: Int,
     onClick: (() -> Unit) = {}
 ) {
@@ -36,7 +36,7 @@ fun StartIconCard(
     enabled: Boolean = true,
     elevated: Boolean = true,
     @DrawableRes iconId: Int,
-    iconTint: Color = FoodDeliveryTheme.colors.onSurfaceVariant,
+    iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     label: String,
     onClick: (() -> Unit) = {}
 ) {

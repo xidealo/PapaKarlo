@@ -45,7 +45,7 @@ fun NavigationIconCard(
                 modifier = Modifier.icon24(),
                 imageVector = ImageVector.vectorResource(iconId),
                 contentDescription = stringResource(iconDescription),
-                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
             val labelText = labelStringId?.let { id ->
                 stringResource(id)
@@ -56,13 +56,13 @@ fun NavigationIconCard(
                     .weight(1f),
                 text = labelText,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             Icon(
                 modifier = Modifier.icon16(),
                 imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
                 contentDescription = stringResource(R.string.description_ic_next),
-                tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
         }
     }

@@ -38,7 +38,7 @@ fun CityItem(
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             text = cityName,
             style = FoodDeliveryTheme.typography.bodyLarge,
-            color = FoodDeliveryTheme.colors.onSurface
+            color = FoodDeliveryTheme.colors.mainColors.onSurface
         )
     }
 }

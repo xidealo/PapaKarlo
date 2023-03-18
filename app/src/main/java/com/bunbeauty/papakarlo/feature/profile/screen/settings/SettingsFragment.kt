@@ -24,10 +24,13 @@ import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryAction
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.presentation.settings.SettingsState
@@ -54,23 +57,37 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Composable
     fun SettingsScreen(settingsState: SettingsState) {
-        when (settingsState.state) {
-            SettingsState.State.SUCCESS -> {
-                SettingsScreenSuccessPreview(settingsState)
-            }
-            SettingsState.State.ERROR -> {
-                ErrorScreen(mainTextId = R.string.error_settings_loading) {
-                    viewModel.loadData()
+        FoodDeliveryToolbarScreen(
+            backActionClick = {
+                findNavController().popBackStack()
+            },
+            topActions = listOf(
+                FoodDeliveryAction(
+                    iconId = R.drawable.ic_logout_24,
+                    onClick = {
+                        viewModel.onLogoutClicked()
+                    }
+                )
+            )
+        ) {
+            when (settingsState.state) {
+                SettingsState.State.SUCCESS -> {
+                    SettingsScreenSuccess(settingsState)
                 }
-            }
-            SettingsState.State.LOADING -> {
-                LoadingScreen()
+                SettingsState.State.ERROR -> {
+                    ErrorScreen(mainTextId = R.string.error_settings_loading) {
+                        viewModel.loadData()
+                    }
+                }
+                SettingsState.State.LOADING -> {
+                    LoadingScreen()
+                }
             }
         }
     }
 
     @Composable
-    fun SettingsScreenSuccessPreview(settingsState: SettingsState) {
+    fun SettingsScreenSuccess(settingsState: SettingsState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -146,6 +163,13 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                 }
                 SettingsState.Event.Back -> {
                     findNavController().navigateUp()
+                }
+                SettingsState.Event.ShowLogoutEvent -> {
+                    LogoutBottomSheet.show(childFragmentManager)?.let { isLogout ->
+                        if (isLogout) {
+                            viewModel.logout()
+                        }
+                    }
                 }
             }
         }

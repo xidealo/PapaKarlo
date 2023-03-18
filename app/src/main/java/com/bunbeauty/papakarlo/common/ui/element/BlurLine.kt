@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
@@ -16,6 +18,13 @@ fun BlurLine(
         modifier = modifier
             .fillMaxWidth()
             .height(FoodDeliveryTheme.dimensions.blurHeight)
-            .background(FoodDeliveryTheme.colors.surfaceGradient)
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color.Transparent,
+                        FoodDeliveryTheme.colors.mainColors.surface
+                    )
+                )
+            )
     )
 }

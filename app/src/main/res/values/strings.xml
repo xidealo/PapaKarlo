@@ -22,6 +22,7 @@
     <string name="action_retry">Повторить попытку</string>
     <string name="common_error">Не удается загрузить данные</string>
     <string name="internet_error">Проверьте соединение и повторите попытку</string>
+    <string name="description_company_logo">Лого компании</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -32,7 +33,7 @@
     <string name="error_no_internet">Нет подключения к интернету</string>
 
     <!-- SELECT CITY -->
-    <string name="title_select_city">Выберите город</string>
+    <string name="title_select_city">Выбор города</string>
     <string name="error_select_city_loading">Не удалось загрузить список городов</string>
 
     <!-- UPDATE -->
@@ -199,7 +200,7 @@
     <string name="msg_confirm_enter_code">Введите код подтверждения ✉</string>
     <string name="msg_confirm_phone_info">Код был отправлен на номер&#160;</string>
     <string name="msg_request_code">Запросить код повторно</string>
-    <string name="msg_request_code_sec">&#160;сек.</string>
+    <string name="msg_request_code_sec">Запросить код повторно %1$d сек.</string>
     <string name="error_confirm_wrong_code">Неправильный код</string>
     <string name="error_something_went_wrong">Что-то пошло не так</string>
 

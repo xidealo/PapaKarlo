@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -28,7 +28,7 @@ fun LoadingButton(
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryTheme.colors.mainButtonColors(),
+        colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = buttonRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
         enabled = !isLoading
@@ -37,36 +37,40 @@ fun LoadingButton(
             CircularProgressIndicator(
                 modifier = Modifier
                     .size(FoodDeliveryTheme.dimensions.smallProgressBarSize),
-                color = FoodDeliveryTheme.colors.onPrimaryDisabled
+                color = FoodDeliveryTheme.colors.mainColors.onDisabled
             )
         } else {
             Text(
                 text = stringResource(textStringId),
                 style = FoodDeliveryTheme.typography.labelLarge.medium,
-                color = FoodDeliveryTheme.colors.onPrimary
+                color = FoodDeliveryTheme.colors.mainColors.onPrimary
             )
         }
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoadingButtonPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.background)) {
-        LoadingButton(
-            textStringId = R.string.action_create_order_create_order,
-            isLoading = false
-        ) {}
+    FoodDeliveryTheme {
+        Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+            LoadingButton(
+                textStringId = R.string.action_create_order_create_order,
+                isLoading = false
+            ) {}
+        }
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun LoadingButtonLoadingPreview() {
-    Box(Modifier.background(FoodDeliveryTheme.colors.background)) {
-        LoadingButton(
-            textStringId = R.string.action_create_order_create_order,
-            isLoading = true
-        ) {}
+    FoodDeliveryTheme {
+        Box(modifier = Modifier.background(FoodDeliveryTheme.colors.mainColors.background)) {
+            LoadingButton(
+                textStringId = R.string.action_create_order_create_order,
+                isLoading = true
+            ) {}
+        }
     }
 }

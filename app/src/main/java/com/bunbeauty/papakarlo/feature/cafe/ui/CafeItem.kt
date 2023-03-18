@@ -34,19 +34,19 @@ fun CafeItem(
                 text = cafeItem.address,
                 modifier = Modifier.fillMaxWidth(),
                 style = FoodDeliveryTheme.typography.h2,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                 Text(
                     text = cafeItem.workingHours,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = FoodDeliveryTheme.colors.surfaceVariant,
+                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 )
                 Text(
                     modifier = Modifier.padding(start = FoodDeliveryTheme.dimensions.smallSpace),
                     text = cafeItem.isOpenMessage,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = FoodDeliveryTheme.colors.cafeStatusColor(cafeItem.cafeStatus),
+                    color = getCafeStatusColor(cafeItem.cafeStatus),
                 )
             }
         }

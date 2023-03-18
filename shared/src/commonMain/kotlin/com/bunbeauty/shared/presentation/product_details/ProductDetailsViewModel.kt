@@ -19,7 +19,7 @@ class ProductDetailsViewModel(
 ) : SharedViewModel() {
 
     private val mutableProductDetailsState = MutableStateFlow(ProductDetailsState())
-    val menuProductUiState = mutableProductDetailsState.asCommonStateFlow()
+    val menuProductDetailsState = mutableProductDetailsState.asCommonStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         mutableProductDetailsState.update { state ->
@@ -48,7 +48,7 @@ class ProductDetailsViewModel(
     }
 
     fun onWantClicked() {
-        menuProductUiState.value.menuProduct?.let { menuProduct ->
+        menuProductDetailsState.value.menuProduct?.let { menuProduct ->
             sharedScope.launch {
                 addCartProductUseCase(menuProduct.uuid)
             }

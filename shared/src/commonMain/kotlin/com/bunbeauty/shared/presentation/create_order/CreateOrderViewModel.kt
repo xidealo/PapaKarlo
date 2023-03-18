@@ -1,6 +1,5 @@
 package com.bunbeauty.shared.presentation.create_order
 
-import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
@@ -254,6 +253,7 @@ class CreateOrderViewModel(
     }
 
     private inline fun withLoading(crossinline block: suspend () -> Unit) {
+        //TODO (Exception handler)
         sharedScope.launch {
             mutableOrderCreationState.update { state ->
                 state.copy(isLoading = true)

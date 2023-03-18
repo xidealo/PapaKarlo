@@ -105,7 +105,7 @@ private fun CityListScreen(
                 .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.common_city),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
-            color = FoodDeliveryTheme.colors.onSurface,
+            color = FoodDeliveryTheme.colors.mainColors.onSurface,
             textAlign = TextAlign.Center
         )
         LazyColumn(

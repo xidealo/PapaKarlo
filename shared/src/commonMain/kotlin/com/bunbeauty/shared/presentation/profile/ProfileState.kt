@@ -1,10 +1,12 @@
 package com.bunbeauty.shared.presentation.profile
 
+import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 import com.bunbeauty.shared.domain.model.order.LightOrder
 
 data class ProfileState(
     val lastOrder: LightOrder? = null,
     val state: State = State.LOADING,
+    val cartCostAndCount: CartCostAndCount? = null,
     val eventList: List<Event> = emptyList(),
 ) {
 

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ fun MainButton(
     Button(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = FoodDeliveryTheme.colors.mainButtonColors(),
+        colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = buttonRoundedCornerShape,
         elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
         enabled = isEnabled

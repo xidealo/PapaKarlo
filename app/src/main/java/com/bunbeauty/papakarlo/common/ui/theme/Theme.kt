@@ -2,23 +2,24 @@ package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import com.bunbeauty.papakarlo.BuildConfig
+import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults.textSelectionColors
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FoodDeliveryTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    flavor: String = BuildConfig.FLAVOR,
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) {
-        DarkColors
-    } else {
-        LightColors
+    val colors = when (flavor) {
+        "papaKarlo" -> PapaKarloColors
+        "cheddar" -> CheddarColors
+        else -> PapaKarloColors
     }
     val rememberedColors = remember {
         colors.copy()
@@ -31,7 +32,7 @@ fun FoodDeliveryTheme(
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
-        LocalTextSelectionColors provides rememberedColors.textSelectionColors,
+        LocalTextSelectionColors provides textSelectionColors,
         content = content
     )
 }

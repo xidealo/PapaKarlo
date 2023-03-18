@@ -20,12 +20,14 @@ import kotlinx.coroutines.flow.map
 class CafeInteractor(
     private val cafeRepo: CafeRepo,
     private val dataStoreRepo: DataStoreRepo,
-    private val dataTimeUtil: IDateTimeUtil
+    private val dataTimeUtil: IDateTimeUtil,
 ) : ICafeInteractor {
 
-    override fun observeCafeList(timeZone: String): Flow<List<Cafe>?> {
+    override fun observeCafeList(timeZone: String): Flow<List<Cafe>> {
         return observeMinutesOfDay(timeZone).map {
-            getCafeList()
+            dataStoreRepo.getSelectedCityUuid()?.let { selectedCityUuid ->
+                cafeRepo.getCafeList(selectedCityUuid)
+            } ?: emptyList()
         }
     }
 
@@ -47,12 +49,6 @@ class CafeInteractor(
                 address = cafe?.address ?: ""
             )
         }.asCommonFlow()
-    }
-
-    override suspend fun getCafeList(): List<Cafe>? {
-        return dataStoreRepo.getSelectedCityUuid()?.let { selectedCityUuid ->
-            cafeRepo.getCafeList(selectedCityUuid).ifEmpty { null }
-        }
     }
 
     override suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeStatus {
@@ -139,7 +135,7 @@ class CafeInteractor(
 
     fun isClosed(fromTime: Int, toTime: Int, minutesOfDay: Int): Boolean {
         return (minutesOfDay < fromTime / SECONDS_IN_MINUTE)
-            || (minutesOfDay > toTime / SECONDS_IN_MINUTE)
+                || (minutesOfDay > toTime / SECONDS_IN_MINUTE)
     }
 
     fun isCloseSoon(toTime: Int, minutesOfDay: Int): Boolean {

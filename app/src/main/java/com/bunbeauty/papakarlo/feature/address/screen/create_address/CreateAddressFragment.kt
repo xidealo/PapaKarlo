@@ -32,7 +32,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
-import com.bunbeauty.papakarlo.common.ui.element.LoadingButton
+import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldWithMenu
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -111,7 +111,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(mediumRoundedCornerShape)
-                    .background(FoodDeliveryTheme.colors.surface)
+                    .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(16.dp)
             ) {
                 val focusManager = LocalFocusManager.current

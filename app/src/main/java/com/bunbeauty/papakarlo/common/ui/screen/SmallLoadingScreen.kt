@@ -13,7 +13,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 internal fun SmallLoadingScreen(
-    background: Color = FoodDeliveryTheme.colors.background
+    background: Color = FoodDeliveryTheme.colors.mainColors.background
 ) {
     Box(
         modifier = Modifier

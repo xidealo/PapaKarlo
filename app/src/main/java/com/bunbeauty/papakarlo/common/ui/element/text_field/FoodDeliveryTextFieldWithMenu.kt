@@ -50,7 +50,7 @@ fun FoodDeliveryTextFieldWithMenu(
             if (suggestionsList.isNotEmpty()) {
                 DropdownMenu(
                     modifier = Modifier
-                        .background(FoodDeliveryTheme.colors.surface)
+                        .background(FoodDeliveryTheme.colors.mainColors.surface)
                         .exposedDropdownSize(),
                     expanded = expanded,
                     properties = PopupProperties(
@@ -65,7 +65,7 @@ fun FoodDeliveryTextFieldWithMenu(
                             text = {
                                 Text(
                                     text = suggestion.value,
-                                    color = FoodDeliveryTheme.colors.onSurface,
+                                    color = FoodDeliveryTheme.colors.mainColors.onSurface,
                                     style = FoodDeliveryTheme.typography.bodyMedium
                                 )
                             },
@@ -84,7 +84,7 @@ fun FoodDeliveryTextFieldWithMenu(
                     .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(errorMessageId),
                 style = FoodDeliveryTheme.typography.bodySmall,
-                color = FoodDeliveryTheme.colors.error
+                color = FoodDeliveryTheme.colors.mainColors.error
             )
         }
     }

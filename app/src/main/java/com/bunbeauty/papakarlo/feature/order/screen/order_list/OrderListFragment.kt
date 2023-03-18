@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -23,6 +24,7 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
@@ -70,20 +72,27 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
 
     @Composable
     private fun OrderListScreen(orderListState: OrderListState) {
-        when (orderListState.state) {
-            OrderListState.State.SUCCESS -> {
-                OrderListScreenSuccess(orderListState.orderList)
+        FoodDeliveryToolbarScreen(
+            title = stringResource(id = R.string.title_my_orders),
+            backActionClick = {
+                findNavController().popBackStack()
             }
-            OrderListState.State.EMPTY -> {
-                EmptyScreen(
-                    imageId = R.drawable.empty_orders,
-                    imageDescriptionId = R.string.description_cafe_addresses_empty,
-                    mainTextId = R.string.title_order_list_empty,
-                    extraTextId = R.string.msg_order_list_empty,
-                )
-            }
-            OrderListState.State.LOADING -> {
-                LoadingScreen()
+        ) {
+            when (orderListState.state) {
+                OrderListState.State.SUCCESS -> {
+                    OrderListScreenSuccess(orderListState.orderList)
+                }
+                OrderListState.State.EMPTY -> {
+                    EmptyScreen(
+                        imageId = R.drawable.empty_orders,
+                        imageDescriptionId = R.string.description_cafe_addresses_empty,
+                        mainTextId = R.string.title_order_list_empty,
+                        extraTextId = R.string.msg_order_list_empty,
+                    )
+                }
+                OrderListState.State.LOADING -> {
+                    LoadingScreen()
+                }
             }
         }
     }
@@ -93,7 +102,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.background)
+                .background(FoodDeliveryTheme.colors.mainColors.background)
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),

@@ -11,6 +11,6 @@ fun CircularProgressBar(
 ) {
     CircularProgressIndicator(
         modifier = modifier,
-        color = FoodDeliveryTheme.colors.primary
+        color = FoodDeliveryTheme.colors.mainColors.primary
     )
 }

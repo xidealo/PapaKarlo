@@ -55,7 +55,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(bottomSheetShape)
-                .background(FoodDeliveryTheme.colors.surface)
+                .background(FoodDeliveryTheme.colors.mainColors.surface)
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             if (cafeOptions == null) {

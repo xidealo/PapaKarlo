@@ -45,17 +45,17 @@ fun AddressItem(
                     .weight(1f),
                 text = address,
                 style = FoodDeliveryTheme.typography.bodyLarge,
-                color = FoodDeliveryTheme.colors.onSurface
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             if (isSelected) {
                 Icon(
                     modifier = Modifier
-                        .size(16.dp)
                         .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
+                        .size(16.dp)
                         .align(CenterVertically),
                     imageVector = ImageVector.vectorResource(R.drawable.ic_check),
                     contentDescription = stringResource(R.string.description_ic_checked),
-                    tint = FoodDeliveryTheme.colors.onSurfaceVariant
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                 )
             }
         }
