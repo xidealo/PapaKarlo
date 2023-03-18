@@ -37,7 +37,7 @@ fun CartProductItem(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
     ) {
-        Row(modifier = Modifier) {
+        Row {
             AsyncImage(
                 modifier = Modifier
                     .heightIn(max = FoodDeliveryTheme.dimensions.productImageSmallHeight)

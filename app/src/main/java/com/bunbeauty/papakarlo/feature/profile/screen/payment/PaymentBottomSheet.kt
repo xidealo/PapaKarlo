@@ -61,7 +61,7 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
                 .padding(bottom = 16.dp)
                 .padding(horizontal = 16.dp)
         ) {
-            Bang()
+            DragHandle()
             Title(
                 modifier = Modifier.padding(top = 16.dp),
                 textStringId = R.string.title_payment

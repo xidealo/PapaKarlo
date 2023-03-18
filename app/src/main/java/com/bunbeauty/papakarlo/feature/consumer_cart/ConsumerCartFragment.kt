@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -148,13 +149,13 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                             ),
                             cartProductItem = cartProductItemModel,
                             onCountIncreased = {
-                                addProductToCartClicked.invoke(cartProductItemModel.menuProductUuid)
+                                addProductToCartClicked(cartProductItemModel.menuProductUuid)
                             },
                             onCountDecreased = {
-                                removeProductFromCartClicked.invoke(cartProductItemModel.menuProductUuid)
+                                removeProductFromCartClicked(cartProductItemModel.menuProductUuid)
                             },
                             onClick = {
-                                onProductClicked.invoke(cartProductItemModel)
+                                onProductClicked(cartProductItemModel)
                             }
                         )
                     }
@@ -178,10 +179,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
-                        Row(
-                            modifier = Modifier.weight(1f),
-                            horizontalArrangement = Arrangement.End
-                        ) {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Row {
                             consumerCart.oldTotalCost?.let { oldTotalCost ->
                                 Text(
                                     modifier = Modifier
@@ -212,78 +211,86 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
-        val cartProductItemModel =
-            CartProductItem(
-                uuid = "",
-                name = "Бэргер",
-                newCost = "300 ₽",
-                oldCost = "330 ₽",
-                photoLink = "",
-                count = 3,
-                menuProductUuid = ""
-            )
-        ConsumerCartScreen(
-            State.Success(
-                ConsumerCartUI(
-                    forFreeDelivery = "500 ₽",
-                    cartProductList = listOf(
-                        cartProductItemModel,
-                        cartProductItemModel,
-                        cartProductItemModel,
-                        cartProductItemModel,
-                        cartProductItemModel,
-                    ),
-                    oldTotalCost = "1650 ₽",
-                    newTotalCost = "1500 ₽",
+        FoodDeliveryTheme {
+            val cartProductItemModel =
+                CartProductItem(
+                    uuid = "",
+                    name = "Бэргер",
+                    newCost = "300 ₽",
+                    oldCost = "330 ₽",
+                    photoLink = "",
+                    count = 3,
+                    menuProductUuid = ""
                 )
-            ),
-            onMenuClicked = {},
-            onErrorButtonClicked = { },
-            addProductToCartClicked = { s -> },
-            removeProductFromCartClicked = { s -> },
-            onProductClicked = { s -> },
-            onCreateOrderClicked = { },
-        )
+            ConsumerCartScreen(
+                State.Success(
+                    ConsumerCartUI(
+                        forFreeDelivery = "500 ₽",
+                        cartProductList = listOf(
+                            cartProductItemModel,
+                            cartProductItemModel,
+                            cartProductItemModel,
+                            cartProductItemModel,
+                            cartProductItemModel,
+                        ),
+                        oldTotalCost = "1650 ₽",
+                        newTotalCost = "1500 ₽",
+                    )
+                ),
+                onMenuClicked = {},
+                onErrorButtonClicked = { },
+                addProductToCartClicked = { s -> },
+                removeProductFromCartClicked = { s -> },
+                onProductClicked = { s -> },
+                onCreateOrderClicked = { },
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartEmptyScreenPreview() {
-        ConsumerCartScreen(
-            State.Empty(),
-            onMenuClicked = {},
-            onErrorButtonClicked = { },
-            addProductToCartClicked = { s -> },
-            removeProductFromCartClicked = { s -> },
-            onProductClicked = { s -> },
-            onCreateOrderClicked = { },
-        )
+        FoodDeliveryTheme {
+            ConsumerCartScreen(
+                State.Empty(),
+                onMenuClicked = {},
+                onErrorButtonClicked = { },
+                addProductToCartClicked = { s -> },
+                removeProductFromCartClicked = { s -> },
+                onProductClicked = { s -> },
+                onCreateOrderClicked = { },
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartLoadingScreenPreview() {
-        ConsumerCartScreen(
-            State.Loading(),
-            onMenuClicked = {},
-            onErrorButtonClicked = { },
-            addProductToCartClicked = { s -> },
-            removeProductFromCartClicked = { s -> },
-            onProductClicked = { s -> },
-            onCreateOrderClicked = { },
-        )
+        FoodDeliveryTheme {
+            ConsumerCartScreen(
+                State.Loading(),
+                onMenuClicked = {},
+                onErrorButtonClicked = { },
+                addProductToCartClicked = { s -> },
+                removeProductFromCartClicked = { s -> },
+                onProductClicked = { s -> },
+                onCreateOrderClicked = { },
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartErrorScreenPreview() {
-        ConsumerCartScreen(
-            State.Error("Не удалось загрузить корзину"), onMenuClicked = {},
-            onErrorButtonClicked = { },
-            addProductToCartClicked = { s -> },
-            removeProductFromCartClicked = { s -> },
-            onProductClicked = { s -> },
-            onCreateOrderClicked = { },
-        )
+        FoodDeliveryTheme {
+            ConsumerCartScreen(
+                State.Error("Не удалось загрузить корзину"), onMenuClicked = {},
+                onErrorButtonClicked = { },
+                addProductToCartClicked = { s -> },
+                removeProductFromCartClicked = { s -> },
+                onProductClicked = { s -> },
+                onCreateOrderClicked = { },
+            )
+        }
     }
 }

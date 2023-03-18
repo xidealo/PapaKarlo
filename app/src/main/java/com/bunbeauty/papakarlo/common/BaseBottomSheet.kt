@@ -67,7 +67,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
     }
 
     @Composable
-    protected fun Bang() {
+    protected fun DragHandle() {
         Box(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -79,7 +79,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
                     .height(4.dp)
                     .background(
                         color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        shape = RoundedCornerShape(100.dp)
+                        shape = RoundedCornerShape(2.dp)
                     )
             )
         }

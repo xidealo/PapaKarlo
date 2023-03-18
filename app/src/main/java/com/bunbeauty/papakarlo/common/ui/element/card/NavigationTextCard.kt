@@ -28,7 +28,7 @@ fun NavigationTextCard(
     onClick: () -> Unit
 ) {
     FoodDeliveryCard(
-        modifier = modifier.defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        modifier = modifier,
         enabled = isClickable,
         onClick = onClick
     ) {

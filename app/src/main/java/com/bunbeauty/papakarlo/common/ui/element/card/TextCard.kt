@@ -22,7 +22,6 @@ fun TextCard(
 ) {
     FoodDeliveryCard(
         modifier = modifier
-            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
     ) {
         Column(
             modifier = Modifier
