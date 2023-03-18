@@ -17,9 +17,7 @@
         <item name="colorOnSurfaceVariant">@color/grey</item>
         <item name="colorOnError">@color/white</item>
 
-        <item name="colorStroke">@color/selector_stroke</item>
         <item name="colorNavigation">@color/selector_navigation</item>
-        <item name="colorPin">@color/selector_pin</item>
 
         <item name="colorOpen">@color/green</item>
         <item name="colorCloseSoon">@color/yellow</item>
@@ -32,10 +30,6 @@
         <item name="colorDone">@color/lightGreen</item>
         <item name="colorDelivered">@color/mint</item>
         <item name="colorCanceled">@color/pink</item>
-
-        <item name="logo_top">@drawable/logo_top_papa_karlo</item>
-        <item name="logo_start">@drawable/logo_start_papa_karlo</item>
-        <item name="logo_login">@drawable/logo_login_papa_k</item>
     </style>
 
     <style name="LoadingAppTheme" parent="AppTheme">

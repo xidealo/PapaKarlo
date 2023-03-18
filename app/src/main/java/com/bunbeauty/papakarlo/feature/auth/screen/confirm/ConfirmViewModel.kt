@@ -7,13 +7,13 @@ import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.auth.FirebaseAuthRepository
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.shared.Constants.WRONG_CODE
 import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
+import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -51,7 +51,7 @@ class ConfirmViewModel(
         )
     val confirmState: StateFlow<Confirmation> = mutableConfirmState.asStateFlow()
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         showError(resourcesProvider.getString(R.string.error_something_went_wrong), true)
 
         mutableConfirmState.update { oldState ->

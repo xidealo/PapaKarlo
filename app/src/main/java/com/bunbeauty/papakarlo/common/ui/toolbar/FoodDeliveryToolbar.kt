@@ -52,7 +52,7 @@ fun FoodDeliveryToolbar(
                         onClick = { backActionClick() }
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_back),
+                            painter = painterResource(id = R.drawable.ic_arrow_back),
                             contentDescription = null
                         )
                     }

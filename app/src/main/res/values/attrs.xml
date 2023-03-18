@@ -16,12 +16,6 @@
     <attr name="colorDelivered" format="reference|color" />
     <attr name="colorCanceled" format="reference|color" />
 
-    <attr name="logo_top" format="reference" />
-    <attr name="logo_start" format="reference" />
-    <attr name="logo_login" format="reference" />
-    <attr name="empty_profile" format="reference" />
-    <attr name="empty_cart" format="reference" />
-
     <declare-styleable name="ProgressButton">
         <attr name="buttonText" format="string" />
         <attr name="buttonTextAllCaps" format="boolean" />

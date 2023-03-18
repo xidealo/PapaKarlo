@@ -117,7 +117,7 @@ fun SmsDigitCell(
             }
             .focusRequester(focusRequester),
         colors = FoodDeliveryTextFieldDefaults.smsCodeTextFieldColors,
-        textStyle = FoodDeliveryTheme.typography.body1.copy(textAlign = TextAlign.Center),
+        textStyle = FoodDeliveryTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
         singleLine = true,
         value = TextFieldValue(value),
         onValueChange = { textFieldValue: TextFieldValue ->
@@ -136,8 +136,10 @@ fun SmsDigitCell(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun SmsEditTextPreview() {
-    SmsEditText {}
+    FoodDeliveryTheme {
+        SmsEditText {}
+    }
 }

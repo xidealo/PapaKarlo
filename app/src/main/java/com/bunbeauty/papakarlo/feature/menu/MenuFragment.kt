@@ -2,14 +2,15 @@ package com.bunbeauty.papakarlo.feature.menu
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -42,7 +43,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentMenuBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
@@ -52,7 +53,7 @@ import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
+import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.launch
@@ -60,10 +61,10 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
-class MenuFragment : BaseFragment(R.layout.fragment_menu) {
+class MenuFragment : BaseFragment(R.layout.fragment_compose) {
 
     override val viewModel: MenuViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentMenuBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
     private val menuUiStateMapper: MenuUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +77,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getMenu()
-        viewBinding.fragmentMenuCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val menuState by viewModel.menuState.collectAsStateWithLifecycle()
             MenuScreen(menuUi = menuUiStateMapper.map(menuState))
             LaunchedEffect(menuState.eventList) {
@@ -105,12 +106,10 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
     private fun MenuScreen(menuUi: MenuUi) {
         FoodDeliveryToolbarScreen(
             title = stringResource(R.string.title_menu),
-            drawableId = R.drawable.logo_top_papa_karlo,
+            drawableId = R.drawable.logo_small,
             topActions = listOf(
-                FoodDeliveryCartAction(
-                    topCartUi = menuUi.topCartUi,
-                ) {
-                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
+                    findNavController().navigate(globalConsumerCartFragment())
                 }
             ),
         ) {
@@ -119,9 +118,10 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     MenuSuccessScreen(menuUi)
                 }
                 is MenuState.State.Error -> {
-                    ErrorScreen(R.string.error_menu_loading) {
-                        viewModel.getMenu()
-                    }
+                    ErrorScreen(
+                        mainTextId = R.string.error_menu_loading,
+                        onClick = viewModel::getMenu
+                    )
                 }
                 else -> {
                     LoadingScreen()
@@ -132,11 +132,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
 
     @Composable
     private fun MenuSuccessScreen(menu: MenuUi) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(FoodDeliveryTheme.colors.mainColors.background)
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             val menuLazyListState = rememberLazyListState()
             val menuPosition by remember {
                 derivedStateOf {
@@ -168,8 +164,8 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
         val categoryLazyListState = rememberLazyListState()
         LazyRow(
             contentPadding = PaddingValues(
-                start = FoodDeliveryTheme.dimensions.mediumSpace,
-                end = FoodDeliveryTheme.dimensions.mediumSpace,
+                horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
+                vertical = FoodDeliveryTheme.dimensions.smallSpace,
             ),
             state = categoryLazyListState
         ) {
@@ -178,25 +174,24 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                 key = { _, categoryItemModel -> categoryItemModel.key }
             ) { i, categoryItemModel ->
                 CategoryItem(
-                    modifier = Modifier
-                        .padding(
-                            start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                        )
-                        .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
-                    categoryItem = categoryItemModel
-                ) {
-                    viewModel.onCategoryClicked(categoryItemModel)
-                    coroutineScope.launch {
-                        categoryLazyListState.animateScrollToItem(i)
+                    modifier = Modifier.padding(
+                        start = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
+                    ),
+                    categoryItem = categoryItemModel,
+                    onClick = {
+                        viewModel.onCategoryClicked(categoryItemModel)
+                        coroutineScope.launch {
+                            categoryLazyListState.animateScrollToItem(i)
+                        }
+                        coroutineScope.launch {
+                            viewModel.autoScrolling = true
+                            menuLazyListState.animateScrollToItem(
+                                viewModel.getMenuListPosition(categoryItemModel)
+                            )
+                            viewModel.autoScrolling = false
+                        }
                     }
-                    coroutineScope.launch {
-                        viewModel.autoScrolling = true
-                        menuLazyListState.animateScrollToItem(
-                            viewModel.getMenuListPosition(categoryItemModel)
-                        )
-                        viewModel.autoScrolling = false
-                    }
-                }
+                )
             }
         }
         SideEffect {
@@ -226,13 +221,12 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             ) { i, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.MenuCategoryHeaderItem -> {
-                        val topSpace = if (i == 0) {
-                            0.dp
-                        } else {
-                            FoodDeliveryTheme.dimensions.mediumSpace
+                        if (i > 0) {
+                            Spacer(
+                                modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace)
+                            )
                         }
                         Text(
-                            modifier = Modifier.padding(top = topSpace),
                             text = menuItemModel.name,
                             style = FoodDeliveryTheme.typography.titleMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
@@ -241,30 +235,23 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
                     is MenuItem.MenuProductPairItem -> {
                         Row(Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
                             MenuProductItem(
-                                modifier = Modifier
-                                    .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace)
-                                    .weight(1f),
+                                modifier = Modifier.weight(1f),
                                 menuProductItem = menuItemModel.firstProduct,
-                                onButtonClicked = {
-                                    viewModel.onAddProductClicked(menuItemModel.firstProduct.uuid)
-                                }
-                            ) {
-                                viewModel.onMenuItemClicked(menuItemModel.firstProduct)
-                            }
+                                onAddProductClick = viewModel::onAddProductClicked,
+                                onProductClick = viewModel::onMenuItemClicked,
+                            )
+                            Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.smallSpace))
                             if (menuItemModel.secondProduct == null) {
-                                Box(Modifier.weight(1f)) {}
+                                Spacer(Modifier.weight(1f))
                             } else {
                                 MenuProductItem(
                                     modifier = Modifier
                                         .padding(start = FoodDeliveryTheme.dimensions.verySmallSpace)
                                         .weight(1f),
                                     menuProductItem = menuItemModel.secondProduct,
-                                    onButtonClicked = {
-                                        viewModel.onAddProductClicked(menuItemModel.secondProduct.uuid)
-                                    }
-                                ) {
-                                    viewModel.onMenuItemClicked(menuItemModel.secondProduct)
-                                }
+                                    onAddProductClick = viewModel::onAddProductClicked,
+                                    onProductClick = viewModel::onMenuItemClicked,
+                                )
                             }
                         }
                     }
@@ -303,54 +290,60 @@ class MenuFragment : BaseFragment(R.layout.fragment_menu) {
             secondProduct = menuProductItemModel,
         )
 
-        MenuScreen(
-            menuUi = MenuUi(
-                categoryItemList = listOf(
-                    getCategoryItemModel("1"),
-                    getCategoryItemModel("2"),
-                    getCategoryItemModel("3"),
-                ),
-                menuItemList = listOf(
-                    getMenuCategoryHeaderItemModel("4"),
-                    getMenuProductPairItemModel("5"),
-                    getMenuProductPairItemModel("6"),
-                    getMenuCategoryHeaderItemModel("7"),
-                    getMenuProductPairItemModel("8"),
-                ),
-                state = MenuState.State.Success,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
-                ),
+        FoodDeliveryTheme {
+            MenuScreen(
+                menuUi = MenuUi(
+                    categoryItemList = listOf(
+                        getCategoryItemModel("1"),
+                        getCategoryItemModel("2"),
+                        getCategoryItemModel("3"),
+                    ),
+                    menuItemList = listOf(
+                        getMenuCategoryHeaderItemModel("4"),
+                        getMenuProductPairItemModel("5"),
+                        getMenuProductPairItemModel("6"),
+                        getMenuCategoryHeaderItemModel("7"),
+                        getMenuProductPairItemModel("8"),
+                    ),
+                    state = MenuState.State.Success,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenLoadingPreview() {
-        MenuScreen(
-            menuUi = MenuUi(
-                state = MenuState.State.Loading,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            MenuScreen(
+                menuUi = MenuUi(
+                    state = MenuState.State.Loading,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-        )
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun MenuScreenErrorPreview() {
-        MenuScreen(
-            menuUi = MenuUi(
-                state = MenuState.State.Error(Throwable()),
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
-                ),
+        FoodDeliveryTheme {
+            MenuScreen(
+                menuUi = MenuUi(
+                    state = MenuState.State.Error(Throwable()),
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
+                )
             )
-        )
+        }
     }
 }
