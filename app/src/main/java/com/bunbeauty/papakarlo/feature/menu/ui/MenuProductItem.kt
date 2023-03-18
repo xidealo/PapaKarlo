@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,14 +27,14 @@ import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
-    onButtonClicked: () -> Unit,
-    onClick: () -> Unit,
+    onAddProductClick: (String) -> Unit,
+    onProductClick: (MenuProductItem) -> Unit,
 ) {
     FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
-        onClick = onClick,
+        modifier = modifier,
+        onClick = {
+            onProductClick(menuProductItem)
+        }
     ) {
         Column {
             AsyncImage(
@@ -77,7 +76,9 @@ fun MenuProductItem(
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     textStringId = R.string.action_product_want,
                     hasShadow = false,
-                    onClick = onButtonClicked
+                    onClick = {
+                        onAddProductClick(menuProductItem.uuid)
+                    }
                 )
             }
         }
@@ -95,6 +96,7 @@ private fun MenuProductItemPreview() {
             newPrice = "99 ₽",
             oldPrice = "100 ₽",
         ),
-        onButtonClicked = {}
-    ) {}
+        onAddProductClick = {},
+        onProductClick = {},
+    )
 }

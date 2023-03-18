@@ -30,8 +30,7 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.bunbeauty.papakarlo.feature.update.UpdateFragment"
-        android:label="@string/title_update_new_app_version"
-        tools:layout="@layout/fragment_update" />
+        android:label="@string/title_update_new_app_version" />
 
     <fragment
         android:id="@+id/selectCityFragment"
@@ -72,8 +71,7 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.bunbeauty.papakarlo.feature.menu.MenuFragment"
-        android:label="@string/title_menu"
-        tools:layout="@layout/fragment_menu">
+        android:label="@string/title_menu">
         <action
             android:id="@+id/to_productFragment"
             app:destination="@id/productFragment"
@@ -83,8 +81,7 @@
     <fragment
         android:id="@+id/productFragment"
         android:name="com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragment"
-        android:label="{menuProductName}"
-        tools:layout="@layout/fragment_product_details">
+        android:label="{menuProductName}">
         <argument
             android:name="menuProductUuid"
             app:argType="string" />
@@ -223,8 +220,7 @@
     <dialog
         android:id="@+id/logoutBottomSheet"
         android:name="com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet"
-        android:label="LogoutBottomSheet"
-        tools:layout="@layout/bottom_sheet_logout">
+        android:label="LogoutBottomSheet">
         <action
             android:id="@+id/back_to_profileFragment"
             app:destination="@id/profileFragment"

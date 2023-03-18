@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.common.ui.screen
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,23 +26,13 @@ fun ErrorScreen(
     @StringRes extraTextId: Int? = null,
     onClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .background(
-                color = FoodDeliveryTheme.colors.mainColors.background
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-        )
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(modifier = Modifier.weight(1f))
 
         Image(
             painter = painterResource(R.drawable.error),
             contentDescription = stringResource(R.string.description_empty_profile)
         )
-
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,7 +43,6 @@ fun ErrorScreen(
             color = FoodDeliveryTheme.colors.mainColors.onSurface,
             textAlign = TextAlign.Center
         )
-
         extraTextId?.let {
             Text(
                 modifier = Modifier
@@ -68,10 +56,7 @@ fun ErrorScreen(
             )
         }
 
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-        )
+        Spacer(modifier = Modifier.weight(1f))
 
         MainButton(
             modifier = Modifier
