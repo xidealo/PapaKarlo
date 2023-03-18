@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -64,47 +65,45 @@ class UpdateFragment : BaseFragment(R.layout.fragment_update) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.weight(1f))
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.google_play),
-                        contentDescription = stringResource(R.string.description_consumer_cart_empty)
-                    )
 
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 32.dp)
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = stringResource(id = R.string.msg_update_new_title_app_version),
-                        style = FoodDeliveryTheme.typography.titleMedium.bold,
-                        color = FoodDeliveryTheme.colors.mainColors.onBackground,
-                        textAlign = TextAlign.Center
-                    )
+                Image(
+                    modifier = Modifier.size(120.dp),
+                    painter = painterResource(R.drawable.google_play),
+                    contentDescription = stringResource(R.string.description_google_play)
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp),
+                    text = stringResource(id = R.string.msg_update_new_title_app_version),
+                    style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    text = stringResource(id = R.string.msg_update_new_app_version),
+                    style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
+                    textAlign = TextAlign.Center
+                )
 
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-                        text = stringResource(id = R.string.msg_update_new_app_version),
-                        style = FoodDeliveryTheme.typography.bodyLarge,
-                        color = FoodDeliveryTheme.colors.mainColors.onBackground,
-                        textAlign = TextAlign.Center
-                    )
-                }
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UpdateScreenPreview() {
-        UpdateScreen()
+        FoodDeliveryTheme {
+            UpdateScreen()
+        }
     }
 }
