@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
@@ -56,9 +57,15 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(top = 8.dp)
+                .padding(bottom = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
-            Title(textStringId = R.string.title_payment)
+            Bang()
+            Title(
+                modifier = Modifier.padding(top = 16.dp),
+                textStringId = R.string.title_payment
+            )
             Text(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_payment_description),

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
@@ -48,9 +49,15 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(top = 8.dp)
+                .padding(bottom = 16.dp)
+                .padding(horizontal = 16.dp)
         ) {
-            Title(textStringId = R.string.title_feedback)
+            Bang()
+            Title(
+                modifier = Modifier.padding(top = 16.dp),
+                textStringId = R.string.title_feedback
+            )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

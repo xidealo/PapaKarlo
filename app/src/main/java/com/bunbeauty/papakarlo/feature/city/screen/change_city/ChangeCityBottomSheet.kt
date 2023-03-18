@@ -68,7 +68,7 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
                         cityName = city.name,
-                        hasShadow = false
+                        elevated = false
                     ) {
                         viewModel.onCitySelected(city)
                     }

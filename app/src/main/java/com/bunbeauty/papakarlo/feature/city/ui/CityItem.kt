@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.city.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,25 +16,21 @@ import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 fun CityItem(
     modifier: Modifier = Modifier,
     cityName: String,
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     onClick: () -> Unit,
 ) {
-    val elevation = if (hasShadow) {
-        FoodDeliveryTheme.dimensions.elevation
-    } else {
-        0.dp
-    }
     FoodDeliveryCard(
         modifier = modifier
             .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight)
             .clip(mediumRoundedCornerShape),
-        onClick = onClick
+        onClick = onClick,
+        elevated = elevated
     ) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 12.dp),
             text = cityName,
             style = FoodDeliveryTheme.typography.bodyLarge,
             color = FoodDeliveryTheme.colors.mainColors.onSurface
