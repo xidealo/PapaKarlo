@@ -119,21 +119,23 @@ fun OrderProductItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun OrderProductItemPreview() {
-    OrderProductItem(
-        orderProductItem = OrderProductUiItem(
-            uuid = "",
-            name = "Бэргер с вкусной свинкой ням ням ням ням",
-            newPrice = "50 ₽",
-            oldPrice = "100 ₽",
-            newCost = "100 ₽",
-            oldCost = "200 ₽",
-            photoLink = "",
-            count = "× 2"
+    FoodDeliveryTheme {
+        OrderProductItem(
+            orderProductItem = OrderProductUiItem(
+                uuid = "",
+                name = "Бэргер с вкусной свинкой ням ням ням ням",
+                newPrice = "50 ₽",
+                oldPrice = "100 ₽",
+                newCost = "100 ₽",
+                oldCost = "200 ₽",
+                photoLink = "",
+                count = "× 2"
+            )
         )
-    )
+    }
 }
 
 @Preview

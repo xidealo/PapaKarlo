@@ -4,7 +4,7 @@ import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
-data class OrderCreationState(
+data class CreateOrderState(
     val isDelivery: Boolean = true,
     val deliveryAddress: UserAddressUi? = null,
     val pickupAddress: String? = null,
@@ -17,12 +17,6 @@ data class OrderCreationState(
     val isLoading: Boolean = false,
     val eventList: List<Event> = emptyList(),
 ) {
-    val switcherPosition
-        get() = if (isDelivery) {
-            0
-        } else {
-            1
-        }
 
     sealed interface Event {
         object OpenCreateAddressEvent : Event
