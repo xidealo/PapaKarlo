@@ -13,6 +13,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.DragHandle
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme

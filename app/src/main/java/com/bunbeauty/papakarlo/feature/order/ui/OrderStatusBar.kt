@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.smallRoundedCornerShape
+import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 @Composable
@@ -91,7 +91,7 @@ fun DoneStep(
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(smallRoundedCornerShape)
+            .clip(largeRoundedCornerShape)
             .background(getOrderColor(orderStatus))
     ) {
         Icon(
@@ -113,7 +113,7 @@ fun FutureStep(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(smallRoundedCornerShape)
+            .clip(largeRoundedCornerShape)
             .background(FoodDeliveryTheme.colors.mainColors.disabled)
     )
 }

@@ -75,7 +75,7 @@ fun OrderProductItem(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                             text = oldPrice,
-                            style = FoodDeliveryTheme.typography.body2,
+                            style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                         )
@@ -84,14 +84,14 @@ fun OrderProductItem(
                         modifier = Modifier
                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.newPrice,
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Text(
                         modifier = Modifier
                             .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                         text = orderProductItem.count,
-                        style = FoodDeliveryTheme.typography.body2,
+                        style = FoodDeliveryTheme.typography.bodySmall,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Row(
@@ -102,14 +102,14 @@ fun OrderProductItem(
                             Text(
                                 modifier = Modifier.padding(end = FoodDeliveryTheme.dimensions.smallSpace),
                                 text = oldCost,
-                                style = FoodDeliveryTheme.typography.body2,
+                                style = FoodDeliveryTheme.typography.bodySmall,
                                 textDecoration = TextDecoration.LineThrough,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                             )
                         }
                         Text(
                             text = orderProductItem.newCost,
-                            style = FoodDeliveryTheme.typography.body2,
+                            style = FoodDeliveryTheme.typography.bodySmall,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }

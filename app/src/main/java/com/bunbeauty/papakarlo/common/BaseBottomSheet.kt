@@ -5,20 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.extensions.startedLaunch
@@ -63,25 +51,6 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
         }
         viewModel.error.startedLaunch { error ->
             viewBinding.root.showSnackbar(error.message, colorOnError, colorError, error.isTop)
-        }
-    }
-
-    @Composable
-    protected fun DragHandle() {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center
-        ) {
-            Spacer(
-                modifier = Modifier
-                    .width(32.dp)
-                    .height(4.dp)
-                    .background(
-                        color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                        shape = RoundedCornerShape(2.dp)
-                    )
-            )
         }
     }
 

@@ -3,7 +3,6 @@ package com.bunbeauty.papakarlo.feature.consumer_cart
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -166,7 +164,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     .fillMaxWidth()
                     .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .zIndex(1f),
-                shadowElevation = 6.dp,
+                shadowElevation = FoodDeliveryTheme.dimensions.bottomSurfaceElevation,
                 color = FoodDeliveryTheme.colors.mainColors.surface
             ) {
                 Column(
