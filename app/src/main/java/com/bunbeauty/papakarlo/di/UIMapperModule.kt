@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListUiStateMapper
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
-import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderItemUiStateMapper
+import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderStateMapper
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductItemMapper
@@ -55,7 +55,7 @@ fun uiMapperModule() = module {
         )
     }
     factory {
-        CreateOrderItemUiStateMapper(
+        CreateOrderStateMapper(
             stringUtil = get(),
         )
     }

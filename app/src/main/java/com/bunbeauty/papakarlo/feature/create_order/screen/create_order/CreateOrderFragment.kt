@@ -54,7 +54,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
 
-    private val createOrderItemUiStateMapper: CreateOrderItemUiStateMapper by inject()
+    private val createOrderStateMapper: CreateOrderStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         viewModel.update()
         viewBinding.fragmentCreateOrderCvMain.setContent {
             val orderCreationState by viewModel.orderCreationState.collectAsStateWithLifecycle()
-            CreateOrderScreen(createOrderItemUiStateMapper.map(orderCreationState))
+            CreateOrderScreen(createOrderStateMapper.map(orderCreationState))
             LaunchedEffect(orderCreationState.eventList) {
                 handleEventList(orderCreationState.eventList)
             }
