@@ -106,10 +106,10 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 16.dp)
                     .clip(mediumRoundedCornerShape)
                     .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(16.dp)

@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -21,19 +22,19 @@ fun CafeItem(
     onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         onClick = onClick
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 12.dp)
         ) {
             Text(
                 text = cafeItem.address,
                 modifier = Modifier.fillMaxWidth(),
-                style = FoodDeliveryTheme.typography.h2,
+                style = FoodDeliveryTheme.typography.bodyMedium,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
             Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {

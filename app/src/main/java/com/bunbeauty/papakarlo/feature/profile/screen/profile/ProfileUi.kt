@@ -8,5 +8,4 @@ data class ProfileUi(
     val orderItem: OrderItem? = null,
     val state: ProfileState.State = ProfileState.State.LOADING,
     val topCartUi: TopCartUi,
-    val eventList: List<ProfileState.Event> = emptyList(),
 )

@@ -21,7 +21,6 @@ class ProfileUiStateMapper(
                 orderItemMapper.toItem(it)
             },
             state = profileState.state,
-            eventList = profileState.eventList,
         )
     }
 }

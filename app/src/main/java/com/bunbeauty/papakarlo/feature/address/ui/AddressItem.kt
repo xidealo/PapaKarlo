@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.address.ui
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,21 +23,20 @@ fun AddressItem(
     modifier: Modifier = Modifier,
     address: String,
     isClickable: Boolean,
-    hasShadow: Boolean,
+    elevated: Boolean,
     isSelected: Boolean = false,
     onClick: (() -> Unit),
 ) {
     FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.cardHeight),
+        modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         enabled = isClickable,
-        elevated = false
+        elevated = elevated
     ) {
         Row(
             modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 12.dp)
         ) {
             Text(
                 modifier = Modifier
@@ -65,24 +63,28 @@ fun AddressItem(
 @Preview(showSystemUi = true)
 @Composable
 fun AddressItemPreview() {
-    FoodDeliveryCard {
-        AddressItem(
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-            isClickable = false,
-            hasShadow = false
-        ) {}
+    FoodDeliveryTheme {
+        FoodDeliveryCard {
+            AddressItem(
+                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                isClickable = false,
+                elevated = false
+            ) {}
+        }
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun AddressItemSelectedPreview() {
-    FoodDeliveryCard {
-        AddressItem(
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-            isClickable = false,
-            hasShadow = false,
-            isSelected = true
-        ) {}
+    FoodDeliveryTheme {
+        FoodDeliveryCard {
+            AddressItem(
+                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                isClickable = false,
+                elevated = false,
+                isSelected = true
+            ) {}
+        }
     }
 }

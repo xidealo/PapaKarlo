@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
+// TODO (DELETE)
 @Composable
 fun BlurLine(
     modifier: Modifier = Modifier

@@ -119,7 +119,7 @@ private fun UserAddressListScreen(
                     ),
                     address = addressItem.address,
                     isClickable = true,
-                    hasShadow = false,
+                    elevated = false,
                     isSelected = addressItem.uuid == selectedUserAddressUuid
                 ) {
                     onAddressClicked(addressItem)

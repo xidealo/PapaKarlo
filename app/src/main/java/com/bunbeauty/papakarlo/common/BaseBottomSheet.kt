@@ -29,7 +29,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(layoutId, container, true)
     }

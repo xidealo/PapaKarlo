@@ -55,11 +55,11 @@ object Versions {
 object PapaKarloApplication {
     const val versionMajor = 1
     const val versionMinor = 2
-    const val versionPatch = 4
+    const val versionPatch = 5
 
     const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
-    const val versionCode = 124
+    const val versionCode = 125
 }
 
 object CheddarApplication {

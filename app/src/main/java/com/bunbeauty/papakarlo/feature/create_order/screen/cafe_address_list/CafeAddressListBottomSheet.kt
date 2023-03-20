@@ -113,7 +113,7 @@ private fun CafeAddressListScreen(
                     ),
                     address = addressItem.address,
                     isClickable = true,
-                    hasShadow = false,
+                    elevated = false,
                     isSelected = addressItem.address == selectedCafeAddress
                 ) {
                     onAddressClicked(addressItem)

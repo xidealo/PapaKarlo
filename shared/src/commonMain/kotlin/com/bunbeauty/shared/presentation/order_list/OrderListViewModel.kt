@@ -5,6 +5,7 @@ import com.bunbeauty.shared.domain.feature.order.ObserveOrderListUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
 import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.presentation.SharedViewModel
+import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -22,9 +23,9 @@ class OrderListViewModel(
     private var orderObservationUuid: String? = null
     private var observeOrdersJob: Job? = null
 
-    fun onOrderClicked(order: LightOrder) {
+    fun onOrderClicked(uuid: String, code: String) {
         mutableOrderListState.update { state ->
-            state + OrderListState.OpenOrderDetailsEvent(order.uuid, order.code)
+            state + OrderListState.OpenOrderDetailsEvent(uuid, code)
         }
     }
 

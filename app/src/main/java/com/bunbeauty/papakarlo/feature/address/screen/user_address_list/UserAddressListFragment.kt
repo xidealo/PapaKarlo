@@ -131,7 +131,7 @@ class UserAddressListFragment :
                         ),
                         address = userAddressItem.address,
                         isClickable = false,
-                        hasShadow = true
+                        elevated = true
                     ) {}
                 }
             }

@@ -20,14 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.DragHandle
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
+import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.City
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.coroutines.resume
@@ -97,12 +99,19 @@ private fun CityListScreen(
             scrolledToTop(itemPosition == 0)
         }
     }
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp)
+            .padding(horizontal = 16.dp)
+    ) {
+        DragHandle()
+
         Text(
+
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
             text = stringResource(R.string.common_city),
             style = FoodDeliveryTheme.typography.titleMedium.bold,
             color = FoodDeliveryTheme.colors.mainColors.onSurface,
@@ -112,16 +121,15 @@ private fun CityListScreen(
             modifier = Modifier
                 .weight(1f, false),
             state = listState,
-            contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
+            contentPadding = PaddingValues(vertical = FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             itemsIndexed(cityList) { i, city ->
-                AddressItem(
+                CityItem(
                     modifier = Modifier.padding(
                         top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                     ),
-                    address = city.name,
-                    isClickable = true,
-                    hasShadow = false,
+                    cityName = city.name,
+                    elevated = false,
                     isSelected = city.uuid == selectedCityUuid
                 ) {
                     onAddressClicked(city)

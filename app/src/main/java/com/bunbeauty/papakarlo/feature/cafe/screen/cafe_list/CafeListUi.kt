@@ -7,5 +7,4 @@ data class CafeListUi(
     val cafeList: List<CafeItem> = emptyList(),
     val topCartUi: TopCartUi,
     val state: CafeListState.State = CafeListState.State.Loading,
-    val eventList: List<CafeListState.Event> = emptyList(),
 )
