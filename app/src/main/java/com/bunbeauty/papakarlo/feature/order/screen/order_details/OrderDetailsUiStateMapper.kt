@@ -38,7 +38,7 @@ class OrderDetailsUiStateMapper(
                         ?.let { stringUtil.getTimeString(it) },
                     address = stringUtil.getOrderAddressString(orderInfo.address),
                     comment = orderInfo.comment,
-                    delivery = stringUtil.getPickupMethodString(orderInfo.isDelivery),
+                    pickupMethod = stringUtil.getPickupMethodString(orderInfo.isDelivery),
                     deferredTimeHintId = if (orderInfo.isDelivery) {
                         R.string.delivery_time
                     } else {

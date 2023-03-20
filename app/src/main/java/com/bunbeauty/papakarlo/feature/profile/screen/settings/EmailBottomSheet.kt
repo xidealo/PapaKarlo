@@ -41,14 +41,14 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.root.setContent {
-            CommentScreen(email = email) { updatedComment ->
+            EmailScreen(email = email) { updatedComment ->
                 callback?.onResult(updatedComment)
             }
         }
     }
 
     @Composable
-    private fun CommentScreen(
+    private fun EmailScreen(
         email: String?,
         onSaveClicked: (String) -> Unit,
     ) {
@@ -108,9 +108,9 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 
     @Preview(showSystemUi = true)
     @Composable
-    private fun CommentScreenPreview() {
+    private fun EmailScreenPreview() {
         FoodDeliveryTheme {
-            CommentScreen(email = "example@email.com") {}
+            EmailScreen(email = "example@email.com") {}
         }
     }
 

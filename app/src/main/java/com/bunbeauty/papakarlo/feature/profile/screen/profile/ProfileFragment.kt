@@ -113,6 +113,17 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
+            actionButton = {
+                if (profileUi.state == ProfileState.State.UNAUTHORIZED) {
+                    MainButton(
+                        modifier = Modifier
+                            .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                        textStringId = R.string.action_profile_login
+                    ) {
+                        viewModel.onLoginClicked()
+                    }
+                }
+            }
         ) {
             when (profileUi.state) {
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
@@ -286,11 +297,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
 
             Spacer(modifier = Modifier.weight(1f))
 
-            MainButton(
-                textStringId = R.string.action_profile_login
-            ) {
-                viewModel.onLoginClicked()
-            }
+            Spacer(
+                modifier = Modifier
+                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
+            )
         }
     }
 

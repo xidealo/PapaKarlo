@@ -12,10 +12,9 @@ data class CreateOrderUi(
     val isAddressErrorShown: Boolean,
     val isLoading: Boolean,
 ) {
-    val switcherPosition
-        get() = if (isDelivery) {
-            0
-        } else {
-            1
-        }
+    val switcherPosition = if (isDelivery) {
+        0
+    } else {
+        1
+    }
 }

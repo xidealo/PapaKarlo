@@ -178,23 +178,21 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        Row {
-                            consumerCart.oldTotalCost?.let { oldTotalCost ->
-                                Text(
-                                    modifier = Modifier
-                                        .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                    text = oldTotalCost,
-                                    style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                                    color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                                    textDecoration = TextDecoration.LineThrough
-                                )
-                            }
+                        consumerCart.oldTotalCost?.let { oldTotalCost ->
                             Text(
-                                text = consumerCart.newTotalCost,
+                                modifier = Modifier
+                                    .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                                text = oldTotalCost,
                                 style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                                textDecoration = TextDecoration.LineThrough
                             )
                         }
+                        Text(
+                            text = consumerCart.newTotalCost,
+                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
                     }
                     MainButton(
                         modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),

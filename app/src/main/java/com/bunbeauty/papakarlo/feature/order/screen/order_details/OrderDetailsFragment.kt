@@ -190,7 +190,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                 OrderInfoTextColumn(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                     hint = stringResource(R.string.msg_order_details_pickup_method),
-                    info = orderInfo.delivery,
+                    info = orderInfo.pickupMethod,
                 )
                 OrderInfoTextColumn(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
@@ -390,7 +390,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                 "3" +
                 "тест",
             comment = "давай кушать",
-            delivery = "доставка",
+            pickupMethod = "доставка",
             statusName = "Готовится",
             deferredTimeHintId = R.string.pickup_time
         )

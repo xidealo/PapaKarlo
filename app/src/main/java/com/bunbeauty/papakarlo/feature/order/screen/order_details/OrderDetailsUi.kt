@@ -19,7 +19,7 @@ data class OrderDetailsUi(
         val deferredTime: String?,
         val address: String,
         val comment: String?,
-        val delivery: String,
+        val pickupMethod: String,
         @StringRes val deferredTimeHintId: Int,
     )
 }
