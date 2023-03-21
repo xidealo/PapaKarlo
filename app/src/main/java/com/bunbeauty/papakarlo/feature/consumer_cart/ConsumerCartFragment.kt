@@ -234,11 +234,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     )
                 ),
                 onMenuClicked = {},
-                onErrorButtonClicked = { },
-                addProductToCartClicked = { s -> },
-                removeProductFromCartClicked = { s -> },
-                onProductClicked = { s -> },
-                onCreateOrderClicked = { },
+                onErrorButtonClicked = {},
+                addProductToCartClicked = {},
+                removeProductFromCartClicked = {},
+                onProductClicked = {},
+                onCreateOrderClicked = {},
             )
         }
     }
@@ -250,11 +250,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
             ConsumerCartScreen(
                 State.Empty(),
                 onMenuClicked = {},
-                onErrorButtonClicked = { },
-                addProductToCartClicked = { s -> },
-                removeProductFromCartClicked = { s -> },
-                onProductClicked = { s -> },
-                onCreateOrderClicked = { },
+                onErrorButtonClicked = {},
+                addProductToCartClicked = {},
+                removeProductFromCartClicked = {},
+                onProductClicked = {},
+                onCreateOrderClicked = {},
             )
         }
     }
@@ -266,11 +266,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
             ConsumerCartScreen(
                 State.Loading(),
                 onMenuClicked = {},
-                onErrorButtonClicked = { },
-                addProductToCartClicked = { s -> },
-                removeProductFromCartClicked = { s -> },
-                onProductClicked = { s -> },
-                onCreateOrderClicked = { },
+                onErrorButtonClicked = {},
+                addProductToCartClicked = {},
+                removeProductFromCartClicked = {},
+                onProductClicked = {},
+                onCreateOrderClicked = {},
             )
         }
     }
@@ -281,11 +281,11 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
         FoodDeliveryTheme {
             ConsumerCartScreen(
                 State.Error("Не удалось загрузить корзину"), onMenuClicked = {},
-                onErrorButtonClicked = { },
-                addProductToCartClicked = { s -> },
-                removeProductFromCartClicked = { s -> },
-                onProductClicked = { s -> },
-                onCreateOrderClicked = { },
+                onErrorButtonClicked = {},
+                addProductToCartClicked = {},
+                removeProductFromCartClicked = {},
+                onProductClicked = {},
+                onCreateOrderClicked = {},
             )
         }
     }

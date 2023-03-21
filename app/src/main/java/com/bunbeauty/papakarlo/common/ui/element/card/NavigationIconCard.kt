@@ -69,12 +69,14 @@ fun NavigationIconCard(
     }
 }
 
-@Preview
+@Preview@Preview(showSystemUi = true)
 @Composable
 fun NavigationIconCardPreview() {
-    NavigationIconCard(
-        iconId = R.drawable.ic_info,
-        iconDescription = R.string.description_ic_about,
-        label = "Текст"
-    ) {}
+    FoodDeliveryTheme {
+        NavigationIconCard(
+            iconId = R.drawable.ic_info,
+            iconDescription = R.string.description_ic_about,
+            label = "Текст"
+        ) {}
+    }
 }

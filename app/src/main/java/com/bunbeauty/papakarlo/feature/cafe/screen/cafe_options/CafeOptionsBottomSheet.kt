@@ -85,7 +85,8 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
             label = cafeOptions.showOnMap,
             hasShadow = false
         ) {
-            val uri = Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
+            val uri =
+                Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)
             goByUri(uri, Intent.ACTION_VIEW)
         }
     }
@@ -95,23 +96,27 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
         startActivity(intent)
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CafeOptionsSuccessScreenPreview() {
-        CafeOptionsScreen(
-            CafeOptions(
-                showOnMap = "На карте: улица Чапаева, д 22А",
-                callToCafe = "Позвонить: +7 (900) 900-90-90",
-                phone = "",
-                latitude = 0.0,
-                longitude = 0.0,
+        FoodDeliveryTheme {
+            CafeOptionsScreen(
+                CafeOptions(
+                    showOnMap = "На карте: улица Чапаева, д 22А",
+                    callToCafe = "Позвонить: +7 (900) 900-90-90",
+                    phone = "",
+                    latitude = 0.0,
+                    longitude = 0.0,
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CafeOptionsLoadingScreenPreview() {
-        CafeOptionsScreen(null)
+        FoodDeliveryTheme {
+            CafeOptionsScreen(null)
+        }
     }
 }

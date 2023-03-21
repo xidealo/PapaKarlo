@@ -38,11 +38,13 @@ fun OrderStatusChip(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusChipPreview() {
-    OrderStatusChip(
-        orderStatus = OrderStatus.NOT_ACCEPTED,
-        statusName = "Обрабатывается"
-    )
+    FoodDeliveryTheme {
+        OrderStatusChip(
+            orderStatus = OrderStatus.NOT_ACCEPTED,
+            statusName = "Обрабатывается"
+        )
+    }
 }

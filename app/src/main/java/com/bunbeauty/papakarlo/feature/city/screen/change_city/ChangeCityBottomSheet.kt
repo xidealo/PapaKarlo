@@ -77,41 +77,45 @@ class ChangeCityBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_change_city)
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ChangeCityScreenPreview() {
-        ChangeCityScreen(
-            cityList = listOf(
-                City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = ""
-                ),
-                City(
-                    uuid = "",
-                    name = "Дубна",
-                    timeZone = ""
-                ),
-                City(
-                    uuid = "",
-                    name = "Кимры",
-                    timeZone = ""
-                ),
-            )
-        )
-    }
-
-    @Preview
-    @Composable
-    private fun OneListItemChangeCityScreenPreview() {
-        ChangeCityScreen(
-            cityList = listOf(
-                City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = ""
+        FoodDeliveryTheme {
+            ChangeCityScreen(
+                cityList = listOf(
+                    City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = ""
+                    ),
+                    City(
+                        uuid = "",
+                        name = "Дубна",
+                        timeZone = ""
+                    ),
+                    City(
+                        uuid = "",
+                        name = "Кимры",
+                        timeZone = ""
+                    ),
                 )
             )
-        )
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun OneListItemChangeCityScreenPreview() {
+        FoodDeliveryTheme {
+            ChangeCityScreen(
+                cityList = listOf(
+                    City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = ""
+                    )
+                )
+            )
+        }
     }
 }

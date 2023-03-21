@@ -37,8 +37,13 @@ fun SecondaryButton(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun SecondaryButtonPreview() {
-    SecondaryButton(textStringId = R.string.action_logout) {}
+    FoodDeliveryTheme {
+        SecondaryButton(
+            textStringId = R.string.action_logout,
+            onClick = {}
+        )
+    }
 }

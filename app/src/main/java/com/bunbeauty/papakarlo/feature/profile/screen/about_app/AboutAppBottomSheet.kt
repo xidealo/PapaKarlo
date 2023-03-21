@@ -72,9 +72,11 @@ class AboutAppBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_about_app) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun AboutAppScreenPreview() {
-        AboutAppScreen()
+        FoodDeliveryTheme {
+            AboutAppScreen()
+        }
     }
 }

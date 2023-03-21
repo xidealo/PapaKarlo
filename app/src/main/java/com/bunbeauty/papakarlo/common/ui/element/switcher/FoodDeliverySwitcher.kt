@@ -111,7 +111,8 @@ private fun SwitcherPreview() {
                 R.string.action_create_order_delivery,
                 R.string.action_create_order_pickup
             ),
-            position = 1
-        ) { }
+            position = 1,
+            onPositionChanged = {}
+        )
     }
 }

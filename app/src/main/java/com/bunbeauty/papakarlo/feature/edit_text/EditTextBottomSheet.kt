@@ -106,37 +106,41 @@ class EditTextBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_edit_text) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun EditTextScreenPreview() {
-        EditTextScreen(
-            EditTextSettings(
-                titleStringId = R.string.title_settings_edit_email,
-                infoText = "Отредактируйте его",
-                labelStringId = R.string.common_email,
-                type = EditTextType.EMAIL,
-                inputText = "aaa@aa.com",
-                buttonStringId = R.string.action_settings_save,
-                requestKey = "",
-                resultKey = ""
+        FoodDeliveryTheme {
+            EditTextScreen(
+                EditTextSettings(
+                    titleStringId = R.string.title_settings_edit_email,
+                    infoText = "Отредактируйте его",
+                    labelStringId = R.string.common_email,
+                    type = EditTextType.EMAIL,
+                    inputText = "aaa@aa.com",
+                    buttonStringId = R.string.action_settings_save,
+                    requestKey = "",
+                    resultKey = ""
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun EditTextScreenWithoutInfoPreview() {
-        EditTextScreen(
-            EditTextSettings(
-                titleStringId = R.string.title_settings_edit_email,
-                infoText = null,
-                labelStringId = R.string.common_email,
-                type = EditTextType.EMAIL,
-                inputText = "aaa@aa.com",
-                buttonStringId = R.string.action_settings_save,
-                requestKey = "",
-                resultKey = ""
+        FoodDeliveryTheme {
+            EditTextScreen(
+                EditTextSettings(
+                    titleStringId = R.string.title_settings_edit_email,
+                    infoText = null,
+                    labelStringId = R.string.common_email,
+                    type = EditTextType.EMAIL,
+                    inputText = "aaa@aa.com",
+                    buttonStringId = R.string.action_settings_save,
+                    requestKey = "",
+                    resultKey = ""
+                )
             )
-        )
+        }
     }
 }

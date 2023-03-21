@@ -118,65 +118,79 @@ fun FutureStep(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarNotAcceptedPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.NOT_ACCEPTED,
-        orderStatusName = "Обрабатывается"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.NOT_ACCEPTED,
+            orderStatusName = "Обрабатывается"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarAcceptedPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.ACCEPTED,
-        orderStatusName = "Принят"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.ACCEPTED,
+            orderStatusName = "Принят"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarPreparingPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.PREPARING,
-        orderStatusName = "Готовится"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.PREPARING,
+            orderStatusName = "Готовится"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarDonePreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.DONE,
-        orderStatusName = "Готов"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.DONE,
+            orderStatusName = "Готов"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarSentOutPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.SENT_OUT,
-        orderStatusName = "В пути"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.SENT_OUT,
+            orderStatusName = "В пути"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarSentDeliveredPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.DELIVERED,
-        orderStatusName = "Выдан"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.DELIVERED,
+            orderStatusName = "Выдан"
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun StatusBarSentCanceledPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.CANCELED,
-        orderStatusName = "Отменен"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.CANCELED,
+            orderStatusName = "Отменен"
+        )
+    }
 }

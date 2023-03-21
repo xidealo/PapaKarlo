@@ -116,9 +116,11 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun PaymentScreenPreview() {
-        PaymentScreen()
+        FoodDeliveryTheme {
+            PaymentScreen()
+        }
     }
 }

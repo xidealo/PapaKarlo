@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -30,7 +29,6 @@ import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
-import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
@@ -362,86 +360,94 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderEmptyDeliveryScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = true,
-                deliveryAddress = null,
-                comment = null,
-                deferredTime = "",
-                totalCost = null,
-                deliveryCost = null,
-                finalCost = null,
-                isLoading = false,
-                pickupAddress = null,
-                isAddressErrorShown = false,
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = true,
+                    deliveryAddress = null,
+                    comment = null,
+                    deferredTime = "",
+                    totalCost = null,
+                    deliveryCost = null,
+                    finalCost = null,
+                    isLoading = false,
+                    pickupAddress = null,
+                    isAddressErrorShown = false,
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderDeliveryScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = true,
-                deliveryAddress =
-                "1" +
-                    "улица Чапаева" +
-                    "22аб" +
-                    "55" +
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = true,
+                    deliveryAddress =
                     "1" +
-                    "1" +
-                    "код домофона 555",
-                comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "",
-                totalCost = "250 $",
-                deliveryCost = "100 $",
-                finalCost = "350 $",
-                isLoading = false,
-                pickupAddress = null,
-                isAddressErrorShown = false,
+                        "улица Чапаева" +
+                        "22аб" +
+                        "55" +
+                        "1" +
+                        "1" +
+                        "код домофона 555",
+                    comment = "Побыстрее пожалуйста, кушать очень хочу",
+                    deferredTime = "",
+                    totalCost = "250 $",
+                    deliveryCost = "100 $",
+                    finalCost = "350 $",
+                    isLoading = false,
+                    pickupAddress = null,
+                    isAddressErrorShown = false,
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderEmptyPickupScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = false,
-                pickupAddress = null,
-                comment = null,
-                deferredTime = "10:30",
-                totalCost = null,
-                deliveryCost = null,
-                finalCost = null,
-                isLoading = false,
-                isAddressErrorShown = false,
-                deliveryAddress = null
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = false,
+                    pickupAddress = null,
+                    comment = null,
+                    deferredTime = "10:30",
+                    totalCost = null,
+                    deliveryCost = null,
+                    finalCost = null,
+                    isLoading = false,
+                    isAddressErrorShown = false,
+                    deliveryAddress = null
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderPickupScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = false,
-                pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "",
-                totalCost = "250 $",
-                deliveryCost = "100 $",
-                finalCost = "350 $",
-                isLoading = true,
-                isAddressErrorShown = false,
-                deliveryAddress = null
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = false,
+                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    comment = "Побыстрее пожалуйста, кушать очень хочу",
+                    deferredTime = "",
+                    totalCost = "250 $",
+                    deliveryCost = "100 $",
+                    finalCost = "350 $",
+                    isLoading = true,
+                    isAddressErrorShown = false,
+                    deliveryAddress = null
+                )
             )
-        )
+        }
     }
 }

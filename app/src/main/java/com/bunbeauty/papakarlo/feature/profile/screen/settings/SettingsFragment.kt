@@ -179,64 +179,72 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
     @Preview(showSystemUi = true)
     @Composable
     fun SettingsScreenWithEmailPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = Settings(
-                    userUuid = "",
-                    phoneNumber = "+7 999 000-00-00",
-                    email = "example@email.com",
-                ),
-                selectedCity = City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = "",
-                ),
-                state = SettingsState.State.SUCCESS
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = Settings(
+                        userUuid = "",
+                        phoneNumber = "+7 999 000-00-00",
+                        email = "example@email.com",
+                    ),
+                    selectedCity = City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = "",
+                    ),
+                    state = SettingsState.State.SUCCESS
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     fun SettingsScreenWithoutEmailPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = Settings(
-                    userUuid = "",
-                    phoneNumber = "+7 999 000-00-00",
-                    email = "",
-                ),
-                selectedCity = City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = "",
-                ),
-                state = SettingsState.State.SUCCESS
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = Settings(
+                        userUuid = "",
+                        phoneNumber = "+7 999 000-00-00",
+                        email = "",
+                    ),
+                    selectedCity = City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = "",
+                    ),
+                    state = SettingsState.State.SUCCESS
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     fun SettingsScreenLoadingPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = null,
-                selectedCity = null,
-                state = SettingsState.State.LOADING
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = null,
+                    selectedCity = null,
+                    state = SettingsState.State.LOADING
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     fun SettingsScreenErrorPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = null,
-                selectedCity = null,
-                state = SettingsState.State.ERROR
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = null,
+                    selectedCity = null,
+                    state = SettingsState.State.ERROR
+                )
             )
-        )
+        }
     }
 }

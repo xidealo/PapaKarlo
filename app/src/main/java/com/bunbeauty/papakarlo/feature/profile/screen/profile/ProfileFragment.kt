@@ -1,11 +1,8 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -259,7 +256,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
             )
 
-            //Spacer(modifier = Modifier.height())
+            // Spacer(modifier = Modifier.height())
         }
     }
 
@@ -328,109 +325,119 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun AuthorizedProfileScreenWithLastOrderPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = OrderItem(
-                    uuid = "",
-                    status = OrderStatus.NOT_ACCEPTED,
-                    statusName = OrderStatus.NOT_ACCEPTED.name,
-                    code = "А-12",
-                    dateTime = "10-10-10 20:20",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = OrderItem(
+                        uuid = "",
+                        status = OrderStatus.NOT_ACCEPTED,
+                        statusName = OrderStatus.NOT_ACCEPTED.name,
+                        code = "А-12",
+                        dateTime = "10-10-10 20:20",
+                    ),
+                    state = ProfileState.State.AUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-                state = ProfileState.State.AUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
-                ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.AUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.AUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UnauthorizedProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.UNAUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.UNAUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun LoadingProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.LOADING,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.LOADING,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ErrorProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.ERROR,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.ERROR,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 }

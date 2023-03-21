@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 fun NavigationCard(
@@ -40,10 +41,13 @@ fun NavigationCard(
     )
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun NavigationCardPreview() {
-    NavigationCard(
-        labelStringId = R.string.title_about_app
-    ) {}
+    FoodDeliveryTheme {
+        NavigationCard(
+            labelStringId = R.string.title_about_app,
+            onClick = {}
+        )
+    }
 }

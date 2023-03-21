@@ -74,8 +74,8 @@ private fun ErrorScreenPreview() {
     FoodDeliveryTheme {
         ErrorScreen(
             mainTextId = R.string.common_error,
-            extraTextId = R.string.internet_error
-        ) {
-        }
+            extraTextId = R.string.internet_error,
+            onClick = {}
+        )
     }
 }

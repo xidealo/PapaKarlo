@@ -64,7 +64,10 @@ fun CityItem(
 @Composable
 fun CityItemPreview() {
     FoodDeliveryTheme {
-        CityItem(cityName = "Москва") {}
+        CityItem(
+            cityName = "Москва",
+            onClick = {}
+        )
     }
 }
 
@@ -72,6 +75,10 @@ fun CityItemPreview() {
 @Composable
 fun SelectedCityItemPreview() {
     FoodDeliveryTheme {
-        CityItem(cityName = "Москва", isSelected = true) {}
+        CityItem(
+            cityName = "Москва",
+            isSelected = true,
+            onClick = {}
+        )
     }
 }

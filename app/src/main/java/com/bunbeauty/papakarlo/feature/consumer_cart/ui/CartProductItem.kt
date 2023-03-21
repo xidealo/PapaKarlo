@@ -91,38 +91,44 @@ fun CartProductItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CartProductItemPreview() {
-    CartProductItem(
-        cartProductItem = CartProductItem(
-            uuid = "",
-            name = "Бургер MINI с говядиной и плавленым сыром",
-            newCost = "99 ₽",
-            oldCost = "100 ₽",
-            photoLink = "",
-            count = 5,
-            menuProductUuid = ""
-        ),
-        onCountIncreased = {},
-        onCountDecreased = {},
-    ) {}
+    FoodDeliveryTheme {
+        CartProductItem(
+            cartProductItem = CartProductItem(
+                uuid = "",
+                name = "Бургер MINI с говядиной и плавленым сыром",
+                newCost = "99 ₽",
+                oldCost = "100 ₽",
+                photoLink = "",
+                count = 5,
+                menuProductUuid = ""
+            ),
+            onCountIncreased = {},
+            onCountDecreased = {},
+            onClick = {},
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CartProductItemWithoutOldCostPreview() {
-    CartProductItem(
-        cartProductItem = CartProductItem(
-            uuid = "",
-            name = "Бургер MINI с говядиной и плавленым сыром",
-            newCost = "99 ₽",
-            oldCost = null,
-            photoLink = "",
-            count = 5,
-            menuProductUuid = ""
-        ),
-        onCountIncreased = {},
-        onCountDecreased = {},
-    ) {}
+    FoodDeliveryTheme {
+        CartProductItem(
+            cartProductItem = CartProductItem(
+                uuid = "",
+                name = "Бургер MINI с говядиной и плавленым сыром",
+                newCost = "99 ₽",
+                oldCost = null,
+                photoLink = "",
+                count = 5,
+                menuProductUuid = ""
+            ),
+            onCountIncreased = {},
+            onCountDecreased = {},
+            onClick = {},
+        )
+    }
 }

@@ -230,20 +230,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenPreview() {
-        LoginScreen(
-            LoginState(
-                state = LoginState.State.Success
+        FoodDeliveryTheme {
+            LoginScreen(
+                LoginState(state = LoginState.State.Success)
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenLoadingPreview() {
-        LoginScreen(
-            LoginState(
-                state = LoginState.State.Loading
+        FoodDeliveryTheme {
+            LoginScreen(
+                LoginState(state = LoginState.State.Loading)
             )
-        )
+        }
     }
 }

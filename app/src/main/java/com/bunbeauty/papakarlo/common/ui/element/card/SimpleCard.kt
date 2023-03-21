@@ -39,10 +39,13 @@ fun SimpleCard(
     }
 }
 
-@Preview
+@Preview@Preview(showSystemUi = true)
 @Composable
 fun SimpleCardPreview() {
-    SimpleCard(
-        text = "Text"
-    ) {}
+    FoodDeliveryTheme {
+        SimpleCard(
+            text = "Text",
+            onClick = {},
+        )
+    }
 }

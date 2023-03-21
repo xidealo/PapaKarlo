@@ -67,9 +67,12 @@ fun NavigationTextCard(
 @Preview(showSystemUi = true)
 @Composable
 private fun TextNavigationCardPreview() {
-    NavigationTextCard(
-        modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-        hintStringId = R.string.hint_settings_phone,
-        label = "+7 999 000-00-00"
-    ) {}
+    FoodDeliveryTheme {
+        NavigationTextCard(
+            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            hintStringId = R.string.hint_settings_phone,
+            label = "+7 999 000-00-00",
+            onClick = {}
+        )
+    }
 }

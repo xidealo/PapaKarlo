@@ -64,13 +64,12 @@ fun AddressItem(
 @Composable
 fun AddressItemPreview() {
     FoodDeliveryTheme {
-        FoodDeliveryCard {
-            AddressItem(
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                isClickable = false,
-                elevated = false
-            ) {}
-        }
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            elevated = false,
+            onClick = {},
+        )
     }
 }
 
@@ -78,13 +77,12 @@ fun AddressItemPreview() {
 @Composable
 fun AddressItemSelectedPreview() {
     FoodDeliveryTheme {
-        FoodDeliveryCard {
-            AddressItem(
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                isClickable = false,
-                elevated = false,
-                isSelected = true
-            ) {}
-        }
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            elevated = false,
+            isSelected = true,
+            onClick = {},
+        )
     }
 }

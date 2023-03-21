@@ -85,18 +85,20 @@ fun MenuProductItem(
     }
 }
 
-@Preview(widthDp = 200)
+@Preview(widthDp = 200, showSystemUi = true)
 @Composable
 private fun MenuProductItemPreview() {
-    MenuProductItem(
-        menuProductItem = MenuProductItem(
-            uuid = "",
-            photoLink = "",
-            name = "Бэргер",
-            newPrice = "99 ₽",
-            oldPrice = "100 ₽",
-        ),
-        onAddProductClick = {},
-        onProductClick = {},
-    )
+    FoodDeliveryTheme {
+        MenuProductItem(
+            menuProductItem = MenuProductItem(
+                uuid = "",
+                photoLink = "",
+                name = "Бэргер",
+                newPrice = "99 ₽",
+                oldPrice = "100 ₽",
+            ),
+            onAddProductClick = {},
+            onProductClick = {},
+        )
+    }
 }

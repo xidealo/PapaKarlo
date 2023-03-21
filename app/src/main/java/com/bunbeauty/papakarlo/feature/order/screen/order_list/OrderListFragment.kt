@@ -140,73 +140,79 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenSuccessPreview() {
-        OrderListScreen(
-            OrderListUi(
-                orderList = listOf(
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.NOT_ACCEPTED,
-                        code = "А-01",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.NOT_ACCEPTED.name
+        FoodDeliveryTheme {
+            OrderListScreen(
+                OrderListUi(
+                    orderList = listOf(
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.NOT_ACCEPTED,
+                            code = "А-01",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.NOT_ACCEPTED.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.ACCEPTED,
+                            code = "Б-02",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.ACCEPTED.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.PREPARING,
+                            code = "В-03",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.PREPARING.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.DONE,
+                            code = "Г-04",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.DONE.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.SENT_OUT,
+                            code = "Д-05",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.SENT_OUT.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.DELIVERED,
+                            code = "Е-06",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.DELIVERED.name
+                        ),
+                        OrderItem(
+                            uuid = "",
+                            status = OrderStatus.CANCELED,
+                            code = "Ж-07",
+                            dateTime = "18.03.2023 11:53",
+                            statusName = OrderStatus.CANCELED.name
+                        )
                     ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.ACCEPTED,
-                        code = "Б-02",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.ACCEPTED.name
-                    ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.PREPARING,
-                        code = "В-03",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.PREPARING.name
-                    ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.DONE,
-                        code = "Г-04",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.DONE.name
-                    ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.SENT_OUT,
-                        code = "Д-05",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.SENT_OUT.name
-                    ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.DELIVERED,
-                        code = "Е-06",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.DELIVERED.name
-                    ),
-                    OrderItem(
-                        uuid = "",
-                        status = OrderStatus.CANCELED,
-                        code = "Ж-07",
-                        dateTime = "18.03.2023 11:53",
-                        statusName = OrderStatus.CANCELED.name
-                    )
-                ),
-                state = OrderListState.State.SUCCESS
+                    state = OrderListState.State.SUCCESS
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenEmptyPreview() {
-        OrderListScreen(OrderListUi(state = OrderListState.State.EMPTY))
+        FoodDeliveryTheme {
+            OrderListScreen(OrderListUi(state = OrderListState.State.EMPTY))
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderListScreenLoadingPreview() {
-        OrderListScreen(OrderListUi(state = OrderListState.State.LOADING))
+        FoodDeliveryTheme {
+            OrderListScreen(OrderListUi(state = OrderListState.State.LOADING))
+        }
     }
 }

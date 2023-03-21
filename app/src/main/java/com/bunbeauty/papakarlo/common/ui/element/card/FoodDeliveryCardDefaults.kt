@@ -1,13 +1,10 @@
 package com.bunbeauty.papakarlo.common.ui.element.card
 
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryCardDefaults {

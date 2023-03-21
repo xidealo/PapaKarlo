@@ -49,28 +49,34 @@ fun CategoryItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun CategoryItemSelectedPreview() {
-    CategoryItem(
-        categoryItem = CategoryItem(
-            key = "",
-            uuid = "",
-            name = "Бургеры",
-            isSelected = true
+    FoodDeliveryTheme {
+        CategoryItem(
+            categoryItem = CategoryItem(
+                key = "",
+                uuid = "",
+                name = "Бургеры",
+                isSelected = true
+            ),
+            onClick = {}
         )
-    ) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun CategoryItemNotSelectedPreview() {
-    CategoryItem(
-        categoryItem = CategoryItem(
-            key = "",
-            uuid = "",
-            name = "Бургеры",
-            isSelected = false
+    FoodDeliveryTheme {
+        CategoryItem(
+            categoryItem = CategoryItem(
+                key = "",
+                uuid = "",
+                name = "Бургеры",
+                isSelected = false
+            ),
+            onClick = {}
         )
-    ) {}
+    }
 }

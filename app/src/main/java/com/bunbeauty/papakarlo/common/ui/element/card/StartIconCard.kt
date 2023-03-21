@@ -49,61 +49,27 @@ fun StartIconCard(
         label = label,
         onClick = onClick,
     )
-
-//    Card(
-//        modifier = modifier
-//            .card()
-//            .clickable(
-//                enabled = isClickable,
-//                interactionSource = remember { MutableInteractionSource() },
-//                indication = rememberRipple(),
-//                onClick = onClick ?: {}
-//            ),
-//        colors = FoodDeliveryTheme.colors.cardColors()
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            val iconTint = iconColor ?: FoodDeliveryTheme.colors.onSurfaceVariant
-//            Icon(
-//                modifier = Modifier.icon24(),
-//                imageVector = ImageVector.vectorResource(iconId),
-//                contentDescription = stringResource(iconDescriptionStringId),
-//                tint = iconTint
-//            )
-//            val labelText = labelStringId?.let { id ->
-//                stringResource(id)
-//            } ?: label
-//            OverflowingText(
-//                modifier = Modifier
-//                    .padding(start = FoodDeliveryTheme.dimensions.mediumSpace)
-//                    .weight(1f),
-//                text = labelText,
-//                style = FoodDeliveryTheme.typography.body1,
-//                color = FoodDeliveryTheme.colors.onSurface
-//            )
-//        }
-//    }
 }
 
-@Preview
+@Preview@Preview(showSystemUi = true)
 @Composable
 fun IconCardPreview() {
-    StartIconCard(
-        iconId = R.drawable.ic_info,
-        labelStringId = R.string.title_about_app
-    )
+    FoodDeliveryTheme {
+        StartIconCard(
+            iconId = R.drawable.ic_info,
+            labelStringId = R.string.title_about_app
+        )
+    }
 }
 
-@Preview
+@Preview@Preview(showSystemUi = true)
 @Composable
 fun OriginalColorIconCardPreview() {
-    StartIconCard(
-        iconId = R.drawable.ic_bb,
-        iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
-        labelStringId = R.string.title_about_app
-    )
+    FoodDeliveryTheme {
+        StartIconCard(
+            iconId = R.drawable.ic_bb,
+            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
+            labelStringId = R.string.title_about_app
+        )
+    }
 }

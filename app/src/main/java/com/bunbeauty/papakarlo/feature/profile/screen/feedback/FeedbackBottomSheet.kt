@@ -94,9 +94,11 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun FeedbackScreenPreview() {
-        FeedbackScreen()
+        FoodDeliveryTheme {
+            FeedbackScreen()
+        }
     }
 }

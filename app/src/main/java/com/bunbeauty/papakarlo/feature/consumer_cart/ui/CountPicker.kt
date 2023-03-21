@@ -81,22 +81,26 @@ fun CountPicker(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CountPickerOneDigitPreview() {
-    CountPicker(
-        count = 5,
-        onCountIncreased = {},
-        onCountDecreased = {}
-    )
+    FoodDeliveryTheme {
+        CountPicker(
+            count = 5,
+            onCountIncreased = {},
+            onCountDecreased = {}
+        )
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CountPickerTwoDigitsPreview() {
-    CountPicker(
-        count = 99,
-        onCountIncreased = {},
-        onCountDecreased = {}
-    )
+    FoodDeliveryTheme {
+        CountPicker(
+            count = 99,
+            onCountIncreased = {},
+            onCountDecreased = {}
+        )
+    }
 }

@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 internal fun LoadingScreen() {
@@ -18,5 +19,7 @@ internal fun LoadingScreen() {
 @Preview(showSystemUi = true)
 @Composable
 private fun LoadingScreenPreview() {
-    LoadingScreen()
+    FoodDeliveryTheme {
+        LoadingScreen()
+    }
 }

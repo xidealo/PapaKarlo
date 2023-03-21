@@ -274,7 +274,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderInfoTextColumnPreview() {
         FoodDeliveryTheme {
@@ -285,7 +285,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderInfoCardPreview() {
         FoodDeliveryTheme {
@@ -293,7 +293,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun OrderInfoCardWithoutDeferredTimeAndCommentPreview() {
         FoodDeliveryTheme {
@@ -330,17 +330,21 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsSuccessScreenPreview() {
-        OrderDetailsScreen(orderDetailsUi = getOrderDetails())
+        FoodDeliveryTheme {
+            OrderDetailsScreen(orderDetailsUi = getOrderDetails())
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsLoadingScreenPreview() {
-        OrderDetailsScreen(
-            orderDetailsUi = getOrderDetails().copy(
-                isLoading = true
+        FoodDeliveryTheme {
+            OrderDetailsScreen(
+                orderDetailsUi = getOrderDetails().copy(
+                    isLoading = true
+                )
             )
-        )
+        }
     }
 
     private fun getOrderDetails(): OrderDetailsUi {

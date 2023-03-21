@@ -40,17 +40,21 @@ fun MainButton(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun MainButtonPreview() {
-    MainButton(textStringId = R.string.action_login_continue) {}
+    FoodDeliveryTheme {
+        MainButton(textStringId = R.string.action_login_continue) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun MainButtonDisabledPreview() {
-    MainButton(
-        textStringId = R.string.action_login_continue,
-        isEnabled = false
-    ) {}
+    FoodDeliveryTheme {
+        MainButton(
+            textStringId = R.string.action_login_continue,
+            isEnabled = false
+        ) {}
+    }
 }

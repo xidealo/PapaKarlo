@@ -142,32 +142,36 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ConfirmScreenResendCodeDisableSuccessPreview() {
-        ConfirmScreen(
-            Confirmation(
-                phoneNumber = "+7 (900) 900-90-90",
-                resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                verificationId = "",
-                resendSeconds = 59,
-                isCodeChecking = false
+        FoodDeliveryTheme {
+            ConfirmScreen(
+                Confirmation(
+                    phoneNumber = "+7 (900) 900-90-90",
+                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
+                    verificationId = "",
+                    resendSeconds = 59,
+                    isCodeChecking = false
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ConfirmScreenResendCodeEnableSuccessPreview() {
-        ConfirmScreen(
-            Confirmation(
-                phoneNumber = "+7 (900) 900-90-90",
-                resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                verificationId = "",
-                resendSeconds = 0,
-                isCodeChecking = false
+        FoodDeliveryTheme {
+            ConfirmScreen(
+                Confirmation(
+                    phoneNumber = "+7 (900) 900-90-90",
+                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
+                    verificationId = "",
+                    resendSeconds = 0,
+                    isCodeChecking = false
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)

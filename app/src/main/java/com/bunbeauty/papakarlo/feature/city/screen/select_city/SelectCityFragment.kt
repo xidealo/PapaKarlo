@@ -92,15 +92,17 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
             name = "Москва",
             timeZone = ""
         )
-        SelectCityScreen(
-            State.Success(
-                listOf(
-                    city,
-                    city,
-                    city,
+        FoodDeliveryTheme {
+            SelectCityScreen(
+                State.Success(
+                    listOf(
+                        city,
+                        city,
+                        city,
+                    )
                 )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)

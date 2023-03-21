@@ -140,6 +140,6 @@ fun SmsDigitCell(
 @Composable
 fun SmsEditTextPreview() {
     FoodDeliveryTheme {
-        SmsEditText {}
+        SmsEditText(onFilled = {})
     }
 }
