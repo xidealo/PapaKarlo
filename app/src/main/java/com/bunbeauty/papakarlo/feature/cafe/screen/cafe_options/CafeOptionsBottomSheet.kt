@@ -78,7 +78,8 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_cafe_option
             goByUri(uri, Intent.ACTION_DIAL)
         }
         NavigationIconCard(
-            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+            modifier = Modifier
+                .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
             iconId = R.drawable.ic_address,
             iconDescription = R.string.description_cafe_options_map,
             label = cafeOptions.showOnMap,

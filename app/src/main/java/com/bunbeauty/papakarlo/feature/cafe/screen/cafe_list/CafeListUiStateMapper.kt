@@ -16,7 +16,6 @@ class CafeListUiStateMapper(
             ),
             cafeList = cafeListState.cafeList,
             state = cafeListState.state,
-            eventList = cafeListState.eventList,
         )
     }
 }

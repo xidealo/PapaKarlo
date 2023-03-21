@@ -50,7 +50,7 @@ internal fun EmptyScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp)
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    .padding(horizontal = 16.dp),
                 text = stringResource(id = mainTextId),
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,

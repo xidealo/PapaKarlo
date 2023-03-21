@@ -39,8 +39,8 @@ class CreateOrderViewModel(
 ) : SharedViewModel() {
 
     private val orderCreationData = MutableStateFlow(OrderCreationData())
-    private val mutableOrderCreationState = MutableStateFlow(OrderCreationState())
-    val orderCreationState = mutableOrderCreationState.asCommonStateFlow()
+    private val mutableCreateOrderState = MutableStateFlow(CreateOrderState())
+    val orderCreationState = mutableCreateOrderState.asCommonStateFlow()
 
     fun update() {
         withLoading {
@@ -51,7 +51,7 @@ class CreateOrderViewModel(
 
     fun onSwitcherPositionChanged(position: Int) {
         (position == 0).let { isDelivery ->
-            mutableOrderCreationState.update { state ->
+            mutableCreateOrderState.update { state ->
                 state.copy(isDelivery = isDelivery)
             }
         }
@@ -64,14 +64,14 @@ class CreateOrderViewModel(
         val addressList = orderCreationData.value.userAddressList
         val addressUiList = addressList.mapNotNull(userAddressMapper::toUiModel)
         val event = if (addressUiList.isEmpty()) {
-            OrderCreationState.Event.OpenCreateAddressEvent
+            CreateOrderState.Event.OpenCreateAddressEvent
         } else {
-            OrderCreationState.Event.ShowUserAddressListEvent(
+            CreateOrderState.Event.ShowUserAddressListEvent(
                 addressList = addressUiList,
                 selectedUserAddressUuid = orderCreationState.value.deliveryAddress?.uuid
             )
         }
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state + event
         }
     }
@@ -84,11 +84,11 @@ class CreateOrderViewModel(
     }
 
     fun onCafeAddressClicked() {
-        val event = OrderCreationState.Event.ShowCafeAddressListEvent(
+        val event = CreateOrderState.Event.ShowCafeAddressListEvent(
             orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem),
             selectedCafeAddress = orderCreationState.value.pickupAddress
         )
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state + event
         }
     }
@@ -104,8 +104,8 @@ class CreateOrderViewModel(
         val deferredTime = timeMapper.toUiModel(orderCreationData.value.selectedDeferredTime)
         sharedScope.launch {
             val timeZone = getSelectedCityTimeZoneUseCase()
-            mutableOrderCreationState.update { state ->
-                val event = OrderCreationState.Event.ShowDeferredTimeEvent(
+            mutableCreateOrderState.update { state ->
+                val event = CreateOrderState.Event.ShowDeferredTimeEvent(
                     deferredTime = deferredTime,
                     minTime = timeMapper.toUiModel(getMinTime(timeZone)),
                     isDelivery = state.isDelivery
@@ -120,39 +120,39 @@ class CreateOrderViewModel(
         orderCreationData.update { data ->
             data.copy(selectedDeferredTime = deferredTime)
         }
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state.copy(deferredTime = deferredTimeUi)
         }
     }
 
     fun onCommentClicked() {
-        val event = OrderCreationState.Event.ShowCommentInputEvent(
-            comment = mutableOrderCreationState.value.comment
+        val event = CreateOrderState.Event.ShowCommentInputEvent(
+            comment = mutableCreateOrderState.value.comment
         )
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state + event
         }
     }
 
     fun onCommentChanged(comment: String) {
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state.copy(comment = comment.ifEmpty { null })
         }
     }
 
     fun onCreateOrderClicked() {
-        val stateValue = mutableOrderCreationState.value
+        val stateValue = mutableCreateOrderState.value
         val data = orderCreationData.value
 
         val isDeliveryAddressNotSelected =
             stateValue.isDelivery && (data.selectedUserAddress == null)
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state.copy(isAddressErrorShown = isDeliveryAddressNotSelected)
         }
 
         if (isDeliveryAddressNotSelected) {
-            mutableOrderCreationState.update { state ->
-                state + OrderCreationState.Event.ShowUserAddressError
+            mutableCreateOrderState.update { state ->
+                state + CreateOrderState.Event.ShowUserAddressError
             }
             return
         }
@@ -168,28 +168,28 @@ class CreateOrderViewModel(
                     timeZone = getSelectedCityTimeZoneUseCase()
                 )
                 if (orderCode == null) {
-                    val event = OrderCreationState.Event.ShowSomethingWentWrongErrorEvent
-                    mutableOrderCreationState.update { it + event }
+                    val event = CreateOrderState.Event.ShowSomethingWentWrongErrorEvent
+                    mutableCreateOrderState.update { it + event }
                 } else {
                     cartProductInteractor.removeAllProductsFromCart()
                     // Delay for IOS version,
                     // Try to remove it when ConsumerCartViewModel.kt will be shared
                     //delay(50)
-                    mutableOrderCreationState.update {
-                        it + OrderCreationState.Event.OrderCreatedEvent(
+                    mutableCreateOrderState.update {
+                        it + CreateOrderState.Event.OrderCreatedEvent(
                             code = orderCode.code
                         )
                     }
                 }
             } else {
-                val event = OrderCreationState.Event.ShowUserUnauthorizedErrorEvent
-                mutableOrderCreationState.update { it + event }
+                val event = CreateOrderState.Event.ShowUserUnauthorizedErrorEvent
+                mutableCreateOrderState.update { it + event }
             }
         }
     }
 
-    fun consumeEventList(eventList: List<OrderCreationState.Event>) {
-        mutableOrderCreationState.update { state ->
+    fun consumeEventList(eventList: List<CreateOrderState.Event>) {
+        mutableCreateOrderState.update { state ->
             state.copy(eventList = state.eventList - eventList.toSet())
         }
     }
@@ -213,11 +213,11 @@ class CreateOrderViewModel(
         orderCreationData.update { data ->
             data.copy(selectedUserAddress = selectedUserAddress)
         }
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state.copy(deliveryAddress = userAddressMapper.toUiModel(selectedUserAddress))
         }
         if (selectedUserAddress != null) {
-            mutableOrderCreationState.update { state ->
+            mutableCreateOrderState.update { state ->
                 state.copy(isAddressErrorShown = false)
             }
         }
@@ -228,16 +228,16 @@ class CreateOrderViewModel(
         orderCreationData.update { data ->
             data.copy(selectedCafe = selectedCafe)
         }
-        mutableOrderCreationState.update { state ->
+        mutableCreateOrderState.update { state ->
             state.copy(pickupAddress = selectedCafe?.address)
         }
     }
 
     private suspend fun updateCartTotal() {
         try {
-            val isDelivery = mutableOrderCreationState.value.isDelivery
+            val isDelivery = mutableCreateOrderState.value.isDelivery
             val cartTotal = getCartTotal(isDelivery)
-            mutableOrderCreationState.update { state ->
+            mutableCreateOrderState.update { state ->
                 state.copy(
                     totalCost = cartTotal.totalCost,
                     deliveryCost = cartTotal.deliveryCost,
@@ -245,8 +245,8 @@ class CreateOrderViewModel(
                 )
             }
         } catch (exception: Exception) {
-            val event = OrderCreationState.Event.ShowSomethingWentWrongErrorEvent
-            mutableOrderCreationState.update { state ->
+            val event = CreateOrderState.Event.ShowSomethingWentWrongErrorEvent
+            mutableCreateOrderState.update { state ->
                 state + event
             }
         }
@@ -255,11 +255,11 @@ class CreateOrderViewModel(
     private inline fun withLoading(crossinline block: suspend () -> Unit) {
         //TODO (Exception handler)
         sharedScope.launch {
-            mutableOrderCreationState.update { state ->
+            mutableCreateOrderState.update { state ->
                 state.copy(isLoading = true)
             }
             block()
-            mutableOrderCreationState.update { state ->
+            mutableCreateOrderState.update { state ->
                 state.copy(isLoading = false)
             }
         }

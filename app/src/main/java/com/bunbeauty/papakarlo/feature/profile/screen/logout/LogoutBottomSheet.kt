@@ -8,16 +8,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.DragHandle
 import com.bunbeauty.papakarlo.common.ui.element.SecondaryButton
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -36,9 +36,12 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(bottomSheetShape)
+                .padding(top = 8.dp)
+                .padding(horizontal = 16.dp)
                 .background(FoodDeliveryTheme.colors.mainColors.surface)
         ) {
+            DragHandle()
+
             Title(
                 modifier = Modifier
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
@@ -46,7 +49,6 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
             )
             Column(
                 modifier = Modifier
-                    .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 MainButton(

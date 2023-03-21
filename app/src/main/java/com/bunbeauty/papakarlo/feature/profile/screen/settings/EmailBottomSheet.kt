@@ -20,10 +20,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.DragHandle
 import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
@@ -39,9 +41,76 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.root.setContent {
-            CommentScreen(email = email) { updatedComment ->
+            EmailScreen(email = email) { updatedComment ->
                 callback?.onResult(updatedComment)
             }
+        }
+    }
+
+    @Composable
+    private fun EmailScreen(
+        email: String?,
+        onSaveClicked: (String) -> Unit,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+                .padding(bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        ) {
+            DragHandle()
+
+            Title(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                text = stringResource(R.string.common_email),
+            )
+
+            val focusRequester = remember { FocusRequester() }
+            val text = email ?: ""
+            var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+                mutableStateOf(
+                    TextFieldValue(
+                        text = text,
+                        selection = TextRange(text.length)
+                    )
+                )
+            }
+            FoodDeliveryTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                focusRequester = focusRequester,
+                value = textFieldValue,
+                labelStringId = R.string.common_email,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Done,
+                onValueChange = { value ->
+                    textFieldValue = value
+                }
+            )
+            LaunchedEffect(Unit) {
+                focusRequester.requestFocus()
+            }
+
+            MainButton(
+                modifier = Modifier
+                    .padding(vertical = FoodDeliveryTheme.dimensions.mediumSpace),
+                textStringId = R.string.action_settings_save,
+                hasShadow = false
+            ) {
+                onSaveClicked(textFieldValue.text)
+            }
+        }
+    }
+
+    @Preview(showSystemUi = true)
+    @Composable
+    private fun EmailScreenPreview() {
+        FoodDeliveryTheme {
+            EmailScreen(email = "example@email.com") {}
         }
     }
 
@@ -63,65 +132,5 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
                 show(fragmentManager, TAG)
             }
         }
-    }
-}
-
-@Composable
-private fun CommentScreen(
-    email: String?,
-    onSaveClicked: (String) -> Unit,
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Title(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            text = stringResource(R.string.common_email),
-        )
-
-        val focusRequester = remember { FocusRequester() }
-        val text = email ?: ""
-        var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-            mutableStateOf(
-                TextFieldValue(
-                    text = text,
-                    selection = TextRange(text.length)
-                )
-            )
-        }
-        FoodDeliveryTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            focusRequester = focusRequester,
-            value = textFieldValue,
-            labelStringId = R.string.common_email,
-            keyboardType = KeyboardType.Email,
-            imeAction = ImeAction.Done,
-            onValueChange = { value ->
-                textFieldValue = value
-            }
-        )
-        LaunchedEffect(Unit) {
-            focusRequester.requestFocus()
-        }
-
-        MainButton(
-            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            textStringId = R.string.action_settings_save,
-            hasShadow = false
-        ) {
-            onSaveClicked(textFieldValue.text)
-        }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun CommentScreenPreview() {
-    FoodDeliveryTheme {
-        CommentScreen(email = "example@email.com") {}
     }
 }
