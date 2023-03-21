@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults.getButtonElevation
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -30,7 +31,7 @@ fun LoadingButton(
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = buttonRoundedCornerShape,
-        elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
+        elevation = getButtonElevation(hasShadow),
         enabled = !isLoading
     ) {
         if (isLoading) {

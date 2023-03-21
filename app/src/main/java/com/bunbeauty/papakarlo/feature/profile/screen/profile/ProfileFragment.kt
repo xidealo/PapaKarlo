@@ -1,8 +1,10 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -203,8 +206,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     ) {
         Column(
             modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             profile.orderItem?.let { orderItem ->
                 OrderItem(orderItem = orderItem) {
@@ -254,6 +258,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileInfoCards(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
             )
+
+            //Spacer(modifier = Modifier.height())
         }
     }
 
@@ -262,22 +268,21 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             ProfileInfoCards()
-            Spacer(modifier = Modifier.weight(1f))
 
+            Spacer(modifier = Modifier.weight(1f))
             Column(
+                modifier = Modifier.padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                BoxWithConstraints {
-                    if (maxHeight > 280.dp) {
-                        Image(
-                            painter = painterResource(R.drawable.empty_profile),
-                            contentDescription = stringResource(R.string.description_empty_profile)
-                        )
-                    }
-                }
+                Image(
+                    modifier = Modifier.size(120.dp),
+                    painter = painterResource(R.drawable.empty_profile),
+                    contentDescription = stringResource(R.string.description_empty_profile)
+                )
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -287,20 +292,15 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier = Modifier.padding(top = 8.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
             }
-
             Spacer(modifier = Modifier.weight(1f))
 
-            Spacer(
-                modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
-            )
+            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
         }
     }
 

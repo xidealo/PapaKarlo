@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -29,10 +30,12 @@ import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
@@ -47,10 +50,10 @@ import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_order) {
+class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
 
     val viewModel: CreateOrderViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
 
@@ -61,7 +64,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentCreateOrderCvMain.setContent {
+        viewBinding.root.setContentWithTheme {
             val orderCreationState by viewModel.orderCreationState.collectAsStateWithLifecycle()
             CreateOrderScreen(createOrderStateMapper.map(orderCreationState))
             LaunchedEffect(orderCreationState.eventList) {

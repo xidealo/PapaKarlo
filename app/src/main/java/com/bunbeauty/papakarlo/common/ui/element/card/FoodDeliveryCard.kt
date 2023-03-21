@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.getCardElevation
 import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,7 +27,6 @@ fun FoodDeliveryCard(
     border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
-    val elevation = if (elevated) 1.dp else 0.dp
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
@@ -34,7 +34,7 @@ fun FoodDeliveryCard(
             modifier = modifier,
             shape = shape,
             colors = colors,
-            elevation = CardDefaults.cardElevation(elevation),
+            elevation = getCardElevation(elevated),
             enabled = enabled,
             onClick = onClick,
             border = border,

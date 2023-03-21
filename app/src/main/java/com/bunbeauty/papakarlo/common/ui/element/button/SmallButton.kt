@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element
+package com.bunbeauty.papakarlo.common.ui.element.button
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -33,7 +32,7 @@ fun SmallButton(
             color = FoodDeliveryTheme.colors.mainColors.primary
         ),
         shape = buttonRoundedCornerShape,
-        elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
         enabled = isEnabled
     ) {
         Text(

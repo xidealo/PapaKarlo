@@ -27,7 +27,7 @@ fun MainButton(
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = buttonRoundedCornerShape,
-        elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
         enabled = isEnabled
     ) {
         val buttonText = text ?: textStringId?.let {

@@ -17,7 +17,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
-import com.bunbeauty.papakarlo.common.ui.element.SmallButton
+import com.bunbeauty.papakarlo.common.ui.element.button.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold

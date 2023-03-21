@@ -1,7 +1,5 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
 import androidx.compose.runtime.Composable
@@ -12,10 +10,13 @@ import androidx.compose.ui.unit.dp
 internal val LocalAppDimensions = staticCompositionLocalOf { AppDimensions() }
 
 data class AppDimensions(
+    val screenContentSpace: Dp = 16.dp,
+
     val verySmallSpace: Dp = 4.dp,
     val smallSpace: Dp = 8.dp,
     val mediumSpace: Dp = 16.dp,
     val largeSpace: Dp = 24.dp,
+
     val elevation: Dp = 1.dp,
     val bottomSurfaceElevation: Dp = 6.dp,
     val codeWidth: Dp = 56.dp,
@@ -36,19 +37,6 @@ data class AppDimensions(
             0.dp
         } else {
             smallSpace
-        }
-    }
-
-    @Composable
-    fun getButtonEvaluation(hasShadow: Boolean): ButtonElevation {
-        return if (hasShadow) {
-            ButtonDefaults.buttonElevation(
-                defaultElevation = elevation
-            )
-        } else {
-            ButtonDefaults.buttonElevation(
-                defaultElevation = 0.dp
-            )
         }
     }
 
