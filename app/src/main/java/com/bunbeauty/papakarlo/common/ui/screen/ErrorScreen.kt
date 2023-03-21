@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,8 +29,8 @@ fun ErrorScreen(
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(1f))
-
         Image(
+            modifier = Modifier.size(120.dp),
             painter = painterResource(R.drawable.error),
             contentDescription = stringResource(R.string.description_empty_profile)
         )
@@ -55,7 +56,6 @@ fun ErrorScreen(
                 textAlign = TextAlign.Center
             )
         }
-
         Spacer(modifier = Modifier.weight(1f))
 
         MainButton(

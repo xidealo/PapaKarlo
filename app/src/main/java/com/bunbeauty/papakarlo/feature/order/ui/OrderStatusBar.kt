@@ -13,14 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.papakarlo.common.ui.icon24
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
@@ -96,12 +95,9 @@ fun DoneStep(
     ) {
         Icon(
             modifier = Modifier
-                .icon24()
-                .padding(
-                    vertical = FoodDeliveryTheme.dimensions.verySmallSpace
-                )
+                .icon16()
                 .align(Alignment.Center),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_check),
+            painter = painterResource(R.drawable.ic_check),
             contentDescription = stringResource(R.string.description_order_details_done),
             tint = FoodDeliveryTheme.colors.orderColors.onOrder
         )

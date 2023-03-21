@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Badge
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -22,6 +23,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.icon16
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
@@ -52,7 +55,9 @@ fun FoodDeliveryToolbar(
                         onClick = { backActionClick() }
                     ) {
                         Icon(
+                            modifier = Modifier.icon16(),
                             painter = painterResource(id = R.drawable.ic_arrow_back),
+                            tint = FoodDeliveryTheme.colors.mainColors.onSurface,
                             contentDescription = null
                         )
                     }
@@ -90,7 +95,9 @@ private fun Action(action: FoodDeliveryAction) {
         onClick = action.onClick
     ) {
         Icon(
+            modifier = Modifier.icon24(),
             painter = painterResource(id = action.iconId),
+            tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             contentDescription = null
         )
     }
@@ -114,7 +121,9 @@ private fun CardAction(action: FoodDeliveryCartAction) {
             )
             Box {
                 Icon(
-                    modifier = Modifier.padding(4.dp),
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .icon24(),
                     painter = painterResource(id = R.drawable.ic_cart_24),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null

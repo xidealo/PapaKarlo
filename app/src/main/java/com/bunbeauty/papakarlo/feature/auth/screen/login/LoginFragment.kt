@@ -174,7 +174,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
             verticalArrangement = Arrangement.Center
         ) {
             BoxWithConstraints {
-                if (maxHeight > 240.dp) {
+                if (maxHeight > 200.dp) {
                     Image(
                         modifier = Modifier.height(156.dp),
                         painter = painterResource(R.drawable.logo_medium),

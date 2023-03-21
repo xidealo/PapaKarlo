@@ -46,7 +46,7 @@ fun CartProductItem(
                     .data(cartProductItem.photoLink)
                     .crossfade(true)
                     .build(),
-                placeholder = painterResource(R.drawable.placeholder),
+                placeholder = painterResource(R.drawable.placeholder_small),
                 contentDescription = stringResource(R.string.description_product),
                 contentScale = ContentScale.FillHeight
             )
