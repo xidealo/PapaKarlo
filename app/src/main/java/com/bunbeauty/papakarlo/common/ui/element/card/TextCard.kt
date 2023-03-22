@@ -46,7 +46,7 @@ fun TextCard(
 
 @Preview(showSystemUi = true)
 @Composable
-fun TextCardPreview() {
+private fun TextCardPreview() {
     FoodDeliveryTheme {
         TextCard(
             hintStringId = R.string.hint_settings_phone,

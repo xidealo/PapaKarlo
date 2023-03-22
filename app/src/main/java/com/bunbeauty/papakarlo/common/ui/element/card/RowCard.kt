@@ -103,7 +103,7 @@ fun RowCard(
 
 @Preview(showSystemUi = true)
 @Composable
-fun RowCardPreview() {
+private fun RowCardPreview() {
     FoodDeliveryTheme {
         RowCard(labelStringId = R.string.common_error)
     }

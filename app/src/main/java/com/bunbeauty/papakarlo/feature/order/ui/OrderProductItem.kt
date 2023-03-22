@@ -36,12 +36,7 @@ fun OrderProductItem(
     modifier: Modifier = Modifier,
     orderProductItem: OrderProductUiItem,
 ) {
-    FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
-        enabled = false
-    ) {
+    FoodDeliveryCard(modifier = modifier.fillMaxWidth()) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier
@@ -138,7 +133,7 @@ private fun OrderProductItemPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun OrderProductItemWithoutOldPricePreview() {
     FoodDeliveryTheme {

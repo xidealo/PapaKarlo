@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
@@ -47,7 +46,7 @@ fun FoodDeliverySwitcher(
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
-        shape = buttonRoundedCornerShape,
+        shape = FoodDeliverySwitcherDefaults.switcherShape,
         colors = FoodDeliveryCardDefaults.cardColors,
     ) {
         Row(
@@ -89,7 +88,7 @@ private fun SwitcherButton(
             .height(40.dp),
         onClick = onClick,
         enabled = enabled,
-        shape = buttonRoundedCornerShape,
+        shape = FoodDeliverySwitcherDefaults.switcherButtonShape,
         colors = FoodDeliverySwitcherDefaults.switcherButtonColor,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {

@@ -178,7 +178,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenWithEmailPreview() {
+    private fun SettingsScreenWithEmailPreview() {
         FoodDeliveryTheme {
             SettingsScreen(
                 SettingsState(
@@ -200,7 +200,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenWithoutEmailPreview() {
+    private fun SettingsScreenWithoutEmailPreview() {
         FoodDeliveryTheme {
             SettingsScreen(
                 SettingsState(
@@ -222,7 +222,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenLoadingPreview() {
+    private fun SettingsScreenLoadingPreview() {
         FoodDeliveryTheme {
             SettingsScreen(
                 SettingsState(
@@ -236,7 +236,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenErrorPreview() {
+    private fun SettingsScreenErrorPreview() {
         FoodDeliveryTheme {
             SettingsScreen(
                 SettingsState(

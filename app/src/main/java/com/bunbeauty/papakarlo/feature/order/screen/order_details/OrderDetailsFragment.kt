@@ -159,10 +159,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         modifier: Modifier = Modifier,
         orderInfo: OrderDetailsUi.OrderInfo,
     ) {
-        FoodDeliveryCard(
-            modifier = modifier,
-            enabled = false
-        ) {
+        FoodDeliveryCard(modifier = modifier) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()

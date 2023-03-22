@@ -61,7 +61,7 @@ fun AddressItem(
 
 @Preview(showSystemUi = true)
 @Composable
-fun AddressItemPreview() {
+private fun AddressItemPreview() {
     FoodDeliveryTheme {
         AddressItem(
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
@@ -74,7 +74,7 @@ fun AddressItemPreview() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun AddressItemSelectedPreview() {
+private fun AddressItemSelectedPreview() {
     FoodDeliveryTheme {
         AddressItem(
             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",

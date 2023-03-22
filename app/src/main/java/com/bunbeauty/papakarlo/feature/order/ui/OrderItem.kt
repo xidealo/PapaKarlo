@@ -59,7 +59,7 @@ fun OrderItem(
 
 @Preview(showSystemUi = true)
 @Composable
-fun OrderItemPreview() {
+private fun OrderItemPreview() {
     FoodDeliveryTheme {
         OrderItem(
             orderItem = OrderItem(
@@ -76,7 +76,7 @@ fun OrderItemPreview() {
 
 @Preview(fontScale = 1.5f, showSystemUi = true)
 @Composable
-fun OrderItemLageFontPreview() {
+private fun OrderItemLageFontPreview() {
     FoodDeliveryTheme {
         OrderItem(
             orderItem = OrderItem(

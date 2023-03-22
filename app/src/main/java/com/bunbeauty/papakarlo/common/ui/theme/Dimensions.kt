@@ -12,6 +12,16 @@ internal val LocalAppDimensions = staticCompositionLocalOf { AppDimensions() }
 data class AppDimensions(
     val screenContentSpace: Dp = 16.dp,
 
+    val buttonRadius: Dp = 20.dp,
+    val smallButtonRadius: Dp = 16.dp,
+
+    val switcherRadius: Dp = 20.dp,
+    val switcherButtonRadius: Dp = 16.dp,
+
+    val cardRadius: Dp = 8.dp,
+    val cardMediumInnerSpace: Dp = 12.dp,
+    val cardLargeInnerSpace: Dp = 16.dp,
+
     val verySmallSpace: Dp = 4.dp,
     val smallSpace: Dp = 8.dp,
     val mediumSpace: Dp = 16.dp,

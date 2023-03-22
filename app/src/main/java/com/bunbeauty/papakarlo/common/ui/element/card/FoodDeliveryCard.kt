@@ -11,17 +11,16 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.getCardElevation
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodDeliveryCard(
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     elevated: Boolean = true,
-    onClick: (() -> Unit) = {},
+    onClick: (() -> Unit),
+    enabled: Boolean = true,
     colors: CardColors = FoodDeliveryCardDefaults.cardColors,
-    shape: Shape = mediumRoundedCornerShape,
+    shape: Shape = FoodDeliveryCardDefaults.cardShape,
     border: BorderStroke? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -33,8 +32,32 @@ fun FoodDeliveryCard(
             shape = shape,
             colors = colors,
             elevation = getCardElevation(elevated),
-            enabled = enabled,
             onClick = onClick,
+            enabled = enabled,
+            border = border,
+            content = content
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FoodDeliveryCard(
+    modifier: Modifier = Modifier,
+    elevated: Boolean = true,
+    colors: CardColors = FoodDeliveryCardDefaults.cardColors,
+    shape: Shape = FoodDeliveryCardDefaults.cardShape,
+    border: BorderStroke? = null,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        Card(
+            modifier = modifier,
+            shape = shape,
+            colors = colors,
+            elevation = getCardElevation(elevated),
             border = border,
             content = content
         )

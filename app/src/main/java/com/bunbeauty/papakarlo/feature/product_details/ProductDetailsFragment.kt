@@ -144,8 +144,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
         FoodDeliveryCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            enabled = false
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Column {
                 AsyncImage(

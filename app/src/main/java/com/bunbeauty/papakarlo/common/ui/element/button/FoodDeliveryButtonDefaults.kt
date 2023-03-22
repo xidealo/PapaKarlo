@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.button
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
@@ -47,6 +48,12 @@ object FoodDeliveryButtonDefaults {
             disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
             contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
         )
+
+    val buttonShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.buttonRadius)
+
+    val smallButtonShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.smallButtonRadius)
 
     @Composable
     fun getButtonElevation(elevated: Boolean): ButtonElevation = if (elevated) {

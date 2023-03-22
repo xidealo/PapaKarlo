@@ -61,7 +61,7 @@ fun CityItem(
 
 @Preview(showSystemUi = true)
 @Composable
-fun CityItemPreview() {
+private fun CityItemPreview() {
     FoodDeliveryTheme {
         CityItem(
             cityName = "Москва",
@@ -72,7 +72,7 @@ fun CityItemPreview() {
 
 @Preview(showSystemUi = true)
 @Composable
-fun SelectedCityItemPreview() {
+private fun SelectedCityItemPreview() {
     FoodDeliveryTheme {
         CityItem(
             cityName = "Москва",

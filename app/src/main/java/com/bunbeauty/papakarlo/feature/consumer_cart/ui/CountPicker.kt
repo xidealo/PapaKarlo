@@ -22,7 +22,6 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.button.FoodDeliveryButtonDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 
 @Composable
 fun CountPicker(
@@ -36,10 +35,10 @@ fun CountPicker(
             .heightIn(
                 min = FoodDeliveryTheme.dimensions.smallButtonSize
             )
-            .clip(buttonRoundedCornerShape)
+            .clip(FoodDeliveryButtonDefaults.smallButtonShape)
             .border(
                 BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
-                shape = buttonRoundedCornerShape
+                shape = FoodDeliveryButtonDefaults.smallButtonShape
             )
             .background(FoodDeliveryTheme.colors.mainColors.surface),
         verticalAlignment = Alignment.CenterVertically

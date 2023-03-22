@@ -138,7 +138,7 @@ fun SmsDigitCell(
 
 @Preview(showSystemUi = true)
 @Composable
-fun SmsEditTextPreview() {
+private fun SmsEditTextPreview() {
     FoodDeliveryTheme {
         SmsEditText(onFilled = {})
     }

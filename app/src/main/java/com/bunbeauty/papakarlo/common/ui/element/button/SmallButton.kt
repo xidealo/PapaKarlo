@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
@@ -31,7 +30,7 @@ fun SmallButton(
             width = 2.dp,
             color = FoodDeliveryTheme.colors.mainColors.primary
         ),
-        shape = buttonRoundedCornerShape,
+        shape = FoodDeliveryButtonDefaults.buttonShape,
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
         enabled = isEnabled
     ) {
@@ -44,7 +43,7 @@ fun SmallButton(
 
 @Preview(showSystemUi = true)
 @Composable
-fun SmallButtonPreview() {
+private fun SmallButtonPreview() {
     FoodDeliveryTheme {
         SmallButton(
             modifier = Modifier.wrapContentSize(),

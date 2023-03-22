@@ -68,9 +68,9 @@ fun NavigationIconCard(
     }
 }
 
-@Preview@Preview(showSystemUi = true)
+@Preview(showSystemUi = true)
 @Composable
-fun NavigationIconCardPreview() {
+private fun NavigationIconCardPreview() {
     FoodDeliveryTheme {
         NavigationIconCard(
             iconId = R.drawable.ic_info,

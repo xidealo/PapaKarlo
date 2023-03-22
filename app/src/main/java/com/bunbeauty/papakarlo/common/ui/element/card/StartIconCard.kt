@@ -53,7 +53,7 @@ fun StartIconCard(
 
 @Preview@Preview(showSystemUi = true)
 @Composable
-fun IconCardPreview() {
+private fun IconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
             iconId = R.drawable.ic_info,
@@ -64,7 +64,7 @@ fun IconCardPreview() {
 
 @Preview@Preview(showSystemUi = true)
 @Composable
-fun OriginalColorIconCardPreview() {
+private fun OriginalColorIconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
             iconId = R.drawable.ic_bb,

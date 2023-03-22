@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.switcher
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
@@ -14,4 +15,11 @@ object FoodDeliverySwitcherDefaults {
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.primary,
             disabledContentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
         )
+
+    val switcherShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.switcherRadius)
+
+    val switcherButtonShape: RoundedCornerShape
+        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.switcherButtonRadius)
+
 }

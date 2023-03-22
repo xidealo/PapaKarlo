@@ -43,7 +43,7 @@ fun NavigationCard(
 
 @Preview(showSystemUi = true)
 @Composable
-fun NavigationCardPreview() {
+private fun NavigationCardPreview() {
     FoodDeliveryTheme {
         NavigationCard(
             labelStringId = R.string.title_about_app,

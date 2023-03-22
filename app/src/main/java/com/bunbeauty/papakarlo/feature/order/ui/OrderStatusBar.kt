@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,8 +22,9 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+
+private val stepShape = RoundedCornerShape(12.dp)
 
 @Composable
 fun OrderStatusBar(
@@ -33,8 +35,7 @@ fun OrderStatusBar(
     FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
-            .fillMaxWidth(),
-        enabled = false
+            .fillMaxWidth()
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
@@ -83,14 +84,14 @@ fun OrderStatusBar(
 }
 
 @Composable
-fun DoneStep(
+private fun DoneStep(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
 ) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(largeRoundedCornerShape)
+            .clip(stepShape)
             .background(getOrderColor(orderStatus))
     ) {
         Icon(
@@ -105,18 +106,18 @@ fun DoneStep(
 }
 
 @Composable
-fun FutureStep(modifier: Modifier = Modifier) {
+private fun FutureStep(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(largeRoundedCornerShape)
+            .clip(stepShape)
             .background(FoodDeliveryTheme.colors.mainColors.disabled)
     )
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-fun StatusBarNotAcceptedPreview() {
+private fun StatusBarNotAcceptedPreview() {
     FoodDeliveryTheme {
         OrderStatusBar(
             orderStatus = OrderStatus.NOT_ACCEPTED,
@@ -125,7 +126,7 @@ fun StatusBarNotAcceptedPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarAcceptedPreview() {
     FoodDeliveryTheme {
@@ -136,7 +137,7 @@ fun StatusBarAcceptedPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarPreparingPreview() {
     FoodDeliveryTheme {
@@ -147,7 +148,7 @@ fun StatusBarPreparingPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarDonePreview() {
     FoodDeliveryTheme {
@@ -158,7 +159,7 @@ fun StatusBarDonePreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarSentOutPreview() {
     FoodDeliveryTheme {
@@ -169,7 +170,7 @@ fun StatusBarSentOutPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarSentDeliveredPreview() {
     FoodDeliveryTheme {
@@ -180,7 +181,7 @@ fun StatusBarSentDeliveredPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 fun StatusBarSentCanceledPreview() {
     FoodDeliveryTheme {
