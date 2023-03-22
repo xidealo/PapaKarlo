@@ -169,7 +169,10 @@ struct CreateOrderSuccessView:View {
                     viewModel.kmmViewModel.onCommentChanged(comment: comment)
                 }),
                 limit: 255,
-                hasError: .constant(false)
+                hasError: .constant(false),
+                textChanged: { str in
+                    
+                }
             )
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)

@@ -28,10 +28,16 @@ struct SearchEditTextView: View {
 
     var body: some View {
         VStack{
-            EditTextView(hint: hint, text: $text, limit: limit, hasError: $hasError, errorMessage: errorMessage)
+            EditTextView(
+                hint: hint,
+                text: $text,
+                limit: limit,
+                hasError: $hasError,
+                errorMessage: errorMessage,
+                textChanged: textChanged
+            )
                 .onReceive(Just(text)) { str in
                     limitText(limit)
-                    textChanged(str)
                 }
             
             LazyVStack{

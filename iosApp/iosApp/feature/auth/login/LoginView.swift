@@ -88,7 +88,10 @@ struct LoginViewSuccessView: View {
                     text:$phone, limit: 18,
                     keyBoadrType: UIKeyboardType.phonePad,
                     hasError: $hasError,
-                    errorMessage: "Введите номер телефона"
+                    errorMessage: "Введите номер телефона",
+                    textChanged: { str in
+                        
+                    }
                 )
                 .padding(.top, Diems.SMALL_PADDING)
                 .onReceive(Just(phone)) { _ in

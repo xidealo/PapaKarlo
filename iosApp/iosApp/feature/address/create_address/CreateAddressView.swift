@@ -92,7 +92,10 @@ struct CreateAddressView: View {
                             text: $house,
                             limit: 5,
                             hasError: $hasHouseError,
-                            errorMessage: "Введите номер дома"
+                            errorMessage: "Введите номер дома",
+                            textChanged: { str in
+                                viewModel.viewModel.onHouseTextChanged(houseText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -102,7 +105,10 @@ struct CreateAddressView: View {
                             text: $flat,
                             limit: 5,
                             hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5"
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onFlatTextChanged(flatText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -113,7 +119,10 @@ struct CreateAddressView: View {
                             text: $entarance,
                             limit: 5,
                             hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5"
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onEntranceTextChanged(entranceText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -124,7 +133,10 @@ struct CreateAddressView: View {
                             text: $floor,
                             limit: 5,
                             hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 5"
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onFloorTextChanged(floorText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -135,7 +147,10 @@ struct CreateAddressView: View {
                             text: $comment,
                             limit: 100,
                             hasError: .constant(false),
-                            errorMessage: "Максимальная длина поля 100"
+                            errorMessage: "Максимальная длина поля 100",
+                            textChanged: { str in
+                                viewModel.viewModel.onCommentTextChanged(commentText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
