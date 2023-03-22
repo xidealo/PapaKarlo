@@ -12,7 +12,8 @@ class CreateAddressHolder: ObservableObject {
     var viewModel = CreateAddressViewModel(
         getStreetsUseCase: iosComponent.provideGetStreetsUseCase(),
         createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
-        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase(),
+        getFilteredStreetListUseCase: iosComponent.provideGetFilteredStreetListUseCase()
     )
 }
 
@@ -27,11 +28,7 @@ struct CreateAddressView: View {
     
     @State var hasStreetError:Bool = false
     @State var hasHouseError:Bool = false
-    @State var hasFlatError:Bool = false
-    @State var hasEntaranceError:Bool = false
-    @State var hasFloorError:Bool = false
-    @State var hasCommentError:Bool = false
-    
+
     @Binding var show:Bool
     
     @FocusState private var isTextFieldFocused: Bool
@@ -42,18 +39,21 @@ struct CreateAddressView: View {
     
     @State var listener: Closeable? = nil
     
+    
     @State var createAddressState = CreateAddressState(
-        streetItemList: [],
+        streetList: [],
+        suggestedStreetList: [],
         state: CreateAddressState.StateLoading(),
+        street: "",
         hasStreetError: false,
-        houseFieldError: nil,
-        hasFlatError: false,
-        hasEntranceError: false,
-        hasFloorError: false,
-        hasCommentError: false,
+        house: "",
+        hasHouseError: false,
+        flat: "",
+        entrance: "",
+        floor: "",
+        comment: "",
         isCreateLoading: false,
-        eventList: [],
-        suggestedStreetList: []
+        eventList: []
     )
     
     @State var filteredList : [StreetItem] = []
@@ -81,7 +81,7 @@ struct CreateAddressView: View {
                             hasError: $hasStreetError,
                             errorMessage: "Выберите улицу из списка",
                             textChanged: { changedValue in
-                                viewModel.viewModel.filter(query: changedValue)
+                                viewModel.viewModel.onStreetTextChanged(streetText: changedValue)
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -101,7 +101,7 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_FLAT,
                             text: $flat,
                             limit: 5,
-                            hasError: $hasFlatError,
+                            hasError: .constant(false),
                             errorMessage: "Максимальная длина поля 5"
                         )
                         .focused($isTextFieldFocused)
@@ -112,7 +112,7 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
                             text: $entarance,
                             limit: 5,
-                            hasError: $hasEntaranceError,
+                            hasError: .constant(false),
                             errorMessage: "Максимальная длина поля 5"
                         )
                         .focused($isTextFieldFocused)
@@ -123,7 +123,7 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
                             text: $floor,
                             limit: 5,
-                            hasError: $hasFloorError,
+                            hasError: .constant(false),
                             errorMessage: "Максимальная длина поля 5"
                         )
                         .focused($isTextFieldFocused)
@@ -134,7 +134,7 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
                             text: $comment,
                             limit: 100,
-                            hasError: $hasCommentError,
+                            hasError: .constant(false),
                             errorMessage: "Максимальная длина поля 100"
                         )
                         .focused($isTextFieldFocused)
@@ -146,14 +146,7 @@ struct CreateAddressView: View {
                                 
                 Button(
                     action: {
-                        viewModel.viewModel.onCreateAddressClicked(
-                            streetName: street,
-                            house: house,
-                            flat: flat,
-                            entrance: entarance,
-                            floor: floor,
-                            comment: comment
-                        )
+                        viewModel.viewModel.onCreateAddressClicked()
                     }
                 ) {
                     if(createAddressState.isCreateLoading){
@@ -217,15 +210,11 @@ struct CreateAddressView: View {
                 if(createAddressStateVM != nil ){
                     createAddressState = createAddressStateVM!
                     hasStreetError = createAddressState.hasStreetError
-                    hasHouseError = createAddressState.houseFieldError  == CreateAddressState.FieldError.incorrect
-                    hasFlatError = createAddressState.hasFlatError
-                    hasEntaranceError = createAddressState.hasEntranceError
-                    hasFloorError = createAddressState.hasFloorError
-                    hasCommentError = createAddressState.hasCommentError
+                    hasHouseError = createAddressState.hasHouseError
                     filteredList = createAddressState.suggestedStreetList.map({ street in
                         StreetItem(
-                            id: street.uuid,
-                            name: street.name
+                            id: street.id,
+                            name: street.value
                         )
                     })
                 }
