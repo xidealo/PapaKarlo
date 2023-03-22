@@ -27,7 +27,7 @@ struct CreateOrderView: View {
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
-                title: Strings.TITLE_CREATION_ORDER,
+                title: "titleCreationOrder",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

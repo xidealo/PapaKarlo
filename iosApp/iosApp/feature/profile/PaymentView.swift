@@ -17,7 +17,7 @@ struct PaymentView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_PAYMENT,
+                title: "titlePayment",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  iosApp
+
+  Created by Марк Шавловский on 22.03.2023.
+  Copyright © 2023 orgName. All rights reserved.
+*/
+
+"titleSelectCity" = "Select city";
+"titleAboutApp" = "About app";

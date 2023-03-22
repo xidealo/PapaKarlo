@@ -20,7 +20,7 @@ struct CafeAddressListView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_CAFE_ADDRESSES,
+                title: "titleCafeAddresses",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

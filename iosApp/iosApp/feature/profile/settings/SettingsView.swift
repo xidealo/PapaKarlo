@@ -38,7 +38,7 @@ struct SettingsView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_SETTINGS,
+                title: "titleSettings",
                 logout : {
                     viewModel.logout()
                 },

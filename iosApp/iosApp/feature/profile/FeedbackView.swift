@@ -15,7 +15,7 @@ struct FeedbackView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_FEEDBACK,
+                title: "titleFeedback",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

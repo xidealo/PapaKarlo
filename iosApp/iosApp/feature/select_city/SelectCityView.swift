@@ -21,9 +21,8 @@ struct SelectCityView: View {
             ){
                 EmptyView()
             }.isDetailLink(false)
-            
             ToolbarView(
-                title: Strings.TITLE_SELECT_CITY_CITY,
+                title:  "titleSelectCity",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 })

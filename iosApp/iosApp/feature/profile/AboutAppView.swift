@@ -20,7 +20,7 @@ struct AboutAppView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_ABOUT_APP,
+                title: "titleAboutApp",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

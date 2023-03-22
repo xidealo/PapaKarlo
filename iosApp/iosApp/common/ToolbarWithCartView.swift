@@ -10,7 +10,9 @@ import SwiftUI
 
 struct ToolbarWithCartView: View {
     
-    let title:String
+    let title:LocalizedStringKey
+    let titleString:String? = nil
+    
     let cost:String
     let count:String
     @Binding var isShowLogo: Bool
@@ -25,6 +27,7 @@ struct ToolbarWithCartView: View {
     var body: some View {
         ZStack{
             HStack(spacing:0){
+                
                 ToolbarView(title: title, back: back)
             
                 NavigationLink(

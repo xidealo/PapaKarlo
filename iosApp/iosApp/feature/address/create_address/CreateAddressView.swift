@@ -63,7 +63,7 @@ struct CreateAddressView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_CREATION_ADDRESS,
+                title: "titleCreationAddress",
                 back: {
                     self.presentationMode.wrappedValue.dismiss()
                 }
