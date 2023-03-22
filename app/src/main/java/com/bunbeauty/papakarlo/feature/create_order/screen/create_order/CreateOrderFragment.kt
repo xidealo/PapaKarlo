@@ -31,6 +31,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
@@ -213,13 +214,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 Text(
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_create_order_total_cost),
-                    style = FoodDeliveryTheme.typography.body1,
+                    style = FoodDeliveryTheme.typography.bodyMedium,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 createOrderUi.totalCost?.let {
                     Text(
                         text = it,
-                        style = FoodDeliveryTheme.typography.body1,
+                        style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
@@ -229,13 +230,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                     Text(
                         modifier = Modifier.weight(1f),
                         text = stringResource(R.string.msg_create_order_delivery_cost),
-                        style = FoodDeliveryTheme.typography.body1,
+                        style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     createOrderUi.deliveryCost?.let {
                         Text(
                             text = it,
-                            style = FoodDeliveryTheme.typography.body1,
+                            style = FoodDeliveryTheme.typography.bodyMedium,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
@@ -248,13 +249,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 Text(
                     modifier = Modifier.weight(1f),
                     text = stringResource(R.string.msg_create_order_amount_to_pay),
-                    style = FoodDeliveryTheme.typography.h2,
+                    style = FoodDeliveryTheme.typography.bodyMedium.bold,
                     color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
-                createOrderUi.finalCost?.let {
+                createOrderUi.finalCost?.let { finalCost ->
                     Text(
-                        text = it,
-                        style = FoodDeliveryTheme.typography.h2,
+                        text = finalCost,
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                 }
