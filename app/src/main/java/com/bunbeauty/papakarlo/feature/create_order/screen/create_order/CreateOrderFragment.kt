@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +22,14 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
-import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
@@ -81,28 +78,26 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
             }
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.weight(1f)) {
-                    Column(
-                        modifier = Modifier
-                            .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        FoodDeliverySwitcher(
-                            modifier = Modifier.fillMaxWidth(),
-                            optionResIdList = listOf(
-                                R.string.action_create_order_delivery,
-                                R.string.action_create_order_pickup
-                            ),
-                            position = createOrderUi.switcherPosition
-                        ) { changedPosition ->
-                            viewModel.onSwitcherPositionChanged(changedPosition)
-                        }
-                        AddressCard(createOrderUi)
-                        DeliveryAddressError(createOrderUi)
-                        CommentCard(createOrderUi)
-                        DeferredTimeCard(createOrderUi)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    FoodDeliverySwitcher(
+                        modifier = Modifier.fillMaxWidth(),
+                        optionResIdList = listOf(
+                            R.string.action_create_order_delivery,
+                            R.string.action_create_order_pickup
+                        ),
+                        position = createOrderUi.switcherPosition
+                    ) { changedPosition ->
+                        viewModel.onSwitcherPositionChanged(changedPosition)
                     }
-                    BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
+                    AddressCard(createOrderUi)
+                    DeliveryAddressError(createOrderUi)
+                    CommentCard(createOrderUi)
+                    DeferredTimeCard(createOrderUi)
                 }
                 BottomAmountBar(createOrderUi)
             }
@@ -205,35 +200,16 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
 
     @Composable
     private fun BottomAmountBar(createOrderUi: CreateOrderUi) {
-        Column(
-            modifier = Modifier
-                .background(FoodDeliveryTheme.colors.mainColors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
-            Row {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_create_order_total_cost),
-                    style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                createOrderUi.totalCost?.let {
-                    Text(
-                        text = it,
-                        style = FoodDeliveryTheme.typography.bodyMedium,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
-                }
-            }
-            if (createOrderUi.isDelivery) {
-                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+        FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+                Row {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = stringResource(R.string.msg_create_order_delivery_cost),
+                        text = stringResource(R.string.msg_create_order_total_cost),
                         style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
-                    createOrderUi.deliveryCost?.let {
+                    createOrderUi.totalCost?.let {
                         Text(
                             text = it,
                             style = FoodDeliveryTheme.typography.bodyMedium,
@@ -241,31 +217,48 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                         )
                     }
                 }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_create_order_amount_to_pay),
-                    style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                createOrderUi.finalCost?.let { finalCost ->
+                if (createOrderUi.isDelivery) {
+                    Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = stringResource(R.string.msg_create_order_delivery_cost),
+                            style = FoodDeliveryTheme.typography.bodyMedium,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
+                        createOrderUi.deliveryCost?.let {
+                            Text(
+                                text = it,
+                                style = FoodDeliveryTheme.typography.bodyMedium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                ) {
                     Text(
-                        text = finalCost,
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(R.string.msg_create_order_amount_to_pay),
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
+                    createOrderUi.finalCost?.let { finalCost ->
+                        Text(
+                            text = finalCost,
+                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
+                    }
                 }
-            }
-            LoadingButton(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_create_order_create_order,
-                isLoading = createOrderUi.isLoading
-            ) {
-                viewModel.onCreateOrderClicked()
+                LoadingButton(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    textStringId = R.string.action_create_order_create_order,
+                    isLoading = createOrderUi.isLoading
+                ) {
+                    viewModel.onCreateOrderClicked()
+                }
             }
         }
     }

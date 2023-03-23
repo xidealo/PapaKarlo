@@ -4,6 +4,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.zIndex
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
@@ -14,7 +15,7 @@ fun FoodDeliverySurface(
     content: @Composable () -> Unit
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.zIndex(1f),
         color = color,
         shadowElevation = FoodDeliverySurfaceDefaults.getSurfaceElevation(elevated),
         content = content

@@ -55,7 +55,7 @@ fun OrderStatusBar(
                 }
                 when {
                     (i < currentStep) -> {
-                        DoneStep(
+                        PassedOrderStatusChip(
                             modifier = Modifier
                                 .padding(start = startSpace)
                                 .weight(1f),
@@ -70,8 +70,8 @@ fun OrderStatusBar(
                             statusName = orderStatusName
                         )
                     }
-                    (i > currentStep) -> {
-                        FutureStep(
+                    else -> {
+                        EmptyOrderStatusChip(
                             modifier = Modifier
                                 .padding(start = startSpace)
                                 .weight(1f)

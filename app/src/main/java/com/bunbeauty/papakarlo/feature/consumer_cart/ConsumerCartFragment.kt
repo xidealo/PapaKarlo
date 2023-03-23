@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,19 +22,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.zIndex
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
@@ -159,18 +158,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                     }
                 }
             }
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(FoodDeliveryTheme.colors.mainColors.surface)
-                    .zIndex(1f),
-                shadowElevation = FoodDeliveryTheme.dimensions.bottomSurfaceElevation,
-                color = FoodDeliveryTheme.colors.mainColors.surface
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                ) {
+            FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
                     Row {
                         Text(
                             text = stringResource(R.string.title_consumer_cart_total),

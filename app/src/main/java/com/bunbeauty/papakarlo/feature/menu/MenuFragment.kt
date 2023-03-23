@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,19 +28,19 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.zIndex
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
@@ -141,13 +140,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
             LaunchedEffect(Unit) {
                 snapshotFlow { menuPosition }.collect(viewModel::onMenuPositionChanged)
             }
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .zIndex(1f),
-                shadowElevation = FoodDeliveryTheme.dimensions.bottomSurfaceElevation,
-                color = FoodDeliveryTheme.colors.mainColors.surface
-            ) {
+            FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
                 CategoryRow(menu.categoryItemList, menuLazyListState)
             }
             MenuColumn(menu.menuItemList, menuLazyListState)
