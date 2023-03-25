@@ -1,8 +1,5 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -15,8 +12,8 @@ data class AppDimensions(
     val buttonRadius: Dp = 20.dp,
     val bottomSheetRadius: Dp = 16.dp,
 
-    val switcherRadius: Dp = 20.dp,
-    val switcherButtonRadius: Dp = 16.dp,
+    val switcherRadius: Dp = 24.dp,
+    val switcherButtonRadius: Dp = 20.dp,
 
     val cardRadius: Dp = 8.dp,
     val cardMediumInnerSpace: Dp = 12.dp,

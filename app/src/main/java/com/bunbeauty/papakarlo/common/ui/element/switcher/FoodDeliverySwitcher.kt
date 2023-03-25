@@ -49,11 +49,7 @@ fun FoodDeliverySwitcher(
         shape = FoodDeliverySwitcherDefaults.switcherShape,
         colors = FoodDeliveryCardDefaults.cardColors,
     ) {
-        Row(
-            modifier = Modifier.padding(
-                FoodDeliveryTheme.dimensions.verySmallSpace
-            )
-        ) {
+        Row(modifier = Modifier.padding(4.dp)) {
             optionList.onEachIndexed { i, text ->
                 val startSpace = if (i == 0) {
                     0.dp
@@ -84,8 +80,7 @@ private fun SwitcherButton(
     onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier
-            .height(40.dp),
+        modifier = modifier.height(40.dp),
         onClick = onClick,
         enabled = enabled,
         shape = FoodDeliverySwitcherDefaults.switcherButtonShape,
@@ -101,7 +96,7 @@ private fun SwitcherButton(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun SwitcherPreview() {
     FoodDeliveryTheme {

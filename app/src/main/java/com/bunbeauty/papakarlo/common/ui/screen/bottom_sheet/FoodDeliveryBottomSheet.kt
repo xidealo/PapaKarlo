@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.screen
+package com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -28,10 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheetDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.theme.bottomSheetShape
 
 @Composable
 fun FoodDeliveryLazyBottomSheet(

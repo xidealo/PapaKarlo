@@ -11,7 +11,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.screen.FoodDeliveryLazyBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.City

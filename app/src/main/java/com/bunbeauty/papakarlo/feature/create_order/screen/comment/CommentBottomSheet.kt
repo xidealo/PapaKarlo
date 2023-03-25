@@ -24,7 +24,7 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
-import com.bunbeauty.papakarlo.common.ui.screen.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine

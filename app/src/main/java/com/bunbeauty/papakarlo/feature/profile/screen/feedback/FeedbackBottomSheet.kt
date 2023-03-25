@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.papakarlo.common.ui.screen.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.INSTAGRAM_LINK

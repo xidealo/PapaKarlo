@@ -23,7 +23,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
-import com.bunbeauty.papakarlo.common.ui.screen.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.BottomSheetComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme

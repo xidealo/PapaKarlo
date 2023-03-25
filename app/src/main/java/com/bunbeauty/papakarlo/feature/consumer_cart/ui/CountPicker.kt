@@ -48,9 +48,7 @@ fun CountPicker(
             onClick = onCountDecreased
         )
         Text(
-            modifier = Modifier
-                .padding(horizontal = FoodDeliveryTheme.dimensions.verySmallSpace)
-                .padding(vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 4.dp),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.bodySmall.bold,
             color = FoodDeliveryTheme.colors.mainColors.primary,
