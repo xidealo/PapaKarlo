@@ -4,38 +4,28 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.DragHandle
-import com.bunbeauty.papakarlo.common.ui.element.Title
+import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.screen.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.databinding.BottomSheetFeedbackBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.INSTAGRAM_LINK
 import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
 import com.bunbeauty.shared.Constants.VK_LINK
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
-
-    override val viewModel: EmptyViewModel by viewModel()
-    override val viewBinding by viewBinding(BottomSheetFeedbackBinding::bind)
+class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetFeedbackCvMain.setContentWithTheme {
-            FeedbackScreen()
+        binding.root.setContentWithTheme {
+            FeedbackScreen(onItemClick = ::goByLink)
         }
     }
 
@@ -44,61 +34,46 @@ class FeedbackBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_feedback) {
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
+}
 
-    @Composable
-    private fun FeedbackScreen() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .padding(bottom = 16.dp)
-                .padding(horizontal = 16.dp)
+@Composable
+private fun FeedbackScreen(
+    onItemClick: (String) -> Unit
+) {
+    FoodDeliveryBottomSheet(titleStringId = R.string.title_feedback) {
+        NavigationIconCard(
+            iconId = R.drawable.ic_vk,
+            iconDescription = R.string.description_feedback_vk,
+            labelStringId = R.string.action_feedback_vk,
+            hasShadow = false
         ) {
-            DragHandle()
-            Title(
-                modifier = Modifier.padding(top = 16.dp),
-                textStringId = R.string.title_feedback
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-            ) {
-                NavigationIconCard(
-                    iconId = R.drawable.ic_vk,
-                    iconDescription = R.string.description_feedback_vk,
-                    labelStringId = R.string.action_feedback_vk,
-                    hasShadow = false
-                ) {
-                    goByLink(VK_LINK)
-                }
-                NavigationIconCard(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_instagram,
-                    iconDescription = R.string.description_feedback_instagram,
-                    labelStringId = R.string.action_feedback_instagram,
-                    hasShadow = false
-                ) {
-                    goByLink(INSTAGRAM_LINK)
-                }
-                NavigationIconCard(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    iconId = R.drawable.ic_gp,
-                    iconDescription = R.string.description_feedback_play_market,
-                    labelStringId = R.string.action_feedback_play_market,
-                    hasShadow = false
-                ) {
-                    goByLink(PLAY_MARKET_LINK)
-                }
-            }
+            onItemClick(VK_LINK)
+        }
+        NavigationIconCard(
+            modifier = Modifier.padding(top = 8.dp),
+            iconId = R.drawable.ic_instagram,
+            iconDescription = R.string.description_feedback_instagram,
+            labelStringId = R.string.action_feedback_instagram,
+            hasShadow = false
+        ) {
+            onItemClick(INSTAGRAM_LINK)
+        }
+        NavigationIconCard(
+            modifier = Modifier.padding(top = 8.dp),
+            iconId = R.drawable.ic_gp,
+            iconDescription = R.string.description_feedback_play_market,
+            labelStringId = R.string.action_feedback_play_market,
+            hasShadow = false
+        ) {
+            onItemClick(PLAY_MARKET_LINK)
         }
     }
+}
 
-    @Preview(showSystemUi = true)
-    @Composable
-    private fun FeedbackScreenPreview() {
-        FoodDeliveryTheme {
-            FeedbackScreen()
-        }
+@Preview
+@Composable
+private fun FeedbackScreenPreview() {
+    FoodDeliveryTheme {
+        FeedbackScreen {}
     }
 }

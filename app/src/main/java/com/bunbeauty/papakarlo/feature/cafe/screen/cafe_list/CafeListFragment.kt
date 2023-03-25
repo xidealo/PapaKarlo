@@ -19,12 +19,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
@@ -35,9 +35,9 @@ import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
+class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
 
-    override val viewBinding by viewBinding(FragmentCafeListBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
     override val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
@@ -52,7 +52,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCafeItemList()
-        viewBinding.fragmentCafeListCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val cafeItemList by viewModel.cafeListState.collectAsStateWithLifecycle()
             CafeListScreen(
                 cafeListUi = cafeListUiStateMapper.map(cafeItemList),
