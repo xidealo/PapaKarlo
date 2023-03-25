@@ -26,13 +26,13 @@ fun NavigationIconCard(
     @StringRes iconDescription: Int,
     @StringRes labelStringId: Int? = null,
     label: String = "",
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = onClick,
-        elevated = hasShadow
+        elevated = elevated
     ) {
         Row(
             modifier = Modifier

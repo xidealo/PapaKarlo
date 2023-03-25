@@ -1,16 +1,15 @@
 package com.bunbeauty.papakarlo.common.ui.element.surface
 
-import androidx.compose.ui.unit.Dp
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliverySurfaceDefaults {
 
-    private val surfaceElevation: Dp = 4.dp
-    private val zeroSurfaceElevation: Dp = 0.dp
-
+    @Composable
     fun getSurfaceElevation(elevated: Boolean) = if (elevated) {
-        surfaceElevation
+        FoodDeliveryTheme.dimensions.surfaceElevation
     } else {
-        zeroSurfaceElevation
+        0.dp
     }
 }

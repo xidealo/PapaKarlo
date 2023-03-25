@@ -52,9 +52,6 @@ object FoodDeliveryButtonDefaults {
     val buttonShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.buttonRadius)
 
-    val smallButtonShape: RoundedCornerShape
-        @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.smallButtonRadius)
-
     @Composable
     fun getButtonElevation(elevated: Boolean): ButtonElevation = if (elevated) {
         buttonElevation

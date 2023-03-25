@@ -45,7 +45,7 @@ fun FoodDeliverySwitcher(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
+        elevation = FoodDeliveryCardDefaults.getCardElevation(true),
         shape = FoodDeliverySwitcherDefaults.switcherShape,
         colors = FoodDeliveryCardDefaults.cardColors,
     ) {

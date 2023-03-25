@@ -100,7 +100,7 @@ private fun EmailScreen(
         MainButton(
             modifier = Modifier.padding(top = 16.dp),
             textStringId = R.string.action_settings_save,
-            hasShadow = false,
+            elevated = false,
             onClick = {
                 onSaveClicked(textFieldValue.text)
             }

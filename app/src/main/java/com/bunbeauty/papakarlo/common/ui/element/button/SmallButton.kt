@@ -18,7 +18,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 fun SmallButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int,
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     onClick: () -> Unit,
     isEnabled: Boolean = true,
 ) {
@@ -31,7 +31,7 @@ fun SmallButton(
             color = FoodDeliveryTheme.colors.mainColors.primary
         ),
         shape = FoodDeliveryButtonDefaults.buttonShape,
-        elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
         enabled = isEnabled
     ) {
         Text(

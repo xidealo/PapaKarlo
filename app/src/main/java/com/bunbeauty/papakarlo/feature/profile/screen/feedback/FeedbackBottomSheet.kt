@@ -45,7 +45,7 @@ private fun FeedbackScreen(
             iconId = R.drawable.ic_vk,
             iconDescription = R.string.description_feedback_vk,
             labelStringId = R.string.action_feedback_vk,
-            hasShadow = false
+            elevated = false
         ) {
             onItemClick(VK_LINK)
         }
@@ -54,7 +54,7 @@ private fun FeedbackScreen(
             iconId = R.drawable.ic_instagram,
             iconDescription = R.string.description_feedback_instagram,
             labelStringId = R.string.action_feedback_instagram,
-            hasShadow = false
+            elevated = false
         ) {
             onItemClick(INSTAGRAM_LINK)
         }
@@ -63,7 +63,7 @@ private fun FeedbackScreen(
             iconId = R.drawable.ic_gp,
             iconDescription = R.string.description_feedback_play_market,
             labelStringId = R.string.action_feedback_play_market,
-            hasShadow = false
+            elevated = false
         ) {
             onItemClick(PLAY_MARKET_LINK)
         }

@@ -16,8 +16,8 @@ import com.bunbeauty.papakarlo.common.ui.theme.medium
 fun SecondaryButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int,
-    hasShadow: Boolean = true,
-    isEnabled: Boolean = true,
+    elevated: Boolean = true,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     Button(
@@ -25,8 +25,8 @@ fun SecondaryButton(
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.secondaryButtonColors,
         shape = FoodDeliveryButtonDefaults.buttonShape,
-        elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
-        enabled = isEnabled
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
+        enabled = enabled
     ) {
 
         Text(

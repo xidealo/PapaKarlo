@@ -75,7 +75,7 @@ fun MenuProductItem(
                         .fillMaxWidth()
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     textStringId = R.string.action_product_want,
-                    hasShadow = false,
+                    elevated = false,
                     onClick = {
                         onAddProductClick(menuProductItem.uuid)
                     }

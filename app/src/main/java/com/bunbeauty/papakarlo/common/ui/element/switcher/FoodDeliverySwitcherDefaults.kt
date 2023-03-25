@@ -21,5 +21,4 @@ object FoodDeliverySwitcherDefaults {
 
     val switcherButtonShape: RoundedCornerShape
         @Composable get() = RoundedCornerShape(FoodDeliveryTheme.dimensions.switcherButtonRadius)
-
 }

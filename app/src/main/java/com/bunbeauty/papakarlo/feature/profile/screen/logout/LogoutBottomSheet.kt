@@ -61,13 +61,13 @@ private fun LogoutScreen(
     FoodDeliveryBottomSheet(titleStringId = R.string.title_logout) {
         MainButton(
             textStringId = R.string.action_logout,
-            hasShadow = false,
+            elevated = false,
             onClick = onLogoutClick
         )
         SecondaryButton(
             modifier = Modifier.padding(top = 4.dp),
             textStringId = R.string.action_logout_cancel,
-            hasShadow = false,
+            elevated = false,
             onClick = onCancelClick
         )
     }

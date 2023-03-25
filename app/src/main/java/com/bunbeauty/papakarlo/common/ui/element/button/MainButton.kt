@@ -17,7 +17,7 @@ fun MainButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int? = null,
     text: String? = null,
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -26,7 +26,7 @@ fun MainButton(
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainButtonColors,
         shape = FoodDeliveryButtonDefaults.buttonShape,
-        elevation = FoodDeliveryButtonDefaults.getButtonElevation(hasShadow),
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
         enabled = isEnabled
     ) {
         val buttonText = text ?: textStringId?.let {

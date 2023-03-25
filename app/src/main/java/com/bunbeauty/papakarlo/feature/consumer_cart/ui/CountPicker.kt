@@ -1,10 +1,11 @@
 package com.bunbeauty.papakarlo.feature.consumer_cart.ui
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -32,54 +33,57 @@ fun CountPicker(
 ) {
     Row(
         modifier = modifier
-            .heightIn(
-                min = FoodDeliveryTheme.dimensions.smallButtonSize
-            )
-            .clip(FoodDeliveryButtonDefaults.smallButtonShape)
+            .clip(FoodDeliveryButtonDefaults.buttonShape)
             .border(
-                BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
-                shape = FoodDeliveryButtonDefaults.smallButtonShape
+                border = BorderStroke(2.dp, FoodDeliveryTheme.colors.mainColors.primary),
+                shape = FoodDeliveryButtonDefaults.buttonShape
             )
-            .background(FoodDeliveryTheme.colors.mainColors.surface),
+            .background(FoodDeliveryTheme.colors.mainColors.surface)
+            .padding(2.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = onCountDecreased,
-            colors = FoodDeliveryButtonDefaults.iconButtonColors,
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(12.dp),
-                painter = painterResource(R.drawable.ic_minus_16),
-                tint = FoodDeliveryTheme.colors.mainColors.primary,
-                contentDescription = stringResource(R.string.description_consumer_cart_decrease),
-            )
-        }
+        CountPickerButton(
+            iconId = R.drawable.ic_minus_16,
+            descriptionStringId = R.string.description_consumer_cart_decrease,
+            onClick = onCountDecreased
+        )
         Text(
             modifier = Modifier
                 .padding(horizontal = FoodDeliveryTheme.dimensions.verySmallSpace)
-                .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
+                .padding(vertical = 8.dp),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.bodySmall.bold,
             color = FoodDeliveryTheme.colors.mainColors.primary,
         )
-
-        IconButton(
-            onClick = onCountIncreased,
-            colors = FoodDeliveryButtonDefaults.iconButtonColors,
-        ) {
-            Icon(
-                modifier = Modifier
-                    .size(12.dp),
-                painter = painterResource(R.drawable.ic_plus_16),
-                tint = FoodDeliveryTheme.colors.mainColors.primary,
-                contentDescription = stringResource(R.string.description_consumer_cart_increase),
-            )
-        }
+        CountPickerButton(
+            iconId = R.drawable.ic_plus_16,
+            descriptionStringId = R.string.description_consumer_cart_increase,
+            onClick = onCountIncreased
+        )
     }
 }
 
-@Preview(showSystemUi = true)
+@Composable
+fun CountPickerButton(
+    @DrawableRes iconId: Int,
+    @StringRes descriptionStringId: Int,
+    onClick: () -> Unit,
+) {
+    IconButton(
+        modifier = Modifier.size(36.dp),
+        onClick = onClick,
+        colors = FoodDeliveryButtonDefaults.iconButtonColors,
+    ) {
+        Icon(
+            modifier = Modifier.size(12.dp),
+            painter = painterResource(iconId),
+            tint = FoodDeliveryTheme.colors.mainColors.primary,
+            contentDescription = stringResource(descriptionStringId),
+        )
+    }
+}
+
+@Preview
 @Composable
 private fun CountPickerOneDigitPreview() {
     FoodDeliveryTheme {
@@ -91,7 +95,7 @@ private fun CountPickerOneDigitPreview() {
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CountPickerTwoDigitsPreview() {
     FoodDeliveryTheme {

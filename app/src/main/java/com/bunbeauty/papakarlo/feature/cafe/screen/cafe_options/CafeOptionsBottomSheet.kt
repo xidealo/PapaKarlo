@@ -70,7 +70,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
             iconId = R.drawable.ic_call,
             iconDescription = R.string.description_cafe_options_call,
             label = cafeOptions.callToCafe,
-            hasShadow = false
+            elevated = false
         ) {
             val uri = Uri.parse(PHONE_LINK + cafeOptions.phone)
             goByUri(uri, Intent.ACTION_DIAL)
@@ -80,7 +80,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
             iconId = R.drawable.ic_address,
             iconDescription = R.string.description_cafe_options_map,
             label = cafeOptions.showOnMap,
-            hasShadow = false
+            elevated = false
         ) {
             val uri =
                 Uri.parse(MAPS_LINK + cafeOptions.latitude + COORDINATES_DIVIDER + cafeOptions.longitude)

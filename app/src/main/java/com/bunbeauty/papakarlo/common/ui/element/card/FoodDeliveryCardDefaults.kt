@@ -10,12 +10,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryCardDefaults {
 
-    private val cardElevation: CardElevation
-        @Composable get() = CardDefaults.cardElevation(2.dp)
-
-    private val zeroCardElevation: CardElevation
-        @Composable get() = CardDefaults.cardElevation(0.dp)
-
     val cardColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = FoodDeliveryTheme.colors.mainColors.surface,
@@ -27,8 +21,8 @@ object FoodDeliveryCardDefaults {
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {
-        cardElevation
+        CardDefaults.cardElevation(defaultElevation = FoodDeliveryTheme.dimensions.cardElevation)
     } else {
-        zeroCardElevation
+        CardDefaults.cardElevation(defaultElevation = 0.dp)
     }
 }
