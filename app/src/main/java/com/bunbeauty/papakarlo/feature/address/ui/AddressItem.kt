@@ -3,19 +3,18 @@ package com.bunbeauty.papakarlo.feature.address.ui
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
@@ -49,11 +48,11 @@ fun AddressItem(
                 Icon(
                     modifier = Modifier
                         .padding(start = FoodDeliveryTheme.dimensions.smallSpace)
-                        .size(16.dp)
+                        .icon16()
                         .align(CenterVertically),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_check),
+                    painter = painterResource(R.drawable.ic_check),
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = stringResource(R.string.description_ic_checked),
-                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                 )
             }
         }
@@ -62,29 +61,27 @@ fun AddressItem(
 
 @Preview(showSystemUi = true)
 @Composable
-fun AddressItemPreview() {
+private fun AddressItemPreview() {
     FoodDeliveryTheme {
-        FoodDeliveryCard {
-            AddressItem(
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                isClickable = false,
-                elevated = false
-            ) {}
-        }
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            elevated = false,
+            onClick = {},
+        )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun AddressItemSelectedPreview() {
+private fun AddressItemSelectedPreview() {
     FoodDeliveryTheme {
-        FoodDeliveryCard {
-            AddressItem(
-                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                isClickable = false,
-                elevated = false,
-                isSelected = true
-            ) {}
-        }
+        AddressItem(
+            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+            isClickable = false,
+            elevated = false,
+            isSelected = true,
+            onClick = {},
+        )
     }
 }

@@ -9,9 +9,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
@@ -27,13 +26,13 @@ fun NavigationIconCard(
     @StringRes iconDescription: Int,
     @StringRes labelStringId: Int? = null,
     label: String = "",
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         onClick = onClick,
-        elevated = hasShadow
+        elevated = elevated
     ) {
         Row(
             modifier = Modifier
@@ -44,9 +43,9 @@ fun NavigationIconCard(
         ) {
             Icon(
                 modifier = Modifier.icon24(),
-                imageVector = ImageVector.vectorResource(iconId),
+                painter = painterResource(iconId),
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 contentDescription = stringResource(iconDescription),
-                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
             val labelText = labelStringId?.let { id ->
                 stringResource(id)
@@ -61,20 +60,22 @@ fun NavigationIconCard(
             )
             Icon(
                 modifier = Modifier.icon16(),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
+                painter = painterResource(R.drawable.ic_right_arrow),
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 contentDescription = stringResource(R.string.description_ic_next),
-                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
         }
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
-fun NavigationIconCardPreview() {
-    NavigationIconCard(
-        iconId = R.drawable.ic_info,
-        iconDescription = R.string.description_ic_about,
-        label = "Текст"
-    ) {}
+private fun NavigationIconCardPreview() {
+    FoodDeliveryTheme {
+        NavigationIconCard(
+            iconId = R.drawable.ic_info,
+            iconDescription = R.string.description_ic_about,
+            label = "Текст"
+        ) {}
+    }
 }

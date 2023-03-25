@@ -58,6 +58,7 @@ fun FoodDeliveryBaseTextField(
                             onValueChange("")
                         },
                     painter = painterResource(R.drawable.ic_clear),
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
             }
@@ -114,6 +115,7 @@ fun FoodDeliveryBaseTextField(
                             onValueChange(TextFieldValue(""))
                         },
                     painter = painterResource(R.drawable.ic_clear),
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
             }

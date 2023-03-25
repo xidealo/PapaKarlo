@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.comment
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -14,18 +13,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -70,14 +69,7 @@ private fun CommentScreen(
     comment: String?,
     onSaveClicked: (String) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Title(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            text = stringResource(R.string.comment),
-        )
+    FoodDeliveryBottomSheet(titleStringId = R.string.comment) {
         val focusRequester = remember { FocusRequester() }
         val text = comment ?: ""
         var textFieldValue by rememberSaveable(stateSaver = TextFieldValue.Saver) {
@@ -89,10 +81,7 @@ private fun CommentScreen(
             )
         }
         FoodDeliveryTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier = Modifier.fillMaxWidth(),
             focusRequester = focusRequester,
             value = textFieldValue,
             labelStringId = R.string.comment,
@@ -106,16 +95,17 @@ private fun CommentScreen(
         }
 
         MainButton(
-            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            modifier = Modifier.padding(top = 16.dp),
             textStringId = R.string.action_settings_save,
-            hasShadow = false
-        ) {
-            onSaveClicked(textFieldValue.text)
-        }
+            elevated = false,
+            onClick = {
+                onSaveClicked(textFieldValue.text)
+            }
+        )
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun CommentScreenPreview() {
     FoodDeliveryTheme {

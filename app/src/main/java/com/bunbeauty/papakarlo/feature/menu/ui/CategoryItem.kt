@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.feature.menu.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.chipCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 
@@ -30,9 +30,10 @@ fun CategoryItem(
         modifier = modifier
             .defaultMinSize(minHeight = FoodDeliveryTheme.dimensions.smallButtonSize),
         onClick = onClick,
-        shape = chipCornerShape,
+        shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
-            width = 2.dp, color = color
+            width = 2.dp,
+            color = color
         )
     ) {
         Text(
@@ -51,26 +52,32 @@ fun CategoryItem(
 
 @Preview
 @Composable
-fun CategoryItemSelectedPreview() {
-    CategoryItem(
-        categoryItem = CategoryItem(
-            key = "",
-            uuid = "",
-            name = "Бургеры",
-            isSelected = true
+private fun CategoryItemSelectedPreview() {
+    FoodDeliveryTheme {
+        CategoryItem(
+            categoryItem = CategoryItem(
+                key = "",
+                uuid = "",
+                name = "Бургеры",
+                isSelected = true
+            ),
+            onClick = {}
         )
-    ) {}
+    }
 }
 
 @Preview
 @Composable
-fun CategoryItemNotSelectedPreview() {
-    CategoryItem(
-        categoryItem = CategoryItem(
-            key = "",
-            uuid = "",
-            name = "Бургеры",
-            isSelected = false
+private fun CategoryItemNotSelectedPreview() {
+    FoodDeliveryTheme {
+        CategoryItem(
+            categoryItem = CategoryItem(
+                key = "",
+                uuid = "",
+                name = "Бургеры",
+                isSelected = false
+            ),
+            onClick = {}
         )
-    ) {}
+    }
 }

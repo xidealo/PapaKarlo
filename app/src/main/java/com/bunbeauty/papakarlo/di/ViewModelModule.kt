@@ -1,12 +1,10 @@
 package com.bunbeauty.papakarlo.di
 
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.feature.address.screen.cafe_address_list.CafeAddressListViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.feature.city.screen.change_city.ChangeCityViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
@@ -86,15 +84,10 @@ fun viewModelModule() = module {
             getFilteredStreetListUseCase = get()
         )
     }
-    viewModel { parameters ->
+    viewModel {
         UserAddressListViewModel(
             getUserAddressList = get(),
             saveSelectedUserAddressUseCase = get(),
-        )
-    }
-    viewModel {
-        CafeAddressListViewModel(
-            cafeInteractor = get(),
         )
     }
     viewModel { parameters ->
@@ -157,11 +150,6 @@ fun viewModelModule() = module {
     viewModel {
         SelectCityViewModel(
             cityInteractor = get()
-        )
-    }
-    viewModel {
-        ChangeCityViewModel(
-            cityInteractor = get(),
         )
     }
 

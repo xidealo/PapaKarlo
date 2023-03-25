@@ -3,13 +3,13 @@ package com.bunbeauty.papakarlo.feature.profile.screen.profile
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -32,12 +32,12 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
@@ -203,8 +203,9 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     ) {
         Column(
             modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             profile.orderItem?.let { orderItem ->
                 OrderItem(orderItem = orderItem) {
@@ -254,6 +255,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
             ProfileInfoCards(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
             )
+
+            // Spacer(modifier = Modifier.height())
         }
     }
 
@@ -262,22 +265,21 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
         ) {
             ProfileInfoCards()
-            Spacer(modifier = Modifier.weight(1f))
 
+            Spacer(modifier = Modifier.weight(1f))
             Column(
+                modifier = Modifier.padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                BoxWithConstraints {
-                    if (maxHeight > 280.dp) {
-                        Image(
-                            painter = painterResource(R.drawable.empty_profile),
-                            contentDescription = stringResource(R.string.description_empty_profile)
-                        )
-                    }
-                }
+                Image(
+                    modifier = Modifier.size(120.dp),
+                    painter = painterResource(R.drawable.empty_profile),
+                    contentDescription = stringResource(R.string.description_empty_profile)
+                )
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -287,20 +289,15 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                    modifier = Modifier.padding(top = 8.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
             }
-
             Spacer(modifier = Modifier.weight(1f))
 
-            Spacer(
-                modifier = Modifier
-                    .height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace)
-            )
+            Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
         }
     }
 
@@ -328,109 +325,119 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun AuthorizedProfileScreenWithLastOrderPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = OrderItem(
-                    uuid = "",
-                    status = OrderStatus.NOT_ACCEPTED,
-                    statusName = OrderStatus.NOT_ACCEPTED.name,
-                    code = "А-12",
-                    dateTime = "10-10-10 20:20",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = OrderItem(
+                        uuid = "",
+                        status = OrderStatus.NOT_ACCEPTED,
+                        statusName = OrderStatus.NOT_ACCEPTED.name,
+                        code = "А-12",
+                        dateTime = "10-10-10 20:20",
+                    ),
+                    state = ProfileState.State.AUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-                state = ProfileState.State.AUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
-                ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun AuthorizedProfileScreenWithoutLastOrderPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.AUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.AUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun UnauthorizedProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.UNAUTHORIZED,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.UNAUTHORIZED,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun LoadingProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.LOADING,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.LOADING,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun ErrorProfileScreenPreview() {
-        ProfileScreen(
-            ProfileUi(
-                orderItem = null,
-                state = ProfileState.State.ERROR,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            ProfileScreen(
+                ProfileUi(
+                    orderItem = null,
+                    state = ProfileState.State.ERROR,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onLastOrderClicked = { s, s1 -> },
-            onSettingsClicked = {},
-            onYourAddressesClicked = {},
-            onOrderHistoryClicked = {},
-            onPaymentClicked = {},
-        )
+                onLastOrderClicked = { s, s1 -> },
+                onSettingsClicked = {},
+                onYourAddressesClicked = {},
+                onOrderHistoryClicked = {},
+                onPaymentClicked = {},
+            )
+        }
     }
 }

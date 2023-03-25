@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,14 +22,16 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
-import com.bunbeauty.papakarlo.common.ui.element.BlurLine
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentCreateOrderBinding
+import com.bunbeauty.papakarlo.common.ui.theme.bold
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
@@ -47,10 +46,10 @@ import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_order) {
+class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
 
     val viewModel: CreateOrderViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentCreateOrderBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
 
@@ -61,7 +60,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentCreateOrderCvMain.setContent {
+        viewBinding.root.setContentWithTheme {
             val orderCreationState by viewModel.orderCreationState.collectAsStateWithLifecycle()
             CreateOrderScreen(createOrderStateMapper.map(orderCreationState))
             LaunchedEffect(orderCreationState.eventList) {
@@ -79,28 +78,26 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
             }
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.weight(1f)) {
-                    Column(
-                        modifier = Modifier
-                            .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        FoodDeliverySwitcher(
-                            modifier = Modifier.fillMaxWidth(),
-                            optionResIdList = listOf(
-                                R.string.action_create_order_delivery,
-                                R.string.action_create_order_pickup
-                            ),
-                            position = createOrderUi.switcherPosition
-                        ) { changedPosition ->
-                            viewModel.onSwitcherPositionChanged(changedPosition)
-                        }
-                        AddressCard(createOrderUi)
-                        DeliveryAddressError(createOrderUi)
-                        CommentCard(createOrderUi)
-                        DeferredTimeCard(createOrderUi)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    FoodDeliverySwitcher(
+                        modifier = Modifier.fillMaxWidth(),
+                        optionResIdList = listOf(
+                            R.string.action_create_order_delivery,
+                            R.string.action_create_order_pickup
+                        ),
+                        position = createOrderUi.switcherPosition
+                    ) { changedPosition ->
+                        viewModel.onSwitcherPositionChanged(changedPosition)
                     }
-                    BlurLine(modifier = Modifier.align(Alignment.BottomCenter))
+                    AddressCard(createOrderUi)
+                    DeliveryAddressError(createOrderUi)
+                    CommentCard(createOrderUi)
+                    DeferredTimeCard(createOrderUi)
                 }
                 BottomAmountBar(createOrderUi)
             }
@@ -203,67 +200,65 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
 
     @Composable
     private fun BottomAmountBar(createOrderUi: CreateOrderUi) {
-        Column(
-            modifier = Modifier
-                .background(FoodDeliveryTheme.colors.mainColors.surface)
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
-            Row {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_create_order_total_cost),
-                    style = FoodDeliveryTheme.typography.body1,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                createOrderUi.totalCost?.let {
-                    Text(
-                        text = it,
-                        style = FoodDeliveryTheme.typography.body1,
-                        color = FoodDeliveryTheme.colors.mainColors.onSurface
-                    )
-                }
-            }
-            if (createOrderUi.isDelivery) {
-                Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+        FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+                Row {
                     Text(
                         modifier = Modifier.weight(1f),
-                        text = stringResource(R.string.msg_create_order_delivery_cost),
-                        style = FoodDeliveryTheme.typography.body1,
+                        text = stringResource(R.string.msg_create_order_total_cost),
+                        style = FoodDeliveryTheme.typography.bodyMedium,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
-                    createOrderUi.deliveryCost?.let {
+                    createOrderUi.totalCost?.let {
                         Text(
                             text = it,
-                            style = FoodDeliveryTheme.typography.body1,
+                            style = FoodDeliveryTheme.typography.bodyMedium,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(R.string.msg_create_order_amount_to_pay),
-                    style = FoodDeliveryTheme.typography.h2,
-                    color = FoodDeliveryTheme.colors.mainColors.onSurface
-                )
-                createOrderUi.finalCost?.let {
+                if (createOrderUi.isDelivery) {
+                    Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = stringResource(R.string.msg_create_order_delivery_cost),
+                            style = FoodDeliveryTheme.typography.bodyMedium,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
+                        createOrderUi.deliveryCost?.let {
+                            Text(
+                                text = it,
+                                style = FoodDeliveryTheme.typography.bodyMedium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
+                ) {
                     Text(
-                        text = it,
-                        style = FoodDeliveryTheme.typography.h2,
+                        modifier = Modifier.weight(1f),
+                        text = stringResource(R.string.msg_create_order_amount_to_pay),
+                        style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
+                    createOrderUi.finalCost?.let { finalCost ->
+                        Text(
+                            text = finalCost,
+                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
+                    }
                 }
-            }
-            LoadingButton(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.action_create_order_create_order,
-                isLoading = createOrderUi.isLoading
-            ) {
-                viewModel.onCreateOrderClicked()
+                LoadingButton(
+                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    textStringId = R.string.action_create_order_create_order,
+                    isLoading = createOrderUi.isLoading
+                ) {
+                    viewModel.onCreateOrderClicked()
+                }
             }
         }
     }
@@ -359,86 +354,94 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_cr
         }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderEmptyDeliveryScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = true,
-                deliveryAddress = null,
-                comment = null,
-                deferredTime = "",
-                totalCost = null,
-                deliveryCost = null,
-                finalCost = null,
-                isLoading = false,
-                pickupAddress = null,
-                isAddressErrorShown = false,
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = true,
+                    deliveryAddress = null,
+                    comment = null,
+                    deferredTime = "",
+                    totalCost = null,
+                    deliveryCost = null,
+                    finalCost = null,
+                    isLoading = false,
+                    pickupAddress = null,
+                    isAddressErrorShown = false,
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderDeliveryScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = true,
-                deliveryAddress =
-                "1" +
-                    "улица Чапаева" +
-                    "22аб" +
-                    "55" +
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = true,
+                    deliveryAddress =
                     "1" +
-                    "1" +
-                    "код домофона 555",
-                comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "",
-                totalCost = "250 $",
-                deliveryCost = "100 $",
-                finalCost = "350 $",
-                isLoading = false,
-                pickupAddress = null,
-                isAddressErrorShown = false,
+                        "улица Чапаева" +
+                        "22аб" +
+                        "55" +
+                        "1" +
+                        "1" +
+                        "код домофона 555",
+                    comment = "Побыстрее пожалуйста, кушать очень хочу",
+                    deferredTime = "",
+                    totalCost = "250 $",
+                    deliveryCost = "100 $",
+                    finalCost = "350 $",
+                    isLoading = false,
+                    pickupAddress = null,
+                    isAddressErrorShown = false,
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderEmptyPickupScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = false,
-                pickupAddress = null,
-                comment = null,
-                deferredTime = "10:30",
-                totalCost = null,
-                deliveryCost = null,
-                finalCost = null,
-                isLoading = false,
-                isAddressErrorShown = false,
-                deliveryAddress = null
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = false,
+                    pickupAddress = null,
+                    comment = null,
+                    deferredTime = "10:30",
+                    totalCost = null,
+                    deliveryCost = null,
+                    finalCost = null,
+                    isLoading = false,
+                    isAddressErrorShown = false,
+                    deliveryAddress = null
+                )
             )
-        )
+        }
     }
 
-    @Preview
+    @Preview(showSystemUi = true)
     @Composable
     private fun CreateOrderPickupScreenPreview() {
-        CreateOrderScreen(
-            createOrderUi = CreateOrderUi(
-                isDelivery = false,
-                pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
-                comment = "Побыстрее пожалуйста, кушать очень хочу",
-                deferredTime = "",
-                totalCost = "250 $",
-                deliveryCost = "100 $",
-                finalCost = "350 $",
-                isLoading = true,
-                isAddressErrorShown = false,
-                deliveryAddress = null
+        FoodDeliveryTheme {
+            CreateOrderScreen(
+                createOrderUi = CreateOrderUi(
+                    isDelivery = false,
+                    pickupAddress = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+                    comment = "Побыстрее пожалуйста, кушать очень хочу",
+                    deferredTime = "",
+                    totalCost = "250 $",
+                    deliveryCost = "100 $",
+                    finalCost = "350 $",
+                    isLoading = true,
+                    isAddressErrorShown = false,
+                    deliveryAddress = null
+                )
             )
-        )
+        }
     }
 }

@@ -41,6 +41,7 @@
     <string name="msg_update_new_title_app_version">Доступна новая версия</string>
     <string name="msg_update_new_app_version">Пожалуйста, обновите приложение.\nНовая версия уже доступна в Play Маркет</string>
     <string name="action_update_update">Обновить</string>
+    <string name="description_google_play">Google play</string>
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>

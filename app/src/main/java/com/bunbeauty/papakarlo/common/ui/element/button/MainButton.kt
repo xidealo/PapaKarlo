@@ -10,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
@@ -18,7 +17,7 @@ fun MainButton(
     modifier: Modifier = Modifier,
     @StringRes textStringId: Int? = null,
     text: String? = null,
-    hasShadow: Boolean = true,
+    elevated: Boolean = true,
     isEnabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -26,8 +25,8 @@ fun MainButton(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
         colors = FoodDeliveryButtonDefaults.mainButtonColors,
-        shape = buttonRoundedCornerShape,
-        elevation = FoodDeliveryTheme.dimensions.getButtonEvaluation(hasShadow),
+        shape = FoodDeliveryButtonDefaults.buttonShape,
+        elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
         enabled = isEnabled
     ) {
         val buttonText = text ?: textStringId?.let {
@@ -40,17 +39,21 @@ fun MainButton(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun MainButtonPreview() {
-    MainButton(textStringId = R.string.action_login_continue) {}
+    FoodDeliveryTheme {
+        MainButton(textStringId = R.string.action_login_continue) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun MainButtonDisabledPreview() {
-    MainButton(
-        textStringId = R.string.action_login_continue,
-        isEnabled = false
-    ) {}
+    FoodDeliveryTheme {
+        MainButton(
+            textStringId = R.string.action_login_continue,
+            isEnabled = false
+        ) {}
+    }
 }

@@ -57,30 +57,36 @@ fun OrderItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
-fun OrderItemPreview() {
-    OrderItem(
-        orderItem = OrderItem(
-            uuid = "",
-            status = OrderStatus.NOT_ACCEPTED,
-            statusName = "Обрабатывается",
-            code = "Щ-99",
-            dateTime = "9 февраля 22:00"
+private fun OrderItemPreview() {
+    FoodDeliveryTheme {
+        OrderItem(
+            orderItem = OrderItem(
+                uuid = "",
+                status = OrderStatus.NOT_ACCEPTED,
+                statusName = "Обрабатывается",
+                code = "Щ-99",
+                dateTime = "9 февраля 22:00"
+            ),
+            onClick = {},
         )
-    ) {}
+    }
 }
 
-@Preview(fontScale = 1.5f)
+@Preview(fontScale = 1.5f, showSystemUi = true)
 @Composable
-fun OrderItemLageFontPreview() {
-    OrderItem(
-        orderItem = OrderItem(
-            uuid = "",
-            status = OrderStatus.NOT_ACCEPTED,
-            statusName = "Обрабатывается",
-            code = "Щ-99",
-            dateTime = "9 февраля 22:00"
+private fun OrderItemLageFontPreview() {
+    FoodDeliveryTheme {
+        OrderItem(
+            orderItem = OrderItem(
+                uuid = "",
+                status = OrderStatus.NOT_ACCEPTED,
+                statusName = "Обрабатывается",
+                code = "Щ-99",
+                dateTime = "9 февраля 22:00"
+            ),
+            onClick = {},
         )
-    ) {}
+    }
 }

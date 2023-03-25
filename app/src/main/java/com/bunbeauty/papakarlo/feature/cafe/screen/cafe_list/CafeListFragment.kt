@@ -19,12 +19,12 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentCafeListBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
@@ -35,9 +35,9 @@ import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
+class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
 
-    override val viewBinding by viewBinding(FragmentCafeListBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
     override val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
@@ -52,7 +52,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCafeItemList()
-        viewBinding.fragmentCafeListCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val cafeItemList by viewModel.cafeListState.collectAsStateWithLifecycle()
             CafeListScreen(
                 cafeListUi = cafeListUiStateMapper.map(cafeItemList),
@@ -137,71 +137,77 @@ class CafeListFragment : BaseFragment(R.layout.fragment_cafe_list) {
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListSuccessScreenPreview() {
-        CafeListScreen(
-            cafeListUi = CafeListUi(
-                cafeList = listOf(
-                    CafeItem(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        isOpenMessage = "Открыто",
-                        cafeStatus = CafeStatus.OPEN,
+        FoodDeliveryTheme {
+            CafeListScreen(
+                cafeListUi = CafeListUi(
+                    cafeList = listOf(
+                        CafeItem(
+                            uuid = "",
+                            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                            workingHours = "9:00 - 22:00",
+                            isOpenMessage = "Открыто",
+                            cafeStatus = CafeStatus.OPEN,
+                        ),
+                        CafeItem(
+                            uuid = "",
+                            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                            workingHours = "9:00 - 22:00",
+                            isOpenMessage = "Открыто. Закроется через 30 минут",
+                            cafeStatus = CafeStatus.CLOSE_SOON,
+                        ),
+                        CafeItem(
+                            uuid = "",
+                            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                            workingHours = "9:00 - 22:00",
+                            isOpenMessage = "Закрыто",
+                            cafeStatus = CafeStatus.CLOSED,
+                        )
                     ),
-                    CafeItem(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        isOpenMessage = "Открыто. Закроется через 30 минут",
-                        cafeStatus = CafeStatus.CLOSE_SOON,
+                    state = CafeListState.State.Success,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
                     ),
-                    CafeItem(
-                        uuid = "",
-                        address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-                        workingHours = "9:00 - 22:00",
-                        isOpenMessage = "Закрыто",
-                        cafeStatus = CafeStatus.CLOSED,
-                    )
                 ),
-                state = CafeListState.State.Success,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
-                ),
-            ),
-            onCafeClicked = {},
-            onRefreshClicked = {}
-        )
+                onCafeClicked = {},
+                onRefreshClicked = {}
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListLoadingScreenPreview() {
-        CafeListScreen(
-            cafeListUi = CafeListUi(
-                state = CafeListState.State.Loading,
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            CafeListScreen(
+                cafeListUi = CafeListUi(
+                    state = CafeListState.State.Loading,
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onCafeClicked = {},
-            onRefreshClicked = {}
-        )
+                onCafeClicked = {},
+                onRefreshClicked = {}
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun CafeListErrorScreenPreview() {
-        CafeListScreen(
-            cafeListUi = CafeListUi(
-                state = CafeListState.State.Error(Throwable()),
-                topCartUi = TopCartUi(
-                    cost = "100",
-                    count = "2",
+        FoodDeliveryTheme {
+            CafeListScreen(
+                cafeListUi = CafeListUi(
+                    state = CafeListState.State.Error(Throwable()),
+                    topCartUi = TopCartUi(
+                        cost = "100",
+                        count = "2",
+                    ),
                 ),
-            ),
-            onCafeClicked = {},
-            onRefreshClicked = {}
-        )
+                onCafeClicked = {},
+                onRefreshClicked = {}
+            )
+        }
     }
 }

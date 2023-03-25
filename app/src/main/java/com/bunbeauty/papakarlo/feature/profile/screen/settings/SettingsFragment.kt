@@ -21,11 +21,11 @@ import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryAction
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.extensions.showSnackbar
@@ -178,65 +178,73 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenWithEmailPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = Settings(
-                    userUuid = "",
-                    phoneNumber = "+7 999 000-00-00",
-                    email = "example@email.com",
-                ),
-                selectedCity = City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = "",
-                ),
-                state = SettingsState.State.SUCCESS
+    private fun SettingsScreenWithEmailPreview() {
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = Settings(
+                        userUuid = "",
+                        phoneNumber = "+7 999 000-00-00",
+                        email = "example@email.com",
+                    ),
+                    selectedCity = City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = "",
+                    ),
+                    state = SettingsState.State.SUCCESS
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenWithoutEmailPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = Settings(
-                    userUuid = "",
-                    phoneNumber = "+7 999 000-00-00",
-                    email = "",
-                ),
-                selectedCity = City(
-                    uuid = "",
-                    name = "Москва",
-                    timeZone = "",
-                ),
-                state = SettingsState.State.SUCCESS
+    private fun SettingsScreenWithoutEmailPreview() {
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = Settings(
+                        userUuid = "",
+                        phoneNumber = "+7 999 000-00-00",
+                        email = "",
+                    ),
+                    selectedCity = City(
+                        uuid = "",
+                        name = "Москва",
+                        timeZone = "",
+                    ),
+                    state = SettingsState.State.SUCCESS
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenLoadingPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = null,
-                selectedCity = null,
-                state = SettingsState.State.LOADING
+    private fun SettingsScreenLoadingPreview() {
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = null,
+                    selectedCity = null,
+                    state = SettingsState.State.LOADING
+                )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
-    fun SettingsScreenErrorPreview() {
-        SettingsScreen(
-            SettingsState(
-                settings = null,
-                selectedCity = null,
-                state = SettingsState.State.ERROR
+    private fun SettingsScreenErrorPreview() {
+        FoodDeliveryTheme {
+            SettingsScreen(
+                SettingsState(
+                    settings = null,
+                    selectedCity = null,
+                    state = SettingsState.State.ERROR
+                )
             )
-        )
+        }
     }
 }

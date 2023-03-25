@@ -7,10 +7,10 @@ import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.auth.FirebaseAuthRepository
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
+import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -29,7 +29,7 @@ class LoginViewModel(
     private val mutableLoginState = MutableStateFlow(LoginState())
     val loginState = mutableLoginState.asStateFlow()
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         mutableLoginState.update { oldState ->
             oldState.copy(
                 state = LoginState.State.Error(throwable)

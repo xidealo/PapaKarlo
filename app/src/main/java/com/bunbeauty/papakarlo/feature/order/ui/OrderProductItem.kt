@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,12 +35,7 @@ fun OrderProductItem(
     modifier: Modifier = Modifier,
     orderProductItem: OrderProductUiItem,
 ) {
-    FoodDeliveryCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .requiredHeightIn(min = FoodDeliveryTheme.dimensions.cardHeight),
-        enabled = false
-    ) {
+    FoodDeliveryCard(modifier = modifier.fillMaxWidth()) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier
@@ -52,7 +46,7 @@ fun OrderProductItem(
                     .data(orderProductItem.photoLink)
                     .crossfade(true)
                     .build(),
-                placeholder = painterResource(R.drawable.placeholder),
+                placeholder = painterResource(R.drawable.placeholder_small),
                 contentDescription = stringResource(R.string.description_product),
                 contentScale = ContentScale.FillHeight
             )
@@ -141,16 +135,18 @@ private fun OrderProductItemPreview() {
 @Preview
 @Composable
 private fun OrderProductItemWithoutOldPricePreview() {
-//    OrderProductItem(
-//        orderProductItem = OrderProductItem(
-//            uuid = "",
-//            name = "Бэргер с вкусной свинкой ням ням ням ням",
-//            newPrice = "50 ₽",
-//            oldPrice = null,
-//            newCost = "100 ₽",
-//            oldCost = null,
-//            photoLink = "",
-//            count = "× 2"
-//        )
-//    )
+    FoodDeliveryTheme {
+        OrderProductItem(
+            orderProductItem = OrderProductUiItem(
+                uuid = "",
+                name = "Бэргер с вкусной свинкой ням ням ням ням",
+                newPrice = "50 ₽",
+                oldPrice = null,
+                newCost = "100 ₽",
+                oldCost = null,
+                photoLink = "",
+                count = "× 2"
+            )
+        )
+    }
 }
