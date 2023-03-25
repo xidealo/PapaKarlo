@@ -32,13 +32,13 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentProductDetailsBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
@@ -47,13 +47,13 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_product_details) {
+class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
 
     private val viewModel: ProductDetailsViewModel by viewModel()
 
     private val args: ProductDetailsFragmentArgs by navArgs()
 
-    override val viewBinding by viewBinding(FragmentProductDetailsBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
 
     private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
@@ -63,7 +63,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
 
         viewModel.getMenuProduct(args.menuProductUuid)
 
-        viewBinding.fragmentProductDetailsCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val menuProductUiState by viewModel.menuProductDetailsState.collectAsStateWithLifecycle()
             ProductDetailsScreen(
                 menuProductName = args.menuProductName,
@@ -144,8 +144,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
         FoodDeliveryCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            enabled = false
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             Column {
                 AsyncImage(
@@ -154,7 +153,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                         .data(menuProductUi.photoLink)
                         .crossfade(true)
                         .build(),
-                    placeholder = painterResource(R.drawable.placeholder),
+                    placeholder = painterResource(R.drawable.placeholder_large),
                     contentDescription = stringResource(R.string.description_product),
                     contentScale = ContentScale.FillWidth
                 )

@@ -54,44 +54,53 @@ fun CafeItem(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CafeItemOpenPreview() {
-    CafeItem(
-        cafeItem = CafeItem(
-            uuid = "",
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            workingHours = "9:00 - 22:00",
-            isOpenMessage = "Открыто",
-            cafeStatus = CafeStatus.OPEN,
+    FoodDeliveryTheme {
+        CafeItem(
+            cafeItem = CafeItem(
+                uuid = "",
+                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                workingHours = "9:00 - 22:00",
+                isOpenMessage = "Открыто",
+                cafeStatus = CafeStatus.OPEN,
+            ),
+            onClick = {},
         )
-    ) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CafeItemCloseSoonPreview() {
-    CafeItem(
-        cafeItem = CafeItem(
-            uuid = "",
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            workingHours = "9:00 - 22:00",
-            isOpenMessage = "Открыто. Закроется через 30 минут",
-            cafeStatus = CafeStatus.CLOSE_SOON,
+    FoodDeliveryTheme {
+        CafeItem(
+            cafeItem = CafeItem(
+                uuid = "",
+                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                workingHours = "9:00 - 22:00",
+                isOpenMessage = "Открыто. Закроется через 30 минут",
+                cafeStatus = CafeStatus.CLOSE_SOON,
+            ),
+            onClick = {},
         )
-    ) {}
+    }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun CafeItemClosedPreview() {
-    CafeItem(
-        cafeItem = CafeItem(
-            uuid = "",
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            workingHours = "9:00 - 22:00",
-            isOpenMessage = "Закрыто",
-            cafeStatus = CafeStatus.CLOSED,
+    FoodDeliveryTheme {
+        CafeItem(
+            cafeItem = CafeItem(
+                uuid = "",
+                address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
+                workingHours = "9:00 - 22:00",
+                isOpenMessage = "Закрыто",
+                cafeStatus = CafeStatus.CLOSED,
+            ),
+            onClick = {},
         )
-    ) {}
+    }
 }

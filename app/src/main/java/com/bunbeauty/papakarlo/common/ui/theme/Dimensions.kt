@@ -1,10 +1,5 @@
 package com.bunbeauty.papakarlo.common.ui.theme
 
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -12,12 +7,26 @@ import androidx.compose.ui.unit.dp
 internal val LocalAppDimensions = staticCompositionLocalOf { AppDimensions() }
 
 data class AppDimensions(
+    val screenContentSpace: Dp = 16.dp,
+
+    val buttonRadius: Dp = 20.dp,
+    val bottomSheetRadius: Dp = 16.dp,
+
+    val switcherRadius: Dp = 24.dp,
+    val switcherButtonRadius: Dp = 20.dp,
+
+    val cardRadius: Dp = 8.dp,
+    val cardMediumInnerSpace: Dp = 12.dp,
+    val cardLargeInnerSpace: Dp = 16.dp,
+
     val verySmallSpace: Dp = 4.dp,
     val smallSpace: Dp = 8.dp,
     val mediumSpace: Dp = 16.dp,
     val largeSpace: Dp = 24.dp,
-    val elevation: Dp = 1.dp,
-    val bottomSurfaceElevation: Dp = 6.dp,
+
+    val cardElevation: Dp = 2.dp,
+    val surfaceElevation: Dp = 4.dp,
+
     val codeWidth: Dp = 56.dp,
     val cardHeight: Dp = 40.dp,
     val buttonSize: Dp = 40.dp,
@@ -37,29 +46,5 @@ data class AppDimensions(
         } else {
             smallSpace
         }
-    }
-
-    @Composable
-    fun getButtonEvaluation(hasShadow: Boolean): ButtonElevation {
-        return if (hasShadow) {
-            ButtonDefaults.buttonElevation(
-                defaultElevation = elevation
-            )
-        } else {
-            ButtonDefaults.buttonElevation(
-                defaultElevation = 0.dp
-            )
-        }
-    }
-
-    @Composable
-    fun cardEvaluation(hasShadow: Boolean = true): CardElevation {
-        return CardDefaults.cardElevation(
-            defaultElevation = if (hasShadow) {
-                elevation
-            } else {
-                0.dp
-            }
-        )
     }
 }

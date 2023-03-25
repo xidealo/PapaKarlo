@@ -2,9 +2,6 @@ package com.bunbeauty.papakarlo.feature.profile.screen.logout
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,10 +10,9 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.DragHandle
-import com.bunbeauty.papakarlo.common.ui.element.SecondaryButton
-import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.button.SecondaryButton
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
@@ -27,47 +23,14 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.root.setContentWithTheme {
-            LogoutScreen()
-        }
-    }
-
-    @Composable
-    private fun LogoutScreen() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp)
-                .background(FoodDeliveryTheme.colors.mainColors.surface)
-        ) {
-            DragHandle()
-
-            Title(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
-                textStringId = R.string.title_logout
-            )
-            Column(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-            ) {
-                MainButton(
-                    textStringId = R.string.action_logout,
-                    hasShadow = false
-                ) {
+            LogoutScreen(
+                onLogoutClick = {
                     callback?.onResult(true)
-                }
-                SecondaryButton(
-                    modifier = Modifier.padding(
-                        top = FoodDeliveryTheme.dimensions.smallSpace,
-                        bottom = FoodDeliveryTheme.dimensions.mediumSpace
-                    ),
-                    textStringId = R.string.action_logout_cancel,
-                    hasShadow = false
-                ) {
+                },
+                onCancelClick = {
                     callback?.onResult(false)
                 }
-            }
+            )
         }
     }
 
@@ -88,12 +51,35 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
             }
         }
     }
+}
 
-    @Preview(showSystemUi = true)
-    @Composable
-    private fun LogoutScreenPreview() {
-        FoodDeliveryTheme {
-            LogoutScreen()
-        }
+@Composable
+private fun LogoutScreen(
+    onLogoutClick: () -> Unit,
+    onCancelClick: () -> Unit,
+) {
+    FoodDeliveryBottomSheet(titleStringId = R.string.title_logout) {
+        MainButton(
+            textStringId = R.string.action_logout,
+            elevated = false,
+            onClick = onLogoutClick
+        )
+        SecondaryButton(
+            modifier = Modifier.padding(top = 4.dp),
+            textStringId = R.string.action_logout_cancel,
+            elevated = false,
+            onClick = onCancelClick
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun LogoutScreenPreview() {
+    FoodDeliveryTheme {
+        LogoutScreen(
+            onLogoutClick = {},
+            onCancelClick = {}
+        )
     }
 }

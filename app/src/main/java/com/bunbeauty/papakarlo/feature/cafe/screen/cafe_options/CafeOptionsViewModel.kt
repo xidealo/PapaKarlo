@@ -29,6 +29,7 @@ class CafeOptionsViewModel(
         viewModelScope.launch {
             cafeInteractor.getCafeByUuid(cafeUuid)?.let { cafe ->
                 mutableCafeOptions.value = CafeOptions(
+                    title = cafe.address,
                     showOnMap = resourcesProvider.getString(R.string.action_cafe_options_show_map) + cafe.address,
                     callToCafe = resourcesProvider.getString(R.string.action_cafe_options_call) + cafe.phone,
                     phone = cafe.phone,

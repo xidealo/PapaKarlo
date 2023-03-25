@@ -17,10 +17,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
@@ -92,15 +92,17 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
             name = "Москва",
             timeZone = ""
         )
-        SelectCityScreen(
-            State.Success(
-                listOf(
-                    city,
-                    city,
-                    city,
+        FoodDeliveryTheme {
+            SelectCityScreen(
+                State.Success(
+                    listOf(
+                        city,
+                        city,
+                        city,
+                    )
                 )
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)

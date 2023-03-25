@@ -4,12 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -17,30 +16,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
-import com.bunbeauty.papakarlo.common.ui.element.DragHandle
-import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.BottomSheetPaymentBinding
+import com.bunbeauty.papakarlo.databinding.BottomSheetComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.Constants.CARD_NUMBER_LABEL
 import com.bunbeauty.shared.Constants.PHONE_NUMBER_LABEL
+import com.bunbeauty.shared.domain.model.Payment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
+class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
 
     override val viewModel: PaymentViewModel by viewModel()
-    override val viewBinding by viewBinding(BottomSheetPaymentBinding::bind)
+    override val viewBinding by viewBinding(BottomSheetComposeBinding::bind)
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.bottomSheetPaymentCvMain.setContentWithTheme {
-            PaymentScreen()
+        viewBinding.root.setContentWithTheme {
+            val payment by viewModel.payment.collectAsStateWithLifecycle()
+
+            PaymentScreen(payment)
         }
     }
 
@@ -52,65 +56,50 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
     }
 
     @Composable
-    private fun PaymentScreen() {
-        val payment by viewModel.payment.collectAsState()
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .padding(bottom = 16.dp)
-                .padding(horizontal = 16.dp)
-        ) {
-            DragHandle()
-            Title(
-                modifier = Modifier.padding(top = 16.dp),
-                textStringId = R.string.title_payment
-            )
+    private fun PaymentScreen(payment: Payment?) {
+        FoodDeliveryBottomSheet(titleStringId = R.string.title_payment) {
             Text(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                 text = stringResource(R.string.msg_payment_description),
                 style = FoodDeliveryTheme.typography.bodyMedium
             )
             if (payment == null) {
                 CircularProgressBar(
                     modifier = Modifier
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                        .padding(16.dp)
                         .align(CenterHorizontally)
                 )
             } else {
-                Column(
-                    modifier = Modifier
-                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                        .fillMaxWidth()
-                ) {
-                    payment?.cardNumber?.let { cardNumber ->
-                        StartIconCard(
-                            elevated = false,
-                            label = cardNumber,
-                            iconId = R.drawable.ic_copy
-                        ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                payment.cardNumber?.let { cardNumber ->
+                    StartIconCard(
+                        elevated = false,
+                        label = cardNumber,
+                        iconId = R.drawable.ic_copy,
+                        onClick = {
                             copyToBuffer(CARD_NUMBER_LABEL, cardNumber)
                             viewModel.showMessage(
                                 requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied),
                                 true
                             )
                         }
+                    )
+                }
+                payment.phoneNumber?.let { phoneNumber ->
+                    if (payment.cardNumber != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
-                    payment?.phoneNumber?.let { phoneNumber ->
-                        StartIconCard(
-                            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                            elevated = false,
-                            label = phoneNumber,
-                            iconId = R.drawable.ic_copy
-                        ) {
+                    StartIconCard(
+                        elevated = false,
+                        label = phoneNumber,
+                        iconId = R.drawable.ic_copy,
+                        onClick = {
                             copyToBuffer(PHONE_NUMBER_LABEL, phoneNumber)
                             viewModel.showMessage(
                                 requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied),
                                 true
                             )
                         }
-                    }
+                    )
                 }
             }
         }
@@ -119,6 +108,13 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_payment) {
     @Preview
     @Composable
     private fun PaymentScreenPreview() {
-        PaymentScreen()
+        FoodDeliveryTheme {
+            PaymentScreen(
+                Payment(
+                    phoneNumber = "+7(999) 999-99-99",
+                    cardNumber = "1234 1234 1234 1234 1234"
+                )
+            )
+        }
     }
 }

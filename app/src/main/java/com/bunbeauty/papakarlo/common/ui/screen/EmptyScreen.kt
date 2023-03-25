@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,10 +43,10 @@ internal fun EmptyScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
+                modifier = Modifier.size(120.dp),
                 painter = painterResource(imageId),
                 contentDescription = stringResource(imageDescriptionId)
             )
-
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -56,7 +57,6 @@ internal fun EmptyScreen(
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
-
             Text(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,10 +1,10 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
-import com.bunbeauty.papakarlo.util.string.StringUtil
+import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.create_order.CreateOrderState
 
 class CreateOrderStateMapper(
-    private val stringUtil: StringUtil,
+    private val stringUtil: IStringUtil,
 ) {
     fun map(createOrderState: CreateOrderState): CreateOrderUi {
         return CreateOrderUi(

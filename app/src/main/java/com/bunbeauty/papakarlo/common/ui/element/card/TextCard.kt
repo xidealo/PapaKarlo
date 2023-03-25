@@ -44,11 +44,13 @@ fun TextCard(
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
-fun TextCardPreview() {
-    TextCard(
-        hintStringId = R.string.hint_settings_phone,
-        label = "+7 999 000-00-00"
-    )
+private fun TextCardPreview() {
+    FoodDeliveryTheme {
+        TextCard(
+            hintStringId = R.string.hint_settings_phone,
+            label = "+7 999 000-00-00"
+        )
+    }
 }

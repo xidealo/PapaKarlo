@@ -3,24 +3,21 @@ package com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.Title
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
+import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.mediumRoundedCornerShape
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.color.MaterialColors
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlin.coroutines.resume
@@ -35,7 +32,6 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
         binding.root.setContent {
             DeferredTimeScreen(
                 title = title,
@@ -126,37 +122,29 @@ private fun DeferredTimeScreen(
     onAsapClicked: () -> Unit,
     onSelectTimeClicked: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Title(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
-            text = title,
+    FoodDeliveryBottomSheet(title = title) {
+        SimpleCard(
+            text = stringResource(R.string.action_deferred_time_asap),
+            elevated = false,
+            onClick = onAsapClicked
         )
-        Column(
-            modifier = Modifier
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-        ) {
-            SimpleCard(
-                modifier = Modifier
-                    .clip(mediumRoundedCornerShape),
-                text = stringResource(R.string.action_deferred_time_asap),
-                hasShadow = false
-            ) {
-                onAsapClicked()
-            }
-            NavigationCard(
-                modifier = Modifier
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                elevated = false,
-                labelStringId = R.string.action_deferred_time_select_time,
-            ) {
-                onSelectTimeClicked()
-            }
-        }
+        NavigationCard(
+            modifier = Modifier.padding(top = 8.dp),
+            elevated = false,
+            labelStringId = R.string.action_deferred_time_select_time,
+            onClick = onSelectTimeClicked
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun DeferredTimeScreenPreview() {
+    FoodDeliveryTheme {
+        DeferredTimeScreen(
+            title = "Время доставки",
+            onAsapClicked = {},
+            onSelectTimeClicked = {},
+        )
     }
 }
