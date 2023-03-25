@@ -172,7 +172,7 @@
     <!-- PROFILE  -->
     <string name="title_profile">Профиль</string>
     <string name="action_profile_settings">Настройки</string>
-    <string name="action_profile_my_addresses">Мои адерса</string>
+    <string name="action_profile_my_addresses">Мои адреса</string>
     <string name="action_profile_my_orders">Мои заказы</string>
     <string name="action_profile_payment">Оплата</string>
     <string name="title_profile_no_profile">Войдите в профиль</string>
