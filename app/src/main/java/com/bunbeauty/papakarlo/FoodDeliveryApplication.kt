@@ -14,7 +14,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
 import org.koin.core.logger.Level
 
-class PapaKarloApplication : Application(), KoinComponent {
+class FoodDeliveryApplication : Application(), KoinComponent {
 
     override fun onCreate() {
         setTheme(R.style.AppTheme)
@@ -22,7 +22,7 @@ class PapaKarloApplication : Application(), KoinComponent {
 
         initKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
-            androidContext(this@PapaKarloApplication)
+            androidContext(this@FoodDeliveryApplication)
             modules(
                 appModule(),
                 appUtilModule(),
