@@ -191,7 +191,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
                 categoryItemList.indexOfFirst { categoryItemModel ->
                     categoryItemModel.isSelected
                 }.let { index ->
-                    categoryLazyListState.animateScrollToItem(index)
+                    if (index >= 0) {
+                        categoryLazyListState.animateScrollToItem(index)
+                    }
                 }
             }
         }
