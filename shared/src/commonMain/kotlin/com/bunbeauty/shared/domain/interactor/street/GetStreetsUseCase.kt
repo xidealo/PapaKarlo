@@ -12,8 +12,8 @@ class GetStreetsUseCase(
 ) {
 
     suspend operator fun invoke(): List<Street> {
-        val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException
-        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException
+        val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException()
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
 
         return streetRepo.getStreetList(
             userUuid = userUuid,

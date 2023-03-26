@@ -8,6 +8,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 private val orange = Color(0xFFFF6900)
+private val brown = Color(0xFF3C281B)
 private val white = Color(0xFFFFFFFF)
 private val black = Color(0xFF000000)
 private val grey1 = Color(0xFFDDDDDD)
@@ -60,9 +61,9 @@ val PapaKarloColors = AppColors(
     isLight = true
 )
 
-val CheddarColors = AppColors(
+val YuliarColors = AppColors(
     mainColors = MainColors(
-        primary = orange,
+        primary = brown,
         disabled = grey1,
         secondary = white,
         background = cream,
