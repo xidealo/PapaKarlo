@@ -91,14 +91,12 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragmen
                 }
                 UserAddressListState.State.EMPTY -> {
                     EmptyScreen(
-                        imageId = R.drawable.empty_address,
+                        imageId = R.drawable.ic_address,
                         imageDescriptionId = R.string.description_cafe_addresses_empty,
                         mainTextId = R.string.title_my_addresses_empty,
                         extraTextId = R.string.msg_my_addresses_empty,
                         buttonTextId = R.string.action_add_addresses,
-                        onClick = {
-                            viewModel.update()
-                        }
+                        onClick = viewModel::update
                     )
                 }
                 UserAddressListState.State.LOADING -> {

@@ -60,7 +60,7 @@ private fun FeedbackScreen(
         }
         NavigationIconCard(
             modifier = Modifier.padding(top = 8.dp),
-            iconId = R.drawable.ic_gp,
+            iconId = R.drawable.ic_google_play,
             iconDescription = R.string.description_feedback_play_market,
             labelStringId = R.string.action_feedback_play_market,
             elevated = false

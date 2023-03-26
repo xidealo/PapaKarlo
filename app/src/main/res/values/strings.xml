@@ -58,7 +58,7 @@
     <string name="action_consumer_cart_creeate_order">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
-    <string name="msg_consumer_cart_empty">Добавьте товар из \"Меню\"</string>
+    <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
     <string name="error_consumer_cart_full">Корзина переполнена</string>
@@ -233,7 +233,7 @@
 
     <!-- ABOUT APP -->
     <string name="title_about_app">О приложении</string>
-    <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
+    <string name="msg_about_app_developer">Разработчик «Банбьюти»</string>
     <string name="msg_about_app_version">Версия&#160;</string>
 
     <!-- CHANGE CITY -->

@@ -24,6 +24,8 @@ private val lightGreen = Color(0xFF86BD47)
 private val green = Color(0xFF62BC71)
 private val darkGrey = Color(0xFF7B7A80)
 private val lightBlue = Color(0xFF0AB9E8)
+private val lightOrange = Color(0xFFFF9B3F)
+private val lightBrown = Color(0xFFDBAF97)
 
 val PapaKarloColors = AppColors(
     mainColors = MainColors(
@@ -55,6 +57,7 @@ val PapaKarloColors = AppColors(
         positive = green,
         warning = yellow,
         negative = lightRed,
+        neutral = lightOrange,
         onStatus = white,
     ),
     bunBeautyBrandColor = lightBlue,
@@ -91,6 +94,7 @@ val YuliarColors = AppColors(
         positive = green,
         warning = yellow,
         negative = lightRed,
+        neutral = lightBrown,
         onStatus = white,
     ),
     bunBeautyBrandColor = lightBlue,
@@ -297,6 +301,7 @@ class StatusColors(
     positive: Color,
     warning: Color,
     negative: Color,
+    neutral: Color,
     onStatus: Color,
 ) {
     var positive by mutableStateOf(positive)
@@ -305,6 +310,8 @@ class StatusColors(
         private set
     var negative by mutableStateOf(negative)
         private set
+    var neutral by mutableStateOf(neutral)
+        private set
     var onStatus by mutableStateOf(onStatus)
         private set
 
@@ -312,11 +319,13 @@ class StatusColors(
         positive: Color = this.positive,
         warning: Color = this.warning,
         negative: Color = this.negative,
+        neutral: Color = this.neutral,
         onStatus: Color = this.onStatus,
     ) = StatusColors(
         positive = positive,
         warning = warning,
         negative = negative,
+        neutral = neutral,
         onStatus = onStatus
     )
 
@@ -324,6 +333,7 @@ class StatusColors(
         positive = other.positive
         warning = other.warning
         negative = other.negative
+        neutral = other.neutral
         onStatus = other.onStatus
     }
 }

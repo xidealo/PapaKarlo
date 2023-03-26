@@ -92,7 +92,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
                 )
                 is State.Empty -> {
                     EmptyScreen(
-                        imageId = R.drawable.empty_cart,
+                        imageId = R.drawable.ic_cart_24,
                         imageDescriptionId = R.string.description_consumer_cart_empty,
                         mainTextId = R.string.title_consumer_cart_empty,
                         extraTextId = R.string.msg_consumer_cart_empty,
