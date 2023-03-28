@@ -34,7 +34,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateFragment : BaseFragment(R.layout.fragment_compose) {
@@ -60,7 +59,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_compose) {
                     modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_update_update
                 ) {
-                    val uri = Uri.parse(PLAY_MARKET_LINK)
+                    val uri = Uri.parse(resources.getString(R.string.google_play_link))
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(intent)
                 }

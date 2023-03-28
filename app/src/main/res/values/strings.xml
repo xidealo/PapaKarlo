@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">PapaKarlo</string>
-
     <!--
     title — заголовки;
     hint — подсказки в edittext;
