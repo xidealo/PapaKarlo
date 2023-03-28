@@ -283,7 +283,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     modifier = Modifier
                         .size(120.dp)
                         .clip(CircleShape)
-                        .background(FoodDeliveryTheme.colors.statusColors.neutral),
+                        .background(FoodDeliveryTheme.colors.statusColors.info),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(

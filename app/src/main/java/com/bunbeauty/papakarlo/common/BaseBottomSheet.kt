@@ -23,7 +23,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
     abstract val viewBinding: ViewBinding
 
     override fun getTheme(): Int {
-        return R.style.BottomSheetTheme
+        return R.style.Theme_MaterialComponents_Light_BottomSheetDialog
     }
 
     override fun onCreateView(
