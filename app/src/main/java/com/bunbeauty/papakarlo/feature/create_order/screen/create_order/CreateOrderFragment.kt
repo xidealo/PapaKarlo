@@ -22,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
@@ -267,7 +268,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
         eventList.forEach { event ->
             when (event) {
                 is CreateOrderState.Event.OpenCreateAddressEvent -> {
-                    findNavController().navigate(toCreateAddressFragment())
+                    findNavController().navigateSafe(toCreateAddressFragment())
                 }
                 is CreateOrderState.Event.ShowUserAddressListEvent -> {
                     UserAddressListBottomSheet.show(
@@ -333,7 +334,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                         backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
                         isTop = false
                     )
-                    findNavController().navigate(toProfileFragment())
+                    findNavController().navigateSafe(toProfileFragment())
                 }
                 is CreateOrderState.Event.ShowUserAddressError -> {
                     // TODO (show address error)
@@ -349,7 +350,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 viewModel.onUserAddressChanged(result.addressItem.uuid)
             }
             is UserAddressListResult.AddNewAddress -> {
-                findNavController().navigate(toCreateAddressFragment())
+                findNavController().navigateSafe(toCreateAddressFragment())
             }
         }
     }

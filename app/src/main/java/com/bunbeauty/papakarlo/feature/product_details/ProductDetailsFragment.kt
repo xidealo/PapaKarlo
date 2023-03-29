@@ -30,6 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
@@ -94,7 +95,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                     ) {
                         findNavController().popBackStack()
                     } else {
-                        findNavController().navigate(globalConsumerCartFragment())
+                        findNavController().navigateSafe(globalConsumerCartFragment())
                     }
                 }
             ),

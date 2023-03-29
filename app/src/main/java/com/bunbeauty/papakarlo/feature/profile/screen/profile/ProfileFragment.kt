@@ -34,6 +34,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
@@ -114,7 +115,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 FoodDeliveryCartAction(
                     topCartUi = profileUi.topCartUi,
                 ) {
-                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                    findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
             actionButton = {
@@ -155,7 +156,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         eventList.forEach { event ->
             when (event) {
                 is ProfileState.Event.OpenOrderDetails -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toOrderDetailsFragment(
                             event.orderUuid,
                             event.orderCode
@@ -163,29 +164,29 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     )
                 }
                 ProfileState.Event.OpenSettings -> {
-                    findNavController().navigate(ProfileFragmentDirections.toSettingsFragment())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
                 }
                 ProfileState.Event.OpenAddressList -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toNavAddress(
                             false
                         )
                     )
                 }
                 ProfileState.Event.OpenOrderList -> {
-                    findNavController().navigate(ProfileFragmentDirections.toOrdersFragment())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
                 }
                 ProfileState.Event.ShowPayment -> {
-                    findNavController().navigate(ProfileFragmentDirections.toPaymentBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toPaymentBottomSheet())
                 }
                 ProfileState.Event.ShowFeedback -> {
-                    findNavController().navigate(ProfileFragmentDirections.toFeedbackBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toFeedbackBottomSheet())
                 }
                 ProfileState.Event.ShowAboutApp -> {
-                    findNavController().navigate(ProfileFragmentDirections.toAboutAppBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
                 }
                 ProfileState.Event.OpenLogin -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toLoginFragment(
                             SuccessLoginDirection.BACK_TO_PROFILE
                         )

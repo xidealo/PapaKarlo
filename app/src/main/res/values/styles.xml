@@ -15,11 +15,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="DefaultWrapContentText" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <!--TEXT-->
     <!-- Naming: [Secondary][Size*][FontWeight*][Width*][Caps]Text -->
     <!-- Size* : Large, Medium, Small -->
@@ -35,7 +30,7 @@
 
     <style name="BottomSheetDialogStyle" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
-        <item name="background">@android:color/white</item>
+        <item name="background">?attr/colorSurface</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -46,11 +41,6 @@
 
     <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/background_bottom_sheet</item>
-    </style>
-
-    <style name="BottomSheet">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

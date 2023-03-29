@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -128,7 +129,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
         eventList.forEach { event ->
             when (event) {
                 is OrderListState.OpenOrderDetailsEvent -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         toOrderDetailsFragment(event.orderUuid, event.orderCode)
                     )
                 }
