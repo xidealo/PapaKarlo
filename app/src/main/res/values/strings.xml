@@ -218,7 +218,6 @@
 
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
-    <string name="msg_payment_description">Вы можете оплатить заказ наличным, а также переводом по номеру карты или телефона</string>
 
     <!-- FEEDBACK -->
     <string name="title_feedback">Отзывы</string>

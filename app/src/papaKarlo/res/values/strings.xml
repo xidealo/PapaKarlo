@@ -3,4 +3,5 @@
     <string name="vk_link">https://vk.com/papakarlokimry</string>
     <string name="instagram_link">https://www.instagram.com/papakarlokimry</string>
     <string name="google_play_link">https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo</string>
+    <string name="msg_payment_description">Оплатить заказ можно наличными, а также переводом по номеру карты или телефона</string>
 </resources>

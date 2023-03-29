@@ -3,4 +3,5 @@
     <string name="vk_link">https://vk.com/kafe.yuliar</string>
     <string name="instagram_link"/>
     <string name="google_play_link">https://play.google.com/store/apps/developer?id=xIdealo</string>
+    <string name="msg_payment_description">Оплатить заказ можно наличными или через терминал при получении</string>
 </resources>
