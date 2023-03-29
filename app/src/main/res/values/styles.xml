@@ -27,10 +27,6 @@
     <!-- Width* : WrapConstrain, WrapContent -->
     <!-- * - required -->
 
-    <style name="MediumRegularWrapContentText" parent="DefaultWrapContentText">
-        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
-    </style>
-
     <style name="MediumRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
         <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
     </style>
