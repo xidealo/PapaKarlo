@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-private val orange = Color(0xFFFF6900)
+private val orange = Color(0xFFFF8243)
 private val gold = Color(0xFFCA9D72)
 private val white = Color(0xFFFFFFFF)
 private val black = Color(0xFF000000)
