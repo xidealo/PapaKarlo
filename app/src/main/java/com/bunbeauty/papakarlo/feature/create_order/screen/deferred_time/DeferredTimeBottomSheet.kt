@@ -17,6 +17,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import com.google.android.material.color.MaterialColors
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
@@ -32,7 +33,7 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setContent {
+        binding.root.setContentWithTheme {
             DeferredTimeScreen(
                 title = title,
                 onAsapClicked = {
