@@ -46,7 +46,7 @@ jobs:
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
-      - name: check shared module tests
-        run: ./gradlew testDebug
-
-
+      - name: run PapaKarlo tests
+        run: ./gradlew testPapaKarloDebug
+      - name: run Yuliar tests
+        run: ./gradlew testYuliarDebug

@@ -58,15 +58,15 @@ android {
     productFlavors {
         create("papaKarlo") {
             applicationId = PapaKarloApplication.applicationId
-            versionCode = PapaKarloApplication.versionCode
+            versionCode = CommonApplication.versionCode
             versionName = PapaKarloApplication.versionName
         }
 
-    /*    create("cheddar") {
-            applicationId = CheddarApplication.applicationId
-            versionCode = CheddarApplication.versionCode
-            versionName = CheddarApplication.versionName
-        }*/
+        create("yuliar") {
+            applicationId = YuliarApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = YuliarApplication.versionName
+        }
     }
 
     kotlinOptions {

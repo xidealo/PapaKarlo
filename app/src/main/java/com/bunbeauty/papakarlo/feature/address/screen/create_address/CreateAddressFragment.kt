@@ -333,7 +333,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         FoodDeliveryTheme {
             CreateAddressScreen(
                 CreateAddressState(
-                    state = CreateAddressState.State.Error(NoSelectedCityUuidException)
+                    state = CreateAddressState.State.Error(NoSelectedCityUuidException())
                 )
             )
         }

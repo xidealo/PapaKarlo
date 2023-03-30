@@ -43,7 +43,7 @@ class CreateAddressViewModel(
             val streets = getStreetsUseCase().ifEmpty {
                 mutableStreetListState.update { oldState ->
                     oldState.copy(
-                        state = CreateAddressState.State.Error(EmptyStreetListException)
+                        state = CreateAddressState.State.Error(EmptyStreetListException())
                     )
                 }
                 return@launch

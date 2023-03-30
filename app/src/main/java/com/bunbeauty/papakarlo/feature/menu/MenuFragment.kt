@@ -34,6 +34,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
@@ -88,7 +89,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
         eventList.forEach { event ->
             when (event) {
                 is MenuState.Event.GoToSelectedItem -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         MenuFragmentDirections.toProductFragment(
                             event.uuid,
                             event.name
@@ -107,7 +108,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
             drawableId = R.drawable.logo_small,
             topActions = listOf(
                 FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
-                    findNavController().navigate(globalConsumerCartFragment())
+                    findNavController().navigateSafe(globalConsumerCartFragment())
                 }
             ),
         ) {
@@ -191,7 +192,9 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
                 categoryItemList.indexOfFirst { categoryItemModel ->
                     categoryItemModel.isSelected
                 }.let { index ->
-                    categoryLazyListState.animateScrollToItem(index)
+                    if (index >= 0) {
+                        categoryLazyListState.animateScrollToItem(index)
+                    }
                 }
             }
         }

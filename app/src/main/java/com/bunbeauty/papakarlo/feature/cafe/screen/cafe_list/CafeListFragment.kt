@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -77,7 +78,7 @@ class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
                 FoodDeliveryCartAction(
                     topCartUi = cafeListUi.topCartUi,
                 ) {
-                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                    findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
         ) {
@@ -123,10 +124,8 @@ class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
         eventList.forEach { event ->
             when (event) {
                 is CafeListState.Event.OpenCafeOptionsBottomSheet -> {
-                    findNavController().navigate(
-                        CafeListFragmentDirections.toCafeOptionsBottomSheet(
-                            event.uuid
-                        )
+                    findNavController().navigateSafe(
+                        CafeListFragmentDirections.toCafeOptionsBottomSheet(event.uuid)
                     )
                 }
             }

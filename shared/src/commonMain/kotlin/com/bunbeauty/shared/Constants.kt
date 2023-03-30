@@ -21,24 +21,6 @@ object Constants {
     const val CARD_NUMBER_LABEL = "cart number"
     const val PHONE_NUMBER_LABEL = "phone number"
 
-
-    // FRAGMENT RESULT KEY
-
-    const val DEFERRED_TIME_REQUEST_KEY = "deferred time request key"
-    const val SELECTED_DEFERRED_TIME_KEY = "selected deferred time key"
-
-    const val COMMENT_REQUEST_KEY = "comment request key"
-    const val RESULT_COMMENT_KEY = "result comment key"
-
-    const val EMAIL_REQUEST_KEY = "email request key"
-    const val RESULT_EMAIL_KEY = "result email key"
-
-    const val USER_ADDRESS_REQUEST_KEY = "user address request key"
-    const val RESULT_USER_ADDRESS_KEY = "result user address key"
-
-    const val CAFE_ADDRESS_REQUEST_KEY = "cafe address request key"
-    const val RESULT_CAFE_ADDRESS_KEY = "result cafe address key"
-
     // PATTERN
 
     const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
@@ -72,26 +54,7 @@ object Constants {
 
     // LINK
 
-    const val VK_LINK = "https://vk.com/papakarlokimry"
-    const val INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
-    const val PLAY_MARKET_LINK =
-        "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
     const val MAPS_LINK = "https://maps.google.com/maps?daddr="
     const val PHONE_LINK = "tel:"
-    const val BB_VK_LINK = "https://vk.com/bunbeauty"
-    const val APP_STORE_LINK = "https://itunes.apple.com/app/id6443966083"
-
-    // ERROR_KEY
-
-    const val STREET_ERROR_KEY = "street error key"
-    const val HOUSE_ERROR_KEY = "house error key"
-    const val FLAT_ERROR_KEY = "flat error key"
-    const val ENTRANCE_ERROR_KEY = "entrance error key"
-    const val FLOOR_ERROR_KEY = "floor error key"
-    const val COMMENT_ERROR_KEY = "comment error key"
-
-    // REMOTE CONFIG KEY
-
-    const val FORCE_UPDATE_VERSION = "forceUpdateVersion"
 
 }
