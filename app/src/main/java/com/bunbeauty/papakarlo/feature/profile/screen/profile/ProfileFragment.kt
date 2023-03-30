@@ -2,7 +2,8 @@ package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,13 +12,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +34,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
@@ -110,7 +115,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 FoodDeliveryCartAction(
                     topCartUi = profileUi.topCartUi,
                 ) {
-                    findNavController().navigate(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                    findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
             ),
             actionButton = {
@@ -151,7 +156,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         eventList.forEach { event ->
             when (event) {
                 is ProfileState.Event.OpenOrderDetails -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toOrderDetailsFragment(
                             event.orderUuid,
                             event.orderCode
@@ -159,29 +164,29 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     )
                 }
                 ProfileState.Event.OpenSettings -> {
-                    findNavController().navigate(ProfileFragmentDirections.toSettingsFragment())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
                 }
                 ProfileState.Event.OpenAddressList -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toNavAddress(
                             false
                         )
                     )
                 }
                 ProfileState.Event.OpenOrderList -> {
-                    findNavController().navigate(ProfileFragmentDirections.toOrdersFragment())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
                 }
                 ProfileState.Event.ShowPayment -> {
-                    findNavController().navigate(ProfileFragmentDirections.toPaymentBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toPaymentBottomSheet())
                 }
                 ProfileState.Event.ShowFeedback -> {
-                    findNavController().navigate(ProfileFragmentDirections.toFeedbackBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toFeedbackBottomSheet())
                 }
                 ProfileState.Event.ShowAboutApp -> {
-                    findNavController().navigate(ProfileFragmentDirections.toAboutAppBottomSheet())
+                    findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
                 }
                 ProfileState.Event.OpenLogin -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         ProfileFragmentDirections.toLoginFragment(
                             SuccessLoginDirection.BACK_TO_PROFILE
                         )
@@ -275,11 +280,20 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 modifier = Modifier.padding(top = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    modifier = Modifier.size(120.dp),
-                    painter = painterResource(R.drawable.empty_profile),
-                    contentDescription = stringResource(R.string.description_empty_profile)
-                )
+                Box(
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                        .background(FoodDeliveryTheme.colors.statusColors.info),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        modifier = Modifier.size(64.dp),
+                        painter = painterResource(R.drawable.ic_profile),
+                        tint = FoodDeliveryTheme.colors.statusColors.onStatus,
+                        contentDescription = stringResource(R.string.description_empty_profile)
+                    )
+                }
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()

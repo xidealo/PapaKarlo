@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,9 +17,6 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.Constants.INSTAGRAM_LINK
-import com.bunbeauty.shared.Constants.PLAY_MARKET_LINK
-import com.bunbeauty.shared.Constants.VK_LINK
 
 class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
@@ -25,7 +24,12 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.root.setContentWithTheme {
-            FeedbackScreen(onItemClick = ::goByLink)
+            FeedbackScreen(
+                vkLink = resources.getString(R.string.vk_link),
+                instagramLink = resources.getString(R.string.instagram_link),
+                googlePlayLink = resources.getString(R.string.google_play_link),
+                onItemClick = ::goByLink,
+            )
         }
     }
 
@@ -38,34 +42,52 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
 @Composable
 private fun FeedbackScreen(
-    onItemClick: (String) -> Unit
+    vkLink: String,
+    instagramLink: String,
+    googlePlayLink: String,
+    onItemClick: (String) -> Unit,
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.title_feedback) {
-        NavigationIconCard(
-            iconId = R.drawable.ic_vk,
-            iconDescription = R.string.description_feedback_vk,
-            labelStringId = R.string.action_feedback_vk,
-            elevated = false
-        ) {
-            onItemClick(VK_LINK)
+        if (vkLink.isNotEmpty()) {
+            NavigationIconCard(
+                iconId = R.drawable.ic_vk,
+                iconDescription = R.string.description_feedback_vk,
+                labelStringId = R.string.action_feedback_vk,
+                elevated = false,
+                onClick = {
+                    onItemClick(vkLink)
+                }
+            )
+            if (instagramLink.isNotEmpty() || googlePlayLink.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
-        NavigationIconCard(
-            modifier = Modifier.padding(top = 8.dp),
-            iconId = R.drawable.ic_instagram,
-            iconDescription = R.string.description_feedback_instagram,
-            labelStringId = R.string.action_feedback_instagram,
-            elevated = false
-        ) {
-            onItemClick(INSTAGRAM_LINK)
+        if (instagramLink.isNotEmpty()) {
+            NavigationIconCard(
+                modifier = Modifier.padding(top = 8.dp),
+                iconId = R.drawable.ic_instagram,
+                iconDescription = R.string.description_feedback_instagram,
+                labelStringId = R.string.action_feedback_instagram,
+                elevated = false,
+                onClick = {
+                    onItemClick(instagramLink)
+                }
+            )
+            if (googlePlayLink.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
-        NavigationIconCard(
-            modifier = Modifier.padding(top = 8.dp),
-            iconId = R.drawable.ic_gp,
-            iconDescription = R.string.description_feedback_play_market,
-            labelStringId = R.string.action_feedback_play_market,
-            elevated = false
-        ) {
-            onItemClick(PLAY_MARKET_LINK)
+        if (googlePlayLink.isNotEmpty()) {
+            NavigationIconCard(
+                modifier = Modifier.padding(top = 8.dp),
+                iconId = R.drawable.ic_google_play,
+                iconDescription = R.string.description_feedback_play_market,
+                labelStringId = R.string.action_feedback_play_market,
+                elevated = false,
+                onClick = {
+                    onItemClick(googlePlayLink)
+                }
+            )
         }
     }
 }
@@ -74,6 +96,11 @@ private fun FeedbackScreen(
 @Composable
 private fun FeedbackScreenPreview() {
     FoodDeliveryTheme {
-        FeedbackScreen {}
+        FeedbackScreen(
+            vkLink = "vkLink",
+            instagramLink = "instagramLink",
+            googlePlayLink = "googlePlayLink",
+            onItemClick = {},
+        )
     }
 }

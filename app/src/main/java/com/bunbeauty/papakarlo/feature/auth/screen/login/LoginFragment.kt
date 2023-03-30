@@ -39,6 +39,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
@@ -92,13 +93,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
         eventList.forEach { event ->
             when (event) {
                 is LoginState.Event.NavigateToCreateOrderFragment -> {
-                    findNavController().navigate(LoginFragmentDirections.toCreateOrderFragment())
+                    findNavController().navigateSafe(LoginFragmentDirections.toCreateOrderFragment())
                 }
                 is LoginState.Event.NavigateBackToProfileFragment -> {
-                    findNavController().navigate(LoginFragmentDirections.backToProfileFragment())
+                    findNavController().navigateSafe(LoginFragmentDirections.backToProfileFragment())
                 }
                 is LoginState.Event.NavigateToConfirmFragment -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         LoginFragmentDirections.toConfirmFragment(
                             event.phone,
                             event.verificationId,

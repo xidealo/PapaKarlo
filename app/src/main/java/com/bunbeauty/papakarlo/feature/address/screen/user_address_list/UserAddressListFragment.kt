@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
@@ -91,14 +92,12 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragmen
                 }
                 UserAddressListState.State.EMPTY -> {
                     EmptyScreen(
-                        imageId = R.drawable.empty_address,
+                        imageId = R.drawable.ic_address,
                         imageDescriptionId = R.string.description_cafe_addresses_empty,
                         mainTextId = R.string.title_my_addresses_empty,
                         extraTextId = R.string.msg_my_addresses_empty,
                         buttonTextId = R.string.action_add_addresses,
-                        onClick = {
-                            viewModel.update()
-                        }
+                        onClick = viewModel::update
                     )
                 }
                 UserAddressListState.State.LOADING -> {
@@ -141,7 +140,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragmen
         eventList.forEach { event ->
             when (event) {
                 UserAddressListState.Event.OpenCreateAddressEvent -> {
-                    findNavController().navigate(toCreateAddressFragment())
+                    findNavController().navigateSafe(toCreateAddressFragment())
                 }
                 UserAddressListState.Event.GoBack -> {
                     // this event are used for ios

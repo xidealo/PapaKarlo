@@ -7,7 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-private val orange = Color(0xFFFF6900)
+private val orange = Color(0xFFFF8243)
+private val gold = Color(0xFFCA9D72)
 private val white = Color(0xFFFFFFFF)
 private val black = Color(0xFF000000)
 private val grey1 = Color(0xFFDDDDDD)
@@ -23,6 +24,7 @@ private val lightGreen = Color(0xFF86BD47)
 private val green = Color(0xFF62BC71)
 private val darkGrey = Color(0xFF7B7A80)
 private val lightBlue = Color(0xFF0AB9E8)
+private val lightOrange = Color(0xFFFDA65D)
 
 val PapaKarloColors = AppColors(
     mainColors = MainColors(
@@ -54,15 +56,16 @@ val PapaKarloColors = AppColors(
         positive = green,
         warning = yellow,
         negative = lightRed,
+        info = lightOrange,
         onStatus = white,
     ),
     bunBeautyBrandColor = lightBlue,
     isLight = true
 )
 
-val CheddarColors = AppColors(
+val YuliarColors = AppColors(
     mainColors = MainColors(
-        primary = orange,
+        primary = gold,
         disabled = grey1,
         secondary = white,
         background = cream,
@@ -90,6 +93,7 @@ val CheddarColors = AppColors(
         positive = green,
         warning = yellow,
         negative = lightRed,
+        info = gold,
         onStatus = white,
     ),
     bunBeautyBrandColor = lightBlue,
@@ -296,6 +300,7 @@ class StatusColors(
     positive: Color,
     warning: Color,
     negative: Color,
+    info: Color,
     onStatus: Color,
 ) {
     var positive by mutableStateOf(positive)
@@ -304,6 +309,8 @@ class StatusColors(
         private set
     var negative by mutableStateOf(negative)
         private set
+    var info by mutableStateOf(info)
+        private set
     var onStatus by mutableStateOf(onStatus)
         private set
 
@@ -311,11 +318,13 @@ class StatusColors(
         positive: Color = this.positive,
         warning: Color = this.warning,
         negative: Color = this.negative,
+        info: Color = this.info,
         onStatus: Color = this.onStatus,
     ) = StatusColors(
         positive = positive,
         warning = warning,
         negative = negative,
+        info = info,
         onStatus = onStatus
     )
 
@@ -323,6 +332,7 @@ class StatusColors(
         positive = other.positive
         warning = other.warning
         negative = other.negative
+        info = other.info
         onStatus = other.onStatus
     }
 }
