@@ -13,6 +13,7 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.City
 import kotlin.coroutines.resume
@@ -26,7 +27,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setContent {
+        binding.root.setContentWithTheme {
             CityListScreen(
                 cityList = cityList,
                 scrolledToTop = ::toggleDraggable,

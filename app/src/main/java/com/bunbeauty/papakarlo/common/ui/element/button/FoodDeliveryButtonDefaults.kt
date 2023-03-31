@@ -21,17 +21,17 @@ object FoodDeliveryButtonDefaults {
     val mainButtonColors: ButtonColors
         @Composable get() = ButtonDefaults.buttonColors(
             containerColor = FoodDeliveryTheme.colors.mainColors.primary,
+            contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary
+            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
         )
 
     val secondaryButtonColors: ButtonColors
         @Composable get() = ButtonDefaults.buttonColors(
             containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
+            contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary
+            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
         )
 
     val mainOutlineButtonColors: ButtonColors
@@ -44,9 +44,9 @@ object FoodDeliveryButtonDefaults {
     val iconButtonColors: IconButtonColors
         @Composable get() = IconButtonDefaults.iconButtonColors(
             containerColor = FoodDeliveryTheme.colors.mainColors.surface,
+            contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.disabled,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled,
-            contentColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
+            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onDisabled
         )
 
     val buttonShape: RoundedCornerShape

@@ -14,6 +14,7 @@ import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
 import kotlin.coroutines.resume
@@ -27,7 +28,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setContent {
+        binding.root.setContentWithTheme {
             CafeAddressListScreen(
                 addressList = addressList,
                 scrolledToTop = ::toggleDraggable,

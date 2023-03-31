@@ -15,6 +15,7 @@ import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
+import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import kotlin.coroutines.resume
@@ -28,7 +29,7 @@ class UserAddressListBottomSheet : ComposeBottomSheet<UserAddressListResult>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.root.setContent {
+        binding.root.setContentWithTheme {
             UserAddressListScreen(
                 addressList = addressList,
                 scrolledToTop = { isScrolledToTop ->
