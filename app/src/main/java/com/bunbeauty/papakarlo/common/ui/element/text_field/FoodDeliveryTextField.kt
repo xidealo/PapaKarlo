@@ -90,7 +90,7 @@ fun FoodDeliveryTextField(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(start = 16.dp, top = 4.dp),
                 text = stringResource(errorMessageId),
                 style = FoodDeliveryTheme.typography.bodySmall,
                 color = FoodDeliveryTheme.colors.mainColors.error

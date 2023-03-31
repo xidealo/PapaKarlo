@@ -23,7 +23,7 @@ class UserInteractor(
                 dataStoreRepo.saveToken(loginResponse.token)
                 dataStoreRepo.saveUserUuid(loginResponse.userUuid)
             } else {
-                throw NotAuthorizeException
+                throw NotAuthorizeException()
             }
         }
     }

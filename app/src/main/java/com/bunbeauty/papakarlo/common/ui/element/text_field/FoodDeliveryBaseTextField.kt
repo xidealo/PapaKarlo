@@ -4,11 +4,13 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -58,6 +60,7 @@ fun FoodDeliveryBaseTextField(
                             onValueChange("")
                         },
                     painter = painterResource(R.drawable.ic_clear),
+                    tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                     contentDescription = null
                 )
             }
@@ -87,47 +90,52 @@ fun FoodDeliveryBaseTextField(
     maxLines: Int = 1,
     isError: Boolean = false
 ) {
-    OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
-        value = value,
-        onValueChange = { changedValue ->
-            onValueChange(
-                changedValue.copy(
-                    text = changedValue.text.take(maxSymbols)
+    CompositionLocalProvider(
+        LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.textSelectionColors
+    ) {
+        OutlinedTextField(
+            modifier = modifier.fillMaxWidth(),
+            value = value,
+            onValueChange = { changedValue ->
+                onValueChange(
+                    changedValue.copy(
+                        text = changedValue.text.take(maxSymbols)
+                    )
                 )
-            )
-        },
-        textStyle = FoodDeliveryTheme.typography.bodyLarge,
-        label = {
-            Text(
-                text = stringResource(labelStringId),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-        trailingIcon = {
-            if (value.text.isNotEmpty()) {
-                Icon(
-                    modifier = Modifier
-                        .icon16()
-                        .clickable {
-                            onValueChange(TextFieldValue(""))
-                        },
-                    painter = painterResource(R.drawable.ic_clear),
-                    contentDescription = null
+            },
+            textStyle = FoodDeliveryTheme.typography.bodyLarge,
+            label = {
+                Text(
+                    text = stringResource(labelStringId),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
-            }
-        },
-        isError = isError,
-        keyboardOptions = KeyboardOptions(
-            autoCorrect = false,
-            keyboardType = keyboardType,
-            imeAction = imeAction
-        ),
-        singleLine = maxLines == 1,
-        maxLines = maxLines,
-        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
-    )
+            },
+            trailingIcon = {
+                if (value.text.isNotEmpty()) {
+                    Icon(
+                        modifier = Modifier
+                            .icon16()
+                            .clickable {
+                                onValueChange(TextFieldValue(""))
+                            },
+                        painter = painterResource(R.drawable.ic_clear),
+                        tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                        contentDescription = null
+                    )
+                }
+            },
+            isError = isError,
+            keyboardOptions = KeyboardOptions(
+                autoCorrect = false,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            singleLine = maxLines == 1,
+            maxLines = maxLines,
+            colors = FoodDeliveryTextFieldDefaults.textFieldColors,
+        )
+    }
 }
 
 @ExperimentalComposeUiApi

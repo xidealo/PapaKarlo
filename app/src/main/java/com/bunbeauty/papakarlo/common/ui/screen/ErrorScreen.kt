@@ -1,16 +1,20 @@
 package com.bunbeauty.papakarlo.common.ui.screen
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -27,23 +31,22 @@ fun ErrorScreen(
     @StringRes extraTextId: Int? = null,
     onClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .background(
-                color = FoodDeliveryTheme.colors.mainColors.background
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Spacer(modifier = Modifier.weight(1f))
+        Box(
             modifier = Modifier
-                .weight(1f)
-        )
-
-        Image(
-            painter = painterResource(R.drawable.error),
-            contentDescription = stringResource(R.string.description_empty_profile)
-        )
-
+                .size(120.dp)
+                .clip(CircleShape)
+                .background(FoodDeliveryTheme.colors.statusColors.negative),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                modifier = Modifier.size(64.dp),
+                painter = painterResource(R.drawable.ic_error),
+                tint = FoodDeliveryTheme.colors.statusColors.onStatus,
+                contentDescription = null
+            )
+        }
         Text(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,7 +57,6 @@ fun ErrorScreen(
             color = FoodDeliveryTheme.colors.mainColors.onSurface,
             textAlign = TextAlign.Center
         )
-
         extraTextId?.let {
             Text(
                 modifier = Modifier
@@ -67,11 +69,7 @@ fun ErrorScreen(
                 textAlign = TextAlign.Center
             )
         }
-
-        Spacer(
-            modifier = Modifier
-                .weight(1f)
-        )
+        Spacer(modifier = Modifier.weight(1f))
 
         MainButton(
             modifier = Modifier
@@ -89,8 +87,8 @@ private fun ErrorScreenPreview() {
     FoodDeliveryTheme {
         ErrorScreen(
             mainTextId = R.string.common_error,
-            extraTextId = R.string.internet_error
-        ) {
-        }
+            extraTextId = R.string.internet_error,
+            onClick = {}
+        )
     }
 }

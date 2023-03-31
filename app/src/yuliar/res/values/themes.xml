@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/gray</item>
+
+        <item name="colorPrimaryDark">?attr/colorPrimary</item>
+        <item name="colorNavigation">@color/selector_navigation</item>
+    </style>
+
+    <style name="LoadingAppTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">?attr/colorSurface</item>
+        <item name="android:windowBackground">@drawable/loading_screen_papa_karlo</item>
+    </style>
+</resources>

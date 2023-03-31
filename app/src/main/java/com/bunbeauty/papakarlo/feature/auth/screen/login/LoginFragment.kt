@@ -39,34 +39,35 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.FragmentLoginBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
-class LoginFragment : BaseFragment(R.layout.fragment_login) {
+class LoginFragment : BaseFragment(R.layout.fragment_compose) {
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
     override val viewModel: LoginViewModel by stateViewModel(state = {
         arguments ?: bundleOf()
     })
-    override val viewBinding by viewBinding(FragmentLoginBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.setSuccessState()
-        viewBinding.fragmentLoginCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val loginState by viewModel.loginState.collectAsStateWithLifecycle()
             LoginScreen(loginState)
             LaunchedEffect(loginState.eventList) {
@@ -92,13 +93,13 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         eventList.forEach { event ->
             when (event) {
                 is LoginState.Event.NavigateToCreateOrderFragment -> {
-                    findNavController().navigate(LoginFragmentDirections.toCreateOrderFragment())
+                    findNavController().navigateSafe(LoginFragmentDirections.toCreateOrderFragment())
                 }
                 is LoginState.Event.NavigateBackToProfileFragment -> {
-                    findNavController().navigate(LoginFragmentDirections.backToProfileFragment())
+                    findNavController().navigateSafe(LoginFragmentDirections.backToProfileFragment())
                 }
                 is LoginState.Event.NavigateToConfirmFragment -> {
-                    findNavController().navigate(
+                    findNavController().navigateSafe(
                         LoginFragmentDirections.toConfirmFragment(
                             event.phone,
                             event.verificationId,
@@ -147,10 +148,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
                 is LoginState.State.Error -> {
                     ErrorScreen(
                         mainTextId = R.string.common_error,
-                        extraTextId = R.string.internet_error
-                    ) {
-                        viewModel.setSuccessState()
-                    }
+                        extraTextId = R.string.internet_error,
+                        onClick = viewModel::setSuccessState,
+                    )
                 }
             }
         }
@@ -175,9 +175,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             verticalArrangement = Arrangement.Center
         ) {
             BoxWithConstraints {
-                if (maxHeight > 240.dp) {
+                if (maxHeight > 200.dp) {
                     Image(
-                        painter = painterResource(R.drawable.logo_login_papa_k),
+                        modifier = Modifier.height(156.dp),
+                        painter = painterResource(R.drawable.logo_medium),
                         contentDescription = stringResource(R.string.description_login_logo)
                     )
                 }
@@ -230,20 +231,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenPreview() {
-        LoginScreen(
-            LoginState(
-                state = LoginState.State.Success
+        FoodDeliveryTheme {
+            LoginScreen(
+                LoginState(state = LoginState.State.Success)
             )
-        )
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun LoginScreenLoadingPreview() {
-        LoginScreen(
-            LoginState(
-                state = LoginState.State.Loading
+        FoodDeliveryTheme {
+            LoginScreen(
+                LoginState(state = LoginState.State.Loading)
             )
-        )
+        }
     }
 }

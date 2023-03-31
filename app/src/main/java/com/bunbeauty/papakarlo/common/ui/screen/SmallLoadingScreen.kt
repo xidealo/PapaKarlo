@@ -27,5 +27,7 @@ internal fun SmallLoadingScreen(
 @Preview(showSystemUi = true)
 @Composable
 private fun SmallLoadingScreenPreview() {
-    LoadingScreen()
+    FoodDeliveryTheme {
+        LoadingScreen()
+    }
 }

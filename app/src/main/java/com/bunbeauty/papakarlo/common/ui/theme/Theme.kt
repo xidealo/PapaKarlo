@@ -2,13 +2,14 @@ package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults.textSelectionColors
+import com.bunbeauty.shared.data.CompanyConstants.PAPA_KARLO_FLAVOR_NAME
+import com.bunbeauty.shared.data.CompanyConstants.YULIAR_FLAVOR_NAME
+import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -17,9 +18,9 @@ fun FoodDeliveryTheme(
     content: @Composable () -> Unit
 ) {
     val colors = when (flavor) {
-        "papaKarlo" -> PapaKarloColors
-        "cheddar" -> CheddarColors
-        else -> PapaKarloColors
+        PAPA_KARLO_FLAVOR_NAME -> PapaKarloColors
+        YULIAR_FLAVOR_NAME -> YuliarColors
+        else -> throw UnknownFlavorException()
     }
     val rememberedColors = remember {
         colors.copy()
@@ -32,7 +33,6 @@ fun FoodDeliveryTheme(
         LocalAppColors provides rememberedColors,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
-        LocalTextSelectionColors provides textSelectionColors,
         content = content
     )
 }

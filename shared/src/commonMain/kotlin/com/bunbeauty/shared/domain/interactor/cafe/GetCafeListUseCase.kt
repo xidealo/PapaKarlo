@@ -12,7 +12,7 @@ class GetCafeListUseCase(
     private val cafeRepo: CafeRepo,
 ) {
     suspend operator fun invoke(): List<Cafe> {
-        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException
-        return cafeRepo.getCafeList(cityUuid).ifEmpty { throw EmptyCafeListException }
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
+        return cafeRepo.getCafeList(cityUuid).ifEmpty { throw EmptyCafeListException() }
     }
 }

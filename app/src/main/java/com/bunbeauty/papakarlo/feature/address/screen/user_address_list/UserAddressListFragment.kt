@@ -21,12 +21,13 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
-import com.bunbeauty.papakarlo.databinding.BottomSheetUserAddressListBinding
+import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
@@ -37,10 +38,9 @@ import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewMo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UserAddressListFragment :
-    BaseFragmentWithSharedViewModel(R.layout.bottom_sheet_user_address_list) {
+class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
 
-    override val viewBinding by viewBinding(BottomSheetUserAddressListBinding::bind)
+    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
     private val viewModel: UserAddressListViewModel by viewModel()
 
     val userAddressItemMapper: UserAddressItemMapper by inject()
@@ -50,10 +50,10 @@ class UserAddressListFragment :
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentUserAddressListCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val addressListState by viewModel.addressListState.collectAsStateWithLifecycle()
             UserAddressListScreen(
-                userAddressListState = UserAddressListAndroidState(
+                userAddressListState = UserAddressListUi(
                     userAddressItems = addressListState.userAddressList.map { userAddress ->
                         userAddressItemMapper.toItem(userAddress)
                     },
@@ -68,7 +68,7 @@ class UserAddressListFragment :
     }
 
     @Composable
-    private fun UserAddressListScreen(userAddressListState: UserAddressListAndroidState) {
+    private fun UserAddressListScreen(userAddressListState: UserAddressListUi) {
         FoodDeliveryToolbarScreen(
             title = stringResource(R.string.title_my_addresses),
             backActionClick = {
@@ -92,14 +92,12 @@ class UserAddressListFragment :
                 }
                 UserAddressListState.State.EMPTY -> {
                     EmptyScreen(
-                        imageId = R.drawable.empty_address,
+                        imageId = R.drawable.ic_address,
                         imageDescriptionId = R.string.description_cafe_addresses_empty,
                         mainTextId = R.string.title_my_addresses_empty,
                         extraTextId = R.string.msg_my_addresses_empty,
                         buttonTextId = R.string.action_add_addresses,
-                        onClick = {
-                            viewModel.update()
-                        }
+                        onClick = viewModel::update
                     )
                 }
                 UserAddressListState.State.LOADING -> {
@@ -142,7 +140,7 @@ class UserAddressListFragment :
         eventList.forEach { event ->
             when (event) {
                 UserAddressListState.Event.OpenCreateAddressEvent -> {
-                    findNavController().navigate(toCreateAddressFragment())
+                    findNavController().navigateSafe(toCreateAddressFragment())
                 }
                 UserAddressListState.Event.GoBack -> {
                     // this event are used for ios
@@ -161,7 +159,7 @@ class UserAddressListFragment :
                 address = "addddd"
             )
             UserAddressListScreen(
-                UserAddressListAndroidState(
+                UserAddressListUi(
                     userAddressItems = listOf(
                         addressItemModel,
                         addressItemModel,
@@ -180,7 +178,7 @@ class UserAddressListFragment :
     private fun UserAddressListEmptyScreenPreview() {
         FoodDeliveryTheme {
             UserAddressListScreen(
-                userAddressListState = UserAddressListAndroidState(
+                userAddressListState = UserAddressListUi(
                     state = UserAddressListState.State.EMPTY,
                     eventList = emptyList()
                 )
@@ -193,7 +191,7 @@ class UserAddressListFragment :
     private fun UserAddressListLoadingScreenPreview() {
         FoodDeliveryTheme {
             UserAddressListScreen(
-                userAddressListState = UserAddressListAndroidState(
+                userAddressListState = UserAddressListUi(
                     state = UserAddressListState.State.LOADING
                 )
             )

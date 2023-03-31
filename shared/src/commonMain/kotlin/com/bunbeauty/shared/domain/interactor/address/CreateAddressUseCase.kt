@@ -23,11 +23,11 @@ class CreateAddressUseCase(
         comment: String,
         floor: String,
     ): UserAddress? {
-        val token = dataStoreRepo.getToken() ?: throw NoTokenException
-        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException
+        val token = dataStoreRepo.getToken() ?: throw NoTokenException()
+        val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
         val street =
             streetRepo.getStreetByNameAndCityUuid(streetName, cityUuid)
-                ?: throw NoStreetByNameAndCityUuidException
+                ?: throw NoStreetByNameAndCityUuidException()
         val createdUserAddress = CreatedUserAddress(
             house = house,
             flat = flat,

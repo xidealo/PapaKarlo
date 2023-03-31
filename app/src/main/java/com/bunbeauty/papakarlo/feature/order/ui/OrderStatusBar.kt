@@ -8,22 +8,23 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.papakarlo.common.ui.icon24
+import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.largeRoundedCornerShape
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+
+private val stepShape = RoundedCornerShape(12.dp)
 
 @Composable
 fun OrderStatusBar(
@@ -34,8 +35,7 @@ fun OrderStatusBar(
     FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
-            .fillMaxWidth(),
-        enabled = false
+            .fillMaxWidth()
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
@@ -55,7 +55,7 @@ fun OrderStatusBar(
                 }
                 when {
                     (i < currentStep) -> {
-                        DoneStep(
+                        PassedOrderStatusChip(
                             modifier = Modifier
                                 .padding(start = startSpace)
                                 .weight(1f),
@@ -70,8 +70,8 @@ fun OrderStatusBar(
                             statusName = orderStatusName
                         )
                     }
-                    (i > currentStep) -> {
-                        FutureStep(
+                    else -> {
+                        EmptyOrderStatusChip(
                             modifier = Modifier
                                 .padding(start = startSpace)
                                 .weight(1f)
@@ -84,24 +84,21 @@ fun OrderStatusBar(
 }
 
 @Composable
-fun DoneStep(
+private fun DoneStep(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
 ) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(largeRoundedCornerShape)
+            .clip(stepShape)
             .background(getOrderColor(orderStatus))
     ) {
         Icon(
             modifier = Modifier
-                .icon24()
-                .padding(
-                    vertical = FoodDeliveryTheme.dimensions.verySmallSpace
-                )
+                .icon16()
                 .align(Alignment.Center),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_check),
+            painter = painterResource(R.drawable.ic_check),
             contentDescription = stringResource(R.string.description_order_details_done),
             tint = FoodDeliveryTheme.colors.orderColors.onOrder
         )
@@ -109,74 +106,88 @@ fun DoneStep(
 }
 
 @Composable
-fun FutureStep(modifier: Modifier = Modifier) {
+private fun FutureStep(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxHeight()
-            .clip(largeRoundedCornerShape)
+            .clip(stepShape)
             .background(FoodDeliveryTheme.colors.mainColors.disabled)
     )
 }
 
 @Preview
 @Composable
-fun StatusBarNotAcceptedPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.NOT_ACCEPTED,
-        orderStatusName = "Обрабатывается"
-    )
+private fun StatusBarNotAcceptedPreview() {
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.NOT_ACCEPTED,
+            orderStatusName = "Обрабатывается"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarAcceptedPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.ACCEPTED,
-        orderStatusName = "Принят"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.ACCEPTED,
+            orderStatusName = "Принят"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarPreparingPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.PREPARING,
-        orderStatusName = "Готовится"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.PREPARING,
+            orderStatusName = "Готовится"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarDonePreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.DONE,
-        orderStatusName = "Готов"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.DONE,
+            orderStatusName = "Готов"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarSentOutPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.SENT_OUT,
-        orderStatusName = "В пути"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.SENT_OUT,
+            orderStatusName = "В пути"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarSentDeliveredPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.DELIVERED,
-        orderStatusName = "Выдан"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.DELIVERED,
+            orderStatusName = "Выдан"
+        )
+    }
 }
 
 @Preview
 @Composable
 fun StatusBarSentCanceledPreview() {
-    OrderStatusBar(
-        orderStatus = OrderStatus.CANCELED,
-        orderStatusName = "Отменен"
-    )
+    FoodDeliveryTheme {
+        OrderStatusBar(
+            orderStatus = OrderStatus.CANCELED,
+            orderStatusName = "Отменен"
+        )
+    }
 }

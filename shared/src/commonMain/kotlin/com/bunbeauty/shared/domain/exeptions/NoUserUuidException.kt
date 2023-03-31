@@ -1,3 +1,3 @@
 package com.bunbeauty.shared.domain.exeptions
 
-object NoUserUuidException : Throwable()
+class NoUserUuidException : Exception()

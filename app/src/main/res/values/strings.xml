@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">PapaKarlo</string>
-
     <!--
     title — заголовки;
     hint — подсказки в edittext;
@@ -41,6 +39,7 @@
     <string name="msg_update_new_title_app_version">Доступна новая версия</string>
     <string name="msg_update_new_app_version">Пожалуйста, обновите приложение.\nНовая версия уже доступна в Play Маркет</string>
     <string name="action_update_update">Обновить</string>
+    <string name="description_google_play">Google play</string>
 
     <!-- PRODUCT -->
     <string name="action_product_want">Хочу!</string>
@@ -57,7 +56,7 @@
     <string name="action_consumer_cart_creeate_order">Оформить заказ</string>
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
-    <string name="msg_consumer_cart_empty">Добавьте товар из \"Меню\"</string>
+    <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
     <string name="error_consumer_cart_full">Корзина переполнена</string>
@@ -172,7 +171,7 @@
     <!-- PROFILE  -->
     <string name="title_profile">Профиль</string>
     <string name="action_profile_settings">Настройки</string>
-    <string name="action_profile_my_addresses">Мои адерса</string>
+    <string name="action_profile_my_addresses">Мои адреса</string>
     <string name="action_profile_my_orders">Мои заказы</string>
     <string name="action_profile_payment">Оплата</string>
     <string name="title_profile_no_profile">Войдите в профиль</string>
@@ -219,7 +218,6 @@
 
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
-    <string name="msg_payment_description">Вы можете оплатить заказ наличным, а также переводом по номеру карты или телефона</string>
 
     <!-- FEEDBACK -->
     <string name="title_feedback">Отзывы</string>
@@ -232,7 +230,7 @@
 
     <!-- ABOUT APP -->
     <string name="title_about_app">О приложении</string>
-    <string name="msg_about_app_developer">Разработчик \"Банбьюти\"</string>
+    <string name="msg_about_app_developer">Разработчик «Банбьюти»</string>
     <string name="msg_about_app_version">Версия&#160;</string>
 
     <!-- CHANGE CITY -->

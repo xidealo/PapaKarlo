@@ -9,9 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.icon16
@@ -56,9 +55,9 @@ fun NavigationTextCard(
             }
             Icon(
                 modifier = Modifier.icon16(),
-                imageVector = ImageVector.vectorResource(R.drawable.ic_right_arrow),
+                painter = painterResource(R.drawable.ic_right_arrow),
+                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 contentDescription = stringResource(R.string.description_ic_next),
-                tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
         }
     }
@@ -67,9 +66,12 @@ fun NavigationTextCard(
 @Preview(showSystemUi = true)
 @Composable
 private fun TextNavigationCardPreview() {
-    NavigationTextCard(
-        modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
-        hintStringId = R.string.hint_settings_phone,
-        label = "+7 999 000-00-00"
-    ) {}
+    FoodDeliveryTheme {
+        NavigationTextCard(
+            modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace),
+            hintStringId = R.string.hint_settings_phone,
+            label = "+7 999 000-00-00",
+            onClick = {}
+        )
+    }
 }

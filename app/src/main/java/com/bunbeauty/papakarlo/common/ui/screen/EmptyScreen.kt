@@ -2,16 +2,20 @@ package com.bunbeauty.papakarlo.common.ui.screen
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -41,11 +45,20 @@ internal fun EmptyScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(imageId),
-                contentDescription = stringResource(imageDescriptionId)
-            )
-
+            Box(
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(FoodDeliveryTheme.colors.statusColors.info),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    modifier = Modifier.size(64.dp),
+                    painter = painterResource(imageId),
+                    tint = FoodDeliveryTheme.colors.statusColors.onStatus,
+                    contentDescription = stringResource(imageDescriptionId)
+                )
+            }
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -56,7 +69,6 @@ internal fun EmptyScreen(
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
-
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,7 +95,7 @@ internal fun EmptyScreen(
 @Composable
 private fun EmptyScreenPreview() {
     EmptyScreen(
-        imageId = R.drawable.empty_cart,
+        imageId = R.drawable.ic_cart_24,
         imageDescriptionId = R.string.description_consumer_cart_empty,
         mainTextId = R.string.msg_consumer_cart_empty,
         extraTextId = R.string.msg_consumer_cart_empty,

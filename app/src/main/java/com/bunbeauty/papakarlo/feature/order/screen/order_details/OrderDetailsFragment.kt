@@ -10,10 +10,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.zIndex
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -31,11 +32,12 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
+import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
+import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.common.ui.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
@@ -102,7 +104,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
+                    contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.screenContentSpace)
                 ) {
                     state.orderInfo?.let { orderInfo ->
                         item {
@@ -114,7 +116,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                                 OrderInfoCard(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                                        .padding(top = 8.dp),
                                     orderInfo = orderInfo
                                 )
                             }
@@ -123,7 +125,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
                     items(state.orderProductItemList) { orderProductItem ->
                         OrderProductItem(
-                            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                            modifier = Modifier.padding(top = 8.dp),
                             orderProductItem = orderProductItem
                         )
                     }
@@ -146,7 +148,6 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
             Text(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace),
                 text = info,
                 style = FoodDeliveryTheme.typography.bodyMedium,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface
@@ -159,47 +160,42 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         modifier: Modifier = Modifier,
         orderInfo: OrderDetailsUi.OrderInfo,
     ) {
-        FoodDeliveryCard(
-            modifier = modifier,
-            enabled = false
-        ) {
+        FoodDeliveryCard(modifier = modifier) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                    .padding(16.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     OrderInfoTextColumn(
-                        modifier = Modifier
-                            .weight(1f),
+                        modifier = Modifier.weight(1f),
                         hint = stringResource(R.string.msg_order_details_date_time),
                         info = orderInfo.dateTime,
                     )
                     orderInfo.deferredTime?.let { deferredTime ->
+                        Spacer(modifier = Modifier.width(16.dp))
                         OrderInfoTextColumn(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = FoodDeliveryTheme.dimensions.smallSpace),
+                            modifier = Modifier.weight(1f),
                             hint = stringResource(id = orderInfo.deferredTimeHintId),
                             info = deferredTime,
                         )
                     }
                 }
                 OrderInfoTextColumn(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    modifier = Modifier.padding(top = 8.dp),
                     hint = stringResource(R.string.msg_order_details_pickup_method),
                     info = orderInfo.pickupMethod,
                 )
                 OrderInfoTextColumn(
-                    modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                    modifier = Modifier.padding(top = 8.dp),
                     hint = stringResource(R.string.msg_order_details_address),
                     info = orderInfo.address,
                 )
                 orderInfo.comment?.let { comment ->
                     OrderInfoTextColumn(
-                        modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
+                        modifier = Modifier.padding(top = 8.dp),
                         hint = stringResource(R.string.msg_order_details_comment),
                         info = comment,
                     )
@@ -210,14 +206,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
     @Composable
     private fun BottomAmountBar(orderDetailsUi: OrderDetailsUi) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(FoodDeliveryTheme.colors.mainColors.surface)
-                .zIndex(1f),
-            shadowElevation = FoodDeliveryTheme.dimensions.bottomSurfaceElevation,
-            color = FoodDeliveryTheme.colors.mainColors.surface
-        ) {
+        FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -240,12 +229,9 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                             textAlign = TextAlign.End
                         )
                     }
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-                ) {
+                Row(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = stringResource(R.string.msg_order_details_order_cost),
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
@@ -276,17 +262,6 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
     @Preview
     @Composable
-    private fun OrderInfoTextColumnPreview() {
-        FoodDeliveryTheme {
-            OrderInfoTextColumn(
-                hint = stringResource(R.string.msg_order_details_address),
-                info = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
-            )
-        }
-    }
-
-    @Preview
-    @Composable
     private fun OrderInfoCardPreview() {
         FoodDeliveryTheme {
             OrderInfoCard(orderInfo = getOrderInfo())
@@ -306,7 +281,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         }
     }
 
-    @Preview(showSystemUi = true)
+    @Preview
     @Composable
     private fun BottomAmountBarPreview() {
         FoodDeliveryTheme {
@@ -314,7 +289,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
         }
     }
 
-    @Preview(showSystemUi = true)
+    @Preview
     @Composable
     private fun BottomAmountBarWithoutDeliveryPreview() {
         FoodDeliveryTheme {
@@ -330,17 +305,21 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsSuccessScreenPreview() {
-        OrderDetailsScreen(orderDetailsUi = getOrderDetails())
+        FoodDeliveryTheme {
+            OrderDetailsScreen(orderDetailsUi = getOrderDetails())
+        }
     }
 
     @Preview(showSystemUi = true)
     @Composable
     private fun OrderDetailsLoadingScreenPreview() {
-        OrderDetailsScreen(
-            orderDetailsUi = getOrderDetails().copy(
-                isLoading = true
+        FoodDeliveryTheme {
+            OrderDetailsScreen(
+                orderDetailsUi = getOrderDetails().copy(
+                    isLoading = true
+                )
             )
-        )
+        }
     }
 
     private fun getOrderDetails(): OrderDetailsUi {

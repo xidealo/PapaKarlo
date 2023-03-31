@@ -1,7 +1,7 @@
 object Versions {
     const val gradle = "7.4.1"
     const val kotlin = "1.8.0"
-    const val googleServices = "4.3.10"
+    const val googleServices = "4.3.15"
     const val crashlytics = "2.8.1"
     const val navigation = "2.5.1"
 
@@ -50,26 +50,27 @@ object Versions {
     const val firebase = "29.0.3"
 
     const val pinEntryEditText = "2.0.6"
+
 }
 
-object PapaKarloApplication {
+object CommonApplication{
     const val versionMajor = 1
     const val versionMinor = 2
     const val versionPatch = 5
 
-    const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
-    const val applicationId = "com.bunbeuaty.papakarlo"
     const val versionCode = 125
 }
 
-object CheddarApplication {
-    const val versionMajor = 1
-    const val versionMinor = 2
-    const val versionPatch = 3
+object PapaKarloApplication {
+    const val versionName =
+        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
+    const val applicationId = "com.bunbeuaty.papakarlo"
+}
 
-    const val versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
-    const val applicationId = "com.bunbeuaty.cheddar"
-    const val versionCode = 123
+object YuliarApplication {
+    const val versionName =
+        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
+    const val applicationId = "com.bunbeuaty.yuliar"
 }
 
 object AndroidSdk {
@@ -126,7 +127,8 @@ object Compose {
     const val uiToolingPreview =
         "androidx.compose.ui:ui-tooling-preview:${Versions.composeUiToolingPreview}"
     const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
-    const val lifecycle = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
+    const val lifecycle =
+        "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
 }
 
 object Lifecycle {
@@ -149,7 +151,7 @@ object Koin {
     const val compose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 }
 
-object MockK{
+object MockK {
     const val main = "io.mockk:mockk:${Versions.mockK}"
     const val common = "io.mockk:mockk-common:${Versions.mockK}"
 }

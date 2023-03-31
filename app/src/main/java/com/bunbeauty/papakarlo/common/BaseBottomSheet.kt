@@ -23,7 +23,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
     abstract val viewBinding: ViewBinding
 
     override fun getTheme(): Int {
-        return R.style.BottomSheetTheme
+        return R.style.BottomSheetDialogStyle
     }
 
     override fun onCreateView(
@@ -54,7 +54,7 @@ abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomShe
         }
     }
 
-    protected inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
+    private inline fun <T> Flow<T>.startedLaunch(crossinline block: suspend (T) -> Unit) {
         startedLaunch(viewLifecycleOwner, block)
     }
 }

@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.common.ui.theme.buttonRoundedCornerShape
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
@@ -46,15 +45,11 @@ fun FoodDeliverySwitcher(
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = FoodDeliveryTheme.dimensions.cardEvaluation(),
-        shape = buttonRoundedCornerShape,
+        elevation = FoodDeliveryCardDefaults.getCardElevation(true),
+        shape = FoodDeliverySwitcherDefaults.switcherShape,
         colors = FoodDeliveryCardDefaults.cardColors,
     ) {
-        Row(
-            modifier = Modifier.padding(
-                FoodDeliveryTheme.dimensions.verySmallSpace
-            )
-        ) {
+        Row(modifier = Modifier.padding(4.dp)) {
             optionList.onEachIndexed { i, text ->
                 val startSpace = if (i == 0) {
                     0.dp
@@ -85,11 +80,10 @@ private fun SwitcherButton(
     onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier
-            .height(40.dp),
+        modifier = modifier.height(40.dp),
         onClick = onClick,
         enabled = enabled,
-        shape = buttonRoundedCornerShape,
+        shape = FoodDeliverySwitcherDefaults.switcherButtonShape,
         colors = FoodDeliverySwitcherDefaults.switcherButtonColor,
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -102,7 +96,7 @@ private fun SwitcherButton(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun SwitcherPreview() {
     FoodDeliveryTheme {
@@ -111,7 +105,8 @@ private fun SwitcherPreview() {
                 R.string.action_create_order_delivery,
                 R.string.action_create_order_pickup
             ),
-            position = 1
-        ) { }
+            position = 1,
+            onPositionChanged = {}
+        )
     }
 }
