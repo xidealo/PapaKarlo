@@ -47,7 +47,7 @@ object Versions {
 
     const val leakcanary = "2.8.1"
 
-    const val firebase = "29.0.3"
+    const val firebase = "31.4.0"
 
     const val pinEntryEditText = "2.0.6"
 
@@ -56,9 +56,9 @@ object Versions {
 object CommonApplication{
     const val versionMajor = 1
     const val versionMinor = 2
-    const val versionPatch = 5
+    const val versionPatch = 7
 
-    const val versionCode = 125
+    const val versionCode = 127
 }
 
 object PapaKarloApplication {
@@ -214,7 +214,6 @@ object Firebase {
     const val bom = "com.google.firebase:firebase-bom:${Versions.firebase}"
     const val crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
     const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
-    const val auth = "com.google.firebase:firebase-auth"
     const val authKtx = "com.google.firebase:firebase-auth-ktx"
 }
 

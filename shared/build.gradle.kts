@@ -73,8 +73,10 @@ kotlin {
                 implementation(Lifecycle.viewmodel)
 
                 implementation(project.dependencies.platform(Firebase.bom))
-                implementation(Firebase.auth)
-                implementation(Firebase.authKtx)
+
+                implementation(Firebase.authKtx){
+                    exclude(group = "com.google.android.gms", module = "play-services-safetynet")
+                }
 
                 implementation(SqlDelight.androidDriver)
             }

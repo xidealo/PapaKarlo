@@ -134,8 +134,9 @@ dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
-    implementation(Firebase.auth)
-    implementation(Firebase.authKtx)
+    implementation(Firebase.authKtx){
+        exclude(group = "com.google.android.gms", module = "play-services-safetynet")
+    }
 
     implementation(Coil.coil)
     implementation(Coil.coilCompose)
