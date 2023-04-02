@@ -11,7 +11,7 @@ import SwiftUI
 struct BottomBarView: View {
     
     @Binding var selection:Int
-    @Binding var title:String
+    @Binding var title:LocalizedStringKey
 
     let iconSize = CGFloat(22)
     let iconBlockHeight = CGFloat(24)
@@ -21,7 +21,7 @@ struct BottomBarView: View {
         HStack(spacing:0){
             Button {
                 selection = 0
-                title = Strings.TITLE_CAFE_LIST
+                title = "titleCafeList"
             } label: {
                 VStack(spacing:0){
                     if(selection == 0){
@@ -50,7 +50,7 @@ struct BottomBarView: View {
 
             Button {
                 selection = 1
-                title = Strings.TITLE_MENU
+                title = "titleMenu"
             } label: {
                 VStack(spacing:0){
                     if(selection == 1){
@@ -79,7 +79,7 @@ struct BottomBarView: View {
             
             Button {
                 selection = 2
-                title = Strings.TITLE_PROFILE
+                title = "titleProfile"
             } label: {
                 VStack(spacing:0){
                     if(selection == 2){

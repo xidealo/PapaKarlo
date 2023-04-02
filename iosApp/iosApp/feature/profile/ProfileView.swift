@@ -14,13 +14,15 @@ struct ProfileView: View {
     @State var profileState = ProfileState(
         lastOrder: nil,
         state: ProfileState.State.loading,
+        cartCostAndCount: nil,
         eventList: []
     )
     
     var viewModel = ProfileViewModel(
         userInteractor: iosComponent.provideIUserInteractor(),
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
-        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase()
+        stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
+        observeCartUseCase: iosComponent.provideObserveCartUseCase()
     )
     
     @Binding var showOrderCreated:Bool

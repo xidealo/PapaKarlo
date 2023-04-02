@@ -31,7 +31,7 @@ struct UpdateView: View {
             
         }.background(Color("background"))
         .navigationTitle(
-            Text(Strings.TITLE_NEW_VERSION)
+            Text("titleNewVersion")
         )
         
     }

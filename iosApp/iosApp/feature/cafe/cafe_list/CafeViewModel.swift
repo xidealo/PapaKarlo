@@ -28,7 +28,7 @@ class CafeViewModel: ObservableObject {
             cafeViewState = newState
         }
         
-        iosComponent.provideCafeInteractor().getCafeList { cafeList, error in
+        iosComponent.provideGetCafeListUseCase().invoke { cafeList, error in
             
             print("In cafe callback")
 

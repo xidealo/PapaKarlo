@@ -10,7 +10,7 @@ import SwiftUI
 struct ContainerView: View {
     
     @State var selection:Int
-    @State var title:String = Strings.TITLE_MENU
+    @State var title:LocalizedStringKey = "titleMenu"
     @StateObject private var viewModel = ToolbarViewModel()
     @State var showOrderCreated:Bool = false
     @State var showCreatedAddress:Bool = false

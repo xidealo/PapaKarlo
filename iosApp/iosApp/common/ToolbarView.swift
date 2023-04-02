@@ -10,12 +10,12 @@ import shared
 
 struct ToolbarView: View {
     
-    let title:String
+    let title:LocalizedStringKey
     
     var logout: (() -> Void)? = nil
     var back: (() -> Void)? = nil
     @State private var showingAlert = false
-
+    
     var body: some View {
         HStack(spacing:0){
             Button(action: {
