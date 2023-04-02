@@ -28,11 +28,13 @@ struct AboutAppView: View {
             
             VStack(spacing:0){
                 ActionCardView(icon: "DeveloperIcon", label: Strings.TITLE_ABOUT_APP_DEVELOPER, isSystemImageName: false, isShowRightArrow: true){
-                    UIApplication.shared.open(URL(string: Constants.init().BB_VK_LINK)!)
+                    UIApplication.shared.open(
+                        URL(string: "Constants.init().BB_VK_LINK")!
+                    )
                 }
                 
-                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: false)
-                    .padding(.top, Diems.SMALL_PADDING)
+                CardView(icon: "VersionIcon", label: Strings.TITLE_ABOUT_APP_VERSION + " " + version, isSystemImageName: false, isShowRightArrow: false
+                ).padding(.top, Diems.SMALL_PADDING)
                 
             }.padding(Diems.MEDIUM_PADDING)
           
