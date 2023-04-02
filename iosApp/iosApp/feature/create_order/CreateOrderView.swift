@@ -82,7 +82,7 @@ struct CreateOrderView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Не указан адрес"),
                 show: $showAddressError,
-                backgroundColor:Color("errorColor"),
+                backgroundColor:Color("error"),
                 foregaroundColor: Color("onPrimary")),
             show: $showAddressError
         )
@@ -90,7 +90,7 @@ struct CreateOrderView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Что-то пошло не так")
                 , show: $showCommonError,
-                backgroundColor:Color("errorColor"),
+                backgroundColor:Color("error"),
                 foregaroundColor: Color("onPrimary")),
             show: $showCommonError
         )

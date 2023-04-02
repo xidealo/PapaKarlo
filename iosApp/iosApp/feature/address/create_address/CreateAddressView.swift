@@ -179,7 +179,7 @@ struct CreateAddressView: View {
                 overlayView: ToastView(
                     toast: Toast(title: "Что-то пошло не так"),
                     show: $showError,
-                    backgroundColor: Color("errorColor"),
+                    backgroundColor: Color("error"),
                     foregaroundColor: Color("onErrorColor")),
                 show: $showError)
             case is CreateAddressState.StateError : VStack(spacing:0){

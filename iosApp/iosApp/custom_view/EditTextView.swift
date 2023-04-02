@@ -30,14 +30,14 @@ struct EditTextView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("errorColor"), lineWidth: 2)
+                            .stroke(Color("error"), lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
                     .keyboardType(keyBoadrType)
                 
                 Text(errorMessage)
-                    .foregroundColor(Color("errorColor"))
+                    .foregroundColor(Color("error"))
                     .frame(maxWidth:.infinity, alignment: .leading)
             }else{
                 TextField(hint, text: $text)

@@ -53,7 +53,7 @@ struct ConfirmView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
                 show: $showLoginError,
-                backgroundColor:Color("errorColor"),
+                backgroundColor:Color("error"),
                 foregaroundColor: Color("onErrorColor")
             ), show: $showLoginError)
      
@@ -138,7 +138,7 @@ struct ConfirmViewSuccessView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Неправильный код"),
                 show: $show,
-                backgroundColor:Color("errorColor"),
+                backgroundColor:Color("error"),
                 foregaroundColor: Color("onErrorColor")
             ), show: $show)
         .onReceive(timer){ time in
