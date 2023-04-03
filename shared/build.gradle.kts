@@ -74,9 +74,7 @@ kotlin {
 
                 implementation(project.dependencies.platform(Firebase.bom))
 
-                implementation(Firebase.authKtx){
-                    exclude(group = "com.google.android.gms", module = "play-services-safetynet")
-                }
+                implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.androidDriver)
             }
