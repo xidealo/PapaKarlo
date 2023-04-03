@@ -7,6 +7,8 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
+import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
@@ -93,6 +95,8 @@ class IosComponent : KoinComponent {
     fun provideCreateAddressUseCase(): CreateAddressUseCase = get()
     fun provideSaveSelectedUserAddressUseCase(): SaveSelectedUserAddressUseCase = get()
     fun provideGetLastOrderUseCase(): GetLastOrderUseCase = get()
+    fun provideGetFilteredStreetListUseCase(): GetFilteredStreetListUseCase = get()
+    fun provideObserveCartUseCase(): ObserveCartUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()

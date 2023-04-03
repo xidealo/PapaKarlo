@@ -12,7 +12,8 @@ class CreateAddressHolder: ObservableObject {
     var viewModel = CreateAddressViewModel(
         getStreetsUseCase: iosComponent.provideGetStreetsUseCase(),
         createAddressUseCase: iosComponent.provideCreateAddressUseCase(),
-        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
+        saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase(),
+        getFilteredStreetListUseCase: iosComponent.provideGetFilteredStreetListUseCase()
     )
 }
 
@@ -27,11 +28,7 @@ struct CreateAddressView: View {
     
     @State var hasStreetError:Bool = false
     @State var hasHouseError:Bool = false
-    @State var hasFlatError:Bool = false
-    @State var hasEntaranceError:Bool = false
-    @State var hasFloorError:Bool = false
-    @State var hasCommentError:Bool = false
-    
+
     @Binding var show:Bool
     
     @FocusState private var isTextFieldFocused: Bool
@@ -42,18 +39,21 @@ struct CreateAddressView: View {
     
     @State var listener: Closeable? = nil
     
+    
     @State var createAddressState = CreateAddressState(
-        streetItemList: [],
+        streetList: [],
+        suggestedStreetList: [],
         state: CreateAddressState.StateLoading(),
+        street: "",
         hasStreetError: false,
-        houseFieldError: nil,
-        hasFlatError: false,
-        hasEntranceError: false,
-        hasFloorError: false,
-        hasCommentError: false,
+        house: "",
+        hasHouseError: false,
+        flat: "",
+        entrance: "",
+        floor: "",
+        comment: "",
         isCreateLoading: false,
-        eventList: [],
-        suggestedStreetList: []
+        eventList: []
     )
     
     @State var filteredList : [StreetItem] = []
@@ -63,7 +63,7 @@ struct CreateAddressView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_CREATION_ADDRESS,
+                title: "titleCreationAddress",
                 back: {
                     self.presentationMode.wrappedValue.dismiss()
                 }
@@ -81,7 +81,7 @@ struct CreateAddressView: View {
                             hasError: $hasStreetError,
                             errorMessage: "Выберите улицу из списка",
                             textChanged: { changedValue in
-                                viewModel.viewModel.filter(query: changedValue)
+                                viewModel.viewModel.onStreetTextChanged(streetText: changedValue)
                             }
                         )
                         .focused($isTextFieldFocused)
@@ -92,7 +92,10 @@ struct CreateAddressView: View {
                             text: $house,
                             limit: 5,
                             hasError: $hasHouseError,
-                            errorMessage: "Введите номер дома"
+                            errorMessage: "Введите номер дома",
+                            textChanged: { str in
+                                viewModel.viewModel.onHouseTextChanged(houseText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -101,8 +104,11 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_FLAT,
                             text: $flat,
                             limit: 5,
-                            hasError: $hasFlatError,
-                            errorMessage: "Максимальная длина поля 5"
+                            hasError: .constant(false),
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onFlatTextChanged(flatText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -112,8 +118,11 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_ENTRANCE,
                             text: $entarance,
                             limit: 5,
-                            hasError: $hasEntaranceError,
-                            errorMessage: "Максимальная длина поля 5"
+                            hasError: .constant(false),
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onEntranceTextChanged(entranceText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -123,8 +132,11 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_FLOOR,
                             text: $floor,
                             limit: 5,
-                            hasError: $hasFloorError,
-                            errorMessage: "Максимальная длина поля 5"
+                            hasError: .constant(false),
+                            errorMessage: "Максимальная длина поля 5",
+                            textChanged: { str in
+                                viewModel.viewModel.onFloorTextChanged(floorText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -134,8 +146,11 @@ struct CreateAddressView: View {
                             hint: Strings.HINT_CREATION_ADDRESS_COMMENT,
                             text: $comment,
                             limit: 100,
-                            hasError: $hasCommentError,
-                            errorMessage: "Максимальная длина поля 100"
+                            hasError: .constant(false),
+                            errorMessage: "Максимальная длина поля 100",
+                            textChanged: { str in
+                                viewModel.viewModel.onCommentTextChanged(commentText: str)
+                            }
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -146,14 +161,7 @@ struct CreateAddressView: View {
                                 
                 Button(
                     action: {
-                        viewModel.viewModel.onCreateAddressClicked(
-                            streetName: street,
-                            house: house,
-                            flat: flat,
-                            entrance: entarance,
-                            floor: floor,
-                            comment: comment
-                        )
+                        viewModel.viewModel.onCreateAddressClicked()
                     }
                 ) {
                     if(createAddressState.isCreateLoading){
@@ -217,15 +225,11 @@ struct CreateAddressView: View {
                 if(createAddressStateVM != nil ){
                     createAddressState = createAddressStateVM!
                     hasStreetError = createAddressState.hasStreetError
-                    hasHouseError = createAddressState.houseFieldError  == CreateAddressState.FieldError.incorrect
-                    hasFlatError = createAddressState.hasFlatError
-                    hasEntaranceError = createAddressState.hasEntranceError
-                    hasFloorError = createAddressState.hasFloorError
-                    hasCommentError = createAddressState.hasCommentError
+                    hasHouseError = createAddressState.hasHouseError
                     filteredList = createAddressState.suggestedStreetList.map({ street in
                         StreetItem(
-                            id: street.uuid,
-                            name: street.name
+                            id: street.id,
+                            name: street.value
                         )
                     })
                 }

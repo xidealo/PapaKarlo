@@ -30,7 +30,7 @@ struct OrderListView: View {
     var body: some View {
         VStack(spacing: 0 ){
             ToolbarView(
-                title: Strings.TITLE_MY_ORDERS,
+                title: "titleMyOrders",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 })
@@ -46,9 +46,6 @@ struct OrderListView: View {
             }
         }
         .background(Color("background"))
-        .navigationTitle(
-            Text(Strings.TITLE_MY_ORDERS)
-        )
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()

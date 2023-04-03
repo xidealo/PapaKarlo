@@ -19,6 +19,8 @@ struct EditTextView: View {
         
     @State var errorMessage:String = "Ошибка"
     
+    var textChanged: (String) -> Void
+
     var body: some View {
         VStack{
             if(hasError){
@@ -29,7 +31,9 @@ struct EditTextView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                             .stroke(Color("errorColor"), lineWidth: 2)
-                    ).onReceive(Just(text)) { _ in limitText(limit) }
+                    ).onReceive(Just(text)) { str in limitText(limit)
+                        textChanged(str)
+                    }
                     .keyboardType(keyBoadrType)
                 
                 Text(errorMessage)
@@ -43,7 +47,9 @@ struct EditTextView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                             .stroke(Color("surfaceVariant"), lineWidth: 2)
-                    ).onReceive(Just(text)) { _ in limitText(limit) }
+                    ).onReceive(Just(text)) { str in limitText(limit)
+                        textChanged(str)
+                    }
                     .keyboardType(keyBoadrType)
                 
             }
@@ -60,6 +66,6 @@ struct EditTextView: View {
 
 struct EditTextView_Previews: PreviewProvider {
     static var previews: some View {
-        EditTextView(hint: "hint", text: .constant(""), limit: 100, hasError: .constant(true))
+        EditTextView(hint: "hint", text: .constant(""), limit: 100, hasError: .constant(true), textChanged: { _ in })
     }
 }

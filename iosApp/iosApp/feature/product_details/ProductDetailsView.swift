@@ -44,7 +44,7 @@ struct ProductDetailsView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarWithCartView(
-                title: viewModel.productDetailsViewState.name,
+                title: LocalizedStringKey(viewModel.productDetailsViewState.name),
                 cost: viewModel.toolbarViewState.cost,
                 count: viewModel.toolbarViewState.count,
                 isShowLogo: .constant(false),

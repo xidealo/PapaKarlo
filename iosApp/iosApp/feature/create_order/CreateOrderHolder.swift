@@ -11,7 +11,7 @@ import shared
 
 class CreateOrderHolder: ObservableObject {
     
-    @Published var creationOrderViewState = OrderCreationState(
+    @Published var creationOrderViewState = CreateOrderState(
         isDelivery: true,
         deliveryAddress: nil,
         pickupAddress: nil,

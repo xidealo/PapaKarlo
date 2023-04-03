@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  iosApp
+
+  Created by Марк Шавловский on 22.03.2023.
+  Copyright © 2023 orgName. All rights reserved.
+*/
+
+"titleSelectCity" = "Select city";
+"titleAboutApp" = "About app";
+"titleSelectCity" = "Select city";
+"titleAboutApp" = "About app";
+"titleCafeList" = "Restaurants";
+"titleMenu" = "Menu";
+"titleProfile" = "Profile";
+"titleMyAddresses" = "My addresses";
+"titleCafeAddresses" = "Cafe addresses";
+"titleMyOrders" = "My orders";
+"titleSettings" = "Settings";
+"titleCartProducts" = "Cart";
+"titleCreationOrder" = "Order creation";
+"titleNewVersion" = "New version";
+"titleCreationAddress" = "Address creation";
+"titleFeedback" = "App feedback";
+"titleCafeOptions" = "Selected restaurant";
+"titlePayment" = "Payment";
+

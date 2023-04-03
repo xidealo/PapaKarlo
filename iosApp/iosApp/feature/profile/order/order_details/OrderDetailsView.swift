@@ -40,7 +40,7 @@ struct OrderDetailsView: View {
                 LoadingView()
             }else{
                 ToolbarView(
-                    title: orderDetailsState.orderInfo?.code ?? "",
+                    title: LocalizedStringKey(orderDetailsState.orderInfo?.code ?? ""),
                     back: {
                         self.mode.wrappedValue.dismiss()
                     }

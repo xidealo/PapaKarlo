@@ -24,7 +24,7 @@ struct ConsumerCartView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_CART_PRODUCTS,
+                title: "titleCartProducts",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

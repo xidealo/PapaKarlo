@@ -98,7 +98,10 @@ struct ConfirmViewSuccessView: View {
                     text:$code,
                     limit: 6,
                     keyBoadrType: UIKeyboardType.numberPad,
-                    hasError: .constant(false)
+                    hasError: .constant(false),
+                    textChanged: { str in
+                        
+                    }
                 )
                 .onReceive(Just(code)) { _ in
                     if(code.count == 6){

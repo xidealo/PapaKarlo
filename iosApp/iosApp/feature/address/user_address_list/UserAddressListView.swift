@@ -32,7 +32,7 @@ struct UserAddressListView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_MY_ADDRESSES,
+                title: "titleMyAddresses",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

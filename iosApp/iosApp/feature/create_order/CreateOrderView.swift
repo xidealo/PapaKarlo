@@ -27,7 +27,7 @@ struct CreateOrderView: View {
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
-                title: Strings.TITLE_CREATION_ORDER,
+                title: "titleCreationOrder",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -169,7 +169,10 @@ struct CreateOrderSuccessView:View {
                     viewModel.kmmViewModel.onCommentChanged(comment: comment)
                 }),
                 limit: 255,
-                hasError: .constant(false)
+                hasError: .constant(false),
+                textChanged: { str in
+                    
+                }
             )
             .padding(.top, Diems.SMALL_PADDING)
             .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -294,13 +297,13 @@ struct CreateOrderSuccessView:View {
             
             creationOrderViewState.eventList.forEach { event in
                 switch(event){
-                case is OrderCreationStateEventShowUserAddressError : showAddressError = true
-                case is OrderCreationStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
-                case is OrderCreationStateEventOrderCreatedEvent : isRootActive = false
+                case is CreateOrderStateEventShowUserAddressError : showAddressError = true
+                case is CreateOrderStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
+                case is CreateOrderStateEventOrderCreatedEvent : isRootActive = false
                     selection = 2
                     showOrderCreated = true
-                case is OrderCreationStateEventShowCafeAddressListEvent : goToCafeAddress = true
-                case is OrderCreationStateEventShowUserAddressListEvent : goToUserAddress = true
+                case is CreateOrderStateEventShowCafeAddressListEvent : goToCafeAddress = true
+                case is CreateOrderStateEventShowUserAddressListEvent : goToUserAddress = true
                 default:
                     print("def")
                 }

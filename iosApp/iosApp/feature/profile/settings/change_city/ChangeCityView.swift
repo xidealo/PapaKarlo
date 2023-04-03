@@ -16,7 +16,7 @@ struct ChangeCityView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: Strings.TITLE_SELECT_CITY_CITY,
+                title: "titleSelectCity",
                 back: {
                     self.presentationMode.wrappedValue.dismiss()
                 }
