@@ -6,8 +6,20 @@ platform :ios, '14.1'
 
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'iosApp' do
+target 'papakarlo' do
   
+  pod 'Firebase', '~> 9.5.0'
+  pod 'Firebase/Analytics', '~> 9.5.0'
+  pod 'Firebase/Crashlytics', '~> 9.5.0'
+  pod 'FirebaseCore', '~> 9.5.0'
+  pod 'GoogleUtilities'
+  pod 'Kingfisher'
+  pod 'shared', :path => '../shared'
+end
+
+
+target 'yuliar' do
+
   pod 'Firebase', '~> 9.5.0'
   pod 'Firebase/Analytics', '~> 9.5.0'
   pod 'Firebase/Crashlytics', '~> 9.5.0'
