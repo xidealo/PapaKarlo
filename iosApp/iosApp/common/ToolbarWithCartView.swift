@@ -43,7 +43,8 @@ struct ToolbarWithCartView: View {
                             .foregroundColor(Color("onSurface"))
                         
                         Image(systemName: "cart").foregroundColor(Color("onSurface"))
-                        Text(count).foregroundColor(Color("colorOnPrimary"))
+                        Text(count)
+                            .foregroundColor(Color("onPrimary"))
                             .padding(4)
                             .background(Color("primary"))
                             .cornerRadius(Diems.MEDIUM_RADIUS)

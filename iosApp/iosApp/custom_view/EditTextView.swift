@@ -27,7 +27,8 @@ struct EditTextView: View {
                 TextField(hint, text: $text)
                     .padding()
                     .lineLimit(5)
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                    .background(RoundedRectangle(cornerRadius: 5)
+                    .fill(Color("surface")))
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
                             .stroke(Color("error"), lineWidth: 2)
@@ -46,7 +47,7 @@ struct EditTextView: View {
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("surfaceVariant"), lineWidth: 2)
+                            .stroke(Color("onSurfaceVariant"), lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }

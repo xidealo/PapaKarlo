@@ -180,7 +180,7 @@ struct CreateAddressView: View {
                     toast: Toast(title: "Что-то пошло не так"),
                     show: $showError,
                     backgroundColor: Color("error"),
-                    foregaroundColor: Color("onErrorColor")),
+                    foregaroundColor: Color("onError")),
                 show: $showError)
             case is CreateAddressState.StateError : VStack(spacing:0){
                 let errorState = createAddressState.state as? CreateAddressState.StateError

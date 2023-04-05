@@ -29,6 +29,7 @@ android {
         compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
     }
+
     buildTypes {
         applicationVariants.all {
             val variant = this
