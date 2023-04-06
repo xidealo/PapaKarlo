@@ -112,6 +112,12 @@ struct EmptyOrderListView: View {
         VStack(spacing: 0){
             Spacer()
             
+            
+            EmptyWithIconView(
+                imageName: <#T##String#>,
+                title: <#T##LocalizedStringKey#>,
+                secondText: <#T##LocalizedStringKey#>
+            )
             DefaultImage(imageName: "EmptyPage")
             
             Text(Strings.MSG_ORDER_LIST_EMPTY_ORDERS).multilineTextAlignment(.center)

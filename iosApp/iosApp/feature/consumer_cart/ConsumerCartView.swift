@@ -149,16 +149,12 @@ struct ConsumerCartEmptyScreen: View {
         VStack(spacing:0){
             Spacer()
             
-            DefaultImage(imageName: "EmptyCart")
-            
-            BoldText(text: "Корзина пуста")
-                .padding(.top, 32)
-            
-            Text(Strings.MSG_CART_PRODUCT_EMPTY)
-                .multilineTextAlignment(.center)
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-
+            EmptyWithIconView(
+                imageName:  "CartIcon",
+                title: "emptyCartTitleProfile",
+                secondText: "emptyCartSecondProfile"
+            )
+    
             Spacer()
             
             Button {

@@ -24,4 +24,7 @@
 "titleFeedback" = "App feedback";
 "titleCafeOptions" = "Selected restaurant";
 "titlePayment" = "Payment";
-
+"loginTitleProfile" = "Login profile";
+"loginSecondProfile" = "Your profile will display shipping addresses and your order history.";
+"emptyCartTitleProfile" = "Cart is empty";
+"emptyCartSecondProfile" = "Add a product from the “Menu”";

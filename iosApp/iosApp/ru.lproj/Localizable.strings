@@ -22,3 +22,7 @@
 "titleFeedback" = "Отзывы о приложении";
 "titleCafeOptions" = "Выбранное кафе";
 "titlePayment" = "Оплата";
+"loginTitleProfile" = "Войдите в профиль";
+"loginSecondProfile" = "В профиле будут отбражаться адреса для доставки и история ваших заказов";
+"emptyCartTitleProfile" = "Корзина пуста";
+"emptyCartSecondProfile" = "Добавьте товар из “Меню”";

@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct BoldLocalizedStringKey: View {
+    let text:LocalizedStringKey
+    var body: some View {
+        Text(text)
+            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+            .foregroundColor(Color("onSurface"))
+    }
+}
+
 struct BoldText: View {
     let text:String
     var body: some View {

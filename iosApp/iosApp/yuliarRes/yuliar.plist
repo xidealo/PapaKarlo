@@ -30,6 +30,16 @@
 				<string>com.googleusercontent.apps.1098337969858-eg8h539t3bar1j5dgkor03vm3dimj2qa</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>secondFb</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1098337969858-d3pudmvaikfj6a14nl9b066mba7f8cla</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
