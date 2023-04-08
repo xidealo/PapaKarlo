@@ -159,12 +159,11 @@ struct EmptyAddressListView: View {
         VStack(spacing:0){
             Spacer()
             
-            DefaultImage(imageName: "EmptyPage")
-
-            Text(Strings.MSG_ADDRESS_LIST_EMPTY_ADDRESSES)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                .padding(.top, Diems.SMALL_PADDING)
+            EmptyWithIconView(
+                imageName: "AddressIcon",
+                title: "emptyAddressListTitleProfile",
+                secondText: "emptyAddressListSecondProfile"
+            )
 
             Spacer()
             

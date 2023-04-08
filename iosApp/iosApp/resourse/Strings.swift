@@ -31,7 +31,6 @@ class Strings{
     static let MSG_PROFILE_NO_PROFILE =  "В профиле будут отображаться адреса и история ваших заказов"
     
     //ADDRESS
-    static let MSG_ADDRESS_LIST_EMPTY_ADDRESSES = "Здесь будут отображаться ваши адреса"
     static let ACTION_ADDRESS_LIST_ADD = "Добавить адрес"
     
     

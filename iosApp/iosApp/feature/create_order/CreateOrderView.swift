@@ -114,7 +114,7 @@ struct CreateOrderSuccessView:View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-    
+
     let calendar = Calendar.current
     
     var body: some View{

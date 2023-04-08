@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group.png",
+      "filename" : "ic_order_history.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group-2.png",
+      "filename" : "ic_order_history-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group-3.png",
+      "filename" : "ic_order_history-3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

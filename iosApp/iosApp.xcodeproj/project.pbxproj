@@ -112,6 +112,8 @@
 		0253930A29AB92A800C8B04B /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
 		02542938287F39060089B45E /* CreateOrderHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02542937287F39060089B45E /* CreateOrderHolder.swift */; };
 		0280BE2B29A0ED14007F7416 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0280BE2A29A0ED14007F7416 /* ErrorView.swift */; };
+		0294FD7A29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
+		0294FD7B29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
 		02A3B73A294FAFDB00C18221 /* LightOrderItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */; };
 		02A99D5529CBA0BE004D2F7B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		02ADC33829D9D0880062A141 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0253930929AB92A800C8B04B /* ButtonText.swift */; };
@@ -341,6 +343,7 @@
 		0253930929AB92A800C8B04B /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
 		02542937287F39060089B45E /* CreateOrderHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderHolder.swift; sourceTree = "<group>"; };
 		0280BE2A29A0ED14007F7416 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		02A3B739294FAFDB00C18221 /* LightOrderItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightOrderItemView.swift; sourceTree = "<group>"; };
 		02A99D5629CBA0BE004D2F7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		02A99D5829CBA101004D2F7B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -660,6 +663,7 @@
 				023761C228C3612600FD33BD /* IconImage.swift */,
 				022BC67128CC8A6700F3ED27 /* OrderChip.swift */,
 				023041D228D61C3700ACF30B /* ToastView.swift */,
+				0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */,
 			);
 			path = custom_view;
 			sourceTree = "<group>";
@@ -1095,6 +1099,7 @@
 				02ADC36829D9D0880062A141 /* CafeItem.swift in Sources */,
 				02ADC36929D9D0880062A141 /* SpalshViewState.swift in Sources */,
 				02ADC36A29D9D0880062A141 /* OrderStatusBar.swift in Sources */,
+				0294FD7B29DF71B900568A10 /* EmptyWithIconView.swift in Sources */,
 				02ADC36B29D9D0880062A141 /* FeedbackView.swift in Sources */,
 				02ADC36C29D9D0880062A141 /* DefaultImage.swift in Sources */,
 				02ADC36D29D9D0880062A141 /* ConfirmView.swift in Sources */,
@@ -1208,6 +1213,7 @@
 				02323496287879EF0048CF39 /* CafeItem.swift in Sources */,
 				024E8781287A160500728CB3 /* SpalshViewState.swift in Sources */,
 				023234CC28787A180048CF39 /* OrderStatusBar.swift in Sources */,
+				0294FD7A29DF71B900568A10 /* EmptyWithIconView.swift in Sources */,
 				02323492287879EF0048CF39 /* FeedbackView.swift in Sources */,
 				023234D928787A180048CF39 /* DefaultImage.swift in Sources */,
 				02323481287879EF0048CF39 /* ConfirmView.swift in Sources */,
