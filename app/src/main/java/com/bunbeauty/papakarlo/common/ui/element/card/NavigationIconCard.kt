@@ -68,7 +68,7 @@ fun NavigationIconCard(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun NavigationIconCardPreview() {
     FoodDeliveryTheme {
