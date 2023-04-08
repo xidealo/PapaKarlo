@@ -15,10 +15,12 @@ import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.data.socialNetworkLinks
+import com.bunbeauty.shared.data.GetSocialNetworkLinksUseCase
 import com.bunbeauty.shared.domain.model.SocialNetworkLinks
 
 class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
+
+    private val socialNetworkLinks = GetSocialNetworkLinksUseCase().invoke()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

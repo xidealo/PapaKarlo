@@ -161,7 +161,8 @@ fun viewModelModule() = module {
     }
     viewModel {
         PaymentViewModel(
-            paymentInteractor = get()
+            paymentInteractor = get(),
+            getPaymentInfoUseCase = get(),
         )
     }
 }
