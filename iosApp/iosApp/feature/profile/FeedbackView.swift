@@ -11,7 +11,8 @@ import shared
 struct FeedbackView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    let socialNetworkInfo = GetSocialNetworkLinksUseCase().invoke()
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -22,25 +23,32 @@ struct FeedbackView: View {
             )
             
             VStack(spacing:0){
-                ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false, isShowRightArrow: true){
-                    UIApplication.shared.open(
-                        URL(string: "Constants.init().VK_LINK")!
-                    )
+                if let vkLink = socialNetworkInfo.vkLink{
+                    ActionCardView(icon: "VKIcon", label: Strings.TITLE_FEEDBACK_VK, isSystemImageName: false, isShowRightArrow: true){
+                        UIApplication.shared.open(
+                            URL(string: vkLink)!
+                        )
+                    }
+                }
+                if let instagramLink = socialNetworkInfo.instagramLink{
+                    ActionCardView(icon: "InstagramIcon", label: Strings.TITLE_FEEDBACK_INSTAGRAM, isSystemImageName: false, isShowRightArrow: true){
+                        UIApplication.shared.open(
+                            URL(string: instagramLink)!
+                        )
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
                 }
                 
-                ActionCardView(icon: "InstagramIcon", label: Strings.TITLE_FEEDBACK_INSTAGRAM, isSystemImageName: false, isShowRightArrow: true){
-                    UIApplication.shared.open(
-                        URL(string: "Constants.init().INSTAGRAM_LINK")!
-                    )
+                if let appStoreLink = socialNetworkInfo.appStoreLink{
+                    ActionCardView(icon: "AppleIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
+                        UIApplication.shared.open(
+                            URL(string: appStoreLink)!
+                        )
+                    }
+                    .padding(.top, Diems.SMALL_PADDING)
                 }
-                .padding(.top, Diems.SMALL_PADDING)
                 
-                ActionCardView(icon: "AppleIcon", label: Strings.TITLE_FEEDBACK_APP_STORE, isSystemImageName: false, isShowRightArrow: true){
-                    UIApplication.shared.open(
-                        URL(string: "Constants.init().APP_STORE_LINK")!
-                    )
-                }
-                .padding(.top, Diems.SMALL_PADDING)
+          
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()
