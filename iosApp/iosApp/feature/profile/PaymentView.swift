@@ -7,13 +7,17 @@
 //
 
 import SwiftUI
+import shared
 
 struct PaymentView: View {
     @State var showCardCopy:Bool = false
     @State var showPhoneCopy:Bool = false
-
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    let paymentInfo = GetPaymentInfoUseCase().invoke()
+    let paymentInteractor = iosComponent.providePaymentInteractor()
+    @State var payment:Payment? = nil
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -24,33 +28,50 @@ struct PaymentView: View {
             )
             
             VStack(spacing:0){
-                Text("Вы можете оплатить заказ наличным, а также переводом по номеру карты или по номеру телефона")
+                Text(paymentInfo)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, Diems.SMALL_PADDING)
                 
-                ActionCardView(icon: "CopyIcon", label: Strings.MSG_PAYMENT_PHONE, isSystemImageName: false, isShowRightArrow: false){
-                    self.showCardCopy = false
-                    self.showPhoneCopy = true
-                    UIPasteboard.general.string = Strings.MSG_PAYMENT_PHONE
+                if(payment == nil){
+                    LoadingView()
+                }else{
+                    if let phone = payment?.phoneNumber{
+                        ActionCardView(
+                            icon: "CopyIcon",
+                            label: phone,
+                            isSystemImageName: false,
+                            isShowRightArrow: false
+                        ){
+                            self.showCardCopy = false
+                            self.showPhoneCopy = true
+                            UIPasteboard.general.string = Strings.MSG_PAYMENT_PHONE
+                        }
+                    }
+                    if let card = payment?.cardNumber{
+                        ActionCardView(
+                            icon: "CopyIcon",
+                            label: card,
+                            isSystemImageName: false,
+                            isShowRightArrow: false
+                        ){
+                            self.showPhoneCopy = false
+                            self.showCardCopy = true
+                            UIPasteboard.general.string = Strings.MSG_PAYMENT_CARD_NUMBER
+                        }
+                        .padding(.top, Diems.SMALL_PADDING)
+                    }
                 }
-                
-                ActionCardView(
-                    icon: "CopyIcon",
-                    label: Strings.MSG_PAYMENT_CARD_NUMBER,
-                    isSystemImageName: false,
-                    isShowRightArrow: false
-                ){
-                    self.showPhoneCopy = false
-                    self.showCardCopy = true
-                    UIPasteboard.general.string = Strings.MSG_PAYMENT_CARD_NUMBER
-                }
-                .padding(.top, Diems.SMALL_PADDING)
             }.padding(Diems.MEDIUM_PADDING)
             Spacer()
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
+        .onAppear(){
+            paymentInteractor.getPayment { _payment, err in
+                payment = _payment
+            }
+        }
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Номер карты скопирован"),

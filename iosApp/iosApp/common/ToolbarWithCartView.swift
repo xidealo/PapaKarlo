@@ -60,7 +60,10 @@ struct ToolbarWithCartView: View {
             }.background(Color("surface"))
             
             if(isShowLogo){
-                DefaultImage(width: 50, height: 37.5, imageName: "LoginLogo")
+                Image("LoginLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 40)
             }
         }
         
