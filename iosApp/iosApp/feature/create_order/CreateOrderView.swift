@@ -114,176 +114,175 @@ struct CreateOrderSuccessView:View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-
+    
     let calendar = Calendar.current
     
     var body: some View{
-        VStack(spacing:0){
-            Switcher(
-                leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY,
-                rightTitle: Strings.MSG_CREATION_ORDER_PICKUP,
-                isLeftSelected: $isDelivery
-            ){ isDelivery in
-                if(isDelivery){
-                    viewModel.kmmViewModel.onSwitcherPositionChanged(position: 0)
-                }else{
-                    viewModel.kmmViewModel.onSwitcherPositionChanged(position: 1)
-                }
-            }
-            .padding(.top, Diems.MEDIUM_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
-            if(viewModel.creationOrderViewState.isDelivery){
-                if viewModel.creationOrderViewState.deliveryAddress == nil{
-                    NavigationCardView(
-                        icon: nil,
-                        label: addressLable,
-                        destination: CreateAddressView(show: $showCreatedAddress)
+        ZStack (alignment: .bottom){
+            ScrollView{
+                VStack(spacing:0){
+                    Switcher(
+                        leftTitle: Strings.MSG_CREATION_ORDER_DELIVERY,
+                        rightTitle: Strings.MSG_CREATION_ORDER_PICKUP,
+                        isLeftSelected: $isDelivery
+                    ){ isDelivery in
+                        if(isDelivery){
+                            viewModel.kmmViewModel.onSwitcherPositionChanged(position: 0)
+                        }else{
+                            viewModel.kmmViewModel.onSwitcherPositionChanged(position: 1)
+                        }
+                    }
+                    .padding(.top, Diems.MEDIUM_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    
+                    if(viewModel.creationOrderViewState.isDelivery){
+                        if viewModel.creationOrderViewState.deliveryAddress == nil{
+                            NavigationCardView(
+                                icon: nil,
+                                label: addressLable,
+                                destination: CreateAddressView(show: $showCreatedAddress)
+                            )
+                            .padding(.top, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }else{
+                            ActionTextCardView(
+                                placeHolder: addressLable,
+                                text: viewModel.getUserAddressList()
+                            ){
+                                viewModel.goToAddress()
+                            }
+                            .padding(.top, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
+                    }else{
+                        ActionTextCardView(
+                            placeHolder: addressLable,
+                            text: "\(viewModel.creationOrderViewState.pickupAddress ?? "")"
+                        ){
+                            viewModel.goToAddress()
+                        }
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                    
+                    EditTextView(
+                        hint: Strings.HINT_CREATE_COMMENT_COMMENT,
+                        text: $comment.onChange({ comment in
+                            viewModel.kmmViewModel.onCommentChanged(comment: comment)
+                        }),
+                        limit: 255,
+                        hasError: .constant(false),
+                        textChanged: { str in
+                            
+                        }
                     )
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                }else{
-                    ActionTextCardView(
-                        placeHolder: addressLable,
-                        text: viewModel.getUserAddressList()
-                    ){
-                        viewModel.goToAddress()
+                    
+                    Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
+                        if(faster) {
+                            viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
+                        }else{
+                            let date =  Date.now + 60 * 60
+                            
+                            viewModel.kmmViewModel.onDeferredTimeSelected(
+                                deferredTimeUi: TimeUITime(
+                                    hours: Int32(calendar.component(.hour, from: date)),
+                                    minutes: Int32(calendar.component(.minute, from: date)
+                                                  )
+                                )
+                            )
+                        }
+                    }))
+                    .toggleStyle(.automatic)
+                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    
+                    if(!faster){
+                        if(viewModel.creationOrderViewState.isDelivery){
+                            DatePicker(
+                                "Время доставки",
+                                selection: $deferredTime.onChange(
+                                    { date in
+                                        viewModel.kmmViewModel.onDeferredTimeSelected(
+                                            deferredTimeUi: TimeUITime(
+                                                hours: Int32(calendar.component(.hour, from: date)),
+                                                minutes: Int32(calendar.component(.minute, from: date)
+                                                              )
+                                            )
+                                        )
+                                    }
+                                ),
+                                in: (Date.now + 60 * 60)...,
+                                displayedComponents: .hourAndMinute
+                            )
+                            .padding(.top, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }else{
+                            DatePicker(
+                                "Время самовывоза",
+                                selection: $deferredTime.onChange(
+                                    { date in
+                                        viewModel.kmmViewModel.onDeferredTimeSelected(
+                                            deferredTimeUi: TimeUITime(
+                                                hours: Int32(calendar.component(.hour, from: date)),
+                                                minutes: Int32(calendar.component(.minute, from: date)
+                                                              )
+                                            )
+                                        )
+                                    }
+                                ),
+                                in: (Date.now + 60 * 60)...,
+                                displayedComponents: .hourAndMinute
+                            )
+                            .padding(.top, Diems.SMALL_PADDING)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        }
+                    }
+                }
+            }
+            .background(Color("background"))
+
+            VStack(spacing:0){
+                HStack(spacing:0){
+                    Text(Strings.MSG_CREATION_ORDER_RESULT)
+                        .foregroundColor(Color("onSurface"))
+                    Spacer()
+                    Text("\(viewModel.creationOrderViewState.totalCost ?? 0) \(Strings.CURRENCY)")
+                        .foregroundColor(Color("onSurface"))
+                }
+                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                
+                if(viewModel.creationOrderViewState.isDelivery){
+                    HStack(spacing:0){
+                        Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                            .foregroundColor(Color("onSurface"))
+                        Spacer()
+                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0) \(Strings.CURRENCY)")
+                            .foregroundColor(Color("onSurface"))
                     }
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
-            }else{
-                ActionTextCardView(
-                    placeHolder: addressLable,
-                    text: "\(viewModel.creationOrderViewState.pickupAddress ?? "")"
-                ){
-                    viewModel.goToAddress()
-                }
-                .padding(.top, Diems.SMALL_PADDING)
-                .padding(.horizontal, Diems.MEDIUM_PADDING)
-            }
-            
-            EditTextView(
-                hint: Strings.HINT_CREATE_COMMENT_COMMENT,
-                text: $comment.onChange({ comment in
-                    viewModel.kmmViewModel.onCommentChanged(comment: comment)
-                }),
-                limit: 255,
-                hasError: .constant(false),
-                textChanged: { str in
-                    
-                }
-            )
-            .padding(.top, Diems.SMALL_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
-            Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
-                if(faster) {
-                    viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
-                }else{
-                    let date =  Date.now + 60 * 60
-                    
-                    viewModel.kmmViewModel.onDeferredTimeSelected(
-                        deferredTimeUi: TimeUITime(
-                            hours: Int32(calendar.component(.hour, from: date)),
-                            minutes: Int32(calendar.component(.minute, from: date)
-                            )
-                        )
-                    )
-                }
-            }))
-            .toggleStyle(.automatic)
-            .padding(.top, Diems.SMALL_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
-            if(!faster){
-                if(viewModel.creationOrderViewState.isDelivery){
-                    DatePicker(
-                        "Время доставки",
-                        selection: $deferredTime.onChange(
-                            { date in
-                                viewModel.kmmViewModel.onDeferredTimeSelected(
-                                    deferredTimeUi: TimeUITime(
-                                        hours: Int32(calendar.component(.hour, from: date)),
-                                        minutes: Int32(calendar.component(.minute, from: date)
-                                                      )
-                                    )
-                                )
-                            }
-                        ),
-                        in: (Date.now + 60 * 60)...,
-                        displayedComponents: .hourAndMinute
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                }else{
-                    DatePicker(
-                        "Время самовывоза",
-                        selection: $deferredTime.onChange(
-                            { date in
-                                viewModel.kmmViewModel.onDeferredTimeSelected(
-                                    deferredTimeUi: TimeUITime(
-                                        hours: Int32(calendar.component(.hour, from: date)),
-                                        minutes: Int32(calendar.component(.minute, from: date)
-                                                      )
-                                    )
-                                )
-                            }
-                        ),
-                        in: (Date.now + 60 * 60)...,
-                        displayedComponents: .hourAndMinute
-                    )
-                    .padding(.top, Diems.SMALL_PADDING)
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                }
-            }
-        }
-        
-        Spacer()
-        
-        LinearGradient(
-            gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom
-        )
-        .frame(height:20)
-        
-        VStack(spacing:0){
-            HStack(spacing:0){
-                Text(Strings.MSG_CREATION_ORDER_RESULT)
-                    .foregroundColor(Color("onSurface"))
-                Spacer()
-                Text("\(viewModel.creationOrderViewState.totalCost ?? 0) \(Strings.CURRENCY)")
-                    .foregroundColor(Color("onSurface"))
-            }
-            .padding(.top, Diems.SMALL_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
-            
-            if(viewModel.creationOrderViewState.isDelivery){
                 HStack(spacing:0){
-                    Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-                        .foregroundColor(Color("onSurface"))
+                    BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
                     Spacer()
-                    Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0) \(Strings.CURRENCY)")
-                        .foregroundColor(Color("onSurface"))
+                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0) \(Strings.CURRENCY)")
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
+                Button(
+                    action: {
+                        viewModel.createOrder()
+                    }, label: {
+                        ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
+                    }
+                )
+                .padding(.vertical, Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
-            HStack(spacing:0){
-                BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
-                Spacer()
-                BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0) \(Strings.CURRENCY)")
-            }
-            .padding(.top, Diems.SMALL_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
-            Button(
-                action: {
-                    viewModel.createOrder()
-                }, label: {
-                    ButtonText(text: Strings.ACTION_CART_PRODUCT_CREATE_ORDER)
-                }
-            )
-            .padding(.vertical, Diems.MEDIUM_PADDING)
-            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            .background(Color("surface"))
         }
         .background(Color("surface"))
         .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
