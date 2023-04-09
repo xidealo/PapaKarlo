@@ -12,9 +12,10 @@ struct ElementCard: View {
     
     var body: some View {
         Text(text)
+            .bodyLarge()
+            .multilineTextAlignment(.leading)
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .multilineTextAlignment(.leading)
             .background(Color("surface"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
             .foregroundColor(Color("onSurface"))
