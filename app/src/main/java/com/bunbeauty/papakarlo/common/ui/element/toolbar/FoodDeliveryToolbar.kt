@@ -51,7 +51,7 @@ fun FoodDeliveryToolbar(
             navigationIcon = {
                 backActionClick?.let {
                     IconButton(
-                        onClick = { backActionClick() }
+                        onClick = backActionClick
                     ) {
                         Icon(
                             modifier = Modifier.icon16(),
