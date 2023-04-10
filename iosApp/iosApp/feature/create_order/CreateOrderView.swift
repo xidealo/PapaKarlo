@@ -134,7 +134,7 @@ struct CreateOrderSuccessView:View {
                     }
                     .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    
+
                     if(viewModel.creationOrderViewState.isDelivery){
                         if viewModel.creationOrderViewState.deliveryAddress == nil{
                             NavigationCardView(
@@ -164,7 +164,7 @@ struct CreateOrderSuccessView:View {
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
-                    
+
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment.onChange({ comment in
@@ -173,18 +173,18 @@ struct CreateOrderSuccessView:View {
                         limit: 255,
                         hasError: .constant(false),
                         textChanged: { str in
-                            
+
                         }
                     )
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    
+
                     Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
                         if(faster) {
                             viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
                         }else{
                             let date =  Date.now + 60 * 60
-                            
+
                             viewModel.kmmViewModel.onDeferredTimeSelected(
                                 deferredTimeUi: TimeUITime(
                                     hours: Int32(calendar.component(.hour, from: date)),
@@ -197,7 +197,7 @@ struct CreateOrderSuccessView:View {
                     .toggleStyle(.automatic)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-                    
+
                     if(!faster){
                         if(viewModel.creationOrderViewState.isDelivery){
                             DatePicker(
@@ -256,7 +256,7 @@ struct CreateOrderSuccessView:View {
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-                
+
                 if(viewModel.creationOrderViewState.isDelivery){
                     HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)

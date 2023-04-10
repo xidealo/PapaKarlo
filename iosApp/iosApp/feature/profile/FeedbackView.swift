@@ -12,7 +12,7 @@ struct FeedbackView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     let socialNetworkInfo = GetSocialNetworkLinksUseCase().invoke()
-    
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -47,8 +47,8 @@ struct FeedbackView: View {
                     }
                     .padding(.top, Diems.SMALL_PADDING)
                 }
-                
-          
+
+
             }.padding(Diems.MEDIUM_PADDING)
           
             Spacer()

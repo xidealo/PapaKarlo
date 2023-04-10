@@ -73,7 +73,7 @@ kotlin {
                 implementation(Lifecycle.viewmodel)
 
                 implementation(project.dependencies.platform(Firebase.bom))
-                implementation(Firebase.auth)
+
                 implementation(Firebase.authKtx)
 
                 implementation(SqlDelight.androidDriver)

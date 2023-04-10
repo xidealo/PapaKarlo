@@ -20,7 +20,7 @@ struct EditTextView: View {
     @State var errorMessage:String = "Ошибка"
     
     var textChanged: (String) -> Void
-    
+
     @State var isSelectedSSS:Bool = false
     var body: some View {
         VStack{
@@ -57,7 +57,7 @@ struct EditTextView: View {
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
-                
+
                     .keyboardType(keyBoadrType)
                 
             }

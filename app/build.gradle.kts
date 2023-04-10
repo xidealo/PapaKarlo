@@ -135,7 +135,6 @@ dependencies {
     implementation(platform(Firebase.bom))
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
-    implementation(Firebase.auth)
     implementation(Firebase.authKtx)
 
     implementation(Coil.coil)
