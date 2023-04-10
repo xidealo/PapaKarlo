@@ -74,10 +74,10 @@ struct LoginViewSuccessView: View {
             
             VStack(spacing:0){
                 Spacer()
-                
                 Image("LoginLogo")
                     .resizable()
-                    .frame(width: 152, height: 120)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 156)
                 
                 Text("titleLoginEnterPhone")
                     .multilineTextAlignment(.center)
