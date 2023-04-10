@@ -38,19 +38,22 @@ struct ToolbarWithCartView: View {
                     ),
                     isActive: $isRootActive
                 ){
-                    HStack{
+                    HStack(spacing:0){
                         Text(cost + Strings.CURRENCY)
                             .foregroundColor(Color("onSurface"))
                         
-                        Image(systemName: "cart").foregroundColor(Color("onSurface"))
+                        Image(systemName: "cart")
+                            .foregroundColor(Color("onSurface"))
+                        
                         Text(count)
+                            .labelSmall(weight: .medium)
                             .foregroundColor(Color("onPrimary"))
-                            .padding(4)
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 2)
                             .background(Color("primary"))
-                            .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .padding(.bottom, Diems.SMALL_PADDING)
-                            .padding(.leading, -12)
-                            .font(.system(size: Diems.SMALL_TEXT_SIZE, design: .default))
+                            .cornerRadius(Diems.LARGE_RADIUS)
+                            .padding(.bottom, 12)
+                            .padding(.leading, -8)
                     }
                 }
                 .isDetailLink(false)

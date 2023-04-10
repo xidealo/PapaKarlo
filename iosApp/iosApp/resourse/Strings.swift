@@ -98,7 +98,7 @@ class Strings{
     static let TITLE_BOTTOM_NAVIGATION_PROFILE = "Профиль"
     
     //COMMON
-    static let CURRENCY = "₽"
+    static let CURRENCY = " ₽"
     
     
     //STATUS
