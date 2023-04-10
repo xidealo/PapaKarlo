@@ -38,3 +38,8 @@
 "emptyOrderListTitleProfile" = "Список заказов пуст";
 "emptyOrderListSecondProfile" = "Здесь будут отображаться ваши заказы";
 
+//Login
+"titleLoginEnterPhone" = "Введите номер вашего телефона";
+"hintLoginEnterPhone" = "Номер телефона"; //add later refactoring
+"errorLoginEnterPhone" = "Введите корректный номер телефона"; //add later refactoring
+"actionLoginContinue" = "Продолжить"; //add later refactoring

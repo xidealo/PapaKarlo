@@ -39,7 +39,7 @@ struct ToolbarWithCartView: View {
                     isActive: $isRootActive
                 ){
                     HStack{
-                        Text(cost)
+                        Text(cost + Strings.CURRENCY)
                             .foregroundColor(Color("onSurface"))
                         
                         Image(systemName: "cart").foregroundColor(Color("onSurface"))

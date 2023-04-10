@@ -79,7 +79,7 @@ struct LoginViewSuccessView: View {
                     .resizable()
                     .frame(width: 152, height: 120)
                 
-                Text(Strings.MSG_LOGIN_ENTER_PHONE)
+                Text("titleLoginEnterPhone")
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color("onSurface"))
                     .padding(.top, Diems.MEDIUM_PADDING)

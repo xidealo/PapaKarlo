@@ -73,7 +73,6 @@ struct ConfirmViewSuccessView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
 
     var body: some View {
-        
         VStack(spacing:0){
             ToolbarView(
                 title: "",
@@ -123,9 +122,8 @@ struct ConfirmViewSuccessView: View {
                         ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
-                        ButtonText(
-                            text: "Запросить код повторно \(timeRemaining) сек.",
-                                   background: Color("onPrimaryDisabled")
+                        ButtonText(text: "Запросить код повторно \(timeRemaining) сек.",
+                                   background: Color("disabled")
                         )
                     }
                     
@@ -149,6 +147,7 @@ struct ConfirmViewSuccessView: View {
             if(timeRemaining == 0){
                 isEnabled = true
             }
+            print(isEnabled)
         }
         .onReceive(viewModel.$confirmViewState) { confirmViewState in
             if(confirmViewState.confirmState == ConfirmState.error){
