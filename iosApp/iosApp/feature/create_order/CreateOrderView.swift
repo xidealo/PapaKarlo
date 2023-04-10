@@ -248,8 +248,11 @@ struct CreateOrderSuccessView:View {
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
                         .foregroundColor(Color("onSurface"))
                     Spacer()
-                    Text("\(viewModel.creationOrderViewState.totalCost ?? 0) \(Strings.CURRENCY)")
-                        .foregroundColor(Color("onSurface"))
+                    if let totalCost = viewModel.creationOrderViewState.totalCost{
+                        let totaCostString = "\(totalCost)\(Strings.CURRENCY)"
+                        Text(totaCostString)
+                            .foregroundColor(Color("onSurface"))
+                    }
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -259,7 +262,7 @@ struct CreateOrderSuccessView:View {
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
                             .foregroundColor(Color("onSurface"))
                         Spacer()
-                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0) \(Strings.CURRENCY)")
+                        Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)\(Strings.CURRENCY)")
                             .foregroundColor(Color("onSurface"))
                     }
                     .padding(.top, Diems.SMALL_PADDING)
@@ -268,7 +271,7 @@ struct CreateOrderSuccessView:View {
                 HStack(spacing:0){
                     BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
                     Spacer()
-                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0) \(Strings.CURRENCY)")
+                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0)\(Strings.CURRENCY)")
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
