@@ -1,0 +1,20 @@
+CREATE TABLE userEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    phone TEXT NOT NULL,
+    email TEXT
+);
+
+insertUser:
+INSERT OR REPLACE
+INTO userEntity
+VALUES (?, ?, ?);
+
+getUserByUuid:
+SELECT *
+FROM userEntity
+WHERE uuid = :uuid;
+
+updateUserEmailByUuid:
+UPDATE userEntity
+SET email = :email
+WHERE uuid = :uuid;

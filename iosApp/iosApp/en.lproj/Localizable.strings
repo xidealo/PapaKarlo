@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  iosApp
+
+  Created by Марк Шавловский on 22.03.2023.
+  Copyright © 2023 orgName. All rights reserved.
+*/
+
+"titleSelectCity" = "Select city";
+"titleAboutApp" = "About app";
+"titleSelectCity" = "Select city";
+"titleAboutApp" = "About app";
+"titleCafeList" = "Restaurants";
+"titleMenu" = "Menu";
+"titleProfile" = "Profile";
+"titleMyAddresses" = "My addresses";
+"titleCafeAddresses" = "Cafe addresses";
+"titleMyOrders" = "My orders";
+"titleSettings" = "Settings";
+"titleCartProducts" = "Cart";
+"titleCreationOrder" = "Order creation";
+"titleNewVersion" = "New version";
+"titleCreationAddress" = "Address creation";
+"titleFeedback" = "App feedback";
+"titleCafeOptions" = "Selected restaurant";
+"titlePayment" = "Payment";
+//logim
+"loginTitleProfile" = "Login profile";
+"loginSecondProfile" = "Your profile will display shipping addresses and your order history.";
+//consumer cart
+"emptyCartTitleProfile" = "Cart is empty";
+"emptyCartSecondProfile" = "Add a product from the “Menu”";
+//user address
+"emptyAddressListTitleProfile" = "Address list is empty";
+"emptyAddressListSecondProfile" = "Your addresses will be displayed here";
+
+//order list
+"emptyOrderListTitleProfile" = "Order list is empty";
+"emptyOrderListSecondProfile" = "Your orders will be displayed here";

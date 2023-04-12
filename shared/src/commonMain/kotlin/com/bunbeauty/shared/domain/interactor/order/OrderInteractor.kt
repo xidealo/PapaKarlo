@@ -1,0 +1,76 @@
+package com.bunbeauty.shared.domain.interactor.order
+
+import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.CommonFlow
+import com.bunbeauty.shared.domain.asCommonFlow
+import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
+import com.bunbeauty.shared.domain.mapFlow
+import com.bunbeauty.shared.domain.model.order.LightOrder
+import com.bunbeauty.shared.domain.model.order.OrderWithAmounts
+import com.bunbeauty.shared.domain.model.product.OrderProductWithCosts
+import com.bunbeauty.shared.domain.repo.CartProductRepo
+import com.bunbeauty.shared.domain.repo.OrderRepo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+
+class OrderInteractor(
+    private val orderRepo: OrderRepo,
+    private val cartProductRepo: CartProductRepo,
+    private val dataStoreRepo: DataStoreRepo,
+    private val productInteractor: IProductInteractor
+) : IOrderInteractor {
+
+    override suspend fun observeOrderList(): Flow<List<LightOrder>> {
+        val userUuid = dataStoreRepo.getUserUuid()
+        return orderRepo.observeOrderListByUserUuid(userUuid ?: "")
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun observeLastOrder(): CommonFlow<LightOrder?> {
+        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            orderRepo.observeLastOrderByUserUuid(userUuid ?: "")
+        }.asCommonFlow()
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun observeOrderListSwift(): CommonFlow<List<LightOrder>> {
+        return dataStoreRepo.userUuid.flatMapLatest { userUuid ->
+            orderRepo.observeOrderListByUserUuid(userUuid ?: "")
+        }.asCommonFlow()
+    }
+
+    override fun observeOrderByUuid(orderUuid: String): CommonFlow<OrderWithAmounts?> {
+        return orderRepo.observeOrderByUuid(orderUuid).mapFlow { order ->
+            OrderWithAmounts(
+                uuid = order.uuid,
+                code = order.code,
+                status = order.status,
+                dateTime = order.dateTime,
+                isDelivery = order.isDelivery,
+                deferredTime = order.deferredTime,
+                address = order.address.description ?: "",
+                comment = order.comment,
+                deliveryCost = order.deliveryCost,
+                orderProductList = order.orderProductList.map { orderProduct ->
+                    OrderProductWithCosts(
+                        uuid = orderProduct.uuid,
+                        count = orderProduct.count,
+                        newCost = productInteractor.getProductPositionNewCost(orderProduct),
+                        oldCost = productInteractor.getProductPositionOldCost(orderProduct),
+                        product = orderProduct.product
+                    )
+                },
+                oldAmountToPay = productInteractor.getOldAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+                newAmountToPay = productInteractor.getNewAmountToPay(
+                    order.orderProductList,
+                    order.deliveryCost
+                ),
+            )
+        }.asCommonFlow()
+    }
+
+}

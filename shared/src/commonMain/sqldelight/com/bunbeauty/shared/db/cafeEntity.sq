@@ -1,0 +1,39 @@
+CREATE TABLE cafeEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    fromTime INTEGER AS Int NOT NULL,
+    toTime INTEGER AS Int NOT NULL,
+    offset INTEGER AS Int NOT NULL,
+    phone TEXT NOT NULL,
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    address TEXT NOT NULL,
+    cityUuid TEXT NOT NULL,
+    isVisible INTEGER AS Boolean NOT NULL
+);
+
+insertCafe:
+INSERT OR REPLACE
+INTO cafeEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+getCafeListByCityUuid:
+SELECT *
+FROM cafeEntity
+WHERE cityUuid = :cityUuid;
+
+getCafeByUuid:
+SELECT *
+FROM cafeEntity
+WHERE uuid = :uuid;
+
+getFirstCafeByCityUuid:
+SELECT *
+FROM cafeEntity
+WHERE cityUuid = :cityUuid
+ORDER BY uuid DESC
+LIMIT 1;
+
+getSelectedCafeByUserAndCityUuid:
+SELECT cafeEntity.* FROM cafeEntity
+JOIN selectedCafeUuidEntity ON cafeEntity.uuid == selectedCafeUuidEntity.cafeUuid
+WHERE selectedCafeUuidEntity.userUuid = :userUuid AND selectedCafeUuidEntity.cityUuid = :cityUuid;

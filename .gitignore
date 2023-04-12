@@ -88,3 +88,10 @@ lint/tmp/
 ehthumbs.db
 Thumbs.db
 
+
+.gradle
+/local.properties
+/build
+*/build
+/captures
+.cxx

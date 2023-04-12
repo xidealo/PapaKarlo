@@ -1,0 +1,28 @@
+CREATE TABLE menuProductCategoryReference (
+    menuProductUuidReference TEXT NOT NULL,
+    categoryUuidReference TEXT NOT NULL,
+    PRIMARY KEY (menuProductUuidReference, categoryUuidReference),
+    FOREIGN KEY (menuProductUuidReference) REFERENCES menuProductEntity(uuid) ON DELETE CASCADE,
+    FOREIGN KEY (categoryUuidReference) REFERENCES categoryEntity(uuid) ON DELETE CASCADE
+);
+
+insertMenuProductCategoryReference:
+INSERT OR REPLACE
+INTO menuProductCategoryReference
+VALUES (?, ?);
+
+getMenuProductCategoryReference:
+SELECT *
+FROM menuProductCategoryReference
+WHERE menuProductUuidReference = :menuProductUuidReference
+    AND categoryUuidReference = :categoryUuidReference;
+
+getMenuProductCategoryReferenceListByMenuProductUuid:
+SELECT *
+FROM menuProductCategoryReference
+WHERE menuProductUuidReference = :menuProductUuid;
+
+deleteMenuProductCategoryReference:
+DELETE FROM menuProductCategoryReference
+WHERE menuProductUuidReference = :menuProductUuidReference
+    AND categoryUuidReference = :categoryUuidReference;

@@ -5,80 +5,20 @@
     android:id="@+id/activity_main_cl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
-
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/activity_main_tb_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/activity_main_iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/top_logo_height"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/medium_margin"
-            android:src="?attr/logo_top" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_main_cl_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/medium_margin">
-
-            <TextView
-                android:id="@+id/activity_main_tv_cart"
-                style="@style/MediumRegularWrapContentText"
-                android:layout_marginEnd="@dimen/very_small_margin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/activity_main_iv_cart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="100₽" />
-
-            <ImageView
-                android:id="@+id/activity_main_iv_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/cart_count_margin"
-                android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/activity_main_tv_cart_count"
-                app:layout_constraintTop_toTopOf="@+id/activity_main_tv_cart_count"
-                app:tint="?attr/colorOnSurface" />
-
-            <TextView
-                android:id="@+id/activity_main_tv_cart_count"
-                android:layout_width="@dimen/cart_count_size"
-                android:layout_height="@dimen/cart_count_size"
-                android:background="@drawable/background_circle"
-                android:gravity="center"
-                android:padding="@dimen/cart_count_padding"
-                android:textAppearance="@style/SmallRegularTextAppearance"
-                android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="99" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
+    tools:context=".feature.main.MainActivity">
 
     <TextView
         android:id="@+id/activity_main_tv_internet_warning"
         style="@style/MediumRegularWrapConstraintsText"
         android:background="?attr/colorError"
-        android:padding="@dimen/small_padding"
+        android:padding="8dp"
         android:text="@string/error_no_internet"
         android:textAlignment="center"
         android:textColor="?attr/colorOnError"
         app:layout_constraintBottom_toTopOf="@+id/activity_main_fcv_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_tb_toolbar" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/activity_main_fcv_container"

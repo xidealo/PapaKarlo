@@ -1,0 +1,6 @@
+ALTER TABLE orderEntity ADD COLUMN addressStreet TEXT;
+ALTER TABLE orderEntity ADD COLUMN addressHouse TEXT;
+ALTER TABLE orderEntity ADD COLUMN addressFlat TEXT;
+ALTER TABLE orderEntity ADD COLUMN addressEntrance TEXT;
+ALTER TABLE orderEntity ADD COLUMN addressFloor TEXT;
+ALTER TABLE orderEntity ADD COLUMN addressComment TEXT;

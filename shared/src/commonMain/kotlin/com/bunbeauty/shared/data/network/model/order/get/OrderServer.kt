@@ -1,0 +1,109 @@
+package com.bunbeauty.shared.data.network.model.order.get
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+class OrderServer(
+
+    @SerialName("uuid")
+    val uuid: String,
+
+    @SerialName("code")
+    val code: String,
+
+    @SerialName("status")
+    val status: String,
+
+    @SerialName("time")
+    val time: Long,
+
+    @SerialName("timeZone")
+    val timeZone: String,
+
+    @SerialName("isDelivery")
+    val isDelivery: Boolean,
+
+    @SerialName("deferredTime")
+    val deferredTime: Long?,
+
+    @SerialName("address")
+    val address: OrderAddressServer,
+
+    @SerialName("comment")
+    val comment: String?,
+
+    @SerialName("deliveryCost")
+    val deliveryCost: Int?,
+
+    @SerialName("clientUserUuid")
+    val clientUserUuid: String,
+
+    @SerialName("oderProductList")
+    val oderProductList: List<OrderProductServer>,
+)
+
+@Serializable
+class OrderAddressServer(
+
+    @SerialName("description")
+    val description: String?,
+
+    @SerialName("street")
+    val street: String?,
+
+    @SerialName("house")
+    val house: String?,
+
+    @SerialName("flat")
+    val flat: String?,
+
+    @SerialName("entrance")
+    val entrance: String?,
+
+    @SerialName("floor")
+    val floor: String?,
+
+    @SerialName("comment")
+    val comment: String?,
+)
+
+@Serializable
+class OrderProductServer(
+
+    @SerialName("uuid")
+    val uuid: String,
+
+    @SerialName("count")
+    val count: Int,
+
+    @SerialName("name")
+    val name: String,
+
+    @SerialName("newPrice")
+    val newPrice: Int,
+
+    @SerialName("oldPrice")
+    val oldPrice: Int?,
+
+    @SerialName("utils")
+    val utils: String?,
+
+    @SerialName("nutrition")
+    val nutrition: Int?,
+
+    @SerialName("description")
+    val description: String,
+
+    @SerialName("comboDescription")
+    val comboDescription: String?,
+
+    @SerialName("photoLink")
+    val photoLink: String,
+
+    @SerialName("barcode")
+    val barcode: Int?,
+
+    @SerialName("orderUuid")
+    val orderUuid: String,
+)

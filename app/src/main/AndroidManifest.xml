@@ -5,9 +5,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name=".PapaKarloApplication"
+        android:name=".FoodDeliveryApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,12 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon"
-        tools:targetApi="n">
+        tools:replace="android:icon">
         <activity
             android:exported="true"
             android:windowSoftInputMode="adjustResize"
-            android:name="com.bunbeauty.papakarlo.ui.MainActivity"
+            android:name="com.bunbeauty.papakarlo.feature.main.MainActivity"
             android:theme="@style/LoadingAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

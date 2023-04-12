@@ -15,6 +15,7 @@ buildscript {
         classpath(ClassPath.kotlinSerialization)
         classpath(ClassPath.firebaseCrashlyticsGradle)
         classpath(ClassPath.navigationSafeArgs)
+        classpath(ClassPath.sqlDelight)
     }
 }
 
