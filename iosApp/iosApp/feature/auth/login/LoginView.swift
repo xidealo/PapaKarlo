@@ -61,7 +61,8 @@ struct LoginViewSuccessView: View {
     @Binding var hasError:Bool
     @ObservedObject var viewModel : LoginViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    @State var isSelected:Bool = false
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -73,12 +74,12 @@ struct LoginViewSuccessView: View {
             
             VStack(spacing:0){
                 Spacer()
-                
                 Image("LoginLogo")
                     .resizable()
-                    .frame(width: 152, height: 120)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 156)
                 
-                Text(Strings.MSG_LOGIN_ENTER_PHONE)
+                Text("titleLoginEnterPhone")
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color("onSurface"))
                     .padding(.top, Diems.MEDIUM_PADDING)

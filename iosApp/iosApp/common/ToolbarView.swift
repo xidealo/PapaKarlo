@@ -30,8 +30,9 @@ struct ToolbarView: View {
             
             Text(title)
                 .foregroundColor(Color("onSurface"))
-                .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .bold, design: .default))
+                .titleMedium(weight: .bold)
                 .padding(.vertical, Diems.MEDIUM_PADDING)
+            
             Spacer()
             
             if logout != nil{

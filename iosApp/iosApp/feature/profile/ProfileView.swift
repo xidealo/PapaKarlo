@@ -110,18 +110,13 @@ struct EmptyProfileView: View {
             .padding(.top, Diems.SMALL_PADDING)
             
             Spacer()
-            
-            DefaultImage(imageName: "NotLoginnedProfile")
-            
-            BoldText(text: "Войдите в профиль")
-                .padding(.top, 32)
-            
-            Text(
-                Strings.MSG_PROFILE_NO_PROFILE
+                        
+            EmptyWithIconView(
+                imageName:  "ProfileIcon",
+                title : "loginTitleProfile",
+                secondText: "loginSecondProfile"
             )
-            .multilineTextAlignment(.center)
-            .padding(.top, Diems.SMALL_PADDING)
-            
+
             Spacer()
             
             Button(

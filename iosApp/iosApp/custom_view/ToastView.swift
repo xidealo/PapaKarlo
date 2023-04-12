@@ -21,13 +21,9 @@ struct ToastView: View {
     var body: some View {
         VStack(spacing:0){
             Spacer()
-            Text(toast.title)
-                .padding(Diems.MEDIUM_PADDING)
-                .frame(maxWidth: .infinity)
-                .background(backgroundColor)
-                .foregroundColor(foregaroundColor)
-                .cornerRadius(Diems.BUTTON_RADIUS)
-                .padding(Diems.MEDIUM_PADDING)
+            ButtonText(text: toast.title, background: backgroundColor)
+                .padding(.vertical, Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth: .infinity)
         .transition(AnyTransition.move(edge: .bottom).combined(with: .opacity))

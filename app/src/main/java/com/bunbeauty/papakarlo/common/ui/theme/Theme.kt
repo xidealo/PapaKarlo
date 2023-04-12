@@ -7,8 +7,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.shared.data.CompanyConstants.PAPA_KARLO_FLAVOR_NAME
-import com.bunbeauty.shared.data.CompanyConstants.YULIAR_FLAVOR_NAME
+import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
+import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 
 @OptIn(ExperimentalFoundationApi::class)

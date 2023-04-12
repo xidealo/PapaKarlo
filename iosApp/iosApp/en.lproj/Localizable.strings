@@ -24,4 +24,16 @@
 "titleFeedback" = "App feedback";
 "titleCafeOptions" = "Selected restaurant";
 "titlePayment" = "Payment";
+//logim
+"loginTitleProfile" = "Login profile";
+"loginSecondProfile" = "Your profile will display shipping addresses and your order history.";
+//consumer cart
+"emptyCartTitleProfile" = "Cart is empty";
+"emptyCartSecondProfile" = "Add a product from the “Menu”";
+//user address
+"emptyAddressListTitleProfile" = "Address list is empty";
+"emptyAddressListSecondProfile" = "Your addresses will be displayed here";
 
+//order list
+"emptyOrderListTitleProfile" = "Order list is empty";
+"emptyOrderListSecondProfile" = "Your orders will be displayed here";

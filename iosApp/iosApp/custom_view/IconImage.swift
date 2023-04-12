@@ -19,7 +19,6 @@ struct IconImage: View {
             .resizable()
             .renderingMode(.template)
             .frame(width: width, height: height)
-        
     }
 }
 

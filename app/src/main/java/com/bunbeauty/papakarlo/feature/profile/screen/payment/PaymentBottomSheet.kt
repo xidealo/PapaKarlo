@@ -4,6 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -42,9 +43,9 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.root.setContentWithTheme {
-            val payment by viewModel.payment.collectAsStateWithLifecycle()
+            val paymentState by viewModel.paymentState.collectAsStateWithLifecycle()
 
-            PaymentScreen(payment)
+            PaymentScreen(paymentState)
         }
     }
 
@@ -56,13 +57,13 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
     }
 
     @Composable
-    private fun PaymentScreen(payment: Payment?) {
+    private fun PaymentScreen(paymentState: PaymentState) {
         FoodDeliveryBottomSheet(titleStringId = R.string.title_payment) {
             Text(
-                text = stringResource(R.string.msg_payment_description),
+                text = paymentState.paymentInfo,
                 style = FoodDeliveryTheme.typography.bodyMedium
             )
-            if (payment == null) {
+            if (paymentState.payment == null) {
                 CircularProgressBar(
                     modifier = Modifier
                         .padding(16.dp)
@@ -70,36 +71,35 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
                 )
             } else {
                 Spacer(modifier = Modifier.height(16.dp))
-                payment.cardNumber?.let { cardNumber ->
-                    StartIconCard(
-                        elevated = false,
-                        label = cardNumber,
-                        iconId = R.drawable.ic_copy,
-                        onClick = {
-                            copyToBuffer(CARD_NUMBER_LABEL, cardNumber)
-                            viewModel.showMessage(
-                                requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied),
-                                true
-                            )
-                        }
-                    )
-                }
-                payment.phoneNumber?.let { phoneNumber ->
-                    if (payment.cardNumber != null) {
-                        Spacer(modifier = Modifier.height(8.dp))
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    paymentState.payment.cardNumber?.let { cardNumber ->
+                        StartIconCard(
+                            elevated = false,
+                            label = cardNumber,
+                            iconId = R.drawable.ic_copy,
+                            onClick = {
+                                copyToBuffer(CARD_NUMBER_LABEL, cardNumber)
+                                viewModel.showMessage(
+                                    requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied),
+                                    true
+                                )
+                            }
+                        )
                     }
-                    StartIconCard(
-                        elevated = false,
-                        label = phoneNumber,
-                        iconId = R.drawable.ic_copy,
-                        onClick = {
-                            copyToBuffer(PHONE_NUMBER_LABEL, phoneNumber)
-                            viewModel.showMessage(
-                                requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied),
-                                true
-                            )
-                        }
-                    )
+                    paymentState.payment.phoneNumber?.let { phoneNumber ->
+                        StartIconCard(
+                            elevated = false,
+                            label = phoneNumber,
+                            iconId = R.drawable.ic_copy,
+                            onClick = {
+                                copyToBuffer(PHONE_NUMBER_LABEL, phoneNumber)
+                                viewModel.showMessage(
+                                    requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied),
+                                    true
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -110,10 +110,14 @@ class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
     private fun PaymentScreenPreview() {
         FoodDeliveryTheme {
             PaymentScreen(
-                Payment(
-                    phoneNumber = "+7(999) 999-99-99",
-                    cardNumber = "1234 1234 1234 1234 1234"
+                PaymentState(
+                    paymentInfo = "Оплатить заказ можно наличными или через терминал при получении",
+                    payment = Payment(
+                        phoneNumber = "+7(999) 999-99-99",
+                        cardNumber = "1234 1234 1234 1234 1234"
+                    )
                 )
+
             )
         }
     }

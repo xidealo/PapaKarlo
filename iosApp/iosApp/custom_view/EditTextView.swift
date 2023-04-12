@@ -21,35 +21,43 @@ struct EditTextView: View {
     
     var textChanged: (String) -> Void
 
+    @State var isSelectedSSS:Bool = false
     var body: some View {
         VStack{
             if(hasError){
                 TextField(hint, text: $text)
                     .padding()
                     .lineLimit(5)
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                    .background(RoundedRectangle(cornerRadius: 5)
+                    .fill(Color("surface")))
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("errorColor"), lineWidth: 2)
+                            .stroke(Color("error"), lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
                     .keyboardType(keyBoadrType)
                 
                 Text(errorMessage)
-                    .foregroundColor(Color("errorColor"))
+                    .foregroundColor(Color("error"))
                     .frame(maxWidth:.infinity, alignment: .leading)
             }else{
-                TextField(hint, text: $text)
+                TextField(hint, text: $text, onEditingChanged: { edit in
+                    self.isSelectedSSS = edit
+                })
                     .padding()
                     .lineLimit(5)
                     .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
                     .overlay(
+                        isSelectedSSS ?
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("surfaceVariant"), lineWidth: 2)
+                            .stroke(Color("primary"), lineWidth: 2)
+                        : RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
+                            .stroke(Color("onSurfaceVariant"), lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
+
                     .keyboardType(keyBoadrType)
                 
             }
@@ -61,11 +69,5 @@ struct EditTextView: View {
         if text.count > upper {
             text = String(text.prefix(upper))
         }
-    }
-}
-
-struct EditTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditTextView(hint: "hint", text: .constant(""), limit: 100, hasError: .constant(true), textChanged: { _ in })
     }
 }

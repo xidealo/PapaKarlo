@@ -22,3 +22,24 @@
 "titleFeedback" = "Отзывы о приложении";
 "titleCafeOptions" = "Выбранное кафе";
 "titlePayment" = "Оплата";
+
+//login
+"loginTitleProfile" = "Войдите в профиль";
+"loginSecondProfile" = "В профиле будут отбражаться адреса для доставки и история ваших заказов";
+
+//Consumer cart
+"emptyCartTitleProfile" = "Корзина пуста";
+"emptyCartSecondProfile" = "Добавьте товар из “Меню”";
+
+//User address list
+"emptyAddressListTitleProfile" = "Список адресов пуст";
+"emptyAddressListSecondProfile" = "Здесь будут отображаться ваши адреса";
+//order list
+"emptyOrderListTitleProfile" = "Список заказов пуст";
+"emptyOrderListSecondProfile" = "Здесь будут отображаться ваши заказы";
+
+//Login
+"titleLoginEnterPhone" = "Введите номер вашего телефона";
+"hintLoginEnterPhone" = "Номер телефона"; //add later refactoring
+"errorLoginEnterPhone" = "Введите корректный номер телефона"; //add later refactoring
+"actionLoginContinue" = "Продолжить"; //add later refactoring

@@ -80,8 +80,8 @@ struct FutureStep: View {
     var body: some View {
         IconImage(width: 12, height: 9, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
-            .background(Color("surfaceVariant"))
-            .foregroundColor(Color("surfaceVariant"))
+            .background(Color("onSurfaceVariant"))
+            .foregroundColor(Color("onSurfaceVariant"))
             .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

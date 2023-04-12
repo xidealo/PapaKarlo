@@ -33,8 +33,7 @@ struct OrderListView: View {
                 title: "titleMyOrders",
                 back: {
                     self.mode.wrappedValue.dismiss()
-                })
-            
+                })            
             switch(orderListState.state){
             case OrderListState.State.loading : LoadingView()
             case OrderListState.State.empty : EmptyOrderListView()
@@ -111,10 +110,11 @@ struct EmptyOrderListView: View {
     var body: some View {
         VStack(spacing: 0){
             Spacer()
-            
-            DefaultImage(imageName: "EmptyPage")
-            
-            Text(Strings.MSG_ORDER_LIST_EMPTY_ORDERS).multilineTextAlignment(.center)
+            EmptyWithIconView(
+                imageName: "ic_history",
+                title: "emptyOrderListTitleProfile",
+                secondText: "emptyOrderListSecondProfile"
+            )
             Spacer()
         }
     }
