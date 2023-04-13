@@ -15,30 +15,25 @@ struct EmptyWithIconView: View {
 
     var body: some View {
         VStack(spacing:0){
-            
             ZStack(alignment: .center){
                 Circle()
-                    .fill(Color("info"))
+                    .fill(AppColor.info)
                     .frame(width: 120, height: 120)
                 IconImage(
                     width: 64,
                     height: 64,
                     imageName: imageName
                 )
-                .foregroundColor(Color("onStatus"))
+                .foregroundColor(AppColor.onStatus)
             }
             
             BoldLocalizedStringKey(text: title)
                 .padding(.top, 32)
             
-            Text(
-                secondText
-            )
-            .multilineTextAlignment(.center)
-            .padding(.top, Diems.SMALL_PADDING)
-            
+            Text(secondText)
+                .bodyLarge()
+                .multilineTextAlignment(.center)
+                .padding(.top, Diems.SMALL_PADDING)
         }
-       
-        
     }
 }

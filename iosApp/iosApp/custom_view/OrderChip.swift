@@ -14,12 +14,12 @@ struct OrderChip: View {
     
     var body: some View {
         Text(OrderChip.getStatusName(status: orderStatus))
-            .frame(height:22)
-            .foregroundColor(Color("surface"))
-            .padding(.horizontal, Diems.SMALL_PADDING)
+            .labelSmall()
+            .foregroundColor(AppColor.surface)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
             .background(OrderChip.getColor(status: orderStatus))
-            .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .heavy, design: .default))
-            .cornerRadius(4)
+            .cornerRadius(12)
     }
     
     static func getColor(status:OrderStatus) -> Color{

@@ -21,21 +21,27 @@ struct CartProductView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(maxWidth: Diems.IMAGE_ELEMENT_WIDTH, maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
             
-            VStack{
+            VStack(spacing:0){
                 Text(cartProductItem.name)
+                    .titleSmall(weight: .bold)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
-                    .foregroundColor(Color("onSurface"))
+                    .foregroundColor(AppColor.onSurface)
 
-                HStack{
+                HStack(spacing:0){
                     if cartProductItem.oldCost != nil {
-                        StrikeText(text: String(cartProductItem.oldCost!) + Strings.CURRENCY)
+                        Text(String(cartProductItem.oldCost!) + Strings.CURRENCY)
+                            .strikethrough()
+                            .bodySmall()
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
                     Text(cartProductItem.newCost)
+                        .bodySmall()
                         .frame(maxWidth:.infinity, alignment: .topLeading)
-                        .foregroundColor(Color("onSurface"))
+                        .foregroundColor(AppColor.onSurface)
                 }
-            }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT).padding(.leading, Diems.SMALL_PADDING)
+            }
+            .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+            .padding(.leading, Diems.SMALL_PADDING)
             
             CountPicker(
                 count: String(cartProductItem.count),
@@ -44,7 +50,7 @@ struct CartProductView: View {
             )
                 .padding(.trailing, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity, alignment: .topLeading)
-        .background(Color("surface"))
+            .background(AppColor.surface)
         .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

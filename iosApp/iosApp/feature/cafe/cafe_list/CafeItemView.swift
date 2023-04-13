@@ -13,21 +13,28 @@ struct CafeItemView: View {
 
     var body: some View {
         VStack(spacing:0){
-            LargeHeaderText(text: cafeItem.address)
-                .foregroundColor(Color("onSurface"))
+            Text(cafeItem.address)
+                .bodyMedium()
+                .foregroundColor(AppColor.onSurface)
                 .padding(.horizontal,  Diems.MEDIUM_PADDING)
-                .padding(.top, Diems.MEDIUM_PADDING)
-                .padding(.bottom, Diems.HALF_SMALL_PADDING)
-            
-            HStack{
-                Text(cafeItem.workingHours).foregroundColor(Color("onSurface"))
-                Text(cafeItem.isOpenMessage).foregroundColor(cafeItem.isOpenColor)
+                .padding(.top, 12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            HStack(spacing:0){
+                Text(cafeItem.workingHours)
+                    .foregroundColor(AppColor.onSurfaceVariant)
+                    .labelMedium()
+                Text(cafeItem.isOpenMessage)
+                    .foregroundColor(cafeItem.isOpenColor)
+                    .labelMedium()
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.bottom, Diems.MEDIUM_PADDING)
-            .padding(.top, Diems.SMALL_PADDING)
+            .padding(.bottom, 12)
+            .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
-        }.background(Color("surface")).cornerRadius(15)
+            
+        }.background(AppColor.surface)
+            .cornerRadius(15)
     }
 }
 

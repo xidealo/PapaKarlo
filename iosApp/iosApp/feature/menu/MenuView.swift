@@ -53,31 +53,32 @@ struct MenuView: View {
                                 Section(
                                     header: LargeHeaderText(
                                         text:viewModel.menuViewState.menuItems[i].categorySectionItem.name
-                                    ).id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
-                                        .padding(.horizontal,  Diems.MEDIUM_PADDING)
-                                        .padding(.top, Diems.MEDIUM_PADDING)){
-                                            ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                                
-                                                MenuItemView(
-                                                    menuProductItem: menuProductItem,
-                                                    isRootActive : $isRootActive,
-                                                    selection : $selection,
-                                                    showOrderCreated : $showOrderCreated,
-                                                    action: {
-                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
-                                                    })
-                                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                                .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                                                .onAppear(){
-                                                    print("onAppear \(i)")
-                                                    viewModel.checkAppear(index: i)
-                                                }
-                                                .onDisappear(){
-                                                    print("onDisappear \(i)")
-                                                    viewModel.checkDisappear(index: i)
-                                                }
+                                    )
+                                    .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
+                                    .padding(.horizontal,  Diems.MEDIUM_PADDING)
+                                    .padding(.top, Diems.MEDIUM_PADDING)){
+                                        ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
+                                            
+                                            MenuItemView(
+                                                menuProductItem: menuProductItem,
+                                                isRootActive : $isRootActive,
+                                                selection : $selection,
+                                                showOrderCreated : $showOrderCreated,
+                                                action: {
+                                                    viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                                })
+                                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                            .padding(.vertical, Diems.HALF_SMALL_PADDING)
+                                            .onAppear(){
+                                                print("onAppear \(i)")
+                                                viewModel.checkAppear(index: i)
+                                            }
+                                            .onDisappear(){
+                                                print("onDisappear \(i)")
+                                                viewModel.checkDisappear(index: i)
                                             }
                                         }
+                                    }
                             }
                         }.onChange(of: viewModel.menuViewState, perform: { menuState in
                             if(menuState.scrollToPostion != lastShowCategory){

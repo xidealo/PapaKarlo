@@ -27,35 +27,34 @@ struct NavigationCardView<Content: View>: View {
                             .resizable()
                             .renderingMode(.template)
                             .frame(width: 24, height: 24)
-                            .foregroundColor(Color("onSurfaceVariant"))
+                            .foregroundColor(AppColor.onSurfaceVariant)
                         }else{
                             IconImage(
                                 width: 24,
                                 height: 24,
                                 imageName: icon ?? ""
                             )
-                            .foregroundColor(Color("onSurfaceVariant"))
+                            .foregroundColor(AppColor.onSurfaceVariant)
                         }
                     }
                     if(icon == nil){
                         Text(label)
-                            .frame(
-                                maxWidth: .infinity, alignment: .leading).foregroundColor(Color("onSurface")
-                            )
+                            .bodyLarge()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(AppColor.onSurface)
                     }else{
                         Text(label)
-                            .frame(
-                                maxWidth: .infinity, alignment: .leading).foregroundColor(Color("onSurface")
-                            )
-                            .padding(
-                                .leading, Diems.MEDIUM_PADDING
-                            )
+                            .bodyLarge()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(AppColor.onSurface)
+                            .padding(.leading, Diems.MEDIUM_PADDING)
                     }
-                  
-                    Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
+                    Image(systemName:"chevron.right")
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                    
                 }.frame(maxWidth:.infinity)
-                .padding(Diems.MEDIUM_PADDING)
-                .background(Color("surface"))
+                .padding(12)
+                .background(AppColor.surface)
                 .cornerRadius(Diems.MEDIUM_RADIUS)
             }
     }

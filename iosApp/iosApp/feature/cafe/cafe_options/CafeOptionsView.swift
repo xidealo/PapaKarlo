@@ -24,12 +24,21 @@ struct CafeOptionsView: View {
             )
             
             VStack(spacing:0){
-                ActionCardView(icon: "PhoneIcon", label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone, isSystemImageName: false, isShowRightArrow: true){
+                ActionCardView(
+                    icon: "PhoneIcon",
+                    label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone,
+                    isSystemImageName: false,
+                    isShowRightArrow: true
+                ){
                     UIApplication.shared.open(URL(string: "tel://" + phone.removeWhitespace())!)
                 }
                 
-                ActionCardView(icon: "CafePosition", label: Strings.TITLE_CAFE_OPTIONS_POSITION + " " + address, isSystemImageName: false, isShowRightArrow: true){
-                    
+                ActionCardView(
+                    icon: "CafePosition",
+                    label: Strings.TITLE_CAFE_OPTIONS_POSITION + " " + address,
+                    isSystemImageName: false,
+                    isShowRightArrow: true
+                ){
                     UIApplication.shared.open(URL(string: "http://maps.apple.com/maps?saddr=&daddr=\(latitude),\(longitude)")!)
                 }
                 .padding(.top, Diems.SMALL_PADDING)

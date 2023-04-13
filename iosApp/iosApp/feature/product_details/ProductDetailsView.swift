@@ -66,37 +66,40 @@ struct ProductDetailsView: View {
                 Group{
                     HStack(spacing:0){
                         Text(viewModel.productDetailsViewState.name)
+                            .titleMedium(weight: .bold)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundColor(Color("onSurface"))
-                            .font(.system(size: Diems.LARGE_TEXT_SIZE, weight: .heavy, design: .default))
+                            .foregroundColor(AppColor.onSurface)
+                            
                         Text(viewModel.productDetailsViewState.size)
-                            .foregroundColor(Color("onSurface"))
-                            .font(.system(size: Diems.SMALL_TEXT_SIZE, weight: .thin, design: .default))
+                            .bodySmall()
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
-                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.top, 12)
                     
                     HStack(spacing:0){
                         if viewModel.productDetailsViewState.oldPrice != nil{
-                            StrikeText(text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY)
-                                .padding(.trailing, Diems.SMALL_RADIUS)
+                            StrikeText(
+                                text: String(viewModel.productDetailsViewState.oldPrice!) + Strings.CURRENCY
+                            )
+                            .padding(.trailing, Diems.SMALL_RADIUS)
                         }
-                        Text(viewModel.productDetailsViewState.newPrice )
-                            .foregroundColor(Color("onSurface"))
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default))
-                            
+                        Text(viewModel.productDetailsViewState.newPrice)
+                            .foregroundColor(AppColor.onSurface)
+                            .bodyLarge(weight: .bold)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, Diems.SMALL_PADDING)
+                    .padding(.top, 4)
                     
                     Text(viewModel.productDetailsViewState.description)
+                        .bodyLarge()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.bottom, Diems.MEDIUM_PADDING)
-                        .foregroundColor(Color("onSurface"))
-                    
-                }.padding(.horizontal, Diems.MEDIUM_PADDING)
+                        .padding(.top, 16)
+                        .foregroundColor(AppColor.onSurface)
+                        .padding(.bottom, 16)
+                }
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
-            .background(Color("surface"))
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
             .padding(Diems.MEDIUM_PADDING)
             
@@ -109,7 +112,7 @@ struct ProductDetailsView: View {
             }.padding(Diems.MEDIUM_PADDING)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.subscribeOnFlow()
