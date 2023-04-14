@@ -32,8 +32,6 @@ fun viewModelModule() = module {
     }
     viewModel {
         MainViewModel(
-            cartProductInteractor = get(),
-            stringUtil = get(),
             networkUtil = get()
         )
     }

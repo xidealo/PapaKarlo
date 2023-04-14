@@ -38,7 +38,6 @@ fun repositoryModule() = module {
     single<NetworkConnector> {
         NetworkConnectorImpl(
             client = get(),
-            json = get(),
             socketService = get(),
         )
     }

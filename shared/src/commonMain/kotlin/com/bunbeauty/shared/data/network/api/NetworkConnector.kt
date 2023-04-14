@@ -9,6 +9,7 @@ import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
@@ -38,6 +39,7 @@ interface NetworkConnector {
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
     suspend fun getOrderList(token: String, count: Int? = null, uuid: String? = null): ApiResult<ListServer<OrderServer>>
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
+    suspend fun getPaymentMethodList(token: String): ApiResult<List<PaymentMethodServer>>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(

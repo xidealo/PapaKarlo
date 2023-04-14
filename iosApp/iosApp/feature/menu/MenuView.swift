@@ -69,11 +69,9 @@ struct MenuView: View {
                                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                                 .padding(.vertical, Diems.HALF_SMALL_PADDING)
                                                 .onAppear(){
-                                                    print("onAppear \(i)")
                                                     viewModel.checkAppear(index: i)
                                                 }
                                                 .onDisappear(){
-                                                    print("onDisappear \(i)")
                                                     viewModel.checkDisappear(index: i)
                                                 }
                                             }

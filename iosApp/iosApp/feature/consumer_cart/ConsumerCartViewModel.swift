@@ -18,13 +18,8 @@ class ConsumerCartViewModel : ObservableObject  {
         consumerCartState: ConsumerCartState.loading,
         actions: []
     )
-        
-    init(){
-        print("CreateOrderViewModel")
-    }
-    
+
     func fetchData(){
-        print("Fetch data ConsumerCartViewModel")
         (consumerCartViewState.copy() as! ConsumerCartViewState).apply { newState in
             newState.consumerCartState = ConsumerCartState.loading
             consumerCartViewState = newState
