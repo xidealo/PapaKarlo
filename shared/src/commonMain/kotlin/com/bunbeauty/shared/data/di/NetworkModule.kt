@@ -2,6 +2,8 @@ package com.bunbeauty.shared.data.di
 
 import com.bunbeauty.shared.Logger
 import com.bunbeauty.shared.Logger.NETWORK_TAG
+import com.bunbeauty.shared.data.network.api_result_handler.ApiResultHandler
+import com.bunbeauty.shared.data.network.api_result_handler.ApiResultHandlerDelegate
 import com.bunbeauty.shared.httpClientEngine
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
@@ -59,5 +61,8 @@ fun networkModule() = module {
                 }
             }
         }
+    }
+    factory<ApiResultHandler> {
+        ApiResultHandlerDelegate()
     }
 }

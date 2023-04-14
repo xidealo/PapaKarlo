@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.data.network.api_result_handler.ApiResultHandler
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.domain.mapFlow
@@ -21,9 +22,9 @@ class OrderRepository(
     private val orderDao: IOrderDao,
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
-) : BaseRepository(), OrderRepo {
-
-    override val tag: String = "ORDER_TAG"
+    private val apiResultHandler: ApiResultHandler,
+) : OrderRepo,
+    ApiResultHandler by apiResultHandler {
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)

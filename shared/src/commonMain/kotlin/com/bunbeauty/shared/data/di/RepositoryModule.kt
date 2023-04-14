@@ -53,6 +53,7 @@ fun repositoryModule() = module {
             orderDao = get(),
             networkConnector = get(),
             orderMapper = get(),
+            apiResultHandler = get(),
         )
     }
     single<MenuProductRepo> {
@@ -119,7 +120,9 @@ fun repositoryModule() = module {
     single {
         PaymentRepository(
             networkConnector = get(),
-            dataStoreRepo = get(),
+            paymentMethodMapper = get(),
+            paymentMethodDao = get(),
+            apiResultHandler = get(),
         )
     }
     single {

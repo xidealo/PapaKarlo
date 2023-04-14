@@ -14,6 +14,8 @@ import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProduc
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.MenuProductCategoryReferenceDao
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.dao.order.OrderDao
+import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
+import com.bunbeauty.shared.data.dao.payment_method.PaymentMethodDao
 import com.bunbeauty.shared.data.dao.street.IStreetDao
 import com.bunbeauty.shared.data.dao.street.StreetDao
 import com.bunbeauty.shared.data.dao.user.IUserDao
@@ -52,5 +54,8 @@ fun databaseModule() = module {
     }
     single<IOrderDao> {
         OrderDao(foodDeliveryDatabase = get())
+    }
+    single<IPaymentMethodDao> {
+        PaymentMethodDao(foodDeliveryDatabase = get())
     }
 }
