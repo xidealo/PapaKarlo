@@ -31,7 +31,8 @@ struct Switcher: View {
                     action(false)
                 }) {
                     Text(rightTitle)
-                        .foregroundColor(Color("onSurfaceVariant"))
+                        .labelLarge(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(maxWidth:.infinity)
                 }
             }else{
@@ -41,7 +42,8 @@ struct Switcher: View {
                     action(true)
                 }) {
                     Text(leftTitle)
-                        .foregroundColor(Color("onSurfaceVariant"))
+                        .labelLarge(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(maxWidth:.infinity)
                 }
                 
@@ -53,9 +55,11 @@ struct Switcher: View {
                     SelectedSwicher(title: rightTitle).frame(maxWidth:.infinity)
                 }
             }
-        }.padding(3).background(Color("surface"))
-            .cornerRadius(Diems.BUTTON_RADIUS)
-            .frame(maxWidth:.infinity)
+        }
+        .padding(4)
+        .background(AppColor.surface)
+        .cornerRadius(Diems.BUTTON_RADIUS)
+        .frame(maxWidth:.infinity)
     }
 }
 
@@ -70,9 +74,11 @@ struct SelectedSwicher: View {
 
     var body: some View {
         Text(title)
-            .frame(maxWidth:.infinity).padding(Diems.SMALL_PADDING)
-            .background(Color("primary"))
-            .foregroundColor(Color("onPrimary"))
+            .labelLarge(weight: .medium)
+            .frame(maxWidth:.infinity)
+            .padding(Diems.SMALL_PADDING)
+            .background(AppColor.primary)
+            .foregroundColor(AppColor.onPrimary)
             .cornerRadius(Diems.BUTTON_RADIUS)
     }
 }

@@ -26,6 +26,7 @@ struct CartProductView: View {
                     .titleSmall(weight: .bold)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
+                    .padding(.top, 8)
 
                 HStack(spacing:0){
                     if cartProductItem.oldCost != nil {
@@ -35,12 +36,13 @@ struct CartProductView: View {
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
                     Text(cartProductItem.newCost)
-                        .bodySmall()
+                        .bodySmall(weight: .bold)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
                         .foregroundColor(AppColor.onSurface)
                 }
+                .padding(.top, 4)
             }
-            .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+            .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT, alignment: .topLeading)
             .padding(.leading, Diems.SMALL_PADDING)
             
             CountPicker(

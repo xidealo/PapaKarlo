@@ -236,9 +236,9 @@
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
+		4F634F30F9BC86E05BE17C28 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A2A1708DE749838236BC07 /* Pods_papakarlo.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		7DF2384A5793888FCFBB03FB /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B984E478273D8FF6302D18EE /* Pods_yuliar.framework */; };
-		F22940AF92C72C27FEC17814 /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77A549A4ED2D17D29C5AF01D /* Pods_papakarlo.framework */; };
+		78A636F0AA9A9393D0F1C829 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF357D01BC97D66D4C0BAA85 /* Pods_yuliar.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -359,15 +359,15 @@
 		02C21FF828D265E900DCF537 /* ActionTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTextCardView.swift; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		06D875028CC759C40EE604DB /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
+		0AFDC04E28CE01CE721D159E /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		736345526B03CF561AA46A59 /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* papakarlo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = papakarlo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		77A549A4ED2D17D29C5AF01D /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C58A5B5C28197D6F96B8F16 /* Pods-papakarlo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.release.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.release.xcconfig"; sourceTree = "<group>"; };
-		9C699C306ADD3566A1D6C7B6 /* Pods-yuliar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.debug.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.debug.xcconfig"; sourceTree = "<group>"; };
-		B984E478273D8FF6302D18EE /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F369EE81E92993AD79036FB5 /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
+		828736D1CA8B6D3C00ECEC22 /* Pods-yuliar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-yuliar.release.xcconfig"; path = "Target Support Files/Pods-yuliar/Pods-yuliar.release.xcconfig"; sourceTree = "<group>"; };
+		98A2A1708DE749838236BC07 /* Pods_papakarlo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_papakarlo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4877DB86253B17AA7B27B6C /* Pods-papakarlo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-papakarlo.debug.xcconfig"; path = "Target Support Files/Pods-papakarlo/Pods-papakarlo.debug.xcconfig"; sourceTree = "<group>"; };
+		FF357D01BC97D66D4C0BAA85 /* Pods_yuliar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_yuliar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,7 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DF2384A5793888FCFBB03FB /* Pods_yuliar.framework in Frameworks */,
+				78A636F0AA9A9393D0F1C829 /* Pods_yuliar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +383,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F22940AF92C72C27FEC17814 /* Pods_papakarlo.framework in Frameworks */,
+				4F634F30F9BC86E05BE17C28 /* Pods_papakarlo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -758,15 +758,6 @@
 			path = papakarloRes;
 			sourceTree = "<group>";
 		};
-		0435AEF5DBD7D3A5BAAAABC8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				77A549A4ED2D17D29C5AF01D /* Pods_papakarlo.framework */,
-				B984E478273D8FF6302D18EE /* Pods_yuliar.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		058557D7273AAEEB004C7B11 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,10 +769,10 @@
 		50DE2F3B6643F72B29F5DDAC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F369EE81E92993AD79036FB5 /* Pods-papakarlo.debug.xcconfig */,
-				7C58A5B5C28197D6F96B8F16 /* Pods-papakarlo.release.xcconfig */,
-				9C699C306ADD3566A1D6C7B6 /* Pods-yuliar.debug.xcconfig */,
-				736345526B03CF561AA46A59 /* Pods-yuliar.release.xcconfig */,
+				F4877DB86253B17AA7B27B6C /* Pods-papakarlo.debug.xcconfig */,
+				0AFDC04E28CE01CE721D159E /* Pods-papakarlo.release.xcconfig */,
+				06D875028CC759C40EE604DB /* Pods-yuliar.debug.xcconfig */,
+				828736D1CA8B6D3C00ECEC22 /* Pods-yuliar.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -793,7 +784,7 @@
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
-				0435AEF5DBD7D3A5BAAAABC8 /* Frameworks */,
+				A4BA523D95A22BF83400B67A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -825,6 +816,15 @@
 			path = iosApp;
 			sourceTree = "<group>";
 		};
+		A4BA523D95A22BF83400B67A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98A2A1708DE749838236BC07 /* Pods_papakarlo.framework */,
+				FF357D01BC97D66D4C0BAA85 /* Pods_yuliar.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -832,12 +832,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 02ADC3AB29D9D0880062A141 /* Build configuration list for PBXNativeTarget "yuliar" */;
 			buildPhases = (
-				B275C6843995B33D22B7B4C4 /* [CP] Check Pods Manifest.lock */,
+				1568FAB67AAC146C41097BF1 /* [CP] Check Pods Manifest.lock */,
 				02ADC33729D9D0880062A141 /* Sources */,
 				02ADC3A229D9D0880062A141 /* Resources */,
 				02ADC3A729D9D0880062A141 /* Frameworks */,
 				02ADC3A929D9D0880062A141 /* ShellScript */,
-				8C6650B744EDB60469505CD9 /* [CP] Embed Pods Frameworks */,
+				9301AB6D3B2CD666397DECFD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -852,12 +852,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "papakarlo" */;
 			buildPhases = (
-				7552489F67CDC32B146F79FE /* [CP] Check Pods Manifest.lock */,
+				7D1FCAAFFD806428F94AD8A9 /* [CP] Check Pods Manifest.lock */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				FAB66D7FD21CA0242210288D /* Frameworks */,
 				0221D3A62958964C002E4F20 /* ShellScript */,
-				105CE18DDA7B21DB2065BDE3 /* [CP] Embed Pods Frameworks */,
+				F02923AA1791AE1EB4A14AC3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -971,24 +971,29 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		105CE18DDA7B21DB2065BDE3 /* [CP] Embed Pods Frameworks */ = {
+		1568FAB67AAC146C41097BF1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-yuliar-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7552489F67CDC32B146F79FE /* [CP] Check Pods Manifest.lock */ = {
+		7D1FCAAFFD806428F94AD8A9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1010,7 +1015,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8C6650B744EDB60469505CD9 /* [CP] Embed Pods Frameworks */ = {
+		9301AB6D3B2CD666397DECFD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1027,26 +1032,21 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-yuliar/Pods-yuliar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B275C6843995B33D22B7B4C4 /* [CP] Check Pods Manifest.lock */ = {
+		F02923AA1791AE1EB4A14AC3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-yuliar-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-papakarlo/Pods-papakarlo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1301,7 +1301,7 @@
 /* Begin XCBuildConfiguration section */
 		02ADC3AC29D9D0880062A141 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C699C306ADD3566A1D6C7B6 /* Pods-yuliar.debug.xcconfig */;
+			baseConfigurationReference = 06D875028CC759C40EE604DB /* Pods-yuliar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1393,7 +1393,7 @@
 		};
 		02ADC3AD29D9D0880062A141 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 736345526B03CF561AA46A59 /* Pods-yuliar.release.xcconfig */;
+			baseConfigurationReference = 828736D1CA8B6D3C00ECEC22 /* Pods-yuliar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1603,7 +1603,7 @@
 		};
 		7555FFA6242A565B00829871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F369EE81E92993AD79036FB5 /* Pods-papakarlo.debug.xcconfig */;
+			baseConfigurationReference = F4877DB86253B17AA7B27B6C /* Pods-papakarlo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1695,7 +1695,7 @@
 		};
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C58A5B5C28197D6F96B8F16 /* Pods-papakarlo.release.xcconfig */;
+			baseConfigurationReference = 0AFDC04E28CE01CE721D159E /* Pods-papakarlo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
