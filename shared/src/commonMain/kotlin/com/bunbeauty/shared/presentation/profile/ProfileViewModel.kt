@@ -29,11 +29,9 @@ class ProfileViewModel(
     var observeLastOrderJob: Job? = null
     private var orderObservationUuid: String? = null
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         mutableProfileState.update { oldState ->
-            oldState.copy(
-                state = ProfileState.State.ERROR
-            )
+            oldState.copy(state = ProfileState.State.ERROR)
         }
     }
 
@@ -117,7 +115,7 @@ class ProfileViewModel(
 
     fun onPaymentClicked() {
         mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowPayment
+            profileState + ProfileState.Event.ShowPayment(listOf())
         }
     }
 

@@ -98,7 +98,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
         ) {
             settingsState.settings?.phoneNumber?.let { phoneNumber ->
                 TextCard(
-                    hintStringId = R.string.hint_settings_phone,
+                    hint = stringResource(R.string.hint_settings_phone),
                     label = phoneNumber
                 )
             }

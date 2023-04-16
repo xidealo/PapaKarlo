@@ -1,26 +1,25 @@
 package com.bunbeauty.papakarlo.common.ui.element.card
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
 
 @Composable
 fun TextCard(
     modifier: Modifier = Modifier,
-    @StringRes hintStringId: Int,
+    hint: String,
     label: String,
+    elevated: Boolean = true,
 ) {
     FoodDeliveryCard(
-        modifier = modifier
+        modifier = modifier,
+        elevated = elevated,
     ) {
         Column(
             modifier = Modifier
@@ -31,7 +30,7 @@ fun TextCard(
                 )
         ) {
             Text(
-                text = stringResource(hintStringId),
+                text = hint,
                 style = FoodDeliveryTheme.typography.labelSmall.medium,
                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
             )
@@ -49,7 +48,7 @@ fun TextCard(
 private fun TextCardPreview() {
     FoodDeliveryTheme {
         TextCard(
-            hintStringId = R.string.hint_settings_phone,
+            hint = "Номер телефона",
             label = "+7 999 000-00-00"
         )
     }

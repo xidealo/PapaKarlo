@@ -48,8 +48,13 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.google.android.material.transition.MaterialFadeThrough
@@ -82,7 +87,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 onSettingsClicked = viewModel::onSettingsClicked,
                 onYourAddressesClicked = viewModel::onYourAddressesClicked,
                 onOrderHistoryClicked = viewModel::onOrderHistoryClicked,
-                onPaymentClicked = viewModel::onPaymentClicked,
             )
             LaunchedEffect(profileState.eventList) {
                 handleEventList(profileState.eventList)
@@ -107,7 +111,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
         onOrderHistoryClicked: () -> Unit,
-        onPaymentClicked: () -> Unit,
     ) {
         FoodDeliveryToolbarScreen(
             title = stringResource(R.string.title_profile),
@@ -137,7 +140,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                     onSettingsClick = onSettingsClicked,
                     onYourAddressesClicked = onYourAddressesClicked,
                     onOrderHistoryClicked = onOrderHistoryClicked,
-                    onPaymentClicked = onPaymentClicked,
                 )
                 ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
                 ProfileState.State.LOADING -> LoadingScreen()
@@ -176,8 +178,32 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 ProfileState.Event.OpenOrderList -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
                 }
-                ProfileState.Event.ShowPayment -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.toPaymentBottomSheet())
+                is ProfileState.Event.ShowPayment -> {
+                    PaymentBottomSheet.show(
+                        parentFragmentManager,
+                        PaymentMethodsArgument(
+                            paymentMethodList = event.paymentMethodList.map { paymentMethod ->
+                                PaymentMethodUI(
+                                    uuid = paymentMethod.uuid,
+                                    name = when (paymentMethod.name) {
+                                        PaymentMethodName.CASH -> "Наличные"
+                                        PaymentMethodName.TERMINAL -> "Картой при получении"
+                                        PaymentMethodName.CARD_NUMBER -> "Переводом по номеру карты"
+                                        PaymentMethodName.PHONE_NUMBER -> "Переводом по номеру телефона"
+                                    },
+                                    value = paymentMethod.value?.let { value ->
+                                        paymentMethod.valueToCopy?.let { valueToCopy ->
+                                            PaymentMethodValueUI(
+                                                value = value,
+                                                valueToCopy = valueToCopy,
+                                            )
+                                        }
+                                    }
+                                )
+                            }
+                        )
+                    )
+                    //findNavController().navigateSafe(ProfileFragmentDirections.toPaymentBottomSheet())
                 }
                 ProfileState.Event.ShowFeedback -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toFeedbackBottomSheet())
@@ -204,7 +230,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
         onOrderHistoryClicked: () -> Unit,
-        onPaymentClicked: () -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -216,9 +241,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 OrderItem(orderItem = orderItem) {
                     onLastOrderClicked(orderItem.uuid, orderItem.code)
                 }
-                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace))
+                Spacer(modifier = Modifier.height(16.dp))
             }
-
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_settings,
@@ -226,42 +250,24 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 labelStringId = R.string.action_profile_settings,
                 onClick = onSettingsClick
             )
-
+            Spacer(modifier = Modifier.height(8.dp))
             NavigationIconCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_address,
                 iconDescription = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
                 onClick = onYourAddressesClicked
             )
-
+            Spacer(modifier = Modifier.height(8.dp))
             NavigationIconCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
+                modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_history,
                 iconDescription = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
                 onClick = onOrderHistoryClicked
             )
-
-            NavigationIconCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                iconId = R.drawable.ic_payment,
-                iconDescription = R.string.description_ic_payment,
-                labelStringId = R.string.action_profile_payment,
-                onClick = onPaymentClicked
-            )
-
-            ProfileInfoCards(
-                modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)
-            )
-
-            // Spacer(modifier = Modifier.height())
+            Spacer(modifier = Modifier.height(8.dp))
+            ProfileInfoCards()
         }
     }
 
@@ -316,27 +322,30 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     }
 
     @Composable
-    private fun ProfileInfoCards(modifier: Modifier = Modifier) {
-        Column(modifier = modifier) {
-            NavigationIconCard(
-                modifier = Modifier.fillMaxWidth(),
-                iconId = R.drawable.ic_star,
-                iconDescription = R.string.description_ic_feedback,
-                labelStringId = R.string.title_feedback
-            ) {
-                viewModel.onFeedbackClicked()
-            }
-            NavigationIconCard(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                iconId = R.drawable.ic_info,
-                iconDescription = R.string.description_ic_about,
-                labelStringId = R.string.title_about_app
-            ) {
-                viewModel.onAboutAppClicked()
-            }
-        }
+    private fun ProfileInfoCards() {
+        NavigationIconCard(
+            modifier = Modifier.fillMaxWidth(),
+            iconId = R.drawable.ic_payment,
+            iconDescription = R.string.description_ic_payment,
+            labelStringId = R.string.action_profile_payment,
+            onClick = viewModel::onPaymentClicked
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        NavigationIconCard(
+            modifier = Modifier.fillMaxWidth(),
+            iconId = R.drawable.ic_star,
+            iconDescription = R.string.description_ic_feedback,
+            labelStringId = R.string.title_feedback,
+            onClick = viewModel::onFeedbackClicked
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        NavigationIconCard(
+            modifier = Modifier.fillMaxWidth(),
+            iconId = R.drawable.ic_info,
+            iconDescription = R.string.description_ic_about,
+            labelStringId = R.string.title_about_app,
+            onClick = viewModel::onAboutAppClicked
+        )
     }
 
     @Preview(showSystemUi = true)
@@ -358,11 +367,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         count = "2",
                     ),
                 ),
-                onLastOrderClicked = { s, s1 -> },
+                onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
-                onPaymentClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }
@@ -380,11 +388,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         count = "2",
                     ),
                 ),
-                onLastOrderClicked = { s, s1 -> },
+                onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
-                onPaymentClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }
@@ -402,11 +409,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         count = "2",
                     ),
                 ),
-                onLastOrderClicked = { s, s1 -> },
+                onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
-                onPaymentClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }
@@ -424,11 +430,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         count = "2",
                     ),
                 ),
-                onLastOrderClicked = { s, s1 -> },
+                onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
                 onOrderHistoryClicked = {},
-                onPaymentClicked = {},
             )
         }
     }
@@ -446,11 +451,10 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         count = "2",
                     ),
                 ),
-                onLastOrderClicked = { s, s1 -> },
+                onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
                 onOrderHistoryClicked = {},
-                onPaymentClicked = {},
             )
         }
     }

@@ -13,8 +13,8 @@ fun SimpleCard(
     modifier: Modifier = Modifier,
     text: String,
     elevated: Boolean = true,
-    onClick: () -> Unit,
     enabled: Boolean = true,
+    onClick: () -> Unit = {},
 ) {
     FoodDeliveryCard(
         modifier = modifier,
