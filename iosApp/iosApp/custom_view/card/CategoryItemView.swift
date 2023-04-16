@@ -23,6 +23,10 @@ struct CategoryItemView: View {
                         .padding(.vertical, 6)
                         .padding(.horizontal, 12)
                         .background(AppColor.primary)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                .stroke(AppColor.primary, lineWidth: 2)
+                        )
                         .cornerRadius(16)
                         .foregroundColor(AppColor.onPrimary)
                 }
@@ -35,8 +39,12 @@ struct CategoryItemView: View {
                         .padding(.vertical, 6)
                         .padding(.horizontal, 12)
                         .background(AppColor.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                .stroke(AppColor.onSurfaceVariant, lineWidth: 2)
+                        )
                         .cornerRadius(16)
-                        .foregroundColor(AppColor.onSurface)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                 }
             }
         }

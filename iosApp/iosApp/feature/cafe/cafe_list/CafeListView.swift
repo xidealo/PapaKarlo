@@ -32,10 +32,12 @@ struct CafeListView: View {
                         }.padding(.top, Diems.MEDIUM_PADDING)
                     }
                 }
-            }.background(Color("background")).hiddenNavigationBarStyle()
-        .onAppear(){
-            viewModel.fetchData()
-        }
+            }
+            .background(AppColor.background)
+            .hiddenNavigationBarStyle()
+            .onAppear(){
+                viewModel.fetchData()
+            }
     }
 }
 

@@ -29,12 +29,14 @@ struct CartProductView: View {
                     .padding(.top, 8)
 
                 HStack(spacing:0){
-                    if cartProductItem.oldCost != nil {
-                        Text(String(cartProductItem.oldCost!) + Strings.CURRENCY)
+                    
+                    if let oldCost =  cartProductItem.oldCost {
+                        Text(String(oldCost) + Strings.CURRENCY)
                             .strikethrough()
                             .bodySmall()
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
+                    
                     Text(cartProductItem.newCost)
                         .bodySmall(weight: .bold)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
