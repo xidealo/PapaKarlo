@@ -26,6 +26,7 @@ struct CartProductView: View {
                     .titleSmall(weight: .bold)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
                     .foregroundColor(AppColor.onSurface)
+                    .padding(.top, 8)
 
                 HStack(spacing:0){
                     if cartProductItem.oldCost != nil {

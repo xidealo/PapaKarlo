@@ -12,15 +12,19 @@ struct SelectableElementCard: View {
     let isSelected:Bool
 
     var body: some View {
-        HStack{
+        HStack(spacing: 0){
             Text(text)
-                .foregroundColor(Color("onSurface"))
+                .foregroundColor(AppColor.onSurface)
             Spacer()
             if(isSelected){
-                Image(systemName: "checkmark").foregroundColor(Color("iconColor"))
+                Image(systemName: "checkmark")
+                    .foregroundColor(AppColor.onSurfaceVariant)
             }
-        }.padding().frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color("surface"))
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppColor.surface)
         .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

@@ -80,8 +80,9 @@ struct LoginViewSuccessView: View {
                     .frame(height: 156)
                 
                 Text("titleLoginEnterPhone")
+                    .bodyLarge()
                     .multilineTextAlignment(.center)
-                    .foregroundColor(Color("onSurface"))
+                    .foregroundColor(AppColor.onSurface)
                     .padding(.top, Diems.MEDIUM_PADDING)
                 
                 EditTextView(
@@ -110,7 +111,7 @@ struct LoginViewSuccessView: View {
                 }
             }.padding(Diems.MEDIUM_PADDING)
         }
-        .background(Color("surface"))
+        .background(AppColor.surface)
         .hiddenNavigationBarStyle()
     }
     

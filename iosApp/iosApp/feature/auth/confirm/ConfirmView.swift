@@ -18,7 +18,7 @@ struct ConfirmView: View {
     @Binding var isGoToCreateOrder:Bool
     
     @State var showLoginError:Bool = false
-
+    
     init(auth:AuthManager, phone:String, rootIsActive: Binding<Bool>, isGoToCreateOrder: Binding<Bool>){
         viewModel = ConfirmViewModel(auth: auth)
         self.phone = phone
@@ -53,10 +53,10 @@ struct ConfirmView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Ошибка от сервера, попробуйте позже"),
                 show: $showLoginError,
-                backgroundColor:Color("error"),
-                foregaroundColor: Color("onError")
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
             ), show: $showLoginError)
-     
+        
     }
 }
 
@@ -71,7 +71,7 @@ struct ConfirmViewSuccessView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     let phone:String
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-
+    
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
@@ -80,16 +80,17 @@ struct ConfirmViewSuccessView: View {
                     self.mode.wrappedValue.dismiss()
                 }
             )
-                        
+            
             VStack(spacing:0){
                 
                 Spacer()
-
+                
                 Text(Strings.MSG_CONFIRM_ENTER_CODE + phone)
+                    .bodyLarge()
                     .multilineTextAlignment(.center)
-                    .foregroundColor(Color("onSurface"))
+                    .foregroundColor(AppColor.onSurface)
                     .padding(.bottom, Diems.MEDIUM_PADDING)
-
+                
                 //SmsTextField(count: 6)
                 
                 EditTextView(
@@ -122,8 +123,9 @@ struct ConfirmViewSuccessView: View {
                         ButtonText(text: Strings.ACTION_CONFIRM_GET_CODE)
                     }
                     else{
-                        ButtonText(text: "Запросить код повторно \(timeRemaining) сек.",
-                                   background: Color("disabled")
+                        ButtonText(
+                            text: "Запросить код повторно \(timeRemaining) сек.",
+                            background: AppColor.disabled
                         )
                     }
                     
@@ -131,13 +133,13 @@ struct ConfirmViewSuccessView: View {
             }
             .padding(Diems.MEDIUM_PADDING)
         }
-        .background(Color("surface"))
+        .background(AppColor.surface)
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Неправильный код"),
                 show: $show,
-                backgroundColor:Color("error"),
-                foregaroundColor: Color("onError")
+                backgroundColor: AppColor.error,
+                foregaroundColor: AppColor.onError
             ), show: $show)
         .onReceive(timer){ time in
             if timeRemaining > 0{
