@@ -16,8 +16,8 @@ struct OrderChip: View {
         Text(OrderChip.getStatusName(status: orderStatus))
             .labelSmall()
             .foregroundColor(AppColor.surface)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .background(OrderChip.getColor(status: orderStatus))
             .cornerRadius(12)
     }

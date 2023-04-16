@@ -111,7 +111,6 @@ struct SuccessAddressListView: View {
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
-
                         }
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)

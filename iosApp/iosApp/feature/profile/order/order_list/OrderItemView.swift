@@ -31,7 +31,8 @@ struct OrderItemView<Content: View>: View {
                     .bodySmall()
                     .foregroundColor(AppColor.onSurfaceVariant)
             }.frame(maxWidth:.infinity)
-                .padding(Diems.MEDIUM_PADDING)
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.vertical, 12)
                 .background(AppColor.surface)
                 .cornerRadius(Diems.MEDIUM_RADIUS)
         }
