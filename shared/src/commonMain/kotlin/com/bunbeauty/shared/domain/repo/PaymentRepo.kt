@@ -4,5 +4,5 @@ import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 
 interface PaymentRepo {
 
-    suspend fun getPaymentMethodList(token: String): List<PaymentMethod>
+    suspend fun getPaymentMethodList(): List<PaymentMethod>
 }

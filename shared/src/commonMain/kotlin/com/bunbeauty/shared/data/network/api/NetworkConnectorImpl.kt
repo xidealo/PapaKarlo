@@ -149,7 +149,7 @@ class NetworkConnectorImpl(
         )
     }
 
-    override suspend fun getPaymentMethodList(token: String): ApiResult<List<PaymentMethodServer>> {
+    override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> {
         return getData(
             path = "payment_method",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)

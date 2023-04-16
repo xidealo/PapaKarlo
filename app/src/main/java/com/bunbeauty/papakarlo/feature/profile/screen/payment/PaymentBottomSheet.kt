@@ -90,6 +90,7 @@ private fun PaymentScreen(
                         hint = paymentMethod.name,
                         label = paymentMethod.value.value,
                         iconId = R.drawable.ic_copy,
+                        elevated = false,
                         onClick = {
                             onCopyClick(paymentMethod)
                         }

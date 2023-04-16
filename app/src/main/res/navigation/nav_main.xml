@@ -116,9 +116,6 @@
             android:id="@+id/to_ordersFragment"
             app:destination="@id/orderListFragment" />
         <action
-            android:id="@+id/to_paymentBottomSheet"
-            app:destination="@id/paymentBottomSheet" />
-        <action
             android:id="@+id/to_feedbackBottomSheet"
             app:destination="@id/feedbackBottomSheet" />
         <action
@@ -173,12 +170,6 @@
             android:id="@+id/to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
     </fragment>
-
-    <dialog
-        android:id="@+id/paymentBottomSheet"
-        android:name="com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet"
-        android:label="PaymentBottomSheet"
-        tools:layout="@layout/bottom_sheet_compose" />
 
     <dialog
         android:id="@+id/feedbackBottomSheet"

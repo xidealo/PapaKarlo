@@ -4,7 +4,6 @@ import com.bunbeauty.shared.data.dao.payment_method.IPaymentMethodDao
 import com.bunbeauty.shared.data.mapper.payment.PaymentMethodMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.data.network.api_result_handler.ApiResultHandler
-import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
@@ -19,10 +18,10 @@ class PaymentRepository(
 
     private var paymentMethodListCache: List<PaymentMethod>? = null
 
-    override suspend fun getPaymentMethodList(token: String): List<PaymentMethod> {
+    override suspend fun getPaymentMethodList(): List<PaymentMethod> {
         val cache = paymentMethodListCache
         return if (cache == null) {
-            val paymentMethodList = getRemotePaymentMethodList(token)
+            val paymentMethodList = getRemotePaymentMethodList()
             if (paymentMethodList == null) {
                 getLocalPaymentMethodList()
             } else {
@@ -35,10 +34,10 @@ class PaymentRepository(
         }
     }
 
-    suspend fun getRemotePaymentMethodList(token: String): List<PaymentMethod>? {
-        return networkConnector.getPaymentMethodList(token)
+    suspend fun getRemotePaymentMethodList(): List<PaymentMethod>? {
+        return networkConnector.getPaymentMethodList()
             .getNullableResult { paymentMethodServerList ->
-                paymentMethodServerList.mapNotNull(paymentMethodMapper::toPaymentMethod)
+                paymentMethodServerList.results.mapNotNull(paymentMethodMapper::toPaymentMethod)
             }
     }
 

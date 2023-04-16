@@ -67,6 +67,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     private val viewModel: ProfileViewModel by viewModel()
 
     private val profileUiStateMapper: ProfileUiStateMapper by inject()
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,30 +181,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 }
                 is ProfileState.Event.ShowPayment -> {
                     PaymentBottomSheet.show(
-                        parentFragmentManager,
-                        PaymentMethodsArgument(
-                            paymentMethodList = event.paymentMethodList.map { paymentMethod ->
-                                PaymentMethodUI(
-                                    uuid = paymentMethod.uuid,
-                                    name = when (paymentMethod.name) {
-                                        PaymentMethodName.CASH -> "Наличные"
-                                        PaymentMethodName.TERMINAL -> "Картой при получении"
-                                        PaymentMethodName.CARD_NUMBER -> "Переводом по номеру карты"
-                                        PaymentMethodName.PHONE_NUMBER -> "Переводом по номеру телефона"
-                                    },
-                                    value = paymentMethod.value?.let { value ->
-                                        paymentMethod.valueToCopy?.let { valueToCopy ->
-                                            PaymentMethodValueUI(
-                                                value = value,
-                                                valueToCopy = valueToCopy,
-                                            )
-                                        }
-                                    }
-                                )
-                            }
+                        fragmentManager = parentFragmentManager,
+                        paymentMethodsArgument = PaymentMethodsArgument(
+                            paymentMethodList = paymentMethodUiStateMapper.map(
+                                event.paymentMethodList
+                            )
                         )
                     )
-                    //findNavController().navigateSafe(ProfileFragmentDirections.toPaymentBottomSheet())
                 }
                 ProfileState.Event.ShowFeedback -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toFeedbackBottomSheet())

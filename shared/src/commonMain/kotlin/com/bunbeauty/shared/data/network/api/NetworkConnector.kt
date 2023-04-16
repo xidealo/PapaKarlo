@@ -39,7 +39,7 @@ interface NetworkConnector {
     suspend fun getProfile(token: String): ApiResult<ProfileServer>
     suspend fun getOrderList(token: String, count: Int? = null, uuid: String? = null): ApiResult<ListServer<OrderServer>>
     suspend fun getSettings(token: String): ApiResult<SettingsServer>
-    suspend fun getPaymentMethodList(token: String): ApiResult<List<PaymentMethodServer>>
+    suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
 
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(

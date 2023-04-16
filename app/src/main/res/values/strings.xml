@@ -220,6 +220,10 @@
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
     <string name="msg_payment_methods">Доступные способы оплаты:</string>
+    <string name="msg_payment_cash">Наличные</string>
+    <string name="msg_payment_card">Картой при получении</string>
+    <string name="msg_payment_card_number">Переводом по номеру карты</string>
+    <string name="msg_payment_phone_number">Переводом по номеру телефона</string>
 
     <!-- FEEDBACK -->
     <string name="title_feedback">Отзывы</string>

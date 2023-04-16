@@ -5,8 +5,8 @@ import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.presentation.SharedViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
@@ -21,6 +21,7 @@ class ProfileViewModel(
     private val observeLastOrderUseCase: ObserveLastOrderUseCase,
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
+    private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
@@ -43,22 +44,26 @@ class ProfileViewModel(
         mutableProfileState.update { profileState ->
             profileState.copy(state = ProfileState.State.LOADING)
         }
-        sharedScope.launch {
+        sharedScope.launch(exceptionHandler) {
             mutableProfileState.update { profileState ->
                 if (userInteractor.isUserAuthorize()) {
                     profileState.copy(
                         state = ProfileState.State.AUTHORIZED,
-                        lastOrder = getLastOrderUseCase()
+                        lastOrder = getLastOrderUseCase(),
+                        paymentMethodList = getPaymentMethodListUseCase()
                     )
                 } else {
-                    profileState.copy(state = ProfileState.State.UNAUTHORIZED)
+                    profileState.copy(
+                        state = ProfileState.State.UNAUTHORIZED,
+                        paymentMethodList = getPaymentMethodListUseCase()
+                    )
                 }
             }
         }
     }
 
     fun observeLastOrder() {
-        observeLastOrderJob = sharedScope.launch {
+        observeLastOrderJob = sharedScope.launch(exceptionHandler) {
             val (uuid, lastOrderFlow) = observeLastOrderUseCase()
             orderObservationUuid = uuid
             lastOrderFlow.collectLatest { lightOrder ->
@@ -115,7 +120,7 @@ class ProfileViewModel(
 
     fun onPaymentClicked() {
         mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowPayment(listOf())
+            profileState + ProfileState.Event.ShowPayment(profileState.paymentMethodList)
         }
     }
 

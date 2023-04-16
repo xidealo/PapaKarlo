@@ -21,6 +21,7 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.shared.domain.repo.PaymentRepo
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -130,6 +131,14 @@ fun repositoryModule() = module {
             dataStoreRepo = get(),
             networkConnector = get(),
             settingsMapper = get(),
+        )
+    }
+    single<PaymentRepo> {
+        PaymentRepository(
+            networkConnector = get(),
+            paymentMethodMapper = get(),
+            paymentMethodDao = get(),
+            apiResultHandler = get(),
         )
     }
 }

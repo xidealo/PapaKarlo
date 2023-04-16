@@ -8,6 +8,7 @@ data class ProfileState(
     val lastOrder: LightOrder? = null,
     val state: State = State.LOADING,
     val cartCostAndCount: CartCostAndCount? = null,
+    val paymentMethodList: List<PaymentMethod> = emptyList(),
     val eventList: List<Event> = emptyList(),
 ) {
 
