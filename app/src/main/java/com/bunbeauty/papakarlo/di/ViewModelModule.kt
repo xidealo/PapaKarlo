@@ -9,7 +9,6 @@ import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewMod
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
@@ -156,12 +155,6 @@ fun viewModelModule() = module {
         SplashViewModel(
             updateInteractor = get(),
             cityInteractor = get(),
-        )
-    }
-    viewModel {
-        PaymentViewModel(
-            paymentInteractor = get(),
-            getPaymentInfoUseCase = get(),
         )
     }
 }
