@@ -4,8 +4,6 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
-import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

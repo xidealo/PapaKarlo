@@ -49,12 +49,9 @@ import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
-import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
-import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.shared.domain.model.order.OrderStatus
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.google.android.material.transition.MaterialFadeThrough

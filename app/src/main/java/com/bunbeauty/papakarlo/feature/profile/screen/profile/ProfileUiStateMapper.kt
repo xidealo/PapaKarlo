@@ -24,5 +24,4 @@ class ProfileUiStateMapper(
             state = profileState.state,
         )
     }
-
 }
