@@ -19,8 +19,10 @@ import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliverySnackbarBox
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconTextCard
+import com.bunbeauty.papakarlo.common.ui.element.rememberFoodDeliverySnackbarState
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
@@ -33,17 +35,24 @@ class PaymentBottomSheet : ComposeBottomSheet<Any>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.root.setContentWithTheme {
-            PaymentScreen(
-                paymentMethodList = paymentMethodsArgument.paymentMethodList,
-                onCopyClick = { nameWithCopyableValue ->
-                    nameWithCopyableValue.value?.let { value ->
-                        copyToBuffer(
-                            label = nameWithCopyableValue.name,
-                            text = value.valueToCopy
-                        )
-                    }
-                }
+            val snackbarState = rememberFoodDeliverySnackbarState(
+                stringResource(R.string.common_copied)
             )
+
+            FoodDeliverySnackbarBox(snackbarState) {
+                PaymentScreen(
+                    paymentMethodList = paymentMethodsArgument.paymentMethodList,
+                    onCopyClick = { nameWithCopyableValue ->
+                        nameWithCopyableValue.value?.let { value ->
+                            copyToBuffer(
+                                label = nameWithCopyableValue.name,
+                                text = value.valueToCopy
+                            )
+                            snackbarState.show()
+                        }
+                    }
+                )
+            }
         }
     }
 

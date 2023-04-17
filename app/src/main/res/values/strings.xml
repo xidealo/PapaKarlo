@@ -22,6 +22,7 @@
     <string name="common_error">Не удается загрузить данные</string>
     <string name="internet_error">Проверьте соединение и повторите попытку</string>
     <string name="description_company_logo">Лого компании</string>
+    <string name="common_copied">Скопировано!</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -120,8 +121,6 @@
 
     <!-- CAFE LIST -->
     <string name="title_cafe_list">Рестораны</string>
-    <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
-    <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="error_cafe_list_loading">Не удалось загрузить список ресторанов</string>
 
     <!--CAFE-->
