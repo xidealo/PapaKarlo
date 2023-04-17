@@ -51,8 +51,4 @@ class PaymentRepository(
             paymentMethodList.map(paymentMethodMapper::toPaymentMethodEntity)
         )
     }
-
-    suspend fun getPayment(token: String): Payment? {
-        return null
-    }
 }

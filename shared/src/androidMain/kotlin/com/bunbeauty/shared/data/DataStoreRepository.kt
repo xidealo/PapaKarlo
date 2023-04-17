@@ -26,7 +26,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = TOKEN_DATA_STORE)
     private val Context.deliveryDataStore: DataStore<Preferences> by preferencesDataStore(name = DELIVERY_DATA_STORE)
-    private val Context.paymentDataStore: DataStore<Preferences> by preferencesDataStore(name = PAYMENT_DATA_STORE)
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
@@ -67,28 +66,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         context.deliveryDataStore.edit {
             it[DELIVERY_COST_KEY] = delivery.cost
             it[FOR_FREE_DELIVERY_KEY] = delivery.forFree
-        }
-    }
-
-    actual override val payment: Flow<Payment?> = context.paymentDataStore.data.map {
-        Payment(
-            phoneNumber = it[PAYMENT_PHONE_NUMBER_KEY],
-            cardNumber = it[PAYMENT_CARD_NUMBER_KEY],
-        )
-    }
-
-    actual override suspend fun getPayment(): Payment? {
-        return payment.firstOrNull()
-    }
-
-    actual override suspend fun savePayment(payment: Payment) {
-        context.paymentDataStore.edit {
-            payment.phoneNumber?.let { phoneNumber ->
-                it[PAYMENT_PHONE_NUMBER_KEY] = phoneNumber
-            }
-            payment.cardNumber?.let { cardNumber ->
-                it[PAYMENT_CARD_NUMBER_KEY] = cardNumber
-            }
         }
     }
 
@@ -192,12 +169,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         private const val FOR_FREE_DELIVERY = "for free delivery"
         private val DELIVERY_COST_KEY = intPreferencesKey(DELIVERY_COST)
         private val FOR_FREE_DELIVERY_KEY = intPreferencesKey(FOR_FREE_DELIVERY)
-
-        private const val PAYMENT_DATA_STORE = "payment data store"
-        private const val PAYMENT_PHONE_NUMBER = "payment phone number"
-        private const val PAYMENT_CARD_NUMBER = "payment card number"
-        private val PAYMENT_PHONE_NUMBER_KEY = stringPreferencesKey(PAYMENT_PHONE_NUMBER)
-        private val PAYMENT_CARD_NUMBER_KEY = stringPreferencesKey(PAYMENT_CARD_NUMBER)
 
         private const val SETTINGS_DATA_STORE = "settings data store"
         private const val SETTINGS_USER_UUID = "settings user uuid"

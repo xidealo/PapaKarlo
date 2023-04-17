@@ -24,10 +24,6 @@ expect class DataStoreRepository: DataStoreRepo, KoinComponent {
     override suspend fun getDelivery(): Delivery?
     override suspend fun saveDelivery(delivery: Delivery)
 
-    override val payment: Flow<Payment?>
-    override suspend fun getPayment(): Payment?
-    override suspend fun savePayment(payment: Payment)
-
     override val settings: Flow<Settings?>
     override suspend fun getSettings(): Settings?
     override suspend fun saveSettings(settings: Settings)
