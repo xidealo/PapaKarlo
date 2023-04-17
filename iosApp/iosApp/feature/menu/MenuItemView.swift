@@ -30,21 +30,17 @@ struct MenuItemView: View {
                 )
         ){
             VStack(spacing:0){
-                ZStack{
-                    KFImage(URL(string: menuProductItem.photoLink))
-                        .resizable()
-                        .frame(
-                            maxWidth: 186,
-                            maxHeight: 110
-                        )
-                        .aspectRatio(contentMode: .fill)
-                        
-                }
-                
+                KFImage(
+                    URL(string: menuProductItem.photoLink)
+                )
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height:110)
                 
                 VStack(spacing:0){
                     Text(menuProductItem.name)
                         .titleSmall(weight: .bold)
+                        .lineLimit(1)
                         .frame(maxWidth:.infinity, alignment: .leading)
                         .foregroundColor(AppColor.onSurface)
                         .padding(.top, Diems.SMALL_PADDING)
@@ -64,7 +60,7 @@ struct MenuItemView: View {
                             .frame(maxWidth:.infinity, alignment: .topLeading)
                             .foregroundColor(AppColor.onSurface)
                     }
-                    Spacer()
+                    .padding(.top, 4)
                 }
                 .padding(.top, 8)
                 .padding(.horizontal, 8)
@@ -72,18 +68,19 @@ struct MenuItemView: View {
                 Button(action: action) {
                     Text(Strings.ACTION_MENU_PRODUCT_WANT)
                         .labelLarge()
-                        .frame(maxWidth:.infinity, maxHeight:40)
+                        .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
                         .foregroundColor(AppColor.primary)
                         .overlay(
                             RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
                                 .stroke(AppColor.primary, lineWidth: 2)
                         )
                         .padding(.horizontal, 8)
-                        .padding(.bottom, 8)
                 }
+                .padding(.top, 8)
+                .padding(.bottom, 8)
                 
             }
-            .frame(maxWidth:.infinity, alignment: .topLeading)
+            .frame(maxWidth: .infinity)
             .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
             

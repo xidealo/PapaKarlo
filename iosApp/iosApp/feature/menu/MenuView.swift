@@ -20,8 +20,8 @@ struct MenuView: View {
     @Binding var showOrderCreated:Bool
     
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
       ]
     
     var body: some View {
@@ -65,7 +65,6 @@ struct MenuView: View {
                                     .padding(.top, 16)
                                     ){
                                         ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                            
                                             MenuItemView(
                                                 menuProductItem: menuProductItem,
                                                 isRootActive : $isRootActive,
