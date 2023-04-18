@@ -3,7 +3,6 @@ package com.bunbeauty.shared.data.repository
 import com.bunbeauty.shared.data.dao.order.IOrderDao
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
-import com.bunbeauty.shared.data.network.api_result_handler.ApiResultHandler
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
 import com.bunbeauty.shared.domain.mapFlow
@@ -13,6 +12,7 @@ import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.shared.extension.getNullableResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -22,9 +22,7 @@ class OrderRepository(
     private val orderDao: IOrderDao,
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
-    private val apiResultHandler: ApiResultHandler,
-) : OrderRepo,
-    ApiResultHandler by apiResultHandler {
+) : OrderRepo {
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)
