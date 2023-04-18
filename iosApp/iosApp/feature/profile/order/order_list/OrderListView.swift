@@ -45,7 +45,8 @@ struct OrderListView: View {
                         code: lightOrder.code,
                         dateTime: dateUtil.getDateTimeString(dateTime: lightOrder.dateTime)
                     )
-                }))
+                })
+            )
             default:
                 EmptyView()
             }

@@ -37,3 +37,12 @@
 //order list
 "emptyOrderListTitleProfile" = "Order list is empty";
 "emptyOrderListSecondProfile" = "Your orders will be displayed here";
+
+//cafe list
+"msg_cafe_open" = "Open";
+"msg_cafe_close_soon"= "Open. Will be closed ";
+"msg_cafe_closed"= "Closed";
+"msg_cafe_minutes" = "min";
+"msg_cafe_minute" = "min";
+"msg_cafe_minutes_234" = "min";
+"msg_cafe_minutes" = "min";

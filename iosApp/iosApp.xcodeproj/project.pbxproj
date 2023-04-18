@@ -52,11 +52,9 @@
 		0232348F287879EF0048CF39 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232344A287879EF0048CF39 /* ProfileView.swift */; };
 		02323490287879EF0048CF39 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232344B287879EF0048CF39 /* AboutAppView.swift */; };
 		02323492287879EF0048CF39 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232344D287879EF0048CF39 /* FeedbackView.swift */; };
-		02323494287879EF0048CF39 /* CafeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323451287879EF0048CF39 /* CafeViewState.swift */; };
 		02323495287879EF0048CF39 /* CafeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323452287879EF0048CF39 /* CafeItemView.swift */; };
 		02323496287879EF0048CF39 /* CafeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323453287879EF0048CF39 /* CafeItem.swift */; };
 		02323497287879EF0048CF39 /* CafeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323454287879EF0048CF39 /* CafeListView.swift */; };
-		02323498287879EF0048CF39 /* CafeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323455287879EF0048CF39 /* CafeViewModel.swift */; };
 		02323499287879EF0048CF39 /* CafeOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323457287879EF0048CF39 /* CafeOptionsView.swift */; };
 		0232349A287879EF0048CF39 /* AddressItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232345A287879EF0048CF39 /* AddressItemView.swift */; };
 		0232349B287879EF0048CF39 /* UserAddressListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232345B287879EF0048CF39 /* UserAddressListView.swift */; };
@@ -132,7 +130,6 @@
 		02ADC34129D9D0880062A141 /* ToolbarWithCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220B1012953A6E000CD93B4 /* ToolbarWithCartView.swift */; };
 		02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323431287879EF0048CF39 /* SelectCityView.swift */; };
 		02ADC34329D9D0880062A141 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023E247428BFE49200F19676 /* CommentView.swift */; };
-		02ADC34429D9D0880062A141 /* CafeViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323451287879EF0048CF39 /* CafeViewState.swift */; };
 		02ADC34529D9D0880062A141 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323468287879EF0048CF39 /* MenuView.swift */; };
 		02ADC34629D9D0880062A141 /* CafeItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323452287879EF0048CF39 /* CafeItemView.swift */; };
 		02ADC34729D9D0880062A141 /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234BE28787A180048CF39 /* ToolbarView.swift */; };
@@ -192,7 +189,6 @@
 		02ADC37D29D9D0880062A141 /* ChangeCityViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024CBDDA28E9D3BE002A39DF /* ChangeCityViewState.swift */; };
 		02ADC37E29D9D0880062A141 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0232343A287879EF0048CF39 /* AuthManager.swift */; };
 		02ADC37F29D9D0880062A141 /* PlaceholderText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234C428787A180048CF39 /* PlaceholderText.swift */; };
-		02ADC38029D9D0880062A141 /* CafeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323455287879EF0048CF39 /* CafeViewModel.swift */; };
 		02ADC38129D9D0880062A141 /* ChangeCityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024CBDD728E9D2F1002A39DF /* ChangeCityViewModel.swift */; };
 		02ADC38229D9D0880062A141 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234B128787A180048CF39 /* Switcher.swift */; };
 		02ADC38329D9D0880062A141 /* EditTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023234BF28787A180048CF39 /* EditTextView.swift */; };
@@ -287,11 +283,9 @@
 		0232344A287879EF0048CF39 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		0232344B287879EF0048CF39 /* AboutAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		0232344D287879EF0048CF39 /* FeedbackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
-		02323451287879EF0048CF39 /* CafeViewState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeViewState.swift; sourceTree = "<group>"; };
 		02323452287879EF0048CF39 /* CafeItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeItemView.swift; sourceTree = "<group>"; };
 		02323453287879EF0048CF39 /* CafeItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeItem.swift; sourceTree = "<group>"; };
 		02323454287879EF0048CF39 /* CafeListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeListView.swift; sourceTree = "<group>"; };
-		02323455287879EF0048CF39 /* CafeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeViewModel.swift; sourceTree = "<group>"; };
 		02323457287879EF0048CF39 /* CafeOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CafeOptionsView.swift; sourceTree = "<group>"; };
 		0232345A287879EF0048CF39 /* AddressItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressItemView.swift; sourceTree = "<group>"; };
 		0232345B287879EF0048CF39 /* UserAddressListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAddressListView.swift; sourceTree = "<group>"; };
@@ -556,11 +550,9 @@
 		02323450287879EF0048CF39 /* cafe_list */ = {
 			isa = PBXGroup;
 			children = (
-				02323451287879EF0048CF39 /* CafeViewState.swift */,
 				02323452287879EF0048CF39 /* CafeItemView.swift */,
 				02323453287879EF0048CF39 /* CafeItem.swift */,
 				02323454287879EF0048CF39 /* CafeListView.swift */,
-				02323455287879EF0048CF39 /* CafeViewModel.swift */,
 			);
 			path = cafe_list;
 			sourceTree = "<group>";
@@ -1070,7 +1062,6 @@
 				0294FD7E29E35E8300568A10 /* AppTypography.swift in Sources */,
 				02ADC34229D9D0880062A141 /* SelectCityView.swift in Sources */,
 				02ADC34329D9D0880062A141 /* CommentView.swift in Sources */,
-				02ADC34429D9D0880062A141 /* CafeViewState.swift in Sources */,
 				02ADC34529D9D0880062A141 /* MenuView.swift in Sources */,
 				02ADC34629D9D0880062A141 /* CafeItemView.swift in Sources */,
 				02ADC34729D9D0880062A141 /* ToolbarView.swift in Sources */,
@@ -1131,7 +1122,6 @@
 				02ADC37D29D9D0880062A141 /* ChangeCityViewState.swift in Sources */,
 				02ADC37E29D9D0880062A141 /* AuthManager.swift in Sources */,
 				02ADC37F29D9D0880062A141 /* PlaceholderText.swift in Sources */,
-				02ADC38029D9D0880062A141 /* CafeViewModel.swift in Sources */,
 				02ADC38129D9D0880062A141 /* ChangeCityViewModel.swift in Sources */,
 				02ADC38229D9D0880062A141 /* Switcher.swift in Sources */,
 				02ADC38329D9D0880062A141 /* EditTextView.swift in Sources */,
@@ -1186,7 +1176,6 @@
 				0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */,
 				0232347F287879EF0048CF39 /* SelectCityView.swift in Sources */,
 				023E247528BFE49200F19676 /* CommentView.swift in Sources */,
-				02323494287879EF0048CF39 /* CafeViewState.swift in Sources */,
 				023234A5287879EF0048CF39 /* MenuView.swift in Sources */,
 				02323495287879EF0048CF39 /* CafeItemView.swift in Sources */,
 				023234D328787A180048CF39 /* ToolbarView.swift in Sources */,
@@ -1247,7 +1236,6 @@
 				024CBDDB28E9D3BE002A39DF /* ChangeCityViewState.swift in Sources */,
 				02323485287879EF0048CF39 /* AuthManager.swift in Sources */,
 				023234D828787A180048CF39 /* PlaceholderText.swift in Sources */,
-				02323498287879EF0048CF39 /* CafeViewModel.swift in Sources */,
 				024CBDD828E9D2F1002A39DF /* ChangeCityViewModel.swift in Sources */,
 				023234C628787A180048CF39 /* Switcher.swift in Sources */,
 				023234D428787A180048CF39 /* EditTextView.swift in Sources */,
