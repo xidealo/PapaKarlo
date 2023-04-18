@@ -12,8 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 @Composable
 fun CafeItem(
@@ -43,11 +42,13 @@ fun CafeItem(
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
                     color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                 )
+
                 Text(
-                    modifier = Modifier.padding(start = FoodDeliveryTheme.dimensions.smallSpace),
-                    text = cafeItem.isOpenMessage,
+                    modifier = Modifier
+                        .padding(start = FoodDeliveryTheme.dimensions.smallSpace),
+                    text = getCafeStatusText(cafeItem.cafeOpenState),
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
-                    color = getCafeStatusColor(cafeItem.cafeStatus),
+                    color = getCafeStatusColor(cafeItem.cafeOpenState),
                 )
             }
         }
@@ -63,8 +64,7 @@ private fun CafeItemOpenPreview() {
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                isOpenMessage = "Открыто",
-                cafeStatus = CafeStatus.OPEN,
+                cafeOpenState =  CafeItem.CafeOpenState.Opened,
             ),
             onClick = {},
         )
@@ -80,8 +80,7 @@ private fun CafeItemCloseSoonPreview() {
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                isOpenMessage = "Открыто. Закроется через 30 минут",
-                cafeStatus = CafeStatus.CLOSE_SOON,
+                cafeOpenState =CafeItem.CafeOpenState.CloseSoon(30),
             ),
             onClick = {},
         )
@@ -97,8 +96,7 @@ private fun CafeItemClosedPreview() {
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                isOpenMessage = "Закрыто",
-                cafeStatus = CafeStatus.CLOSED,
+                cafeOpenState = CafeItem.CafeOpenState.Closed,
             ),
             onClick = {},
         )

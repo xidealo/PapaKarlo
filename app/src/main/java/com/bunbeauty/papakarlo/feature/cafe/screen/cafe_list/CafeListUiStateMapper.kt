@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
 
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 
 class CafeListUiStateMapper(
     private val stringUtil: IStringUtil,

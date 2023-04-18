@@ -11,8 +11,7 @@ struct CafeItem:Identifiable {
     let id:String
     let address:String
     let workingHours:String
-    let isOpenMessage:String
-    let isOpenColor:Color
+    let isOpen:Bool
     let phone:String
     let latitude:Float
     let longitude:Float

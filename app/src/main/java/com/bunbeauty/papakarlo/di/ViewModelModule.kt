@@ -3,7 +3,7 @@ package com.bunbeauty.papakarlo.di
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list.CafeListViewModel
+import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewModel
 import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel

@@ -8,9 +8,9 @@ import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
 import com.bunbeauty.shared.domain.model.cafe.Cafe
 import com.bunbeauty.shared.domain.model.cafe.CafeAddress
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -51,15 +51,17 @@ class CafeInteractor(
         }.asCommonFlow()
     }
 
-    override suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeStatus {
+    override suspend fun getCafeStatus(cafe: Cafe, timeZone: String): CafeItem.CafeOpenState {
         return getCurrentMinuteOfDay(timeZone).let { minuteOfDay ->
             if (isClosed(cafe.fromTime, cafe.toTime, minuteOfDay)) {
-                CafeStatus.CLOSED
+                CafeItem.CafeOpenState.Closed
             } else {
                 if (isCloseSoon(cafe.toTime, minuteOfDay)) {
-                    CafeStatus.CLOSE_SOON
+                    CafeItem.CafeOpenState.CloseSoon(
+                        time = getCloseIn(cafe, timeZone) ?: 0
+                    )
                 } else {
-                    CafeStatus.OPEN
+                    CafeItem.CafeOpenState.Opened
                 }
             }
         }

@@ -1,6 +1,5 @@
-package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
+package com.bunbeauty.shared.presentation.cafe_list
 
-import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 
 data class CafeListState(

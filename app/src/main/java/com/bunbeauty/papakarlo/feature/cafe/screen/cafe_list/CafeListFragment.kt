@@ -18,7 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
@@ -27,19 +27,20 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
+import com.bunbeauty.shared.presentation.cafe_list.CafeListState
+import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
+class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
 
     override val viewBinding by viewBinding(FragmentComposeBinding::bind)
-    override val viewModel: CafeListViewModel by viewModel()
+    val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,22 +145,19 @@ class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            isOpenMessage = "Открыто",
-                            cafeStatus = CafeStatus.OPEN,
+                            cafeOpenState = CafeItem.CafeOpenState.Opened,
                         ),
                         CafeItem(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            isOpenMessage = "Открыто. Закроется через 30 минут",
-                            cafeStatus = CafeStatus.CLOSE_SOON,
+                            cafeOpenState = CafeItem.CafeOpenState.CloseSoon(30),
                         ),
                         CafeItem(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            isOpenMessage = "Закрыто",
-                            cafeStatus = CafeStatus.CLOSED,
+                            cafeOpenState =  CafeItem.CafeOpenState.Closed,
                         )
                     ),
                     state = CafeListState.State.Success,

@@ -22,26 +22,34 @@ class CafeViewModel: ObservableObject {
     
     func fetchData(){
         print("CafeViewModel: fetch")
-
+        
         (cafeViewState.copy() as! CafeViewState).apply { newState in
             newState.isLoading = true
             cafeViewState = newState
         }
         
         iosComponent.provideGetCafeListUseCase().invoke { cafeList, error in
-            
-            print("In cafe callback")
-
             if(error != nil){
                 print(error ?? "Nil error on cafeList")
             }
             
-            self.cafeViewState = CafeViewState(isLoading: false, cafeItemList: cafeList?.map({ cafe in
-                let fromTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.fromTime))
-                let toTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.toTime))
-                
-                return CafeItem(id: cafe.uuid, address: cafe.address, workingHours: fromTime + Constants.init().WORKING_HOURS_DIVIDER + toTime, isOpenMessage: "", isOpenColor: Color.green, phone: cafe.phone, latitude: Float(cafe.latitude), longitude: Float(cafe.longitude))
-            }) ?? [])
+            self.cafeViewState = CafeViewState(isLoading: false, cafeItemList: cafeList?.map(
+                { cafe in
+                    let fromTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.fromTime))
+                    let toTime = iosComponent.provideCafeInteractor().getCafeTime(daySeconds: (cafe.toTime))
+                    
+                    return CafeItem(
+                        id: cafe.uuid,
+                        address: cafe.address,
+                        workingHours: fromTime + " - " + toTime,
+                        isOpenMessage: "",
+                        isOpenColor: Color.green,
+                        phone: cafe.phone,
+                        latitude: Float(cafe.latitude),
+                        longitude: Float(cafe.longitude)
+                    )
+                }) ?? []
+            )
         }
     }
     
