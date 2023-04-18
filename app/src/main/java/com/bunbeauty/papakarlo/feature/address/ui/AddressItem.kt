@@ -29,7 +29,7 @@ fun AddressItem(
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
         onClick = onClick,
-        enabled = isClickable,
+        clickable = isClickable,
         elevated = elevated
     ) {
         Row(

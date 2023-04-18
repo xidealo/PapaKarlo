@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -86,13 +85,16 @@ private fun PaymentScreen(
             text = stringResource(R.string.msg_payment_methods),
             style = FoodDeliveryTheme.typography.bodyMedium
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Column(
+            modifier = Modifier.padding(top = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             paymentMethodList.forEach { paymentMethod ->
                 if (paymentMethod.value == null) {
                     SimpleCard(
                         text = paymentMethod.name,
-                        enabled = false
+                        elevated = false,
+                        clickable = false,
                     )
                 } else {
                     StartIconTextCard(

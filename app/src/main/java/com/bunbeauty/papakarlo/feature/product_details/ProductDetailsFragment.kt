@@ -135,7 +135,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                     .verticalScroll(rememberScrollState())
             ) {
                 ProductCard(menuProductUi)
-                Spacer(modifier = Modifier.height(72.dp))
+                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
             }
         }
     }

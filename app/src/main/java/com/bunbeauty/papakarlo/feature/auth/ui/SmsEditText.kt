@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth.ui
 
+import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -49,14 +51,14 @@ fun SmsEditText(
     var isFilled: Boolean by remember {
         mutableStateOf(false)
     }
-    Row(modifier = modifier) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = spacedBy(8.dp),
+    ) {
         CompositionLocalProvider(
             LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors
         ) {
             repeat(smsCodeLength) { i ->
-                if (i > 0) {
-                    Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.smallSpace))
-                }
                 SmsDigitCell(
                     modifier = Modifier.weight(1f),
                     value = enteredNumbers[i],

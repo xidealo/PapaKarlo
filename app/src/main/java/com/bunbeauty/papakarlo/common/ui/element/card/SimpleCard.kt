@@ -13,14 +13,14 @@ fun SimpleCard(
     modifier: Modifier = Modifier,
     text: String,
     elevated: Boolean = true,
-    enabled: Boolean = true,
     onClick: () -> Unit = {},
+    clickable: Boolean = true,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
         onClick = onClick,
-        enabled = enabled,
+        clickable = clickable,
     ) {
         OverflowingText(
             modifier = Modifier

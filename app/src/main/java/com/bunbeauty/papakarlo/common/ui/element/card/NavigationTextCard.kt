@@ -22,12 +22,12 @@ fun NavigationTextCard(
     modifier: Modifier = Modifier,
     @StringRes hintStringId: Int,
     label: String?,
-    isClickable: Boolean = true,
+    clickable: Boolean = true,
     onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,
-        enabled = isClickable,
+        clickable = clickable,
         onClick = onClick
     ) {
         Row(

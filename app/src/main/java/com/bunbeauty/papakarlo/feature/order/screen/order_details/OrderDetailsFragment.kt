@@ -175,9 +175,10 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                         info = orderInfo.dateTime,
                     )
                     orderInfo.deferredTime?.let { deferredTime ->
-                        Spacer(modifier = Modifier.width(16.dp))
                         OrderInfoTextColumn(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .weight(1f),
                             hint = stringResource(id = orderInfo.deferredTimeHintId),
                             info = deferredTime,
                         )
@@ -214,7 +215,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
                 orderDetailsUi.deliveryCost?.let { deliveryCost ->
-                    Row {
+                    Row(modifier = Modifier.padding(bottom = 8.dp)) {
                         Text(
                             text = stringResource(R.string.msg_order_details_delivery_cost),
                             style = FoodDeliveryTheme.typography.bodyMedium,
@@ -229,7 +230,6 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
                             textAlign = TextAlign.End
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
                 }
                 Row(modifier = Modifier.fillMaxWidth()) {
                     Text(

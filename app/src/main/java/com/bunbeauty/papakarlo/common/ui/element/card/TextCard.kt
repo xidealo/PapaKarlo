@@ -20,6 +20,7 @@ fun TextCard(
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
+        clickable = false,
     ) {
         Column(
             modifier = Modifier
@@ -43,7 +44,7 @@ fun TextCard(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun TextCardPreview() {
     FoodDeliveryTheme {

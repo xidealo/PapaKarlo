@@ -52,8 +52,7 @@ fun StartIconTextCard(
                 tint = iconTint,
                 contentDescription = iconDescription
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
+            Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = hint,
                     style = FoodDeliveryTheme.typography.labelSmall.medium,

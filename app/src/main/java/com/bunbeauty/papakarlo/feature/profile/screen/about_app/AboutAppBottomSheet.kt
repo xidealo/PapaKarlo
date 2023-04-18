@@ -2,8 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.screen.about_app
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,15 +33,15 @@ private fun AboutAppScreen() {
         StartIconCard(
             label = stringResource(R.string.msg_about_app_developer),
             iconId = R.drawable.ic_bb,
-            enabled = false,
+            clickable = false,
             elevated = false,
             iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
         )
-        Spacer(modifier = Modifier.height(8.dp))
         StartIconCard(
+            modifier = Modifier.padding(top = 8.dp),
             label = stringResource(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
             iconId = R.drawable.ic_version,
-            enabled = false,
+            clickable = false,
             elevated = false,
         )
     }

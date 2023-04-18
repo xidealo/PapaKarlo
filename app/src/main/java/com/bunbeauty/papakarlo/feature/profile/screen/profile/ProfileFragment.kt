@@ -219,10 +219,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             profile.orderItem?.let { orderItem ->
-                OrderItem(orderItem = orderItem) {
-                    onLastOrderClicked(orderItem.uuid, orderItem.code)
-                }
-                Spacer(modifier = Modifier.height(16.dp))
+                OrderItem(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    orderItem = orderItem,
+                    onClick = {
+                        onLastOrderClicked(orderItem.uuid, orderItem.code)
+                    }
+                )
             }
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
@@ -231,24 +234,25 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                 labelStringId = R.string.action_profile_settings,
                 onClick = onSettingsClick
             )
-            Spacer(modifier = Modifier.height(8.dp))
             NavigationIconCard(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 iconId = R.drawable.ic_address,
                 iconDescription = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
                 onClick = onYourAddressesClicked
             )
-            Spacer(modifier = Modifier.height(8.dp))
             NavigationIconCard(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 iconId = R.drawable.ic_history,
                 iconDescription = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
                 onClick = onOrderHistoryClicked
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            ProfileInfoCards()
+            ProfileInfoCards(modifier = Modifier.padding(top = 8.dp))
         }
     }
 
@@ -303,30 +307,34 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
     }
 
     @Composable
-    private fun ProfileInfoCards() {
-        NavigationIconCard(
-            modifier = Modifier.fillMaxWidth(),
-            iconId = R.drawable.ic_payment,
-            iconDescription = R.string.description_ic_payment,
-            labelStringId = R.string.action_profile_payment,
-            onClick = viewModel::onPaymentClicked
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        NavigationIconCard(
-            modifier = Modifier.fillMaxWidth(),
-            iconId = R.drawable.ic_star,
-            iconDescription = R.string.description_ic_feedback,
-            labelStringId = R.string.title_feedback,
-            onClick = viewModel::onFeedbackClicked
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        NavigationIconCard(
-            modifier = Modifier.fillMaxWidth(),
-            iconId = R.drawable.ic_info,
-            iconDescription = R.string.description_ic_about,
-            labelStringId = R.string.title_about_app,
-            onClick = viewModel::onAboutAppClicked
-        )
+    private fun ProfileInfoCards(modifier: Modifier = Modifier) {
+        Column(modifier = modifier) {
+            NavigationIconCard(
+                modifier = Modifier.fillMaxWidth(),
+                iconId = R.drawable.ic_payment,
+                iconDescription = R.string.description_ic_payment,
+                labelStringId = R.string.action_profile_payment,
+                onClick = viewModel::onPaymentClicked
+            )
+            NavigationIconCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                iconId = R.drawable.ic_star,
+                iconDescription = R.string.description_ic_feedback,
+                labelStringId = R.string.title_feedback,
+                onClick = viewModel::onFeedbackClicked
+            )
+            NavigationIconCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                iconId = R.drawable.ic_info,
+                iconDescription = R.string.description_ic_about,
+                labelStringId = R.string.title_about_app,
+                onClick = viewModel::onAboutAppClicked
+            )
+        }
     }
 
     @Preview(showSystemUi = true)
