@@ -21,7 +21,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class GetLastOrderUseCaseTest {
+internal class GetLastOrderUseCaseTest {
 
     @MockK(relaxed = true)
     private lateinit var orderRepo: OrderRepo

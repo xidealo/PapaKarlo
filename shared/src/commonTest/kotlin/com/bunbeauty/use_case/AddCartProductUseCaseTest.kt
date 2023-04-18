@@ -1,23 +1,30 @@
+package com.bunbeauty.use_case
+
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class AddCartProductUseCaseTest {
+
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class AddCartProductUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()
     private val menuProductUuid = "menu_product_uuid"
 
     @Test
-    fun `invoke should return false when cart is full`() = runBlocking {
+    fun `invoke should return false when cart is full`() = runTest {
         // Given
         val useCase = AddCartProductUseCase(cartProductRepo)
-        coEvery { cartProductRepo.getCartProductList() } returns generateCartProducts(CART_PRODUCT_LIMIT)
+        coEvery { cartProductRepo.getCartProductList() } returns generateCartProducts(
+            CART_PRODUCT_LIMIT
+        )
 
         // When
         val result = useCase(menuProductUuid)
@@ -27,7 +34,7 @@ class AddCartProductUseCaseTest {
     }
 
     @Test
-    fun `invoke should save new cart product when product is not in cart`() = runBlocking {
+    fun `invoke should save new cart product when product is not in cart`() = runTest {
         // Given
         val useCase = AddCartProductUseCase(cartProductRepo)
         coEvery { cartProductRepo.getCartProductList() } returns emptyList()
@@ -42,7 +49,7 @@ class AddCartProductUseCaseTest {
     }
 
     @Test
-    fun `invoke should update cart product count when product is in cart`() = runBlocking {
+    fun `invoke should update cart product count when product is in cart`() = runTest {
         // Given
         val useCase = AddCartProductUseCase(cartProductRepo)
         val initialCount = 2
