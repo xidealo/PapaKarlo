@@ -14,6 +14,7 @@ import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
+import com.bunbeauty.shared.data.network.model.PaymentMethodServer
 import com.bunbeauty.shared.data.network.model.PaymentServer
 import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
@@ -27,6 +28,7 @@ import com.bunbeauty.shared.data.network.model.profile.get.ProfileServer
 import com.bunbeauty.shared.data.network.model.profile.patch.PatchUserServer
 import com.bunbeauty.shared.data.network.socket.SocketService
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
@@ -36,16 +38,12 @@ import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.path
 import kotlinx.coroutines.flow.Flow
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 
 class NetworkConnectorImpl(
     private val client: HttpClient,
-    private val json: Json,
     private val socketService: SocketService
 ) : KoinComponent, NetworkConnector {
 
@@ -53,7 +51,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getForceUpdateVersion(): ApiResult<ForceUpdateVersionServer> {
         return getData(
-            serializer = ForceUpdateVersionServer.serializer(),
             path = "force_update_version",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
@@ -61,7 +58,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getCategoryList(): ApiResult<ListServer<CategoryServer>> {
         return getData(
-            serializer = ListServer.serializer(CategoryServer.serializer()),
             path = "category",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
@@ -69,7 +65,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getMenuProductList(): ApiResult<ListServer<MenuProductServer>> {
         return getData(
-            serializer = ListServer.serializer(MenuProductServer.serializer()),
             path = "menu_product",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
@@ -77,7 +72,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getCityList(): ApiResult<ListServer<CityServer>> {
         return getData(
-            serializer = ListServer.serializer(CityServer.serializer()),
             path = "city",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
@@ -85,7 +79,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getCafeListByCityUuid(cityUuid: String): ApiResult<ListServer<CafeServer>> {
         return getData(
-            serializer = ListServer.serializer(CafeServer.serializer()),
             path = "cafe",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
@@ -93,7 +86,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getStreetListByCityUuid(cityUuid: String): ApiResult<ListServer<StreetServer>> {
         return getData(
-            serializer = ListServer.serializer(StreetServer.serializer()),
             path = "street",
             parameters = hashMapOf(CITY_UUID_PARAMETER to cityUuid)
         )
@@ -101,7 +93,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getDelivery(): ApiResult<DeliveryServer> {
         return getData(
-            serializer = DeliveryServer.serializer(),
             path = "delivery",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
@@ -113,7 +104,6 @@ class NetworkConnectorImpl(
     ): ApiResult<ListServer<AddressServer>> {
         return getData(
             path = "address",
-            serializer = ListServer.serializer(AddressServer.serializer()),
             parameters = mapOf(CITY_UUID_PARAMETER to cityUuid),
             token = token
         )
@@ -121,7 +111,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getPayment(token: String): ApiResult<PaymentServer> {
         return getData(
-            serializer = PaymentServer.serializer(),
             path = "payment",
             token = token
         )
@@ -129,7 +118,6 @@ class NetworkConnectorImpl(
 
     override suspend fun getProfile(token: String): ApiResult<ProfileServer> {
         return getData(
-            serializer = ProfileServer.serializer(),
             path = "client",
             token = token
         )
@@ -141,7 +129,6 @@ class NetworkConnectorImpl(
         uuid: String?,
     ): ApiResult<ListServer<OrderServer>> {
         return getData(
-            serializer = ListServer.serializer(OrderServer.serializer()),
             path = "v2/client/order",
             parameters = buildMap {
                 if (count != null) {
@@ -157,9 +144,15 @@ class NetworkConnectorImpl(
 
     override suspend fun getSettings(token: String): ApiResult<SettingsServer> {
         return getData(
-            serializer = SettingsServer.serializer(),
             path = "client/settings",
             token = token
+        )
+    }
+
+    override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> {
+        return getData(
+            path = "payment_method",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -167,7 +160,6 @@ class NetworkConnectorImpl(
 
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
-            serializer = AuthResponseServer.serializer(),
             path = "client/login",
             postBody = loginPostServer,
         )
@@ -178,7 +170,6 @@ class NetworkConnectorImpl(
         userAddress: UserAddressPostServer
     ): ApiResult<AddressServer> {
         return postData(
-            serializer = AddressServer.serializer(),
             path = "address",
             postBody = userAddress,
             token = token
@@ -187,7 +178,6 @@ class NetworkConnectorImpl(
 
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
-            serializer = OrderServer.serializer(),
             path = "v2/order",
             postBody = order,
             token = token
@@ -201,7 +191,6 @@ class NetworkConnectorImpl(
         patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer> {
         return patchData(
-            serializer = SettingsServer.serializer(),
             path = "client/settings",
             patchBody = patchUserServer,
             token = token
@@ -224,13 +213,12 @@ class NetworkConnectorImpl(
 
     // COMMON
 
-    suspend fun <T> getData(
-        serializer: KSerializer<T>,
+    private suspend inline fun <reified R> getData(
         path: String,
         parameters: Map<String, Any> = mapOf(),
         token: String? = null
-    ): ApiResult<T> {
-        return handleNetworkCall(serializer) {
+    ): ApiResult<R> {
+        return safeCall {
             client.get {
                 buildRequest(
                     path = path,
@@ -241,14 +229,13 @@ class NetworkConnectorImpl(
         }
     }
 
-    private suspend fun <R> postData(
-        serializer: KSerializer<R>,
+    private suspend inline fun <reified R> postData(
         path: String,
         parameters: Map<String, String> = mapOf(),
         postBody: Any,
         token: String? = null
     ): ApiResult<R> {
-        return handleNetworkCall(serializer) {
+        return safeCall {
             client.post {
                 buildRequest(
                     path = path,
@@ -260,14 +247,13 @@ class NetworkConnectorImpl(
         }
     }
 
-    private suspend fun <R> patchData(
+    private suspend inline fun <reified R> patchData(
         path: String,
         patchBody: Any,
-        serializer: KSerializer<R>,
         parameters: Map<String, String> = mapOf(),
         token: String? = null
     ): ApiResult<R> {
-        return handleNetworkCall(serializer) {
+        return safeCall {
             client.patch {
                 buildRequest(
                     path = path,
@@ -279,12 +265,11 @@ class NetworkConnectorImpl(
         }
     }
 
-    private suspend inline fun <R> handleNetworkCall(
-        serializer: KSerializer<R>,
-        networkCall: () -> HttpResponse,
+    private suspend inline fun <reified R> safeCall(
+        networkCall: () -> HttpResponse
     ): ApiResult<R> {
         return try {
-            ApiResult.Success(json.decodeFromString(serializer, networkCall().bodyAsText()))
+            ApiResult.Success(networkCall().body())
         } catch (exception: ClientRequestException) {
             ApiResult.Error(ApiError(exception.response.status.value, exception.message))
         } catch (exception: Throwable) {

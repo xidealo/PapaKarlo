@@ -98,7 +98,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
         ) {
             settingsState.settings?.phoneNumber?.let { phoneNumber ->
                 TextCard(
-                    hintStringId = R.string.hint_settings_phone,
+                    hint = stringResource(R.string.hint_settings_phone),
                     label = phoneNumber
                 )
             }
@@ -107,26 +107,23 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
             if (email.isNullOrEmpty()) {
                 NavigationCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = R.string.common_email
-                ) {
-                    viewModel.onEmailClicked()
-                }
+                    label = stringResource(R.string.common_email),
+                    onClick = viewModel::onEmailClicked
+                )
             } else {
                 NavigationTextCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = R.string.common_email,
-                    label = email
-                ) {
-                    viewModel.onEmailClicked()
-                }
+                    label = email,
+                    onClick = viewModel::onEmailClicked,
+                )
             }
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.common_city,
-                label = settingsState.selectedCity?.name
-            ) {
-                viewModel.onCityClicked()
-            }
+                label = settingsState.selectedCity?.name,
+                onClick = viewModel::onCityClicked
+            )
         }
     }
 

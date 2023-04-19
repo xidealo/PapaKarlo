@@ -132,8 +132,8 @@ private fun DeferredTimeScreen(
         NavigationCard(
             modifier = Modifier.padding(top = 8.dp),
             elevated = false,
-            labelStringId = R.string.action_deferred_time_select_time,
-            onClick = onSelectTimeClicked
+            label = stringResource(R.string.action_deferred_time_select_time),
+            onClick = onSelectTimeClicked,
         )
     }
 }

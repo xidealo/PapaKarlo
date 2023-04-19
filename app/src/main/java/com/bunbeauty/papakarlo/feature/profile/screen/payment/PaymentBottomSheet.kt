@@ -6,119 +6,146 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import by.kirich1409.viewbindingdelegate.viewBinding
+import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseBottomSheet
-import com.bunbeauty.papakarlo.common.ui.element.CircularProgressBar
-import com.bunbeauty.papakarlo.common.ui.element.card.StartIconCard
+import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliverySnackbarBox
+import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
+import com.bunbeauty.papakarlo.common.ui.element.card.StartIconTextCard
+import com.bunbeauty.papakarlo.common.ui.element.rememberFoodDeliverySnackbarState
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.BottomSheetComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.Constants.CARD_NUMBER_LABEL
-import com.bunbeauty.shared.Constants.PHONE_NUMBER_LABEL
-import com.bunbeauty.shared.domain.model.Payment
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PaymentBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
+class PaymentBottomSheet : ComposeBottomSheet<Any>() {
 
-    override val viewModel: PaymentViewModel by viewModel()
-    override val viewBinding by viewBinding(BottomSheetComposeBinding::bind)
+    private var paymentMethodsArgument by argument<PaymentMethodsArgument>()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.root.setContentWithTheme {
-            val paymentState by viewModel.paymentState.collectAsStateWithLifecycle()
-
-            PaymentScreen(paymentState)
-        }
-    }
-
-    private fun copyToBuffer(label: String, data: String) {
-        val clipboard =
-            ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
-        val clip = ClipData.newPlainText(label, data)
-        clipboard?.setPrimaryClip(clip)
-    }
-
-    @Composable
-    private fun PaymentScreen(paymentState: PaymentState) {
-        FoodDeliveryBottomSheet(titleStringId = R.string.title_payment) {
-            Text(
-                text = paymentState.paymentInfo,
-                style = FoodDeliveryTheme.typography.bodyMedium
+        binding.root.setContentWithTheme {
+            val snackbarState = rememberFoodDeliverySnackbarState(
+                stringResource(R.string.common_copied)
             )
-            if (paymentState.payment == null) {
-                CircularProgressBar(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(CenterHorizontally)
+
+            FoodDeliverySnackbarBox(snackbarState) {
+                PaymentScreen(
+                    paymentMethodList = paymentMethodsArgument.paymentMethodList,
+                    onCopyClick = { nameWithCopyableValue ->
+                        nameWithCopyableValue.value?.let { value ->
+                            copyToBuffer(
+                                label = nameWithCopyableValue.name,
+                                text = value.valueToCopy
+                            )
+                            snackbarState.show()
+                        }
+                    }
                 )
-            } else {
-                Spacer(modifier = Modifier.height(16.dp))
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    paymentState.payment.cardNumber?.let { cardNumber ->
-                        StartIconCard(
-                            elevated = false,
-                            label = cardNumber,
-                            iconId = R.drawable.ic_copy,
-                            onClick = {
-                                copyToBuffer(CARD_NUMBER_LABEL, cardNumber)
-                                viewModel.showMessage(
-                                    requireContext().getString(R.string.msg_cafe_list_copy_card_number_copied),
-                                    true
-                                )
-                            }
-                        )
-                    }
-                    paymentState.payment.phoneNumber?.let { phoneNumber ->
-                        StartIconCard(
-                            elevated = false,
-                            label = phoneNumber,
-                            iconId = R.drawable.ic_copy,
-                            onClick = {
-                                copyToBuffer(PHONE_NUMBER_LABEL, phoneNumber)
-                                viewModel.showMessage(
-                                    requireContext().getString(R.string.msg_cafe_list_copy_phone_number_copied),
-                                    true
-                                )
-                            }
-                        )
-                    }
-                }
             }
         }
     }
 
-    @Preview
-    @Composable
-    private fun PaymentScreenPreview() {
-        FoodDeliveryTheme {
-            PaymentScreen(
-                PaymentState(
-                    paymentInfo = "Оплатить заказ можно наличными или через терминал при получении",
-                    payment = Payment(
-                        phoneNumber = "+7(999) 999-99-99",
-                        cardNumber = "1234 1234 1234 1234 1234"
-                    )
-                )
+    private fun copyToBuffer(label: String, text: String) {
+        val clipboard =
+            ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+        val clip = ClipData.newPlainText(label, text)
+        clipboard?.setPrimaryClip(clip)
+    }
 
-            )
+    companion object {
+        private const val TAG = "PaymentBottomSheet"
+
+        fun show(
+            fragmentManager: FragmentManager,
+            paymentMethodsArgument: PaymentMethodsArgument,
+        ) = PaymentBottomSheet().apply {
+            this.paymentMethodsArgument = paymentMethodsArgument
+            show(fragmentManager, TAG)
         }
+    }
+}
+
+@Composable
+private fun PaymentScreen(
+    paymentMethodList: List<PaymentMethodUI>,
+    onCopyClick: (PaymentMethodUI) -> Unit
+) {
+    FoodDeliveryBottomSheet(titleStringId = R.string.title_payment) {
+        Text(
+            text = stringResource(R.string.msg_payment_methods),
+            style = FoodDeliveryTheme.typography.bodyMedium
+        )
+        Column(
+            modifier = Modifier.padding(top = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            paymentMethodList.forEach { paymentMethod ->
+                if (paymentMethod.value == null) {
+                    SimpleCard(
+                        text = paymentMethod.name,
+                        elevated = false,
+                        clickable = false,
+                    )
+                } else {
+                    StartIconTextCard(
+                        hint = paymentMethod.name,
+                        label = paymentMethod.value.value,
+                        iconId = R.drawable.ic_copy,
+                        elevated = false,
+                        onClick = {
+                            onCopyClick(paymentMethod)
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PaymentScreenPreview() {
+    FoodDeliveryTheme {
+        PaymentScreen(
+            listOf(
+                PaymentMethodUI(
+                    uuid = "",
+                    name = "Наличные",
+                    value = null,
+                ),
+                PaymentMethodUI(
+                    uuid = "",
+                    name = "Картой при получении",
+                    value = null,
+                ),
+                PaymentMethodUI(
+                    uuid = "",
+                    name = "Перевод по номеру карты",
+                    value = PaymentMethodValueUI(
+                        value = "1234 1234 1234 1234",
+                        valueToCopy = "1234123412341234",
+                    ),
+                ),
+                PaymentMethodUI(
+                    uuid = "",
+                    name = "Перевод по номеру телефона",
+                    value = PaymentMethodValueUI(
+                        value = "+7 (900) 900-90-90",
+                        valueToCopy = "+79009009090",
+                    ),
+                ),
+            ),
+            onCopyClick = {}
+        )
     }
 }

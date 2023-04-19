@@ -9,6 +9,7 @@ class ProfileUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderItemMapper: OrderItemMapper,
 ) {
+
     fun map(profileState: ProfileState): ProfileUi {
         return ProfileUi(
             topCartUi = TopCartUi(

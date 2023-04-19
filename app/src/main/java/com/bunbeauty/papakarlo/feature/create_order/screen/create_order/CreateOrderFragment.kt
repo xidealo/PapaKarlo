@@ -91,10 +91,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
-                        position = createOrderUi.switcherPosition
-                    ) { changedPosition ->
-                        viewModel.onSwitcherPositionChanged(changedPosition)
-                    }
+                        position = createOrderUi.switcherPosition,
+                        onPositionChanged = viewModel::onSwitcherPositionChanged
+                    )
                     AddressCard(createOrderUi)
                     DeliveryAddressError(createOrderUi)
                     CommentCard(createOrderUi)
@@ -117,21 +116,19 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 NavigationCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    enabled = !createOrderUi.isLoading,
-                    labelStringId = labelStringId
-                ) {
-                    viewModel.onUserAddressClicked()
-                }
+                    clickable = !createOrderUi.isLoading,
+                    label = stringResource(labelStringId),
+                    onClick = viewModel::onUserAddressClicked
+                )
             } else {
                 NavigationTextCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = labelStringId,
                     label = createOrderUi.deliveryAddress,
-                    isClickable = !createOrderUi.isLoading
-                ) {
-                    viewModel.onUserAddressClicked()
-                }
+                    clickable = !createOrderUi.isLoading,
+                    onClick = viewModel::onUserAddressClicked
+                )
             }
         } else {
             NavigationTextCard(
@@ -139,10 +136,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = labelStringId,
                 label = createOrderUi.pickupAddress ?: "",
-                isClickable = !createOrderUi.isLoading
-            ) {
-                viewModel.onCafeAddressClicked()
-            }
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCafeAddressClicked
+            )
         }
     }
 
@@ -165,20 +161,18 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
         if (createOrderUi.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                enabled = !createOrderUi.isLoading,
-                labelStringId = R.string.comment
-            ) {
-                viewModel.onCommentClicked()
-            }
+                label = stringResource(R.string.comment),
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCommentClicked
+            )
         } else {
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.hint_create_order_comment,
                 label = createOrderUi.comment,
-                isClickable = !createOrderUi.isLoading
-            ) {
-                viewModel.onCommentClicked()
-            }
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCommentClicked
+            )
         }
     }
 
@@ -193,10 +187,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
             hintStringId = hintStringId,
             label = createOrderUi.deferredTime,
-            isClickable = !createOrderUi.isLoading
-        ) {
-            viewModel.onDeferredTimeClicked()
-        }
+            clickable = !createOrderUi.isLoading,
+            onClick = viewModel::onDeferredTimeClicked,
+        )
     }
 
     @Composable
@@ -256,10 +249,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 LoadingButton(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_create_order_create_order,
-                    isLoading = createOrderUi.isLoading
-                ) {
-                    viewModel.onCreateOrderClicked()
-                }
+                    isLoading = createOrderUi.isLoading,
+                    onClick = viewModel::onCreateOrderClicked
+                )
             }
         }
     }

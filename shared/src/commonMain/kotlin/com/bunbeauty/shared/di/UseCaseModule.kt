@@ -10,7 +10,7 @@ import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.order.*
-import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
@@ -182,6 +182,8 @@ internal fun useCaseModule() = module {
         GetFilteredStreetListUseCase()
     }
     factory {
-        GetPaymentInfoUseCase()
+        GetPaymentMethodListUseCase(
+            paymentRepo = get()
+        )
     }
 }

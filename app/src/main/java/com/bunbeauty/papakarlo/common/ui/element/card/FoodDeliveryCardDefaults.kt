@@ -21,8 +21,14 @@ object FoodDeliveryCardDefaults {
 
     @Composable
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {
-        CardDefaults.cardElevation(defaultElevation = FoodDeliveryTheme.dimensions.cardElevation)
+        CardDefaults.cardElevation(
+            defaultElevation = FoodDeliveryTheme.dimensions.cardElevation,
+            disabledElevation = FoodDeliveryTheme.dimensions.cardElevation,
+        )
     } else {
-        CardDefaults.cardElevation(defaultElevation = 0.dp)
+        CardDefaults.cardElevation(
+            defaultElevation = 0.dp,
+            disabledElevation = 0.dp,
+        )
     }
 }
