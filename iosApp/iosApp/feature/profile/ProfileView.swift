@@ -55,7 +55,7 @@ struct ProfileView: View {
             .isDetailLink(false)
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
@@ -97,15 +97,25 @@ struct EmptyProfileView: View {
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(
-                icon: "star",
-                label: Strings.TITLE_PROFILE_FEEDBACK,
-                destination: FeedbackView()
+                icon: "ic_payment",
+                label: "Оплата",
+                destination: PaymentView(),
+                isSystem: false
             )
             
             NavigationCardView(
-                icon: "info.circle",
+                icon: "ic_star",
+                label: Strings.TITLE_PROFILE_FEEDBACK,
+                destination: FeedbackView(),
+                isSystem: false
+            )
+            .padding(.top, Diems.SMALL_PADDING)
+
+            NavigationCardView(
+                icon: "ic_info",
                 label: Strings.TITLE_PROFILE_ABOUT_APP,
-                destination: AboutAppView()
+                destination: AboutAppView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
@@ -152,9 +162,10 @@ struct SuccessProfileView: View {
             }
             
             NavigationCardView(
-                icon: "gearshape",
+                icon: "ic_settings",
                 label: Strings.TITLE_PROFILE_SETTINGS,
-                destination: SettingsView()
+                destination: SettingsView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
 
@@ -167,30 +178,34 @@ struct SuccessProfileView: View {
             .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(
-                icon: "clock.arrow.circlepath",
+                icon: "ic_history",
                 label: Strings.TITLE_PROFILE_MY_ORDERS,
-                destination: OrderListView()
+                destination: OrderListView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(
-                icon: "dollarsign.circle",
+                icon: "ic_payment",
                 label: Strings.TITLE_PROFILE_PAYMENT,
-                destination: PaymentView()
+                destination: PaymentView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(
-                icon: "star",
+                icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
-                destination: FeedbackView()
+                destination: FeedbackView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
             NavigationCardView(
-                icon: "info.circle",
+                icon: "ic_info",
                 label: Strings.TITLE_PROFILE_ABOUT_APP,
-                destination: AboutAppView()
+                destination: AboutAppView(),
+                isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
             
@@ -201,16 +216,17 @@ struct SuccessProfileView: View {
                 overlayView: ToastView(
                     toast: Toast(title: "Код заказа: \(profileViewState.lastOrder?.code ?? "")"),
                     show: $showOrderCreated,
-                    backgroundColor:Color("primary"),
-                    foregaroundColor: Color("onPrimary")),
+                    backgroundColor: AppColor.primary,
+                    foregaroundColor: AppColor.onPrimary
+                ),
                 show: $showOrderCreated
             )
             .overlay(
                 overlayView: ToastView(
                     toast: Toast(title: "Адрес добавлен"),
                     show: $showCreatedAddress,
-                    backgroundColor:Color("primary"),
-                    foregaroundColor: Color("onPrimary")),
+                    backgroundColor:AppColor.primary,
+                    foregaroundColor: AppColor.onPrimary),
                 show: $showCreatedAddress
             )
     }

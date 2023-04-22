@@ -26,24 +26,26 @@ struct BottomBarView: View {
                 VStack(spacing:0){
                     if(selection == 0){
                         ZStack{
-                            IconImage(width: 20, height: 24, imageName: "CafesIcon")
+                            IconImage(width: 24, height: 24, imageName: "CafesIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("primary"))
+                                .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
                         Text("Кафе")
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .foregroundColor(Color("primary"))
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
-                            IconImage(width: 20, height: 24, imageName: "CafesIcon")
+                            IconImage(width: 24, height: 24, imageName: "CafesIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("onSurfaceVariant"))
+                                .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
                         Text("Кафе")
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .foregroundColor(Color("onSurfaceVariant"))
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
@@ -57,22 +59,24 @@ struct BottomBarView: View {
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "MenuIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("primary"))
+                                .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
                         Text("Меню")
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .foregroundColor(Color("primary"))
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "MenuIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("onSurfaceVariant"))
+                                .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
                         Text("Меню")
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .foregroundColor(Color("onSurfaceVariant"))
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
@@ -86,22 +90,28 @@ struct BottomBarView: View {
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "ProfileIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("primary"))
+                                .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
-                        Text("Профиль").frame(maxWidth:.infinity)
+                        Text("Профиль")
+                            .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .foregroundColor(Color("primary"))
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
                             IconImage(width: 24, height: 24, imageName: "ProfileIcon")
                                 .padding(.top, iconTopPaddig)
-                                .foregroundColor(Color("onSurfaceVariant"))
+                                .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
-                        Text("Профиль").frame(maxWidth:.infinity).padding(.horizontal, Diems.MEDIUM_PADDING).foregroundColor(Color("onSurfaceVariant"))
+                        Text("Профиль")
+                            .frame(maxWidth:.infinity)
+                            .padding(.horizontal, Diems.MEDIUM_PADDING)
+                            .padding(.top, 2)
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
             }
           
-        }.background(Color("surface"))
+        }.background(AppColor.surface)
     }
 }
