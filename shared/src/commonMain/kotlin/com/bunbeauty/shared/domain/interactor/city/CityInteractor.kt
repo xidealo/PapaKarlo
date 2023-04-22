@@ -3,10 +3,10 @@ package com.bunbeauty.shared.domain.interactor.city
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.CommonFlow
 import com.bunbeauty.shared.domain.asCommonFlow
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.shared.domain.model.city.SelectableCity
 import com.bunbeauty.shared.domain.repo.CityRepo
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 class CityInteractor(
     private val dataStoreRepo: DataStoreRepo,
@@ -25,13 +25,14 @@ class CityInteractor(
         dataStoreRepo.saveSelectedCityUuid(city.uuid)
     }
 
-    override fun observeCityList(): CommonFlow<List<City>> {
-        return cityRepo.observeCityList().asCommonFlow()
-    }
-
-    override fun observeSelectedCity(): Flow<City?> {
-        return dataStoreRepo.selectedCityUuid.flatMapLatest { selectedCityUuid ->
-            cityRepo.observeCityByUuid(selectedCityUuid ?: "")
-        }
+    override fun observeCityList(): CommonFlow<List<SelectableCity>> {
+        return cityRepo.observeCityList().map { cityList ->
+            cityList.map { city ->
+                SelectableCity(
+                    city = city,
+                    isSelected = dataStoreRepo.getSelectedCityUuid() == city.uuid
+                )
+            }
+        }.asCommonFlow()
     }
 }

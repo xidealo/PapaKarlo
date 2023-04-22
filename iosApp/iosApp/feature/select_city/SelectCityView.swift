@@ -32,7 +32,7 @@ struct SelectCityView: View {
                 SelectCitySuccessView(cityList: viewModel.selectCityViewState.cityList, viewModel: viewModel)
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
     }
 }

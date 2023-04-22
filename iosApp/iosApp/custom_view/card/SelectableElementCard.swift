@@ -17,8 +17,12 @@ struct SelectableElementCard: View {
                 .foregroundColor(AppColor.onSurface)
             Spacer()
             if(isSelected){
-                Image(systemName: "checkmark")
-                    .foregroundColor(AppColor.onSurfaceVariant)
+                IconImage(
+                    width: 16,
+                    height: 16,
+                    imageName: "CheckIcon"
+                )
+                .foregroundColor(AppColor.onSurfaceVariant)
             }
         }
         .padding(.vertical, 12)

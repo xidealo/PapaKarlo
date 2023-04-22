@@ -79,9 +79,10 @@ struct SettingsView: View {
                         }
                         Button("Нет", role: .cancel) { }
                     }
+                    .padding(.top, 16)
+
                 }
                 .padding(Diems.MEDIUM_PADDING)
-                .padding(.top, 16)
 
                 Spacer()
             }
