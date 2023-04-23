@@ -16,11 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbar
 import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbarActions
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.feature.main.NavigationBarOptions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +26,6 @@ fun FoodDeliveryScaffold(
     title: String? = null,
     backActionClick: (() -> Unit)? = null,
     topActions: List<FoodDeliveryToolbarActions> = emptyList(),
-    navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.background,
     @DrawableRes drawableId: Int? = null,
     actionButton: @Composable () -> Unit = {},
@@ -48,11 +45,6 @@ fun FoodDeliveryScaffold(
                 actions = topActions,
                 drawableId = drawableId
             )
-        },
-        bottomBar = {
-            if (navigationBarOptions is NavigationBarOptions.Visible) {
-                FoodDeliveryNavigationBar(options = navigationBarOptions)
-            }
         },
         containerColor = FoodDeliveryTheme.colors.mainColors.background,
         floatingActionButton = actionButton,

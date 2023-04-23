@@ -2,9 +2,6 @@ package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.material.ripple.LocalRippleTheme
-import androidx.compose.material.ripple.RippleAlpha
-import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -34,19 +31,10 @@ fun FoodDeliveryTheme(
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null,
         LocalAppColors provides rememberedColors,
-        LocalRippleTheme provides FoodDeliveryRippleTheme,
         LocalAppDimensions provides AppDimensions(),
         LocalAppTypography provides AppTypography(),
         content = content
     )
-}
-
-private object FoodDeliveryRippleTheme : RippleTheme {
-    @Composable
-    override fun defaultColor() = FoodDeliveryTheme.colors.mainColors.primary
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0.1f, 0.1f, 0.1f, 0.1f)
 }
 
 object FoodDeliveryTheme {
