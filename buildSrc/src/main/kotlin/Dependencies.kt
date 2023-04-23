@@ -28,6 +28,7 @@ object Versions {
     const val composeMaterial3 = "1.1.0-alpha03"
     const val composeUiTooling = "1.3.2"
     const val composeUiToolingPreview = "1.3.2"
+    const val composeUiViewbinding = "1.3.2"
     const val activityCompose = "1.6.1"
     const val lifecycleRuntimeCompose = "2.6.0-alpha03"
 
@@ -126,6 +127,7 @@ object Compose {
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeUiTooling}"
     const val uiToolingPreview =
         "androidx.compose.ui:ui-tooling-preview:${Versions.composeUiToolingPreview}"
+    const val uiViewbinding = "androidx.compose.ui:ui-viewbinding:${Versions.composeUiViewbinding}"
     const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val lifecycle =
         "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"

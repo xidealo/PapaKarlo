@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.ui.element.toolbar
+package com.bunbeauty.papakarlo.common.ui.element.top_bar
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

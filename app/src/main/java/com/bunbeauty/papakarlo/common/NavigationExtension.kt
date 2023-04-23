@@ -9,3 +9,10 @@ fun NavController.navigateSafe(directions: NavDirections) {
         navigate(directions)
     }
 }
+
+fun NavController.navigateSafe(directionsId: Int) {
+    val action = currentDestination?.getAction(directionsId)
+    if (action != null) {
+        navigate(directionsId)
+    }
+}

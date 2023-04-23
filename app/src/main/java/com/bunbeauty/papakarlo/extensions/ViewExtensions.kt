@@ -37,8 +37,6 @@ fun View.showSnackbar(
                     0
                 )
             }
-        } else {
-            setAnchorView(R.id.activity_main_bnv_bottom_navigation)
         }
         view.findViewById<TextView>(R.id.snackbar_text).textAlignment =
             View.TEXT_ALIGNMENT_CENTER

@@ -24,11 +24,11 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
@@ -37,13 +37,13 @@ import com.google.firebase.auth.PhoneAuthProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
-class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
+class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: ConfirmViewModel by stateViewModel(state = {
         arguments ?: bundleOf()
     })
 
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
@@ -67,7 +67,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
 
     @Composable
     private fun ConfirmScreen(confirmState: Confirmation) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             backActionClick = {
                 findNavController().popBackStack()
             },
