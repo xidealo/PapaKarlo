@@ -5,7 +5,26 @@ import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.NavigationBarItem
 
 data class MainState(
     val connectionLost: Boolean = false,
-    val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden
+    val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
+    val eventList: List<Event> = emptyList(),
+) {
+
+    sealed interface Event {
+        class ShowMessageEvent(val message: FoodDeliveryMessage) : Event
+    }
+
+    operator fun plus(event: Event) = copy(eventList = eventList + event)
+    operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())
+}
+
+enum class FoodDeliveryMessageType {
+    INFO,
+    ERROR,
+}
+
+data class FoodDeliveryMessage(
+    val type: FoodDeliveryMessageType,
+    val text: String
 )
 
 sealed interface NavigationBarOptions {

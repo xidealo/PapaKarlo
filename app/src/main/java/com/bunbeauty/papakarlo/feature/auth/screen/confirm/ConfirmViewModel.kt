@@ -2,12 +2,13 @@ package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.WRONG_CODE_ERROR
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.shared.Constants.WRONG_CODE
@@ -39,9 +40,9 @@ class ConfirmViewModel(
 
     private var timerJob: Job? = null
 
-    private val mutableConfirmState: MutableStateFlow<Confirmation> =
+    private val mutableConfirmState: MutableStateFlow<ConfirmState> =
         MutableStateFlow(
-            Confirmation(
+            ConfirmState(
                 phoneNumber = savedStateHandle["phone"]!!,
                 resendToken = savedStateHandle["resendToken"]!!,
                 verificationId = savedStateHandle["verificationId"]!!,
@@ -49,13 +50,13 @@ class ConfirmViewModel(
                 isCodeChecking = false
             )
         )
-    val confirmState: StateFlow<Confirmation> = mutableConfirmState.asStateFlow()
+    val confirmState: StateFlow<ConfirmState> = mutableConfirmState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-        showError(resourcesProvider.getString(R.string.error_something_went_wrong), true)
-
-        mutableConfirmState.update { oldState ->
-            oldState.copy(isCodeChecking = false)
+        mutableConfirmState.update { state ->
+            state.copy(isCodeChecking = false) + ConfirmState.Event.ShowErrorMessageEvent(
+                SOMETHING_WENT_WRONG_ERROR
+            )
         }
     }
 
@@ -80,15 +81,15 @@ class ConfirmViewModel(
 
     fun onVerificationError(error: String) {
         mutableConfirmState.value = mutableConfirmState.value.copy(isCodeChecking = false)
-        val errorResourceId = when (error) {
-            WRONG_CODE -> {
-                R.string.error_confirm_wrong_code
-            }
-            else -> {
-                R.string.error_something_went_wrong
-            }
+        val confirmError = when (error) {
+            WRONG_CODE -> WRONG_CODE_ERROR
+            else -> SOMETHING_WENT_WRONG_ERROR
         }
-        showError(resourcesProvider.getString(errorResourceId), true)
+        mutableConfirmState.update { state ->
+            state.copy(isCodeChecking = false) + ConfirmState.Event.ShowErrorMessageEvent(
+                confirmError
+            )
+        }
         logD(AUTH_TAG, error)
     }
 

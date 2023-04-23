@@ -15,6 +15,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.google.android.material.snackbar.Snackbar
 
+@Deprecated("Use IMessageHost")
 fun View.showSnackbar(
     message: String,
     @ColorInt textColor: Int,

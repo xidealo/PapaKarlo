@@ -42,6 +42,7 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOr
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.presentation.create_order.CreateOrderState
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import org.koin.android.ext.android.inject
@@ -320,11 +321,11 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     )
                 }
                 is CreateOrderState.Event.OrderCreatedEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_order_code, event.code),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(
+                            R.string.msg_order_code,
+                            event.code
+                        )
                     )
                     findNavController().navigateSafe(toProfileFragment())
                 }
