@@ -4,10 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
+import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
@@ -22,7 +24,9 @@ class ConsumerCartViewModel(
     private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
-) : CartViewModel() {
+    private val addCartProductUseCase: AddCartProductUseCase,
+    private val removeCartProductUseCase: RemoveCartProductUseCase,
+) : BaseViewModel() {
 
     private val mutableConsumerCartState: MutableStateFlow<State<ConsumerCartUI>> =
         MutableStateFlow(State.Loading())
@@ -59,6 +63,18 @@ class ConsumerCartViewModel(
 
     fun onProductClicked(cartProductItem: CartProductItem) {
         router.navigate(ConsumerCartFragmentDirections.toProductFragment(cartProductItem.menuProductUuid, cartProductItem.name))
+    }
+
+    fun onAddCardProductClicked(menuProductUuid: String) {
+        viewModelScope.launch {
+            addCartProductUseCase(menuProductUuid)
+        }
+    }
+
+    fun onRemoveCardProductClicked(menuProductUuid: String) {
+        viewModelScope.launch {
+            removeCartProductUseCase(menuProductUuid)
+        }
     }
 
     private fun ConsumerCart?.toState(): State<ConsumerCartUI> {

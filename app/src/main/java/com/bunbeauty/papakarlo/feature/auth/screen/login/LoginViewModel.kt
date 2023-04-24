@@ -2,14 +2,12 @@ package com.bunbeauty.papakarlo.feature.auth.screen.login
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
-import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.google.firebase.auth.PhoneAuthProvider
@@ -148,7 +146,7 @@ class LoginViewModel(
         mutableLoginState.update { oldState ->
             oldState.copy(
                 state = LoginState.State.Loading,
-                eventList = oldState.eventList + LoginState.Event.SendCode(phone = phone)
+                eventList = oldState.eventList + LoginState.Event.SendCodeEvent(phone = phone)
             )
         }
     }
@@ -163,12 +161,12 @@ class LoginViewModel(
             when (successLoginDirection) {
                 BACK_TO_PROFILE -> mutableLoginState.update { state ->
                     state.copy(
-                        eventList = state.eventList + LoginState.Event.NavigateBackToProfileFragment
+                        eventList = state.eventList + LoginState.Event.NavigateBackToProfileEvent
                     )
                 }
                 TO_CREATE_ORDER -> mutableLoginState.update { state ->
                     state.copy(
-                        eventList = state.eventList + LoginState.Event.NavigateToCreateOrderFragment
+                        eventList = state.eventList + LoginState.Event.NavigateToCreateOrderEvent
                     )
                 }
             }
@@ -176,20 +174,9 @@ class LoginViewModel(
     }
 
     fun onVerificationError(error: String) {
-        mutableLoginState.update { oldState ->
-            oldState.copy(
-                state = LoginState.State.Success
-            )
+        mutableLoginState.update { state ->
+            state.copy(state = LoginState.State.Success) + LoginState.Event.ShowErrorEvent(error)
         }
-        val errorResId = when (error) {
-            TOO_MANY_REQUESTS -> {
-                R.string.error_login_too_many_requests
-            }
-            else -> {
-                R.string.error_login_something_try_later
-            }
-        }
-        showError(resourcesProvider.getString(errorResId), true)
     }
 
     fun onCodeSent(
@@ -199,7 +186,7 @@ class LoginViewModel(
     ) {
         mutableLoginState.update { state ->
             state.copy(
-                eventList = state.eventList + LoginState.Event.NavigateToConfirmFragment(
+                eventList = state.eventList + LoginState.Event.NavigateToConfirmEvent(
                     phone = phone,
                     verificationId = verificationId,
                     resendToken = resendToken,

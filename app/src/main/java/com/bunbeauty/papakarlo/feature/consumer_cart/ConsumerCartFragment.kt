@@ -57,8 +57,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 consumerCartState = consumerCartState,
                 onMenuClicked = viewModel::onMenuClicked,
                 onErrorButtonClicked = viewModel::getConsumerCart,
-                addProductToCartClicked = viewModel::addProductToCart,
-                removeProductFromCartClicked = viewModel::removeProductFromCart,
+                addProductToCartClicked = viewModel::onAddCardProductClicked,
+                removeProductFromCartClicked = viewModel::onRemoveCardProductClicked,
                 onProductClicked = viewModel::onProductClicked,
                 onCreateOrderClicked = viewModel::onCreateOrderClicked,
             )

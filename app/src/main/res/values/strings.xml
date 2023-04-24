@@ -80,6 +80,7 @@
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_user">Пользователь не авторизован</string>
+    <string name="error_user_address">Адрес не выбран</string>
     <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_total_cost">Итого</string>
     <string name="msg_create_order_delivery_cost">Доставка</string>
@@ -191,7 +192,6 @@
     <string name="msg_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
-    <string name="error_login_something_try_later">Ошибка. Попробуйте позже</string>
     <string name="error_login_too_many_requests">Превышен лимит на отправку кодов, попробуйте позже</string>
     <string name="description_login_logo">Лого</string>
 

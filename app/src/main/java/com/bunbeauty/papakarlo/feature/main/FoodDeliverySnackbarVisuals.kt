@@ -8,6 +8,6 @@ data class FoodDeliverySnackbarVisuals(
     override val actionLabel: String? = null,
     override val withDismissAction: Boolean = false,
     override val duration: SnackbarDuration = SnackbarDuration.Short,
-): SnackbarVisuals {
+) : SnackbarVisuals {
     override val message: String = foodDeliveryMessage.text
 }

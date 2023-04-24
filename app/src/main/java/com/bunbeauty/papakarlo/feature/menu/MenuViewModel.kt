@@ -1,12 +1,13 @@
 package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuState
 import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
@@ -22,7 +23,8 @@ class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,
     private val observeCartUseCase: ObserveCartUseCase,
-) : CartViewModel() {
+    private val addCartProductUseCase: AddCartProductUseCase,
+) : BaseViewModel() {
 
     private val mutableMenuState = MutableStateFlow(MenuState())
     val menuState = mutableMenuState.asStateFlow()
@@ -39,6 +41,7 @@ class MenuViewModel(
             )
         }
     }
+
     init {
         observeCart()
     }
@@ -113,7 +116,9 @@ class MenuViewModel(
     }
 
     fun onAddProductClicked(menuProductUuid: String) {
-        addProductToCart(menuProductUuid)
+        viewModelScope.launch {
+            addCartProductUseCase(menuProductUuid)
+        }
     }
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {

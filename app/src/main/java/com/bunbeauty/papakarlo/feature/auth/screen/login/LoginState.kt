@@ -17,16 +17,17 @@ data class LoginState(
     }
 
     sealed interface Event {
-        data class NavigateToConfirmFragment(
+        data class NavigateToConfirmEvent(
             val phone: String,
             val verificationId: String,
             val resendToken: PhoneAuthProvider.ForceResendingToken,
             val successLoginDirection: SuccessLoginDirection,
         ) : Event
 
-        object NavigateBackToProfileFragment : Event
-        object NavigateToCreateOrderFragment : Event
-        data class SendCode(val phone: String) : Event
+        object NavigateBackToProfileEvent : Event
+        object NavigateToCreateOrderEvent : Event
+        data class SendCodeEvent(val phone: String) : Event
+        data class ShowErrorEvent(val error: String) : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)

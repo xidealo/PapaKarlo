@@ -29,8 +29,8 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.model.Settings
@@ -145,19 +145,13 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     }
                 }
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_settings_email_updated),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(R.string.msg_settings_email_updated)
                     )
                 }
                 SettingsState.Event.ShowEmailChangingFailedEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_something_went_wrong),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = false
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_something_went_wrong)
                     )
                 }
                 SettingsState.Event.Back -> {

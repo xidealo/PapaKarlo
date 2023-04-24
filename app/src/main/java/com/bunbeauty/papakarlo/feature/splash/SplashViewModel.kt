@@ -12,7 +12,7 @@ class SplashViewModel(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
-    init {
+    fun init() {
         checkIsUpdated()
     }
 

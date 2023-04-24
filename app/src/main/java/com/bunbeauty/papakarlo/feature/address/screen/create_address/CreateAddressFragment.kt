@@ -40,7 +40,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
@@ -277,20 +277,14 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
         eventList.forEach { event ->
             when (event) {
                 is CreateAddressState.Event.AddressCreatedSuccess -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_create_address_created),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(R.string.msg_create_address_created)
                     )
                     findNavController().popBackStack()
                 }
                 is CreateAddressState.Event.AddressCreatedFailed -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_create_address_fail),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = false
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_create_address_fail)
                     )
                 }
             }

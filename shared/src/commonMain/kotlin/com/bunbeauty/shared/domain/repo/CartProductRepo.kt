@@ -15,7 +15,7 @@ interface CartProductRepo {
 
     suspend fun updateCartProductCount(cartProductUuid: String, count: Int): CartProduct?
 
-    suspend fun deleteCartProduct(cartProduct: CartProduct)
+    suspend fun deleteCartProduct(cartProductUuid: String)
 
     suspend fun deleteAllCartProducts()
 }

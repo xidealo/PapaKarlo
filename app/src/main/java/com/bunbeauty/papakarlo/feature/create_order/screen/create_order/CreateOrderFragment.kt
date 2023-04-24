@@ -33,7 +33,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
@@ -305,19 +304,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     }
                 }
                 is CreateOrderState.Event.ShowSomethingWentWrongErrorEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_something_went_wrong),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = true
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_something_went_wrong)
                     )
                 }
                 is CreateOrderState.Event.ShowUserUnauthorizedErrorEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_user),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = true
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_user)
                     )
                 }
                 is CreateOrderState.Event.OrderCreatedEvent -> {
@@ -330,7 +323,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     findNavController().navigateSafe(toProfileFragment())
                 }
                 is CreateOrderState.Event.ShowUserAddressError -> {
-                    // TODO (show address error)
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_user_address)
+                    )
                 }
             }
         }
