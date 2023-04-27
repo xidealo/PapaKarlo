@@ -26,7 +26,7 @@ struct CafeOptionsView: View {
             VStack(spacing:0){
                 ActionCardView(
                     icon: "PhoneIcon",
-                    label: Strings.TITLE_CAFE_OPTIONS_CALL + " " + phone,
+                    label: Strings.TITLE_CAFE_OPTIONS_CALL + ": " + phone,
                     isSystemImageName: false,
                     isShowRightArrow: true
                 ){
@@ -35,7 +35,7 @@ struct CafeOptionsView: View {
                 
                 ActionCardView(
                     icon: "CafePosition",
-                    label: Strings.TITLE_CAFE_OPTIONS_POSITION + " " + address,
+                    label: Strings.TITLE_CAFE_OPTIONS_POSITION + ": " + address,
                     isSystemImageName: false,
                     isShowRightArrow: true
                 ){

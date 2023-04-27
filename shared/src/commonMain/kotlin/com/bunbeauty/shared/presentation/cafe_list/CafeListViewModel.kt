@@ -94,6 +94,7 @@ class CafeListViewModel(
         return CafeItem(
             uuid = cafe.uuid,
             address = cafe.address,
+            phone = cafe.phone,
             workingHours = "$fromTime$WORKING_HOURS_DIVIDER$toTime",
             cafeOpenState =  cafeInteractor.getCafeStatus(cafe, timeZone),
         )
