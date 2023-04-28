@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.feature.auth.screen.login
 
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
-import com.google.firebase.auth.PhoneAuthProvider
 
 data class LoginState(
     val phone: String = "",
@@ -19,8 +18,6 @@ data class LoginState(
     sealed interface Event {
         data class NavigateToConfirmEvent(
             val phone: String,
-            val verificationId: String,
-            val resendToken: PhoneAuthProvider.ForceResendingToken,
             val successLoginDirection: SuccessLoginDirection,
         ) : Event
 

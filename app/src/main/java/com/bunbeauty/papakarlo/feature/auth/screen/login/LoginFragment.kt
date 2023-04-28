@@ -77,11 +77,7 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
             }
         }
         phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
-            viewModel.onCodeSent(
-                codeSentEvent.phone,
-                codeSentEvent.verificationId,
-                codeSentEvent.token
-            )
+            viewModel.onCodeSent(codeSentEvent.phone)
         }
         phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
             viewModel.onVerificationError(authErrorEvent.error)
@@ -104,8 +100,6 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
                     findNavController().navigateSafe(
                         LoginFragmentDirections.toConfirmFragment(
                             event.phone,
-                            event.verificationId,
-                            event.resendToken,
                             event.successLoginDirection
                         )
                     )

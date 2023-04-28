@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
@@ -16,7 +15,6 @@ import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -29,11 +27,9 @@ import kotlinx.coroutines.launch
 class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle,
+    private val successLoginDirection: SuccessLoginDirection,
+    phoneNumber: String,
 ) : BaseViewModel() {
-
-    private val successLoginDirection: SuccessLoginDirection =
-        savedStateHandle["successLoginDirection"]!!
 
     private val timerSecondCount = 60
     private val timerIntervalMillis = 1000L
@@ -43,9 +39,7 @@ class ConfirmViewModel(
     private val mutableConfirmState: MutableStateFlow<ConfirmState> =
         MutableStateFlow(
             ConfirmState(
-                phoneNumber = savedStateHandle["phone"]!!,
-                resendToken = savedStateHandle["resendToken"]!!,
-                verificationId = savedStateHandle["verificationId"]!!,
+                phoneNumber = phoneNumber,
                 resendSeconds = timerSecondCount,
                 isCodeChecking = false
             )
@@ -70,13 +64,6 @@ class ConfirmViewModel(
 
     fun onResendCodeClicked() {
         startResendTimer()
-    }
-
-    fun onCodeSent(verificationId: String, resendToken: PhoneAuthProvider.ForceResendingToken) {
-        mutableConfirmState.value = mutableConfirmState.value.copy(
-            verificationId = verificationId,
-            resendToken = resendToken
-        )
     }
 
     fun onVerificationError(error: String) {

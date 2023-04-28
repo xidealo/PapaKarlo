@@ -126,7 +126,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             userInteractor = get(),
             firebaseAuthRepository = get(),
-            savedStateHandle = parameters.get()
+            successLoginDirection = parameters[0],
+            phoneNumber = parameters[1],
         )
     }
     viewModel {

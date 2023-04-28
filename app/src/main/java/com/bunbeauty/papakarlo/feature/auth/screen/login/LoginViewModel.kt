@@ -10,7 +10,6 @@ import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -179,17 +178,11 @@ class LoginViewModel(
         }
     }
 
-    fun onCodeSent(
-        phone: String,
-        verificationId: String,
-        resendToken: PhoneAuthProvider.ForceResendingToken,
-    ) {
+    fun onCodeSent(phone: String) {
         mutableLoginState.update { state ->
             state.copy(
                 eventList = state.eventList + LoginState.Event.NavigateToConfirmEvent(
                     phone = phone,
-                    verificationId = verificationId,
-                    resendToken = resendToken,
                     successLoginDirection = successLoginDirection,
                 ),
             )

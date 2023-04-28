@@ -1,11 +1,7 @@
 package com.bunbeauty.papakarlo.feature.auth.model
 
-import com.google.firebase.auth.PhoneAuthProvider
-
 data class ConfirmState(
     val phoneNumber: String,
-    val resendToken: PhoneAuthProvider.ForceResendingToken,
-    val verificationId: String,
     val resendSeconds: Int,
     val isCodeChecking: Boolean,
     val eventList: List<Event> = emptyList(),

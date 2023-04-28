@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
@@ -35,15 +35,22 @@ import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.google.firebase.auth.PhoneAuthProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.core.parameter.parametersOf
 
 class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
 
-    override val viewModel: ConfirmViewModel by stateViewModel(state = {
-        arguments ?: bundleOf()
-    })
+    private val args: ConfirmFragmentArgs by navArgs()
+
+    override val viewModel: ConfirmViewModel by stateViewModel(
+        parameters = {
+            parametersOf(
+                args.successLoginDirection,
+                args.phone,
+            )
+        }
+    )
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
@@ -59,9 +66,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                 handleEventList(confirmState.eventList)
             }
             ConfirmScreen(confirmState)
-        }
-        phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
-            viewModel.onCodeSent(codeSentEvent.verificationId, codeSentEvent.token)
         }
         phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
             viewModel.onVerificationError(authErrorEvent.error)
@@ -95,7 +99,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                         phoneVerificationUtil.resendVerificationCode(
                             phone = confirmState.formattedPhoneNumber,
                             activity = requireActivity(),
-                            token = confirmState.resendToken
                         )
                     }
                 }
@@ -135,10 +138,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) { code ->
                 viewModel.onCodeEntered()
-                phoneVerificationUtil.verifyCode(
-                    code = code,
-                    verificationId = confirmState.verificationId
-                )
+                phoneVerificationUtil.verifyCode(code)
             }
             Spacer(modifier = Modifier.weight(1f))
             Spacer(
@@ -169,8 +169,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
             ConfirmScreen(
                 ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 59,
                     isCodeChecking = false
                 )
@@ -185,8 +183,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
             ConfirmScreen(
                 ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 0,
                     isCodeChecking = false
                 )
@@ -201,8 +197,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
             ConfirmScreen(
                 ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 0,
                     isCodeChecking = true
                 )
