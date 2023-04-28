@@ -11,4 +11,5 @@ struct AddressItem:Identifiable {
     var id : String
     var address:String
     var isClickable:Bool
+    var isSelected:Bool
 }

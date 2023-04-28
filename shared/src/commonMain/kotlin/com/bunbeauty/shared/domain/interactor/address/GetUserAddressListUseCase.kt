@@ -8,7 +8,6 @@ class GetUserAddressListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo
 ) {
-
     suspend operator fun invoke(): List<UserAddress> {
         val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return emptyList()

@@ -79,6 +79,7 @@ class IosComponent : KoinComponent {
     fun provideGetSelectedUserAddressUseCase(): GetSelectedUserAddressUseCase = get()
     fun provideGetSelectedCafeUseCase(): GetSelectedCafeUseCase = get()
     fun provideGetUserAddressListUseCase(): GetUserAddressListUseCase = get()
+    fun provideGetSelectableUserAddressListUseCase(): GetSelectableUserAddressListUseCase = get()
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()
     fun provideGetCartTotalUseCase(): GetCartTotalUseCase = get()
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()

@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.presentation.user_address_list
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
+import com.bunbeauty.shared.domain.interactor.address.GetSelectableUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
 import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class UserAddressListViewModel(
-    private val getUserAddressList: GetUserAddressListUseCase,
+    private val getSelectableUserAddressListUseCase: GetSelectableUserAddressListUseCase,
     private val saveSelectedUserAddressUseCase: SaveSelectedUserAddressUseCase,
 ) : SharedViewModel() {
 
@@ -21,7 +22,7 @@ class UserAddressListViewModel(
             state.copy(state = UserAddressListState.State.LOADING)
         }
         sharedScope.launch {
-            val addressList = getUserAddressList()
+            val addressList = getSelectableUserAddressListUseCase()
             mutableAddressListState.update { state ->
                 state.copy(
                     userAddressList = addressList,

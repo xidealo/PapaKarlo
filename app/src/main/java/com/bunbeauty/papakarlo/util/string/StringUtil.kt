@@ -3,6 +3,7 @@ package com.bunbeauty.papakarlo.util.string
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -41,6 +42,21 @@ class StringUtil(
                 getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
                 getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
                 getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+        }
+    }
+
+    override fun getUserAddressString(userAddress: SelectableUserAddress?): String? {
+        return userAddress?.let {
+            val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
+            val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
+            val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
+            val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
+            userAddress.street.name +
+                    getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
+                    getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
+                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
+                    getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
+                    getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
         }
     }
 

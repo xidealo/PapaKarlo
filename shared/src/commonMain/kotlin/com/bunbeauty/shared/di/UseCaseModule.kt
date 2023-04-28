@@ -13,11 +13,7 @@ import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
+import com.bunbeauty.shared.domain.interactor.address.*
 import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
@@ -34,6 +30,12 @@ internal fun useCaseModule() = module {
     }
     factory {
         GetUserAddressListUseCase(
+            dataStoreRepo = get(),
+            userAddressRepo = get(),
+        )
+    }
+    factory {
+        GetSelectableUserAddressListUseCase(
             dataStoreRepo = get(),
             userAddressRepo = get(),
         )

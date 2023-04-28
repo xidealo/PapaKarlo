@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.util.string
 
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
@@ -11,6 +12,7 @@ import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 interface IStringUtil {
 
     fun getUserAddressString(userAddress: UserAddress?): String?
+    fun getUserAddressString(userAddress: SelectableUserAddress?): String?
     fun getUserAddressString(userAddress: UserAddressUi?): String?
     fun getOrderAddressString(orderAddress: OrderAddress): String
     fun getDateTimeString(dateTime: DateTime): String
