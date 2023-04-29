@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.interactor.address
+package com.bunbeauty.shared.domain.use_case.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.address.UserAddress

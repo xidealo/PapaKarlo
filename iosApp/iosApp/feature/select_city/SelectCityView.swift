@@ -21,11 +21,10 @@ struct SelectCityView: View {
             ){
                 EmptyView()
             }.isDetailLink(false)
+            
             ToolbarView(
-                title:  "titleSelectCity",
-                back: {
-                    self.mode.wrappedValue.dismiss()
-                })
+                title:  "titleSelectCity"
+                )
             if viewModel.selectCityViewState.isLoading{
                 LoadingView()
             }else{

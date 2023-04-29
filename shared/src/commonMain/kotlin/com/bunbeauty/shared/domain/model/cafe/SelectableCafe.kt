@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.model.cafe
 
-data class Cafe(
+data class SelectableCafe(
     val uuid: String,
     val fromTime: Int,
     val toTime: Int,
@@ -9,4 +9,5 @@ data class Cafe(
     val latitude: Double,
     val longitude: Double,
     val cityUuid: String,
+    val isSelected:Boolean
 )

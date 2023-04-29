@@ -16,19 +16,20 @@ import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.interactor.address.*
-import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
-import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
+import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.payment.PaymentInteractor
-import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
+import com.bunbeauty.shared.domain.use_case.address.*
+import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -81,6 +82,7 @@ class IosComponent : KoinComponent {
     fun provideGetUserAddressListUseCase(): GetUserAddressListUseCase = get()
     fun provideGetSelectableUserAddressListUseCase(): GetSelectableUserAddressListUseCase = get()
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()
+    fun provideGetSelectableCafeListUseCase(): GetSelectableCafeListUseCase = get()
     fun provideGetCartTotalUseCase(): GetCartTotalUseCase = get()
     fun provideGetMinTimeUseCase(): GetMinTimeUseCase = get()
     fun provideCreateOrderUseCase(): CreateOrderUseCase = get()

@@ -13,12 +13,13 @@ import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.interactor.address.*
-import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
-import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
+import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
+import com.bunbeauty.shared.domain.use_case.address.*
+import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import org.koin.dsl.module
 
 internal fun useCaseModule() = module {
@@ -48,6 +49,12 @@ internal fun useCaseModule() = module {
     }
     factory {
         GetCafeListUseCase(
+            cafeRepo = get(),
+            dataStoreRepo = get(),
+        )
+    }
+    factory {
+        GetSelectableCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
         )
