@@ -29,6 +29,7 @@ struct MenuView: View {
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
+                
                 ScrollView(.horizontal, showsIndicators:false) {
                     ScrollViewReader{ scrollReader in
                         HStack(spacing:0){
@@ -52,7 +53,7 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-                
+           
                 ScrollView {
                     ScrollViewReader{ scrollReader in
                         LazyVGrid(columns: columns, spacing: 8) {

@@ -86,7 +86,7 @@ fun viewModelModule() = module {
     }
     viewModel {
         UserAddressListViewModel(
-            getUserAddressList = get(),
+            getSelectableUserAddressListUseCase = get(),
             saveSelectedUserAddressUseCase = get(),
         )
     }

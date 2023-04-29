@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.interactor.deferred_time
+package com.bunbeauty.shared.domain.use_case.deferred_time
 
 import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.domain.model.date_time.Time

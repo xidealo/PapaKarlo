@@ -30,7 +30,6 @@ struct CafeListView: View {
 
     var body: some View {
             VStack(spacing:0){
-                
                 switch(cafeViewState.state){
                 case is CafeListState.StateLoading : LoadingView()
                 case is CafeListState.StateSuccess : SuccessCafeListView(
@@ -40,7 +39,7 @@ struct CafeListView: View {
                             address: cafe.address,
                             workingHours: cafe.workingHours,
                             cafeOpenState: cafe.cafeOpenState,
-                            phone: "",
+                            phone: cafe.phone,
                             latitude: 0.0,
                             longitude: 0.0
                         )

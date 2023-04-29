@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.interactor.cafe
+package com.bunbeauty.shared.domain.use_case.cafe
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.EmptyCafeListException

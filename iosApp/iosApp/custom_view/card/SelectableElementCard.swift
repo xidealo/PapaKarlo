@@ -15,6 +15,7 @@ struct SelectableElementCard: View {
         HStack(spacing: 0){
             Text(text)
                 .foregroundColor(AppColor.onSurface)
+                .multilineTextAlignment(.leading)
             Spacer()
             if(isSelected){
                 IconImage(

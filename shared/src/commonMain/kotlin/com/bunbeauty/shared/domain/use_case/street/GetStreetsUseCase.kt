@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.interactor.street
+package com.bunbeauty.shared.domain.use_case.street
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException

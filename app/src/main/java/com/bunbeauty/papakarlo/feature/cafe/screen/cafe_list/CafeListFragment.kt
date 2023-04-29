@@ -146,18 +146,21 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compo
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
                             cafeOpenState = CafeItem.CafeOpenState.Opened,
+                            phone = "00000000"
                         ),
                         CafeItem(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
                             cafeOpenState = CafeItem.CafeOpenState.CloseSoon(30),
+                            phone = "00000000"
                         ),
                         CafeItem(
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
                             cafeOpenState =  CafeItem.CafeOpenState.Closed,
+                            phone = "00000000"
                         )
                     ),
                     state = CafeListState.State.Success,

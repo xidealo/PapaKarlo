@@ -1,4 +1,4 @@
-package com.bunbeauty.shared.domain.interactor.address
+package com.bunbeauty.shared.domain.use_case.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.address.UserAddress
@@ -8,7 +8,6 @@ class GetUserAddressListUseCase(
     private val dataStoreRepo: DataStoreRepo,
     private val userAddressRepo: UserAddressRepo
 ) {
-
     suspend operator fun invoke(): List<UserAddress> {
         val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return emptyList()
