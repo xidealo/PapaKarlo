@@ -24,7 +24,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.init()
+                viewModel.checkAppVersion()
             }
         }
     }

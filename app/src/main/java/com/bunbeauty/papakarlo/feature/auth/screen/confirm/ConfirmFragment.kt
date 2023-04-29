@@ -124,12 +124,16 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(R.string.msg_confirm_enter_code),
-                textAlign = TextAlign.Center
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                textAlign = TextAlign.Center,
             )
             Text(
                 modifier = Modifier
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 text = stringResource(R.string.msg_confirm_phone_info) + confirmState.phoneNumber,
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
             SmsEditText(
