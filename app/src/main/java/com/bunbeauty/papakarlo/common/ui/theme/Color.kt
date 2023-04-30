@@ -10,7 +10,9 @@ import androidx.compose.ui.graphics.Color
 private val orange = Color(0xFFFF8243)
 private val gold = Color(0xFFCA9D72)
 private val white = Color(0xFFFFFFFF)
-private val black = Color(0xFF000000)
+private val black1 = Color(0xFF000000)
+private val black2 = Color(0xFF1D1B20)
+private val black3 = Color(0xFF151117)
 private val grey1 = Color(0xFFDDDDDD)
 private val grey2 = Color(0xFFC1C1C1)
 private val grey3 = Color(0xFFA7A5A5)
@@ -26,7 +28,7 @@ private val darkGrey = Color(0xFF7B7A80)
 private val lightBlue = Color(0xFF0AB9E8)
 private val lightOrange = Color(0xFFFDA65D)
 
-val PapaKarloColors = AppColors(
+val PapaKarloLightColors = AppColors(
     mainColors = MainColors(
         primary = orange,
         disabled = grey1,
@@ -37,8 +39,8 @@ val PapaKarloColors = AppColors(
         onPrimary = white,
         onDisabled = grey3,
         onSecondary = grey3,
-        onBackground = black,
-        onSurface = black,
+        onBackground = black1,
+        onSurface = black1,
         onSurfaceVariant = grey2,
         onError = white,
     ),
@@ -62,8 +64,44 @@ val PapaKarloColors = AppColors(
     bunBeautyBrandColor = lightBlue,
     isLight = true
 )
+val PapaKarloDarkColors = AppColors(
+    mainColors = MainColors(
+        primary = orange,
+        disabled = grey1,
+        secondary = black3,
+        background = black2,
+        surface = black3,
+        error = red,
+        onPrimary = white,
+        onDisabled = grey3,
+        onSecondary = grey3,
+        onBackground = white,
+        onSurface = white,
+        onSurfaceVariant = grey2,
+        onError = black3,
+    ),
+    orderColors = OrderColors(
+        notAccepted = purple,
+        accepted = blue,
+        preparing = lightRed,
+        sentOut = yellow,
+        done = lightGreen,
+        delivered = green,
+        canceled = darkGrey,
+        onOrder = white,
+    ),
+    statusColors = StatusColors(
+        positive = green,
+        warning = yellow,
+        negative = lightRed,
+        info = lightOrange,
+        onStatus = white,
+    ),
+    bunBeautyBrandColor = lightBlue,
+    isLight = false
+)
 
-val YuliarColors = AppColors(
+val YuliarLightColors = AppColors(
     mainColors = MainColors(
         primary = gold,
         disabled = grey1,
@@ -74,10 +112,47 @@ val YuliarColors = AppColors(
         onPrimary = white,
         onDisabled = grey3,
         onSecondary = grey3,
-        onBackground = black,
-        onSurface = black,
+        onBackground = black1,
+        onSurface = black1,
         onSurfaceVariant = grey2,
         onError = white,
+    ),
+    orderColors = OrderColors(
+        notAccepted = purple,
+        accepted = blue,
+        preparing = lightRed,
+        sentOut = yellow,
+        done = lightGreen,
+        delivered = green,
+        canceled = darkGrey,
+        onOrder = white,
+    ),
+    statusColors = StatusColors(
+        positive = green,
+        warning = yellow,
+        negative = lightRed,
+        info = gold,
+        onStatus = white,
+    ),
+    bunBeautyBrandColor = lightBlue,
+    isLight = true
+)
+
+val YuliarDarkColors = AppColors(
+    mainColors = MainColors(
+        primary = gold,
+        disabled = grey1,
+        secondary = black3,
+        background = black2,
+        surface = black3,
+        error = red,
+        onPrimary = white,
+        onDisabled = grey3,
+        onSecondary = grey3,
+        onBackground = white,
+        onSurface = white,
+        onSurfaceVariant = grey2,
+        onError = black3,
     ),
     orderColors = OrderColors(
         notAccepted = purple,
@@ -100,7 +175,7 @@ val YuliarColors = AppColors(
     isLight = false
 )
 
-val LocalAppColors = staticCompositionLocalOf { PapaKarloColors }
+val LocalAppColors = staticCompositionLocalOf { PapaKarloLightColors }
 
 @Stable
 class AppColors(

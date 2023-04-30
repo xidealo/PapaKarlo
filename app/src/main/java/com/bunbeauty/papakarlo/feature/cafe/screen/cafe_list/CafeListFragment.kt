@@ -36,6 +36,7 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.google.android.material.transition.MaterialFadeThrough
+import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -44,12 +45,6 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-        findNavController()
-    }
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
