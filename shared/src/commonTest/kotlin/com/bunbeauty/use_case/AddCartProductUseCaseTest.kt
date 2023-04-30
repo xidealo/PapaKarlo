@@ -1,5 +1,6 @@
 package com.bunbeauty.use_case
 
+import com.bunbeauty.shared.Constants.CART_PRODUCT_LIMIT
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
@@ -7,66 +8,73 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class AddCartProductUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()
     private val menuProductUuid = "menu_product_uuid"
+    private lateinit var addCartProduct: AddCartProductUseCase
+
+    @BeforeTest
+    fun setup() {
+        addCartProduct = AddCartProductUseCase(cartProductRepo)
+    }
 
     @Test
-    fun `invoke should return false when cart is full`() = runTest {
+    fun `return false when cart is full`() = runTest {
         // Given
-        val useCase = AddCartProductUseCase(cartProductRepo)
         coEvery { cartProductRepo.getCartProductList() } returns generateCartProducts(
             CART_PRODUCT_LIMIT
         )
 
         // When
-        val result = useCase(menuProductUuid)
+        val result = addCartProduct(menuProductUuid)
 
         // Then
         assertFalse(result)
     }
 
     @Test
-    fun `invoke should save new cart product when product is not in cart`() = runTest {
+    fun `save new cart product when product is not in cart`() = runTest {
         // Given
-        val useCase = AddCartProductUseCase(cartProductRepo)
         coEvery { cartProductRepo.getCartProductList() } returns emptyList()
         coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns null
         coEvery { cartProductRepo.saveAsCartProduct(menuProductUuid) } returns generateCartProduct()
 
         // When
-        val result = useCase(menuProductUuid)
+        val result = addCartProduct(menuProductUuid)
 
         // Then
         assertTrue(result)
     }
 
     @Test
-    fun `invoke should update cart product count when product is in cart`() = runTest {
+    fun `update cart product count when product is in cart`() = runTest {
         // Given
-        val useCase = AddCartProductUseCase(cartProductRepo)
         val initialCount = 2
         val initialCartProduct = generateCartProduct(count = initialCount)
         coEvery { cartProductRepo.getCartProductList() } returns listOf(initialCartProduct)
         coEvery { cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) } returns initialCartProduct
-        coEvery { cartProductRepo.updateCartProductCount(initialCartProduct.uuid, initialCount + 1) } returns initialCartProduct.copy(count = initialCount + 1)
+        coEvery {
+            cartProductRepo.updateCartProductCount(
+                initialCartProduct.uuid,
+                initialCount + 1
+            )
+        } returns initialCartProduct.copy(count = initialCount + 1)
 
         // When
-        val result = useCase(menuProductUuid)
+        val result = addCartProduct(menuProductUuid)
 
         // Then
         assertTrue(result)
     }
 
     companion object {
-        private const val CART_PRODUCT_LIMIT = 99
 
         private fun generateCartProducts(count: Int): List<CartProduct> {
             return List(count) {
