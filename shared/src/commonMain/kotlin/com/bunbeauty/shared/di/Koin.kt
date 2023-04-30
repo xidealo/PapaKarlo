@@ -9,11 +9,13 @@ import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.order.*
+import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
@@ -100,6 +102,9 @@ class IosComponent : KoinComponent {
     fun provideGetLastOrderUseCase(): GetLastOrderUseCase = get()
     fun provideGetFilteredStreetListUseCase(): GetFilteredStreetListUseCase = get()
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
+    fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
+
+    fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()
