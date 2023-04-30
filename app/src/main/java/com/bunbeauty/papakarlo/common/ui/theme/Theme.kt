@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.common.ui.theme
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -15,11 +16,24 @@ import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
 @Composable
 fun FoodDeliveryTheme(
     flavor: String = BuildConfig.FLAVOR,
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colors = when (flavor) {
-        PAPA_KARLO_FLAVOR_NAME -> PapaKarloColors
-        YULIAR_FLAVOR_NAME -> YuliarColors
+        PAPA_KARLO_FLAVOR_NAME -> {
+            if (isDarkTheme) {
+                PapaKarloDarkColors
+            } else {
+                PapaKarloLightColors
+            }
+        }
+        YULIAR_FLAVOR_NAME -> {
+            if (isDarkTheme) {
+                YuliarDarkColors
+            } else {
+                YuliarLightColors
+            }
+        }
         else -> throw UnknownFlavorException()
     }
     val rememberedColors = remember {
