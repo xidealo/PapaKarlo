@@ -32,7 +32,6 @@ import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.shared.domain.model.cafe.CafeStatus
-import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,12 +40,6 @@ class CafeListFragment : BaseFragment(R.layout.layout_compose) {
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     override val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-        findNavController()
-    }
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

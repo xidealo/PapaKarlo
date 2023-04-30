@@ -54,7 +54,6 @@ import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
-import com.google.android.material.transition.MaterialFadeThrough
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -65,11 +64,6 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     override val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val menuUiStateMapper: MenuUiStateMapper by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
