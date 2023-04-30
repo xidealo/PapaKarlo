@@ -35,15 +35,15 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.FragmentProfileBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
@@ -58,9 +58,9 @@ import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profile) {
+class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewBinding by viewBinding(FragmentProfileBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: ProfileViewModel by viewModel()
 
     private val profileUiStateMapper: ProfileUiStateMapper by inject()
@@ -77,7 +77,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.update()
-        viewBinding.fragmentProfileCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val profileState by viewModel.profileState.collectAsStateWithLifecycle()
             ProfileScreen(
                 profileUi = profileUiStateMapper.map(profileState),
@@ -110,7 +110,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
         onYourAddressesClicked: () -> Unit,
         onOrderHistoryClicked: () -> Unit,
     ) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
             topActions = listOf(
                 FoodDeliveryCartAction(
@@ -129,7 +129,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_profil
                         viewModel.onLoginClicked()
                     }
                 }
-            }
+            },
         ) {
             when (profileUi.state) {
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(

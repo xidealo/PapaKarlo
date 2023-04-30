@@ -22,11 +22,11 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.navigateSafe
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentOrderListBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
@@ -38,9 +38,9 @@ import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_order_list) {
+class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewBinding by viewBinding(FragmentOrderListBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: OrderListViewModel by viewModel()
 
     private val orderItemMapper: OrderItemMapper by inject()
@@ -49,7 +49,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentOrderListCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val orderListState by viewModel.orderListState.collectAsStateWithLifecycle()
             OrderListScreen(
                 orderListUi = OrderListUi(
@@ -75,7 +75,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_orde
 
     @Composable
     private fun OrderListScreen(orderListUi: OrderListUi) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_my_orders),
             backActionClick = {
                 findNavController().popBackStack()

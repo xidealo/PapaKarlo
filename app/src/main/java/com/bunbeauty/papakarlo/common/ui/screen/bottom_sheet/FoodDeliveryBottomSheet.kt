@@ -83,6 +83,7 @@ fun FoodDeliveryBottomSheet(
                 modifier = Modifier.fillMaxWidth(),
                 text = title,
                 style = FoodDeliveryTheme.typography.titleMedium.bold,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
         },

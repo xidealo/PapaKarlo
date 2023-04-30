@@ -83,7 +83,8 @@ private fun PaymentScreen(
     FoodDeliveryBottomSheet(titleStringId = R.string.title_payment) {
         Text(
             text = stringResource(R.string.msg_payment_methods),
-            style = FoodDeliveryTheme.typography.bodyMedium
+            style = FoodDeliveryTheme.typography.bodyMedium,
+            color = FoodDeliveryTheme.colors.mainColors.onSurface,
         )
         Column(
             modifier = Modifier.padding(top = 16.dp),

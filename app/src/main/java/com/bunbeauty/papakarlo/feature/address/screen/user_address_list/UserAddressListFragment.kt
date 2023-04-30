@@ -22,12 +22,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
@@ -38,9 +38,9 @@ import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewMo
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
+class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: UserAddressListViewModel by viewModel()
 
     val userAddressItemMapper: UserAddressItemMapper by inject()
@@ -69,7 +69,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.fragmen
 
     @Composable
     private fun UserAddressListScreen(userAddressListState: UserAddressListUi) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_my_addresses),
             backActionClick = {
                 findNavController().popBackStack()

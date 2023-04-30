@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.view_model.CartViewModel
+import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.shared.Constants.WORKING_HOURS_DIVIDER
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -23,7 +23,7 @@ class CafeListViewModel(
     private val getSelectedCityTimeZoneUseCase: GetSelectedCityTimeZoneUseCase,
     private val getCafeListUseCase: GetCafeListUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
-) : CartViewModel() {
+) : BaseViewModel() {
 
     private val mutableCafeItemListState = MutableStateFlow(CafeListState())
     val cafeListState = mutableCafeItemListState.asStateFlow()

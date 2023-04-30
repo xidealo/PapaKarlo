@@ -26,7 +26,8 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             stringUtil = get(),
-            observeCartUseCase = get()
+            observeCartUseCase = get(),
+            addCartProductUseCase = get(),
         )
     }
     viewModel {
@@ -39,6 +40,8 @@ fun viewModelModule() = module {
             stringUtil = get(),
             userInteractor = get(),
             cartProductInteractor = get(),
+            addCartProductUseCase = get(),
+            removeCartProductUseCase = get(),
         )
     }
     viewModel {
@@ -123,7 +126,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             userInteractor = get(),
             firebaseAuthRepository = get(),
-            savedStateHandle = parameters.get()
+            successLoginDirection = parameters[0],
+            phoneNumber = parameters[1],
         )
     }
     viewModel {

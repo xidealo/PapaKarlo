@@ -20,12 +20,12 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.navigateSafe
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.cafe.model.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
@@ -36,15 +36,16 @@ import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
+class CafeListFragment : BaseFragment(R.layout.layout_compose) {
 
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     override val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough()
+        findNavController()
     }
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -72,14 +73,15 @@ class CafeListFragment : BaseFragment(R.layout.fragment_compose) {
         onCafeClicked: (CafeItem) -> Unit,
         onRefreshClicked: () -> Unit,
     ) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
             topActions = listOf(
                 FoodDeliveryCartAction(
                     topCartUi = cafeListUi.topCartUi,
-                ) {
-                    findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
-                }
+                    onClick = {
+                        findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
+                    }
+                )
             ),
         ) {
             when (cafeListUi.state) {

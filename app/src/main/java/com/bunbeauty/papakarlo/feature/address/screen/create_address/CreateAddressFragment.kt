@@ -30,17 +30,17 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldWithMenu
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentCreateAddressBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
@@ -50,17 +50,17 @@ import com.bunbeauty.shared.presentation.create_address.CreateAddressState
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_create_address) {
+class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     val viewModel: CreateAddressViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentCreateAddressBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getStreetList()
-        viewBinding.fragmentCreateAddressCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val streetListState by viewModel.streetListState.collectAsStateWithLifecycle()
             CreateAddressScreen(streetListState)
             LaunchedEffect(streetListState.eventList) {
@@ -71,7 +71,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
 
     @Composable
     private fun CreateAddressScreen(createAddressState: CreateAddressState) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_create_address),
             backActionClick = {
                 findNavController().popBackStack()
@@ -277,20 +277,14 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_
         eventList.forEach { event ->
             when (event) {
                 is CreateAddressState.Event.AddressCreatedSuccess -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_create_address_created),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(R.string.msg_create_address_created)
                     )
                     findNavController().popBackStack()
                 }
                 is CreateAddressState.Event.AddressCreatedFailed -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_create_address_fail),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = false
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_create_address_fail)
                     )
                 }
             }

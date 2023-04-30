@@ -3,6 +3,7 @@ package com.bunbeauty.shared.di
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
@@ -175,6 +176,11 @@ internal fun useCaseModule() = module {
     }
     factory {
         AddCartProductUseCase(
+            cartProductRepo = get()
+        )
+    }
+    factory {
+        RemoveCartProductUseCase(
             cartProductRepo = get()
         )
     }

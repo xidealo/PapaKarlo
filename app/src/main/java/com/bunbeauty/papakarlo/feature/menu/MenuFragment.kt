@@ -35,14 +35,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
@@ -60,10 +60,10 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
-class MenuFragment : BaseFragment(R.layout.fragment_compose) {
+class MenuFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: MenuViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val menuUiStateMapper: MenuUiStateMapper by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,7 +103,7 @@ class MenuFragment : BaseFragment(R.layout.fragment_compose) {
 
     @Composable
     private fun MenuScreen(menuUi: MenuUi) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
             drawableId = R.drawable.logo_small,
             topActions = listOf(

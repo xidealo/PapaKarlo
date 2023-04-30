@@ -45,21 +45,24 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
     private val mutableCodeSentEvent: MutableSharedFlow<CodeSentEvent> = MutableSharedFlow()
     override val codeSentEvent: SharedFlow<CodeSentEvent> = mutableCodeSentEvent.asSharedFlow()
 
+    private var verificationId: String? = null
+    private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
+
     override fun sendVerificationCode(phone: String, activity: Activity) {
         verifyPhoneNumber(phone, activity)
     }
 
-    override fun resendVerificationCode(
-        phone: String,
-        activity: Activity,
-        token: PhoneAuthProvider.ForceResendingToken
-    ) {
-        verifyPhoneNumber(phone, activity, token)
+    override fun resendVerificationCode(phone: String, activity: Activity) {
+        forceResendingToken?.let { token ->
+            verifyPhoneNumber(phone, activity, token)
+        }
     }
 
-    override fun verifyCode(code: String, verificationId: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationId, code)
-        signInWithCredential(credential)
+    override fun verifyCode(code: String) {
+        verificationId?.let { id ->
+            val credential = PhoneAuthProvider.getCredential(id, code)
+            signInWithCredential(credential)
+        }
     }
 
     fun verifyPhoneNumber(
@@ -141,10 +144,12 @@ class PhoneVerificationUtil : IPhoneVerificationUtil, CoroutineScope {
     fun sendCodeSent(
         phone: String,
         verificationId: String,
-        token: PhoneAuthProvider.ForceResendingToken
+        forceResendingToken: PhoneAuthProvider.ForceResendingToken
     ) {
+        this.verificationId = verificationId
+        this.forceResendingToken = forceResendingToken
         launch {
-            mutableCodeSentEvent.emit(CodeSentEvent(phone, verificationId, token))
+            mutableCodeSentEvent.emit(CodeSentEvent(phone))
         }
     }
 }

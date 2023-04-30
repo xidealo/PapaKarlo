@@ -29,14 +29,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.delegates.argument
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.databinding.FragmentOrderDetailsBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.ui.OrderProductItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderStatusBar
@@ -45,10 +45,10 @@ import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_order_details) {
+class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     private val viewModel: OrderDetailsViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentOrderDetailsBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val orderDetailsUiStateMapper: OrderDetailsUiStateMapper by inject()
 
@@ -58,7 +58,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewBinding.fragmentOrderDetailsCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val orderState by viewModel.orderState.collectAsStateWithLifecycle()
             OrderDetailsScreen(
                 orderDetailsUi = orderDetailsUiStateMapper.map(orderState)
@@ -78,7 +78,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_o
 
     @Composable
     private fun OrderDetailsScreen(orderDetailsUi: OrderDetailsUi) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = orderDetailsUi.code,
             backActionClick = {
                 findNavController().popBackStack()

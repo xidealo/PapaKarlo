@@ -45,7 +45,7 @@ class NetworkUtil(
         awaitClose { connectivityManager.unregisterNetworkCallback(networkCallback) }
     }
 
-    fun getInitialIsOnline(): Boolean {
+    private fun getInitialIsOnline(): Boolean {
         val network = connectivityManager.activeNetwork
         val capabilities = connectivityManager.getNetworkCapabilities(network)
         return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
