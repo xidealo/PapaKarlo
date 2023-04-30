@@ -159,7 +159,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compo
                             uuid = "",
                             address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                             workingHours = "9:00 - 22:00",
-                            cafeOpenState =  CafeItem.CafeOpenState.Closed,
+                            cafeOpenState = CafeItem.CafeOpenState.Closed,
                             phone = "00000000"
                         )
                     ),

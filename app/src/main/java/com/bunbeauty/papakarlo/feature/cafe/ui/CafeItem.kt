@@ -64,7 +64,7 @@ private fun CafeItemOpenPreview() {
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                cafeOpenState =  CafeItem.CafeOpenState.Opened,
+                cafeOpenState = CafeItem.CafeOpenState.Opened,
                 phone = "00000000"
             ),
             onClick = {},
@@ -81,7 +81,7 @@ private fun CafeItemCloseSoonPreview() {
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                cafeOpenState =CafeItem.CafeOpenState.CloseSoon(30),
+                cafeOpenState = CafeItem.CafeOpenState.CloseSoon(30),
                 phone = "00000000"
             ),
             onClick = {},

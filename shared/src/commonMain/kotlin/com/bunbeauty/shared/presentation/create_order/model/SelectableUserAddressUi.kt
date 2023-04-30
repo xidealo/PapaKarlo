@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order.model
 
-class UserAddressUi(
+class SelectableUserAddressUi(
     val uuid: String,
     val street: String,
     val house: String,
@@ -8,4 +8,5 @@ class UserAddressUi(
     val entrance: String?,
     val floor: String?,
     val comment: String?,
+    val isSelected: Boolean,
 )

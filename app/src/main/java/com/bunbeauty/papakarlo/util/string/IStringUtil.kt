@@ -6,14 +6,14 @@ import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
-import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 interface IStringUtil {
 
     fun getUserAddressString(userAddress: UserAddress?): String?
     fun getUserAddressString(userAddress: SelectableUserAddress?): String?
-    fun getUserAddressString(userAddress: UserAddressUi?): String?
+    fun getUserAddressString(userAddress: SelectableUserAddressUi?): String?
     fun getOrderAddressString(orderAddress: OrderAddress): String
     fun getDateTimeString(dateTime: DateTime): String
     fun getTimeString(time: Time): String

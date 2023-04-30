@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.cafe.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -23,8 +22,8 @@ fun getCafeStatusText(cafeStatus: CafeItem.CafeOpenState): String {
         is CafeItem.CafeOpenState.Opened -> stringResource(R.string.msg_cafe_open)
         is CafeItem.CafeOpenState.CloseSoon -> {
             stringResource(R.string.msg_cafe_close_soon) +
-                    cafeStatus.time  +
-                    getMinuteString(cafeStatus.time)
+                cafeStatus.time +
+                getMinuteString(cafeStatus.time)
         }
         is CafeItem.CafeOpenState.Closed -> stringResource(R.string.msg_cafe_closed)
     }
