@@ -77,29 +77,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
     }
 
-    actual override val payment: Flow<Payment?> = flow {
-        emit(
-            Payment(
-                phoneNumber = NSUserDefaults.standardUserDefaults.stringForKey(
-                    PAYMENT_PHONE_NUMBER_KEY
-                ),
-                cardNumber = NSUserDefaults.standardUserDefaults.stringForKey(
-                    PAYMENT_CARD_NUMBER_KEY
-                )
-            )
-        )
-    }
-
-    actual override suspend fun getPayment(): Payment? {
-        return payment.firstOrNull()
-    }
-
-    actual override suspend fun savePayment(payment: Payment) {
-        NSUserDefaults.standardUserDefaults.setObject(payment.phoneNumber, PAYMENT_PHONE_NUMBER_KEY)
-        NSUserDefaults.standardUserDefaults.setObject(payment.cardNumber, PAYMENT_CARD_NUMBER_KEY)
-    }
-
-
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
         return flow {
             emit(
@@ -168,8 +145,6 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         const val USER_UUID_KEY = "USER_UUID_KEY"
         const val DELIVERY_COST_KEY = "DELIVERY_COST_KEY"
         const val DELIVERY_FOR_FREE_KEY = "DELIVERY_FOR_FREE_KEY"
-        const val PAYMENT_PHONE_NUMBER_KEY = "PAYMENT_PHONE_NUMBER_KEY"
-        const val PAYMENT_CARD_NUMBER_KEY = "PAYMENT_CARD_NUMBER_KEY"
         private const val SETTINGS_USER_UUID_KEY = "SETTINGS_USER_UUID_KEY"
         private const val SETTINGS_PHONE_NUMBER_KEY = "SETTINGS_PHONE_NUMBER_KEY"
         private const val SETTINGS_EMAIL_KEY = "SETTINGS_EMAIL_KEY"

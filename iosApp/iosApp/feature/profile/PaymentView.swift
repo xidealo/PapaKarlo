@@ -15,7 +15,7 @@ struct PaymentView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     let paymentInfo = GetPaymentInfoUseCase().invoke()
-    let paymentInteractor = iosComponent.providePaymentInteractor()
+    
     @State var payment:Payment? = nil
     
     var body: some View {
@@ -68,9 +68,9 @@ struct PaymentView: View {
         .background(Color("background"))
         .hiddenNavigationBarStyle()
         .onAppear(){
-            paymentInteractor.getPayment { _payment, err in
-                payment = _payment
-            }
+//            paymentInteractor.getPayment { _payment, err in
+//                payment = _payment
+//            }
         }
         .overlay(
             overlayView: ToastView(
