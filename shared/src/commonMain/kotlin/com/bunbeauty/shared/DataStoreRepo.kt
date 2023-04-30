@@ -24,10 +24,6 @@ interface DataStoreRepo {
     suspend fun getDelivery(): Delivery?
     suspend fun saveDelivery(delivery: Delivery)
 
-    val payment: Flow<Payment?>
-    suspend fun getPayment(): Payment?
-    suspend fun savePayment(payment: Payment)
-
     val settings: Flow<Settings?>
     suspend fun getSettings(): Settings?
     suspend fun saveSettings(settings: Settings)

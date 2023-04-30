@@ -19,18 +19,18 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentSettingsBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.city.City
@@ -38,9 +38,9 @@ import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_settings) {
+class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewBinding by viewBinding(FragmentSettingsBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: SettingsViewModel by viewModel()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -58,7 +58,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
 
     @Composable
     fun SettingsScreen(settingsState: SettingsState) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_settings),
             backActionClick = {
                 findNavController().popBackStack()
@@ -98,7 +98,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
         ) {
             settingsState.settings?.phoneNumber?.let { phoneNumber ->
                 TextCard(
-                    hintStringId = R.string.hint_settings_phone,
+                    hint = stringResource(R.string.hint_settings_phone),
                     label = phoneNumber
                 )
             }
@@ -107,26 +107,23 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
             if (email.isNullOrEmpty()) {
                 NavigationCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    labelStringId = R.string.common_email
-                ) {
-                    viewModel.onEmailClicked()
-                }
+                    label = stringResource(R.string.common_email),
+                    onClick = viewModel::onEmailClicked
+                )
             } else {
                 NavigationTextCard(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = R.string.common_email,
-                    label = email
-                ) {
-                    viewModel.onEmailClicked()
-                }
+                    label = email,
+                    onClick = viewModel::onEmailClicked,
+                )
             }
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.common_city,
-                label = settingsState.selectedCity?.name
-            ) {
-                viewModel.onCityClicked()
-            }
+                label = settingsState.selectedCity?.name,
+                onClick = viewModel::onCityClicked
+            )
         }
     }
 
@@ -148,19 +145,13 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_setti
                     }
                 }
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_settings_email_updated),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(R.string.msg_settings_email_updated)
                     )
                 }
                 SettingsState.Event.ShowEmailChangingFailedEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_something_went_wrong),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = false
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_something_went_wrong)
                     )
                 }
                 SettingsState.Event.Back -> {

@@ -40,27 +40,29 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.Constants.PHONE_CODE
+import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
-class LoginFragment : BaseFragment(R.layout.fragment_compose) {
+class LoginFragment : BaseFragment(R.layout.layout_compose) {
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
     override val viewModel: LoginViewModel by stateViewModel(state = {
         arguments ?: bundleOf()
     })
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,11 +77,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
             }
         }
         phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
-            viewModel.onCodeSent(
-                codeSentEvent.phone,
-                codeSentEvent.verificationId,
-                codeSentEvent.token
-            )
+            viewModel.onCodeSent(codeSentEvent.phone)
         }
         phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
             viewModel.onVerificationError(authErrorEvent.error)
@@ -92,26 +90,37 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
     private fun handleEventList(eventList: List<LoginState.Event>) {
         eventList.forEach { event ->
             when (event) {
-                is LoginState.Event.NavigateToCreateOrderFragment -> {
+                is LoginState.Event.NavigateToCreateOrderEvent -> {
                     findNavController().navigateSafe(LoginFragmentDirections.toCreateOrderFragment())
                 }
-                is LoginState.Event.NavigateBackToProfileFragment -> {
+                is LoginState.Event.NavigateBackToProfileEvent -> {
                     findNavController().navigateSafe(LoginFragmentDirections.backToProfileFragment())
                 }
-                is LoginState.Event.NavigateToConfirmFragment -> {
+                is LoginState.Event.NavigateToConfirmEvent -> {
                     findNavController().navigateSafe(
                         LoginFragmentDirections.toConfirmFragment(
                             event.phone,
-                            event.verificationId,
-                            event.resendToken,
                             event.successLoginDirection
                         )
                     )
                 }
-                is LoginState.Event.SendCode -> {
+                is LoginState.Event.SendCodeEvent -> {
                     phoneVerificationUtil.sendVerificationCode(
                         phone = event.phone,
                         activity = requireActivity()
+                    )
+                }
+                is LoginState.Event.ShowErrorEvent -> {
+                    val errorStringId = when (event.error) {
+                        TOO_MANY_REQUESTS -> {
+                            R.string.error_login_too_many_requests
+                        }
+                        else -> {
+                            R.string.error_something_went_wrong
+                        }
+                    }
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(errorStringId)
                     )
                 }
             }
@@ -121,7 +130,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_compose) {
 
     @Composable
     private fun LoginScreen(loginState: LoginState) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             backActionClick = {
                 findNavController().popBackStack()
             },

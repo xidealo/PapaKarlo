@@ -15,12 +15,14 @@
     <string name="description_ic_clear">Очистить</string>
     <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_copy">Копировать</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
     <string name="action_retry">Повторить попытку</string>
     <string name="common_error">Не удается загрузить данные</string>
     <string name="internet_error">Проверьте соединение и повторите попытку</string>
     <string name="description_company_logo">Лого компании</string>
+    <string name="common_copied">Скопировано!</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -78,6 +80,7 @@
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_user">Пользователь не авторизован</string>
+    <string name="error_user_address">Адрес не выбран</string>
     <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_total_cost">Итого</string>
     <string name="msg_create_order_delivery_cost">Доставка</string>
@@ -119,8 +122,6 @@
 
     <!-- CAFE LIST -->
     <string name="title_cafe_list">Рестораны</string>
-    <string name="msg_cafe_list_copy_card_number_copied">Номер карты скопирован</string>
-    <string name="msg_cafe_list_copy_phone_number_copied">Номер телефона скопирован</string>
     <string name="error_cafe_list_loading">Не удалось загрузить список ресторанов</string>
 
     <!--CAFE-->
@@ -191,7 +192,6 @@
     <string name="msg_login_info">Пожалуйста, введите номер вашего телефона</string>
     <string name="action_login_continue">Продолжить</string>
     <string name="error_login_phone">Введите корректный номер телефона</string>
-    <string name="error_login_something_try_later">Ошибка. Попробуйте позже</string>
     <string name="error_login_too_many_requests">Превышен лимит на отправку кодов, попробуйте позже</string>
     <string name="description_login_logo">Лого</string>
 
@@ -218,6 +218,11 @@
 
     <!-- PAYMENT -->
     <string name="title_payment">Оплата</string>
+    <string name="msg_payment_methods">Доступные способы оплаты:</string>
+    <string name="msg_payment_cash">Наличные</string>
+    <string name="msg_payment_card">Картой при получении</string>
+    <string name="msg_payment_card_number">Переводом по номеру карты</string>
+    <string name="msg_payment_phone_number">Переводом по номеру телефона</string>
 
     <!-- FEEDBACK -->
     <string name="title_feedback">Отзывы</string>

@@ -62,7 +62,7 @@ struct LoginViewSuccessView: View {
     @ObservedObject var viewModel : LoginViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     @State var isSelected:Bool = false
-    
+
     var body: some View {
         VStack(spacing:0){
             ToolbarView(

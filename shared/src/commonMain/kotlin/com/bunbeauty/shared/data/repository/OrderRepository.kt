@@ -12,6 +12,7 @@ import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.shared.extension.getNullableResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -21,9 +22,7 @@ class OrderRepository(
     private val orderDao: IOrderDao,
     private val networkConnector: NetworkConnector,
     private val orderMapper: IOrderMapper,
-) : BaseRepository(), OrderRepo {
-
-    override val tag: String = "ORDER_TAG"
+) : OrderRepo {
 
     override fun observeOrderListByUserUuid(userUuid: String): Flow<List<LightOrder>> {
         return orderDao.observeOrderListByUserUuid(userUuid).mapListFlow(orderMapper::toLightOrder)

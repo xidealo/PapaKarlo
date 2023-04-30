@@ -79,15 +79,6 @@ class CartProductInteractor(
         }
     }
 
-    override suspend fun removeProductFromCart(menuProductUuid: String) {
-        val cartProduct = cartProductRepo.getCartProductByMenuProductUuid(menuProductUuid) ?: return
-        if (cartProduct.count > 1) {
-            cartProductRepo.updateCartProductCount(cartProduct.uuid, cartProduct.count - 1)
-        } else {
-            cartProductRepo.deleteCartProduct(cartProduct)
-        }
-    }
-
     override suspend fun removeAllProductsFromCart() {
         cartProductRepo.deleteAllCartProducts()
     }

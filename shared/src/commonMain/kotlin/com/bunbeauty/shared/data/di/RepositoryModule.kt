@@ -21,6 +21,7 @@ import com.bunbeauty.shared.domain.repo.CityRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
+import com.bunbeauty.shared.domain.repo.PaymentRepo
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import com.bunbeauty.shared.domain.repo.UserAddressRepo
 import com.bunbeauty.shared.domain.repo.UserRepo
@@ -38,7 +39,6 @@ fun repositoryModule() = module {
     single<NetworkConnector> {
         NetworkConnectorImpl(
             client = get(),
-            json = get(),
             socketService = get(),
         )
     }
@@ -118,16 +118,17 @@ fun repositoryModule() = module {
         )
     }
     single {
-        PaymentRepository(
-            networkConnector = get(),
-            dataStoreRepo = get(),
-        )
-    }
-    single {
         SettingsRepository(
             dataStoreRepo = get(),
             networkConnector = get(),
             settingsMapper = get(),
+        )
+    }
+    single<PaymentRepo> {
+        PaymentRepository(
+            networkConnector = get(),
+            paymentMethodMapper = get(),
+            paymentMethodDao = get(),
         )
     }
 }

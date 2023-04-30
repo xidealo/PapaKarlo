@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.bunbeauty.shared.Logger.NAV_TAG
-import com.bunbeauty.shared.Logger.logD
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
@@ -33,23 +32,6 @@ class Router : CoroutineScope {
     fun attach(activity: AppCompatActivity, @IdRes navHostId: Int) {
         this.activity = WeakReference(activity)
         this.navHostId = navHostId
-    }
-
-    fun checkPrevious(destinationId: Int): Boolean {
-        val backQueue = findNavController()?.backQueue
-        return if (backQueue != null && backQueue.size > 1) {
-            backQueue[backQueue.lastIndex - 1].destination.id == destinationId
-        } else {
-            false
-        }
-    }
-
-    fun navigateUp() {
-        launch(Main) {
-            hideKeyboard()
-            findNavController()?.navigateUp()
-            logD(NAV_TAG, "navigateUp")
-        }
     }
 
     fun navigate(navDirections: NavDirections) {

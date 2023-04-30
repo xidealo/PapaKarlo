@@ -1,75 +1,79 @@
 package com.bunbeauty.papakarlo.common.ui.element.card
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
+import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
 fun StartIconCard(
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    elevated: Boolean = true,
-    @DrawableRes iconId: Int,
-    iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-    @StringRes labelStringId: Int,
-    onClick: (() -> Unit) = {}
-) {
-    RowCard(
-        modifier = modifier,
-        enabled = enabled,
-        elevated = elevated,
-        startIconId = iconId,
-        startIconTint = iconTint,
-        labelStringId = labelStringId,
-        onClick = onClick,
-    )
-}
-
-@Composable
-fun StartIconCard(
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    elevated: Boolean = true,
-    @DrawableRes iconId: Int,
-    iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     label: String,
-    onClick: (() -> Unit) = {}
+    @DrawableRes iconId: Int,
+    modifier: Modifier = Modifier,
+    elevated: Boolean = true,
+    iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+    onClick: (() -> Unit) = {},
+    clickable: Boolean = true,
 ) {
-    RowCard(
+    FoodDeliveryCard(
         modifier = modifier,
-        enabled = enabled,
+        clickable = clickable,
         elevated = elevated,
-        startIconId = iconId,
-        startIconTint = iconTint,
-        label = label,
-        onClick = onClick,
-    )
+        onClick = onClick
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier.icon24(),
+                painter = painterResource(iconId),
+                tint = iconTint,
+                contentDescription = label
+            )
+            OverflowingText(
+                modifier = Modifier.padding(start = 16.dp),
+                text = label,
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface
+            )
+        }
+    }
 }
 
-@Preview@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun IconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
+            label = "Ооооооооооооооочень длинная информация",
             iconId = R.drawable.ic_info,
-            labelStringId = R.string.title_about_app
         )
     }
 }
 
-@Preview@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun OriginalColorIconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
+            label = "Информация",
             iconId = R.drawable.ic_bb,
             iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
-            labelStringId = R.string.title_about_app
         )
     }
 }

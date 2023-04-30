@@ -68,12 +68,12 @@ struct OrderListView: View {
                 unsubscribe()
             }
         }
-        
+
     }
     
     func subscribe(){
         viewModel.observeOrders()
-        
+
         listener = viewModel.orderListState.watch { orderListVM in
             if(orderListVM != nil ){
                 orderListState = orderListVM!

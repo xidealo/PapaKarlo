@@ -17,27 +17,27 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentSelectCityBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.city.City
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
+class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: SelectCityViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentSelectCityBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCityList()
-        viewBinding.fragmentSelectCityCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val cityList by viewModel.cityListState.collectAsState()
             SelectCityScreen(cityList)
         }
@@ -45,7 +45,7 @@ class SelectCityFragment : BaseFragment(R.layout.fragment_select_city) {
 
     @Composable
     private fun SelectCityScreen(cityListState: State<List<City>>) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_select_city),
         ) {
             when (cityListState) {

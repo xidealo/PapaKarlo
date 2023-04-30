@@ -1,53 +1,80 @@
 package com.bunbeauty.papakarlo.feature.main
 
-import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import androidx.navigation.NavController
+import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
-import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 
 class MainViewModel(
-    private val cartProductInteractor: ICartProductInteractor,
-    private val stringUtil: IStringUtil,
-    private val networkUtil: INetworkUtil
-) : BaseViewModel(), DefaultLifecycleObserver {
+    private val networkUtil: INetworkUtil,
+) : ViewModel() {
 
-    private val mutableCartCost: MutableStateFlow<String> = MutableStateFlow("")
-    val cartCost: StateFlow<String> = mutableCartCost.asStateFlow()
-
-    private val mutableCartProductCount: MutableStateFlow<String> = MutableStateFlow("")
-    val cartProductCount: StateFlow<String> = mutableCartProductCount.asStateFlow()
-
-    private val mutableIsOnline: MutableStateFlow<Boolean> = MutableStateFlow(true)
-    val isOnline: StateFlow<Boolean> = mutableIsOnline.asStateFlow()
+    private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())
+    val mainState: StateFlow<MainState> = mutableMainState.asStateFlow()
 
     init {
-        observeTotalCartCount()
-        observeTotalCartCost()
         observeNetworkConnection()
     }
 
-    private fun observeTotalCartCount() {
-        cartProductInteractor.observeTotalCartCount().onEach { count ->
-            mutableCartProductCount.value = count.toString()
-        }.launchIn(viewModelScope)
+    fun onNavDestinationUpdated(destinationId: Int, navController: NavController) {
+        val navigationBarOptions = when (destinationId) {
+            R.id.cafeListFragment -> NavigationBarOptions.Visible(
+                selectedItem = NavigationBarItem.CAFE_LIST,
+                navController = navController
+            )
+            R.id.menuFragment -> NavigationBarOptions.Visible(
+                selectedItem = NavigationBarItem.MENU,
+                navController = navController
+            )
+            R.id.profileFragment -> NavigationBarOptions.Visible(
+                selectedItem = NavigationBarItem.PROFILE,
+                navController = navController
+            )
+            else -> NavigationBarOptions.Hidden
+        }
+        mutableMainState.update { state ->
+            state.copy(navigationBarOptions = navigationBarOptions)
+        }
     }
 
-    private fun observeTotalCartCost() {
-        cartProductInteractor.observeNewTotalCartCost().onEach { cost ->
-            mutableCartCost.value = stringUtil.getCostString(cost)
-        }.launchIn(viewModelScope)
+    fun showInfoMessage(text: String) {
+        showMessage(text, FoodDeliveryMessageType.INFO)
+    }
+
+    fun showErrorMessage(text: String) {
+        showMessage(text, FoodDeliveryMessageType.ERROR)
+    }
+
+    fun consumeEvents(eventList: List<MainState.Event>) {
+        mutableMainState.update { state ->
+            state - eventList
+        }
+    }
+
+    private fun showMessage(text: String, type: FoodDeliveryMessageType) {
+        mutableMainState.update { state ->
+            state + MainState.Event.ShowMessageEvent(
+                message = FoodDeliveryMessage(
+                    type = type,
+                    text = text
+                )
+            )
+        }
     }
 
     private fun observeNetworkConnection() {
         networkUtil.observeIsOnline().onEach { isOnline ->
-            mutableIsOnline.value = isOnline
+            mutableMainState.update { state ->
+                state.copy(connectionLost = !isOnline)
+            }
         }.launchIn(viewModelScope)
     }
 }

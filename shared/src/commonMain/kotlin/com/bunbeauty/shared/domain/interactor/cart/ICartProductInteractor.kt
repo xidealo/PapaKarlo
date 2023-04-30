@@ -22,7 +22,5 @@ interface ICartProductInteractor {
 
     suspend fun addProductToCart(menuProductUuid: String): CartProduct?
 
-    suspend fun removeProductFromCart(menuProductUuid: String)
-
     suspend fun removeAllProductsFromCart()
 }

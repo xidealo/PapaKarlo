@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -19,31 +20,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
-import com.google.firebase.auth.PhoneAuthProvider
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.core.parameter.parametersOf
 
-class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
+class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
 
-    override val viewModel: ConfirmViewModel by stateViewModel(state = {
-        arguments ?: bundleOf()
-    })
+    private val args: ConfirmFragmentArgs by navArgs()
 
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewModel: ConfirmViewModel by stateViewModel(
+        parameters = {
+            parametersOf(
+                args.successLoginDirection,
+                args.phone,
+            )
+        }
+    )
+
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
@@ -52,10 +61,11 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
 
         viewBinding.root.setContentWithTheme {
             val confirmState by viewModel.confirmState.collectAsState()
+
+            LaunchedEffect(confirmState.eventList) {
+                handleEventList(confirmState.eventList)
+            }
             ConfirmScreen(confirmState)
-        }
-        phoneVerificationUtil.codeSentEvent.startedLaunch { codeSentEvent ->
-            viewModel.onCodeSent(codeSentEvent.verificationId, codeSentEvent.token)
         }
         phoneVerificationUtil.authErrorEvent.startedLaunch { authErrorEvent ->
             viewModel.onVerificationError(authErrorEvent.error)
@@ -66,8 +76,8 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
     }
 
     @Composable
-    private fun ConfirmScreen(confirmState: Confirmation) {
-        FoodDeliveryToolbarScreen(
+    private fun ConfirmScreen(confirmState: ConfirmState) {
+        FoodDeliveryScaffold(
             backActionClick = {
                 findNavController().popBackStack()
             },
@@ -89,7 +99,6 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
                         phoneVerificationUtil.resendVerificationCode(
                             phone = confirmState.formattedPhoneNumber,
                             activity = requireActivity(),
-                            token = confirmState.resendToken
                         )
                     }
                 }
@@ -104,7 +113,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
     }
 
     @Composable
-    private fun ConfirmScreenSuccess(confirmation: Confirmation) {
+    private fun ConfirmScreenSuccess(confirmState: ConfirmState) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -115,12 +124,16 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
             Spacer(modifier = Modifier.weight(1f))
             Text(
                 text = stringResource(R.string.msg_confirm_enter_code),
-                textAlign = TextAlign.Center
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                textAlign = TextAlign.Center,
             )
             Text(
                 modifier = Modifier
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                text = stringResource(R.string.msg_confirm_phone_info) + confirmation.phoneNumber,
+                text = stringResource(R.string.msg_confirm_phone_info) + confirmState.phoneNumber,
+                style = FoodDeliveryTheme.typography.bodyLarge,
+                color = FoodDeliveryTheme.colors.mainColors.onSurface,
                 textAlign = TextAlign.Center
             )
             SmsEditText(
@@ -129,10 +142,7 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
                     .padding(top = FoodDeliveryTheme.dimensions.mediumSpace)
             ) { code ->
                 viewModel.onCodeEntered()
-                phoneVerificationUtil.verifyCode(
-                    code = code,
-                    verificationId = confirmation.verificationId
-                )
+                phoneVerificationUtil.verifyCode(code)
             }
             Spacer(modifier = Modifier.weight(1f))
             Spacer(
@@ -142,15 +152,27 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
         }
     }
 
+    private fun handleEventList(eventList: List<ConfirmState.Event>) {
+        eventList.forEach { event ->
+            when (event) {
+                is ConfirmState.Event.ShowErrorMessageEvent -> {
+                    val messageId = when (event.error) {
+                        ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR -> R.string.error_something_went_wrong
+                        ConfirmState.ConfirmError.WRONG_CODE_ERROR -> R.string.error_confirm_wrong_code
+                    }
+                    (activity as? IMessageHost)?.showErrorMessage(resources.getString(messageId))
+                }
+            }
+        }
+    }
+
     @Preview(showSystemUi = true)
     @Composable
     private fun ConfirmScreenResendCodeDisableSuccessPreview() {
         FoodDeliveryTheme {
             ConfirmScreen(
-                Confirmation(
+                ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 59,
                     isCodeChecking = false
                 )
@@ -163,10 +185,8 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
     private fun ConfirmScreenResendCodeEnableSuccessPreview() {
         FoodDeliveryTheme {
             ConfirmScreen(
-                Confirmation(
+                ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 0,
                     isCodeChecking = false
                 )
@@ -179,10 +199,8 @@ class ConfirmFragment : BaseFragment(R.layout.fragment_compose) {
     private fun ConfirmScreenResendLoadingPreview() {
         FoodDeliveryTheme {
             ConfirmScreen(
-                Confirmation(
+                ConfirmState(
                     phoneNumber = "+7 (900) 900-90-90",
-                    resendToken = PhoneAuthProvider.ForceResendingToken.zza(),
-                    verificationId = "",
                     resendSeconds = 0,
                     isCodeChecking = true
                 )

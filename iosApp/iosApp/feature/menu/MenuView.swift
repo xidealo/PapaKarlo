@@ -23,13 +23,13 @@ struct MenuView: View {
         GridItem(.flexible(), spacing: 8, alignment: .top),
         GridItem(.flexible(), spacing: 8, alignment: .top)
       ]
-    
+
     var body: some View {
         VStack(spacing:0){
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
-                
+
                 ScrollView(.horizontal, showsIndicators:false) {
                     ScrollViewReader{ scrollReader in
                         HStack(spacing:0){
@@ -53,7 +53,7 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-           
+
                 ScrollView {
                     ScrollViewReader{ scrollReader in
                         LazyVGrid(columns: columns, spacing: 8) {

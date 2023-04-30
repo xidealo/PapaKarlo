@@ -104,6 +104,7 @@ dependencies {
     implementation(Compose.material3)
     implementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
+    implementation(Compose.uiViewbinding)
     implementation(Compose.activity)
     implementation(Compose.lifecycle)
 

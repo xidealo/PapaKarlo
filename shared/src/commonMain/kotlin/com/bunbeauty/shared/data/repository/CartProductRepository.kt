@@ -50,8 +50,8 @@ class CartProductRepository(
         }
     }
 
-    override suspend fun deleteCartProduct(cartProduct: CartProduct) {
-        cartProductDao.deleteCartProductByUuid(cartProduct.uuid)
+    override suspend fun deleteCartProduct(cartProductUuid: String) {
+        cartProductDao.deleteCartProductByUuid(cartProductUuid)
     }
 
     override suspend fun deleteAllCartProducts() {

@@ -8,7 +8,6 @@ import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewMod
 import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
-import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
@@ -27,13 +26,12 @@ fun viewModelModule() = module {
         MenuViewModel(
             menuProductInteractor = get(),
             stringUtil = get(),
-            observeCartUseCase = get()
+            observeCartUseCase = get(),
+            addCartProductUseCase = get(),
         )
     }
     viewModel {
         MainViewModel(
-            cartProductInteractor = get(),
-            stringUtil = get(),
             networkUtil = get()
         )
     }
@@ -42,6 +40,8 @@ fun viewModelModule() = module {
             stringUtil = get(),
             userInteractor = get(),
             cartProductInteractor = get(),
+            addCartProductUseCase = get(),
+            removeCartProductUseCase = get(),
         )
     }
     viewModel {
@@ -108,7 +108,8 @@ fun viewModelModule() = module {
             observeLastOrderUseCase = get(),
             stopObserveOrdersUseCase = get(),
             getLastOrderUseCase = get(),
-            observeCartUseCase = get()
+            observeCartUseCase = get(),
+            getPaymentMethodListUseCase = get()
         )
     }
     viewModel { parameters ->
@@ -123,7 +124,8 @@ fun viewModelModule() = module {
         ConfirmViewModel(
             userInteractor = get(),
             firebaseAuthRepository = get(),
-            savedStateHandle = parameters.get()
+            successLoginDirection = parameters[0],
+            phoneNumber = parameters[1],
         )
     }
     viewModel {
@@ -155,12 +157,6 @@ fun viewModelModule() = module {
         SplashViewModel(
             updateInteractor = get(),
             cityInteractor = get(),
-        )
-    }
-    viewModel {
-        PaymentViewModel(
-            paymentInteractor = get(),
-            getPaymentInfoUseCase = get(),
         )
     }
 }

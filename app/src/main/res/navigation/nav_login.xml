@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.bunbeauty.papakarlo.feature.auth.screen.login.LoginFragment"
-        android:label=""
-        tools:layout="@layout/fragment_login">
+        android:label="">
         <argument
             android:name="successLoginDirection"
             app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />
@@ -31,17 +30,10 @@
     <fragment
         android:id="@+id/confirmFragment"
         android:name="com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragment"
-        android:label=""
-        tools:layout="@layout/fragment_confirm">
+        android:label="">
         <argument
             android:name="phone"
             app:argType="string" />
-        <argument
-            android:name="verificationId"
-            app:argType="string" />
-        <argument
-            android:name="resendToken"
-            app:argType="com.google.firebase.auth.PhoneAuthProvider$ForceResendingToken" />
         <argument
             android:name="successLoginDirection"
             app:argType="com.bunbeauty.papakarlo.common.model.SuccessLoginDirection" />

@@ -18,7 +18,6 @@ struct Switcher: View {
         HStack{
             if isLeftSelected{
                 Button(action: {
-                    print("button pressed")
                     isLeftSelected = true
                     action(true)
                 }) {
@@ -26,7 +25,6 @@ struct Switcher: View {
                 }
                 
                 Button(action: {
-                    print("button pressed")
                     isLeftSelected = false
                     action(false)
                 }) {
@@ -37,7 +35,6 @@ struct Switcher: View {
                 }
             }else{
                 Button(action: {
-                    print("button pressed")
                     isLeftSelected = true
                     action(true)
                 }) {
@@ -48,7 +45,6 @@ struct Switcher: View {
                 }
                 
                 Button(action: {
-                    print("button pressed")
                     isLeftSelected = false
                     action(false)
                 }) {

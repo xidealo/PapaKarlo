@@ -27,20 +27,20 @@ import androidx.compose.ui.unit.dp
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.shared.data.GetSocialNetworkLinksUseCase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class UpdateFragment : BaseFragment(R.layout.fragment_compose) {
+class UpdateFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: EmptyViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val googlePlayLink = GetSocialNetworkLinksUseCase().invoke().googlePlayLink
 
@@ -55,7 +55,7 @@ class UpdateFragment : BaseFragment(R.layout.fragment_compose) {
 
     @Composable
     private fun UpdateScreen() {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(R.string.title_update_new_app_version),
             actionButton = {
                 MainButton(

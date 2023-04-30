@@ -3,6 +3,7 @@ package com.bunbeauty.shared.di
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
@@ -10,6 +11,7 @@ import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.order.*
+import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
@@ -188,7 +190,17 @@ internal fun useCaseModule() = module {
         )
     }
     factory {
+        RemoveCartProductUseCase(
+            cartProductRepo = get()
+        )
+    }
+    factory {
         GetFilteredStreetListUseCase()
+    }
+    factory {
+        GetPaymentMethodListUseCase(
+            paymentRepo = get()
+        )
     }
     factory {
         GetPaymentInfoUseCase()

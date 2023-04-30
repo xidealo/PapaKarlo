@@ -27,38 +27,38 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.FragmentConsumerCartBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
 import com.bunbeauty.papakarlo.feature.consumer_cart.ui.CartProductItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
+class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: ConsumerCartViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentConsumerCartBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getConsumerCart()
-        viewBinding.fragmentConsumerCartCvMain.setContentWithTheme {
+        viewBinding.root.setContentWithTheme {
             val consumerCartState by viewModel.consumerCartState.collectAsState()
             ConsumerCartScreen(
                 consumerCartState = consumerCartState,
                 onMenuClicked = viewModel::onMenuClicked,
                 onErrorButtonClicked = viewModel::getConsumerCart,
-                addProductToCartClicked = viewModel::addProductToCart,
-                removeProductFromCartClicked = viewModel::removeProductFromCart,
+                addProductToCartClicked = viewModel::onAddCardProductClicked,
+                removeProductFromCartClicked = viewModel::onRemoveCardProductClicked,
                 onProductClicked = viewModel::onProductClicked,
                 onCreateOrderClicked = viewModel::onCreateOrderClicked,
             )
@@ -75,7 +75,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.fragment_consumer_cart) {
         onProductClicked: (CartProductItem) -> Unit,
         onCreateOrderClicked: () -> Unit,
     ) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
             backActionClick = {
                 findNavController().popBackStack()

@@ -23,17 +23,16 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.LoadingButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.switcher.FoodDeliverySwitcher
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.extensions.showSnackbar
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.create_order.screen.cafe_address_list.CafeAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottomSheet
@@ -42,15 +41,16 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOr
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
+import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.presentation.create_order.CreateOrderState
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
+class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     val viewModel: CreateOrderViewModel by viewModel()
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
 
@@ -72,7 +72,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
 
     @Composable
     private fun CreateOrderScreen(createOrderUi: CreateOrderUi) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_create_order),
             backActionClick = {
                 findNavController().popBackStack()
@@ -91,10 +91,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                             R.string.action_create_order_delivery,
                             R.string.action_create_order_pickup
                         ),
-                        position = createOrderUi.switcherPosition
-                    ) { changedPosition ->
-                        viewModel.onSwitcherPositionChanged(changedPosition)
-                    }
+                        position = createOrderUi.switcherPosition,
+                        onPositionChanged = viewModel::onSwitcherPositionChanged
+                    )
                     AddressCard(createOrderUi)
                     DeliveryAddressError(createOrderUi)
                     CommentCard(createOrderUi)
@@ -117,21 +116,19 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 NavigationCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                    enabled = !createOrderUi.isLoading,
-                    labelStringId = labelStringId
-                ) {
-                    viewModel.onUserAddressClicked()
-                }
+                    clickable = !createOrderUi.isLoading,
+                    label = stringResource(labelStringId),
+                    onClick = viewModel::onUserAddressClicked
+                )
             } else {
                 NavigationTextCard(
                     modifier = Modifier
                         .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = labelStringId,
                     label = createOrderUi.deliveryAddress,
-                    isClickable = !createOrderUi.isLoading
-                ) {
-                    viewModel.onUserAddressClicked()
-                }
+                    clickable = !createOrderUi.isLoading,
+                    onClick = viewModel::onUserAddressClicked
+                )
             }
         } else {
             NavigationTextCard(
@@ -139,10 +136,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                     .padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = labelStringId,
                 label = createOrderUi.pickupAddress ?: "",
-                isClickable = !createOrderUi.isLoading
-            ) {
-                viewModel.onCafeAddressClicked()
-            }
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCafeAddressClicked
+            )
         }
     }
 
@@ -165,20 +161,18 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
         if (createOrderUi.comment == null) {
             NavigationCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
-                enabled = !createOrderUi.isLoading,
-                labelStringId = R.string.comment
-            ) {
-                viewModel.onCommentClicked()
-            }
+                label = stringResource(R.string.comment),
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCommentClicked
+            )
         } else {
             NavigationTextCard(
                 modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                 hintStringId = R.string.hint_create_order_comment,
                 label = createOrderUi.comment,
-                isClickable = !createOrderUi.isLoading
-            ) {
-                viewModel.onCommentClicked()
-            }
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onCommentClicked
+            )
         }
     }
 
@@ -193,10 +187,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
             modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
             hintStringId = hintStringId,
             label = createOrderUi.deferredTime,
-            isClickable = !createOrderUi.isLoading
-        ) {
-            viewModel.onDeferredTimeClicked()
-        }
+            clickable = !createOrderUi.isLoading,
+            onClick = viewModel::onDeferredTimeClicked,
+        )
     }
 
     @Composable
@@ -256,10 +249,9 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                 LoadingButton(
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_create_order_create_order,
-                    isLoading = createOrderUi.isLoading
-                ) {
-                    viewModel.onCreateOrderClicked()
-                }
+                    isLoading = createOrderUi.isLoading,
+                    onClick = viewModel::onCreateOrderClicked
+                )
             }
         }
     }
@@ -310,32 +302,28 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_co
                     }
                 }
                 is CreateOrderState.Event.ShowSomethingWentWrongErrorEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_something_went_wrong),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = true
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_something_went_wrong)
                     )
                 }
                 is CreateOrderState.Event.ShowUserUnauthorizedErrorEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.error_user),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnError),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorError),
-                        isTop = true
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_user)
                     )
                 }
                 is CreateOrderState.Event.OrderCreatedEvent -> {
-                    viewBinding.root.showSnackbar(
-                        message = resources.getString(R.string.msg_order_code, event.code),
-                        textColor = resourcesProvider.getColorByAttr(R.attr.colorOnPrimary),
-                        backgroundColor = resourcesProvider.getColorByAttr(R.attr.colorPrimary),
-                        isTop = false
+                    (activity as? IMessageHost)?.showInfoMessage(
+                        resources.getString(
+                            R.string.msg_order_code,
+                            event.code
+                        )
                     )
                     findNavController().navigateSafe(toProfileFragment())
                 }
                 is CreateOrderState.Event.ShowUserAddressError -> {
-                    // TODO (show address error)
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_user_address)
+                    )
                 }
             }
         }

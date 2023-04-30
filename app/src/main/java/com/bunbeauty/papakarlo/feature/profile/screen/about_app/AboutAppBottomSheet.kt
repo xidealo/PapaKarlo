@@ -31,18 +31,18 @@ class AboutAppBottomSheet : ComposeBottomSheet<Any>() {
 private fun AboutAppScreen() {
     FoodDeliveryBottomSheet(titleStringId = R.string.title_about_app) {
         StartIconCard(
-            enabled = false,
-            elevated = false,
+            label = stringResource(R.string.msg_about_app_developer),
             iconId = R.drawable.ic_bb,
+            clickable = false,
+            elevated = false,
             iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
-            labelStringId = R.string.msg_about_app_developer
         )
         StartIconCard(
             modifier = Modifier.padding(top = 8.dp),
-            enabled = false,
-            elevated = false,
+            label = stringResource(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
             iconId = R.drawable.ic_version,
-            label = stringResource(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME
+            clickable = false,
+            elevated = false,
         )
     }
 }

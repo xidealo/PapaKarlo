@@ -17,8 +17,8 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCardDefaults.g
 fun FoodDeliveryCard(
     modifier: Modifier = Modifier,
     elevated: Boolean = true,
-    onClick: (() -> Unit),
-    enabled: Boolean = true,
+    onClick: (() -> Unit) = {},
+    clickable: Boolean = true,
     colors: CardColors = FoodDeliveryCardDefaults.cardColors,
     shape: Shape = FoodDeliveryCardDefaults.cardShape,
     border: BorderStroke? = null,
@@ -33,31 +33,7 @@ fun FoodDeliveryCard(
             colors = colors,
             elevation = getCardElevation(elevated),
             onClick = onClick,
-            enabled = enabled,
-            border = border,
-            content = content
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun FoodDeliveryCard(
-    modifier: Modifier = Modifier,
-    elevated: Boolean = true,
-    colors: CardColors = FoodDeliveryCardDefaults.cardColors,
-    shape: Shape = FoodDeliveryCardDefaults.cardShape,
-    border: BorderStroke? = null,
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
-    ) {
-        Card(
-            modifier = modifier,
-            shape = shape,
-            colors = colors,
-            elevation = getCardElevation(elevated),
+            enabled = clickable,
             border = border,
             content = content
         )

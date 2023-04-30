@@ -1,13 +1,13 @@
 package com.bunbeauty.papakarlo.feature.auth.screen.confirm
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.auth.model.Confirmation
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR
+import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.WRONG_CODE_ERROR
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.shared.Constants.WRONG_CODE
@@ -15,7 +15,6 @@ import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
-import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -28,34 +27,30 @@ import kotlinx.coroutines.launch
 class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle,
+    private val successLoginDirection: SuccessLoginDirection,
+    phoneNumber: String,
 ) : BaseViewModel() {
-
-    private val successLoginDirection: SuccessLoginDirection =
-        savedStateHandle["successLoginDirection"]!!
 
     private val timerSecondCount = 60
     private val timerIntervalMillis = 1000L
 
     private var timerJob: Job? = null
 
-    private val mutableConfirmState: MutableStateFlow<Confirmation> =
+    private val mutableConfirmState: MutableStateFlow<ConfirmState> =
         MutableStateFlow(
-            Confirmation(
-                phoneNumber = savedStateHandle["phone"]!!,
-                resendToken = savedStateHandle["resendToken"]!!,
-                verificationId = savedStateHandle["verificationId"]!!,
+            ConfirmState(
+                phoneNumber = phoneNumber,
                 resendSeconds = timerSecondCount,
                 isCodeChecking = false
             )
         )
-    val confirmState: StateFlow<Confirmation> = mutableConfirmState.asStateFlow()
+    val confirmState: StateFlow<ConfirmState> = mutableConfirmState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-        showError(resourcesProvider.getString(R.string.error_something_went_wrong), true)
-
-        mutableConfirmState.update { oldState ->
-            oldState.copy(isCodeChecking = false)
+        mutableConfirmState.update { state ->
+            state.copy(isCodeChecking = false) + ConfirmState.Event.ShowErrorMessageEvent(
+                SOMETHING_WENT_WRONG_ERROR
+            )
         }
     }
 
@@ -71,24 +66,17 @@ class ConfirmViewModel(
         startResendTimer()
     }
 
-    fun onCodeSent(verificationId: String, resendToken: PhoneAuthProvider.ForceResendingToken) {
-        mutableConfirmState.value = mutableConfirmState.value.copy(
-            verificationId = verificationId,
-            resendToken = resendToken
-        )
-    }
-
     fun onVerificationError(error: String) {
         mutableConfirmState.value = mutableConfirmState.value.copy(isCodeChecking = false)
-        val errorResourceId = when (error) {
-            WRONG_CODE -> {
-                R.string.error_confirm_wrong_code
-            }
-            else -> {
-                R.string.error_something_went_wrong
-            }
+        val confirmError = when (error) {
+            WRONG_CODE -> WRONG_CODE_ERROR
+            else -> SOMETHING_WENT_WRONG_ERROR
         }
-        showError(resourcesProvider.getString(errorResourceId), true)
+        mutableConfirmState.update { state ->
+            state.copy(isCodeChecking = false) + ConfirmState.Event.ShowErrorMessageEvent(
+                confirmError
+            )
+        }
         logD(AUTH_TAG, error)
     }
 

@@ -10,7 +10,6 @@ import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteracto
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.interactor.order.OrderInteractor
-import com.bunbeauty.shared.domain.interactor.payment.PaymentInteractor
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.interactor.product.ProductInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
@@ -72,12 +71,6 @@ internal fun interactorModule() = module {
     single<IProductInteractor> {
         ProductInteractor(
             dataStoreRepo = get(),
-        )
-    }
-    single {
-        PaymentInteractor(
-            dataStoreRepo = get(),
-            paymentRepository = get(),
         )
     }
 }

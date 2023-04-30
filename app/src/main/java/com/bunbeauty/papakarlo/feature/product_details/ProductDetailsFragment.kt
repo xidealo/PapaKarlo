@@ -20,7 +20,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -31,15 +30,15 @@ import coil.request.ImageRequest
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryCartAction
-import com.bunbeauty.papakarlo.common.ui.element.toolbar.FoodDeliveryToolbarScreen
+import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.databinding.FragmentComposeBinding
+import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
@@ -48,13 +47,13 @@ import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment_compose) {
+class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     private val viewModel: ProductDetailsViewModel by viewModel()
 
     private val args: ProductDetailsFragmentArgs by navArgs()
 
-    override val viewBinding by viewBinding(FragmentComposeBinding::bind)
+    override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val productDetailsUiStateMapper: ProductDetailsUiStateMapper by inject()
 
@@ -82,7 +81,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
         productDetailsUi: ProductDetailsUi,
         state: ProductDetailsState.State,
     ) {
-        FoodDeliveryToolbarScreen(
+        FoodDeliveryScaffold(
             title = menuProductName,
             backActionClick = {
                 findNavController().popBackStack()
@@ -135,7 +134,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.fragment
                     .verticalScroll(rememberScrollState())
             ) {
                 ProductCard(menuProductUi)
-                Spacer(modifier = Modifier.height(72.dp))
+                Spacer(modifier = Modifier.height(FoodDeliveryTheme.dimensions.scrollScreenBottomSpace))
             }
         }
     }

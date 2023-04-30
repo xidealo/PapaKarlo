@@ -24,7 +24,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class CreateAddressUseCaseTest {
+internal class CreateAddressUseCaseTest {
 
     @MockK(relaxed = true)
     private lateinit var dataStoreRepo: DataStoreRepo

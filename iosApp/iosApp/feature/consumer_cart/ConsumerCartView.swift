@@ -98,7 +98,7 @@ struct ConsumerCartSuccessScreen: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
-                        
+
                         VStack(spacing: 0){
                             ForEach(consumerCartUI.cartProductList){ cartProductItem in
                                 CartProductView(cartProductItem: cartProductItem, plusAction: {
@@ -120,7 +120,7 @@ struct ConsumerCartSuccessScreen: View {
                     Text(Strings.MSG_CART_PRODUCT_RESULT)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
-                    
+
                     Spacer()
                     
                     if let oldTotalCost = consumerCartUI.oldTotalCost{
@@ -129,7 +129,7 @@ struct ConsumerCartSuccessScreen: View {
                             .bodyMedium(weight: .bold)
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
-                    
+
                     Text(consumerCartUI.newTotalCost)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
@@ -163,7 +163,7 @@ struct ConsumerCartEmptyScreen: View {
                 title: "emptyCartTitleProfile",
                 secondText: "emptyCartSecondProfile"
             )
-            
+
             Spacer()
             
             Button {
