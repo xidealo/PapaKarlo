@@ -44,7 +44,10 @@ struct ProfileView: View {
                 showOrderCreated: $showOrderCreated,
                 showCreatedAddress: $showCreatedAddress
             )
-            case ProfileState.State.unauthorized : EmptyProfileView(isActive: $isActive)
+            case ProfileState.State.unauthorized : EmptyProfileView(
+                isActive: $isActive,
+                paymentMethodList: profileState.paymentMethodList
+            )
             default: EmptyView()
             }
             
@@ -95,13 +98,14 @@ struct ProfileView: View {
 
 struct EmptyProfileView: View {
     @Binding var isActive:Bool
-    
+    var paymentMethodList : [PaymentMethod]
+
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(
                 icon: "ic_payment",
                 label: "Оплата",
-                destination: PaymentView(),
+                destination: PaymentView(paymentMethodList:paymentMethodList),
                 isSystem: false
             )
             
@@ -190,7 +194,7 @@ struct SuccessProfileView: View {
             NavigationCardView(
                 icon: "ic_payment",
                 label: Strings.TITLE_PROFILE_PAYMENT,
-                destination: PaymentView(),
+                destination: PaymentView(paymentMethodList:profileViewState.paymentMethodList),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
