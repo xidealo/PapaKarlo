@@ -15,8 +15,7 @@ struct PaymentView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     let paymentInfo = GetPaymentInfoUseCase().invoke()
-    
-    @State var payment:Payment? = nil
+    @State var paymentMethodList : [PaymentMethod]
     
     var body: some View {
         VStack(spacing:0){
@@ -32,33 +31,15 @@ struct PaymentView: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, Diems.SMALL_PADDING)
                 
-                if(payment == nil){
-                    LoadingView()
-                }else{
-                    if let phone = payment?.phoneNumber{
-                        ActionCardView(
-                            icon: "CopyIcon",
-                            label: phone,
-                            isSystemImageName: false,
-                            isShowRightArrow: false
-                        ){
-                            self.showCardCopy = false
-                            self.showPhoneCopy = true
-                            UIPasteboard.general.string = Strings.MSG_PAYMENT_PHONE
-                        }
-                    }
-                    if let card = payment?.cardNumber{
-                        ActionCardView(
-                            icon: "CopyIcon",
-                            label: card,
-                            isSystemImageName: false,
-                            isShowRightArrow: false
-                        ){
-                            self.showPhoneCopy = false
-                            self.showCardCopy = true
-                            UIPasteboard.general.string = Strings.MSG_PAYMENT_CARD_NUMBER
-                        }
-                        .padding(.top, Diems.SMALL_PADDING)
+                ForEach(paymentMethodList, id: \.self){ method in
+                    ActionCardView(
+                        icon: "CopyIcon",
+                        label: method.value ?? "",
+                        isSystemImageName: false,
+                        isShowRightArrow: false
+                    ){
+                        self.showPhoneCopy = true
+                        UIPasteboard.general.string = method.valueToCopy ?? ""
                     }
                 }
             }.padding(Diems.MEDIUM_PADDING)
@@ -67,11 +48,6 @@ struct PaymentView: View {
         .frame(maxWidth:.infinity, maxHeight: .infinity)
         .background(Color("background"))
         .hiddenNavigationBarStyle()
-        .onAppear(){
-//            paymentInteractor.getPayment { _payment, err in
-//                payment = _payment
-//            }
-        }
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Номер карты скопирован"),
@@ -93,6 +69,6 @@ struct PaymentView: View {
 
 struct PaymentView_Previews: PreviewProvider {
     static var previews: some View {
-        PaymentView()
+        PaymentView(paymentMethodList:[])
     }
 }
