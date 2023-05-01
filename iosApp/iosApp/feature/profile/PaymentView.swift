@@ -11,7 +11,7 @@ import shared
 
 struct PaymentView: View {
     @State var showCardCopy:Bool = false
-    @State var showPhoneCopy:Bool = false
+    @State var showCopy:Bool = false
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     let paymentInfo = GetPaymentInfoUseCase().invoke()
@@ -38,9 +38,10 @@ struct PaymentView: View {
                         isSystemImageName: false,
                         isShowRightArrow: false
                     ){
-                        self.showPhoneCopy = true
+                        self.showCopy = true
                         UIPasteboard.general.string = method.valueToCopy ?? ""
                     }
+                    .padding(.top, 8)
                 }
             }.padding(Diems.MEDIUM_PADDING)
             Spacer()
@@ -58,11 +59,11 @@ struct PaymentView: View {
         )
         .overlay(
             overlayView: ToastView(
-                toast: Toast(title: "Номер телефона скопирован"),
-                show: $showPhoneCopy,
-                backgroundColor:Color("primary"),
-                foregaroundColor: Color("onPrimary")
-            ), show: $showPhoneCopy
+                toast: Toast(title: "Значение скопировано"),
+                show: $showCopy,
+                backgroundColor:AppColor.primary,
+                foregaroundColor: AppColor.onPrimary
+            ), show: $showCopy
         )
     }
 }
