@@ -8,6 +8,12 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import com.bunbeauty.papakarlo.BuildConfig
+import com.bunbeauty.papakarlo.common.ui.theme.color.AppColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.LocalAppColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
 import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
