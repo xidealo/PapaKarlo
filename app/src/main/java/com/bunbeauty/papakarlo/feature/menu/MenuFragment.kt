@@ -35,6 +35,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryImageDefaults.getMediumLogoId
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
@@ -99,7 +100,7 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     private fun MenuScreen(menuUi: MenuUi) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
-            drawableId = R.drawable.logo_small,
+            drawableId = getMediumLogoId(),
             topActions = listOf(
                 FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())

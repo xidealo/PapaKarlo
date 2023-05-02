@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.common.ui.theme.color
 
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black2
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Blue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Cream
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.DarkGrey
@@ -9,7 +10,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Green
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey3
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Black3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightOrange
