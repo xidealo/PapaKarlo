@@ -285,12 +285,14 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         .padding(top = 32.dp),
                     text = stringResource(R.string.title_profile_no_profile),
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
                     textAlign = TextAlign.Center
                 )
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
                     textAlign = TextAlign.Center
                 )
             }
