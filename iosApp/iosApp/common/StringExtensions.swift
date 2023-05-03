@@ -8,6 +8,7 @@
 
 import Foundation
 import shared
+import SwiftUI
 
 extension String {
     func trimingLeadingSpaces(using characterSet: CharacterSet = .whitespacesAndNewlines) -> String {
@@ -54,7 +55,6 @@ extension UserAddress {
     }
 }
 
-
 extension SelectableUserAddress {
     func getAddress() -> String {
         
@@ -80,7 +80,6 @@ extension SelectableUserAddress {
         return address
     }
 }
-
 
 extension OrderAddress {
     func getAddress() -> String {
@@ -112,4 +111,14 @@ extension OrderAddress {
     }
 }
 
-
+extension PaymentMethodName{
+    func getPaymentMethod() -> LocalizedStringKey {
+        switch(self){
+        case PaymentMethodName.cash: return "msg_payment_cash"
+        case PaymentMethodName.card: return "msg_payment_card"
+        case PaymentMethodName.cardNumber: return "msg_payment_card_number"
+        case PaymentMethodName.phoneNumber: return "msg_payment_phone_number"
+        default : return ""
+        }
+    }
+}

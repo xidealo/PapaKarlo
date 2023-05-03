@@ -54,3 +54,8 @@
 "msg_cafe_minutes_234" = "минуты";
 "msg_cafe_minutes" = "минут";
 
+//PaymentMethodName
+"msg_payment_cash" = "Наличные";
+"msg_payment_card" = "Картой при получении";
+"msg_payment_card_number" = "Переводом по номеру карты";
+"msg_payment_phone_number" = "Переводом по номеру телефона";

@@ -32,16 +32,21 @@ struct PaymentView: View {
                     .padding(.bottom, Diems.SMALL_PADDING)
                 
                 ForEach(paymentMethodList, id: \.self){ method in
-                    ActionCardView(
-                        icon: "CopyIcon",
-                        label: method.value ?? "",
-                        isSystemImageName: false,
-                        isShowRightArrow: false
-                    ){
-                        self.showCopy = true
-                        UIPasteboard.general.string = method.valueToCopy ?? ""
+                    if(method.valueToShow == nil){
+                        ElementCardWithLocolized(text: method.name.getPaymentMethod())
+                            .padding(.top, 8)
+                    }else{
+                        ActionCardView(
+                            icon: "CopyIcon",
+                            label: method.valueToShow ?? "",
+                            isSystemImageName: false,
+                            isShowRightArrow: false
+                        ){
+                            self.showCopy = true
+                            UIPasteboard.general.string = method.valueToCopy ?? ""
+                        }
+                        .padding(.top, 8)
                     }
-                    .padding(.top, 8)
                 }
             }.padding(Diems.MEDIUM_PADDING)
             Spacer()
