@@ -12,12 +12,11 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 @Composable
 fun CafeItem(
     modifier: Modifier = Modifier,
-    cafeItem: CafeItem,
+    cafeItem: CafeItemAndroid,
     onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
@@ -46,7 +45,7 @@ fun CafeItem(
                 Text(
                     modifier = Modifier
                         .padding(start = FoodDeliveryTheme.dimensions.smallSpace),
-                    text = getCafeStatusText(cafeItem.cafeOpenState),
+                    text = cafeItem.cafeStatusText,
                     style = FoodDeliveryTheme.typography.labelMedium.medium,
                     color = getCafeStatusColor(cafeItem.cafeOpenState),
                 )
@@ -60,12 +59,13 @@ fun CafeItem(
 private fun CafeItemOpenPreview() {
     FoodDeliveryTheme {
         CafeItem(
-            cafeItem = CafeItem(
+            cafeItem = CafeItemAndroid(
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                cafeOpenState = CafeItem.CafeOpenState.Opened,
-                phone = "00000000"
+                phone = "00000000",
+                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Opened,
+                cafeStatusText = "Open"
             ),
             onClick = {},
         )
@@ -77,12 +77,15 @@ private fun CafeItemOpenPreview() {
 private fun CafeItemCloseSoonPreview() {
     FoodDeliveryTheme {
         CafeItem(
-            cafeItem = CafeItem(
+            cafeItem = CafeItemAndroid(
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                cafeOpenState = CafeItem.CafeOpenState.CloseSoon(30),
-                phone = "00000000"
+                phone = "00000000",
+                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.CloseSoon(
+                    30
+                ),
+                cafeStatusText = "Closed soon 30 min"
             ),
             onClick = {},
         )
@@ -94,12 +97,13 @@ private fun CafeItemCloseSoonPreview() {
 private fun CafeItemClosedPreview() {
     FoodDeliveryTheme {
         CafeItem(
-            cafeItem = CafeItem(
+            cafeItem = CafeItemAndroid(
                 uuid = "",
                 address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж",
                 workingHours = "9:00 - 22:00",
-                cafeOpenState = CafeItem.CafeOpenState.Closed,
-                phone = "00000000"
+                phone = "00000000",
+                cafeOpenState = com.bunbeauty.shared.presentation.cafe_list.CafeItem.CafeOpenState.Closed,
+                cafeStatusText = "Closed"
             ),
             onClick = {},
         )

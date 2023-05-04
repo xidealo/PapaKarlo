@@ -40,6 +40,7 @@ data class AppDimensions(
     val smsEditTextWidth: Dp = 320.dp,
     val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp,
 ) {
+    @Deprecated("use arrangement")
     fun getItemSpaceByIndex(i: Int): Dp {
         return if (i == 0) {
             0.dp

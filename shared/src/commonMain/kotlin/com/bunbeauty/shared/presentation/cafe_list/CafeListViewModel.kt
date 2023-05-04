@@ -72,10 +72,10 @@ class CafeListViewModel(
         }
     }
 
-    fun onCafeCardClicked(cafeItem: CafeItem) {
+    fun onCafeCardClicked(uuid: String) {
         mutableCafeItemListState.update { oldState ->
             oldState + CafeListState.Event.OpenCafeOptionsBottomSheet(
-                uuid = cafeItem.uuid
+                uuid = uuid
             )
         }
     }

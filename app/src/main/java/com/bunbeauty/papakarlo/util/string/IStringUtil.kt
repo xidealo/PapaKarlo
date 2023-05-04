@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
@@ -26,4 +27,6 @@ interface IStringUtil {
     fun getOrderStatusName(orderStatus: OrderStatus): String
     fun getPickupMethodString(isDelivery: Boolean): String
     fun getDeferredString(isDelivery: Boolean): String
+
+    fun getCafeStatusText(cafeOpenState: CafeItem.CafeOpenState): String
 }
