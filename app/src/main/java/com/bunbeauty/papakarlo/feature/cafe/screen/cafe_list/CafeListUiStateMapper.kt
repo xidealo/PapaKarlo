@@ -1,14 +1,8 @@
 package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 
 class CafeListUiStateMapper(

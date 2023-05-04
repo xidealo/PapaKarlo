@@ -2,8 +2,6 @@ package com.bunbeauty.papakarlo.feature.cafe.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 

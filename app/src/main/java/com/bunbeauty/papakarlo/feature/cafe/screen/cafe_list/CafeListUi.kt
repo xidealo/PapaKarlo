@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_list
 
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
-import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 
 data class CafeListUi(

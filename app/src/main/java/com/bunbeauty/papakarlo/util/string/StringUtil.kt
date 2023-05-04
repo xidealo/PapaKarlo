@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.util.string
 
-import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
@@ -195,8 +194,8 @@ class StringUtil(
             is CafeItem.CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
             is CafeItem.CafeOpenState.CloseSoon -> {
                 resourcesProvider.getString(R.string.msg_cafe_close_soon) +
-                        cafeStatus.time +
-                        getMinuteString(cafeStatus.time)
+                    cafeStatus.time +
+                    getMinuteString(cafeStatus.time)
             }
             is CafeItem.CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
         }
