@@ -208,13 +208,16 @@ class CreateOrderViewModel(
                 userAddressList = userAddressList,
             )
         }
-        val selectableUserAddress = userAddressList.find { it.isSelected }
+        val selectableUserAddress =
+            userAddressList.find { it.isSelected } ?: userAddressList.firstOrNull()
 
         orderCreationData.update { data ->
             data.copy(selectedUserAddress = selectableUserAddress)
         }
         mutableCreateOrderState.update { state ->
-            state.copy(deliveryAddress = userAddressMapper.toUiModel(selectableUserAddress))
+            state.copy(
+                deliveryAddress = userAddressMapper.toUiModel(selectableUserAddress)
+            )
         }
         if (selectableUserAddress != null) {
             mutableCreateOrderState.update { state ->
@@ -230,8 +233,7 @@ class CreateOrderViewModel(
                 cafeList = cafeList,
             )
         }
-        val selectedCafe = cafeList.find { it.isSelected }
-
+        val selectedCafe = cafeList.find { it.isSelected } ?: cafeList.firstOrNull()
 
         orderCreationData.update { data ->
             data.copy(selectedCafe = selectedCafe)
