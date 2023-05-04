@@ -40,7 +40,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.navigateSafe
-import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryImageDefaults.getMediumLogoId
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
@@ -188,7 +187,7 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
                 if (maxHeight > 200.dp) {
                     Image(
                         modifier = Modifier.height(156.dp),
-                        painter = painterResource(getMediumLogoId()),
+                        painter = painterResource(R.drawable.logo_medium),
                         contentDescription = stringResource(R.string.description_login_logo)
                     )
                 }

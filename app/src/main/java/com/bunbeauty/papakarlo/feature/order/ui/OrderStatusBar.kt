@@ -35,7 +35,8 @@ fun OrderStatusBar(
     FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        clickable = false,
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
