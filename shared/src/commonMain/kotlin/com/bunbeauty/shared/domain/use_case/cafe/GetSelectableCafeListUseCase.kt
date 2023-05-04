@@ -15,6 +15,12 @@ class GetSelectableCafeListUseCase(
     suspend operator fun invoke(): List<SelectableCafe> {
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: throw NoSelectedCityUuidException()
         val userUuid = dataStoreRepo.getUserUuid() ?: throw NoUserUuidException()
+
+        val selectedCafe = cafeRepo.getSelectedCafeByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid,
+        ) ?: cafeRepo.getFirstCafeCityUuid(cityUuid = cityUuid)
+
         return cafeRepo
             .getCafeList(cityUuid)
             .ifEmpty { throw EmptyCafeListException() }
@@ -28,10 +34,7 @@ class GetSelectableCafeListUseCase(
                     latitude = cafe.latitude,
                     longitude = cafe.longitude,
                     cityUuid = cafe.cityUuid,
-                    isSelected = cafe.uuid == cafeRepo.getSelectedCafeByUserAndCityUuid(
-                        userUuid = userUuid,
-                        cityUuid = cityUuid,
-                    )?.uuid,
+                    isSelected = cafe.uuid == selectedCafe?.uuid,
                 )
             }
     }

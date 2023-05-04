@@ -12,6 +12,15 @@ class GetSelectableUserAddressListUseCase(
         val userUuid = dataStoreRepo.getUserUuid() ?: return emptyList()
         val cityUuid = dataStoreRepo.getSelectedCityUuid() ?: return emptyList()
         val token = dataStoreRepo.getToken() ?: return emptyList()
+
+        val selectedAddress = userAddressRepo.getSelectedAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid,
+        ) ?: userAddressRepo.getFirstUserAddressByUserAndCityUuid(
+            userUuid = userUuid,
+            cityUuid = cityUuid,
+        )
+
         return userAddressRepo.getUserAddressListByUserAndCityUuid(
             userUuid = userUuid,
             cityUuid = cityUuid,
@@ -26,11 +35,7 @@ class GetSelectableUserAddressListUseCase(
                 floor = userAddress.floor,
                 comment = userAddress.comment,
                 userUuid = userAddress.userUuid,
-                isSelected = userAddress.uuid == userAddressRepo
-                    .getSelectedAddressByUserAndCityUuid(
-                        userUuid = userUuid,
-                        cityUuid = cityUuid,
-                    )?.uuid,
+                isSelected = userAddress.uuid == selectedAddress?.uuid,
             )
         }
     }

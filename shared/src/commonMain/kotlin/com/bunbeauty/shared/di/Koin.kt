@@ -77,8 +77,6 @@ class IosComponent : KoinComponent {
 
     //Use cases
     fun provideDisableUserUseCase(): DisableUserUseCase = get()
-    fun provideGetSelectedUserAddressUseCase(): GetSelectedUserAddressUseCase = get()
-    fun provideGetSelectedCafeUseCase(): GetSelectedCafeUseCase = get()
     fun provideGetUserAddressListUseCase(): GetUserAddressListUseCase = get()
     fun provideGetSelectableUserAddressListUseCase(): GetSelectableUserAddressListUseCase = get()
     fun provideGetCafeListUseCase(): GetCafeListUseCase = get()

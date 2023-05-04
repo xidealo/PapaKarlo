@@ -26,12 +26,6 @@ import org.koin.dsl.module
 
 internal fun useCaseModule() = module {
     factory {
-        GetSelectedUserAddressUseCase(
-            userAddressRepo = get(),
-            dataStoreRepo = get(),
-        )
-    }
-    factory {
         GetUserAddressListUseCase(
             dataStoreRepo = get(),
             userAddressRepo = get(),
@@ -41,12 +35,6 @@ internal fun useCaseModule() = module {
         GetSelectableUserAddressListUseCase(
             dataStoreRepo = get(),
             userAddressRepo = get(),
-        )
-    }
-    factory {
-        GetSelectedCafeUseCase(
-            cafeRepo = get(),
-            dataStoreRepo = get(),
         )
     }
     factory {

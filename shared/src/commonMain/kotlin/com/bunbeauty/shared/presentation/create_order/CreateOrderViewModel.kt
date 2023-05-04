@@ -208,8 +208,7 @@ class CreateOrderViewModel(
                 userAddressList = userAddressList,
             )
         }
-        val selectableUserAddress =
-            userAddressList.find { it.isSelected } ?: userAddressList.firstOrNull()
+        val selectableUserAddress = userAddressList.find { it.isSelected }
 
         orderCreationData.update { data ->
             data.copy(selectedUserAddress = selectableUserAddress)
@@ -233,7 +232,7 @@ class CreateOrderViewModel(
                 cafeList = cafeList,
             )
         }
-        val selectedCafe = cafeList.find { it.isSelected } ?: cafeList.firstOrNull()
+        val selectedCafe = cafeList.find { it.isSelected }
 
         orderCreationData.update { data ->
             data.copy(selectedCafe = selectedCafe)
