@@ -41,7 +41,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-    val viewModel: CafeListViewModel by viewModel()
+    private val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
