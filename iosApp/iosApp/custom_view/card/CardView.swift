@@ -24,24 +24,36 @@ struct CardView: View {
     
     var body: some View {
         HStack(spacing:0){
+            
             if icon != nil{
                 if(isSystemImageName){
-                    Image(systemName: icon ?? "").foregroundColor(Color("iconColor"))
+                    Image(systemName: icon ?? "")
+                    .foregroundColor(
+                        AppColor.onSurfaceVariant
+                    )
                 }else{
-                    Image(icon ?? "").resizable().frame(width: 23, height: 24).foregroundColor(Color("iconColor"))
+                    Image(icon ?? "")
+                        .resizable()
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .frame(width: 23, height: 24)
                 }
             }
+            
             Text(label)
+                .bodyLarge()
                 .frame(maxWidth:.infinity, alignment: .leading)
-                .foregroundColor(Color("onSurface"))
+                .foregroundColor(AppColor.onSurface)
                 .multilineTextAlignment(.leading)
                 .padding(.leading, Diems.MEDIUM_PADDING)
             if isShowRightArrow{
-                Image(systemName:"chevron.right").foregroundColor(Color("onSurfaceVariant"))
+                Image(systemName:"chevron.right")
+                    .foregroundColor(AppColor.onSurfaceVariant)
             }
+            
         }.frame(maxWidth:.infinity)
-        .padding(Diems.MEDIUM_PADDING)
-        .background(Color("surface"))
+        .padding(.vertical, 12)
+        .padding(.horizontal, 12)
+        .background(AppColor.surface)
         .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

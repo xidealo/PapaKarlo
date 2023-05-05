@@ -3,13 +3,13 @@ package com.bunbeauty.papakarlo.feature.cafe.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 
 @Composable
-fun getCafeStatusColor(cafeStatus: CafeStatus): Color {
+fun getCafeStatusColor(cafeStatus: CafeItem.CafeOpenState): Color {
     return when (cafeStatus) {
-        CafeStatus.OPEN -> FoodDeliveryTheme.colors.statusColors.positive
-        CafeStatus.CLOSE_SOON -> FoodDeliveryTheme.colors.statusColors.warning
-        CafeStatus.CLOSED -> FoodDeliveryTheme.colors.statusColors.negative
+        is CafeItem.CafeOpenState.Opened -> FoodDeliveryTheme.colors.statusColors.positive
+        is CafeItem.CafeOpenState.CloseSoon -> FoodDeliveryTheme.colors.statusColors.warning
+        is CafeItem.CafeOpenState.Closed -> FoodDeliveryTheme.colors.statusColors.negative
     }
 }

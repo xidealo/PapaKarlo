@@ -24,7 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SelectCityFragment : BaseFragment(R.layout.layout_compose) {

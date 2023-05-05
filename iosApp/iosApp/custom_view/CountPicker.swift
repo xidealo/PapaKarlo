@@ -12,22 +12,30 @@ struct CountPicker: View {
     let count:String
     let plusAction: () -> Void
     let minusAction: () -> Void
-
+    
     var body: some View {
-        HStack{
+        HStack(spacing:0){
             Group{
                 Button(action: minusAction) {
-                    Text("-").padding(.horizontal, Diems.SMALL_PADDING - 2)
+                    Text("-")
+                        .padding(.horizontal, 8)
                 }
                 Text(count)
+                    .bodySmall()
                 Button(action:plusAction) {
-                    Text("+").padding(.horizontal, Diems.SMALL_PADDING - 2)
+                    Text("+")
+                        .padding(.horizontal, 8)
                 }
-            }.foregroundColor(Color("onPrimary"))
-        }.padding(.horizontal, 8)
-            .padding(.vertical, Diems.SMALL_PADDING)
-            .background(Color("primary"))
-            .cornerRadius(Diems.BUTTON_RADIUS)
+            }
+            .foregroundColor(AppColor.primary)
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, Diems.SMALL_PADDING)
+        .overlay(
+            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                .stroke(AppColor.primary, lineWidth: 2)
+        )
+        .cornerRadius(Diems.BUTTON_RADIUS)
     }
     
 }
@@ -39,6 +47,6 @@ struct CountPicker_Previews: PreviewProvider {
         } minusAction: {
             
         }
-
+        
     }
 }

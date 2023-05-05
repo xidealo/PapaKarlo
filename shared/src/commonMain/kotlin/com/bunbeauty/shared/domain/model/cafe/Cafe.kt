@@ -8,5 +8,5 @@ data class Cafe(
     val address: String,
     val latitude: Double,
     val longitude: Double,
-    val cityUuid: String
+    val cityUuid: String,
 )

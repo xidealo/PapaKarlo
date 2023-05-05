@@ -62,7 +62,7 @@ struct CreateOrderView: View {
                 )
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.update()
@@ -74,30 +74,33 @@ struct CreateOrderView: View {
             overlayView: ToastView(
                 toast: Toast(title: "Адрес добавлен"),
                 show: $showCreatedAddress,
-                backgroundColor:Color("primary"),
-                foregaroundColor: Color("onPrimary")),
+                backgroundColor:AppColor.primary,
+                foregaroundColor: AppColor.onPrimary
+            ),
             show: $showCreatedAddress
         )
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Не указан адрес"),
                 show: $showAddressError,
-                backgroundColor:Color("error"),
-                foregaroundColor: Color("onPrimary")),
+                backgroundColor:AppColor.error,
+                foregaroundColor: AppColor.onError
+            ),
             show: $showAddressError
         )
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Что-то пошло не так")
                 , show: $showCommonError,
-                backgroundColor:Color("error"),
-                foregaroundColor: Color("onPrimary")),
+                backgroundColor:AppColor.error,
+                foregaroundColor: AppColor.onError
+            ),
             show: $showCommonError
         )
     }
 }
 
-struct CreateOrderSuccessView:View {
+struct CreateOrderSuccessView: View {
     
     @ObservedObject var viewModel:CreateOrderHolder
     @State var addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY
@@ -241,17 +244,19 @@ struct CreateOrderSuccessView:View {
                     }
                 }
             }
-            .background(Color("background"))
+            .background(AppColor.background)
 
             VStack(spacing:0){
                 HStack(spacing:0){
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
-                        .foregroundColor(Color("onSurface"))
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
                     Spacer()
                     if let totalCost = viewModel.creationOrderViewState.totalCost{
                         let totaCostString = "\(totalCost)\(Strings.CURRENCY)"
                         Text(totaCostString)
-                            .foregroundColor(Color("onSurface"))
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
                     }
                 }
                 .padding(.top, Diems.SMALL_PADDING)
@@ -260,18 +265,24 @@ struct CreateOrderSuccessView:View {
                 if(viewModel.creationOrderViewState.isDelivery){
                     HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
-                            .foregroundColor(Color("onSurface"))
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
                         Spacer()
                         Text("\(viewModel.creationOrderViewState.deliveryCost ?? 0)\(Strings.CURRENCY)")
-                            .foregroundColor(Color("onSurface"))
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
                     }
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                 }
                 HStack(spacing:0){
-                    BoldText(text:Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                    Text(Strings.MSG_CREATION_ORDER_FINAL_AMOUNT)
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
                     Spacer()
-                    BoldText(text:"\(viewModel.creationOrderViewState.finalCost ?? 0)\(Strings.CURRENCY)")
+                    Text("\(viewModel.creationOrderViewState.finalCost ?? 0)\(Strings.CURRENCY)")
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -285,9 +296,9 @@ struct CreateOrderSuccessView:View {
                 .padding(.vertical, Diems.MEDIUM_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
             }
-            .background(Color("surface"))
+            .background(AppColor.surface)
         }
-        .background(Color("surface"))
+        .background(AppColor.surface)
         .onReceive(viewModel.$creationOrderViewState, perform: { creationOrderViewState in
             if(creationOrderViewState.isDelivery){
                 addressLable = Strings.HINT_CREATION_ORDER_ADDRESS_DELIVERY

@@ -15,7 +15,7 @@ class ChangeCityViewModel: ObservableObject {
         cityList: [],
         changeCityState: ChangeCityState.loading
     )
-    var cityList: [City] = []
+    var cityList: [SelectableCity] = []
     
     init(){
         loadData()
@@ -23,11 +23,15 @@ class ChangeCityViewModel: ObservableObject {
     
     func loadData(){
         iosComponent.provideCityInteractor().observeCityList().watch { arr in
-            self.cityList = arr as! [City]
+            self.cityList = arr as! [SelectableCity]
             
             (self.changeCityViewState.copy() as! ChangeCityViewState).apply { newState in
-                newState.cityList = (arr as! [City]).map({ city in
-                    ChangeCityItem(id: city.uuid, city: city.name, isSelected: false)
+                newState.cityList = (arr as! [SelectableCity]).map({ selectableCity in
+                    ChangeCityItem(
+                        id: selectableCity.city.uuid,
+                        city: selectableCity.city.name,
+                        isSelected: selectableCity.isSelected
+                    )
                 })
                 newState.changeCityState = ChangeCityState.success
                 self.changeCityViewState = newState

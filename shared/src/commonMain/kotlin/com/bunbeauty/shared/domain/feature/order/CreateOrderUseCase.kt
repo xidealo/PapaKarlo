@@ -1,8 +1,10 @@
 package com.bunbeauty.shared.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.cafe.Cafe
+import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.CreatedOrder
 import com.bunbeauty.shared.domain.model.order.CreatedOrderAddress
@@ -21,8 +23,8 @@ class CreateOrderUseCase(
 
     suspend operator fun invoke(
         isDelivery: Boolean,
-        selectedUserAddress: UserAddress?,
-        selectedCafe: Cafe?,
+        selectedUserAddress: SelectableUserAddress?,
+        selectedCafe: SelectableCafe?,
         comment: String?,
         deferredTime: Time?,
         timeZone: String,

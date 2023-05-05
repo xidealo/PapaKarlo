@@ -5,7 +5,7 @@ import com.bunbeauty.shared.data.mapper.city.ICityMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
 import com.bunbeauty.shared.domain.mapFlow
 import com.bunbeauty.shared.domain.mapListFlow
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 import kotlinx.coroutines.flow.Flow
 

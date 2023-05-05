@@ -10,20 +10,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
-import com.bunbeauty.papakarlo.common.delegates.nullableArgument
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
-import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
+import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
+class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>() {
 
-    private var addressList by argument<List<CafeAddressItem>>()
-    private var selectedCafeAddress by nullableArgument<String>()
+    private var addressList by argument<List<SelectableCafeAddressItem>>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,7 +34,6 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
                     callback?.onResult(addressItem)
                     dismiss()
                 },
-                selectedCafeAddress = selectedCafeAddress
             )
         }
     }
@@ -46,14 +43,12 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<CafeAddressItem>,
-            selectedCafeAddress: String?,
+            addressList: List<SelectableCafeAddressItem>,
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
-                this.selectedCafeAddress = selectedCafeAddress
-                callback = object : Callback<CafeAddressItem> {
-                    override fun onResult(result: CafeAddressItem?) {
+                callback = object : Callback<SelectableCafeAddressItem> {
+                    override fun onResult(result: SelectableCafeAddressItem?) {
                         continuation.resume(result)
                     }
                 }
@@ -65,10 +60,9 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<CafeAddressItem>() {
 
 @Composable
 private fun CafeAddressListScreen(
-    addressList: List<CafeAddressItem>,
-    selectedCafeAddress: String?,
+    addressList: List<SelectableCafeAddressItem>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (CafeAddressItem) -> Unit,
+    onAddressClicked: (SelectableCafeAddressItem) -> Unit,
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.cafe_address,
@@ -82,7 +76,7 @@ private fun CafeAddressListScreen(
                 address = addressItem.address,
                 isClickable = true,
                 elevated = false,
-                isSelected = addressItem.address == selectedCafeAddress
+                isSelected = addressItem.isSelected
             ) {
                 onAddressClicked(addressItem)
             }
@@ -96,16 +90,17 @@ private fun CafeAddressListScreenPreview() {
     FoodDeliveryTheme {
         CafeAddressListScreen(
             addressList = listOf(
-                CafeAddressItem(
+                SelectableCafeAddressItem(
                     uuid = "1",
                     address = "Адрес 1",
+                    isSelected = true
                 ),
-                CafeAddressItem(
+                SelectableCafeAddressItem(
                     uuid = "2",
                     address = "Оооооооооооооооооооооооочень длинный адрес 2",
+                    isSelected = false
                 ),
             ),
-            selectedCafeAddress = "Адрес 1",
             scrolledToTop = {},
             onAddressClicked = {},
         )

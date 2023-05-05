@@ -12,11 +12,18 @@ struct TextCard: View {
     let text:String
 
     var body: some View {
-        VStack{
-            PlaceholderText(text:placeHolder).frame(maxWidth:.infinity, alignment: .leading)
-            Text(text)
+        VStack(spacing:0){
+            
+            Text(placeHolder)
+                .labelSmall(weight: .medium)
+                .foregroundColor(AppColor.onSurfaceVariant)
                 .frame(maxWidth:.infinity, alignment: .leading)
-                .foregroundColor(Color("onSurface"))
+            
+            Text(text)
+                .bodyMedium()
+                .frame(maxWidth:.infinity, alignment: .leading)
+                .foregroundColor(AppColor.onSurface)
+                .multilineTextAlignment(.leading)
         }.padding(.horizontal, Diems.MEDIUM_PADDING)
             .padding(.vertical, Diems.SMALL_PADDING)
             .background(Color("surface"))

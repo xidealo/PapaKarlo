@@ -266,7 +266,6 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     UserAddressListBottomSheet.show(
                         fragmentManager = childFragmentManager,
                         addressList = event.addressList.map(userAddressItemMapper::toItem),
-                        selectedUserAddressUuid = event.selectedUserAddressUuid,
                     )?.let { result ->
                         handleUserAddressListResult(result)
                     }
@@ -275,7 +274,6 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     CafeAddressListBottomSheet.show(
                         fragmentManager = childFragmentManager,
                         addressList = event.addressList,
-                        selectedCafeAddress = event.selectedCafeAddress
                     )?.let { addressItem ->
                         viewModel.onCafeAddressChanged(addressItem.uuid)
                     }

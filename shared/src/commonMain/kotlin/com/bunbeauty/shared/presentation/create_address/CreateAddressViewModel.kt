@@ -3,9 +3,9 @@ package com.bunbeauty.shared.presentation.create_address
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.exeptions.EmptyStreetListException
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
-import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.use_case.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
+import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
 import com.bunbeauty.shared.presentation.Suggestion
 import kotlinx.coroutines.CoroutineExceptionHandler
