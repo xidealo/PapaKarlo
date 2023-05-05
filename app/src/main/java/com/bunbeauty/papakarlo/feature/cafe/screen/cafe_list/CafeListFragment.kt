@@ -32,6 +32,7 @@ import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
