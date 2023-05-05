@@ -35,8 +35,6 @@ import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
-import com.google.android.material.transition.MaterialFadeThrough
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
