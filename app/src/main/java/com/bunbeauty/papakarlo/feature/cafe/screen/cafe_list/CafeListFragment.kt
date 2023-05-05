@@ -32,7 +32,6 @@ import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItem
 import com.bunbeauty.papakarlo.feature.cafe.ui.CafeItemAndroid
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
-import com.bunbeauty.shared.domain.model.cafe.CafeStatus
 import com.bunbeauty.shared.presentation.cafe_list.CafeItem
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
@@ -42,7 +41,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
-    val viewModel: CafeListViewModel by viewModel()
+    private val viewModel: CafeListViewModel by viewModel()
     private val cafeListUiStateMapper: CafeListUiStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
