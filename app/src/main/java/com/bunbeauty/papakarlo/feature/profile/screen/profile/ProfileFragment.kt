@@ -54,7 +54,6 @@ import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
-import com.google.android.material.transition.MaterialFadeThrough
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -65,11 +64,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
 
     private val profileUiStateMapper: ProfileUiStateMapper by inject()
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enterTransition = MaterialFadeThrough()
-    }
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -291,12 +285,14 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         .padding(top = 32.dp),
                     text = stringResource(R.string.title_profile_no_profile),
                     style = FoodDeliveryTheme.typography.titleMedium.bold,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
                     textAlign = TextAlign.Center
                 )
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     text = stringResource(R.string.msg_profile_no_profile),
                     style = FoodDeliveryTheme.typography.bodyLarge,
+                    color = FoodDeliveryTheme.colors.mainColors.onBackground,
                     textAlign = TextAlign.Center
                 )
             }

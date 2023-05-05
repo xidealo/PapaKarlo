@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/black2</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="colorSurface">@color/black2</item>
+    </style>
+
+    <style name="LoadingAppTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+</resources>

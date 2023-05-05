@@ -35,7 +35,10 @@ fun OrderProductItem(
     modifier: Modifier = Modifier,
     orderProductItem: OrderProductUiItem,
 ) {
-    FoodDeliveryCard(modifier = modifier.fillMaxWidth()) {
+    FoodDeliveryCard(
+        modifier = modifier.fillMaxWidth(),
+        clickable = false,
+    ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
                 modifier = Modifier

@@ -104,7 +104,10 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
-            FoodDeliveryCard(modifier = Modifier.padding(top = 16.dp)) {
+            FoodDeliveryCard(
+                modifier = Modifier.padding(top = 16.dp),
+                clickable = false,
+            ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()

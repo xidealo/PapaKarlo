@@ -82,6 +82,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -145,7 +149,8 @@ dependencies {
         exclude(group = PinEntryEditText.group, module = PinEntryEditText.module)
     }
 
-    implementation(TimePicker.timePicker)
+    implementation(MaterialDialogs.datetime)
+    coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
 }
