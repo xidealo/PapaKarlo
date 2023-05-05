@@ -26,7 +26,12 @@ struct ActionCardView: View {
     
     var body: some View {
         Button(action: action){
-           CardView(icon: icon, label: label, isSystemImageName: isSystemImageName, isShowRightArrow: isShowRightArrow)
+           CardView(
+            icon: icon,
+            label: label,
+            isSystemImageName: isSystemImageName,
+            isShowRightArrow: isShowRightArrow
+           )
         }
     }
 }

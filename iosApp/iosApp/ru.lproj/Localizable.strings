@@ -43,3 +43,19 @@
 "hintLoginEnterPhone" = "Номер телефона"; //add later refactoring
 "errorLoginEnterPhone" = "Введите корректный номер телефона"; //add later refactoring
 "actionLoginContinue" = "Продолжить"; //add later refactoring
+
+
+//cafe list
+"msg_cafe_open" = "Открыто";
+"msg_cafe_close_soon"= "Открыто. Закроется через ";
+"msg_cafe_closed"= "Закрыто";
+"msg_cafe_minutes" = "минут";
+"msg_cafe_minute" = "минуту";
+"msg_cafe_minutes_234" = "минуты";
+"msg_cafe_minutes" = "минут";
+
+//PaymentMethodName
+"msg_payment_cash" = "Наличные";
+"msg_payment_card" = "Картой при получении";
+"msg_payment_card_number" = "Переводом по номеру карты";
+"msg_payment_phone_number" = "Переводом по номеру телефона";

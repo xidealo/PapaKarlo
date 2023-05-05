@@ -19,33 +19,22 @@ struct OrderItemView<Content: View>: View {
         ){
             HStack(spacing:0){
                 Text(orderItem.code)
-                    .foregroundColor(Color("onSurface"))
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+                    .foregroundColor(AppColor.onSurface)
+                    .titleMedium(weight: .bold)
                 
                 OrderChip(orderStatus: orderItem.status)
                     .padding(.leading, Diems.SMALL_PADDING)
-                
+
                 Spacer()
                 
                 Text(orderItem.dateTime)
-                    .font(
-                        .system(
-                            size: Diems.SMALL_TEXT_SIZE,
-                                weight: .thin,
-                                design: .default
-                        )
-                    )
-                    .foregroundColor(Color("onSurface"))
+                    .bodySmall()
+                    .foregroundColor(AppColor.onSurfaceVariant)
             }.frame(maxWidth:.infinity)
-                .padding(Diems.MEDIUM_PADDING)
-                .background(Color("surface"))
+                .padding(.horizontal, Diems.MEDIUM_PADDING)
+                .padding(.vertical, 12)
+                .background(AppColor.surface)
                 .cornerRadius(Diems.MEDIUM_RADIUS)
         }
-    }
-}
-
-struct OrderItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        OrderItemView(orderItem: OrderItem(id: "UUID", status: OrderStatus.notAccepted, code: "H-03", dateTime: "9 февраля 22:00"), destination: OrderDetailsView(orderUuid: ""))
     }
 }

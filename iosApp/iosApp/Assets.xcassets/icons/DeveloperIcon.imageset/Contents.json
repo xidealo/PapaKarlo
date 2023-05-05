@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Vector 65.png",
+      "filename" : "ic_bb.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Vector 65-1.png",
+      "filename" : "ic_bb 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Vector 65-2.png",
+      "filename" : "ic_bb 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

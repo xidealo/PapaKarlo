@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.domain.feature.city
 
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.repo.CityRepo
 
 class GetCityListUseCase(

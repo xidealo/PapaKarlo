@@ -6,13 +6,13 @@
 //
 import SwiftUI
 import Foundation
+import shared
 
-struct CafeItem:Identifiable {
+struct CafeItemUi:Identifiable {
     let id:String
     let address:String
     let workingHours:String
-    let isOpenMessage:String
-    let isOpenColor:Color
+    let cafeOpenState: CafeItem.CafeOpenState
     let phone:String
     let latitude:Float
     let longitude:Float

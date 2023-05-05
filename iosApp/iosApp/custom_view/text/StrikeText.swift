@@ -12,8 +12,8 @@ struct StrikeText: View {
     var body: some View {
         Text(text)
             .strikethrough()
-            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .thin, design: .default))
-            .foregroundColor(Color("onSurface"))
+            .bodyLarge()
+            .foregroundColor(AppColor.onSurfaceVariant)
     }
 }
 

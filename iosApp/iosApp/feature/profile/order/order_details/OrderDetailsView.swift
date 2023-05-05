@@ -29,7 +29,7 @@ struct OrderDetailsView: View {
     )
     
     @State var listener: Closeable? = nil
-
+    
     @State var orderUuid:String
     
     @Environment(\.scenePhase) var scenePhase
@@ -45,77 +45,79 @@ struct OrderDetailsView: View {
                         self.mode.wrappedValue.dismiss()
                     }
                 )
-
-                ZStack(alignment: .bottom){
-                    ScrollView {
-                        LazyVStack(spacing: 0){
-                            OrderStatusBar(
-                                orderStatus: orderDetailsState.orderInfo?.status ??  OrderStatus.notAccepted,
-                                orderStatusName: orderDetailsState.orderInfo?.status.name ?? ""
-                            )
-                                .padding(.top, Diems.MEDIUM_PADDING)
+                
+                ScrollView {
+                    LazyVStack(spacing: 0){
+                        OrderStatusBar(
+                            orderStatus: orderDetailsState.orderInfo?.status ??  OrderStatus.notAccepted,
+                            orderStatusName: orderDetailsState.orderInfo?.status.name ?? ""
+                        )
+                        .padding(.top, Diems.MEDIUM_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                        
+                        if let orderInfo = orderDetailsState.orderInfo{
+                            OrderDetailsTextView(orderDetails: orderInfo)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-
-                            if(orderDetailsState.orderInfo != nil){
-                                OrderDetailsTextView(orderDetails: orderDetailsState.orderInfo!)
-                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                    .padding(.top, Diems.MEDIUM_PADDING)
-                                    .padding(.bottom, Diems.SMALL_PADDING)
-                            }
-
-                            VStack(spacing: 0){
-                                ForEach(orderDetailsState.orderProductItemList.map({ order in
-                                    OrderProductItem(
-                                        id: order.uuid,
-                                        name: order.name,
-                                        newPrice: order.newPrice,
-                                        oldPrice: order.oldPrice,
-                                        newCost: order.newCost,
-                                        oldCost: order.oldCost,
-                                        photoLink: order.photoLink,
-                                        count: String(order.count)
-                                    )
-                                })){ orderProductItem in
-                                    OrderProductItemView(orderProductItem: orderProductItem)
-                                        .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                        .padding(.top, Diems.SMALL_PADDING)
-                                }
-                            }
-                            .padding(.bottom, Diems.MEDIUM_PADDING)
+                                .padding(.top, Diems.MEDIUM_PADDING)
+                                .padding(.bottom, Diems.SMALL_PADDING)
                         }
+                        
+                        VStack(spacing: 0){
+                            ForEach(orderDetailsState.orderProductItemList.map({ order in
+                                OrderProductItem(
+                                    id: order.uuid,
+                                    name: order.name,
+                                    newPrice: order.newPrice,
+                                    oldPrice: order.oldPrice,
+                                    newCost: order.newCost,
+                                    oldCost: order.oldCost,
+                                    photoLink: order.photoLink,
+                                    count: String(order.count)
+                                )
+                            })){ orderProductItem in
+                                OrderProductItemView(orderProductItem: orderProductItem)
+                                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                                    .padding(.top, Diems.SMALL_PADDING)
+                            }
+                        }
+                        .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
-
-                    LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
-                        .frame(height:20)
-
                 }
+                
+                
                 VStack(spacing:0){
                     if(orderDetailsState.deliveryCost != nil){
                         HStack(spacing:0){
                             Text(Strings.MSG_CREATION_ORDER_DELIVERY)
+                                .bodyMedium()
                             Spacer()
                             Text((orderDetailsState.deliveryCost ?? "0") + Strings.CURRENCY)
                         }
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                         .padding(.top, Diems.SMALL_PADDING)
                     }
-
+                    
                     HStack(spacing:0){
-                        BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
+                        Text(Strings.MSG_CART_PRODUCT_RESULT)
+                            .bodyMedium(weight: .bold)
                         Spacer()
                         if orderDetailsState.totalCost != nil {
-                            StrikeText(text: (orderDetailsState.totalCost ?? "") + Strings.CURRENCY)
+                            Text((orderDetailsState.totalCost ?? "") + Strings.CURRENCY)
+                                .strikethrough()
+                                .bodyMedium(weight: .bold)
+                                .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, Diems.SMALL_PADDING)
                         }
-                        BoldText(text: (orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
+                        Text((orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
+                            .bodyMedium(weight: .bold)
                     }
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.bottom, Diems.MEDIUM_PADDING)
-                }.background(Color("surface"))
+                }.background(AppColor.surface)
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
@@ -125,7 +127,7 @@ struct OrderDetailsView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-               subscribe()
+                subscribe()
             } else if newPhase == .inactive {
                 unsubscribe()
             } else if newPhase == .background {
@@ -162,38 +164,56 @@ struct OrderProductItemView :View {
             
             VStack(spacing:0){
                 Text(orderProductItem.name)
+                    .titleSmall(weight: .bold)
                     .frame(maxWidth:.infinity, alignment: .topLeading)
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
-                    .foregroundColor(Color("onSurface"))
+                    .foregroundColor(AppColor.onSurface)
+                    .padding(.top, 8)
+
+                Spacer()
                 
                 HStack(spacing:0){
-                    if orderProductItem.oldPrice != nil {
-                        StrikeText(text: orderProductItem.oldPrice! + Strings.CURRENCY)
+                    if let oldPrice = orderProductItem.oldPrice{
+                        Text(oldPrice + Strings.CURRENCY)
+                            .strikethrough()
+                            .bodySmall()
+                            .foregroundColor(AppColor.onSurfaceVariant)
                             .padding(.trailing, Diems.SMALL_PADDING)
                     }
+                    
                     Text(orderProductItem.newPrice + Strings.CURRENCY)
-                        .foregroundColor(Color("onSurface"))
-
+                        .bodySmall(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
+                    
                     Text(" x ")
+                        .bodySmall()
+                        .foregroundColor(AppColor.onSurface)
+                    
                     Text(orderProductItem.count)
-                        .foregroundColor(Color("onSurface"))
+                        .bodySmall()
+                        .foregroundColor(AppColor.onSurface)
                     
                     HStack(spacing:0){
-                        if orderProductItem.oldCost != nil {
-                            StrikeText(text: orderProductItem.oldCost! + Strings.CURRENCY)
+                        if let oldCost = orderProductItem.oldCost{
+                            Text(oldCost + Strings.CURRENCY)
+                                .strikethrough()
+                                .bodySmall()
+                                .foregroundColor(AppColor.onSurfaceVariant)
                                 .padding(.trailing, Diems.SMALL_PADDING)
                         }
                         
                         Text(orderProductItem.newCost + Strings.CURRENCY)
-                            .foregroundColor(Color("onSurface"))
-                    }.frame(maxWidth:.infinity, alignment: .topTrailing)
-                        .padding(.trailing, Diems.SMALL_PADDING)
-                    
+                            .bodySmall(weight: .bold)
+                            .foregroundColor(AppColor.onSurface)
+                    }
+                    .frame(maxWidth:.infinity, alignment: .topTrailing)
+                    .padding(.trailing, Diems.SMALL_PADDING)
                 }
-            }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                .padding(.leading, Diems.SMALL_PADDING)
+                .padding(.bottom, 8)
+            }
+            .frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
+            .padding(.leading, Diems.SMALL_PADDING)
         }.frame(maxWidth:.infinity, alignment: .topLeading)
-            .background(Color("surface"))
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }
@@ -205,55 +225,77 @@ struct OrderDetailsTextView: View {
         VStack(spacing:0){
             HStack(spacing:0){
                 VStack(spacing:0){
-                    PlaceholderText(text: "Время заказа")
+                    Text("Время заказа")
+                        .labelSmall(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    
                     Text(dateUtil.getDateTimeString(dateTime: orderDetails.dateTime))
+                        .bodyMedium()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
+                
                 if(orderDetails.deferredTime != nil && orderDetails.deferredTime is TimeUITime){
                     VStack(spacing:0){
-                        PlaceholderText(
-                            text: "Ко времени"
-                        ).frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Время доставки")
+                            .labelSmall(weight: .medium)
+                            .foregroundColor(AppColor.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         
                         Text(dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime))
+                            .bodyMedium()
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .padding(.top, Diems.HALF_SMALL_PADDING)
                 }
             }
             VStack(spacing:0){
-                PlaceholderText(text: "Способ получения")
+                Text("Способ получения")
+                    .labelSmall(weight: .medium)
+                    .foregroundColor(AppColor.onSurfaceVariant)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
                 if(orderDetails.isDelivery){
                     Text("Доставка")
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }else{
                     Text("Самовывоз")
+                        .bodyMedium()
+                        .foregroundColor(AppColor.onSurface)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             .padding(.top, Diems.HALF_SMALL_PADDING)
-
+            
             VStack(spacing:0){
-                PlaceholderText(text: "Адрес")
+                Text("Адрес")
+                    .labelSmall(weight: .medium)
+                    .foregroundColor(AppColor.onSurfaceVariant)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
                 Text(orderDetails.address.getAddress())
+                    .bodyMedium()
                     .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
             .padding(.top, Diems.HALF_SMALL_PADDING)
             if(orderDetails.comment != nil && orderDetails.comment != ""){
                 VStack(spacing:0){
-                    PlaceholderText(text: "Комментарий")
+                    Text("Комментарий")
+                        .labelSmall(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    
                     Text(orderDetails.comment ?? "")
+                        .bodyMedium()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }.padding(.top, Diems.HALF_SMALL_PADDING)
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
             .padding(Diems.MEDIUM_PADDING)
-            .background(Color("surface"))
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

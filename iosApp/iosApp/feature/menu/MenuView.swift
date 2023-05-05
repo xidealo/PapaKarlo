@@ -19,11 +19,17 @@ struct MenuView: View {
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
     
+    let columns = [
+        GridItem(.flexible(), spacing: 8, alignment: .top),
+        GridItem(.flexible(), spacing: 8, alignment: .top)
+      ]
+
     var body: some View {
         VStack(spacing:0){
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
+
                 ScrollView(.horizontal, showsIndicators:false) {
                     ScrollViewReader{ scrollReader in
                         HStack(spacing:0){
@@ -44,40 +50,44 @@ struct MenuView: View {
                             }
                         })
                     }
-                }.padding(.vertical, Diems.SMALL_PADDING)
-                
+                }
+                .padding(.vertical, Diems.SMALL_PADDING)
+                .background(AppColor.surface)
+
                 ScrollView {
                     ScrollViewReader{ scrollReader in
-                        LazyVStack(spacing:0){
+                        LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.menuViewState.menuItems.indices){  i in
                                 Section(
                                     header: LargeHeaderText(
                                         text:viewModel.menuViewState.menuItems[i].categorySectionItem.name
-                                    ).id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
-                                        .padding(.horizontal,  Diems.MEDIUM_PADDING)
-                                        .padding(.top, Diems.MEDIUM_PADDING)){
-                                            ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                                
-                                                MenuItemView(
-                                                    menuProductItem: menuProductItem,
-                                                    isRootActive : $isRootActive,
-                                                    selection : $selection,
-                                                    showOrderCreated : $showOrderCreated,
-                                                    action: {
-                                                        viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
-                                                    })
-                                                .padding(.horizontal, Diems.MEDIUM_PADDING)
-                                                .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                                                .onAppear(){
-                                                    viewModel.checkAppear(index: i)
-                                                }
-                                                .onDisappear(){
-                                                    viewModel.checkDisappear(index: i)
-                                                }
+                                    )
+                                    .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
+                                    .padding(.top, 16)
+                                    ){
+                                        ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
+                                            MenuItemView(
+                                                menuProductItem: menuProductItem,
+                                                isRootActive : $isRootActive,
+                                                selection : $selection,
+                                                showOrderCreated : $showOrderCreated,
+                                                action: {
+                                                    viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                                })
+                                            .onAppear(){
+                                                print("onAppear \(i)")
+                                                viewModel.checkAppear(index: i)
+                                            }
+                                            .onDisappear(){
+                                                print("onDisappear \(i)")
+                                                viewModel.checkDisappear(index: i)
                                             }
                                         }
+                                    }
                             }
-                        }.onChange(of: viewModel.menuViewState, perform: { menuState in
+                        }
+                        .padding(.horizontal, 16)
+                        .onChange(of: viewModel.menuViewState, perform: { menuState in
                             if(menuState.scrollToPostion != lastShowCategory){
                                 self.lastShowCategory = menuState.scrollToPostion
                                 withAnimation(.spring()){
@@ -89,7 +99,7 @@ struct MenuView: View {
                 }
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)

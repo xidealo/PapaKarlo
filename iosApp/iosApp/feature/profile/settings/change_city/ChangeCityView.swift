@@ -37,7 +37,8 @@ struct ChangeCityView: View {
                         }
                     }
                 }
-            }.padding(.top, Diems.MEDIUM_PADDING)
+            }
+            .padding(.top, Diems.MEDIUM_PADDING)
             default:  EmptyView()
             }
         }
@@ -46,7 +47,7 @@ struct ChangeCityView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
         })
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         
     }

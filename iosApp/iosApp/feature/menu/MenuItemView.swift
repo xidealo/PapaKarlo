@@ -20,60 +20,70 @@ struct MenuItemView: View {
     let action: () -> Void
     
     var body: some View {
-        ZStack(alignment: .trailing){
-            NavigationLink(
-                destination:
+        NavigationLink(
+            destination:
                 ProductDetailsView(
                     menuProductUuid: menuProductItem.productUuid,
                     isRootActive: self.$isRootActive,
                     selection: self.$selection,
                     showOrderCreated: $showOrderCreated
                 )
-            ){
-                HStack(spacing:0){
-                    KFImage(URL(string: menuProductItem.photoLink))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(
-                            maxWidth: Diems.IMAGE_ELEMENT_WIDTH,
-                            maxHeight: Diems.IMAGE_ELEMENT_HEIGHT
-                        )
+        ){
+            VStack(spacing:0){
+                KFImage(
+                    URL(string: menuProductItem.photoLink)
+                )
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height:110)
+                
+                VStack(spacing:0){
+                    Text(menuProductItem.name)
+                        .titleSmall(weight: .bold)
+                        .lineLimit(1)
+                        .frame(maxWidth:.infinity, alignment: .leading)
+                        .foregroundColor(AppColor.onSurface)
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .multilineTextAlignment(.leading)
                     
-                    VStack(spacing:0){
-                        Text(menuProductItem.name)
-                            .frame(maxWidth:.infinity, alignment: .topLeading)
-                            .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
-                            .foregroundColor(Color("onSurface"))
-                            .padding(.top, Diems.SMALL_PADDING)
-                            .multilineTextAlignment(.leading)
-                        HStack(spacing:0){
-                            if menuProductItem.oldPrice != nil{
-                                StrikeText(text: String(menuProductItem.oldPrice ?? 0) + Strings.CURRENCY)
-                                    .padding(.trailing, Diems.SMALL_PADDING)
-                            }
-                            Text(menuProductItem.newPrice)
-                                .frame(maxWidth:.infinity, alignment: .topLeading)
-                                .foregroundColor(Color("onSurface"))
+                    HStack(spacing:0){
+                        if let oldPrice = menuProductItem.oldPrice{
+                            Text(String(oldPrice) + Strings.CURRENCY)
+                                .strikethrough()
+                                .bodySmall()
+                                .foregroundColor(AppColor.onSurfaceVariant)
+                                .padding(.trailing, Diems.SMALL_PADDING)
+                            
                         }
-                        Spacer()
-                    }.frame(maxHeight: Diems.IMAGE_ELEMENT_HEIGHT)
-                        .padding(.leading, Diems.SMALL_PADDING)
-                    Button(action: action) {
-                        Text(Strings.ACTION_MENU_PRODUCT_WANT)
-                            .frame(maxWidth:Diems.BUTTON_WIDTH, maxHeight:32)
-                            .padding(.vertical, Diems.HALF_SMALL_PADDING)
-                            .padding(.horizontal, 25)
-                            .foregroundColor(Color("primary"))
-                            .overlay(RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                                .stroke(Color("primary"), lineWidth: 2))
-                            .padding(.leading, Diems.HALF_SMALL_PADDING)
-                    }.padding(.trailing, Diems.MEDIUM_PADDING)
-                    
-                }.frame(maxWidth:.infinity, alignment: .topLeading)
-                    .background(Color("surface"))
-                    .cornerRadius(Diems.MEDIUM_RADIUS)
-           
-            }.isDetailLink(false)
-        }
+                        Text(menuProductItem.newPrice)
+                            .bodySmall(weight: .bold)
+                            .frame(maxWidth:.infinity, alignment: .topLeading)
+                            .foregroundColor(AppColor.onSurface)
+                    }
+                    .padding(.top, 4)
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 8)
+                
+                Button(action: action) {
+                    Text(Strings.ACTION_MENU_PRODUCT_WANT)
+                        .labelLarge()
+                        .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
+                        .foregroundColor(AppColor.primary)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                .stroke(AppColor.primary, lineWidth: 2)
+                        )
+                        .padding(.horizontal, 8)
+                }
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+                
+            }
+            .frame(maxWidth: .infinity)
+            .background(AppColor.surface)
+            .cornerRadius(Diems.MEDIUM_RADIUS)
+            
+        }.isDetailLink(false)
     }
 }

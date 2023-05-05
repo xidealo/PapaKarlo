@@ -1,9 +1,9 @@
 package com.bunbeauty.shared.presentation.user_address_list
 
-import com.bunbeauty.shared.domain.model.address.UserAddress
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 
 data class UserAddressListState(
-    val userAddressList: List<UserAddress> = emptyList(),
+    val userAddressList: List<SelectableUserAddress> = emptyList(),
     val eventList: List<Event> = emptyList(),
     val state: State = State.LOADING
 ) {

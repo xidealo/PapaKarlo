@@ -20,8 +20,8 @@ struct LightOrderItemView<Content: View>: View{
         ){
             HStack(spacing:0){
                 Text(lightOrder.code)
-                    .foregroundColor(Color("onSurface"))
-                    .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .heavy, design: .default))
+                    .foregroundColor(AppColor.onSurface)
+                    .titleMedium(weight: .bold)
                 
                 OrderChip(orderStatus: lightOrder.status)
                     .padding(.leading, Diems.SMALL_PADDING)
@@ -29,17 +29,11 @@ struct LightOrderItemView<Content: View>: View{
                 Spacer()
                 
                 Text(dateUtil.getDateTimeString(dateTime: lightOrder.dateTime))
-                    .font(
-                        .system(
-                            size: Diems.SMALL_TEXT_SIZE,
-                                weight: .thin,
-                                design: .default
-                        )
-                    )
-                    .foregroundColor(Color("onSurface"))
+                    .bodySmall()
+                    .foregroundColor(AppColor.onSurfaceVariant)
             }.frame(maxWidth:.infinity)
-                .padding(Diems.MEDIUM_PADDING)
-                .background(Color("surface"))
+                .padding(12)
+                .background(AppColor.surface)
                 .cornerRadius(Diems.MEDIUM_RADIUS)
         }
     }

@@ -31,7 +31,7 @@ struct CafeAddressListView: View {
             default : SuccessCafeAddressListView(viewModel: viewModel)
             }
         }.hiddenNavigationBarStyle()
-            .background(Color("background"))
+            .background(AppColor.background)
             .onReceive(viewModel.$cafeAddressViewState, perform: { cafeAddressViewState in
                 if(cafeAddressViewState.cafeAddressState == CafeAddressState.goBack){
                     self.mode.wrappedValue.dismiss()
