@@ -23,6 +23,8 @@
     <string name="internet_error">Проверьте соединение и повторите попытку</string>
     <string name="description_company_logo">Лого компании</string>
     <string name="common_copied">Скопировано!</string>
+    <string name="common_ok">ОК</string>
+    <string name="common_cancel">Отмена</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>

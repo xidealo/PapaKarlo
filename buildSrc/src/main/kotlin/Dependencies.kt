@@ -21,7 +21,8 @@ object Versions {
     const val appCompact = "1.5.1"
     const val coreKtx = "1.9.0"
     const val coil = "2.1.0"
-    const val timePicker = "4.2.3"
+    const val datetime = "0.8.1-rc"
+    const val desugar = "2.0.3"
 
     const val composeCompiler = "1.4.0"
     const val composeBom = "2022.12.00"
@@ -54,7 +55,7 @@ object Versions {
 
 }
 
-object CommonApplication{
+object CommonApplication {
     const val versionMajor = 1
     const val versionMinor = 2
     const val versionPatch = 8
@@ -194,8 +195,12 @@ object Coil {
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coil}"
 }
 
-object TimePicker {
-    const val timePicker = "com.wdullaer:materialdatetimepicker:${Versions.timePicker}"
+object MaterialDialogs {
+    const val datetime = "io.github.vanpra.compose-material-dialogs:datetime:${Versions.datetime}"
+}
+
+object AndroidTools {
+    const val desugar = "com.android.tools:desugar_jdk_libs:${Versions.desugar}"
 }
 
 object KotlinxDateTime {
