@@ -33,18 +33,25 @@ struct OrderListView: View {
                 title: "titleMyOrders",
                 back: {
                     self.mode.wrappedValue.dismiss()
-                })            
+                })
             switch(orderListState.state){
             case OrderListState.State.loading : LoadingView()
             case OrderListState.State.empty : EmptyOrderListView()
-            case OrderListState.State.success :   SuccessOrderListView(orderList: orderListState.orderList.map({ lightOrder in
-                OrderItem(id: lightOrder.uuid, status: lightOrder.status, code: lightOrder.code, dateTime: dateUtil.getDateTimeString(dateTime: lightOrder.dateTime))
-            }))
+            case OrderListState.State.success :   SuccessOrderListView(
+                orderList: orderListState.orderList.map({ lightOrder in
+                    OrderItem(
+                        id: lightOrder.uuid,
+                        status: lightOrder.status,
+                        code: lightOrder.code,
+                        dateTime: dateUtil.getDateTimeString(dateTime: lightOrder.dateTime)
+                    )
+                })
+            )
             default:
                 EmptyView()
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             subscribe()
@@ -54,14 +61,14 @@ struct OrderListView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
-               subscribe()
+                subscribe()
             } else if newPhase == .inactive {
                 unsubscribe()
             } else if newPhase == .background {
                 unsubscribe()
             }
         }
-     
+
     }
     
     func subscribe(){

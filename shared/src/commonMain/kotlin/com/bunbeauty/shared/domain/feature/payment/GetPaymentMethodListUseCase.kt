@@ -9,7 +9,7 @@ class GetPaymentMethodListUseCase(
 
     suspend operator fun invoke(): List<PaymentMethod> {
         return paymentRepo.getPaymentMethodList().sortedBy { paymentMethod ->
-            if (paymentMethod.value == null || paymentMethod.valueToCopy == null) {
+            if (paymentMethod.valueToShow == null || paymentMethod.valueToCopy == null) {
                 0
             } else {
                 1

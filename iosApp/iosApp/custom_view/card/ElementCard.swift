@@ -14,11 +14,28 @@ struct ElementCard: View {
         Text(text)
             .bodyLarge()
             .multilineTextAlignment(.leading)
-            .padding()
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color("surface"))
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
-            .foregroundColor(Color("onSurface"))
+            .foregroundColor(AppColor.onSurface)
+    }
+}
+
+struct ElementCardWithLocolized: View {
+    let text:LocalizedStringKey
+    
+    var body: some View {
+        Text(text)
+            .bodyLarge()
+            .multilineTextAlignment(.leading)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(AppColor.surface)
+            .cornerRadius(Diems.MEDIUM_RADIUS)
+            .foregroundColor(AppColor.onSurface)
     }
 }
 

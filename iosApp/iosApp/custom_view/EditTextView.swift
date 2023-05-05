@@ -26,40 +26,43 @@ struct EditTextView: View {
         VStack{
             if(hasError){
                 TextField(hint, text: $text)
-                    .padding()
+                    .font(Font.system(size: 16, weight: .regular, design: .default))
+                    .padding(16)
                     .lineLimit(5)
                     .background(RoundedRectangle(cornerRadius: 5)
-                    .fill(Color("surface")))
+                    .fill(AppColor.surface))
                     .overlay(
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("error"), lineWidth: 2)
+                            .stroke(AppColor.error, lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
                     .keyboardType(keyBoadrType)
                 
                 Text(errorMessage)
-                    .foregroundColor(Color("error"))
+                    .foregroundColor(AppColor.error)
                     .frame(maxWidth:.infinity, alignment: .leading)
             }else{
                 TextField(hint, text: $text, onEditingChanged: { edit in
                     self.isSelectedSSS = edit
                 })
-                    .padding()
+                    .font(Font.system(size: 16, weight: .regular, design: .default))
+                    .padding(16)
                     .lineLimit(5)
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color("surface")))
+                    .background(
+                        RoundedRectangle(cornerRadius: 5)
+                        .fill(AppColor.surface)
+                    )
                     .overlay(
                         isSelectedSSS ?
                         RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("primary"), lineWidth: 2)
+                            .stroke(AppColor.primary, lineWidth: 2)
                         : RoundedRectangle(cornerRadius: Diems.MEDIUM_RADIUS)
-                            .stroke(Color("onSurfaceVariant"), lineWidth: 2)
+                            .stroke(AppColor.onSurfaceVariant, lineWidth: 2)
                     ).onReceive(Just(text)) { str in limitText(limit)
                         textChanged(str)
                     }
-
                     .keyboardType(keyBoadrType)
-                
             }
         }.environment(\.colorScheme, .light)
         

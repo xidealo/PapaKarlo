@@ -15,7 +15,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBot
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 

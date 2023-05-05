@@ -32,8 +32,8 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
-import com.bunbeauty.shared.domain.model.City
 import com.bunbeauty.shared.domain.model.Settings
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.presentation.settings.SettingsState
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

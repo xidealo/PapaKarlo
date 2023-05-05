@@ -19,20 +19,32 @@ struct CategoryItemView: View {
                     action(categoryItemModel.name)
                 }) {
                     Text(categoryItemModel.name)
-                        .padding(Diems.SMALL_PADDING)
-                        .background(Color("primary"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .foregroundColor(Color("onPrimary"))
+                        .labelLarge(weight: .medium)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 12)
+                        .background(AppColor.primary)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                .stroke(AppColor.primary, lineWidth: 2)
+                        )
+                        .cornerRadius(16)
+                        .foregroundColor(AppColor.onPrimary)
                 }
             }else{
                 Button(action: {
                     action(categoryItemModel.name)
                 }) {
                     Text(categoryItemModel.name)
-                        .padding(Diems.SMALL_PADDING)
-                        .background(Color("surface"))
-                        .cornerRadius(Diems.MEDIUM_RADIUS)
-                        .foregroundColor(Color("onSurface"))
+                        .labelLarge(weight: .medium)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 12)
+                        .background(AppColor.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
+                                .stroke(AppColor.onSurfaceVariant, lineWidth: 2)
+                        )
+                        .cornerRadius(16)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                 }
             }
         }

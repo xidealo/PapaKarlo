@@ -11,7 +11,7 @@ import shared
 struct UserAddressListView: View {
     
     var viewModel = UserAddressListViewModel(
-        getUserAddressList: iosComponent.provideGetUserAddressListUseCase(),
+        getSelectableUserAddressListUseCase: iosComponent.provideGetSelectableUserAddressListUseCase(),
         saveSelectedUserAddressUseCase: iosComponent.provideSaveSelectedUserAddressUseCase()
     )
     
@@ -42,7 +42,12 @@ struct UserAddressListView: View {
             case UserAddressListState.State.empty: EmptyAddressListView(show: show)
             case UserAddressListState.State.success : SuccessAddressListView(
                 addressItemList: userAddressViewState.userAddressList.map({ userAddress in
-                    AddressItem(id: userAddress.uuid, address: userAddress.getAddress(), isClickable: isClickable)
+                    AddressItem(
+                        id: userAddress.uuid,
+                        address: userAddress.getAddress(),
+                        isClickable: isClickable,
+                        isSelected: userAddress.isSelected
+                    )
                 }),
                 show: show,
                 viewModel: viewModel,
@@ -111,7 +116,6 @@ struct SuccessAddressListView: View {
                             AddressItemView(addressItem: address)
                                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                                 .padding(.top, Diems.SMALL_PADDING)
-
                         }
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)

@@ -156,7 +156,8 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
         FoodDeliveryTheme {
             val addressItemModel = UserAddressItem(
                 uuid = "1",
-                address = "addddd"
+                address = "addddd",
+                isSelected = false
             )
             UserAddressListScreen(
                 UserAddressListUi(

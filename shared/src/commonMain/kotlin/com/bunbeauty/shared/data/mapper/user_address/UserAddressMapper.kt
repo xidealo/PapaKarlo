@@ -5,16 +5,17 @@ import com.bunbeauty.shared.data.network.model.AddressServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.db.UserAddressEntity
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
-import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
+import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 
 class UserAddressMapper(
-    private val streetMapper: IStreetMapper
+    private val streetMapper: IStreetMapper,
 ) {
 
-    fun toUiModel(userAddress: UserAddress?): UserAddressUi? {
+    fun toUiModel(userAddress: SelectableUserAddress?): SelectableUserAddressUi? {
         return userAddress?.let {
-            UserAddressUi(
+            SelectableUserAddressUi(
                 uuid = userAddress.uuid,
                 street = userAddress.street.name,
                 house = userAddress.house,
@@ -22,11 +23,12 @@ class UserAddressMapper(
                 entrance = userAddress.entrance,
                 floor = userAddress.floor,
                 comment = userAddress.comment,
+                isSelected = userAddress.isSelected
             )
         }
     }
-    
-     fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
+
+    fun toUserAddress(userAddressEntity: UserAddressEntity): UserAddress {
         return UserAddress(
             uuid = userAddressEntity.uuid,
             street = streetMapper.toStreet(userAddressEntity),
@@ -39,7 +41,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddress(addressServer: AddressServer): UserAddress {
+    fun toUserAddress(addressServer: AddressServer): UserAddress {
         return UserAddress(
             uuid = addressServer.uuid,
             street = streetMapper.toStreet(addressServer.street),
@@ -52,7 +54,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
+    fun toUserAddressEntity(addressServer: AddressServer): UserAddressEntity {
         return UserAddressEntity(
             uuid = addressServer.uuid,
             streetUuid = addressServer.street.uuid,
@@ -67,7 +69,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddressEntity(userAddress: UserAddress): UserAddressEntity {
+    fun toUserAddressEntity(userAddress: UserAddress): UserAddressEntity {
         return UserAddressEntity(
             uuid = userAddress.uuid,
             streetUuid = userAddress.street.uuid,
@@ -82,7 +84,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toAddressServer(userAddress: UserAddress): AddressServer {
+    fun toAddressServer(userAddress: UserAddress): AddressServer {
         return AddressServer(
             uuid = userAddress.uuid,
             street = streetMapper.toStreetServer(userAddress.street),
@@ -95,7 +97,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toAddressServer(userAddressEntity: UserAddressEntity): AddressServer {
+    fun toAddressServer(userAddressEntity: UserAddressEntity): AddressServer {
         return AddressServer(
             uuid = userAddressEntity.uuid,
             street = streetMapper.toStreetServer(userAddressEntity),
@@ -108,7 +110,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddressPostServer(userAddressEntity: UserAddressEntity): UserAddressPostServer {
+    fun toUserAddressPostServer(userAddressEntity: UserAddressEntity): UserAddressPostServer {
         return UserAddressPostServer(
             streetUuid = userAddressEntity.streetUuid,
             house = userAddressEntity.house,
@@ -120,7 +122,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddressPostServer(userAddress: UserAddress): UserAddressPostServer {
+    fun toUserAddressPostServer(userAddress: UserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             streetUuid = userAddress.street.uuid,
             house = userAddress.house,
@@ -132,7 +134,7 @@ class UserAddressMapper(
         )
     }
 
-     fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
+    fun toUserAddressPostServer(createdUserAddress: CreatedUserAddress): UserAddressPostServer {
         return UserAddressPostServer(
             house = createdUserAddress.house,
             flat = createdUserAddress.flat,

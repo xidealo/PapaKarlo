@@ -23,11 +23,16 @@ struct OrderStatusBar: View {
     var body: some View {
         HStack(spacing:0){
             ForEach(0...4, id: \.self){ i in
-                Step(index: i, currentStep: getCurrentStep(orderStatus: orderStatus), orderStatus: orderStatus)
-                    .padding(.horizontal, Diems.HALF_SMALL_PADDING)
+                Step(
+                    index: i,
+                    currentStep: getCurrentStep(orderStatus: orderStatus),
+                    orderStatus: orderStatus
+                )
+                .padding(.horizontal, Diems.HALF_SMALL_PADDING)
             }.padding(.vertical, Diems.SMALL_PADDING)
-        }.frame(maxWidth:.infinity)
-            .background(Color("surface"))
+        }
+        .frame(maxWidth:.infinity)
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
     }
     
@@ -51,15 +56,13 @@ struct Step: View {
     let orderStatus : OrderStatus
     
     var body: some View {
-        VStack{
-            if(index < currentStep){
-                DoneStep(orderStatus: orderStatus)
-            }else if(index == currentStep){
-                OrderChip(orderStatus: orderStatus)
-            }else{
-                FutureStep()
-            }
-        }.padding(.vertical, Diems.SMALL_PADDING)
+        if(index < currentStep){
+            DoneStep(orderStatus: orderStatus)
+        }else if(index == currentStep){
+            OrderChip(orderStatus: orderStatus)
+        }else{
+            FutureStep()
+        }
     }
 }
 
@@ -68,7 +71,7 @@ struct DoneStep: View {
     let orderStatus : OrderStatus
     
     var body: some View {
-        IconImage(width: 12, height: 9, imageName: "CheckIcon")
+        IconImage(width: 12, height: 10, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(OrderChip.getColor(status: orderStatus))
             .foregroundColor(Color("surface"))
@@ -78,7 +81,7 @@ struct DoneStep: View {
 
 struct FutureStep: View {
     var body: some View {
-        IconImage(width: 12, height: 9, imageName: "CheckIcon")
+        IconImage(width: 12, height: 10, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(Color("onSurfaceVariant"))
             .foregroundColor(Color("onSurfaceVariant"))

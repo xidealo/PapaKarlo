@@ -23,7 +23,7 @@ class PaymentMethodUiStateMapper(
                 }.let { nameResId ->
                     resources.getString(nameResId)
                 },
-                value = paymentMethod.value?.let { value ->
+                value = paymentMethod.valueToShow?.let { value ->
                     paymentMethod.valueToCopy?.let { valueToCopy ->
                         PaymentMethodValueUI(
                             value = value,

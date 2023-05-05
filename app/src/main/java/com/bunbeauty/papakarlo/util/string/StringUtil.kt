@@ -3,13 +3,15 @@ package com.bunbeauty.papakarlo.util.string
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
 import com.bunbeauty.shared.Constants.ADDRESS_DIVIDER
+import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.date_time.Time
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.presentation.cafe_list.CafeItem
+import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
-import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 class StringUtil(
     private val resourcesProvider: IResourcesProvider
@@ -44,7 +46,22 @@ class StringUtil(
         }
     }
 
-    override fun getUserAddressString(userAddress: UserAddressUi?): String? {
+    override fun getUserAddressString(userAddress: SelectableUserAddress?): String? {
+        return userAddress?.let {
+            val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
+            val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
+            val entranceShort = resourcesProvider.getString(R.string.msg_address_entrance_short)
+            val floorShort = resourcesProvider.getString(R.string.msg_address_floor_short)
+            userAddress.street.name +
+                getStringPart(ADDRESS_DIVIDER, houseShort, userAddress.house) +
+                getStringPart(ADDRESS_DIVIDER, flatShort, userAddress.flat) +
+                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.entrance, entranceShort) +
+                getInvertedStringPart(ADDRESS_DIVIDER, userAddress.floor, floorShort) +
+                getStringPart(ADDRESS_DIVIDER, "", userAddress.comment)
+        }
+    }
+
+    override fun getUserAddressString(userAddress: SelectableUserAddressUi?): String? {
         return userAddress?.let {
             val houseShort = resourcesProvider.getString(R.string.msg_address_house_short)
             val flatShort = resourcesProvider.getString(R.string.msg_address_flat_short)
@@ -170,5 +187,27 @@ class StringUtil(
         } else {
             resourcesProvider.getString(R.string.pickup_time)
         }
+    }
+
+    override fun getCafeStatusText(cafeStatus: CafeItem.CafeOpenState): String {
+        return when (cafeStatus) {
+            is CafeItem.CafeOpenState.Opened -> resourcesProvider.getString(R.string.msg_cafe_open)
+            is CafeItem.CafeOpenState.CloseSoon -> {
+                resourcesProvider.getString(R.string.msg_cafe_close_soon) +
+                    cafeStatus.time +
+                    getMinuteString(cafeStatus.time)
+            }
+            is CafeItem.CafeOpenState.Closed -> resourcesProvider.getString(R.string.msg_cafe_closed)
+        }
+    }
+
+    private fun getMinuteString(closeIn: Int): String {
+        val minuteStringId = when {
+            (closeIn / 10 == 1) -> R.string.msg_cafe_minutes
+            (closeIn % 10 == 1) -> R.string.msg_cafe_minute
+            (closeIn % 10 in 2..4) -> R.string.msg_cafe_minutes_234
+            else -> R.string.msg_cafe_minutes
+        }
+        return resourcesProvider.getString(minuteStringId)
     }
 }

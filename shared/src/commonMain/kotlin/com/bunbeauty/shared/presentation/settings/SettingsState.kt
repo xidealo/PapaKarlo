@@ -1,6 +1,6 @@
 package com.bunbeauty.shared.presentation.settings
 
-import com.bunbeauty.shared.domain.model.City
+import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.domain.model.Settings
 
 data class SettingsState(

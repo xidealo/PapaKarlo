@@ -63,9 +63,7 @@ struct SettingsView: View {
                         destination:ChangeCityView()
                     )
                     .padding(.top, Diems.SMALL_PADDING)
-                    
-                    Spacer()
-                    
+                                        
                     Button(action: {
                         showingAlert = true
                     }) {
@@ -81,11 +79,16 @@ struct SettingsView: View {
                         }
                         Button("Нет", role: .cancel) { }
                     }
-                }.padding(Diems.MEDIUM_PADDING)
+                    .padding(.top, 16)
+
+                }
+                .padding(Diems.MEDIUM_PADDING)
+
+                Spacer()
             }
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
             viewModel.loadData()

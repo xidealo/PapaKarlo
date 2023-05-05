@@ -12,6 +12,7 @@ object Constants {
     const val PAPA_KARLO_INSTAGRAM_LINK = "https://www.instagram.com/papakarlokimry"
     const val PAPA_KARLO_PLAY_MARKET_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.papakarlo"
     const val PAPA_KARLO_APP_STORE_LINK = "https://apps.apple.com/ru/app/%D0%BF%D0%B0%D0%BF%D0%B0-%D0%BA%D0%B0%D1%80%D0%BB%D0%BE/id6443966083"
+    const val PAPA_KARLO_PAYMENT_INFO = "Оплатить заказ можно наличными, а также переводом по номеру карты или телефона"
 
     const val YULIAR_TARGET_NAME = "yuliar"
     const val YULIAR_FLAVOR_NAME = "yuliar"
@@ -19,6 +20,7 @@ object Constants {
     const val YULIAR_VK_LINK = "https://vk.com/kafe.yuliar"
     const val YULIAR_PLAY_MARKET_LINK = "https://play.google.com/store/apps/details?id=com.bunbeuaty.yuliar"
     const val YULIAR_APP_STORE_LINK = "https://apps.apple.com/ru/app/%D1%8E%D0%BB%D0%B8%D0%B0%D1%80/id6447322629"
+    const val YULIAR_PAYMENT_INFO = "Оплатить заказ можно наличными или через терминал при получении"
 
     // API PARAMETER
 

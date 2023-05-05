@@ -57,7 +57,7 @@ struct ConsumerCartView: View {
             case .hasData: ConsumerCartSuccessScreen(consumerCartUI: viewModel.consumerCartViewState, viewModel: viewModel)
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear() {
             viewModel.fetchData()
@@ -94,9 +94,11 @@ struct ConsumerCartSuccessScreen: View {
                 ScrollView {
                     LazyVStack(spacing:0){
                         Text("Бесплатная доставка от \(consumerCartUI.forFreeDelivery)\(Strings.CURRENCY)")
+                            .bodyLarge()
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.bottom, Diems.MEDIUM_PADDING)
                             .padding(.top, Diems.SMALL_PADDING)
+
                         VStack(spacing: 0){
                             ForEach(consumerCartUI.cartProductList){ cartProductItem in
                                 CartProductView(cartProductItem: cartProductItem, plusAction: {
@@ -111,21 +113,28 @@ struct ConsumerCartSuccessScreen: View {
                         .padding(.bottom, Diems.MEDIUM_PADDING)
                     }
                 }
-                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom)
-                    .frame(height:20)
             }
             
             VStack(spacing:0){
                 HStack(spacing:0){
-                    BoldText(text: Strings.MSG_CART_PRODUCT_RESULT)
+                    Text(Strings.MSG_CART_PRODUCT_RESULT)
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
+
                     Spacer()
                     
-                    if consumerCartUI.oldTotalCost != nil{
-                        StrikeText(text: String(consumerCartUI.oldTotalCost!) + Strings.CURRENCY)
+                    if let oldTotalCost = consumerCartUI.oldTotalCost{
+                        Text(String(oldTotalCost) + Strings.CURRENCY)
+                            .strikethrough()
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurfaceVariant)
                     }
-                    BoldText(text: consumerCartUI.newTotalCost)
-                        .padding(Diems.SMALL_PADDING)
-                }.padding()
+
+                    Text(consumerCartUI.newTotalCost)
+                        .bodyMedium(weight: .bold)
+                        .foregroundColor(AppColor.onSurface)
+                        .padding(.horizontal, Diems.SMALL_PADDING)
+                }.padding(16)
                 
                 Button {
                     viewModel.checkAuthorization()
@@ -134,7 +143,7 @@ struct ConsumerCartSuccessScreen: View {
                 }
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
                 .padding(.bottom, Diems.MEDIUM_PADDING)
-            }.background(Color("surface"))
+            }.background(AppColor.surface)
         }
     }
 }
@@ -154,7 +163,7 @@ struct ConsumerCartEmptyScreen: View {
                 title: "emptyCartTitleProfile",
                 secondText: "emptyCartSecondProfile"
             )
-    
+
             Spacer()
             
             Button {

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ic_address.png",
+      "filename" : "ic_point_24.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_address-1.png",
+      "filename" : "ic_point_24 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ic_address-2.png",
+      "filename" : "ic_point_24 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

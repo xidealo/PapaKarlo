@@ -12,27 +12,19 @@ import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
-import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
+import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
-import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.interactor.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
+import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
+import com.bunbeauty.shared.domain.use_case.address.*
+import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
 import org.koin.dsl.module
 
 internal fun useCaseModule() = module {
-    factory {
-        GetSelectedUserAddressUseCase(
-            userAddressRepo = get(),
-            dataStoreRepo = get(),
-        )
-    }
     factory {
         GetUserAddressListUseCase(
             dataStoreRepo = get(),
@@ -40,13 +32,19 @@ internal fun useCaseModule() = module {
         )
     }
     factory {
-        GetSelectedCafeUseCase(
+        GetSelectableUserAddressListUseCase(
+            dataStoreRepo = get(),
+            userAddressRepo = get(),
+        )
+    }
+    factory {
+        GetCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
         )
     }
     factory {
-        GetCafeListUseCase(
+        GetSelectableCafeListUseCase(
             cafeRepo = get(),
             dataStoreRepo = get(),
         )
@@ -191,5 +189,8 @@ internal fun useCaseModule() = module {
         GetPaymentMethodListUseCase(
             paymentRepo = get()
         )
+    }
+    factory {
+        GetPaymentInfoUseCase()
     }
 }

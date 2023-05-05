@@ -14,6 +14,7 @@ struct ButtonText: View {
 
     var body: some View {
         Text(text)
+            .labelLarge(weight: .medium)
             .frame(maxWidth: .infinity, maxHeight: 40)
             .foregroundColor(Color("surface"))
             .background(background)

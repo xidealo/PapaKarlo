@@ -1,12 +1,12 @@
 package com.bunbeauty.shared.presentation.create_order
 
-import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressItem
+import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
+import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
-import com.bunbeauty.shared.presentation.create_order.model.UserAddressUi
 
 data class CreateOrderState(
     val isDelivery: Boolean = true,
-    val deliveryAddress: UserAddressUi? = null,
+    val deliveryAddress: SelectableUserAddressUi? = null,
     val pickupAddress: String? = null,
     val comment: String? = null,
     val deferredTime: TimeUI = TimeUI.ASAP,
@@ -21,13 +21,11 @@ data class CreateOrderState(
     sealed interface Event {
         object OpenCreateAddressEvent : Event
         data class ShowUserAddressListEvent(
-            val addressList: List<UserAddressUi>,
-            val selectedUserAddressUuid: String?,
+            val addressList: List<SelectableUserAddressUi>,
         ) : Event
 
         data class ShowCafeAddressListEvent(
-            val addressList: List<CafeAddressItem>,
-            val selectedCafeAddress: String?,
+            val addressList: List<SelectableCafeAddressItem>,
         ) : Event
 
         data class ShowDeferredTimeEvent(

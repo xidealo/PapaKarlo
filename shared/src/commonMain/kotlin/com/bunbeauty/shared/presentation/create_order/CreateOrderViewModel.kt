@@ -4,18 +4,16 @@ import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedCafeUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.address.GetUserAddressListUseCase
-import com.bunbeauty.shared.domain.interactor.address.SaveSelectedUserAddressUseCase
-import com.bunbeauty.shared.domain.interactor.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
-import com.bunbeauty.shared.domain.interactor.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
+import com.bunbeauty.shared.domain.use_case.address.GetSelectableUserAddressListUseCase
+import com.bunbeauty.shared.domain.use_case.address.SaveSelectedUserAddressUseCase
+import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.presentation.SharedViewModel
-import com.bunbeauty.shared.presentation.cafe_address_list.CafeAddressMapper
+import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItemMapper
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -27,10 +25,8 @@ class CreateOrderViewModel(
     private val userInteractor: IUserInteractor,
     private val timeMapper: TimeMapper,
     private val userAddressMapper: UserAddressMapper,
-    private val getSelectedUserAddress: GetSelectedUserAddressUseCase,
-    private val getSelectedCafe: GetSelectedCafeUseCase,
-    private val getUserAddressList: GetUserAddressListUseCase,
-    private val getCafeList: GetCafeListUseCase,
+    private val getSelectableUserAddressListUseCase: GetSelectableUserAddressListUseCase,
+    private val getSelectableCafeListUseCase: GetSelectableCafeListUseCase,
     private val getCartTotal: GetCartTotalUseCase,
     private val getMinTime: GetMinTimeUseCase,
     private val createOrderUseCase: CreateOrderUseCase,
@@ -68,7 +64,6 @@ class CreateOrderViewModel(
         } else {
             CreateOrderState.Event.ShowUserAddressListEvent(
                 addressList = addressUiList,
-                selectedUserAddressUuid = orderCreationState.value.deliveryAddress?.uuid
             )
         }
         mutableCreateOrderState.update { state ->
@@ -85,8 +80,7 @@ class CreateOrderViewModel(
 
     fun onCafeAddressClicked() {
         val event = CreateOrderState.Event.ShowCafeAddressListEvent(
-            orderCreationData.value.cafeList.map(CafeAddressMapper::toCafeAddressItem),
-            selectedCafeAddress = orderCreationState.value.pickupAddress
+            orderCreationData.value.cafeList.map(SelectableCafeAddressItemMapper::toSelectableCafeAddressItem),
         )
         mutableCreateOrderState.update { state ->
             state + event
@@ -195,28 +189,36 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateAddresses() {
-        val userAddressList = getUserAddressList()
-        val cafeList = getCafeList()
+        val userAddressList = getSelectableUserAddressListUseCase()
+        val cafeList = getSelectableCafeListUseCase()
         orderCreationData.update { data ->
             data.copy(
                 userAddressList = userAddressList,
-                cafeList = cafeList
+                cafeList = cafeList,
             )
         }
-
         updateSelectedUserAddress()
         updateSelectedCafe()
     }
 
     private suspend fun updateSelectedUserAddress() {
-        val selectedUserAddress = getSelectedUserAddress()
+        val userAddressList = getSelectableUserAddressListUseCase()
         orderCreationData.update { data ->
-            data.copy(selectedUserAddress = selectedUserAddress)
+            data.copy(
+                userAddressList = userAddressList,
+            )
+        }
+        val selectableUserAddress = userAddressList.find { it.isSelected }
+
+        orderCreationData.update { data ->
+            data.copy(selectedUserAddress = selectableUserAddress)
         }
         mutableCreateOrderState.update { state ->
-            state.copy(deliveryAddress = userAddressMapper.toUiModel(selectedUserAddress))
+            state.copy(
+                deliveryAddress = userAddressMapper.toUiModel(selectableUserAddress)
+            )
         }
-        if (selectedUserAddress != null) {
+        if (selectableUserAddress != null) {
             mutableCreateOrderState.update { state ->
                 state.copy(isAddressErrorShown = false)
             }
@@ -224,7 +226,14 @@ class CreateOrderViewModel(
     }
 
     private suspend fun updateSelectedCafe() {
-        val selectedCafe = getSelectedCafe()
+        val cafeList = getSelectableCafeListUseCase()
+        orderCreationData.update { data ->
+            data.copy(
+                cafeList = cafeList,
+            )
+        }
+        val selectedCafe = cafeList.find { it.isSelected }
+
         orderCreationData.update { data ->
             data.copy(selectedCafe = selectedCafe)
         }

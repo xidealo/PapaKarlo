@@ -4,7 +4,7 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoTokenException
-import com.bunbeauty.shared.domain.interactor.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.use_case.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.street.Street
