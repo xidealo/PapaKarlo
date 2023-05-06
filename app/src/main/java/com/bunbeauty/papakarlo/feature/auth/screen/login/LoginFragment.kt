@@ -178,8 +178,8 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {

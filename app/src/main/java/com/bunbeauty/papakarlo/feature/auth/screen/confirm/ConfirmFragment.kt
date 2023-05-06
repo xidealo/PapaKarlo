@@ -117,8 +117,8 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.weight(1f))
