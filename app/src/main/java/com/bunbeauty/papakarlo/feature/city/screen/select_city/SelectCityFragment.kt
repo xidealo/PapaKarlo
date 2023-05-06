@@ -8,11 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
@@ -32,13 +33,14 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     override val viewModel: SelectCityViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getCityList()
         viewBinding.root.setContentWithTheme {
-            val cityList by viewModel.cityListState.collectAsState()
+            val cityList by viewModel.cityListState.collectAsStateWithLifecycle()
             SelectCityScreen(cityList)
         }
     }

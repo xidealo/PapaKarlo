@@ -1,19 +1,19 @@
 package com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseBottomSheet
@@ -36,12 +36,12 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
     })
     override val viewBinding by viewBinding(BottomSheetComposeBinding::bind)
 
-    @SuppressLint("SetTextI18n")
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.root.setContentWithTheme {
-            val cafeOptions by viewModel.cafeOptions.collectAsState()
+            val cafeOptions by viewModel.cafeOptions.collectAsStateWithLifecycle()
             CafeOptionsScreen(cafeOptions)
         }
     }

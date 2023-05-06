@@ -13,13 +13,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -56,11 +57,12 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
+    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewBinding.root.setContentWithTheme {
-            val confirmState by viewModel.confirmState.collectAsState()
+            val confirmState by viewModel.confirmState.collectAsStateWithLifecycle()
 
             LaunchedEffect(confirmState.eventList) {
                 handleEventList(confirmState.eventList)
