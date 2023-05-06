@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.FragmentManager
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.delegates.argument
@@ -88,6 +89,7 @@ private fun CityListScreen(
     }
 }
 
+@Preview
 @Composable
 private fun CityListScreenPreview() {
     FoodDeliveryTheme {
@@ -95,12 +97,12 @@ private fun CityListScreenPreview() {
             cityList = listOf(
                 City(
                     uuid = "1",
-                    name = "1",
+                    name = "City 1",
                     timeZone = "1",
                 ),
                 City(
                     uuid = "2",
-                    name = "2",
+                    name = "City 2",
                     timeZone = "2",
                 ),
             ),
