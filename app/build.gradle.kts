@@ -9,6 +9,7 @@ plugins {
     id(Plugin.googleService)
     id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
+    id("com.github.triplet.play") version "3.8.2"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
@@ -54,7 +55,6 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-
     flavorDimensions.add("default")
     val versionAndNamePair = getVersionAndName()
     productFlavors {
@@ -87,6 +87,15 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+}
+
+play {
+    enabled.set(false)
+    track.set("production")
+    userFraction.set(0.10) // 10%
+    defaultToAppBundles.set(true)
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
+    serviceAccountCredentials.set(file("google-play.json"))
 }
 
 /*
@@ -175,4 +184,6 @@ dependencies {
     coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
+
+    implementation("com.github.triplet.gradle:play-publisher:3.8.1")
 }
