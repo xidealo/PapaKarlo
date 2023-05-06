@@ -82,8 +82,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                         .verticalScroll(rememberScrollState())
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
                 ) {
                     FoodDeliverySwitcher(
                         modifier = Modifier.fillMaxWidth(),
