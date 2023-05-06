@@ -28,10 +28,10 @@ data class ConsumerCartData(
 )
 
 sealed interface ConsumerCartEvent {
-    object NavigateToMenuEvent: ConsumerCartEvent
-    object NavigateToCreateOrderEvent: ConsumerCartEvent
-    class NavigateToLoginEvent(val successLoginDirection: SuccessLoginDirection): ConsumerCartEvent
-    class NavigateToProductEvent(val cartProductItem: CartProductItem): ConsumerCartEvent
+    object NavigateToMenuEvent : ConsumerCartEvent
+    object NavigateToCreateOrderEvent : ConsumerCartEvent
+    class NavigateToLoginEvent(val successLoginDirection: SuccessLoginDirection) : ConsumerCartEvent
+    class NavigateToProductEvent(val cartProductItem: CartProductItem) : ConsumerCartEvent
 }
 
 data class ConsumerCartUIState(

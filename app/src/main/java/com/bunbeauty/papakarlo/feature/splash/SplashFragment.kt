@@ -33,7 +33,7 @@ class SplashFragment : BaseFragment(R.layout.fragment_splash) {
             }
         }
         viewModel.eventList.startedLaunch { eventList ->
-            eventList.forEach {event ->
+            eventList.forEach { event ->
                 when (event) {
                     SplashEvent.NavigateToUpdateEvent -> {
                         findNavController().navigateSafe(toUpdateFragment())

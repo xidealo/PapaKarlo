@@ -51,7 +51,7 @@ class SelectCityViewModel(
                 }
             },
             onError = {
-                //TODO handle error
+                // TODO handle error
             }
         )
     }
