@@ -57,23 +57,11 @@ object Versions {
 
 }
 
-object CommonApplication {
-    const val versionMajor = 1
-    const val versionMinor = 2
-    const val versionPatch = 8
-
-    const val versionCode = 128
-}
-
 object PapaKarloApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.papakarlo"
 }
 
 object YuliarApplication {
-    const val versionName =
-        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.yuliar"
 }
 

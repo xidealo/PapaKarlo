@@ -89,15 +89,25 @@ android {
     }
 }
 
+/*
+   * version number from count of commits
+   * version name from last commit message
+*/
 
 fun getVersionAndName(): Pair<Int, String> {
-    val stdout = org.apache.commons.io.output.ByteArrayOutputStream()
+    val versionNumberStdout = org.apache.commons.io.output.ByteArrayOutputStream()
     rootProject.exec {
         commandLine("git", "rev-list", "--all", "--count")
-        standardOutput = stdout
+        standardOutput = versionNumberStdout
+    }
+    val versionNameStdout = org.apache.commons.io.output.ByteArrayOutputStream()
+    rootProject.exec {
+        commandLine("git", "log", "-1", "--format=%s")
+        standardOutput = versionNameStdout
     }
 
-    return Pair(1, stdout.toString().trim())
+    val commitsCount = versionNumberStdout.toString().trim()
+    return Pair(commitsCount.toInt(), versionNameStdout.toString().trim())
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
