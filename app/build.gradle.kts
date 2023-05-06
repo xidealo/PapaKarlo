@@ -95,7 +95,7 @@ play {
     userFraction.set(0.10) // 10%
     defaultToAppBundles.set(true)
     releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
-    serviceAccountCredentials.set(file("google-play.json"))
+    serviceAccountCredentials.set(file("pc-api-6318663642333598278-516-1c90818c6fc9.json"))
 }
 
 /*
@@ -184,6 +184,4 @@ dependencies {
     coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
-
-    implementation("com.github.triplet.gradle:play-publisher:3.8.1")
 }
