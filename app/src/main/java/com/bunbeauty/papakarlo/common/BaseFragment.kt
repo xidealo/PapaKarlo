@@ -21,6 +21,7 @@ abstract class BaseFragment(@LayoutRes layoutId: Int) : Fragment(layoutId) {
     override fun onStart() {
         super.onStart()
 
+        // TODO move to extension function: fun Fragment.overrideBackPressedCallback()
         if (isBackPressedOverridden) {
             onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback {
                 activity?.moveTaskToBack(true)

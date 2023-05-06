@@ -8,22 +8,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityFragmentDirections.toMenuFragment
 import com.bunbeauty.papakarlo.feature.city.ui.CityItem
 import com.bunbeauty.shared.domain.model.city.City
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -40,29 +43,29 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
 
         viewModel.getCityList()
         viewBinding.root.setContentWithTheme {
-            val cityList by viewModel.cityListState.collectAsStateWithLifecycle()
-            SelectCityScreen(cityList)
+            val uiState by viewModel.cityListUiState.collectAsStateWithLifecycle()
+            SelectCityScreen(uiState.cityListState)
+            LaunchedEffect(uiState.eventList) {
+                handleEventList(uiState.eventList)
+            }
         }
     }
 
     @Composable
-    private fun SelectCityScreen(cityListState: State<List<City>>) {
-        FoodDeliveryScaffold(
-            title = stringResource(R.string.title_select_city),
-        ) {
+    private fun SelectCityScreen(cityListState: SelectCityUIState.CityListState) {
+        FoodDeliveryScaffold(title = stringResource(R.string.title_select_city)) {
             when (cityListState) {
-                is State.Success -> {
-                    SelectCitySuccessScreen(cityListState.data)
-                }
-                is State.Loading -> {
+                SelectCityUIState.CityListState.Loading -> {
                     LoadingScreen()
                 }
-                is State.Error -> {
+                is SelectCityUIState.CityListState.Success -> {
+                    SelectCitySuccessScreen(cityListState.cityList)
+                }
+                SelectCityUIState.CityListState.Error -> {
                     ErrorScreen(R.string.error_select_city_loading) {
                         viewModel.getCityList()
                     }
                 }
-                else -> Unit
             }
         }
     }
@@ -86,6 +89,15 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
         }
     }
 
+    private fun handleEventList(eventList: List<SelectCityEvent>) {
+        eventList.forEach { event ->
+            when (event) {
+                SelectCityEvent.NavigateToMenu -> findNavController().navigateSafe(toMenuFragment())
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
     @Preview(showSystemUi = true)
     @Composable
     private fun SelectCitySuccessScreenPreview() {
@@ -96,12 +108,8 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
         )
         FoodDeliveryTheme {
             SelectCityScreen(
-                State.Success(
-                    listOf(
-                        city,
-                        city,
-                        city,
-                    )
+                SelectCityUIState.CityListState.Success(
+                    cityList = listOf(city, city, city)
                 )
             )
         }
@@ -111,7 +119,7 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun SelectCityLoadingScreenPreview() {
         FoodDeliveryTheme {
-            SelectCityScreen(State.Loading())
+            SelectCityScreen(SelectCityUIState.CityListState.Loading)
         }
     }
 
@@ -119,7 +127,7 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun SelectCityErrorScreenPreview() {
         FoodDeliveryTheme {
-            SelectCityScreen(State.Error("Не удалось загрузить список городов"))
+            SelectCityScreen(SelectCityUIState.CityListState.Error)
         }
     }
 }

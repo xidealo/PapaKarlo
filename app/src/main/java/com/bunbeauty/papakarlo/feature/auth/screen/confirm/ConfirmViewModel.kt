@@ -8,8 +8,6 @@ import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.WRONG_CODE_ERROR
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
-import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.shared.Constants.WRONG_CODE
 import com.bunbeauty.shared.Logger.AUTH_TAG
 import com.bunbeauty.shared.Logger.logD
@@ -87,9 +85,12 @@ class ConfirmViewModel(
                 firebaseUserPhone = firebaseAuthRepository.firebaseUserPhone
             )
 
-            when (successLoginDirection) {
-                BACK_TO_PROFILE -> router.navigate(backToProfileFragment())
-                TO_CREATE_ORDER -> router.navigate(toCreateOrderFragment())
+            val navigateEvent = when (successLoginDirection) {
+                BACK_TO_PROFILE -> ConfirmState.Event.NavigateBackToProfileEvent
+                TO_CREATE_ORDER -> ConfirmState.Event.NavigateToCreateOrderEvent
+            }
+            mutableConfirmState.update { state ->
+                state + navigateEvent
             }
         }
     }

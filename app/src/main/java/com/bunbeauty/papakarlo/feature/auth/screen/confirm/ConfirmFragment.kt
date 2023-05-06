@@ -26,6 +26,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -34,6 +35,8 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
 import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
+import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import org.koin.android.ext.android.inject
@@ -163,6 +166,12 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                         ConfirmState.ConfirmError.WRONG_CODE_ERROR -> R.string.error_confirm_wrong_code
                     }
                     (activity as? IMessageHost)?.showErrorMessage(resources.getString(messageId))
+                }
+                ConfirmState.Event.NavigateBackToProfileEvent -> {
+                    findNavController().navigateSafe(backToProfileFragment())
+                }
+                ConfirmState.Event.NavigateToCreateOrderEvent -> {
+                    findNavController().navigateSafe(toCreateOrderFragment())
                 }
             }
         }

@@ -11,6 +11,8 @@ data class ConfirmState(
 
     sealed interface Event {
         class ShowErrorMessageEvent(val error: ConfirmError) : Event
+        object NavigateBackToProfileEvent : Event
+        object NavigateToCreateOrderEvent : Event
     }
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
