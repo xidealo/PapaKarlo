@@ -5,6 +5,9 @@ import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SplashViewModel(
@@ -12,23 +15,37 @@ class SplashViewModel(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
+    private val mutableEventList = MutableStateFlow<List<SplashEvent>>(emptyList())
+    val eventList = mutableEventList.asStateFlow()
+
     fun checkAppVersion() {
         viewModelScope.launch {
             val isUpdated = updateInteractor.checkIsUpdated(BuildConfig.VERSION_CODE)
             if (isUpdated) {
                 checkIsCitySelected()
             } else {
-                router.navigate(SplashFragmentDirections.toUpdateFragment())
+                mutableEventList.update { list ->
+                    list + SplashEvent.NavigateToUpdateEvent
+                }
             }
+        }
+    }
+
+    fun consumeEventList(eventList: List<SplashEvent>) {
+        mutableEventList.update { list ->
+            list - eventList.toSet()
         }
     }
 
     private suspend fun checkIsCitySelected() {
         val isCitySelected = cityInteractor.checkIsCitySelected()
-        if (isCitySelected) {
-            router.navigate(SplashFragmentDirections.toMenuFragment())
+        val navigateEvent = if (isCitySelected) {
+            SplashEvent.NavigateToMenuEvent
         } else {
-            router.navigate(SplashFragmentDirections.toSelectCityFragment())
+            SplashEvent.NavigateToSelectCityEvent
+        }
+        mutableEventList.update { list ->
+            list + navigateEvent
         }
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,7 +28,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragment
-import com.bunbeauty.papakarlo.common.state.State
+import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
@@ -38,8 +39,11 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.toCreateOrderFragment
+import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.toLoginFragment
+import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.toMenuFragment
+import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
-import com.bunbeauty.papakarlo.feature.consumer_cart.model.ConsumerCartUI
 import com.bunbeauty.papakarlo.feature.consumer_cart.ui.CartProductItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,9 +58,9 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
 
         viewModel.getConsumerCart()
         viewBinding.root.setContentWithTheme {
-            val consumerCartState by viewModel.consumerCartState.collectAsStateWithLifecycle()
+            val uiState by viewModel.consumerCartState.collectAsStateWithLifecycle()
             ConsumerCartScreen(
-                consumerCartState = consumerCartState,
+                consumerCartState = uiState.consumerCartState,
                 onMenuClicked = viewModel::onMenuClicked,
                 onErrorButtonClicked = viewModel::getConsumerCart,
                 addProductToCartClicked = viewModel::onAddCardProductClicked,
@@ -64,12 +68,15 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 onProductClicked = viewModel::onProductClicked,
                 onCreateOrderClicked = viewModel::onCreateOrderClicked,
             )
+            LaunchedEffect(uiState.eventList) {
+                handleEventList(uiState.eventList)
+            }
         }
     }
 
     @Composable
     private fun ConsumerCartScreen(
-        consumerCartState: State<ConsumerCartUI>,
+        consumerCartState: ConsumerCartUIState.ConsumerCartState,
         onMenuClicked: () -> Unit,
         onErrorButtonClicked: () -> Unit,
         addProductToCartClicked: (String) -> Unit,
@@ -84,15 +91,15 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
             }
         ) {
             when (consumerCartState) {
-                is State.Loading -> LoadingScreen()
-                is State.Success -> ConsumerCartSuccessScreen(
-                    consumerCart = consumerCartState.data,
+                ConsumerCartUIState.ConsumerCartState.Loading -> LoadingScreen()
+                is ConsumerCartUIState.ConsumerCartState.Success -> ConsumerCartSuccessScreen(
+                    consumerCartData = consumerCartState.data,
                     addProductToCartClicked = addProductToCartClicked,
                     removeProductFromCartClicked = removeProductFromCartClicked,
                     onProductClicked = onProductClicked,
                     onCreateOrderClicked = onCreateOrderClicked,
                 )
-                is State.Empty -> {
+                ConsumerCartUIState.ConsumerCartState.Empty -> {
                     EmptyScreen(
                         imageId = R.drawable.ic_cart_24,
                         imageDescriptionId = R.string.description_consumer_cart_empty,
@@ -102,7 +109,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                         onClick = onMenuClicked
                     )
                 }
-                is State.Error -> {
+                is ConsumerCartUIState.ConsumerCartState.Error -> {
                     ErrorScreen(
                         mainTextId = R.string.error_consumer_cart_loading,
                         onClick = onErrorButtonClicked
@@ -114,7 +121,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
 
     @Composable
     private fun ConsumerCartSuccessScreen(
-        consumerCart: ConsumerCartUI,
+        consumerCartData: ConsumerCartData,
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
@@ -135,13 +142,13 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCart.forFreeDelivery,
+                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCartData.forFreeDelivery,
                             style = FoodDeliveryTheme.typography.bodyLarge,
                             color = FoodDeliveryTheme.colors.mainColors.onBackground,
                             textAlign = TextAlign.Center
                         )
                     }
-                    itemsIndexed(consumerCart.cartProductList) { i, cartProductItemModel ->
+                    itemsIndexed(consumerCartData.cartProductList) { i, cartProductItemModel ->
                         CartProductItem(
                             modifier = Modifier.padding(
                                 top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
@@ -169,7 +176,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                         Spacer(modifier = Modifier.weight(1f))
-                        consumerCart.oldTotalCost?.let { oldTotalCost ->
+                        consumerCartData.oldTotalCost?.let { oldTotalCost ->
                             Text(
                                 modifier = Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
@@ -180,7 +187,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             )
                         }
                         Text(
-                            text = consumerCart.newTotalCost,
+                            text = consumerCartData.newTotalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
@@ -195,23 +202,48 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         }
     }
 
+    private fun handleEventList(eventList: List<ConsumerCartEvent>) {
+        eventList.forEach { event ->
+            when (event) {
+                ConsumerCartEvent.NavigateToMenuEvent -> {
+                    findNavController().navigateSafe(toMenuFragment())
+                }
+                ConsumerCartEvent.NavigateToCreateOrderEvent -> {
+                    findNavController().navigateSafe(toCreateOrderFragment())
+                }
+                is ConsumerCartEvent.NavigateToLoginEvent -> {
+                    findNavController().navigateSafe(toLoginFragment(event.successLoginDirection))
+                }
+                is ConsumerCartEvent.NavigateToProductEvent -> {
+                    findNavController().navigateSafe(
+                        toProductFragment(
+                            event.cartProductItem.menuProductUuid,
+                            event.cartProductItem.name
+                        )
+                    )
+                }
+            }
+        }
+        viewModel.consumeEventList(eventList)
+    }
+
     @Preview(showSystemUi = true)
     @Composable
     private fun ConsumerCartSuccessScreenPreview() {
+        val cartProductItemModel = CartProductItem(
+            uuid = "",
+            name = "Бэргер",
+            newCost = "300 ₽",
+            oldCost = "330 ₽",
+            photoLink = "",
+            count = 3,
+            menuProductUuid = ""
+        )
+
         FoodDeliveryTheme {
-            val cartProductItemModel =
-                CartProductItem(
-                    uuid = "",
-                    name = "Бэргер",
-                    newCost = "300 ₽",
-                    oldCost = "330 ₽",
-                    photoLink = "",
-                    count = 3,
-                    menuProductUuid = ""
-                )
             ConsumerCartScreen(
-                State.Success(
-                    ConsumerCartUI(
+                ConsumerCartUIState.ConsumerCartState.Success(
+                    ConsumerCartData(
                         forFreeDelivery = "500 ₽",
                         cartProductList = listOf(
                             cartProductItemModel,
@@ -239,7 +271,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
     private fun ConsumerCartEmptyScreenPreview() {
         FoodDeliveryTheme {
             ConsumerCartScreen(
-                State.Empty(),
+                ConsumerCartUIState.ConsumerCartState.Empty,
                 onMenuClicked = {},
                 onErrorButtonClicked = {},
                 addProductToCartClicked = {},
@@ -255,7 +287,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
     private fun ConsumerCartLoadingScreenPreview() {
         FoodDeliveryTheme {
             ConsumerCartScreen(
-                State.Loading(),
+                ConsumerCartUIState.ConsumerCartState.Loading,
                 onMenuClicked = {},
                 onErrorButtonClicked = {},
                 addProductToCartClicked = {},
@@ -271,7 +303,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
     private fun ConsumerCartErrorScreenPreview() {
         FoodDeliveryTheme {
             ConsumerCartScreen(
-                State.Error("Не удалось загрузить корзину"), onMenuClicked = {},
+                ConsumerCartUIState.ConsumerCartState.Error,
+                onMenuClicked = {},
                 onErrorButtonClicked = {},
                 addProductToCartClicked = {},
                 removeProductFromCartClicked = {},
