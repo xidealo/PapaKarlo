@@ -27,15 +27,25 @@ fun FoodDeliveryCard(
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
-        Card(
-            modifier = modifier,
-            shape = shape,
-            colors = colors,
-            elevation = getCardElevation(elevated),
-            onClick = onClick,
-            enabled = clickable,
-            border = border,
-            content = content
-        )
+        if (clickable) {
+            Card(
+                modifier = modifier,
+                shape = shape,
+                colors = colors,
+                elevation = getCardElevation(elevated),
+                onClick = onClick,
+                border = border,
+                content = content
+            )
+        } else {
+            Card(
+                modifier = modifier,
+                shape = shape,
+                colors = colors,
+                elevation = getCardElevation(elevated),
+                border = border,
+                content = content
+            )
+        }
     }
 }
