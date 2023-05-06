@@ -135,7 +135,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compos
                 }
             }
         }
-        viewModel.consumeEvents(eventList)
+        viewModel.consumeEventList(eventList)
     }
 
     @Preview(showSystemUi = true)

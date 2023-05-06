@@ -53,7 +53,7 @@ class MainViewModel(
         showMessage(text, FoodDeliveryMessageType.ERROR)
     }
 
-    fun consumeEvents(eventList: List<MainState.Event>) {
+    fun consumeEventList(eventList: List<MainState.Event>) {
         mutableMainState.update { state ->
             state - eventList
         }

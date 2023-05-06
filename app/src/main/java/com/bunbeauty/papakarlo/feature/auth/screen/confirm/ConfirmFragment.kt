@@ -175,6 +175,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                 }
             }
         }
+        viewModel.consumeEventList(eventList)
     }
 
     @Preview(showSystemUi = true)

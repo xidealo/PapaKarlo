@@ -95,6 +95,12 @@ class ConfirmViewModel(
         }
     }
 
+    fun consumeEventList(eventList: List<ConfirmState.Event>) {
+        mutableConfirmState.update { state ->
+            state - eventList
+        }
+    }
+
     private fun startResendTimer() {
         mutableConfirmState.value = mutableConfirmState.value.copy(resendSeconds = timerSecondCount)
         timerJob = viewModelScope.launch(exceptionHandler) {

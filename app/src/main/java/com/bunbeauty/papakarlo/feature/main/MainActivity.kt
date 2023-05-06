@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             }
         }
 
-        viewModel.consumeEvents(eventList)
+        viewModel.consumeEventList(eventList)
     }
 
     private fun fragmentContainerFactory(
