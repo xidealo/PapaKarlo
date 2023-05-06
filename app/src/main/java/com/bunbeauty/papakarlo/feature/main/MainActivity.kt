@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.FloatingWindow
 import androidx.navigation.fragment.NavHostFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -39,6 +40,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -151,18 +153,18 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
-    private suspend fun handleEventList(
+    private fun handleEventList(
         eventList: List<MainState.Event>,
         snackbarHostState: SnackbarHostState
     ) {
         eventList.forEach { event ->
             when (event) {
                 is MainState.Event.ShowMessageEvent -> {
-                    snackbarHostState.showSnackbar(
-                        FoodDeliverySnackbarVisuals(
-                            foodDeliveryMessage = event.message
+                    lifecycleScope.launch {
+                        snackbarHostState.showSnackbar(
+                            FoodDeliverySnackbarVisuals(event.message)
                         )
-                    )
+                    }
                 }
             }
         }
