@@ -7,19 +7,16 @@ import com.bunbeauty.shared.domain.model.city.City
 import com.bunbeauty.shared.extension.launchSafe
 import com.bunbeauty.shared.extension.mapToStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
-    private val selectCityDataState: MutableStateFlow<SelectCityDataState> =
-        MutableStateFlow(SelectCityDataState())
-    val cityListUiState: StateFlow<SelectCityUIState> =
-        selectCityDataState.mapToStateFlow(viewModelScope) { dataState ->
-            mapState(dataState)
-        }
+    private val selectCityDataState = MutableStateFlow(SelectCityDataState())
+    val cityListUiState = selectCityDataState.mapToStateFlow(viewModelScope) { state ->
+        mapState(state)
+    }
 
     fun getCityList() {
         selectCityDataState.update { state ->
