@@ -56,17 +56,18 @@ android {
     }
 
     flavorDimensions.add("default")
+    val versionAndNamePair = getVersionAndName()
     productFlavors {
         create("papaKarlo") {
             applicationId = PapaKarloApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = PapaKarloApplication.versionName
+            versionCode = versionAndNamePair.first
+            versionName = versionAndNamePair.second
         }
 
         create("yuliar") {
             applicationId = YuliarApplication.applicationId
-            versionCode = CommonApplication.versionCode
-            versionName = YuliarApplication.versionName
+            versionCode = versionAndNamePair.first
+            versionName = versionAndNamePair.second
         }
     }
 
@@ -86,6 +87,17 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+}
+
+
+fun getVersionAndName(): Pair<Int, String> {
+    val stdout = org.apache.commons.io.output.ByteArrayOutputStream()
+    rootProject.exec {
+        commandLine("git", "rev-list", "--all", "--count")
+        standardOutput = stdout
+    }
+
+    return Pair(1, stdout.toString().trim())
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

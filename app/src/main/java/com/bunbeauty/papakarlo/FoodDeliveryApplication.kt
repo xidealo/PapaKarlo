@@ -1,6 +1,7 @@
 package com.bunbeauty.papakarlo
 
 import android.app.Application
+import android.util.Log
 import androidx.viewbinding.BuildConfig
 import coil.Coil
 import coil.ImageLoader
@@ -19,7 +20,12 @@ class FoodDeliveryApplication : Application(), KoinComponent {
     override fun onCreate() {
         setTheme(R.style.AppTheme)
         super.onCreate()
-
+        val t = com.bunbeauty.papakarlo.BuildConfig.VERSION_NAME
+        print(t)
+        Log.d(
+            "TAGgggg",
+            "onCreate:${com.bunbeauty.papakarlo.BuildConfig.VERSION_NAME},  ${com.bunbeauty.papakarlo.BuildConfig.VERSION_CODE}"
+        )
         initKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@FoodDeliveryApplication)
