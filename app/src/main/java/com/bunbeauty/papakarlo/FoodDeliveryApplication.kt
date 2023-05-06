@@ -22,6 +22,7 @@ class FoodDeliveryApplication : Application(), KoinComponent {
         super.onCreate()
         val t = com.bunbeauty.papakarlo.BuildConfig.VERSION_NAME
         print(t)
+
         Log.d(
             "TAGgggg",
             "onCreate:${com.bunbeauty.papakarlo.BuildConfig.VERSION_NAME},  ${com.bunbeauty.papakarlo.BuildConfig.VERSION_CODE}"
