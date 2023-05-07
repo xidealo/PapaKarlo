@@ -34,19 +34,15 @@ import androidx.navigation.FloatingWindow
 import androidx.navigation.fragment.NavHostFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.Router
 import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
-
-    private val router: Router by inject()
 
     val viewModel: MainViewModel by viewModel()
 
@@ -72,12 +68,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 snackbarHostState = snackbarHostState
             )
         }
-    }
-
-    override fun onDestroy() {
-        router.detach()
-
-        super.onDestroy()
     }
 
     override fun showInfoMessage(text: String) {
@@ -169,7 +159,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             }
         }
 
-        viewModel.consumeEvents(eventList)
+        viewModel.consumeEventList(eventList)
     }
 
     private fun fragmentContainerFactory(
@@ -179,7 +169,6 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     ): FragmentContainerBinding =
         FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
             setupNavigationListener()
-            router.attach(this, R.id.containerFcv)
         }
 
     private fun setupNavigationListener() {

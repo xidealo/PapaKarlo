@@ -91,6 +91,7 @@ fun viewModelModule() = module {
     viewModel { parameters ->
         CafeOptionsViewModel(
             cafeInteractor = get(),
+            resourcesProvider = get(),
             savedStateHandle = parameters.get(),
         )
     }

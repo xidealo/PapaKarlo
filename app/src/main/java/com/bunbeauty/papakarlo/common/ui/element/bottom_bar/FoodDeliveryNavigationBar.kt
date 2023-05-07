@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.navigateSafe
+import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.icon24
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common
+package com.bunbeauty.papakarlo.common.extension
 
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections

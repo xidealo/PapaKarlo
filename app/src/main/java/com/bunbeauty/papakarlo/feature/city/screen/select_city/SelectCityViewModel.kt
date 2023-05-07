@@ -1,36 +1,78 @@
 package com.bunbeauty.papakarlo.feature.city.screen.select_city
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.state.State
 import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityFragmentDirections.toMenuFragment
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.model.city.City
+import com.bunbeauty.shared.extension.launchSafe
+import com.bunbeauty.shared.extension.mapToStateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
 
 class SelectCityViewModel(
     private val cityInteractor: ICityInteractor
 ) : BaseViewModel() {
 
-    private val mutableCityListState: MutableStateFlow<State<List<City>>> =
-        MutableStateFlow(State.Loading())
-    val cityListState: StateFlow<State<List<City>>> = mutableCityListState.asStateFlow()
+    private val selectCityDataState = MutableStateFlow(SelectCityDataState())
+    val cityListUiState = selectCityDataState.mapToStateFlow(viewModelScope) { state ->
+        mapState(state)
+    }
 
     fun getCityList() {
-        mutableCityListState.value = State.Loading()
-        viewModelScope.launch {
-            mutableCityListState.value = cityInteractor.getCityList()
-                .toState()
+        selectCityDataState.update { state ->
+            state.copy(state = SelectCityDataState.State.LOADING)
         }
+        viewModelScope.launchSafe(
+            block = {
+                selectCityDataState.update { state ->
+                    state.copy(
+                        state = SelectCityDataState.State.SUCCESS,
+                        cityList = cityInteractor.getCityList(),
+                    )
+                }
+            },
+            onError = {
+                selectCityDataState.update { state ->
+                    state.copy(state = SelectCityDataState.State.ERROR)
+                }
+            }
+        )
     }
 
     fun onCitySelected(city: City) {
-        viewModelScope.launch {
-            cityInteractor.saveSelectedCity(city)
-            router.navigate(toMenuFragment())
+        viewModelScope.launchSafe(
+            block = {
+                cityInteractor.saveSelectedCity(city)
+                selectCityDataState.update { state ->
+                    state + SelectCityEvent.NavigateToMenu
+                }
+            },
+            onError = {
+                // TODO handle error
+            }
+        )
+    }
+
+    fun consumeEventList(eventList: List<SelectCityEvent>) {
+        selectCityDataState.update { state ->
+            state - eventList
         }
+    }
+
+    private fun mapState(dataState: SelectCityDataState): SelectCityUIState {
+        return SelectCityUIState(
+            cityListState = when (dataState.state) {
+                SelectCityDataState.State.SUCCESS -> {
+                    if (dataState.cityList == null) {
+                        SelectCityUIState.CityListState.Error
+                    } else {
+                        SelectCityUIState.CityListState.Success(cityList = dataState.cityList)
+                    }
+                }
+                SelectCityDataState.State.LOADING -> SelectCityUIState.CityListState.Loading
+                SelectCityDataState.State.ERROR -> SelectCityUIState.CityListState.Error
+            },
+            eventList = dataState.eventList
+        )
     }
 }
