@@ -10,9 +10,6 @@
 "titleAboutApp" = "About app";
 "titleSelectCity" = "Select city";
 "titleAboutApp" = "About app";
-"titleCafeList" = "Restaurants";
-"titleMenu" = "Menu";
-"titleProfile" = "Profile";
 "titleMyAddresses" = "My addresses";
 "titleCafeAddresses" = "Cafe addresses";
 "titleMyOrders" = "My orders";
@@ -52,3 +49,8 @@
 "msg_payment_card" = "Card";
 "msg_payment_card_number" = "Transfer by card number";
 "msg_payment_phone_number" = "Transfer by phone number";
+
+//BottomBar
+"title_restaurants" = "Restaurants";
+"title_menu" = "Menu";
+"title_profile" = "Profile";
