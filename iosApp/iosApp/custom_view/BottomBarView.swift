@@ -31,9 +31,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
                         Text("title_restaurants")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
@@ -42,9 +43,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
                         Text("title_restaurants")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
@@ -62,9 +64,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
                         Text("title_menu")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
@@ -73,9 +76,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
                         Text("title_menu")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)
@@ -93,9 +97,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.primary)
                         }.frame(height: iconBlockHeight)
                         Text("title_profile")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.primary)
                     }else{
                         ZStack{
@@ -104,9 +109,10 @@ struct BottomBarView: View {
                                 .foregroundColor(AppColor.onSurfaceVariant)
                         }.frame(height: iconBlockHeight)
                         Text("title_profile")
+                            .labelMedium(weight: .medium)
                             .frame(maxWidth:.infinity)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
-                            .padding(.top, 2)
+                            .padding(.top, 4)
                             .foregroundColor(AppColor.onSurfaceVariant)
                     }
                 }.padding(Diems.HALF_SMALL_PADDING)

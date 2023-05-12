@@ -29,8 +29,7 @@ struct CartProductView: View {
                     .padding(.top, 8)
 
                 HStack(spacing:0){
-                    
-                    if let oldCost =  cartProductItem.oldCost {
+                    if let oldCost = cartProductItem.oldCost {
                         Text(String(oldCost) + Strings.CURRENCY)
                             .strikethrough()
                             .bodySmall()
@@ -41,7 +40,7 @@ struct CartProductView: View {
                         .bodySmall(weight: .bold)
                         .frame(maxWidth:.infinity, alignment: .topLeading)
                         .foregroundColor(AppColor.onSurface)
-                        .padding(.leading, 4)
+                        .padding(.leading, (cartProductItem.oldCost != nil) ? 4 : 0)
                 }
                 .padding(.top, 4)
             }

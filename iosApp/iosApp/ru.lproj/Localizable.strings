@@ -17,7 +17,6 @@
 "titleNewVersion" = "Новая версия";
 "titleCreationAddress" = "Добавление адреса";
 "titleFeedback" = "Отзывы о приложении";
-"titleCafeOptions" = "Выбранное кафе";
 "titlePayment" = "Оплата";
 
 //login
@@ -26,7 +25,7 @@
 
 //Consumer cart
 "emptyCartTitleProfile" = "Корзина пуста";
-"emptyCartSecondProfile" = "Добавьте товар из “Меню”";
+"emptyCartSecondProfile" = "Добавьте товар из «Меню»";
 
 //User address list
 "emptyAddressListTitleProfile" = "Список адресов пуст";

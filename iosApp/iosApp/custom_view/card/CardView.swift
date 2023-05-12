@@ -24,7 +24,6 @@ struct CardView: View {
     
     var body: some View {
         HStack(spacing:0){
-            
             if icon != nil{
                 if(isSystemImageName){
                     Image(systemName: icon ?? "")
@@ -41,10 +40,12 @@ struct CardView: View {
             
             Text(label)
                 .bodyLarge()
+                .lineLimit(1)
                 .frame(maxWidth:.infinity, alignment: .leading)
                 .foregroundColor(AppColor.onSurface)
                 .multilineTextAlignment(.leading)
                 .padding(.leading, Diems.MEDIUM_PADDING)
+
             if isShowRightArrow{
                 Image(systemName:"chevron.right")
                     .foregroundColor(AppColor.onSurfaceVariant)

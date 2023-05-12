@@ -42,6 +42,7 @@ struct MenuView: View {
                                 .id(categoryItemModel.id)
                             }
                         }
+                        .padding(.horizontal, 12)
                         .onChange(of: viewModel.menuViewState, perform: { menuState in
                             print("select horizontal tag")
                             print(menuState.scrollToPostion)
