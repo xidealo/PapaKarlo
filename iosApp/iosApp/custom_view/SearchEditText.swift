@@ -27,7 +27,7 @@ struct SearchEditTextView: View {
     var textChanged: (String) -> Void
 
     var body: some View {
-        VStack{
+        VStack (spacing:0) {
             EditTextView(
                 hint: hint,
                 text: $text,
@@ -40,7 +40,7 @@ struct SearchEditTextView: View {
                     limitText(limit)
                 }
             
-            LazyVStack{
+            LazyVStack(spacing:0){
                 ForEach(list){ street in
                     Button {
                         prevSimbol = street.name
@@ -49,12 +49,15 @@ struct SearchEditTextView: View {
                         Text(street.name)
                             .padding(Diems.SMALL_PADDING)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color("surface"))
+                            .background(AppColor.surface)
                             .cornerRadius(Diems.MEDIUM_RADIUS)
-                            .foregroundColor(Color("onSurface"))
+                            .foregroundColor(AppColor.onSurface)
+                            .padding(.top, Diems.SMALL_PADDING)
                     }
                 }
-            }.padding(.horizontal, Diems.MEDIUM_PADDING)
+            }
+            .padding(.horizontal, Diems.MEDIUM_PADDING)
+            .padding(.top, 4)
         }
     }
     

@@ -182,7 +182,7 @@ struct CreateOrderSuccessView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
 
-                    Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
+                    Toggle(isOn: $faster.onChange({ faster in
                         if(faster) {
                             viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
                         }else{
@@ -196,7 +196,10 @@ struct CreateOrderSuccessView: View {
                                 )
                             )
                         }
-                    }))
+                    })){
+                        Text("Как можно скорее")
+                            .bodyLarge()
+                    }
                     .toggleStyle(.automatic)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -204,7 +207,6 @@ struct CreateOrderSuccessView: View {
                     if(!faster){
                         if(viewModel.creationOrderViewState.isDelivery){
                             DatePicker(
-                                "Время доставки",
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
@@ -218,12 +220,14 @@ struct CreateOrderSuccessView: View {
                                 ),
                                 in: (Date.now + 60 * 60)...,
                                 displayedComponents: .hourAndMinute
-                            )
+                            ){
+                                Text("Время доставки")
+                                    .bodyLarge()
+                            }
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }else{
                             DatePicker(
-                                "Время самовывоза",
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
@@ -237,7 +241,10 @@ struct CreateOrderSuccessView: View {
                                 ),
                                 in: (Date.now + 60 * 60)...,
                                 displayedComponents: .hourAndMinute
-                            )
+                            ){
+                                Text("Время самовывоза")
+                                    .bodyLarge()
+                            }
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }

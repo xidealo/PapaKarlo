@@ -15,13 +15,8 @@ struct CardView: View {
     let isSystemImageName:Bool
     let isShowRightArrow:Bool
     
-    init(icon:String?, label:String, isSystemImageName:Bool, isShowRightArrow:Bool) {
-        self.icon = icon
-        self.label = label
-        self.isSystemImageName = isSystemImageName
-        self.isShowRightArrow = isShowRightArrow
-    }
-    
+    var placeHolder:LocalizedStringKey? = nil
+
     var body: some View {
         HStack(spacing:0){
             if icon != nil{
@@ -38,14 +33,26 @@ struct CardView: View {
                 }
             }
             
-            Text(label)
-                .bodyLarge()
-                .lineLimit(1)
-                .frame(maxWidth:.infinity, alignment: .leading)
-                .foregroundColor(AppColor.onSurface)
-                .multilineTextAlignment(.leading)
-                .padding(.leading, Diems.MEDIUM_PADDING)
-
+            VStack(spacing:0){
+                if let placeHolder = placeHolder{
+                    Text(placeHolder)
+                        .labelSmall(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
+                        .frame(maxWidth:.infinity, alignment: .leading)
+                        .padding(.leading, Diems.MEDIUM_PADDING)
+                        .padding(.bottom, 2)
+                }
+         
+                Text(label)
+                    .bodyLarge()
+                    .lineLimit(1)
+                    .frame(maxWidth:.infinity, alignment: .leading)
+                    .foregroundColor(AppColor.onSurface)
+                    .multilineTextAlignment(.leading)
+                    .padding(.leading, Diems.MEDIUM_PADDING)
+            }
+            .frame(maxWidth:.infinity, alignment: .leading)
+            
             if isShowRightArrow{
                 Image(systemName:"chevron.right")
                     .foregroundColor(AppColor.onSurfaceVariant)

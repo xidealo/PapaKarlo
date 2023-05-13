@@ -92,6 +92,7 @@ struct OrderDetailsView: View {
                                 .bodyMedium()
                             Spacer()
                             Text((orderDetailsState.deliveryCost ?? "0") + Strings.CURRENCY)
+                                .bodyMedium()
                         }
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                         .padding(.top, Diems.SMALL_PADDING)

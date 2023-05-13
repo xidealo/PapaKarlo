@@ -16,7 +16,7 @@
 "titleCreationOrder" = "Оформление заказа";
 "titleNewVersion" = "Новая версия";
 "titleCreationAddress" = "Добавление адреса";
-"titleFeedback" = "Отзывы о приложении";
+"titleFeedback" = "Отзывы";
 "titlePayment" = "Оплата";
 
 //login
@@ -62,3 +62,5 @@
 "title_menu" = "Меню";
 "title_profile" = "Профиль";
 
+//payment
+"available_payments" = "Доступные варианты оплаты:";

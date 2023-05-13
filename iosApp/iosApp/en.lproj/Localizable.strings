@@ -18,7 +18,7 @@
 "titleCreationOrder" = "Order creation";
 "titleNewVersion" = "New version";
 "titleCreationAddress" = "Address creation";
-"titleFeedback" = "App feedback";
+"titleFeedback" = "Feedback";
 "titlePayment" = "Payment";
 //logim
 "loginTitleProfile" = "Login profile";
@@ -53,3 +53,6 @@
 "title_restaurants" = "Restaurants";
 "title_menu" = "Menu";
 "title_profile" = "Profile";
+
+//payment
+"available_payments" = "Available payment options:";
