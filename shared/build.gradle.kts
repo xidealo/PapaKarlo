@@ -75,6 +75,7 @@ kotlin {
                 implementation(project.dependencies.platform(Firebase.bom))
 
                 implementation(Firebase.authKtx)
+                implementation(Firebase.messaging)
 
                 implementation(SqlDelight.androidDriver)
             }
