@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseMessaging
 import SwiftUI
+import shared
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     var restrictRotation:UIInterfaceOrientationMask = .portrait
@@ -33,7 +34,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
-        
+  
         //disable capcha on confirm
         //Auth.auth().settings?.isAppVerificationDisabledForTesting = true
         
@@ -116,14 +117,22 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate : MessagingDelegate{
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
+        let topic = "NEWS_" + GetCompanyUuidUseCase().getCompanyUuid()
+        print("topc " + topic)
+        Messaging.messaging().subscribe(toTopic: topic) { error in
+            
+          print("Subscribed to weather topic \(error)")
         
-        let dataDict: [String: String] = ["token": fcmToken ?? ""]
-        NotificationCenter.default.post(
-            name: Notification.Name("FCMToken"),
-            object: nil,
-            userInfo: dataDict
-        )
+        }
+        
+//        print("Firebase registration token: \(String(describing: fcmToken))")
+//
+//        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+//        NotificationCenter.default.post(
+//            name: Notification.Name("FCMToken"),
+//            object: nil,
+//            userInfo: dataDict
+//        )
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
