@@ -19,11 +19,10 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
-        val firebaseVersion = "9.5.0"
 
-        pod("FirebaseAuth") {
-            version = firebaseVersion
-        }
+        pod("FirebaseAuth")
+
+        pod("FirebaseMessaging")
 
         framework {
             baseName = "shared"

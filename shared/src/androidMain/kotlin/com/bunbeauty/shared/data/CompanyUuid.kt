@@ -18,16 +18,3 @@ internal actual val companyUuid: String = if (BuildConfig.DEBUG) {
         else -> throw UnknownFlavorException()
     }
 }
- actual class GetCompanyUuidUseCase {
-     actual fun getCompanyUuid(): String {
-        return if (BuildConfig.DEBUG) {
-            TEST_COMPANY_UUID
-        } else {
-            when (BuildConfig.FLAVOR) {
-                PAPA_KARLO_FLAVOR_NAME -> PAPA_KARLO_COMPANY_UUID
-                YULIAR_FLAVOR_NAME -> YULIAR_COMPANY_UUID
-                else -> throw UnknownFlavorException()
-            }
-        }
-    }
-}
