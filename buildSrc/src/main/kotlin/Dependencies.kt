@@ -48,7 +48,6 @@ object Versions {
     const val kotlinxDateTime = "0.3.3"
 
     const val leakcanary = "2.8.1"
-
     const val firebase = "31.4.0"
     const val pinEntryEditText = "2.0.6"
 }
