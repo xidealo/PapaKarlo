@@ -52,6 +52,7 @@ object Versions {
     const val firebase = "31.4.0"
 
     const val pinEntryEditText = "2.0.6"
+
 }
 
 object CommonApplication {
