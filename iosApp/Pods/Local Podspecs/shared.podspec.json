@@ -15,7 +15,10 @@
   },
   "dependencies": {
     "FirebaseAuth": [
-      "9.5.0"
+
+    ],
+    "FirebaseMessaging": [
+
     ]
   },
   "pod_target_xcconfig": {

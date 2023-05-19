@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.BuildConfig
+import com.bunbeauty.shared.Constants
 import com.bunbeauty.shared.Constants.TEST_COMPANY_UUID
 import com.bunbeauty.shared.Constants.PAPA_KARLO_COMPANY_UUID
 import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
