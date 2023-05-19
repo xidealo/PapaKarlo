@@ -31,7 +31,6 @@ class MessagingService : FirebaseMessagingService() {
             Manifest.permission.POST_NOTIFICATIONS
         ) == PackageManager.PERMISSION_GRANTED
 
-
         if (isNotificationPermissionGranted) {
             Logger.logD(NOTIFICATION_TAG, "isNotificationPermissionGranted")
             remoteMessage.notification?.let { notification ->
