@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.profile
 
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.ObserveLastOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
@@ -22,6 +23,7 @@ class ProfileViewModel(
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
     private val observeCartUseCase: ObserveCartUseCase,
     private val getPaymentMethodListUseCase: GetPaymentMethodListUseCase,
+    private val getLinkListUseCase: GetLinkListUseCase,
 ) : SharedViewModel() {
 
     private val mutableProfileState = MutableStateFlow(ProfileState())
@@ -46,17 +48,16 @@ class ProfileViewModel(
         }
         sharedScope.launch(exceptionHandler) {
             mutableProfileState.update { profileState ->
+                val newProfileState = profileState.copy(
+                    lastOrder = getLastOrderUseCase(),
+                    paymentMethodList = getPaymentMethodListUseCase(),
+                    linkList = getLinkListUseCase(),
+                )
+
                 if (userInteractor.isUserAuthorize()) {
-                    profileState.copy(
-                        state = ProfileState.State.AUTHORIZED,
-                        lastOrder = getLastOrderUseCase(),
-                        paymentMethodList = getPaymentMethodListUseCase()
-                    )
+                    newProfileState.copy(state = ProfileState.State.AUTHORIZED)
                 } else {
-                    profileState.copy(
-                        state = ProfileState.State.UNAUTHORIZED,
-                        paymentMethodList = getPaymentMethodListUseCase()
-                    )
+                    newProfileState.copy(state = ProfileState.State.UNAUTHORIZED)
                 }
             }
         }
@@ -126,7 +127,7 @@ class ProfileViewModel(
 
     fun onFeedbackClicked() {
         mutableProfileState.update { profileState ->
-            profileState + ProfileState.Event.ShowFeedback
+            profileState + ProfileState.Event.ShowFeedback(profileState.linkList)
         }
     }
 

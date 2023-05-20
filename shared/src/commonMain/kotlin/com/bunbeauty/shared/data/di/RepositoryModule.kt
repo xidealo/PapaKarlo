@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.DeliveryRepository
+import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
 import com.bunbeauty.shared.data.repository.PaymentRepository
@@ -19,6 +20,7 @@ import com.bunbeauty.shared.domain.repo.CafeRepo
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.CityRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
+import com.bunbeauty.shared.domain.repo.LinkRepo
 import com.bunbeauty.shared.domain.repo.MenuProductRepo
 import com.bunbeauty.shared.domain.repo.OrderRepo
 import com.bunbeauty.shared.domain.repo.PaymentRepo
@@ -129,6 +131,13 @@ fun repositoryModule() = module {
             networkConnector = get(),
             paymentMethodMapper = get(),
             paymentMethodDao = get(),
+        )
+    }
+    single<LinkRepo> {
+        LinkRepository(
+            networkConnector = get(),
+            linkMapper = get(),
+            linkDao = get(),
         )
     }
 }

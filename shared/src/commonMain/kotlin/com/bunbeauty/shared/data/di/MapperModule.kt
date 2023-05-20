@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.mapper.cart_product.CartProductMapper
 import com.bunbeauty.shared.data.mapper.cart_product.ICartProductMapper
 import com.bunbeauty.shared.data.mapper.city.CityMapper
 import com.bunbeauty.shared.data.mapper.city.ICityMapper
+import com.bunbeauty.shared.data.mapper.link.LinkMapper
 import com.bunbeauty.shared.data.mapper.menuProduct.IMenuProductMapper
 import com.bunbeauty.shared.data.mapper.menuProduct.MenuProductMapper
 import com.bunbeauty.shared.data.mapper.order.IOrderMapper
@@ -44,5 +45,8 @@ fun dataMapperModule() = module {
     }
     factory {
         PaymentMethodMapper()
+    }
+    factory {
+        LinkMapper()
     }
 }

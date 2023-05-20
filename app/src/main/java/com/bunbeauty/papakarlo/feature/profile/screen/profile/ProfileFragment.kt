@@ -48,6 +48,8 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackArgument
+import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
 import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
@@ -64,6 +66,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
 
     private val profileUiStateMapper: ProfileUiStateMapper by inject()
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
+    private val linkUiStateMapper: LinkUiStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -180,8 +183,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
-                ProfileState.Event.ShowFeedback -> {
-                    findNavController().navigateSafe(ProfileFragmentDirections.toFeedbackBottomSheet())
+                is ProfileState.Event.ShowFeedback -> {
+                    FeedbackBottomSheet.show(
+                        fragmentManager = parentFragmentManager,
+                        feedbackArgument = FeedbackArgument(
+                            linkList = linkUiStateMapper.map(event.linkList)
+                        )
+                    )
                 }
                 ProfileState.Event.ShowAboutApp -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())

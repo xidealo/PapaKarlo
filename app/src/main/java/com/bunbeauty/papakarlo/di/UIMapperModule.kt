@@ -7,6 +7,7 @@ import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductItemMapper
 import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsUiStateMapper
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.LinkUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileUiStateMapper
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
@@ -64,5 +65,8 @@ fun uiMapperModule() = module {
         PaymentMethodUiStateMapper(
             resources = get(),
         )
+    }
+    factory {
+        LinkUiStateMapper()
     }
 }

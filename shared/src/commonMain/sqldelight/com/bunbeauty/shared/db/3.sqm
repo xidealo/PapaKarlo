@@ -1,0 +1,5 @@
+CREATE TABLE linkEntity (
+      uuid TEXT NOT NULL PRIMARY KEY,
+      type TEXT NOT NULL,
+      value TEXT NOT NULL
+);
