@@ -10,6 +10,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
+import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
@@ -188,5 +189,11 @@ internal fun useCaseModule() = module {
         GetPaymentMethodListUseCase(
             paymentRepo = get()
         )
+    }
+    factory {
+        GetPaymentInfoUseCase()
+    }
+    factory {
+        SubscribeToNotificationUseCase()
     }
 }
