@@ -191,9 +191,6 @@ internal fun useCaseModule() = module {
         )
     }
     factory {
-        GetPaymentInfoUseCase()
-    }
-    factory {
         SubscribeToNotificationUseCase()
     }
 }

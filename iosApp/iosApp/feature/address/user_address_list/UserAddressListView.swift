@@ -21,6 +21,8 @@ struct UserAddressListView: View {
         state: UserAddressListState.State.loading
     )
     
+    var title: LocalizedStringKey = "title_my_addresses"
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var show:Bool = false
@@ -32,7 +34,7 @@ struct UserAddressListView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: "titleMyAddresses",
+                title: title,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

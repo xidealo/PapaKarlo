@@ -99,7 +99,7 @@ struct OrderDetailsView: View {
                     }
                     
                     HStack(spacing:0){
-                        Text(Strings.MSG_CART_PRODUCT_RESULT)
+                        Text("title_order_details_sum")
                             .bodyMedium(weight: .bold)
                         Spacer()
                         if orderDetailsState.totalCost != nil {
@@ -107,7 +107,7 @@ struct OrderDetailsView: View {
                                 .strikethrough()
                                 .bodyMedium(weight: .bold)
                                 .foregroundColor(AppColor.onSurfaceVariant)
-                                .padding(.trailing, Diems.SMALL_PADDING)
+                                .padding(.trailing, 4)
                         }
                         Text((orderDetailsState.finalCost ?? "") + Strings.CURRENCY)
                             .bodyMedium(weight: .bold)
@@ -178,14 +178,14 @@ struct OrderProductItemView :View {
                             .strikethrough()
                             .bodySmall()
                             .foregroundColor(AppColor.onSurfaceVariant)
-                            .padding(.trailing, Diems.SMALL_PADDING)
+                            .padding(.trailing, 4)
                     }
                     
                     Text(orderProductItem.newPrice + Strings.CURRENCY)
                         .bodySmall(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                     
-                    Text(" x ")
+                    Text(" × ")
                         .bodySmall()
                         .foregroundColor(AppColor.onSurface)
                     
@@ -199,7 +199,7 @@ struct OrderProductItemView :View {
                                 .strikethrough()
                                 .bodySmall()
                                 .foregroundColor(AppColor.onSurfaceVariant)
-                                .padding(.trailing, Diems.SMALL_PADDING)
+                                .padding(.trailing, 4)
                         }
                         
                         Text(orderProductItem.newCost + Strings.CURRENCY)

@@ -33,7 +33,10 @@ struct CreateOrderView: View {
                 }
             )
             NavigationLink(
-                destination:UserAddressListView(isClickable: true),
+                destination:UserAddressListView(
+                    title: "title_delivery_addresses",
+                    isClickable: true
+                ),
                 isActive: $goToUserAddress
             ){
                 EmptyView()

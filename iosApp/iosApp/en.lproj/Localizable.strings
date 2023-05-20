@@ -10,7 +10,6 @@
 "titleAboutApp" = "About app";
 "titleSelectCity" = "Select city";
 "titleAboutApp" = "About app";
-"titleMyAddresses" = "My addresses";
 "titleCafeAddresses" = "Cafe addresses";
 "titleMyOrders" = "My orders";
 "titleSettings" = "Settings";
@@ -26,6 +25,8 @@
 //consumer cart
 "emptyCartTitleProfile" = "Cart is empty";
 "emptyCartSecondProfile" = "Add a product from the “Menu”";
+"consumer_cart_total" = "totla";
+
 //user address
 "emptyAddressListTitleProfile" = "Address list is empty";
 "emptyAddressListSecondProfile" = "Your addresses will be displayed here";
@@ -56,3 +57,10 @@
 
 //payment
 "available_payments" = "Available payment options:";
+
+//UserAddressListView
+"title_my_addresses" = "My addresses";
+"title_delivery_addresses" = "Delivery address";
+
+//OrderDetails
+"title_order_details_sum" = "Orders sum";

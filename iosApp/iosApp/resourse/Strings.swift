@@ -61,7 +61,7 @@ class Strings{
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
     static let MSG_CART_PRODUCT_EMPTY = "Добавте товар из \"Меню\" "
-    static let MSG_CART_PRODUCT_RESULT = "Итого"
+    static let MSG_CART_PRODUCT_RESULT = "Сумма заказа"
     
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"

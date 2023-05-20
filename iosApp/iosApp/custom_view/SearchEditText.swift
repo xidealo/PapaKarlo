@@ -35,8 +35,7 @@ struct SearchEditTextView: View {
                 hasError: $hasError,
                 errorMessage: errorMessage,
                 textChanged: textChanged
-            )
-                .onReceive(Just(text)) { str in
+            ).onReceive(Just(text)) { str in
                     limitText(limit)
                 }
             
@@ -57,7 +56,6 @@ struct SearchEditTextView: View {
                 }
             }
             .padding(.horizontal, Diems.MEDIUM_PADDING)
-            .padding(.top, 4)
         }
     }
     
