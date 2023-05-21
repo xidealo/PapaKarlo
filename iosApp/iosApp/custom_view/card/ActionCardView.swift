@@ -13,24 +13,18 @@ struct ActionCardView: View {
     
     let label:String
     let isSystemImageName:Bool
-    let action: () -> Void
     let isShowRightArrow:Bool
-    
-    init(icon:String?, label:String, isSystemImageName:Bool, isShowRightArrow:Bool, action: @escaping () -> Void) {
-        self.icon = icon
-        self.label = label
-        self.action = action
-        self.isSystemImageName = isSystemImageName
-        self.isShowRightArrow = isShowRightArrow
-    }
-    
+    let action: () -> Void
+    var placeHolder:LocalizedStringKey? = nil
+
     var body: some View {
         Button(action: action){
            CardView(
             icon: icon,
             label: label,
             isSystemImageName: isSystemImageName,
-            isShowRightArrow: isShowRightArrow
+            isShowRightArrow: isShowRightArrow,
+            placeHolder: placeHolder
            )
         }
     }
