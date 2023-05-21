@@ -9,8 +9,4 @@
     <style name="LoadingAppTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
-
-    <style name="LoadingAppThemeAdssd">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
 </resources>
