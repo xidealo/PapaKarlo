@@ -18,12 +18,14 @@ struct CountPicker: View {
             Group{
                 Button(action: minusAction) {
                     Text("-")
+                        .bodyLarge(weight: .bold)
                         .padding(.horizontal, 8)
                 }
                 Text(count)
-                    .bodySmall()
+                    .bodySmall(weight: .bold)
                 Button(action:plusAction) {
                     Text("+")
+                        .bodyLarge(weight: .bold)
                         .padding(.horizontal, 8)
                 }
             }
@@ -33,7 +35,7 @@ struct CountPicker: View {
         .padding(.vertical, Diems.SMALL_PADDING)
         .overlay(
             RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                .stroke(AppColor.primary, lineWidth: 2)
+                .stroke(AppColor.primary, lineWidth: 4)
         )
         .cornerRadius(Diems.BUTTON_RADIUS)
     }

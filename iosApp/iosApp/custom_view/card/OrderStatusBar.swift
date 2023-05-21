@@ -74,8 +74,8 @@ struct DoneStep: View {
         IconImage(width: 12, height: 10, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
             .background(OrderChip.getColor(status: orderStatus))
-            .foregroundColor(Color("surface"))
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+            .foregroundColor(AppColor.surface)
+            .cornerRadius(16)
     }
 }
 
@@ -83,9 +83,9 @@ struct FutureStep: View {
     var body: some View {
         IconImage(width: 12, height: 10, imageName: "CheckIcon")
             .padding(Diems.SMALL_PADDING)
-            .background(Color("onSurfaceVariant"))
-            .foregroundColor(Color("onSurfaceVariant"))
-            .cornerRadius(Diems.MEDIUM_RADIUS)
+            .background(AppColor.onSurfaceVariant)
+            .foregroundColor(AppColor.onSurfaceVariant)
+            .cornerRadius(16)
     }
 }
 

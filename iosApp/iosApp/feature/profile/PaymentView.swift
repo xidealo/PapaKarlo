@@ -12,9 +12,9 @@ import shared
 struct PaymentView: View {
     @State var showCardCopy:Bool = false
     @State var showCopy:Bool = false
-    
+    let placeHolder:String? = nil
+
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    let paymentInfo = GetPaymentInfoUseCase().invoke()
     @State var paymentMethodList : [PaymentMethod]
     
     var body: some View {
@@ -27,8 +27,11 @@ struct PaymentView: View {
             )
             
             VStack(spacing:0){
-                Text(paymentInfo)
-                    .multilineTextAlignment(.center)
+                Text("available_payments")
+                    .bodyMedium()
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(AppColor.onSurface)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom, Diems.SMALL_PADDING)
                 
                 ForEach(paymentMethodList, id: \.self){ method in
@@ -40,7 +43,8 @@ struct PaymentView: View {
                             icon: "CopyIcon",
                             label: method.valueToShow ?? "",
                             isSystemImageName: false,
-                            isShowRightArrow: false
+                            isShowRightArrow: false,
+                            placeHolder: method.name.getPaymentMethod()
                         ){
                             self.showCopy = true
                             UIPasteboard.general.string = method.valueToCopy ?? ""
@@ -52,14 +56,14 @@ struct PaymentView: View {
             Spacer()
         }
         .frame(maxWidth:.infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .overlay(
             overlayView: ToastView(
                 toast: Toast(title: "Номер карты скопирован"),
                 show: $showCardCopy,
-                backgroundColor:Color("primary"),
-                foregaroundColor: Color("onPrimary")
+                backgroundColor: AppColor.primary,
+                foregaroundColor: AppColor.onPrimary
             ), show: $showCardCopy
         )
         .overlay(

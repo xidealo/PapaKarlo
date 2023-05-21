@@ -24,8 +24,7 @@ struct OrderItemView<Content: View>: View {
                 
                 OrderChip(orderStatus: orderItem.status)
                     .padding(.leading, Diems.SMALL_PADDING)
-
-                Spacer()
+                    .frame(maxWidth:.infinity, alignment:.leading)
                 
                 Text(orderItem.dateTime)
                     .bodySmall()

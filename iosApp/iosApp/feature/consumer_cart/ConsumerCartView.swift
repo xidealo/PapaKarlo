@@ -117,7 +117,7 @@ struct ConsumerCartSuccessScreen: View {
             
             VStack(spacing:0){
                 HStack(spacing:0){
-                    Text(Strings.MSG_CART_PRODUCT_RESULT)
+                    Text("consumer_cart_total")
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
 
@@ -128,12 +128,12 @@ struct ConsumerCartSuccessScreen: View {
                             .strikethrough()
                             .bodyMedium(weight: .bold)
                             .foregroundColor(AppColor.onSurfaceVariant)
+                            .padding(.trailing, 4)
                     }
 
                     Text(consumerCartUI.newTotalCost)
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
-                        .padding(.horizontal, Diems.SMALL_PADDING)
                 }.padding(16)
                 
                 Button {

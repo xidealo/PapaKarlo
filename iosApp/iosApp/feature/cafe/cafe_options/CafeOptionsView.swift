@@ -17,7 +17,7 @@ struct CafeOptionsView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: "titleCafeOptions",
+                title: "\(address)",
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

@@ -125,7 +125,8 @@ struct ConfirmViewSuccessView: View {
                     else{
                         ButtonText(
                             text: "Запросить код повторно \(timeRemaining) сек.",
-                            background: AppColor.disabled
+                            background: AppColor.disabled,
+                            foregroundColor: AppColor.onDisabled
                         )
                     }
                     

@@ -67,7 +67,7 @@ struct MenuItemView: View {
                 
                 Button(action: action) {
                     Text(Strings.ACTION_MENU_PRODUCT_WANT)
-                        .labelLarge()
+                        .labelLarge(weight: .medium)
                         .frame(maxWidth:.infinity, minHeight: 40, maxHeight:40)
                         .foregroundColor(AppColor.primary)
                         .overlay(
