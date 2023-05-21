@@ -43,7 +43,10 @@ struct CreateOrderView: View {
             }
             
             NavigationLink(
-                destination:CafeAddressListView(isClickable: true),
+                destination:CafeAddressListView(
+                    isClickable: true,
+                    _title: "title_pickup_addresses"
+                ),
                 isActive: $goToCafeAddress
             ){
                 EmptyView()

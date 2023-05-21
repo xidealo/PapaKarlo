@@ -64,3 +64,6 @@
 
 //OrderDetails
 "title_order_details_sum" = "Orders sum";
+
+//CafeAddressListView
+"title_pickup_addresses" = "Pickup addresses";
