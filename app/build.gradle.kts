@@ -86,6 +86,13 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+
+    lint {
+        abortOnError = true
+        warningsAsErrors = true
+        checkDependencies = true
+        baseline = File(project.projectDir, "/lint-baseline.xml")
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
