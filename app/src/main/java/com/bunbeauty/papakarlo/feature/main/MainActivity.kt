@@ -1,8 +1,11 @@
 package com.bunbeauty.papakarlo.feature.main
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -27,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -48,6 +52,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     private val viewBinding: LayoutComposeBinding by viewBinding(LayoutComposeBinding::bind)
 
+    private val requestPermissionLauncher by lazy {
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    }
+
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -68,6 +76,8 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 snackbarHostState = snackbarHostState
             )
         }
+
+        checkNotificationPermission()
     }
 
     override fun showInfoMessage(text: String) {
@@ -76,6 +86,14 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
 
     override fun showErrorMessage(text: String) {
         viewModel.showErrorMessage(text)
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!NotificationManagerCompat.from(this).areNotificationsEnabled()) {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

@@ -55,16 +55,16 @@ func getCafeStatusColor(cafeStatus: CafeItem.CafeOpenState) -> Color {
     }
 }
 
-
 func getCafeStatusText(cafeStatus: CafeItem.CafeOpenState) -> String {
     switch cafeStatus {
     case is CafeItem.CafeOpenStateOpened:
         return NSLocalizedString("msg_cafe_open", comment: "")
     case is CafeItem.CafeOpenStateCloseSoon :
+        let minutes = Int((cafeStatus as? CafeItem.CafeOpenStateCloseSoon)?.time ?? 0)
         let minuteString = getMinuteString(
-            closeIn: Int((cafeStatus as? CafeItem.CafeOpenStateCloseSoon)?.time ?? 0)
+            closeIn: minutes
         )
-        return NSLocalizedString("msg_cafe_close_soon", comment: "") + minuteString
+        return NSLocalizedString("msg_cafe_close_soon", comment: "") + String(minutes) + " " + minuteString
     case is CafeItem.CafeOpenStateClosed:
         return NSLocalizedString("msg_cafe_closed", comment: "")
     default:

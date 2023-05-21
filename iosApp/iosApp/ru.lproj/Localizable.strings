@@ -8,9 +8,6 @@
 
 "titleSelectCity" = "Выбор города";
 "titleAboutApp" = "О приложении";
-"titleCafeList" = "Рестораны";
-"titleMenu" = "Меню";
-"titleProfile" = "Профиль";
 "titleMyAddresses" = "Мои адреса";
 "titleCafeAddresses" = "Адреса кафе";
 "titleMyOrders" = "Мои заказы";
@@ -34,6 +31,7 @@
 //User address list
 "emptyAddressListTitleProfile" = "Список адресов пуст";
 "emptyAddressListSecondProfile" = "Здесь будут отображаться ваши адреса";
+
 //order list
 "emptyOrderListTitleProfile" = "Список заказов пуст";
 "emptyOrderListSecondProfile" = "Здесь будут отображаться ваши заказы";
@@ -59,3 +57,9 @@
 "msg_payment_card" = "Картой при получении";
 "msg_payment_card_number" = "Переводом по номеру карты";
 "msg_payment_phone_number" = "Переводом по номеру телефона";
+
+//BottomBar
+"title_restaurants" = "Рестораны";
+"title_menu" = "Меню";
+"title_profile" = "Профиль";
+

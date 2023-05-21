@@ -22,6 +22,11 @@ object Constants {
     const val YULIAR_APP_STORE_LINK = "https://apps.apple.com/ru/app/%D1%8E%D0%BB%D0%B8%D0%B0%D1%80/id6447322629"
     const val YULIAR_PAYMENT_INFO = "Оплатить заказ можно наличными или через терминал при получении"
 
+    // NOTIFICATION
+
+    const val NEWS_NOTIFICATION_PREFIX = "NEWS_"
+    const val CHANNEL_ID = "1"
+
     // API PARAMETER
 
     const val COMPANY_UUID_PARAMETER = "companyUuid"

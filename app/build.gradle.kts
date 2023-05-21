@@ -148,6 +148,7 @@ dependencies {
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
     implementation(Firebase.authKtx)
+    implementation(Firebase.messaging)
 
     implementation(Coil.coil)
     implementation(Coil.coilCompose)

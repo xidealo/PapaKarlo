@@ -18,7 +18,7 @@ object Versions {
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
     const val material = "1.4.0"
-    const val appCompact = "1.5.1"
+    const val appCompact = "1.6.1"
     const val coreKtx = "1.9.0"
     const val coil = "2.1.0"
     const val datetime = "0.8.1-rc"
@@ -222,6 +222,7 @@ object Firebase {
     const val crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
     const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
     const val authKtx = "com.google.firebase:firebase-auth-ktx"
+    const val messaging = "com.google.firebase:firebase-messaging-ktx"
 }
 
 object PinEntryEditText {
