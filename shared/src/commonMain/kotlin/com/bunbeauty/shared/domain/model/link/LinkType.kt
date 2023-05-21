@@ -5,4 +5,6 @@ enum class LinkType {
     INSTAGRAM,
     GOOGLE_PLAY,
     APP_STORE,
+    FACEBOOK,
+    UNKNOWN,
 }

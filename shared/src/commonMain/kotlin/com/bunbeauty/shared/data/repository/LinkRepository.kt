@@ -34,12 +34,12 @@ class LinkRepository(
     suspend fun getRemoteLinkList(): List<Link>? {
         return networkConnector.getLinkList()
             .getNullableResult { linkServerList ->
-                linkServerList.results.mapNotNull(linkMapper::toLink)
+                linkServerList.results.map(linkMapper::toLink)
             }
     }
 
     suspend fun getLocalLinkList(): List<Link> {
-        return linkDao.getLinkList().mapNotNull(linkMapper::toLink)
+        return linkDao.getLinkList().map(linkMapper::toLink)
     }
 
     suspend fun saveLinkListLocally(linkList: List<Link>) {

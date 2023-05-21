@@ -62,8 +62,9 @@ private fun FeedbackScreen(
             linkList.forEach { link ->
                 NavigationIconCard(
                     iconId = link.iconId,
-                    iconDescription = link.labelId,
+                    iconDescriptionStringId = link.labelId,
                     labelStringId = link.labelId,
+                    label = link.value,
                     elevated = false,
                     onClick = {
                         onItemClick(link.value)
@@ -84,19 +85,25 @@ private fun FeedbackScreenPreview() {
                     uuid = "",
                     labelId = R.string.action_feedback_vk,
                     iconId = R.drawable.ic_vk,
-                    value = "vk.com/link",
+                    value = "https://vk.com/link",
                 ),
                 LinkUI(
                     uuid = "",
                     labelId = R.string.action_feedback_instagram,
                     iconId = R.drawable.ic_instagram,
-                    value = "instagram.com/link",
+                    value = "https://instagram.com/link",
                 ),
                 LinkUI(
                     uuid = "",
                     labelId = R.string.action_feedback_play_market,
                     iconId = R.drawable.ic_google_play,
-                    value = "googleplay.com/link",
+                    value = "https://googleplay.com/link",
+                ),
+                LinkUI(
+                    uuid = "",
+                    labelId = null,
+                    iconId = R.drawable.ic_link,
+                    value = "https://unknown.link.com/path",
                 ),
             ),
             onItemClick = {},

@@ -232,6 +232,7 @@
     <string name="action_feedback_instagram">Instagram</string>
     <string name="action_feedback_play_market">Play Маркет</string>
     <string name="action_feedback_app_store">App Store</string>
+    <string name="action_feedback_facebook">Facebook</string>
 
     <!-- ABOUT APP -->
     <string name="title_about_app">О приложении</string>

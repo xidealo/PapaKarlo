@@ -232,7 +232,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_settings,
-                iconDescription = R.string.description_ic_settings,
+                iconDescriptionStringId = R.string.description_ic_settings,
                 labelStringId = R.string.action_profile_settings,
                 onClick = onSettingsClick
             )
@@ -241,7 +241,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 iconId = R.drawable.ic_address,
-                iconDescription = R.string.description_ic_my_addresses,
+                iconDescriptionStringId = R.string.description_ic_my_addresses,
                 labelStringId = R.string.action_profile_my_addresses,
                 onClick = onYourAddressesClicked
             )
@@ -250,7 +250,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 iconId = R.drawable.ic_history,
-                iconDescription = R.string.description_ic_my_orders,
+                iconDescriptionStringId = R.string.description_ic_my_orders,
                 labelStringId = R.string.action_profile_my_orders,
                 onClick = onOrderHistoryClicked
             )
@@ -316,7 +316,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             NavigationIconCard(
                 modifier = Modifier.fillMaxWidth(),
                 iconId = R.drawable.ic_payment,
-                iconDescription = R.string.description_ic_payment,
+                iconDescriptionStringId = R.string.description_ic_payment,
                 labelStringId = R.string.action_profile_payment,
                 onClick = viewModel::onPaymentClicked
             )
@@ -325,7 +325,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 iconId = R.drawable.ic_star,
-                iconDescription = R.string.description_ic_feedback,
+                iconDescriptionStringId = R.string.description_ic_feedback,
                 labelStringId = R.string.title_feedback,
                 onClick = viewModel::onFeedbackClicked
             )
@@ -334,7 +334,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 iconId = R.drawable.ic_info,
-                iconDescription = R.string.description_ic_about,
+                iconDescriptionStringId = R.string.description_ic_about,
                 labelStringId = R.string.title_about_app,
                 onClick = viewModel::onAboutAppClicked
             )

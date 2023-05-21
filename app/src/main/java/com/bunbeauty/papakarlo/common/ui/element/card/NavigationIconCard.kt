@@ -23,7 +23,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun NavigationIconCard(
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
-    @StringRes iconDescription: Int,
+    @StringRes iconDescriptionStringId: Int? = null,
     @StringRes labelStringId: Int? = null,
     label: String = "",
     elevated: Boolean = true,
@@ -45,7 +45,9 @@ fun NavigationIconCard(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = stringResource(iconDescription),
+                contentDescription = iconDescriptionStringId?.let { stringId ->
+                    stringResource(stringId)
+                },
             )
             val labelText = labelStringId?.let { id ->
                 stringResource(id)
@@ -74,7 +76,7 @@ private fun NavigationIconCardPreview() {
     FoodDeliveryTheme {
         NavigationIconCard(
             iconId = R.drawable.ic_info,
-            iconDescription = R.string.description_ic_about,
+            iconDescriptionStringId = R.string.description_ic_about,
             label = "Текст"
         ) {}
     }
