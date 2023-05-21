@@ -61,11 +61,11 @@ class Strings{
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
     static let MSG_CART_PRODUCT_EMPTY = "Добавте товар из \"Меню\" "
-    static let MSG_CART_PRODUCT_RESULT = "Итого"
+    static let MSG_CART_PRODUCT_RESULT = "Сумма заказа"
     
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"
-    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес кафе"
+    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес ресторана"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
     static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
     static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"

@@ -14,7 +14,6 @@ import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseC
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
-import com.bunbeauty.shared.domain.feature.payment.GetPaymentInfoUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
@@ -196,9 +195,6 @@ internal fun useCaseModule() = module {
         GetLinkListUseCase(
             linkRepo = get()
         )
-    }
-    factory {
-        GetPaymentInfoUseCase()
     }
     factory {
         SubscribeToNotificationUseCase()

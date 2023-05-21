@@ -40,6 +40,7 @@ struct EditTextView: View {
                     .keyboardType(keyBoadrType)
                 
                 Text(errorMessage)
+                    .bodySmall()
                     .foregroundColor(AppColor.error)
                     .frame(maxWidth:.infinity, alignment: .leading)
             }else{

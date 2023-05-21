@@ -12,15 +12,19 @@ struct CafeAddressListView: View {
     
     @ObservedObject private var viewModel : CafeAddressViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    var title: LocalizedStringKey = "titleCafeAddresses"
 
-    init(isClickable:Bool){
-        viewModel = CafeAddressViewModel(isClickable: true)
+    init(isClickable:Bool, _title : LocalizedStringKey = "titleCafeAddresses"){
+        title = _title
+        viewModel = CafeAddressViewModel(
+            isClickable: true
+        )
     }
     
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: "titleCafeAddresses",
+                title: title,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }

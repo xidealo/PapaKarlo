@@ -10,7 +10,6 @@
 "titleAboutApp" = "About app";
 "titleSelectCity" = "Select city";
 "titleAboutApp" = "About app";
-"titleMyAddresses" = "My addresses";
 "titleCafeAddresses" = "Cafe addresses";
 "titleMyOrders" = "My orders";
 "titleSettings" = "Settings";
@@ -18,8 +17,7 @@
 "titleCreationOrder" = "Order creation";
 "titleNewVersion" = "New version";
 "titleCreationAddress" = "Address creation";
-"titleFeedback" = "App feedback";
-"titleCafeOptions" = "Selected restaurant";
+"titleFeedback" = "Feedback";
 "titlePayment" = "Payment";
 //logim
 "loginTitleProfile" = "Login profile";
@@ -27,6 +25,8 @@
 //consumer cart
 "emptyCartTitleProfile" = "Cart is empty";
 "emptyCartSecondProfile" = "Add a product from the “Menu”";
+"consumer_cart_total" = "totla";
+
 //user address
 "emptyAddressListTitleProfile" = "Address list is empty";
 "emptyAddressListSecondProfile" = "Your addresses will be displayed here";
@@ -54,3 +54,16 @@
 "title_restaurants" = "Restaurants";
 "title_menu" = "Menu";
 "title_profile" = "Profile";
+
+//payment
+"available_payments" = "Available payment options:";
+
+//UserAddressListView
+"title_my_addresses" = "My addresses";
+"title_delivery_addresses" = "Delivery address";
+
+//OrderDetails
+"title_order_details_sum" = "Orders sum";
+
+//CafeAddressListView
+"title_pickup_addresses" = "Pickup addresses";

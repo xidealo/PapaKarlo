@@ -12,10 +12,7 @@
     <string name="part_ruble">&#160;₽</string>
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
-    <string name="description_ic_clear">Очистить</string>
-    <string name="description_ic_add">Добавить</string>
     <string name="description_product">Фото блюда</string>
-    <string name="description_copy">Копировать</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
     <string name="action_retry">Повторить попытку</string>
@@ -63,7 +60,6 @@
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
     <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
     <string name="title_consumer_cart_total">Итого</string>
-    <string name="error_consumer_cart_full">Корзина переполнена</string>
     <string name="description_consumer_cart_increase">Увеличить</string>
     <string name="description_consumer_cart_decrease">Уменьшить</string>
     <string name="description_consumer_cart_empty">Пустая корзина</string>
@@ -105,11 +101,6 @@
     <string name="error_create_address_fail">Не удалось создать адрес</string>
     <string name="error_create_address_street">Выберите название улицы из списка</string>
     <string name="error_create_address_house">Укажите номер дома</string>
-    <string name="error_create_address_house_max_length">Максимальная длинна для поля 5</string>
-    <string name="error_create_address_flat_max_length">Максимальная длинна для поля 5</string>
-    <string name="error_create_address_entrance_max_length">Максимальная длинна для поля 5</string>
-    <string name="error_create_address_floor_max_length">Максимальная длинна для поля 5</string>
-    <string name="error_create_address_comment_max_length">Максимальная длинна для поля 100</string>
     <string name="action_create_address_save">Сохранить</string>
     <string name="error_create_address_loading">Не удалось загрузить список улиц</string>
     <string name="error_create_address_no_selected_city">Ууупс, кажется, у вас не выбран город</string>
@@ -208,7 +199,6 @@
     <!-- SETTINGS -->
     <string name="title_settings">Настройки</string>
     <string name="hint_settings_phone">Номер телефона</string>
-    <string name="title_settings_edit_email">Редактирование почты</string>
     <string name="action_settings_save">Сохранить</string>
     <string name="error_settings_loading">Не удалось загрузить данные</string>
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
@@ -240,7 +230,6 @@
     <string name="msg_about_app_version">Версия&#160;</string>
 
     <!-- CHANGE CITY -->
-    <string name="title_change_city">Изменение города</string>
 
     <!-- LOGOUT -->
     <string name="title_logout">Выйти из профиля?</string>
