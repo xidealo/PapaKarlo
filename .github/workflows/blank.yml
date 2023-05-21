@@ -28,7 +28,11 @@ jobs:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
       - name: check android lint
-        run: ./gradlew --continue :app:lintpapaKarloDebug
+        run: ./gradlew --continue :app:lint
+      - name: check android PapaKarloLint
+        run: ./gradlew --continue lintPapaKarloRelease
+      - name: check android YuliarLint
+        run: ./gradlew --continue lintPapaKarloRelease
   check_ktLint_job:
     runs-on: ubuntu-latest
     needs: build_job
