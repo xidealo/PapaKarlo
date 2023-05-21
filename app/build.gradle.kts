@@ -88,7 +88,9 @@ android {
     }
 
     lint {
-        abortOnError = false
+        abortOnError = true
+        warningsAsErrors = true
+        checkDependencies = true
         disable.add("VectorPath")
     }
 }
