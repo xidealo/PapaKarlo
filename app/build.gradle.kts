@@ -92,6 +92,7 @@ android {
         warningsAsErrors = true
         checkDependencies = true
         baseline = File(project.projectDir, "/lint-baseline.xml")
+        disable.add("VectorPath")
     }
 }
 
