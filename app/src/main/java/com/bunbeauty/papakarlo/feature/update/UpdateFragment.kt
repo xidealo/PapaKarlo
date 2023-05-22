@@ -34,7 +34,6 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.shared.data.GetSocialNetworkLinksUseCase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UpdateFragment : BaseFragment(R.layout.layout_compose) {
@@ -42,7 +41,7 @@ class UpdateFragment : BaseFragment(R.layout.layout_compose) {
     override val viewModel: EmptyViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
-    private val googlePlayLink = GetSocialNetworkLinksUseCase().invoke().googlePlayLink
+    //private val googlePlayLink = GetSocialNetworkLinksUseCase().invoke().googlePlayLink
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
@@ -62,7 +61,7 @@ class UpdateFragment : BaseFragment(R.layout.layout_compose) {
                     modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                     textStringId = R.string.action_update_update
                 ) {
-                    val uri = Uri.parse(googlePlayLink)
+                    val uri = Uri.parse("googlePlayLink")
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(intent)
                 }

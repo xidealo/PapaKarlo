@@ -27,7 +27,7 @@ class LinkUiStateMapper {
                     LinkType.FACEBOOK -> R.drawable.ic_facebook
                     LinkType.UNKNOWN -> R.drawable.ic_link
                 },
-                value = link.value,
+                value = link.linkValue,
             )
         }
     }

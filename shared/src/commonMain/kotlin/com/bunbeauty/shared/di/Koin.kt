@@ -14,6 +14,7 @@ import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
@@ -102,6 +103,7 @@ class IosComponent : KoinComponent {
     fun provideGetFilteredStreetListUseCase(): GetFilteredStreetListUseCase = get()
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
+    fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
 
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
 

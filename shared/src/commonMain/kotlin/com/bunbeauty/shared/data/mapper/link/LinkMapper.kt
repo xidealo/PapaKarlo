@@ -15,7 +15,7 @@ class LinkMapper {
         return Link(
             uuid = linkServer.uuid,
             type = type,
-            value = linkServer.value,
+            linkValue = linkServer.value,
         )
     }
 
@@ -27,7 +27,7 @@ class LinkMapper {
         return Link(
             uuid = linkEntity.uuid,
             type = type,
-            value = linkEntity.value_,
+            linkValue = linkEntity.value_,
         )
     }
 
@@ -35,7 +35,7 @@ class LinkMapper {
         return LinkEntity(
             uuid = link.uuid,
             type = link.type.name,
-            value_ = link.value,
+            value_ = link.linkValue,
         )
     }
 }
