@@ -8,6 +8,8 @@ import com.bunbeauty.shared.data.dao.category.CategoryDao
 import com.bunbeauty.shared.data.dao.category.ICategoryDao
 import com.bunbeauty.shared.data.dao.city.CityDao
 import com.bunbeauty.shared.data.dao.city.ICityDao
+import com.bunbeauty.shared.data.dao.link.ILinkDao
+import com.bunbeauty.shared.data.dao.link.LinkDao
 import com.bunbeauty.shared.data.dao.menu_product.IMenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product.MenuProductDao
 import com.bunbeauty.shared.data.dao.menu_product_category_reference.IMenuProductCategoryReferenceDao
@@ -57,5 +59,8 @@ fun databaseModule() = module {
     }
     single<IPaymentMethodDao> {
         PaymentMethodDao(foodDeliveryDatabase = get())
+    }
+    single<ILinkDao> {
+        LinkDao(foodDeliveryDatabase = get())
     }
 }

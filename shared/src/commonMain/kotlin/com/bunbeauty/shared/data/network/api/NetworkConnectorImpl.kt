@@ -12,6 +12,7 @@ import com.bunbeauty.shared.data.network.model.CategoryServer
 import com.bunbeauty.shared.data.network.model.CityServer
 import com.bunbeauty.shared.data.network.model.DeliveryServer
 import com.bunbeauty.shared.data.network.model.ForceUpdateVersionServer
+import com.bunbeauty.shared.data.network.model.LinkServer
 import com.bunbeauty.shared.data.network.model.ListServer
 import com.bunbeauty.shared.data.network.model.MenuProductServer
 import com.bunbeauty.shared.data.network.model.PaymentMethodServer
@@ -152,6 +153,13 @@ class NetworkConnectorImpl(
     override suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>> {
         return getData(
             path = "payment_method",
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
+        )
+    }
+
+    override suspend fun getLinkList(): ApiResult<ListServer<LinkServer>> {
+        return getData(
+            path = "link",
             parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }

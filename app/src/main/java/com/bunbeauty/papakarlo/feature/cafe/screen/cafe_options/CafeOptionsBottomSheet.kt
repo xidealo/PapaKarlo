@@ -68,7 +68,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
     private fun CafeOptionsSuccessScreen(cafeOptions: CafeOptions) {
         NavigationIconCard(
             iconId = R.drawable.ic_call,
-            iconDescription = R.string.description_cafe_options_call,
+            iconDescriptionStringId = R.string.description_cafe_options_call,
             label = cafeOptions.callToCafe,
             elevated = false
         ) {
@@ -78,7 +78,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
         NavigationIconCard(
             modifier = Modifier.padding(top = 8.dp),
             iconId = R.drawable.ic_address,
-            iconDescription = R.string.description_cafe_options_map,
+            iconDescriptionStringId = R.string.description_cafe_options_map,
             label = cafeOptions.showOnMap,
             elevated = false
         ) {

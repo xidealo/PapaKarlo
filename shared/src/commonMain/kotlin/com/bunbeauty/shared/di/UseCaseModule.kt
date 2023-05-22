@@ -9,6 +9,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
 import com.bunbeauty.shared.domain.feature.menu_product.GetMenuProductByUuidUseCase
 import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
@@ -188,6 +189,11 @@ internal fun useCaseModule() = module {
     factory {
         GetPaymentMethodListUseCase(
             paymentRepo = get()
+        )
+    }
+    factory {
+        GetLinkListUseCase(
+            linkRepo = get()
         )
     }
     factory {

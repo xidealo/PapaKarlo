@@ -1,0 +1,14 @@
+CREATE TABLE linkEntity (
+    uuid TEXT NOT NULL PRIMARY KEY,
+    type TEXT NOT NULL,
+    value TEXT NOT NULL
+);
+
+insertLink:
+INSERT OR REPLACE
+INTO linkEntity
+VALUES (?, ?, ?);
+
+getLinkList:
+SELECT *
+FROM linkEntity;

@@ -110,7 +110,8 @@ fun viewModelModule() = module {
             stopObserveOrdersUseCase = get(),
             getLastOrderUseCase = get(),
             observeCartUseCase = get(),
-            getPaymentMethodListUseCase = get()
+            getPaymentMethodListUseCase = get(),
+            getLinkListUseCase = get(),
         )
     }
     viewModel { parameters ->
