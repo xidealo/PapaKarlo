@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-
 class SettingsViewModel(
     private val observeSettingsUseCase: ObserveSettingsUseCase,
     private val observeSelectedCityUseCase: ObserveSelectedCityUseCase,

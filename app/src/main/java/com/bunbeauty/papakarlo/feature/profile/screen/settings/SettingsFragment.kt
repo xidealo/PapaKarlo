@@ -77,7 +77,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     SettingsScreenSuccess(settingsState)
                 }
                 SettingsState.State.ERROR -> {
-                    ErrorScreen(mainTextId = R.string.error_settings_loading) {
+                    ErrorScreen(mainTextId = R.string.error_common_data_loading) {
                         viewModel.loadData()
                     }
                 }

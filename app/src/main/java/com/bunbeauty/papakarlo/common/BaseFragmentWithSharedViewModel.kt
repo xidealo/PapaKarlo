@@ -6,14 +6,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.viewbinding.ViewBinding
-import com.bunbeauty.papakarlo.util.resources.IResourcesProvider
-import org.koin.android.ext.android.inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 abstract class BaseFragmentWithSharedViewModel(@LayoutRes layoutId: Int) : Fragment(layoutId) {
 
     abstract val viewBinding: ViewBinding
-    val resourcesProvider: IResourcesProvider by inject()
 
     var isBackPressedOverridden = false
     var onBackPressedCallback: OnBackPressedCallback? = null
@@ -40,6 +42,15 @@ abstract class BaseFragmentWithSharedViewModel(@LayoutRes layoutId: Int) : Fragm
         }
 
         super.onStop()
+    }
+
+    fun Fragment.launchOnLifecycle(
+        state: Lifecycle.State = Lifecycle.State.STARTED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(state, block)
+        }
     }
 
     protected fun overrideBackPressedCallback() {
