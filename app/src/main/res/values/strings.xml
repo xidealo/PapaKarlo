@@ -22,6 +22,7 @@
     <string name="common_copied">Скопировано!</string>
     <string name="common_ok">ОК</string>
     <string name="common_cancel">Отмена</string>
+    <string name="error_common_data_loading">Не удалось загрузить данные</string>
 
     <!--ADDRESS-->
     <string name="msg_address_house_short">д.&#160;</string>
@@ -200,7 +201,6 @@
     <string name="title_settings">Настройки</string>
     <string name="hint_settings_phone">Номер телефона</string>
     <string name="action_settings_save">Сохранить</string>
-    <string name="error_settings_loading">Не удалось загрузить данные</string>
     <string name="msg_settings_email_updated">Почта успешно обновлена</string>
 
     <!-- ORDERS -->

@@ -17,6 +17,7 @@ import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
 import com.bunbeauty.shared.presentation.settings.SettingsViewModel
+import com.bunbeauty.shared.presentation.update.UpdateViewModel
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -154,11 +155,15 @@ fun viewModelModule() = module {
             cityInteractor = get()
         )
     }
-
     viewModel {
         SplashViewModel(
             updateInteractor = get(),
             cityInteractor = get(),
+        )
+    }
+    viewModel {
+        UpdateViewModel(
+            getLinkListUseCase = get(),
         )
     }
 }
