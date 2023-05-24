@@ -8,6 +8,14 @@
 import SwiftUI
 import shared
 
+//FEEDBACK
+let TITLE_FEEDBACK_VK = "Вконтакте"
+let TITLE_FEEDBACK_INSTAGRAM = "Instagram"
+let TITLE_FEEDBACK_APP_STORE = "App Store"
+let TITLE_FEEDBACK_FACE_BOOK = "Facebook"
+let TITLE_FEEDBACK_GOOLE_PLAY = "Play Маркет"
+
+
 struct FeedbackView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -31,7 +39,7 @@ struct FeedbackView: View {
                     case LinkType.appStore:
                         ActionCardView(
                             icon: "AppleIcon",
-                            label: Strings.TITLE_FEEDBACK_APP_STORE,
+                            label: TITLE_FEEDBACK_APP_STORE,
                             isSystemImageName: false,
                             isShowRightArrow: true){
                                 UIApplication.shared.open(
@@ -42,7 +50,7 @@ struct FeedbackView: View {
                     case LinkType.vkontakte:
                         ActionCardView(
                             icon: "VKIcon",
-                            label: Strings.TITLE_FEEDBACK_VK,
+                            label: TITLE_FEEDBACK_VK,
                             isSystemImageName: false,
                             isShowRightArrow: true
                         ){
@@ -54,7 +62,7 @@ struct FeedbackView: View {
 
                     case LinkType.instagram:  ActionCardView(
                         icon: "InstagramIcon",
-                        label: Strings.TITLE_FEEDBACK_INSTAGRAM,
+                        label: TITLE_FEEDBACK_INSTAGRAM,
                         isSystemImageName: false,
                         isShowRightArrow: true
                     ){
@@ -64,9 +72,9 @@ struct FeedbackView: View {
                     }
                     .padding(.top, index == 0 ? 0 : 8)
 
-                    case LinkType.instagram:  ActionCardView(
-                        icon: "InstagramIcon",
-                        label: Strings.TITLE_FEEDBACK_INSTAGRAM,
+                    case LinkType.facebook: ActionCardView(
+                        icon: "FacebookIcon",
+                        label: TITLE_FEEDBACK_FACE_BOOK,
                         isSystemImageName: false,
                         isShowRightArrow: true
                     ){
@@ -76,8 +84,30 @@ struct FeedbackView: View {
                     }
                     .padding(.top, index == 0 ? 0 : 8)
 
-                    default : EmptyView()
+                    case LinkType.googlePlay: ActionCardView(
+                        icon: "GooglePlayIcon",
+                        label: TITLE_FEEDBACK_GOOLE_PLAY,
+                        isSystemImageName: false,
+                        isShowRightArrow: true
+                    ){
+                        UIApplication.shared.open(
+                            URL(string: link.linkValue)!
+                        )
                     }
+                    .padding(.top, index == 0 ? 0 : 8)
+                        
+                    default : ActionCardView(
+                        icon: "UnknownIcon",
+                        label: link.linkValue,
+                        isSystemImageName: false,
+                        isShowRightArrow: true
+                    ){
+                        UIApplication.shared.open(
+                            URL(string: link.linkValue)!
+                        )
+                    }.padding(.top, index == 0 ? 0 : 8)
+
+                }
                 }
             }.padding(Diems.MEDIUM_PADDING)
           

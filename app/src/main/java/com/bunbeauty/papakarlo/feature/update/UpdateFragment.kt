@@ -82,7 +82,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
                         modifier = Modifier.padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
                         textStringId = R.string.action_update_update
                     ) {
-                        val uri = Uri.parse(uiState.googlePayLink.value)
+                        val uri = Uri.parse(uiState.googlePayLink.linkValue)
                         val intent = Intent(Intent.ACTION_VIEW, uri)
                         startActivity(intent)
                     }
@@ -158,7 +158,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
                     Link(
                         uuid = "1",
                         type = LinkType.GOOGLE_PLAY,
-                        value = "https://play.google.com/store/apps/details?id=1",
+                        linkValue = "https://play.google.com/store/apps/details?id=1",
                     )
                 ),
                 onRepeatClick = {}
