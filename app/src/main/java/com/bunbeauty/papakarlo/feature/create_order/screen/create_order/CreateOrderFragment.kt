@@ -42,7 +42,7 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.Deferre
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
-import com.bunbeauty.shared.presentation.create_order.CreateOrderState
+import com.bunbeauty.shared.presentation.create_order.CreateOrderEvent
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,7 +53,6 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
-
     private val createOrderStateMapper: CreateOrderStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -62,7 +61,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
 
         viewModel.update()
         viewBinding.root.setContentWithTheme {
-            val orderCreationState by viewModel.orderCreationState.collectAsStateWithLifecycle()
+            val orderCreationState by viewModel.uiState.collectAsStateWithLifecycle()
             CreateOrderScreen(createOrderStateMapper.map(orderCreationState))
             LaunchedEffect(orderCreationState.eventList) {
                 handleEventList(orderCreationState.eventList)
@@ -256,13 +255,13 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
         }
     }
 
-    private suspend fun handleEventList(eventList: List<CreateOrderState.Event>) {
+    private suspend fun handleEventList(eventList: List<CreateOrderEvent>) {
         eventList.forEach { event ->
             when (event) {
-                is CreateOrderState.Event.OpenCreateAddressEvent -> {
+                is CreateOrderEvent.OpenCreateAddressEvent -> {
                     findNavController().navigateSafe(toCreateAddressFragment())
                 }
-                is CreateOrderState.Event.ShowUserAddressListEvent -> {
+                is CreateOrderEvent.ShowUserAddressListEvent -> {
                     UserAddressListBottomSheet.show(
                         fragmentManager = childFragmentManager,
                         addressList = event.addressList.map(userAddressItemMapper::toItem),
@@ -270,7 +269,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         handleUserAddressListResult(result)
                     }
                 }
-                is CreateOrderState.Event.ShowCafeAddressListEvent -> {
+                is CreateOrderEvent.ShowCafeAddressListEvent -> {
                     CafeAddressListBottomSheet.show(
                         fragmentManager = childFragmentManager,
                         addressList = event.addressList,
@@ -278,7 +277,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         viewModel.onCafeAddressChanged(addressItem.uuid)
                     }
                 }
-                is CreateOrderState.Event.ShowCommentInputEvent -> {
+                is CreateOrderEvent.ShowCommentInputEvent -> {
                     CommentBottomSheet.show(
                         childFragmentManager,
                         event.comment
@@ -286,7 +285,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         viewModel.onCommentChanged(comment)
                     }
                 }
-                is CreateOrderState.Event.ShowDeferredTimeEvent -> {
+                is CreateOrderEvent.ShowDeferredTimeEvent -> {
                     val titleId = if (event.isDelivery) {
                         R.string.delivery_time
                     } else {
@@ -301,17 +300,17 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         viewModel.onDeferredTimeSelected(deferredTime)
                     }
                 }
-                is CreateOrderState.Event.ShowSomethingWentWrongErrorEvent -> {
+                is CreateOrderEvent.ShowSomethingWentWrongErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_something_went_wrong)
                     )
                 }
-                is CreateOrderState.Event.ShowUserUnauthorizedErrorEvent -> {
+                is CreateOrderEvent.ShowUserUnauthorizedErrorEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_user)
                     )
                 }
-                is CreateOrderState.Event.OrderCreatedEvent -> {
+                is CreateOrderEvent.OrderCreatedEvent -> {
                     (activity as? IMessageHost)?.showInfoMessage(
                         resources.getString(
                             R.string.msg_order_code,
@@ -320,7 +319,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     )
                     findNavController().navigateSafe(toProfileFragment())
                 }
-                is CreateOrderState.Event.ShowUserAddressError -> {
+                is CreateOrderEvent.ShowUserAddressError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_user_address)
                     )

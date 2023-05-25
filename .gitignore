@@ -88,6 +88,12 @@ lint/tmp/
 ehthumbs.db
 Thumbs.db
 
+Pods/
+
+Packages/
+Package.pins
+Package.resolved
+*.xcodeproj
 
 .gradle
 /local.properties

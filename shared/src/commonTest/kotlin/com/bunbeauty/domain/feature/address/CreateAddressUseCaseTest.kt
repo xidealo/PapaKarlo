@@ -1,10 +1,10 @@
-package com.bunbeauty.use_case
+package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoStreetByNameAndCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoTokenException
-import com.bunbeauty.shared.domain.use_case.address.CreateAddressUseCase
+import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.model.address.CreatedUserAddress
 import com.bunbeauty.shared.domain.model.address.UserAddress
 import com.bunbeauty.shared.domain.model.street.Street

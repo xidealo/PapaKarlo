@@ -1,4 +1,4 @@
-package com.bunbeauty.use_case
+package com.bunbeauty.domain.feature.payment
 
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod

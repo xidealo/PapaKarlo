@@ -1,4 +1,4 @@
-package com.bunbeauty.use_case
+package com.bunbeauty.domain.feature.cart
 
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.model.cart.CartProduct

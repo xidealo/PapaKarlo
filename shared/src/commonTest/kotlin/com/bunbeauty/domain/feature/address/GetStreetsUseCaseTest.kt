@@ -1,9 +1,9 @@
-package com.bunbeauty.use_case
+package com.bunbeauty.domain.feature.address
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.exeptions.NoSelectedCityUuidException
 import com.bunbeauty.shared.domain.exeptions.NoUserUuidException
-import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.model.street.Street
 import com.bunbeauty.shared.domain.repo.StreetRepo
 import io.mockk.MockKAnnotations

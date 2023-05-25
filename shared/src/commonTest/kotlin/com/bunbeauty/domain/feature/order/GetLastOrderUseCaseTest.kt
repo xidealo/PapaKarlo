@@ -1,4 +1,4 @@
-package com.bunbeauty.use_case
+package com.bunbeauty.domain.feature.order
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.feature.order.GetLastOrderUseCase
