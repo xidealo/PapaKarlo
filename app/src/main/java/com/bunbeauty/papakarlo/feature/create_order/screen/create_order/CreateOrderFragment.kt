@@ -109,7 +109,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
         val labelStringId = if (createOrderUi.isDelivery) {
             R.string.delivery_address
         } else {
-            R.string.cafe_address
+            R.string.pickup_address
         }
         if (createOrderUi.isDelivery) {
             if (createOrderUi.deliveryAddress == null) {
