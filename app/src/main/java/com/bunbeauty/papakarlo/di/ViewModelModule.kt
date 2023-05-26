@@ -50,15 +50,16 @@ fun viewModelModule() = module {
             cartProductInteractor = get(),
             cafeInteractor = get(),
             userInteractor = get(),
+            createOrderStateMapper = get(),
             timeMapper = get(),
             userAddressMapper = get(),
-            getSelectableUserAddressListUseCase = get(),
-            getSelectableCafeListUseCase = get(),
+            getSelectableUserAddressList = get(),
+            getSelectableCafeList = get(),
             getCartTotal = get(),
             getMinTime = get(),
-            createOrderUseCase = get(),
-            getSelectedCityTimeZoneUseCase = get(),
-            saveSelectedUserAddressUseCase = get()
+            createOrder = get(),
+            getSelectedCityTimeZone = get(),
+            saveSelectedUserAddress = get(),
         )
     }
     viewModel {

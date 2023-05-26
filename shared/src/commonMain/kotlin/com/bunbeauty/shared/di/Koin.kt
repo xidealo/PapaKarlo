@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
@@ -28,7 +29,7 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*

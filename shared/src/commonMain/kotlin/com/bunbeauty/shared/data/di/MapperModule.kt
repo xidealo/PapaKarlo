@@ -35,7 +35,6 @@ fun dataMapperModule() = module {
         )
     }
     single<IUserMapper> { UserMapper() }
-    single { UserAddressMapper(streetMapper = get()) }
     single<IStreetMapper> { StreetMapper() }
     single<ICityMapper> { CityMapper() }
     single<IOrderMapper> { OrderMapper(orderProductMapper = get(), dateTimeUtil = get()) }
