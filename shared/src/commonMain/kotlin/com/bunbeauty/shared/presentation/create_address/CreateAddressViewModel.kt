@@ -160,7 +160,7 @@ class CreateAddressViewModel(
                     )
                 }
             } else {
-                saveSelectedUserAddressUseCase(userAddress.userUuid)
+                saveSelectedUserAddressUseCase(userAddress.uuid)
                 mutableStreetListState.update { state ->
                     state + CreateAddressState.Event.AddressCreatedSuccess
                 }
