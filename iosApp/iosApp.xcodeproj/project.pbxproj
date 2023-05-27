@@ -340,6 +340,7 @@
 		0251DCA229DE11990008DBA5 /* yuliar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = yuliar.plist; sourceTree = "<group>"; };
 		0253930929AB92A800C8B04B /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
 		02542937287F39060089B45E /* CreateOrderHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderHolder.swift; sourceTree = "<group>"; };
+		026643F02A22AF3C000310BF /* papakarlo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = papakarlo.entitlements; sourceTree = "<group>"; };
 		0280BE2A29A0ED14007F7416 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
@@ -781,6 +782,7 @@
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
+				026643F02A22AF3C000310BF /* papakarlo.entitlements */,
 				021CDA02287988C100DD1A98 /* GoogleService-Info.plist */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
@@ -1594,6 +1596,7 @@
 			baseConfigurationReference = E5A0C805668AFB7BBE296C80 /* Pods-papakarlo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;
@@ -1686,6 +1689,7 @@
 			baseConfigurationReference = 28BD2A8818E20F390A44F2DD /* Pods-papakarlo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 17;

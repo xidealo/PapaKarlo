@@ -114,6 +114,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 extension AppDelegate : MessagingDelegate{
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+//        print("token \(fcmToken)")
+//        let dataDict: [String: String] = ["token": fcmToken ?? ""]
+//         NotificationCenter.default.post(
+//           name: Notification.Name("FCMToken"),
+//           object: nil,
+//           userInfo: dataDict
+//         )
+        
         iosComponent.provideSubscribeToNotificationUseCase().invoke()
     }
 }
