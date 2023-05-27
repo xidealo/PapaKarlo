@@ -323,13 +323,13 @@ struct CreateOrderSuccessView: View {
             
             creationOrderViewState.eventList.forEach { event in
                 switch(event){
-                case is CreateOrderStateEventShowUserAddressError : showAddressError = true
-                case is CreateOrderStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
-                case is CreateOrderStateEventOrderCreatedEvent : isRootActive = false
+                case is CreateOrderEventShowUserAddressError : showAddressError = true
+                case is CreateOrderEventShowSomethingWentWrongErrorEvent : showCommonError = true
+                case is CreateOrderEventOrderCreatedEvent : isRootActive = false
                     selection = 2
                     showOrderCreated = true
-                case is CreateOrderStateEventShowCafeAddressListEvent : goToCafeAddress = true
-                case is CreateOrderStateEventShowUserAddressListEvent : goToUserAddress = true
+                case is CreateOrderEventShowCafeAddressListEvent : goToCafeAddress = true
+                case is CreateOrderEventShowUserAddressListEvent : goToUserAddress = true
                 default:
                     print("def")
                 }
