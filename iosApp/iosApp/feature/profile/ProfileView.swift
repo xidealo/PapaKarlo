@@ -16,6 +16,7 @@ struct ProfileView: View {
         state: ProfileState.State.loading,
         cartCostAndCount: nil,
         paymentMethodList: [],
+        linkList: [],
         eventList: []
     )
     
@@ -24,7 +25,8 @@ struct ProfileView: View {
         getLastOrderUseCase: iosComponent.provideGetLastOrderUseCase(), observeLastOrderUseCase:iosComponent.provideObserveLastOrderUseCase(),
         stopObserveOrdersUseCase: iosComponent.provideStopObserveOrdersUseCase(),
         observeCartUseCase: iosComponent.provideObserveCartUseCase(),
-        getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase()
+        getPaymentMethodListUseCase: iosComponent.provideGetPaymentMethodListUseCase(),
+        getLinkListUseCase: iosComponent.provideGetLinkListUseCase()
     )
     
     @Binding var showOrderCreated:Bool
@@ -46,7 +48,8 @@ struct ProfileView: View {
             )
             case ProfileState.State.unauthorized : EmptyProfileView(
                 isActive: $isActive,
-                paymentMethodList: profileState.paymentMethodList
+                paymentMethodList: profileState.paymentMethodList,
+                linkList: profileState.linkList
             )
             default: EmptyView()
             }
@@ -99,7 +102,8 @@ struct ProfileView: View {
 struct EmptyProfileView: View {
     @Binding var isActive:Bool
     var paymentMethodList : [PaymentMethod]
-
+    var linkList: [shared.Link]
+    
     var body: some View {
         VStack(spacing:0){
             NavigationCardView(
@@ -112,7 +116,7 @@ struct EmptyProfileView: View {
             NavigationCardView(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
-                destination: FeedbackView(),
+                destination: FeedbackView(linkList: linkList),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)
@@ -202,7 +206,7 @@ struct SuccessProfileView: View {
             NavigationCardView(
                 icon: "ic_star",
                 label: Strings.TITLE_PROFILE_FEEDBACK,
-                destination: FeedbackView(),
+                destination: FeedbackView(linkList: profileViewState.linkList),
                 isSystem: false
             )
             .padding(.top, Diems.SMALL_PADDING)

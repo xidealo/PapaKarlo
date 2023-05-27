@@ -84,10 +84,7 @@ class Strings{
     //ABOUT APP
     static let TITLE_ABOUT_APP_DEVELOPER = "Разработчик \"Банбьюти\""
     static let TITLE_ABOUT_APP_VERSION = "Версия"
-    //FEEDBACK
-    static let TITLE_FEEDBACK_VK = "Вконтакте"
-    static let TITLE_FEEDBACK_INSTAGRAM = "Instagram"
-    static let TITLE_FEEDBACK_APP_STORE = "App Store"
+  
     //CAFE_OPTIONS
     static let TITLE_CAFE_OPTIONS_CALL = "Позвонить"
     static let TITLE_CAFE_OPTIONS_POSITION = "На карте"

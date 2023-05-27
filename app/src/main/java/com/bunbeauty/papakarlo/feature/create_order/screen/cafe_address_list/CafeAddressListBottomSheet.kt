@@ -65,7 +65,7 @@ private fun CafeAddressListScreen(
     onAddressClicked: (SelectableCafeAddressItem) -> Unit,
 ) {
     FoodDeliveryLazyBottomSheet(
-        titleStringId = R.string.cafe_address,
+        titleStringId = R.string.pickup_address,
         scrolledToTop = scrolledToTop
     ) {
         itemsIndexed(addressList) { i, addressItem ->

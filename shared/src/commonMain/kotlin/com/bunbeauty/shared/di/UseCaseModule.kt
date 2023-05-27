@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.di
 
+import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -19,7 +20,7 @@ import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
-import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
