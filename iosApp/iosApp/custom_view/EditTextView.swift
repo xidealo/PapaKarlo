@@ -41,6 +41,14 @@ struct EditTextView: View {
                 textChanged(str)
             }
             .keyboardType(keyBoadrType)
+            if(hasError){
+                Text(errorMessage)
+                    .bodySmall()
+                    .foregroundColor(AppColor.error)
+                    .frame(maxWidth:.infinity, alignment: .leading)
+                    .padding(.top, 4)
+                    .padding(.leading, 16)
+            }
         }.environment(\.colorScheme, .light)
     }
     
