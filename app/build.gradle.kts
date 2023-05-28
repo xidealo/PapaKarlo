@@ -62,11 +62,15 @@ android {
             versionCode = CommonApplication.versionCode
             versionName = PapaKarloApplication.versionName
         }
-
         create("yuliar") {
             applicationId = YuliarApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = YuliarApplication.versionName
+        }
+        create("djan") {
+            applicationId = DjanApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = DjanApplication.versionName
         }
     }
 

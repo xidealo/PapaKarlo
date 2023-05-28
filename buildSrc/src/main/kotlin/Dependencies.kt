@@ -75,6 +75,12 @@ object YuliarApplication {
     const val applicationId = "com.bunbeuaty.yuliar"
 }
 
+object DjanApplication {
+    const val versionName =
+        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
+    const val applicationId = "com.bunbeauty.djan"
+}
+
 object AndroidSdk {
     const val min = 24
     const val compile = 33

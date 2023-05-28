@@ -12,17 +12,16 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Grey3
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightBlue
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightGreen
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightOrange
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightRed
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red1
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red2
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
-val PapaKarloLightColors = AppColors(
+val DjanLightColors = AppColors(
     mainColors = MainColors(
-        primary = Orange,
+        primary = Red2,
         disabled = Grey1,
         secondary = White,
         background = Cream,
@@ -50,16 +49,16 @@ val PapaKarloLightColors = AppColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
-        info = LightOrange,
+        info = Red2,
         onStatus = White,
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = true
 )
 
-val PapaKarloDarkColors = AppColors(
+val DjanDarkColors = AppColors(
     mainColors = MainColors(
-        primary = Orange,
+        primary = Red2,
         disabled = Black3,
         secondary = Black2,
         background = Black1,
@@ -87,7 +86,7 @@ val PapaKarloDarkColors = AppColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
-        info = LightOrange,
+        info = Red2,
         onStatus = White,
     ),
     bunBeautyBrandColor = LightBlue,
