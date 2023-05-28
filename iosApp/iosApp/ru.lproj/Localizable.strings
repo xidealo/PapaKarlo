@@ -66,10 +66,10 @@
 
 //UserAddressListView
 "title_my_addresses" = "Мои адреса";
-"title_delivery_addresses" = "Адреса доставки";
+"title_delivery_addresses" = "Адрес доставки";
 
 //OrderDetails
 "title_order_details_sum" = "Сумма заказа";
 
 //CafeAddressListView
-"title_pickup_addresses" = "Адреса самовывоза";
+"title_pickup_addresses" = "Адрес самовывоза";

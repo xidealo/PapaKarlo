@@ -293,9 +293,13 @@ struct CreateOrderSuccessView: View {
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                     Spacer()
-                    Text("\(viewModel.creationOrderViewState.finalCost ?? 0)\(Strings.CURRENCY)")
-                        .bodyMedium(weight: .bold)
-                        .foregroundColor(AppColor.onSurface)
+                    
+                    if let finalCost = viewModel.creationOrderViewState.finalCost{
+                        Text("\(finalCost)" + Strings.CURRENCY)
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurface)
+                    }
+                    
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)

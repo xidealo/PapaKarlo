@@ -65,7 +65,7 @@ class Strings{
     
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"
-    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес ресторана"
+    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес самовывоза"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
     static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
     static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"
