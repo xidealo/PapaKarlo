@@ -24,6 +24,9 @@ struct CreateOrderView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @State var addressList: [SelectableCafeAddressItem] = []
+
+    
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
@@ -45,7 +48,8 @@ struct CreateOrderView: View {
             NavigationLink(
                 destination:CafeAddressListView(
                     isClickable: true,
-                    _title: "title_pickup_addresses"
+                    _title: "title_pickup_addresses",
+                    addressList: addressList
                 ),
                 isActive: $goToCafeAddress
             ){
@@ -64,7 +68,8 @@ struct CreateOrderView: View {
                     goToCafeAddress:$goToCafeAddress,
                     isRootActive: $isRootActive,
                     selection: $selection,
-                    showOrderCreated: $showOrderCreated
+                    showOrderCreated: $showOrderCreated,
+                    addressList: $addressList
                 )
             }
         }
@@ -123,7 +128,8 @@ struct CreateOrderSuccessView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-    
+    @Binding var addressList: [SelectableCafeAddressItem]
+
     let calendar = Calendar.current
     
     var body: some View{
@@ -332,7 +338,9 @@ struct CreateOrderSuccessView: View {
                 case is CreateOrderEventOrderCreatedEvent : isRootActive = false
                     selection = 2
                     showOrderCreated = true
-                case is CreateOrderEventShowCafeAddressListEvent : goToCafeAddress = true
+                case is CreateOrderEventShowCafeAddressListEvent :
+                    addressList = (event as? CreateOrderEventShowCafeAddressListEvent)?.addressList ?? []
+                    goToCafeAddress = true
                 case is CreateOrderEventShowUserAddressListEvent : goToUserAddress = true
                 default:
                     print("def")
