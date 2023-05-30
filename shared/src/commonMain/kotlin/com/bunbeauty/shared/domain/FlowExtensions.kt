@@ -30,6 +30,7 @@ inline fun <IM, OM> Flow<IM?>.mapFlow(crossinline block: suspend ((IM) -> OM)): 
 
 fun <T> Flow<T>.asCommonFlow(): CommonFlow<T> = CommonFlow(this)
 fun <T> MutableStateFlow<T>.asCommonStateFlow(): CommonStateFlow<T> = CommonStateFlow(this.asStateFlow())
+fun <T> StateFlow<T>.asCommonStateFlow(): CommonStateFlow<T> = CommonStateFlow(this)
 
 interface Closeable{
     fun close()

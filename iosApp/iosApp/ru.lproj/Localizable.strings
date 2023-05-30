@@ -8,16 +8,14 @@
 
 "titleSelectCity" = "Выбор города";
 "titleAboutApp" = "О приложении";
-"titleMyAddresses" = "Мои адреса";
-"titleCafeAddresses" = "Адреса кафе";
+"titleCafeAddresses" = "Адреса ресторанов";
 "titleMyOrders" = "Мои заказы";
 "titleSettings" = "Настройки";
 "titleCartProducts" = "Корзина";
 "titleCreationOrder" = "Оформление заказа";
 "titleNewVersion" = "Новая версия";
 "titleCreationAddress" = "Добавление адреса";
-"titleFeedback" = "Отзывы о приложении";
-"titleCafeOptions" = "Выбранное кафе";
+"titleFeedback" = "Отзывы";
 "titlePayment" = "Оплата";
 
 //login
@@ -26,7 +24,8 @@
 
 //Consumer cart
 "emptyCartTitleProfile" = "Корзина пуста";
-"emptyCartSecondProfile" = "Добавьте товар из “Меню”";
+"emptyCartSecondProfile" = "Добавьте товар из «Меню»";
+"consumer_cart_total" = "Итого";
 
 //User address list
 "emptyAddressListTitleProfile" = "Список адресов пуст";
@@ -41,7 +40,6 @@
 "hintLoginEnterPhone" = "Номер телефона"; //add later refactoring
 "errorLoginEnterPhone" = "Введите корректный номер телефона"; //add later refactoring
 "actionLoginContinue" = "Продолжить"; //add later refactoring
-
 
 //cafe list
 "msg_cafe_open" = "Открыто";
@@ -63,3 +61,15 @@
 "title_menu" = "Меню";
 "title_profile" = "Профиль";
 
+//payment
+"available_payments" = "Доступные способы оплаты:";
+
+//UserAddressListView
+"title_my_addresses" = "Мои адреса";
+"title_delivery_addresses" = "Адрес доставки";
+
+//OrderDetails
+"title_order_details_sum" = "Сумма заказа";
+
+//CafeAddressListView
+"title_pickup_addresses" = "Адрес самовывоза";

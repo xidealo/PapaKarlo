@@ -2,18 +2,7 @@
 
     <!-- BOTTOM BAR -->
 
-    <style name="BottomNavigation">
-        <item name="labelVisibilityMode">labeled</item>
-        <item name="itemIconTint">?attr/colorNavigation</item>
-        <item name="itemTextColor">?attr/colorNavigation</item>
-    </style>
-
     <!--DEFAULT TEXT-->
-
-    <style name="DefaultWrapConstraintsText" parent="Widget.AppCompat.TextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
 
     <!--TEXT-->
     <!-- Naming: [Secondary][Size*][FontWeight*][Width*][Caps]Text -->
@@ -21,10 +10,6 @@
     <!-- FontWeight* : Regular, Bold -->
     <!-- Width* : WrapConstrain, WrapContent -->
     <!-- * - required -->
-
-    <style name="MediumRegularWrapConstraintsText" parent="DefaultWrapConstraintsText">
-        <item name="android:textAppearance">@style/MediumRegularTextAppearance</item>
-    </style>
 
     <!--BOTTOM SHEET-->
 

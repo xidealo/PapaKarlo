@@ -61,11 +61,11 @@ class Strings{
     static let ACTION_CART_PRODUCT_CREATE_ORDER = "Оформить заказ"
     
     static let MSG_CART_PRODUCT_EMPTY = "Добавте товар из \"Меню\" "
-    static let MSG_CART_PRODUCT_RESULT = "Итого"
+    static let MSG_CART_PRODUCT_RESULT = "Сумма заказа"
     
     //CREATION ORDER
     static let HINT_CREATION_ORDER_ADDRESS_DELIVERY = "Адрес доставки"
-    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес кафе"
+    static let HINT_CREATION_ORDER_ADDRESS_CAFE = "Адрес самовывоза"
     static let HINT_CREATION_ORDER_COMMENT = "Комментарий"
     static let HINT_CREATION_ORDER_DEFERRED_DELIVERY = "Время доставки"
     static let HINT_CREATION_ORDER_DEFERRED_PICKUP = "Время самовывоза"
@@ -84,10 +84,7 @@ class Strings{
     //ABOUT APP
     static let TITLE_ABOUT_APP_DEVELOPER = "Разработчик \"Банбьюти\""
     static let TITLE_ABOUT_APP_VERSION = "Версия"
-    //FEEDBACK
-    static let TITLE_FEEDBACK_VK = "Вконтакте"
-    static let TITLE_FEEDBACK_INSTAGRAM = "Instagram"
-    static let TITLE_FEEDBACK_APP_STORE = "App Store"
+  
     //CAFE_OPTIONS
     static let TITLE_CAFE_OPTIONS_CALL = "Позвонить"
     static let TITLE_CAFE_OPTIONS_POSITION = "На карте"

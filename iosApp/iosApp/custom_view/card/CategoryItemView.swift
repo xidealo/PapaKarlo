@@ -25,7 +25,7 @@ struct CategoryItemView: View {
                         .background(AppColor.primary)
                         .overlay(
                             RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                                .stroke(AppColor.primary, lineWidth: 2)
+                                .stroke(AppColor.primary, lineWidth: 4)
                         )
                         .cornerRadius(16)
                         .foregroundColor(AppColor.onPrimary)
@@ -41,7 +41,7 @@ struct CategoryItemView: View {
                         .background(AppColor.surface)
                         .overlay(
                             RoundedRectangle(cornerRadius: Diems.BUTTON_RADIUS)
-                                .stroke(AppColor.onSurfaceVariant, lineWidth: 2)
+                                .stroke(AppColor.onSurfaceVariant, lineWidth: 4)
                         )
                         .cornerRadius(16)
                         .foregroundColor(AppColor.onSurfaceVariant)

@@ -86,6 +86,13 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+
+    lint {
+        abortOnError = true
+        warningsAsErrors = true
+        checkDependencies = true
+        disable.add("VectorPath")
+    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -141,6 +148,7 @@ dependencies {
     implementation(Firebase.crashlyticsKtx)
     implementation(Firebase.analyticsKtx)
     implementation(Firebase.authKtx)
+    implementation(Firebase.messaging)
 
     implementation(Coil.coil)
     implementation(Coil.coilCompose)

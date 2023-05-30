@@ -14,23 +14,23 @@ struct OrderChip: View {
     
     var body: some View {
         Text(OrderChip.getStatusName(status: orderStatus))
-            .labelSmall()
+            .labelSmall(weight: .medium)
             .foregroundColor(AppColor.surface)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
             .background(OrderChip.getColor(status: orderStatus))
-            .cornerRadius(12)
+            .cornerRadius(16)
     }
     
     static func getColor(status:OrderStatus) -> Color{
         switch status{
-        case OrderStatus.notAccepted : return Color("notAcceptedColor")
-        case OrderStatus.accepted : return Color("acceptedColor")
-        case OrderStatus.preparing : return Color("preparingColor")
-        case OrderStatus.sentOut : return Color("sentOutColor")
-        case OrderStatus.done : return Color("doneColor")
-        case OrderStatus.delivered : return Color("deliveredColor")
-        case OrderStatus.canceled : return Color("canceledColor")
+        case OrderStatus.notAccepted : return AppColor.notAccepted
+        case OrderStatus.accepted : return AppColor.accepted
+        case OrderStatus.preparing : return AppColor.preparing
+        case OrderStatus.sentOut : return AppColor.sentOut
+        case OrderStatus.done : return AppColor.done
+        case OrderStatus.delivered : return AppColor.delivered
+        case OrderStatus.canceled : return AppColor.canceled
         default : return Color.blue
         }
     }

@@ -39,7 +39,6 @@ struct CreateAddressView: View {
     
     @State var listener: Closeable? = nil
     
-    
     @State var createAddressState = CreateAddressState(
         streetList: [],
         suggestedStreetList: [],
@@ -85,7 +84,6 @@ struct CreateAddressView: View {
                             }
                         )
                         .focused($isTextFieldFocused)
-                        .padding(.top, Diems.MEDIUM_PADDING)
                         
                         EditTextView(
                             hint: Strings.HINT_CREATION_ADDRESS_HOUSE,
@@ -154,9 +152,12 @@ struct CreateAddressView: View {
                         )
                         .focused($isTextFieldFocused)
                         .padding(.top, Diems.SMALL_PADDING)
-                        .padding(.bottom, isTextFieldFocused ? 60 :  0)
                     }
-                    .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    .padding(Diems.MEDIUM_PADDING)
+                    .background(AppColor.surface)
+                    .cornerRadius(Diems.MEDIUM_RADIUS)
+                    .padding(Diems.MEDIUM_PADDING)
+                    .padding(.bottom, isTextFieldFocused ? 60 :  0)
                 }
                                 
                 Button(
@@ -166,7 +167,7 @@ struct CreateAddressView: View {
                 ) {
                     if(createAddressState.isCreateLoading){
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
+                            .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
                             .scaleEffect(1.5)
                     }else{
                         ButtonText(text: Strings.ACTION_CREATION_ADDRESS_ADD)
@@ -179,9 +180,11 @@ struct CreateAddressView: View {
                 overlayView: ToastView(
                     toast: Toast(title: "Что-то пошло не так"),
                     show: $showError,
-                    backgroundColor: Color("error"),
-                    foregaroundColor: Color("onError")),
-                show: $showError)
+                    backgroundColor: AppColor.error,
+                    foregaroundColor: AppColor.onError
+                ),
+                show: $showError
+            )
             case is CreateAddressState.StateError : VStack(spacing:0){
                 let errorState = createAddressState.state as? CreateAddressState.StateError
                 switch(errorState?.throwable){
@@ -218,7 +221,7 @@ struct CreateAddressView: View {
             }
         }
         .hiddenNavigationBarStyle()
-        .background(Color("background"))
+        .background(AppColor.background)
         .onAppear(){
             viewModel.viewModel.getStreetList()
             listener = viewModel.viewModel.streetListState.watch { createAddressStateVM in

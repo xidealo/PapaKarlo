@@ -11,16 +11,16 @@ import shared
 
 class CreateOrderHolder: ObservableObject {
     
-    @Published var creationOrderViewState = CreateOrderState(
+    @Published var creationOrderViewState = CreateOrderUIState(
         isDelivery: true,
         deliveryAddress: nil,
+        isDeliveryAddressErrorShown: false,
         pickupAddress: nil,
         comment: nil,
         deferredTime: TimeUIASAP(),
         totalCost: nil,
         deliveryCost: nil,
         finalCost: nil,
-        isAddressErrorShown: false,
         isLoading: false,
         eventList: []
     )
@@ -29,22 +29,23 @@ class CreateOrderHolder: ObservableObject {
         cartProductInteractor: iosComponent.provideCartProductInteractor(),
         cafeInteractor: iosComponent.provideCafeInteractor(),
         userInteractor: iosComponent.provideIUserInteractor(),
+        createOrderStateMapper: iosComponent.provideCreateOrderStateMapper(),
         timeMapper: iosComponent.provideTimeMapper(),
         userAddressMapper: iosComponent.provideUserAddressMapper(),
-        getSelectableUserAddressListUseCase: iosComponent.provideGetSelectableUserAddressListUseCase(),
-        getSelectableCafeListUseCase: iosComponent.provideGetSelectableCafeListUseCase(),
+        getSelectableUserAddressList: iosComponent.provideGetSelectableUserAddressListUseCase(),
+        getSelectableCafeList: iosComponent.provideGetSelectableCafeListUseCase(),
         getCartTotal: iosComponent.provideGetCartTotalUseCase(),
         getMinTime: iosComponent.provideGetMinTimeUseCase(),
-        createOrderUseCase : iosComponent.provideCreateOrderUseCase(),
-        getSelectedCityTimeZoneUseCase: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
-        saveSelectedUserAddressUseCase : iosComponent.provideSaveSelectedUserAddressUseCase()
+        createOrder: iosComponent.provideCreateOrderUseCase(),
+        getSelectedCityTimeZone: iosComponent.provideGetSelectedCityTimeZoneUseCase(),
+        saveSelectedUserAddress : iosComponent.provideSaveSelectedUserAddressUseCase()
     )
         
     var listener: Closeable? = nil
     
     func update(){
         kmmViewModel.update()
-        listener = kmmViewModel.orderCreationState.watch { orderCreationUiState in
+        listener = kmmViewModel.uiState.watch { orderCreationUiState in
             if let checkedOrderCreationUiState = orderCreationUiState {
                 self.creationOrderViewState = checkedOrderCreationUiState
             }

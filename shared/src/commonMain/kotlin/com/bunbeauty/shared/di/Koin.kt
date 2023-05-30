@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
@@ -14,6 +15,8 @@ import com.bunbeauty.shared.domain.feature.city.GetCityListUseCase
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.city.ObserveSelectedCityUseCase
 import com.bunbeauty.shared.domain.feature.city.SaveSelectedCityUseCase
+import com.bunbeauty.shared.domain.feature.link.GetLinkListUseCase
+import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationUseCase
 import com.bunbeauty.shared.domain.feature.order.*
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
@@ -26,11 +29,12 @@ import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.use_case.street.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
+import com.bunbeauty.shared.presentation.create_order.CreateOrderStateMapper
 import com.bunbeauty.shared.presentation.create_order.TimeMapper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -101,12 +105,16 @@ class IosComponent : KoinComponent {
     fun provideGetFilteredStreetListUseCase(): GetFilteredStreetListUseCase = get()
     fun provideObserveCartUseCase(): ObserveCartUseCase = get()
     fun provideRemoveCartProductUseCase(): RemoveCartProductUseCase = get()
+    fun provideGetLinkListUseCase(): GetLinkListUseCase = get()
 
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
+
+    fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()
     fun provideUserAddressMapper(): UserAddressMapper = get()
+    fun provideCreateOrderStateMapper(): CreateOrderStateMapper = get()
 
     //Other
     fun provideFirebaseAuthRepository(): FirebaseAuthRepository = get()

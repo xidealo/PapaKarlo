@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "app store.png",
+      "filename" : "ic_app_store.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "app store-1.png",
+      "filename" : "ic_app_store (1).png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "app store-2.png",
+      "filename" : "ic_app_store (2).png",
       "idiom" : "universal",
       "scale" : "3x"
     }

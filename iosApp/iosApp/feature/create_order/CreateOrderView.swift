@@ -24,6 +24,9 @@ struct CreateOrderView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @State var addressList: [SelectableCafeAddressItem] = []
+
+    
     var body: some View {
         VStack(spacing: 0){
             ToolbarView(
@@ -33,14 +36,21 @@ struct CreateOrderView: View {
                 }
             )
             NavigationLink(
-                destination:UserAddressListView(isClickable: true),
+                destination:UserAddressListView(
+                    title: "title_delivery_addresses",
+                    isClickable: true
+                ),
                 isActive: $goToUserAddress
             ){
                 EmptyView()
             }
             
             NavigationLink(
-                destination:CafeAddressListView(isClickable: true),
+                destination:CafeAddressListView(
+                    isClickable: true,
+                    _title: "title_pickup_addresses",
+                    addressList: addressList
+                ),
                 isActive: $goToCafeAddress
             ){
                 EmptyView()
@@ -58,7 +68,8 @@ struct CreateOrderView: View {
                     goToCafeAddress:$goToCafeAddress,
                     isRootActive: $isRootActive,
                     selection: $selection,
-                    showOrderCreated: $showOrderCreated
+                    showOrderCreated: $showOrderCreated,
+                    addressList: $addressList
                 )
             }
         }
@@ -117,7 +128,8 @@ struct CreateOrderSuccessView: View {
     @Binding var isRootActive:Bool
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
-    
+    @Binding var addressList: [SelectableCafeAddressItem]
+
     let calendar = Calendar.current
     
     var body: some View{
@@ -182,7 +194,7 @@ struct CreateOrderSuccessView: View {
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
 
-                    Toggle("Как можно скорее", isOn: $faster.onChange({ faster in
+                    Toggle(isOn: $faster.onChange({ faster in
                         if(faster) {
                             viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
                         }else{
@@ -196,7 +208,10 @@ struct CreateOrderSuccessView: View {
                                 )
                             )
                         }
-                    }))
+                    })){
+                        Text("Как можно скорее")
+                            .bodyLarge()
+                    }
                     .toggleStyle(.automatic)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -204,7 +219,6 @@ struct CreateOrderSuccessView: View {
                     if(!faster){
                         if(viewModel.creationOrderViewState.isDelivery){
                             DatePicker(
-                                "Время доставки",
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
@@ -218,12 +232,14 @@ struct CreateOrderSuccessView: View {
                                 ),
                                 in: (Date.now + 60 * 60)...,
                                 displayedComponents: .hourAndMinute
-                            )
+                            ){
+                                Text("Время доставки")
+                                    .bodyLarge()
+                            }
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }else{
                             DatePicker(
-                                "Время самовывоза",
                                 selection: $deferredTime.onChange(
                                     { date in
                                         viewModel.kmmViewModel.onDeferredTimeSelected(
@@ -237,7 +253,10 @@ struct CreateOrderSuccessView: View {
                                 ),
                                 in: (Date.now + 60 * 60)...,
                                 displayedComponents: .hourAndMinute
-                            )
+                            ){
+                                Text("Время самовывоза")
+                                    .bodyLarge()
+                            }
                             .padding(.top, Diems.SMALL_PADDING)
                             .padding(.horizontal, Diems.MEDIUM_PADDING)
                         }
@@ -280,9 +299,13 @@ struct CreateOrderSuccessView: View {
                         .bodyMedium(weight: .bold)
                         .foregroundColor(AppColor.onSurface)
                     Spacer()
-                    Text("\(viewModel.creationOrderViewState.finalCost ?? 0)\(Strings.CURRENCY)")
-                        .bodyMedium(weight: .bold)
-                        .foregroundColor(AppColor.onSurface)
+                    
+                    if let finalCost = viewModel.creationOrderViewState.finalCost{
+                        Text("\(finalCost)" + Strings.CURRENCY)
+                            .bodyMedium(weight: .bold)
+                            .foregroundColor(AppColor.onSurface)
+                    }
+                    
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -310,13 +333,15 @@ struct CreateOrderSuccessView: View {
             
             creationOrderViewState.eventList.forEach { event in
                 switch(event){
-                case is CreateOrderStateEventShowUserAddressError : showAddressError = true
-                case is CreateOrderStateEventShowSomethingWentWrongErrorEvent : showCommonError = true
-                case is CreateOrderStateEventOrderCreatedEvent : isRootActive = false
+                case is CreateOrderEventShowUserAddressError : showAddressError = true
+                case is CreateOrderEventShowSomethingWentWrongErrorEvent : showCommonError = true
+                case is CreateOrderEventOrderCreatedEvent : isRootActive = false
                     selection = 2
                     showOrderCreated = true
-                case is CreateOrderStateEventShowCafeAddressListEvent : goToCafeAddress = true
-                case is CreateOrderStateEventShowUserAddressListEvent : goToUserAddress = true
+                case is CreateOrderEventShowCafeAddressListEvent :
+                    addressList = (event as? CreateOrderEventShowCafeAddressListEvent)?.addressList ?? []
+                    goToCafeAddress = true
+                case is CreateOrderEventShowUserAddressListEvent : goToUserAddress = true
                 default:
                     print("def")
                 }

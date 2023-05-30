@@ -14,14 +14,13 @@ class CafeAddressViewModel: ObservableObject {
         cafeAddressState: CafeAddressState.loading, addressItemList: []
     )
     
-    init(isClickable:Bool){
-        loadData(isClickable: isClickable)
+    init(isClickable:Bool, addressList: [SelectableCafeAddressItem]){
+        loadData(isClickable: isClickable, addressList: addressList )
     }
     
-    func loadData(isClickable:Bool) {
-        iosComponent.provideGetSelectableCafeListUseCase().invoke() { list, error in
-            print(list)
-            self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (list!).map({ cafeAddress in
+    func loadData(isClickable:Bool, addressList: [SelectableCafeAddressItem]) {
+        
+            self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (addressList).map({ cafeAddress in
                 AddressItem(
                     id: cafeAddress.uuid,
                     address: cafeAddress.address,
@@ -29,7 +28,7 @@ class CafeAddressViewModel: ObservableObject {
                     isSelected: cafeAddress.isSelected
                 )
             }))
-        }
+        
     }
     
     func selectAddress(uuid:String){

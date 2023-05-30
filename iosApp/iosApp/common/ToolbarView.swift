@@ -29,8 +29,9 @@ struct ToolbarView: View {
             }.padding(Diems.SMALL_PADDING)
             
             Text(title)
-                .foregroundColor(Color("onSurface"))
+                .foregroundColor(AppColor.onSurface)
                 .titleMedium(weight: .bold)
+                .lineLimit(1)
                 .padding(.vertical, Diems.MEDIUM_PADDING)
             
             Spacer()

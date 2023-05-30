@@ -23,11 +23,11 @@ struct CafeItemView: View {
 
             HStack(spacing:0){
                 Text(cafeItem.workingHours)
-                    .labelMedium()
+                    .labelMedium(weight: .medium)
                     .foregroundColor(AppColor.onSurfaceVariant)
 
                 Text(getCafeStatusText(cafeStatus: cafeItem.cafeOpenState))
-                    .labelMedium()
+                    .labelMedium(weight: .medium)
                     .foregroundColor(getCafeStatusColor(cafeStatus: cafeItem.cafeOpenState))
                     .padding(.leading, 4)
             }

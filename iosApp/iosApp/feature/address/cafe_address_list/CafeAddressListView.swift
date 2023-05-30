@@ -7,20 +7,30 @@
 //
 
 import SwiftUI
+import shared
 
 struct CafeAddressListView: View {
     
     @ObservedObject private var viewModel : CafeAddressViewModel
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    var title: LocalizedStringKey = "titleCafeAddresses"
 
-    init(isClickable:Bool){
-        viewModel = CafeAddressViewModel(isClickable: true)
+    init(
+        isClickable:Bool,
+        _title : LocalizedStringKey = "titleCafeAddresses",
+        addressList: [SelectableCafeAddressItem]
+    ){
+        title = _title
+        viewModel = CafeAddressViewModel(
+            isClickable: true,
+            addressList:addressList
+        )
     }
     
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: "titleCafeAddresses",
+                title: title,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -42,7 +52,7 @@ struct CafeAddressListView: View {
 
 struct CafeAddressListView_Previews: PreviewProvider {
     static var previews: some View {
-        CafeAddressListView(isClickable: false)
+        CafeAddressListView(isClickable: false, addressList: [])
     }
 }
 

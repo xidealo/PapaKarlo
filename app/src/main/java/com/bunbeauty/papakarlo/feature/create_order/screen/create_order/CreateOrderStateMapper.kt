@@ -1,23 +1,23 @@
 package com.bunbeauty.papakarlo.feature.create_order.screen.create_order
 
 import com.bunbeauty.papakarlo.util.string.IStringUtil
-import com.bunbeauty.shared.presentation.create_order.CreateOrderState
+import com.bunbeauty.shared.presentation.create_order.CreateOrderUIState
 
 class CreateOrderStateMapper(
     private val stringUtil: IStringUtil,
 ) {
-    fun map(createOrderState: CreateOrderState): CreateOrderUi {
+    fun map(createOrderUIState: CreateOrderUIState): CreateOrderUi {
         return CreateOrderUi(
-            isDelivery = createOrderState.isDelivery,
-            deliveryAddress = stringUtil.getUserAddressString(createOrderState.deliveryAddress),
-            pickupAddress = createOrderState.pickupAddress,
-            comment = createOrderState.comment,
-            deferredTime = stringUtil.getTimeString(createOrderState.deferredTime),
-            totalCost = stringUtil.getCostString(createOrderState.totalCost),
-            deliveryCost = stringUtil.getCostString(createOrderState.deliveryCost),
-            finalCost = stringUtil.getCostString(createOrderState.finalCost),
-            isAddressErrorShown = createOrderState.isAddressErrorShown,
-            isLoading = createOrderState.isLoading,
+            isDelivery = createOrderUIState.isDelivery,
+            deliveryAddress = stringUtil.getUserAddressString(createOrderUIState.deliveryAddress),
+            pickupAddress = createOrderUIState.pickupAddress,
+            comment = createOrderUIState.comment,
+            deferredTime = stringUtil.getTimeString(createOrderUIState.deferredTime),
+            totalCost = stringUtil.getCostString(createOrderUIState.totalCost),
+            deliveryCost = stringUtil.getCostString(createOrderUIState.deliveryCost),
+            finalCost = stringUtil.getCostString(createOrderUIState.finalCost),
+            isAddressErrorShown = createOrderUIState.isDeliveryAddressErrorShown,
+            isLoading = createOrderUIState.isLoading,
         )
     }
 }

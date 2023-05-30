@@ -21,6 +21,8 @@ struct UserAddressListView: View {
         state: UserAddressListState.State.loading
     )
     
+    var title: LocalizedStringKey = "title_my_addresses"
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var show:Bool = false
@@ -32,7 +34,7 @@ struct UserAddressListView: View {
     var body: some View {
         VStack(spacing:0){
             ToolbarView(
-                title: "titleMyAddresses",
+                title: title,
                 back: {
                     self.mode.wrappedValue.dismiss()
                 }
@@ -100,7 +102,7 @@ struct SuccessAddressListView: View {
     @State var listener: Closeable? = nil
 
     var body: some View {
-        VStack(spacing:0){
+        ZStack(alignment:.bottom){
             ScrollView {
                 LazyVStack(spacing:0){
                     ForEach(addressItemList){ address in
@@ -119,6 +121,8 @@ struct SuccessAddressListView: View {
                         }
                     }
                 }.padding(.vertical, Diems.SMALL_PADDING)
+                .padding(.bottom, Diems.BUTTON_HEIGHT * 2)
+                .padding(.bottom, Diems.MEDIUM_PADDING)
             }
         
             NavigationLink(
@@ -151,8 +155,8 @@ struct SuccessAddressListView: View {
         }.overlay(
             overlayView: ToastView(
             toast: Toast(title: "Адрес добавлен \(userAddressListState.userAddressList.last?.getAddress() ?? "")"),
-            show: $show, backgroundColor:Color("primary"),
-            foregaroundColor: Color("onPrimary")), show: $show)
+            show: $show, backgroundColor:AppColor.primary,
+            foregaroundColor: AppColor.onPrimary), show: $show)
     }
 }
 
