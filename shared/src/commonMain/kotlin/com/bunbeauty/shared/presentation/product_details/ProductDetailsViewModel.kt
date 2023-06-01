@@ -70,7 +70,11 @@ class ProductDetailsViewModel(
             uuid = menuProduct.uuid,
             photoLink = menuProduct.photoLink,
             name = menuProduct.name,
-            size = "${menuProduct.nutrition} ${menuProduct.utils}",
+            size = if ((menuProduct.nutrition == null) || (menuProduct.utils == null)) {
+                ""
+            } else {
+                "${menuProduct.nutrition} ${menuProduct.utils}"
+            },
             oldPrice = menuProduct.oldPrice?.toString(),
             newPrice = menuProduct.newPrice.toString(),
             description = menuProduct.description,
