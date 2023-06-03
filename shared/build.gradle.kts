@@ -21,7 +21,6 @@ kotlin {
         podfile = project.file("../iosApp/Podfile")
 
         pod("FirebaseAuth")
-
         pod("FirebaseMessaging")
 
         framework {
@@ -120,6 +119,7 @@ android {
     productFlavors {
         create("papaKarlo") {}
         create("yuliar") {}
+        create("djan") {}
     }
 }
 

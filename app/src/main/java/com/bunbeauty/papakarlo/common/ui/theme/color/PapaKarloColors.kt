@@ -16,7 +16,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightOra
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.LightRed
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Orange
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Purple
-import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red
+import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Red1
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.White
 import com.bunbeauty.papakarlo.common.ui.theme.color.FoodDeliveryColors.Yellow
 
@@ -27,7 +27,7 @@ val PapaKarloLightColors = AppColors(
         secondary = White,
         background = Cream,
         surface = White,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,
@@ -64,7 +64,7 @@ val PapaKarloDarkColors = AppColors(
         secondary = Black2,
         background = Black1,
         surface = Black2,
-        error = Red,
+        error = Red1,
         onPrimary = White,
         onDisabled = Grey3,
         onSecondary = Grey3,

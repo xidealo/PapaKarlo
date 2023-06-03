@@ -58,9 +58,9 @@ object Versions {
 object CommonApplication {
     const val versionMajor = 1
     const val versionMinor = 4
-    const val versionPatch = 0
+    const val versionPatch = 1
 
-    const val versionCode = 140
+    const val versionCode = 141
 }
 
 object PapaKarloApplication {
@@ -73,6 +73,12 @@ object YuliarApplication {
     const val versionName =
         "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
     const val applicationId = "com.bunbeuaty.yuliar"
+}
+
+object DjanApplication {
+    const val versionName =
+        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
+    const val applicationId = "com.bunbeauty.djan"
 }
 
 object AndroidSdk {
