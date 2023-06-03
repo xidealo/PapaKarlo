@@ -30,3 +30,17 @@ target 'yuliar' do
   pod 'Kingfisher'
   pod 'shared', :path => '../shared'
 end
+
+
+target 'djan' do
+
+  pod 'Firebase', '~> 9.5.0'
+  pod 'Firebase/Analytics', '~> 9.5.0'
+  pod 'Firebase/Crashlytics', '~> 9.5.0'
+  pod 'FirebaseCore', '~> 9.5.0'
+  pod 'FirebaseMessaging', '~> 9.5.0'
+  pod 'GoogleUtilities'
+  pod 'Kingfisher'
+  pod 'shared', :path => '../shared'
+end
+
