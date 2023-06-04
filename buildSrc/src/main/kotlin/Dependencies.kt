@@ -81,6 +81,12 @@ object DjanApplication {
     const val applicationId = "com.bunbeauty.djan"
 }
 
+object GustoPubApplication {
+    const val versionName =
+        "${CommonApplication.versionMajor}.${CommonApplication.versionMinor}.${CommonApplication.versionPatch}"
+    const val applicationId = "com.bunbeauty.gustopub"
+}
+
 object AndroidSdk {
     const val min = 24
     const val compile = 33

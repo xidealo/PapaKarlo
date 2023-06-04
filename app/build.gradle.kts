@@ -72,6 +72,11 @@ android {
             versionCode = CommonApplication.versionCode
             versionName = DjanApplication.versionName
         }
+        create("gustoPub") {
+            applicationId = GustoPubApplication.applicationId
+            versionCode = CommonApplication.versionCode
+            versionName = GustoPubApplication.versionName
+        }
     }
 
     kotlinOptions {

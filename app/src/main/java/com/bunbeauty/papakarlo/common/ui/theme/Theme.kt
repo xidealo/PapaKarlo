@@ -11,12 +11,15 @@ import com.bunbeauty.papakarlo.BuildConfig
 import com.bunbeauty.papakarlo.common.ui.theme.color.AppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.DjanLightColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubDarkColors
+import com.bunbeauty.papakarlo.common.ui.theme.color.GustoPubLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.LocalAppColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.PapaKarloLightColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarDarkColors
 import com.bunbeauty.papakarlo.common.ui.theme.color.YuliarLightColors
 import com.bunbeauty.shared.Constants.DJAN_FLAVOR_NAME
+import com.bunbeauty.shared.Constants.GUSTO_PUB_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.PAPA_KARLO_FLAVOR_NAME
 import com.bunbeauty.shared.Constants.YULIAR_FLAVOR_NAME
 import com.bunbeauty.shared.domain.exeptions.UnknownFlavorException
@@ -48,6 +51,13 @@ fun FoodDeliveryTheme(
                 DjanDarkColors
             } else {
                 DjanLightColors
+            }
+        }
+        GUSTO_PUB_FLAVOR_NAME -> {
+            if (isDarkTheme) {
+                GustoPubDarkColors
+            } else {
+                GustoPubLightColors
             }
         }
         else -> throw UnknownFlavorException()

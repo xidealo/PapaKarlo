@@ -120,6 +120,7 @@ android {
         create("papaKarlo") {}
         create("yuliar") {}
         create("djan") {}
+        create("gustoPub") {}
     }
 }
 
