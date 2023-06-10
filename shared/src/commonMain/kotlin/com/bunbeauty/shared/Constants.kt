@@ -18,7 +18,7 @@ object Constants {
     const val DJAN_COMPANY_UUID = "136ce426-15ab-49eb-ab78-19da43fca191"
 
     const val GUSTO_PUB_TARGET_NAME = "gustopub"
-    const val GUSTO_PUB_FLAVOR_NAME = "gustoPub"
+    const val GUSTO_PUB_FLAVOR_NAME = "gustopub"
     const val GUSTO_PUB_COMPANY_UUID = "e1d1474b-6fba-4dff-826f-48e89abc48e3"
 
     // NOTIFICATION
