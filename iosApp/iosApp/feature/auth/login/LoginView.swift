@@ -95,7 +95,7 @@ struct LoginViewSuccessView: View {
                         
                     }
                 )
-                .padding(.top, Diems.SMALL_PADDING)
+                .padding(.top, 16)
                 .onReceive(Just(phone)) { _ in
                     minCode()
                 }

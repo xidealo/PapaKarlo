@@ -26,7 +26,11 @@ class ProductDetailsViewModel : ToolbarViewModel {
     }
     
     func getSize(menuProduct:MenuProduct) -> String {
-        return "\(menuProduct.nutrition ?? 0) \(menuProduct.utils ?? "")"
+        if(menuProduct.nutrition == nil){
+            return ""
+        }else{
+            return "\(menuProduct.nutrition ?? 0) \(menuProduct.utils ?? "")"
+        }
     }
     
     func addCartProductToCart(menuProductUuid:String){
