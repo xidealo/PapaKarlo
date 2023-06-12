@@ -72,7 +72,7 @@ android {
             versionCode = CommonApplication.versionCode
             versionName = DjanApplication.versionName
         }
-        create("gustoPub") {
+        create("gustopub") {
             applicationId = GustoPubApplication.applicationId
             versionCode = CommonApplication.versionCode
             versionName = GustoPubApplication.versionName
