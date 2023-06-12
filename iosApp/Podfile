@@ -7,11 +7,12 @@ platform :ios, '14.1'
 install! 'cocoapods', :deterministic_uuids => false
 
 def default_pods
-  pod 'Firebase', '~> 9.5.0'
-  pod 'Firebase/Analytics', '~> 9.5.0'
-  pod 'Firebase/Crashlytics', '~> 9.5.0'
-  pod 'FirebaseCore', '~> 9.5.0'
-  pod 'FirebaseMessaging', '~> 9.5.0'
+  pod 'Firebase'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+  pod 'FirebaseCore'
+  pod 'FirebaseMessaging'
+  pod 'FirebaseCoreDiagnostics'
   pod 'GoogleUtilities'
   pod 'Kingfisher'
   pod 'shared', :path => '../shared'
