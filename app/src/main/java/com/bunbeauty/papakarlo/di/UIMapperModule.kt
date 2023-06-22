@@ -59,6 +59,7 @@ fun uiMapperModule() = module {
     factory {
         CreateOrderStateMapper(
             stringUtil = get(),
+            paymentMethodUiStateMapper = get()
         )
     }
     factory {

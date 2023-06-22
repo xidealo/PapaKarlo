@@ -39,11 +39,17 @@ import com.bunbeauty.papakarlo.feature.create_order.screen.comment.CommentBottom
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toCreateAddressFragment
 import com.bunbeauty.papakarlo.feature.create_order.screen.create_order.CreateOrderFragmentDirections.toProfileFragment
 import com.bunbeauty.papakarlo.feature.create_order.screen.deferred_time.DeferredTimeBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.payment_method.SelectPaymentMethodBottomSheet
+import com.bunbeauty.papakarlo.feature.create_order.screen.payment_method.SelectablePaymentMethodUI
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListBottomSheet
 import com.bunbeauty.papakarlo.feature.create_order.screen.user_address_list.UserAddressListResult
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
+import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.shared.presentation.create_order.CreateOrderEvent
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -54,6 +60,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
 
     private val userAddressItemMapper: UserAddressItemMapper by inject()
     private val createOrderStateMapper: CreateOrderStateMapper by inject()
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,6 +104,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     DeliveryAddressError(createOrderUi)
                     CommentCard(createOrderUi)
                     DeferredTimeCard(createOrderUi)
+                    PaymentMethodCard(createOrderUi)
                 }
                 BottomAmountBar(createOrderUi)
             }
@@ -183,11 +191,23 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
             R.string.pickup_time
         }
         NavigationTextCard(
-            modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
+            modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
             hintStringId = hintStringId,
             label = createOrderUi.deferredTime,
             clickable = !createOrderUi.isLoading,
             onClick = viewModel::onDeferredTimeClicked,
+        )
+    }
+
+    @Composable
+    private fun PaymentMethodCard(createOrderUi: CreateOrderUi) {
+        NavigationTextCard(
+            modifier = Modifier
+                .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
+            hintStringId = R.string.payment_method,
+            label = createOrderUi.selectedPaymentMethod?.name,
+            clickable = !createOrderUi.isLoading,
+            onClick = viewModel::onPaymentMethodClick,
         )
     }
 
@@ -324,6 +344,19 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         resources.getString(R.string.error_user_address)
                     )
                 }
+                is CreateOrderEvent.ShowPaymentMethodList -> {
+                    SelectPaymentMethodBottomSheet.show(
+                        fragmentManager = childFragmentManager,
+                        selectablePaymentMethodList = event.selectablePaymentMethodList.map { selectablePaymentMethod ->
+                            SelectablePaymentMethodUI(
+                                paymentMethodUI = paymentMethodUiStateMapper.map(selectablePaymentMethod.paymentMethod),
+                                isSelected = selectablePaymentMethod.isSelected
+                            )
+                        },
+                    )?.let { addressItem ->
+                        // viewModel.onCafeAddressChanged(addressItem.uuid)
+                    }
+                }
             }
         }
         viewModel.consumeEventList(eventList)
@@ -356,6 +389,14 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     isLoading = false,
                     pickupAddress = null,
                     isAddressErrorShown = false,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "uuid",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "наличка",
+                            valueToCopy = "наличка",
+                        )
+                    )
                 )
             )
         }
@@ -370,12 +411,12 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     isDelivery = true,
                     deliveryAddress =
                     "1" +
-                        "улица Чапаева" +
-                        "22аб" +
-                        "55" +
-                        "1" +
-                        "1" +
-                        "код домофона 555",
+                            "улица Чапаева" +
+                            "22аб" +
+                            "55" +
+                            "1" +
+                            "1" +
+                            "код домофона 555",
                     comment = "Побыстрее пожалуйста, кушать очень хочу",
                     deferredTime = "",
                     totalCost = "250 $",
@@ -384,6 +425,14 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     isLoading = false,
                     pickupAddress = null,
                     isAddressErrorShown = false,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "uuid",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "наличка",
+                            valueToCopy = "наличка",
+                        )
+                    )
                 )
             )
         }
@@ -404,7 +453,15 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     finalCost = null,
                     isLoading = false,
                     isAddressErrorShown = false,
-                    deliveryAddress = null
+                    deliveryAddress = null,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "uuid",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "наличка",
+                            valueToCopy = "наличка",
+                        )
+                    )
                 )
             )
         }
@@ -425,7 +482,15 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     finalCost = "350 $",
                     isLoading = true,
                     isAddressErrorShown = false,
-                    deliveryAddress = null
+                    deliveryAddress = null,
+                    selectedPaymentMethod = PaymentMethodUI(
+                        uuid = "uuid",
+                        name = "Наличка",
+                        value = PaymentMethodValueUI(
+                            value = "наличка",
+                            valueToCopy = "наличка",
+                        )
+                    )
                 )
             )
         }

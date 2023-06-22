@@ -77,6 +77,13 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         return NSUserDefaults.standardUserDefaults.stringForKey(SELECTED_CITY_UUID_KEY)
     }
 
+    override val selectedPaymentMethodUuid: Flow<String?>
+        get() = TODO("Not yet implemented")
+
+    override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
+        TODO("Not yet implemented")
+    }
+
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {
         return flow {
             emit(

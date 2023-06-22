@@ -21,6 +21,7 @@ import com.bunbeauty.shared.domain.use_case.cafe.GetCafeListUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
 import com.bunbeauty.shared.domain.use_case.cafe.GetSelectableCafeListUseCase
@@ -190,6 +191,12 @@ internal fun useCaseModule() = module {
     factory {
         GetPaymentMethodListUseCase(
             paymentRepo = get()
+        )
+    }
+    factory {
+        GetSelectablePaymentMethodListUseCase(
+            paymentRepo = get(),
+            dataStoreRepo = get()
         )
     }
     factory {
