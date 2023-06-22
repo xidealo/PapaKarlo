@@ -8,6 +8,7 @@ class CreatedOrder(
     val comment: String?,
     val deferredTime: Long?,
     val orderProducts: List<CreatedOrderProduct>,
+    val paymentMethod: String?,
 )
 
 class CreatedOrderAddress(

@@ -157,6 +157,7 @@
     <!-- ORDER DETAILS -->
     <string name="msg_order_details_date_time">Дата и время заказа</string>
     <string name="msg_order_details_pickup_method">Способ получения</string>
+    <string name="msg_order_details_payment_method">Способ оплаты</string>
     <string name="msg_order_details_deferred_time_delivery">Ко времени</string>
     <string name="msg_order_details_deferred_time_pickup">Ко времени</string>
     <string name="msg_order_details_address">Адрес</string>

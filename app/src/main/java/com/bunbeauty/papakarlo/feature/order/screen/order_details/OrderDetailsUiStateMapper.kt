@@ -43,7 +43,8 @@ class OrderDetailsUiStateMapper(
                         R.string.delivery_time
                     } else {
                         R.string.pickup_time
-                    }
+                    },
+                    paymentMethod = orderInfo.paymentMethod
                 )
             },
             code = orderState.orderInfo?.code ?: ""
