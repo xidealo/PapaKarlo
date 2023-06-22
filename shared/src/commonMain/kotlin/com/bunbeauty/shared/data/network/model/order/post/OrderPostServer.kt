@@ -19,7 +19,10 @@ class OrderPostServer(
     val deferredTime: Long?,
 
     @SerialName("orderProducts")
-    val orderProducts: List<OrderProductPostServer>
+    val orderProducts: List<OrderProductPostServer>,
+
+    @SerialName("paymentMethod")
+    val paymentMethod: String?,
 )
 
 @Serializable
@@ -57,5 +60,5 @@ class OrderProductPostServer(
     val count: Int,
 
     @SerialName("menuProductUuid")
-    val menuProductUuid: String
+    val menuProductUuid: String,
 )

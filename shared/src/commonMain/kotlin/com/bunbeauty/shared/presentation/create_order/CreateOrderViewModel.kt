@@ -7,6 +7,7 @@ import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetPaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.cafe.ICafeInteractor
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -39,6 +40,7 @@ class CreateOrderViewModel(
     private val getSelectedCityTimeZone: GetSelectedCityTimeZoneUseCase,
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
+    private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
 ) : SharedViewModel() {
 
     private val mutableDataState = MutableStateFlow(CreateOrderDataState())
@@ -99,6 +101,13 @@ class CreateOrderViewModel(
         withLoading {
             cafeInteractor.saveSelectedCafe(cafeUuid)
             updateSelectedCafe()
+        }
+    }
+
+    fun onPaymentMethodChanged(paymentMethodUuid: String) {
+        withLoading {
+            savePaymentMethodUseCase(paymentMethodUuid)
+            updatePaymentMethods()
         }
     }
 
@@ -174,7 +183,8 @@ class CreateOrderViewModel(
                     selectedCafe = data.selectedCafe,
                     comment = stateValue.comment,
                     deferredTime = data.deferredTime,
-                    timeZone = getSelectedCityTimeZone()
+                    timeZone = getSelectedCityTimeZone(),
+                    paymentMethod = data.selectedPaymentMethod?.name?.name
                 )
                 if (orderCode == null) {
                     val event = CreateOrderEvent.ShowSomethingWentWrongErrorEvent

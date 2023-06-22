@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS orderEntity (
     addressEntrance TEXT,
     addressFloor TEXT,
     addressComment TEXT,
+    paymentMethod TEXT,
     FOREIGN KEY (userUuid) REFERENCES userEntity(uuid) ON DELETE CASCADE
 );
 

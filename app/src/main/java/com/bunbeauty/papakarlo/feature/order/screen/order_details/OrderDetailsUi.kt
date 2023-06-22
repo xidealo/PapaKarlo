@@ -21,5 +21,6 @@ data class OrderDetailsUi(
         val comment: String?,
         val pickupMethod: String,
         @StringRes val deferredTimeHintId: Int,
+        val paymentMethod: String?,
     )
 }

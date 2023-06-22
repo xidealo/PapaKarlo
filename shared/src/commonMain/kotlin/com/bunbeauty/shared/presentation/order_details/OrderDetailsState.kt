@@ -21,7 +21,8 @@ data class OrderDetailsState(
         val deferredTime: TimeUI?,
         val address: OrderAddress,
         val comment: String?,
-        val isDelivery: Boolean
+        val isDelivery: Boolean,
+        val paymentMethod: String?,
     )
 
     data class OrderProductItem(

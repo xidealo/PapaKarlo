@@ -201,14 +201,23 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
 
     @Composable
     private fun PaymentMethodCard(createOrderUi: CreateOrderUi) {
-        NavigationTextCard(
-            modifier = Modifier
-                .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
-            hintStringId = R.string.payment_method,
-            label = createOrderUi.selectedPaymentMethod?.name,
-            clickable = !createOrderUi.isLoading,
-            onClick = viewModel::onPaymentMethodClick,
-        )
+        if (createOrderUi.selectedPaymentMethod == null) {
+            NavigationCard(
+                modifier = Modifier.padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
+                label = stringResource(R.string.payment_method),
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onPaymentMethodClick
+            )
+        } else {
+            NavigationTextCard(
+                modifier = Modifier
+                    .padding(vertical = FoodDeliveryTheme.dimensions.smallSpace),
+                hintStringId = R.string.payment_method,
+                label = createOrderUi.selectedPaymentMethod.name,
+                clickable = !createOrderUi.isLoading,
+                onClick = viewModel::onPaymentMethodClick,
+            )
+        }
     }
 
     @Composable
@@ -353,8 +362,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                                 isSelected = selectablePaymentMethod.isSelected
                             )
                         },
-                    )?.let { addressItem ->
-                        // viewModel.onCafeAddressChanged(addressItem.uuid)
+                    )?.let { paymentMethod ->
+                        viewModel.onPaymentMethodChanged(paymentMethod.paymentMethodUI.uuid)
                     }
                 }
             }

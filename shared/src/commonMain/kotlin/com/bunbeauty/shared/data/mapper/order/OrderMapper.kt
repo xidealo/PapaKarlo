@@ -22,7 +22,7 @@ class OrderMapper(
 
     override fun toOrderWithProductEntity(
         orderServer: OrderServer,
-        orderProductServer: OrderProductServer
+        orderProductServer: OrderProductServer,
     ): OrderWithProductEntity {
         return OrderWithProductEntity(
             uuid = orderServer.uuid,
@@ -53,7 +53,8 @@ class OrderMapper(
             orderProductComboDescription = orderProductServer.comboDescription,
             orderProductPhotoLink = orderProductServer.photoLink,
             orderProductBarcode = orderProductServer.barcode,
-            orderUuid = orderServer.uuid
+            orderUuid = orderServer.uuid,
+            paymentMethod = orderServer.paymentMethod
         )
     }
 
@@ -107,6 +108,7 @@ class OrderMapper(
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
                 orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
+                paymentMethod = firstOrderWithProductEntity.paymentMethod
             )
         }
     }
@@ -133,6 +135,7 @@ class OrderMapper(
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
+            paymentMethod = orderServer.paymentMethod
         )
     }
 
@@ -152,6 +155,7 @@ class OrderMapper(
             comment = createdOrder.comment,
             deferredTime = createdOrder.deferredTime,
             orderProducts = createdOrder.orderProducts.map(orderProductMapper::toPostServerModel),
+            paymentMethod = createdOrder.paymentMethod
         )
     }
 }
