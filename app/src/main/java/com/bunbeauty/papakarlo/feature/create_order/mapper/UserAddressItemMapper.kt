@@ -24,7 +24,7 @@ class UserAddressItemMapper(private val stringUtil: IStringUtil) {
         )
     }
 
-    fun toItem(userAddress: SelectableUserAddressUi): UserAddressItem {
+    fun toItem(userAddress: com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi): UserAddressItem {
         return UserAddressItem(
             uuid = userAddress.uuid,
             address = stringUtil.getUserAddressString(userAddress) ?: "",

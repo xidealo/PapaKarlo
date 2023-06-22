@@ -72,8 +72,10 @@
     <string name="action_create_order_pickup">Самовывоз</string>
     <string name="delivery_time">Время доставки</string>
     <string name="pickup_time">Время самовывоза</string>
+    <string name="payment_method">Способ оплаты</string>
     <string name="delivery_address">Адрес доставки</string>
     <string name="pickup_address">Адрес самовывоза</string>
+    <string name="pickup_payment_method">Способ оплаты</string>
     <string name="comment">Комментарий</string>
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="action_create_order_create_order">Оформить заказ</string>

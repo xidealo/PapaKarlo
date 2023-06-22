@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.presentation.cafe_address_list.SelectableCafeAddressItem
 import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
@@ -25,4 +26,6 @@ sealed interface CreateOrderEvent {
     object ShowSomethingWentWrongErrorEvent : CreateOrderEvent
     data class OrderCreatedEvent(val code: String) : CreateOrderEvent
     object ShowUserAddressError : CreateOrderEvent
+    data class ShowPaymentMethodList(val selectablePaymentMethodList: List<SelectablePaymentMethod>) :
+        CreateOrderEvent
 }
