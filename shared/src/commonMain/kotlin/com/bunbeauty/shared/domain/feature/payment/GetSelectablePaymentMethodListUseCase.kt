@@ -19,17 +19,11 @@ class GetSelectablePaymentMethodListUseCase(
         }
 
         val selectedPaymentMethodUuid = dataStoreRepo.selectedPaymentMethodUuid.first()
-        val hasSelectedItem =
-            paymentMethodList.any { it.uuid == selectedPaymentMethodUuid }
 
         return paymentMethodList.mapIndexed { index, paymentMethod ->
             SelectablePaymentMethod(
                 paymentMethod = paymentMethod,
-                isSelected = if (hasSelectedItem) {
-                    selectedPaymentMethodUuid == paymentMethod.uuid
-                } else {
-                    index == 0
-                }
+                isSelected = paymentMethodList.any { it.uuid == selectedPaymentMethodUuid }
             )
         }
     }

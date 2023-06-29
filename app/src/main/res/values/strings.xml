@@ -82,6 +82,7 @@
     <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_user">Пользователь не авторизован</string>
     <string name="error_user_address">Адрес не выбран</string>
+    <string name="error_payment_method">Способ оплаты не выбран</string>
     <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_total_cost">Итого</string>
     <string name="msg_create_order_delivery_cost">Доставка</string>

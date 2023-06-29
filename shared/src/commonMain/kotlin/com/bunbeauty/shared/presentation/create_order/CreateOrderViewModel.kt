@@ -175,6 +175,13 @@ class CreateOrderViewModel(
             return
         }
 
+        if(data.selectedPaymentMethod == null){
+            mutableDataState.update { state ->
+                state + CreateOrderEvent.ShowPaymentMethodError
+            }
+            return
+        }
+
         withLoading {
             if (userInteractor.isUserAuthorize()) {
                 val orderCode = createOrder(
