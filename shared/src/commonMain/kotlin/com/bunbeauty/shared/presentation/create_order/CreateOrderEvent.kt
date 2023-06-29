@@ -26,6 +26,7 @@ sealed interface CreateOrderEvent {
     object ShowSomethingWentWrongErrorEvent : CreateOrderEvent
     data class OrderCreatedEvent(val code: String) : CreateOrderEvent
     object ShowUserAddressError : CreateOrderEvent
+    object ShowPaymentMethodError : CreateOrderEvent
     data class ShowPaymentMethodList(val selectablePaymentMethodList: List<SelectablePaymentMethod>) :
         CreateOrderEvent
 }

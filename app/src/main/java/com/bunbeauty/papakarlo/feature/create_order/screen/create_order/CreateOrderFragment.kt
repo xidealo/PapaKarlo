@@ -366,6 +366,11 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         viewModel.onPaymentMethodChanged(paymentMethod.paymentMethodUI.uuid)
                     }
                 }
+                is CreateOrderEvent.ShowPaymentMethodError ->{
+                    (activity as? IMessageHost)?.showErrorMessage(
+                        resources.getString(R.string.error_payment_method)
+                    )
+                }
             }
         }
         viewModel.consumeEventList(eventList)
