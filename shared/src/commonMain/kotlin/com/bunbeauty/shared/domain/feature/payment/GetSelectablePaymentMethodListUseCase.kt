@@ -23,7 +23,7 @@ class GetSelectablePaymentMethodListUseCase(
         return paymentMethodList.mapIndexed { index, paymentMethod ->
             SelectablePaymentMethod(
                 paymentMethod = paymentMethod,
-                isSelected = paymentMethodList.any { it.uuid == selectedPaymentMethodUuid }
+                isSelected = paymentMethod.uuid == selectedPaymentMethodUuid
             )
         }
     }
