@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.order.screen.order_details
 
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
-import com.bunbeauty.papakarlo.feature.profile.screen.profile.ProfileUiStateMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 
