@@ -5,8 +5,4 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="colorSurface">@color/black2</item>
     </style>
-
-    <style name="LoadingAppTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
 </resources>

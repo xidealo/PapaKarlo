@@ -7,7 +7,12 @@
 		<key>djan.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>23</integer>
+			<integer>2</integer>
+		</dict>
+		<key>gustoPub.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
 		</dict>
 		<key>papakarlo.xcscheme_^#shared#^_</key>
 		<dict>
@@ -23,6 +28,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>026C1F502A2690B900838266</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>027CB0132A346F7B00350EB2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
