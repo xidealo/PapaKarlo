@@ -218,7 +218,6 @@
 		026C1FC02A2690B900838266 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		026C1FC12A2690B900838266 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		026C1FC22A2690B900838266 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		026C1FC32A2690B900838266 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		026C1FCF2A2691BF00838266 /* djan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 026C1FCD2A2691B000838266 /* djan.plist */; };
 		026C1FD02A2691C600838266 /* yuliar.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0251DCA229DE11990008DBA5 /* yuliar.plist */; };
 		026C1FD32A2691F300838266 /* djanAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 026C1FD12A2691E500838266 /* djanAssets.xcassets */; };
@@ -332,8 +331,10 @@
 		027CB0832A346F7B00350EB2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		027CB0842A346F7B00350EB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
 		027CB0852A346F7B00350EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
-		027CB0862A346F7B00350EB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		0280BE2B29A0ED14007F7416 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0280BE2A29A0ED14007F7416 /* ErrorView.swift */; };
+		0288683D2A3B9A4900EC2A22 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0288683C2A3B9A4900EC2A22 /* GoogleService-Info.plist */; };
+		028868412A3B9E3D00EC2A22 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 028868402A3B9E3D00EC2A22 /* GoogleService-Info.plist */; };
+		028868422A3BA5AD00EC2A22 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0288683E2A3B9BFE00EC2A22 /* GoogleService-Info.plist */; };
 		0294FD7A29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
 		0294FD7B29DF71B900568A10 /* EmptyWithIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */; };
 		0294FD7D29E35E8300568A10 /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0294FD7C29E35E8300568A10 /* AppTypography.swift */; };
@@ -448,7 +449,6 @@
 		02ADC3A129D9D0880062A141 /* ChangeCityItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323448287879EF0048CF39 /* ChangeCityItem.swift */; };
 		02ADC3A329D9D0880062A141 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		02ADC3A429D9D0880062A141 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 02A99D5729CBA0BE004D2F7B /* Localizable.strings */; };
-		02ADC3A629D9D0880062A141 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 021CDA02287988C100DD1A98 /* GoogleService-Info.plist */; };
 		02ADC3B529D9D2610062A141 /* yuliarAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02ADC3B429D9D2610062A141 /* yuliarAssets.xcassets */; };
 		02ADC3B929D9F85E0062A141 /* papakarloAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */; };
 		02ADC3BA29D9F8820062A141 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
@@ -460,7 +460,7 @@
 		085C60A1FA0300AE43832F37 /* Pods_yuliar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A63DBC48114650569052C0C /* Pods_yuliar.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		42262007967FD10B420F4236 /* Pods_gustopub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55743AD7364AF2F6E59B9257 /* Pods_gustopub.framework */; };
-		4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		A9362AB2610EDF355C8AD23C /* Pods_papakarlo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1CD0BCD06F7106F15F4855 /* Pods_papakarlo.framework */; };
 		BEF335160F3076A3BA82BFFB /* Pods_djan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C21F5379139124B6361286 /* Pods_djan.framework */; };
@@ -577,6 +577,9 @@
 		027CB08F2A346F7B00350EB2 /* gustopub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gustopub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = gustoPubAssets.xcassets; sourceTree = "<group>"; };
 		0280BE2A29A0ED14007F7416 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		0288683C2A3B9A4900EC2A22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0288683E2A3B9BFE00EC2A22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		028868402A3B9E3D00EC2A22 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0294FD7929DF71B900568A10 /* EmptyWithIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyWithIconView.swift; sourceTree = "<group>"; };
 		0294FD7C29E35E8300568A10 /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		0294FD7F29E751CC00568A10 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
@@ -612,7 +615,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0B25C2EBE3215D0FC6C121 /* BuildFile in Frameworks */,
+				4A0B25C2EBE3215D0FC6C121 /* (null) in Frameworks */,
 				BEF335160F3076A3BA82BFFB /* Pods_djan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -995,6 +998,7 @@
 		026C1F212A26903400838266 /* djanRes */ = {
 			isa = PBXGroup;
 			children = (
+				028868402A3B9E3D00EC2A22 /* GoogleService-Info.plist */,
 				026C1FD12A2691E500838266 /* djanAssets.xcassets */,
 				026C1FCD2A2691B000838266 /* djan.plist */,
 			);
@@ -1004,6 +1008,7 @@
 		027CB0912A346FF200350EB2 /* gustoPubRes */ = {
 			isa = PBXGroup;
 			children = (
+				0288683E2A3B9BFE00EC2A22 /* GoogleService-Info.plist */,
 				02FFD2E22A350902000B03E8 /* gustoPub.plist */,
 				027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */,
 			);
@@ -1013,6 +1018,7 @@
 		02ADC3B329D9D2480062A141 /* yuliarRes */ = {
 			isa = PBXGroup;
 			children = (
+				0288683C2A3B9A4900EC2A22 /* GoogleService-Info.plist */,
 				0251DCA229DE11990008DBA5 /* yuliar.plist */,
 				02ADC3B429D9D2610062A141 /* yuliarAssets.xcassets */,
 			);
@@ -1022,6 +1028,7 @@
 		02ADC3B729D9F8410062A141 /* papakarloRes */ = {
 			isa = PBXGroup;
 			children = (
+				021CDA02287988C100DD1A98 /* GoogleService-Info.plist */,
 				0251DCA029DE11680008DBA5 /* pepe.plist */,
 				02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */,
 			);
@@ -1067,7 +1074,6 @@
 			children = (
 				020097112A23C40E00CA65F5 /* yuliar.entitlements */,
 				026643F02A22AF3C000310BF /* papakarlo.entitlements */,
-				021CDA02287988C100DD1A98 /* GoogleService-Info.plist */,
 				7555FF7D242A565900829871 /* iosApp */,
 				7555FF7C242A565900829871 /* Products */,
 				50DE2F3B6643F72B29F5DDAC /* Pods */,
@@ -1236,8 +1242,8 @@
 				026C1FC02A2690B900838266 /* Preview Assets.xcassets in Resources */,
 				026C1FC12A2690B900838266 /* Localizable.strings in Resources */,
 				026C1FC22A2690B900838266 /* Assets.xcassets in Resources */,
-				026C1FC32A2690B900838266 /* GoogleService-Info.plist in Resources */,
 				026C1FD32A2691F300838266 /* djanAssets.xcassets in Resources */,
+				028868412A3B9E3D00EC2A22 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,9 +1254,9 @@
 				027CB0832A346F7B00350EB2 /* Preview Assets.xcassets in Resources */,
 				027CB0842A346F7B00350EB2 /* Localizable.strings in Resources */,
 				027CB0852A346F7B00350EB2 /* Assets.xcassets in Resources */,
-				027CB0862A346F7B00350EB2 /* GoogleService-Info.plist in Resources */,
 				02FFD2E32A350902000B03E8 /* gustoPub.plist in Resources */,
 				02FFD2E42A3509E3000B03E8 /* gustoPubAssets.xcassets in Resources */,
+				028868422A3BA5AD00EC2A22 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1263,7 +1269,7 @@
 				02ADC3A429D9D0880062A141 /* Localizable.strings in Resources */,
 				02ADC3BA29D9F8820062A141 /* Assets.xcassets in Resources */,
 				026C1FD02A2691C600838266 /* yuliar.plist in Resources */,
-				02ADC3A629D9D0880062A141 /* GoogleService-Info.plist in Resources */,
+				0288683D2A3B9A4900EC2A22 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1997,7 +2003,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2008,7 +2014,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2090,7 +2096,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2101,7 +2107,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2257,7 +2263,7 @@
 					"\"SwiftUI\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.gustoPub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.gustopub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2350,7 +2356,7 @@
 					"\"SwiftUI\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.gustoPub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bunbeauty.gustopub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2369,7 +2375,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2380,7 +2386,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2462,7 +2468,7 @@
 				CODE_SIGN_ENTITLEMENTS = yuliar.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2473,7 +2479,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2673,7 +2679,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2684,7 +2690,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2766,7 +2772,7 @@
 				CODE_SIGN_ENTITLEMENTS = papakarlo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = 77HLJ933B9;
 				ENABLE_PREVIEWS = YES;
@@ -2777,7 +2783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
