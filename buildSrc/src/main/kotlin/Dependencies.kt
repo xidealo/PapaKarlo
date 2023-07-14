@@ -58,9 +58,9 @@ object Versions {
 object CommonApplication {
     const val versionMajor = 1
     const val versionMinor = 4
-    const val versionPatch = 1
+    const val versionPatch = 2
 
-    const val versionCode = 141
+    const val versionCode = 142
 }
 
 object PapaKarloApplication {
