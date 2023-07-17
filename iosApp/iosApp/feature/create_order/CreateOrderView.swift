@@ -25,6 +25,7 @@ struct CreateOrderView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var addressList: [SelectableCafeAddressItem] = []
+    @State var paymentMethod:PaymentMethod?
 
     
     var body: some View {
@@ -69,7 +70,8 @@ struct CreateOrderView: View {
                     isRootActive: $isRootActive,
                     selection: $selection,
                     showOrderCreated: $showOrderCreated,
-                    addressList: $addressList
+                    addressList: $addressList,
+                    paymentMethod: $paymentMethod
                 )
             }
         }
@@ -129,6 +131,7 @@ struct CreateOrderSuccessView: View {
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
     @Binding var addressList: [SelectableCafeAddressItem]
+    @Binding var paymentMethod:PaymentMethod?
 
     let calendar = Calendar.current
     
@@ -180,6 +183,25 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
 
+                    if(paymentMethod == nil){
+                        NavigationCardView(
+                            icon: nil,
+                            label: "Способ оплаты",
+                            destination: CreateAddressView(show: $showCreatedAddress)
+                        )
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }else{
+                        ActionLocalizedTextCardView(
+                            placeHolder: "addressLable",
+                            text: paymentMethod!.name.getPaymentMethod()
+                        ){
+                            viewModel.goToAddress()
+                        }
+                        .padding(.top, Diems.SMALL_PADDING)
+                        .padding(.horizontal, Diems.MEDIUM_PADDING)
+                    }
+                    
                     EditTextView(
                         hint: Strings.HINT_CREATE_COMMENT_COMMENT,
                         text: $comment.onChange({ comment in

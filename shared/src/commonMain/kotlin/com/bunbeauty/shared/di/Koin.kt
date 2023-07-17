@@ -30,6 +30,8 @@ import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
+import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
+import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.address.*
@@ -110,6 +112,8 @@ class IosComponent : KoinComponent {
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
 
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
+    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase = get()
+    fun provideSavePaymentMethodUseCase(): SavePaymentMethodUseCase = get()
 
     //Mapper
     fun provideTimeMapper(): TimeMapper = get()
