@@ -67,3 +67,6 @@
 
 //CafeAddressListView
 "title_pickup_addresses" = "Pickup addresses";
+
+//SelectablePaymentMethod
+"selectable_payment_method" = "Payment method";

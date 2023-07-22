@@ -450,6 +450,10 @@
 		02ADC3BA29D9F8820062A141 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		02B3E3482A65D27F00939099 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02B3E3472A65D27F00939099 /* GoogleService-Info.plist */; };
 		02C21FF928D265E900DCF537 /* ActionTextCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C21FF828D265E900DCF537 /* ActionTextCardView.swift */; };
+		02CBBE352A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
+		02CBBE362A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
+		02CBBE372A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
+		02CBBE382A6BE979000260FC /* SelectablePaymentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */; };
 		02FFD2E32A350902000B03E8 /* gustoPub.plist in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD2E22A350902000B03E8 /* gustoPub.plist */; };
 		02FFD2E42A3509E3000B03E8 /* gustoPubAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 027CB0932A34713400350EB2 /* gustoPubAssets.xcassets */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
@@ -584,6 +588,7 @@
 		02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = papakarloAssets.xcassets; sourceTree = "<group>"; };
 		02B3E3472A65D27F00939099 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		02C21FF828D265E900DCF537 /* ActionTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTextCardView.swift; sourceTree = "<group>"; };
+		02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectablePaymentListView.swift; sourceTree = "<group>"; };
 		02FFD2E22A350902000B03E8 /* gustoPub.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gustoPub.plist; sourceTree = "<group>"; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -735,12 +740,12 @@
 		0232343B287879EF0048CF39 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				02CBBE332A6BE952000260FC /* payment */,
 				0232343C287879EF0048CF39 /* order */,
 				02323443287879EF0048CF39 /* settings */,
 				0232344A287879EF0048CF39 /* ProfileView.swift */,
 				0232344B287879EF0048CF39 /* AboutAppView.swift */,
 				0232344D287879EF0048CF39 /* FeedbackView.swift */,
-				021E0A9328D4AAB900CB6A15 /* PaymentView.swift */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -1024,6 +1029,15 @@
 				02ADC3B829D9F85E0062A141 /* papakarloAssets.xcassets */,
 			);
 			path = papakarloRes;
+			sourceTree = "<group>";
+		};
+		02CBBE332A6BE952000260FC /* payment */ = {
+			isa = PBXGroup;
+			children = (
+				021E0A9328D4AAB900CB6A15 /* PaymentView.swift */,
+				02CBBE342A6BE979000260FC /* SelectablePaymentListView.swift */,
+			);
+			path = payment;
 			sourceTree = "<group>";
 		};
 		058557D7273AAEEB004C7B11 /* Preview Content */ = {
@@ -1575,6 +1589,7 @@
 				026C1F8B2A2690B900838266 /* CreateOrderViewState.swift in Sources */,
 				026C1F8C2A2690B900838266 /* SmsTextField.swift in Sources */,
 				026C1F8D2A2690B900838266 /* LoginView.swift in Sources */,
+				02CBBE372A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				026C1F8E2A2690B900838266 /* ProductDetailsViewState.swift in Sources */,
 				026C1F8F2A2690B900838266 /* AppDelegate.swift in Sources */,
 				026C1F902A2690B900838266 /* BoldText.swift in Sources */,
@@ -1689,6 +1704,7 @@
 				027CB04E2A346F7B00350EB2 /* CreateOrderViewState.swift in Sources */,
 				027CB04F2A346F7B00350EB2 /* SmsTextField.swift in Sources */,
 				027CB0502A346F7B00350EB2 /* LoginView.swift in Sources */,
+				02CBBE382A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				027CB0512A346F7B00350EB2 /* ProductDetailsViewState.swift in Sources */,
 				027CB0522A346F7B00350EB2 /* AppDelegate.swift in Sources */,
 				027CB0532A346F7B00350EB2 /* BoldText.swift in Sources */,
@@ -1803,6 +1819,7 @@
 				02ADC36E29D9D0880062A141 /* CreateOrderViewState.swift in Sources */,
 				02ADC36F29D9D0880062A141 /* SmsTextField.swift in Sources */,
 				02ADC37029D9D0880062A141 /* LoginView.swift in Sources */,
+				02CBBE362A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				02ADC37129D9D0880062A141 /* ProductDetailsViewState.swift in Sources */,
 				02ADC37229D9D0880062A141 /* AppDelegate.swift in Sources */,
 				02ADC37329D9D0880062A141 /* BoldText.swift in Sources */,
@@ -1917,6 +1934,7 @@
 				023234AE287879EF0048CF39 /* CreateOrderViewState.swift in Sources */,
 				023234CB28787A180048CF39 /* SmsTextField.swift in Sources */,
 				02323483287879EF0048CF39 /* LoginView.swift in Sources */,
+				02CBBE352A6BE979000260FC /* SelectablePaymentListView.swift in Sources */,
 				023234A8287879EF0048CF39 /* ProductDetailsViewState.swift in Sources */,
 				02323420287878440048CF39 /* AppDelegate.swift in Sources */,
 				023234D528787A180048CF39 /* BoldText.swift in Sources */,

@@ -49,7 +49,7 @@ struct CardView: View {
                     .frame(maxWidth:.infinity, alignment: .leading)
                     .foregroundColor(AppColor.onSurface)
                     .multilineTextAlignment(.leading)
-                    .padding(.leading, Diems.MEDIUM_PADDING)
+                    .padding(.leading, (icon != nil) ? Diems.MEDIUM_PADDING : 0)
             }
             .frame(maxWidth:.infinity, alignment: .leading)
             

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import shared
+import Combine
 
 struct CreateOrderView: View {
     
@@ -16,6 +17,7 @@ struct CreateOrderView: View {
     @State var showCommonError:Bool = false
     @State var goToUserAddress:Bool = false
     @State var goToCafeAddress:Bool = false
+    @State var goToSelectPaymentMethod:Bool = false
     
     //for back after createOrder
     @Binding var isRootActive:Bool
@@ -25,8 +27,8 @@ struct CreateOrderView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @State var addressList: [SelectableCafeAddressItem] = []
-    @State var paymentMethod:PaymentMethod?
-
+    @State var paymentList: [SelectablePaymentMethod] = []
+    @State var selectedPaymentUuid:String? = nil
     
     var body: some View {
         VStack(spacing: 0){
@@ -57,6 +59,19 @@ struct CreateOrderView: View {
                 EmptyView()
             }
             
+            NavigationLink(
+                destination:SelectablePaymentListView(
+                    paymentList: paymentList,
+                    selectedPaymentUuid : $selectedPaymentUuid
+                ),
+                isActive: $goToSelectPaymentMethod
+            ){
+                EmptyView()
+            }
+            .onChange(of: $selectedPaymentUuid.wrappedValue, perform: { value in
+                viewModel.kmmViewModel.onPaymentMethodChanged(paymentMethodUuid:selectedPaymentUuid ?? "")
+            })
+            
             if(viewModel.creationOrderViewState.isLoading){
                 LoadingView()
             }else{
@@ -67,11 +82,12 @@ struct CreateOrderView: View {
                     showCommonError: $showCommonError,
                     goToUserAddress:$goToUserAddress,
                     goToCafeAddress:$goToCafeAddress,
+                    goToSelectPaymentMethod :$goToSelectPaymentMethod,
                     isRootActive: $isRootActive,
                     selection: $selection,
                     showOrderCreated: $showOrderCreated,
                     addressList: $addressList,
-                    paymentMethod: $paymentMethod
+                    paymentList: $paymentList
                 )
             }
         }
@@ -110,6 +126,7 @@ struct CreateOrderView: View {
             ),
             show: $showCommonError
         )
+       
     }
 }
 
@@ -122,6 +139,7 @@ struct CreateOrderSuccessView: View {
     @Binding var showCommonError:Bool
     @Binding var goToUserAddress:Bool
     @Binding var goToCafeAddress:Bool
+    @Binding var goToSelectPaymentMethod:Bool
     @State var isDelivery = true
     @State var comment = ""
     @State var faster = true
@@ -131,7 +149,7 @@ struct CreateOrderSuccessView: View {
     @Binding var selection:Int
     @Binding var showOrderCreated:Bool
     @Binding var addressList: [SelectableCafeAddressItem]
-    @Binding var paymentMethod:PaymentMethod?
+    @Binding var paymentList: [SelectablePaymentMethod]
 
     let calendar = Calendar.current
     
@@ -152,7 +170,7 @@ struct CreateOrderSuccessView: View {
                     }
                     .padding(.top, Diems.MEDIUM_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-
+                    
                     if(viewModel.creationOrderViewState.isDelivery){
                         if viewModel.creationOrderViewState.deliveryAddress == nil{
                             NavigationCardView(
@@ -182,21 +200,24 @@ struct CreateOrderSuccessView: View {
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }
-
-                    if(paymentMethod == nil){
-                        NavigationCardView(
+                    
+                    if(viewModel.creationOrderViewState.paymentMethod == nil){
+                        ActionCardView(
                             icon: nil,
                             label: "Способ оплаты",
-                            destination: CreateAddressView(show: $showCreatedAddress)
-                        )
+                            isSystemImageName: false,
+                            isShowRightArrow: true
+                        ){
+                            viewModel.onPaymentMethodClick()
+                        }
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }else{
                         ActionLocalizedTextCardView(
                             placeHolder: "addressLable",
-                            text: paymentMethod!.name.getPaymentMethod()
+                            text: viewModel.creationOrderViewState.paymentMethod!.name.getPaymentMethod()
                         ){
-                            viewModel.goToAddress()
+                            viewModel.onPaymentMethodClick()
                         }
                         .padding(.top, Diems.SMALL_PADDING)
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
@@ -210,18 +231,18 @@ struct CreateOrderSuccessView: View {
                         limit: 255,
                         hasError: .constant(false),
                         textChanged: { str in
-
+                            
                         }
                     )
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-
+                    
                     Toggle(isOn: $faster.onChange({ faster in
                         if(faster) {
                             viewModel.kmmViewModel.onDeferredTimeSelected(deferredTimeUi: TimeUIASAP())
                         }else{
                             let date =  Date.now + 60 * 60
-
+                            
                             viewModel.kmmViewModel.onDeferredTimeSelected(
                                 deferredTimeUi: TimeUITime(
                                     hours: Int32(calendar.component(.hour, from: date)),
@@ -237,7 +258,7 @@ struct CreateOrderSuccessView: View {
                     .toggleStyle(.automatic)
                     .padding(.top, Diems.SMALL_PADDING)
                     .padding(.horizontal, Diems.MEDIUM_PADDING)
-
+                    
                     if(!faster){
                         if(viewModel.creationOrderViewState.isDelivery){
                             DatePicker(
@@ -286,7 +307,7 @@ struct CreateOrderSuccessView: View {
                 }
             }
             .background(AppColor.background)
-
+            
             VStack(spacing:0){
                 HStack(spacing:0){
                     Text(Strings.MSG_CREATION_ORDER_RESULT)
@@ -302,7 +323,7 @@ struct CreateOrderSuccessView: View {
                 }
                 .padding(.top, Diems.SMALL_PADDING)
                 .padding(.horizontal, Diems.MEDIUM_PADDING)
-
+                
                 if(viewModel.creationOrderViewState.isDelivery){
                     HStack(spacing:0){
                         Text(Strings.MSG_CREATION_ORDER_DELIVERY)
@@ -364,6 +385,9 @@ struct CreateOrderSuccessView: View {
                     addressList = (event as? CreateOrderEventShowCafeAddressListEvent)?.addressList ?? []
                     goToCafeAddress = true
                 case is CreateOrderEventShowUserAddressListEvent : goToUserAddress = true
+                case is CreateOrderEventShowPaymentMethodList :
+                    paymentList = (event as? CreateOrderEventShowPaymentMethodList)?.selectablePaymentMethodList ?? []
+                    goToSelectPaymentMethod = true
                 default:
                     print("def")
                 }

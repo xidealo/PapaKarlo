@@ -102,4 +102,8 @@ class CreateOrderHolder: ObservableObject {
             kmmViewModel.onCafeAddressClicked()
         }
     }
+    
+    func onPaymentMethodClick()  {
+        kmmViewModel.onPaymentMethodClick()
+    }
 }

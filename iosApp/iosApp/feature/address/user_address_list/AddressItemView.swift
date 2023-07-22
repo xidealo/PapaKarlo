@@ -12,7 +12,10 @@ struct AddressItemView: View {
     let addressItem:AddressItem
     
     var body: some View {
-        SelectableElementCard(text: addressItem.address, isSelected: addressItem.isSelected)
+        SelectableElementCard(
+            text: addressItem.address,
+            isSelected: addressItem.isSelected
+        )
     }
 }
 
