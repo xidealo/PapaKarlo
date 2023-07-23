@@ -214,7 +214,7 @@ struct CreateOrderSuccessView: View {
                         .padding(.horizontal, Diems.MEDIUM_PADDING)
                     }else{
                         ActionLocalizedTextCardView(
-                            placeHolder: "addressLable",
+                            placeHolder: "selectable_payment_method",
                             text: viewModel.creationOrderViewState.paymentMethod!.name.getPaymentMethod()
                         ){
                             viewModel.onPaymentMethodClick()

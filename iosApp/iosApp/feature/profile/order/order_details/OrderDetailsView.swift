@@ -224,6 +224,7 @@ struct OrderDetailsTextView: View {
     
     var body: some View {
         VStack(spacing:0){
+            
             HStack(spacing:0){
                 VStack(spacing:0){
                     Text("Время заказа")
@@ -242,30 +243,44 @@ struct OrderDetailsTextView: View {
                             .labelSmall(weight: .medium)
                             .foregroundColor(AppColor.onSurfaceVariant)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
                         Text(dateUtil.getTimeString(time: orderDetails.deferredTime as! TimeUITime))
                             .bodyMedium()
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(.top, Diems.HALF_SMALL_PADDING)
                 }
             }
-            VStack(spacing:0){
-                Text("Способ получения")
-                    .labelSmall(weight: .medium)
-                    .foregroundColor(AppColor.onSurfaceVariant)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                if(orderDetails.isDelivery){
-                    Text("Доставка")
-                        .bodyMedium()
-                        .foregroundColor(AppColor.onSurface)
+            
+            HStack(spacing:0 ){
+                VStack(spacing:0){
+                    Text("Способ получения")
+                        .labelSmall(weight: .medium)
+                        .foregroundColor(AppColor.onSurfaceVariant)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }else{
-                    Text("Самовывоз")
-                        .bodyMedium()
-                        .foregroundColor(AppColor.onSurface)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    if(orderDetails.isDelivery){
+                        Text("Доставка")
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }else{
+                        Text("Самовывоз")
+                            .bodyMedium()
+                            .foregroundColor(AppColor.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+
+                VStack(spacing:0){
+                    if let paymentMethd = orderDetails.paymentMethod{
+                        Text("selectable_payment_method")
+                            .labelSmall(weight: .medium)
+                            .foregroundColor(AppColor.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text(paymentMethd.getPaymentMethod())
+                            .bodyMedium()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             }
             .padding(.top, Diems.HALF_SMALL_PADDING)
