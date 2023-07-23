@@ -27,6 +27,16 @@ extension String {
         return String(self[...index])
     }
     
+    func getPaymentMethod() -> LocalizedStringKey {
+        switch(self){
+        case PaymentMethodName.cash.name: return "msg_payment_cash"
+        case PaymentMethodName.card.name: return "msg_payment_card"
+        case PaymentMethodName.cardNumber.name: return "msg_payment_card_number"
+        case PaymentMethodName.phoneNumber.name: return "msg_payment_phone_number"
+        default : return ""
+        }
+    }
+    
 }
 
 extension UserAddress {

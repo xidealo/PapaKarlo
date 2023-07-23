@@ -1,6 +1,6 @@
 object Versions {
     const val gradle = "7.4.1"
-    const val kotlin = "1.8.0"
+    const val kotlin = "1.8.20"
     const val googleServices = "4.3.15"
     const val crashlytics = "2.8.1"
     const val navigation = "2.5.1"
@@ -24,7 +24,7 @@ object Versions {
     const val datetime = "0.8.1-rc"
     const val desugar = "2.0.3"
 
-    const val composeCompiler = "1.4.0"
+    const val composeCompiler = "1.4.6"
     const val composeBom = "2022.12.00"
     const val composeMaterial3 = "1.1.0-alpha03"
     const val composeUiTooling = "1.3.2"
@@ -58,9 +58,9 @@ object Versions {
 object CommonApplication {
     const val versionMajor = 1
     const val versionMinor = 4
-    const val versionPatch = 1
+    const val versionPatch = 2
 
-    const val versionCode = 141
+    const val versionCode = 142
 }
 
 object PapaKarloApplication {

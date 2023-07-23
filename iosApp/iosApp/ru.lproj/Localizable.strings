@@ -73,3 +73,6 @@
 
 //CafeAddressListView
 "title_pickup_addresses" = "Адрес самовывоза";
+
+//SelectablePaymentMethod
+"selectable_payment_method" = "Спопсоб оплаты";
