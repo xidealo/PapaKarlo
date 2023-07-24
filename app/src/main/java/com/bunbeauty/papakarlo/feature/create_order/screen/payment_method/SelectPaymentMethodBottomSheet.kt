@@ -17,9 +17,6 @@ import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
-import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
-import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 

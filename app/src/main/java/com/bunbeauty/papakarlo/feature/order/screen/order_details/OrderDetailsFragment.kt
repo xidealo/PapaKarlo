@@ -379,12 +379,12 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             deferredTime = "10:30",
             address =
             "" +
-                    "ул. Лука" +
-                    "2" +
-                    "10" +
-                    "1" +
-                    "3" +
-                    "тест",
+                "ул. Лука" +
+                "2" +
+                "10" +
+                "1" +
+                "3" +
+                "тест",
             comment = "давай кушать",
             pickupMethod = "доставка",
             statusName = "Готовится",
