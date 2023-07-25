@@ -49,7 +49,6 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValue
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.shared.presentation.create_order.CreateOrderEvent
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
-import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -366,7 +365,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         viewModel.onPaymentMethodChanged(paymentMethod.paymentMethodUI.uuid)
                     }
                 }
-                is CreateOrderEvent.ShowPaymentMethodError ->{
+                is CreateOrderEvent.ShowPaymentMethodError -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_payment_method)
                     )
@@ -425,12 +424,12 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     isDelivery = true,
                     deliveryAddress =
                     "1" +
-                            "улица Чапаева" +
-                            "22аб" +
-                            "55" +
-                            "1" +
-                            "1" +
-                            "код домофона 555",
+                        "улица Чапаева" +
+                        "22аб" +
+                        "55" +
+                        "1" +
+                        "1" +
+                        "код домофона 555",
                     comment = "Побыстрее пожалуйста, кушать очень хочу",
                     deferredTime = "",
                     totalCost = "250 $",
