@@ -9,7 +9,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow

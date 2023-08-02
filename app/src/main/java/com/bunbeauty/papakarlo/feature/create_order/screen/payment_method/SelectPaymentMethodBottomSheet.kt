@@ -14,7 +14,7 @@ import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryLazyBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
+import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodValueUI
 import kotlin.coroutines.resume
@@ -70,11 +70,11 @@ private fun PaymentMethodListScreen(
         scrolledToTop = scrolledToTop,
     ) {
         itemsIndexed(paymentMethodList) { i, paymentItem ->
-            AddressItem(
+            SelectableItemView(
                 modifier = Modifier.padding(
                     top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                 ),
-                address = paymentItem.paymentMethodUI.name,
+                title = paymentItem.paymentMethodUI.name,
                 isClickable = true,
                 elevated = false,
                 isSelected = paymentItem.isSelected

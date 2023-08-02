@@ -46,7 +46,9 @@ class OrderDetailsUiStateMapper(
                     } else {
                         R.string.pickup_time
                     },
-                    paymentMethod = paymentMethodUiStateMapper.map(orderInfo.paymentMethod)
+                    paymentMethod = orderInfo.paymentMethod?.let { paymentMethod ->
+                        paymentMethodUiStateMapper.map(paymentMethod)
+                    }
                 )
             },
             code = orderState.orderInfo?.code ?: ""

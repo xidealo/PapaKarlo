@@ -43,15 +43,14 @@ class PaymentMethodUiStateMapper(
         )
     }
 
-    fun map(paymentMethod: PaymentMethodName?): String {
+    fun map(paymentMethod: PaymentMethodName): String {
         return when (paymentMethod) {
             PaymentMethodName.CASH -> R.string.msg_payment_cash
             PaymentMethodName.CARD -> R.string.msg_payment_card
             PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
             PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
-            else -> null
-        }?.let { nameResId ->
+        }.let { nameResId ->
             resources.getString(nameResId)
-        } ?: ""
+        }
     }
 }
