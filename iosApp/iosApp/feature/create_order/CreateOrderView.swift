@@ -15,6 +15,7 @@ struct CreateOrderView: View {
     @State var showCreatedAddress:Bool = false
     @State var showAddressError:Bool = false
     @State var showCommonError:Bool = false
+    @State var showPaymentMethodError:Bool = false
     @State var goToUserAddress:Bool = false
     @State var goToCafeAddress:Bool = false
     @State var goToSelectPaymentMethod:Bool = false
@@ -80,9 +81,10 @@ struct CreateOrderView: View {
                     showCreatedAddress: $showCreatedAddress,
                     showAddressError: $showAddressError,
                     showCommonError: $showCommonError,
+                    showPaymentMethodError:$showPaymentMethodError,
                     goToUserAddress:$goToUserAddress,
                     goToCafeAddress:$goToCafeAddress,
-                    goToSelectPaymentMethod :$goToSelectPaymentMethod,
+                    goToSelectPaymentMethod : $goToSelectPaymentMethod,
                     isRootActive: $isRootActive,
                     selection: $selection,
                     showOrderCreated: $showOrderCreated,
@@ -126,6 +128,15 @@ struct CreateOrderView: View {
             ),
             show: $showCommonError
         )
+         .overlay(
+            overlayView: ToastView(
+                toast: Toast(title: "Способ оплаты не выбран"),
+                show: $showPaymentMethodError,
+                backgroundColor:AppColor.error,
+                foregaroundColor: AppColor.onError
+            ),
+            show: $showPaymentMethodError
+        )
        
     }
 }
@@ -137,6 +148,7 @@ struct CreateOrderSuccessView: View {
     @Binding var showCreatedAddress:Bool
     @Binding var showAddressError:Bool
     @Binding var showCommonError:Bool
+    @Binding var showPaymentMethodError:Bool
     @Binding var goToUserAddress:Bool
     @Binding var goToCafeAddress:Bool
     @Binding var goToSelectPaymentMethod:Bool
@@ -388,6 +400,8 @@ struct CreateOrderSuccessView: View {
                 case is CreateOrderEventShowPaymentMethodList :
                     paymentList = (event as? CreateOrderEventShowPaymentMethodList)?.selectablePaymentMethodList ?? []
                     goToSelectPaymentMethod = true
+                case is CreateOrderEventShowPaymentMethodError:
+                    showPaymentMethodError = true
                 default:
                     print("def")
                 }
