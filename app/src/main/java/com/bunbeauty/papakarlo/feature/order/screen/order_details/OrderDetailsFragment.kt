@@ -171,7 +171,8 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     OrderInfoTextColumn(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier
+                            .weight(1f),
                         hint = stringResource(R.string.msg_order_details_date_time),
                         info = orderInfo.dateTime,
                     )
@@ -186,11 +187,12 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     }
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
                 ) {
                     OrderInfoTextColumn(
                         modifier = Modifier
-                            .padding(top = 8.dp)
                             .weight(1f),
                         hint = stringResource(R.string.msg_order_details_pickup_method),
                         info = orderInfo.pickupMethod,
@@ -198,7 +200,6 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     orderInfo.paymentMethod?.let { paymentMethod ->
                         OrderInfoTextColumn(
                             modifier = Modifier
-                                .padding(top = 8.dp)
                                 .padding(start = 16.dp)
                                 .weight(1f),
                             hint = stringResource(R.string.msg_order_details_payment_method),
@@ -207,13 +208,15 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     }
                 }
                 OrderInfoTextColumn(
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = Modifier
+                        .padding(top = 8.dp),
                     hint = stringResource(R.string.msg_order_details_address),
                     info = orderInfo.address,
                 )
                 orderInfo.comment?.let { comment ->
                     OrderInfoTextColumn(
-                        modifier = Modifier.padding(top = 8.dp),
+                        modifier = Modifier
+                            .padding(top = 8.dp),
                         hint = stringResource(R.string.msg_order_details_comment),
                         info = comment,
                     )

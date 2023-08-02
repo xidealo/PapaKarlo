@@ -15,14 +15,7 @@ class PaymentMethodUiStateMapper(
         return paymentMethodList.map { paymentMethod ->
             PaymentMethodUI(
                 uuid = paymentMethod.uuid,
-                name = when (paymentMethod.name) {
-                    PaymentMethodName.CASH -> R.string.msg_payment_cash
-                    PaymentMethodName.CARD -> R.string.msg_payment_card
-                    PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
-                    PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
-                }.let { nameResId ->
-                    resources.getString(nameResId)
-                },
+                name = map(paymentMethod.name),
                 value = paymentMethod.valueToShow?.let { value ->
                     paymentMethod.valueToCopy?.let { valueToCopy ->
                         PaymentMethodValueUI(
@@ -38,14 +31,7 @@ class PaymentMethodUiStateMapper(
     fun map(paymentMethod: PaymentMethod): PaymentMethodUI {
         return PaymentMethodUI(
             uuid = paymentMethod.uuid,
-            name = when (paymentMethod.name) {
-                PaymentMethodName.CASH -> R.string.msg_payment_cash
-                PaymentMethodName.CARD -> R.string.msg_payment_card
-                PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
-                PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
-            }.let { nameResId ->
-                resources.getString(nameResId)
-            },
+            name = map(paymentMethod.name),
             value = paymentMethod.valueToShow?.let { value ->
                 paymentMethod.valueToCopy?.let { valueToCopy ->
                     PaymentMethodValueUI(
@@ -57,15 +43,15 @@ class PaymentMethodUiStateMapper(
         )
     }
 
-    fun map(paymentMethod: String?): String? {
+    fun map(paymentMethod: PaymentMethodName?): String {
         return when (paymentMethod) {
-            PaymentMethodName.CASH.name -> R.string.msg_payment_cash
-            PaymentMethodName.CARD.name -> R.string.msg_payment_card
-            PaymentMethodName.CARD_NUMBER.name -> R.string.msg_payment_card_number
-            PaymentMethodName.PHONE_NUMBER.name -> R.string.msg_payment_phone_number
+            PaymentMethodName.CASH -> R.string.msg_payment_cash
+            PaymentMethodName.CARD -> R.string.msg_payment_card
+            PaymentMethodName.CARD_NUMBER -> R.string.msg_payment_card_number
+            PaymentMethodName.PHONE_NUMBER -> R.string.msg_payment_phone_number
             else -> null
         }?.let { nameResId ->
             resources.getString(nameResId)
-        }
+        } ?: ""
     }
 }

@@ -13,6 +13,7 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
 class OrderMapper(
@@ -108,7 +109,8 @@ class OrderMapper(
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
                 orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
-                paymentMethod = firstOrderWithProductEntity.paymentMethod
+                paymentMethod = PaymentMethodName.values()
+                    .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod }
             )
         }
     }
@@ -135,7 +137,8 @@ class OrderMapper(
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
-            paymentMethod = orderServer.paymentMethod
+            paymentMethod = PaymentMethodName.values()
+                .firstOrNull { it.name == orderServer.paymentMethod }
         )
     }
 

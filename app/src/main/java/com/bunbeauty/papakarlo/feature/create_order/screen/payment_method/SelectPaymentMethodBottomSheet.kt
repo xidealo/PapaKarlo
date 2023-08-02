@@ -40,7 +40,7 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
     }
 
     companion object {
-        private const val TAG = "CafeAddressListBottomSheet"
+        private const val TAG = "SelectPaymentMethodBottomSheet"
 
         suspend fun show(
             fragmentManager: FragmentManager,

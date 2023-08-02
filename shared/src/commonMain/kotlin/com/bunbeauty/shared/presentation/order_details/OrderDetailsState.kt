@@ -3,6 +3,7 @@ package com.bunbeauty.shared.presentation.order_details
 import com.bunbeauty.shared.domain.model.date_time.DateTime
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
 data class OrderDetailsState(
@@ -22,7 +23,7 @@ data class OrderDetailsState(
         val address: OrderAddress,
         val comment: String?,
         val isDelivery: Boolean,
-        val paymentMethod: String?,
+        val paymentMethod: PaymentMethodName?,
     )
 
     data class OrderProductItem(

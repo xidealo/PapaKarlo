@@ -4,6 +4,7 @@ import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 import com.bunbeauty.shared.domain.repo.PaymentRepo
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 class GetSelectablePaymentMethodListUseCase(
     private val paymentRepo: PaymentRepo,
@@ -18,7 +19,7 @@ class GetSelectablePaymentMethodListUseCase(
             }
         }
 
-        val selectedPaymentMethodUuid = dataStoreRepo.selectedPaymentMethodUuid.first()
+        val selectedPaymentMethodUuid = dataStoreRepo.selectedPaymentMethodUuid.firstOrNull()
 
         return paymentMethodList.mapIndexed { index, paymentMethod ->
             SelectablePaymentMethod(
