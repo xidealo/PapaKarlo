@@ -60,6 +60,8 @@ fun viewModelModule() = module {
             createOrder = get(),
             getSelectedCityTimeZone = get(),
             saveSelectedUserAddress = get(),
+            getSelectablePaymentMethodListUseCase = get(),
+            savePaymentMethodUseCase = get()
         )
     }
     viewModel {

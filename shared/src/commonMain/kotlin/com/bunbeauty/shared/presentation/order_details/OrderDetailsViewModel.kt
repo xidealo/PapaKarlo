@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class OrderDetailsViewModel(
     private val observeOrderUseCase: ObserveOrderUseCase,
     private val timeMapper: TimeMapper,
-    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase
+    private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedViewModel() {
 
     private val mutableOrderState = MutableStateFlow(OrderDetailsState())
@@ -87,6 +87,7 @@ class OrderDetailsViewModel(
             address = order.address,
             comment = order.comment,
             isDelivery = order.isDelivery,
+            paymentMethod = order.paymentMethod
         )
 
     private fun getProductList(order: Order) =

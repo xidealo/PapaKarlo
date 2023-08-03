@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
 import com.bunbeauty.shared.presentation.create_order.model.SelectableUserAddressUi
 import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 
@@ -17,4 +18,5 @@ data class CreateOrderUIState(
 
     val isLoading: Boolean,
     val eventList: List<CreateOrderEvent>,
+    val paymentMethod: PaymentMethod?,
 )

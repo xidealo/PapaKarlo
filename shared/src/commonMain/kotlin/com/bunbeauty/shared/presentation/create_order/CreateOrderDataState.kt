@@ -3,6 +3,8 @@ package com.bunbeauty.shared.presentation.create_order
 import com.bunbeauty.shared.domain.model.address.SelectableUserAddress
 import com.bunbeauty.shared.domain.model.cafe.SelectableCafe
 import com.bunbeauty.shared.domain.model.date_time.Time
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethod
+import com.bunbeauty.shared.domain.model.payment_method.SelectablePaymentMethod
 
 data class CreateOrderDataState(
     val isDelivery: Boolean = true,
@@ -23,9 +25,12 @@ data class CreateOrderDataState(
 
     val isLoading: Boolean = false,
     val eventList: List<CreateOrderEvent> = emptyList(),
+    val selectedPaymentMethod: PaymentMethod? = null,
+    val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
 ) {
 
     operator fun plus(event: CreateOrderEvent) = copy(eventList = eventList + event)
-    operator fun minus(events: List<CreateOrderEvent>) = copy(eventList = eventList - events.toSet())
+    operator fun minus(events: List<CreateOrderEvent>) =
+        copy(eventList = eventList - events.toSet())
 
 }

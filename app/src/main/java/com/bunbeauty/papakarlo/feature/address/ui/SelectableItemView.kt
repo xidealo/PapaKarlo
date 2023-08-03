@@ -18,9 +18,9 @@ import com.bunbeauty.papakarlo.common.ui.icon16
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable
-fun AddressItem(
+fun SelectableItemView(
     modifier: Modifier = Modifier,
-    address: String,
+    title: String,
     isClickable: Boolean,
     elevated: Boolean,
     isSelected: Boolean = false,
@@ -40,7 +40,7 @@ fun AddressItem(
             Text(
                 modifier = Modifier
                     .weight(1f),
-                text = address,
+                text = title,
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface
             )
@@ -63,8 +63,8 @@ fun AddressItem(
 @Composable
 private fun AddressItemPreview() {
     FoodDeliveryTheme {
-        AddressItem(
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+        SelectableItemView(
+            title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
             isClickable = false,
             elevated = false,
             onClick = {},
@@ -76,8 +76,8 @@ private fun AddressItemPreview() {
 @Composable
 private fun AddressItemSelectedPreview() {
     FoodDeliveryTheme {
-        AddressItem(
-            address = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
+        SelectableItemView(
+            title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
             isClickable = false,
             elevated = false,
             isSelected = true,

@@ -42,7 +42,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
     }
 
     companion object {
-        private const val TAG = "CafeAddressListBottomSheet"
+        private const val TAG = "CityListBottomSheet"
 
         suspend fun show(
             fragmentManager: FragmentManager,

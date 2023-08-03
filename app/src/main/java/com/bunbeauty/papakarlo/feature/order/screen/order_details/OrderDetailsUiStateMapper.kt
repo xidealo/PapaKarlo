@@ -1,12 +1,14 @@
 package com.bunbeauty.papakarlo.feature.order.screen.order_details
 
 import com.bunbeauty.papakarlo.R
+import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 
 class OrderDetailsUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderProductItemMapper: OrderProductItemMapper,
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
 ) {
     fun map(orderState: OrderDetailsState): OrderDetailsUi {
         return OrderDetailsUi(
@@ -43,6 +45,9 @@ class OrderDetailsUiStateMapper(
                         R.string.delivery_time
                     } else {
                         R.string.pickup_time
+                    },
+                    paymentMethod = orderInfo.paymentMethod?.let { paymentMethod ->
+                        paymentMethodUiStateMapper.map(paymentMethod)
                     }
                 )
             },

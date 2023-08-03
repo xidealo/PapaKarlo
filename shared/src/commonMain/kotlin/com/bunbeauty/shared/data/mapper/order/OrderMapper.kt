@@ -13,6 +13,7 @@ import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderAddress
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.model.order.OrderStatus
+import com.bunbeauty.shared.domain.model.payment_method.PaymentMethodName
 import com.bunbeauty.shared.domain.util.IDateTimeUtil
 
 class OrderMapper(
@@ -22,7 +23,7 @@ class OrderMapper(
 
     override fun toOrderWithProductEntity(
         orderServer: OrderServer,
-        orderProductServer: OrderProductServer
+        orderProductServer: OrderProductServer,
     ): OrderWithProductEntity {
         return OrderWithProductEntity(
             uuid = orderServer.uuid,
@@ -53,7 +54,8 @@ class OrderMapper(
             orderProductComboDescription = orderProductServer.comboDescription,
             orderProductPhotoLink = orderProductServer.photoLink,
             orderProductBarcode = orderProductServer.barcode,
-            orderUuid = orderServer.uuid
+            orderUuid = orderServer.uuid,
+            paymentMethod = orderServer.paymentMethod
         )
     }
 
@@ -107,6 +109,8 @@ class OrderMapper(
                 comment = firstOrderWithProductEntity.comment,
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
                 orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
+                paymentMethod = PaymentMethodName.values()
+                    .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod }
             )
         }
     }
@@ -133,6 +137,8 @@ class OrderMapper(
             comment = orderServer.comment,
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
+            paymentMethod = PaymentMethodName.values()
+                .firstOrNull { it.name == orderServer.paymentMethod }
         )
     }
 
@@ -152,6 +158,7 @@ class OrderMapper(
             comment = createdOrder.comment,
             deferredTime = createdOrder.deferredTime,
             orderProducts = createdOrder.orderProducts.map(orderProductMapper::toPostServerModel),
+            paymentMethod = createdOrder.paymentMethod
         )
     }
 }

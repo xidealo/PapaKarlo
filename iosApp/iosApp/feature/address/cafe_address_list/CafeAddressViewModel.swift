@@ -20,14 +20,14 @@ class CafeAddressViewModel: ObservableObject {
     
     func loadData(isClickable:Bool, addressList: [SelectableCafeAddressItem]) {
         
-            self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (addressList).map({ cafeAddress in
-                AddressItem(
-                    id: cafeAddress.uuid,
-                    address: cafeAddress.address,
-                    isClickable: isClickable,
-                    isSelected: cafeAddress.isSelected
-                )
-            }))
+        self.cafeAddressViewState = CafeAddressViewState(cafeAddressState: CafeAddressState.success, addressItemList: (addressList).map({ cafeAddress in
+            AddressItem(
+                id: cafeAddress.uuid,
+                address: cafeAddress.address,
+                isClickable: isClickable,
+                isSelected: cafeAddress.isSelected
+            )
+        }))
         
     }
     

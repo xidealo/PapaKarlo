@@ -38,6 +38,7 @@ class OrderDao(foodDeliveryDatabase: FoodDeliveryDatabase) : IOrderDao {
                             addressEntrance = firstOrderWithProduct.addressEntrance,
                             addressFloor = firstOrderWithProduct.addressFloor,
                             addressComment = firstOrderWithProduct.addressComment,
+                            paymentMethod = firstOrderWithProduct.paymentMethod
                         )
                     )
                 }

@@ -27,9 +27,13 @@ interface DataStoreRepo {
     suspend fun getSettings(): Settings?
     suspend fun saveSettings(settings: Settings)
 
+    val selectedPaymentMethodUuid: Flow<String?>
+    suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String)
+
     val selectedCityUuid: Flow<String?>
     suspend fun saveSelectedCityUuid(cityUuid: String)
     suspend fun getSelectedCityUuid(): String?
+
     fun observeUserAndCityUuid(): Flow<UserCityUuid>
     suspend fun getUserAndCityUuid(): UserCityUuid
 

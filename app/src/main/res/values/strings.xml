@@ -72,14 +72,17 @@
     <string name="action_create_order_pickup">Самовывоз</string>
     <string name="delivery_time">Время доставки</string>
     <string name="pickup_time">Время самовывоза</string>
+    <string name="payment_method">Способ оплаты</string>
     <string name="delivery_address">Адрес доставки</string>
     <string name="pickup_address">Адрес самовывоза</string>
+    <string name="pickup_payment_method">Способ оплаты</string>
     <string name="comment">Комментарий</string>
     <string name="hint_create_order_comment">Комментарий</string>
     <string name="action_create_order_create_order">Оформить заказ</string>
     <string name="error_select_delivery_address">Выберите адрес доставки</string>
     <string name="error_user">Пользователь не авторизован</string>
     <string name="error_user_address">Адрес не выбран</string>
+    <string name="error_payment_method">Способ оплаты не выбран</string>
     <string name="msg_order_code">Код заказа %s</string>
     <string name="msg_create_order_total_cost">Итого</string>
     <string name="msg_create_order_delivery_cost">Доставка</string>
@@ -155,6 +158,7 @@
     <!-- ORDER DETAILS -->
     <string name="msg_order_details_date_time">Дата и время заказа</string>
     <string name="msg_order_details_pickup_method">Способ получения</string>
+    <string name="msg_order_details_payment_method">Способ оплаты</string>
     <string name="msg_order_details_deferred_time_delivery">Ко времени</string>
     <string name="msg_order_details_deferred_time_pickup">Ко времени</string>
     <string name="msg_order_details_address">Адрес</string>

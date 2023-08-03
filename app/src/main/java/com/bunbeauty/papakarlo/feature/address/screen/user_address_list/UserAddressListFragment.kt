@@ -31,7 +31,7 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.address.model.UserAddressItem
 import com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragmentDirections.toCreateAddressFragment
-import com.bunbeauty.papakarlo.feature.address.ui.AddressItem
+import com.bunbeauty.papakarlo.feature.address.ui.SelectableItemView
 import com.bunbeauty.papakarlo.feature.create_order.mapper.UserAddressItemMapper
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListState
 import com.bunbeauty.shared.presentation.user_address_list.UserAddressListViewModel
@@ -123,11 +123,11 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                 )
             ) {
                 itemsIndexed(userAddressItems) { i, userAddressItem ->
-                    AddressItem(
+                    SelectableItemView(
                         modifier = Modifier.padding(
                             top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
                         ),
-                        address = userAddressItem.address,
+                        title = userAddressItem.address,
                         isClickable = false,
                         elevated = true
                     ) {}
