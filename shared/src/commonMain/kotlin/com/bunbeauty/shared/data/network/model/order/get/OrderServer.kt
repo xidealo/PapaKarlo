@@ -43,7 +43,7 @@ class OrderServer(
     val oderProductList: List<OrderProductServer>,
 
     @SerialName("paymentMethod")
-    val paymentMethod: String,
+    val paymentMethod: String?,
 )
 
 @Serializable
