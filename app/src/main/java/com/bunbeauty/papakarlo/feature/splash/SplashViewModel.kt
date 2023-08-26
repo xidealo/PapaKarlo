@@ -2,7 +2,7 @@ package com.bunbeauty.papakarlo.feature.splash
 
 import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.BuildConfig
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
 import kotlinx.coroutines.flow.MutableStateFlow

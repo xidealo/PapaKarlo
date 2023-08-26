@@ -40,7 +40,7 @@ fun rememberFoodDeliverySnackbarState(defaultText: String = ""): FoodDeliverySna
 
 class FoodDeliverySnackbarState(
     private val coroutineScope: CoroutineScope,
-    defaultText: String,
+    defaultText: String
 ) {
 
     var job: Job? = null
@@ -71,7 +71,7 @@ fun FoodDeliverySnackbarBox(
     snackbarState: FoodDeliverySnackbarState,
     backgroundColor: Color = FoodDeliveryTheme.colors.mainColors.primary,
     textColor: Color = FoodDeliveryTheme.colors.mainColors.onPrimary,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     Box {
         content()
@@ -92,7 +92,7 @@ fun FoodDeliverySnackbarBox(
                 Text(
                     text = snackbarState.text,
                     style = FoodDeliveryTheme.typography.bodyMedium,
-                    color = textColor,
+                    color = textColor
                 )
             }
         }

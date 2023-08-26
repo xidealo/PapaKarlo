@@ -17,12 +17,14 @@ class CreateOrderStateMapper(
 
             totalCost = dataState.totalCost,
             deliveryCost = dataState.deliveryCost,
-            finalCost = dataState.finalCost,
+            oldFinalCost  = dataState.oldFinalCost,
+            newFinalCost = dataState.newFinalCost,
 
             isLoading = dataState.isLoading,
 
             eventList = dataState.eventList,
-            paymentMethod = dataState.selectedPaymentMethod
+            paymentMethod = dataState.selectedPaymentMethod,
+            discount = dataState.discount
         )
     }
 }

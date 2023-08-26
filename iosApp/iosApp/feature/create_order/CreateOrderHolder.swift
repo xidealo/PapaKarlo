@@ -23,7 +23,8 @@ class CreateOrderHolder: ObservableObject {
         finalCost: nil,
         isLoading: false,
         eventList: [],
-        paymentMethod: nil
+        paymentMethod: nil,
+        discount: nil
     )
     
     let kmmViewModel = CreateOrderViewModel(

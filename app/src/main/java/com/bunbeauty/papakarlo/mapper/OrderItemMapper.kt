@@ -49,12 +49,12 @@ class OrderItemMapper(
                     newCost = stringUtil.getCostString(orderProduct.newCost),
                     oldCost = stringUtil.getCostString(orderProduct.oldCost),
                     photoLink = orderProduct.product.photoLink,
-                    count = stringUtil.getCountString(orderProduct.count),
+                    count = stringUtil.getCountString(orderProduct.count)
                 )
             },
             isDelivery = orderWithAmounts.isDelivery,
             oldAmountToPay = stringUtil.getCostString(orderWithAmounts.oldAmountToPay),
-            newAmountToPay = stringUtil.getCostString(orderWithAmounts.newAmountToPay),
+            newAmountToPay = stringUtil.getCostString(orderWithAmounts.newAmountToPay)
         )
     }
 }

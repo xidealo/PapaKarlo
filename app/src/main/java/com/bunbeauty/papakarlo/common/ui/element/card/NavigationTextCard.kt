@@ -57,7 +57,7 @@ fun NavigationTextCard(
                 modifier = Modifier.icon16(),
                 painter = painterResource(R.drawable.ic_right_arrow),
                 tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                contentDescription = stringResource(R.string.description_ic_next),
+                contentDescription = stringResource(R.string.description_ic_next)
             )
         }
     }

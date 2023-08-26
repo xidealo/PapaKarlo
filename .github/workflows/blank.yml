@@ -11,10 +11,20 @@ jobs:
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
-      - name: set up JDK 11
+      - name: Create local properties
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE
+          \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
+          \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
+          \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
+      - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       - name: Build with Gradle
         run: ./gradlew assemblepapaKarloDebug
 
@@ -23,10 +33,24 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
+      - name: Create local properties
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE
+          \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
+          \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
+          \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
       - name: check android lint
         run: ./gradlew --continue :app:lint
   check_ktLint_job:
@@ -34,6 +58,20 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Create local properties
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE
+          \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
+          \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
+          \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
       - name: check ktLint
         run: ./gradlew --continue ktlintCheck
 
@@ -42,10 +80,24 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
+      - name: Create local properties
+        env:
+          RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
+          RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
+          RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: echo -e "RELEASE_STORE_FILE=$RELEASE_STORE_FILE
+          \nRELEASE_STORE_PASSWORD=$RELEASE_STORE_PASSWORD
+          \nRELEASE_KEY_ALIAS=$RELEASE_KEY_ALIAS
+          \nRELEASE_KEY_PASSWORD=$RELEASE_KEY_PASSWORD" > local.properties
       - name: run PapaKarlo tests
         run: ./gradlew testPapaKarloDebug
       - name: run Yuliar tests

@@ -18,7 +18,7 @@ fun SecondaryButton(
     @StringRes textStringId: Int,
     elevated: Boolean = true,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -28,10 +28,9 @@ fun SecondaryButton(
         elevation = FoodDeliveryButtonDefaults.getButtonElevation(elevated),
         enabled = enabled
     ) {
-
         Text(
             text = stringResource(id = textStringId),
-            style = FoodDeliveryTheme.typography.labelLarge.medium,
+            style = FoodDeliveryTheme.typography.labelLarge.medium
         )
     }
 }

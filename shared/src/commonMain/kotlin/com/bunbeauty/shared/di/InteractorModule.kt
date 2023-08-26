@@ -8,8 +8,6 @@ import com.bunbeauty.shared.domain.interactor.city.CityInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.interactor.menu_product.MenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
-import com.bunbeauty.shared.domain.interactor.order.OrderInteractor
 import com.bunbeauty.shared.domain.interactor.product.IProductInteractor
 import com.bunbeauty.shared.domain.interactor.product.ProductInteractor
 import com.bunbeauty.shared.domain.interactor.update.IUpdateInteractor
@@ -41,8 +39,8 @@ internal fun interactorModule() = module {
         CartProductInteractor(
             cartProductRepo = get(),
             deliveryRepo = get(),
-            dataStoreRepo = get(),
             productInteractor = get(),
+            getCartTotal = get()
         )
     }
     single<ICafeInteractor> {
@@ -55,22 +53,13 @@ internal fun interactorModule() = module {
     single<IUpdateInteractor> {
         UpdateInteractor(versionRepo = get())
     }
-    single<IOrderInteractor> {
-        OrderInteractor(
-            orderRepo = get(),
-            cartProductRepo = get(),
-            dataStoreRepo = get(),
-            productInteractor = get(),
-        )
-    }
+
     single<IMenuProductInteractor> {
         MenuProductInteractor(
             menuProductRepo = get(),
         )
     }
     single<IProductInteractor> {
-        ProductInteractor(
-            dataStoreRepo = get(),
-        )
+        ProductInteractor()
     }
 }

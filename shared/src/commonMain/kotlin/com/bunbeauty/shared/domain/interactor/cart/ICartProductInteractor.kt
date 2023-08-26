@@ -8,17 +8,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICartProductInteractor {
 
-    suspend fun getConsumerCart(): ConsumerCart?
-
     fun observeConsumerCart(): CommonFlow<ConsumerCart?>
 
     fun observeNewTotalCartCost(): CommonFlow<Int>
 
     fun observeTotalCartCount(): CommonFlow<Int>
-
-    fun observeDeliveryCost(): Flow<Int>
-
-    suspend fun getCartTotal(): CartTotal
 
     suspend fun addProductToCart(menuProductUuid: String): CartProduct?
 

@@ -12,11 +12,11 @@ struct LoadingView: View {
     var body: some View {
         ZStack {
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: Color("primary")))
+                .progressViewStyle(CircularProgressViewStyle(tint: AppColor.primary))
                 .scaleEffect(1.5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
     }
 }

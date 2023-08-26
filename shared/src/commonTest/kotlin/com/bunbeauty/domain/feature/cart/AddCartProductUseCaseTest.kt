@@ -13,7 +13,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class AddCartProductUseCaseTest {
 
     private val cartProductRepo: CartProductRepo = mockk()

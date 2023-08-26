@@ -9,7 +9,7 @@ plugins {
 version = "1.0"
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -105,6 +105,7 @@ kotlin {
 }
 
 android {
+    namespace = Namespace.shared
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = AndroidSdk.min
@@ -115,6 +116,16 @@ android {
         debug {}
         release {}
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
     setFlavorDimensions(listOf("default"))
     productFlavors {
         create("papaKarlo") {}

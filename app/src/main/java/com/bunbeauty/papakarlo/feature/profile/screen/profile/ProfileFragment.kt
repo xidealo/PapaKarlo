@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -38,7 +38,7 @@ import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationIconCard
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -47,12 +47,12 @@ import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackArgument
 import com.bunbeauty.papakarlo.feature.profile.screen.feedback.FeedbackBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentBottomSheet
 import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodsArgument
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.domain.model.order.OrderStatus
 import com.bunbeauty.shared.presentation.profile.ProfileState
 import com.bunbeauty.shared.presentation.profile.ProfileViewModel
@@ -68,7 +68,6 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
     private val linkUiStateMapper: LinkUiStateMapper by inject()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
@@ -81,7 +80,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 onLastOrderClicked = viewModel::onLastOrderClicked,
                 onSettingsClicked = viewModel::onSettingsClicked,
                 onYourAddressesClicked = viewModel::onYourAddressesClicked,
-                onOrderHistoryClicked = viewModel::onOrderHistoryClicked,
+                onOrderHistoryClicked = viewModel::onOrderHistoryClicked
             )
             LaunchedEffect(profileState.eventList) {
                 handleEventList(profileState.eventList)
@@ -105,13 +104,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
             topActions = listOf(
                 FoodDeliveryCartAction(
-                    topCartUi = profileUi.topCartUi,
+                    topCartUi = profileUi.topCartUi
                 ) {
                     findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
@@ -126,23 +125,26 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         viewModel.onLoginClicked()
                     }
                 }
-            },
+            }
         ) {
-            when (profileUi.state) {
-                ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
-                    profileUi,
-                    onLastOrderClicked = onLastOrderClicked,
-                    onSettingsClick = onSettingsClicked,
-                    onYourAddressesClicked = onYourAddressesClicked,
-                    onOrderHistoryClicked = onOrderHistoryClicked,
-                )
-                ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
-                ProfileState.State.LOADING -> LoadingScreen()
-                ProfileState.State.ERROR -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_profile_loading
-                    ) {
-                        viewModel.update()
+            Crossfade(targetState = profileUi.state, label = "CafeListScreen") { state ->
+                when (state) {
+                    ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
+                        profileUi,
+                        onLastOrderClicked = onLastOrderClicked,
+                        onSettingsClick = onSettingsClicked,
+                        onYourAddressesClicked = onYourAddressesClicked,
+                        onOrderHistoryClicked = onOrderHistoryClicked
+                    )
+
+                    ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
+                    ProfileState.State.LOADING -> LoadingScreen()
+                    ProfileState.State.ERROR -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_profile_loading
+                        ) {
+                            viewModel.update()
+                        }
                     }
                 }
             }
@@ -160,9 +162,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.OpenSettings -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
                 }
+
                 ProfileState.Event.OpenAddressList -> {
                     findNavController().navigateSafe(
                         ProfileFragmentDirections.toNavAddress(
@@ -170,9 +174,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.OpenOrderList -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
                 }
+
                 is ProfileState.Event.ShowPayment -> {
                     PaymentBottomSheet.show(
                         fragmentManager = parentFragmentManager,
@@ -183,6 +189,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 is ProfileState.Event.ShowFeedback -> {
                     FeedbackBottomSheet.show(
                         fragmentManager = parentFragmentManager,
@@ -191,9 +198,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.ShowAboutApp -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
                 }
+
                 ProfileState.Event.OpenLogin -> {
                     findNavController().navigateSafe(
                         ProfileFragmentDirections.toLoginFragment(
@@ -212,7 +221,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -264,7 +273,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             ProfileInfoCards()
 
@@ -352,13 +361,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         status = OrderStatus.NOT_ACCEPTED,
                         statusName = OrderStatus.NOT_ACCEPTED.name,
                         code = "А-12",
-                        dateTime = "10-10-10 20:20",
+                        dateTime = "10-10-10 20:20"
                     ),
                     state = ProfileState.State.AUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -378,8 +387,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.AUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -399,8 +408,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.UNAUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -420,13 +429,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.LOADING,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }
@@ -441,13 +450,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.ERROR,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }

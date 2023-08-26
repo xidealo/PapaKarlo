@@ -1,58 +1,55 @@
 object Versions {
-    const val gradle = "7.4.1"
-    const val kotlin = "1.8.20"
+    const val gradle = "8.1.1"
+    const val kotlin = "1.9.0"
     const val googleServices = "4.3.15"
-    const val crashlytics = "2.8.1"
-    const val navigation = "2.5.1"
+    const val crashlytics = "2.9.9"
+    const val navigation = "2.7.1"
 
-    const val kotlinCoroutines = "1.6.4"
-    const val ktor = "2.2.2"
-    const val kotlinxSerialization = "1.3.2"
-    const val koin = "3.1.5"
+    const val kotlinCoroutines = "1.7.3"
+    const val ktor = "2.3.3"
+    const val kotlinxSerialization = "1.5.1"
+    const val koin = "3.4.3"
     const val mockK = "1.12.5"
 
     const val sqlDelight = "1.5.5"
 
-    const val constraintLayout = "2.1.3"
-
     const val junit = "4.13.2"
     const val testRunner = "1.3.0"
-    const val material = "1.4.0"
     const val appCompact = "1.6.1"
     const val coreKtx = "1.9.0"
-    const val coil = "2.1.0"
-    const val datetime = "0.8.1-rc"
+    const val coil = "2.4.0"
+    const val datetime = "0.9.0"
     const val desugar = "2.0.3"
 
-    const val composeCompiler = "1.4.6"
-    const val composeBom = "2022.12.00"
-    const val composeMaterial3 = "1.1.0-alpha03"
-    const val composeUiTooling = "1.3.2"
-    const val composeUiToolingPreview = "1.3.2"
-    const val composeUiViewbinding = "1.3.2"
-    const val activityCompose = "1.6.1"
-    const val lifecycleRuntimeCompose = "2.6.0-alpha03"
+    const val composeCompiler = "1.5.0"
+    const val composeBom = "2023.06.01"
+    const val activityCompose = "1.7.2"
+    const val lifecycleRuntimeCompose = "2.6.1"
 
     const val dataStorePreferences = "1.0.0"
 
-    const val extensions = "2.2.0"
-    const val viewmodel = "2.4.1"
-    const val activity = "1.4.0"
-    const val fragment = "1.4.0"
-    const val lifecycle = "2.4.0"
+    const val activity = "1.7.2"
+    const val fragment = "1.5.7"
+    const val lifecycle = "2.6.1"
 
     const val viewBindingDelegate = "1.5.3"
 
     const val googleMapUtils = "2.2.3"
 
-    const val kotlinxDateTime = "0.3.3"
+    const val kotlinxDateTime = "0.4.0"
 
-    const val leakcanary = "2.8.1"
+    const val leakcanary = "2.12"
 
-    const val firebase = "31.4.0"
+    const val firebase = "32.2.3"
 
     const val pinEntryEditText = "2.0.6"
 
+    const val kaspresso = "1.5.3"
+}
+
+object Namespace {
+    const val app = "com.bunbeauty.papakarlo"
+    const val shared = "com.bunbeauty.shared"
 }
 
 object CommonApplication {
@@ -89,7 +86,7 @@ object GustoPubApplication {
 
 object AndroidSdk {
     const val min = 24
-    const val compile = 33
+    const val compile = 34
     const val target = compile
 }
 
@@ -122,37 +119,34 @@ object Plugin {
 
 object AndroidX {
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompact}"
-    const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
 }
 
 object Google {
-    const val material = "com.google.android.material:material:${Versions.material}"
     const val androidMaps = "com.google.maps.android:android-maps-utils:${Versions.googleMapUtils}"
 }
 
 object Compose {
     const val bom = "androidx.compose:compose-bom:${Versions.composeBom}"
     const val foundation = "androidx.compose.foundation:foundation"
+    const val foundationLayout = "androidx.compose.foundation:foundation-layout"
     const val ui = "androidx.compose.ui:ui"
-    const val material3 = "androidx.compose.material3:material3:${Versions.composeMaterial3}"
-    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.composeUiTooling}"
+    const val material3 = "androidx.compose.material3:material3"
+    const val uiTooling = "androidx.compose.ui:ui-tooling"
     const val uiToolingPreview =
-        "androidx.compose.ui:ui-tooling-preview:${Versions.composeUiToolingPreview}"
-    const val uiViewbinding = "androidx.compose.ui:ui-viewbinding:${Versions.composeUiViewbinding}"
+        "androidx.compose.ui:ui-tooling-preview"
+    const val uiViewbinding = "androidx.compose.ui:ui-viewbinding"
     const val activity = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val lifecycle =
         "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycleRuntimeCompose}"
 }
 
 object Lifecycle {
-    const val extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.extensions}"
-    const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.viewmodel}"
+    const val extensions = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycle}"
+    const val viewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
     const val activity = "androidx.activity:activity-ktx:${Versions.activity}"
     const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
-    const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
-    const val livedate = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
 }
 
 object Test {
@@ -237,12 +231,6 @@ object Firebase {
     const val messaging = "com.google.firebase:firebase-messaging-ktx"
 }
 
-object PinEntryEditText {
-    const val pinEntryEditText = "com.alimuzaffar.lib:pinentryedittext:${Versions.pinEntryEditText}"
-    const val group = "androidx.appcompat"
-    const val module = "appcompat"
-}
-
 object SqlDelight {
     const val runtime = "com.squareup.sqldelight:runtime:${Versions.sqlDelight}"
     const val coroutineExtensions =
@@ -264,4 +252,13 @@ object ViewBindingDelegate {
 
 object Leakcanary {
     const val android = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
+}
+
+object Kaspresso {
+    const val kaspresso =
+        "com.kaspersky.android-components:kaspresso:${Versions.kaspresso}"
+    const val kaspressoAllureSupport =
+        "com.kaspersky.android-components:kaspresso-allure-support:${Versions.kaspresso}"
+    const val kaspressoComposeSupport =
+        "com.kaspersky.android-components:kaspresso-compose-support:${Versions.kaspresso}"
 }

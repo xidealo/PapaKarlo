@@ -19,7 +19,7 @@ fun MainButton(
     text: String? = null,
     elevated: Boolean = true,
     isEnabled: Boolean = true,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),
@@ -34,7 +34,7 @@ fun MainButton(
         } ?: ""
         Text(
             text = buttonText,
-            style = FoodDeliveryTheme.typography.labelLarge.medium,
+            style = FoodDeliveryTheme.typography.labelLarge.medium
         )
     }
 }

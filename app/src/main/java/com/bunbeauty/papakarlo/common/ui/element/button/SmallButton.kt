@@ -20,7 +20,7 @@ fun SmallButton(
     @StringRes textStringId: Int,
     elevated: Boolean = true,
     onClick: () -> Unit,
-    isEnabled: Boolean = true,
+    isEnabled: Boolean = true
 ) {
     OutlinedButton(
         modifier = modifier,
@@ -36,7 +36,7 @@ fun SmallButton(
     ) {
         Text(
             text = stringResource(textStringId),
-            style = FoodDeliveryTheme.typography.labelLarge.medium,
+            style = FoodDeliveryTheme.typography.labelLarge.medium
         )
     }
 }

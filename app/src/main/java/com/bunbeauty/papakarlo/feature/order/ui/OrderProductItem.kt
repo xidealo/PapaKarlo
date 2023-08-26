@@ -28,16 +28,16 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUiItem
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductUiItem
 
 @Composable
 fun OrderProductItem(
     modifier: Modifier = Modifier,
-    orderProductItem: OrderProductUiItem,
+    orderProductItem: OrderProductUiItem
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
-        clickable = false,
+        clickable = false
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
@@ -74,7 +74,7 @@ fun OrderProductItem(
                             text = oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
@@ -101,7 +101,7 @@ fun OrderProductItem(
                                 text = oldCost,
                                 style = FoodDeliveryTheme.typography.bodySmall,
                                 textDecoration = TextDecoration.LineThrough,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                             )
                         }
                         Text(

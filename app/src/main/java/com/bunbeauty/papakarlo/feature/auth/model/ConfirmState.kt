@@ -4,7 +4,7 @@ data class ConfirmState(
     val phoneNumber: String,
     val resendSeconds: Int,
     val isCodeChecking: Boolean,
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
     val isResendEnable: Boolean = resendSeconds == 0
     val formattedPhoneNumber: String = phoneNumber.replace(Regex("[\\s()-]"), "")
@@ -20,6 +20,6 @@ data class ConfirmState(
 
     enum class ConfirmError {
         SOMETHING_WENT_WRONG_ERROR,
-        WRONG_CODE_ERROR,
+        WRONG_CODE_ERROR
     }
 }

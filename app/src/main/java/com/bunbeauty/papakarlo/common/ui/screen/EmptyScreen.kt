@@ -33,7 +33,7 @@ internal fun EmptyScreen(
     @StringRes mainTextId: Int,
     @StringRes extraTextId: Int,
     @StringRes buttonTextId: Int? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null
 ) {
     Column(
         modifier = Modifier
@@ -99,6 +99,6 @@ private fun EmptyScreenPreview() {
         imageDescriptionId = R.string.description_consumer_cart_empty,
         mainTextId = R.string.msg_consumer_cart_empty,
         extraTextId = R.string.msg_consumer_cart_empty,
-        buttonTextId = R.string.action_consumer_cart_menu,
+        buttonTextId = R.string.action_consumer_cart_menu
     )
 }

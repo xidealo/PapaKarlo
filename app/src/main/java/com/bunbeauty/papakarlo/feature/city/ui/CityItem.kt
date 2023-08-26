@@ -23,7 +23,7 @@ fun CityItem(
     cityName: String,
     elevated: Boolean = true,
     isSelected: Boolean = false,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier
@@ -52,7 +52,7 @@ fun CityItem(
                         .align(Alignment.CenterVertically),
                     painter = painterResource(R.drawable.ic_check),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    contentDescription = stringResource(R.string.description_ic_checked),
+                    contentDescription = stringResource(R.string.description_ic_checked)
                 )
             }
         }

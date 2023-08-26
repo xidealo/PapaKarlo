@@ -58,7 +58,7 @@ struct UserAddressListView: View {
             default : EmptyView()
             }
         }
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
         .onAppear(){
            listener = viewModel.addressListState.watch { addressListVM in

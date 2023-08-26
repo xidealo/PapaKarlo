@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/userAddressListFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.screen.user_address_list.UserAddressListFragment"
+        android:name="com.bunbeauty.papakarlo.feature.address.screen.useraddresslist.UserAddressListFragment"
         android:label="@string/title_my_addresses">
         <argument
             android:name="isClickable"
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/createAddressFragment"
-        android:name="com.bunbeauty.papakarlo.feature.address.screen.create_address.CreateAddressFragment"
+        android:name="com.bunbeauty.papakarlo.feature.address.screen.createaddress.CreateAddressFragment"
         android:label="@string/title_create_address" />
 
 </navigation>

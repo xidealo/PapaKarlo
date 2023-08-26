@@ -33,7 +33,7 @@ val YuliarLightColors = AppColors(
         onBackground = Black1,
         onSurface = Black1,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -43,14 +43,14 @@ val YuliarLightColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = Gold,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = true
@@ -70,7 +70,7 @@ val YuliarDarkColors = AppColors(
         onBackground = White,
         onSurface = White,
         onSurfaceVariant = Grey2,
-        onError = White,
+        onError = White
     ),
     orderColors = OrderColors(
         notAccepted = Purple,
@@ -80,14 +80,14 @@ val YuliarDarkColors = AppColors(
         done = LightGreen,
         delivered = Green,
         canceled = DarkGrey,
-        onOrder = White,
+        onOrder = White
     ),
     statusColors = StatusColors(
         positive = Green,
         warning = Yellow,
         negative = LightRed,
         info = Gold,
-        onStatus = White,
+        onStatus = White
     ),
     bunBeautyBrandColor = LightBlue,
     isLight = false

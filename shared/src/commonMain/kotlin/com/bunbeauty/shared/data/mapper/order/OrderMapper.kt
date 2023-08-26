@@ -55,7 +55,10 @@ class OrderMapper(
             orderProductPhotoLink = orderProductServer.photoLink,
             orderProductBarcode = orderProductServer.barcode,
             orderUuid = orderServer.uuid,
-            paymentMethod = orderServer.paymentMethod
+            paymentMethod = orderServer.paymentMethod,
+            oldTotalCost = orderServer.oldTotalCost,
+            newTotalCost = orderServer.newTotalCost,
+            percentDiscount = orderServer.percentDiscount,
         )
     }
 
@@ -110,7 +113,10 @@ class OrderMapper(
                 deliveryCost = firstOrderWithProductEntity.deliveryCost,
                 orderProductList = orderWithProductEntityList.map(orderProductMapper::toOrderProduct),
                 paymentMethod = PaymentMethodName.values()
-                    .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod }
+                    .firstOrNull { it.name == firstOrderWithProductEntity.paymentMethod },
+                oldTotalCost = firstOrderWithProductEntity.oldTotalCost,
+                newTotalCost = firstOrderWithProductEntity.newTotalCost,
+                percentDiscount = firstOrderWithProductEntity.percentDiscount,
             )
         }
     }
@@ -138,7 +144,10 @@ class OrderMapper(
             deliveryCost = orderServer.deliveryCost,
             orderProductList = orderServer.oderProductList.map(orderProductMapper::toOrderProduct),
             paymentMethod = PaymentMethodName.values()
-                .firstOrNull { it.name == orderServer.paymentMethod }
+                .firstOrNull { it.name == orderServer.paymentMethod },
+            oldTotalCost = orderServer.oldTotalCost,
+            newTotalCost = orderServer.newTotalCost,
+            percentDiscount = orderServer.percentDiscount,
         )
     }
 

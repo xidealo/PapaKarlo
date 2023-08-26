@@ -41,7 +41,7 @@ struct ErrorView: View {
             .padding(.horizontal, Diems.MEDIUM_PADDING)
         }
         .hiddenNavigationBarStyle()
-        .background(Color("background"))
+        .background(AppColor.background)
     }
 }
 
