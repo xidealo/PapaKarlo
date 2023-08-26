@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
-import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextFieldDefaults
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextFieldDefaults
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @Composable

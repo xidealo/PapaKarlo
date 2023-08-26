@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.menu
 
 import androidx.lifecycle.viewModelScope
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
 import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem

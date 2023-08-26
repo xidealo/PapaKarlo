@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.menu.model
 
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 
 class MenuUiStateMapper(

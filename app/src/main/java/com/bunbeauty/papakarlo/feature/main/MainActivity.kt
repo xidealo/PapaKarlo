@@ -37,7 +37,7 @@ import androidx.navigation.FloatingWindow
 import androidx.navigation.fragment.NavHostFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.FoodDeliveryNavigationBar
+import com.bunbeauty.papakarlo.common.ui.element.bottombar.FoodDeliveryNavigationBar
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.FragmentContainerBinding
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding

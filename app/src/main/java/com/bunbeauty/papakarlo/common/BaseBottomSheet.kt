@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 abstract class BaseBottomSheet(@LayoutRes private val layoutId: Int) : BottomSheetDialogFragment() {

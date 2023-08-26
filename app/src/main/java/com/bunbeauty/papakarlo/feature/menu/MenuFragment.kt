@@ -36,7 +36,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -51,8 +51,8 @@ import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

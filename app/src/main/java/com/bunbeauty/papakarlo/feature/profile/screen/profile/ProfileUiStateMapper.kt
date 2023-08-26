@@ -1,6 +1,6 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.profile.ProfileState

@@ -1,11 +1,11 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
+import com.bunbeauty.papakarlo.common.viewmodel.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
-import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
+import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
