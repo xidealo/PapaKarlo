@@ -86,7 +86,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
             },
             topActions = listOf(
                 FoodDeliveryCartAction(topCartUi = productDetailsUi.topCartUi) {
-                    val backQueue = findNavController().backQueue
+                    val backQueue = findNavController().currentBackStack.value
                     if ((backQueue.size > 1) &&
                         (backQueue[backQueue.lastIndex - 1].destination.id == R.id.consumerCartFragment)
                     ) {

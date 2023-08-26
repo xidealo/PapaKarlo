@@ -1,9 +1,9 @@
 object Versions {
-    const val gradle = "8.1.0"
+    const val gradle = "8.1.1"
     const val kotlin = "1.9.0"
     const val googleServices = "4.3.15"
     const val crashlytics = "2.9.9"
-    const val navigation = "2.5.1"
+    const val navigation = "2.7.1"
 
     const val kotlinCoroutines = "1.7.3"
     const val ktor = "2.3.3"
@@ -40,7 +40,7 @@ object Versions {
 
     const val leakcanary = "2.12"
 
-    const val firebase = "31.4.0"
+    const val firebase = "32.2.3"
 
     const val pinEntryEditText = "2.0.6"
 
@@ -85,7 +85,7 @@ object GustoPubApplication {
 
 object AndroidSdk {
     const val min = 24
-    const val compile = 33
+    const val compile = 34
     const val target = compile
 }
 
