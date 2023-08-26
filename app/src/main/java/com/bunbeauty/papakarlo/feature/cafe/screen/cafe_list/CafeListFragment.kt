@@ -65,7 +65,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
     private fun CafeListScreen(
         cafeListUi: CafeListUi,
         onCafeClicked: (String) -> Unit,
-        onRefreshClicked: () -> Unit,
+        onRefreshClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_cafe_list),
@@ -76,7 +76,7 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                         findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                     }
                 )
-            ),
+            )
         ) {
             when (cafeListUi.state) {
                 is CafeListState.State.Success -> CafeListSuccessScreen(
@@ -97,12 +97,12 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
     @Composable
     private fun CafeListSuccessScreen(
         cafeItemList: List<CafeItemAndroid>,
-        onCafeClicked: (String) -> Unit,
+        onCafeClicked: (String) -> Unit
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
-            verticalArrangement = spacedBy(8.dp),
+            verticalArrangement = spacedBy(8.dp)
         ) {
             itemsIndexed(cafeItemList) { i, cafeItem ->
                 CafeItem(
@@ -164,8 +164,8 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     state = CafeListState.State.Success,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onCafeClicked = {},
                 onRefreshClicked = {}
@@ -182,8 +182,8 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     state = CafeListState.State.Loading,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onCafeClicked = {},
                 onRefreshClicked = {}
@@ -200,8 +200,8 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     state = CafeListState.State.Error(Throwable()),
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onCafeClicked = {},
                 onRefreshClicked = {}

@@ -102,7 +102,7 @@ class CafeOptionsBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_compose) {
                     callToCafe = "Позвонить: +7 (900) 900-90-90",
                     phone = "",
                     latitude = 0.0,
-                    longitude = 0.0,
+                    longitude = 0.0
                 )
             )
         }

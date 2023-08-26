@@ -20,7 +20,7 @@ class OrderProductItemMapper(
                 stringUtil.getCostString(oldCost)
             },
             photoLink = stringUtil.getCostString(orderProductItem.photoLink),
-            count = stringUtil.getCountString(orderProductItem.count),
+            count = stringUtil.getCountString(orderProductItem.count)
         )
     }
 }

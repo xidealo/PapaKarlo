@@ -113,7 +113,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = R.string.common_email,
                     label = email,
-                    onClick = viewModel::onEmailClicked,
+                    onClick = viewModel::onEmailClicked
                 )
             }
             NavigationTextCard(
@@ -176,12 +176,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "example@email.com",
+                        email = "example@email.com"
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )
@@ -198,12 +198,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "",
+                        email = ""
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )

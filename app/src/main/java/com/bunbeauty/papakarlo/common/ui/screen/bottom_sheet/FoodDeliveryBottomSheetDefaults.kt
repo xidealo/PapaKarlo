@@ -12,6 +12,6 @@ object FoodDeliveryBottomSheetDefaults {
             topStart = FoodDeliveryTheme.dimensions.bottomSheetRadius,
             topEnd = FoodDeliveryTheme.dimensions.bottomSheetRadius,
             bottomEnd = 0.dp,
-            bottomStart = 0.dp,
+            bottomStart = 0.dp
         )
 }

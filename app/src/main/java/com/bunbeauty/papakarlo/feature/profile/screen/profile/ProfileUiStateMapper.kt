@@ -7,7 +7,7 @@ import com.bunbeauty.shared.presentation.profile.ProfileState
 
 class ProfileUiStateMapper(
     private val stringUtil: IStringUtil,
-    private val orderItemMapper: OrderItemMapper,
+    private val orderItemMapper: OrderItemMapper
 ) {
 
     fun map(profileState: ProfileState): ProfileUi {
@@ -21,7 +21,7 @@ class ProfileUiStateMapper(
             orderItem = profileState.lastOrder?.let {
                 orderItemMapper.toItem(it)
             },
-            state = profileState.state,
+            state = profileState.state
         )
     }
 }

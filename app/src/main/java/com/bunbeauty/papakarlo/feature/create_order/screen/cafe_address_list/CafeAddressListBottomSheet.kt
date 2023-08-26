@@ -33,7 +33,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>
                 onAddressClicked = { addressItem ->
                     callback?.onResult(addressItem)
                     dismiss()
-                },
+                }
             )
         }
     }
@@ -43,7 +43,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            addressList: List<SelectableCafeAddressItem>,
+            addressList: List<SelectableCafeAddressItem>
         ) = suspendCoroutine { continuation ->
             CafeAddressListBottomSheet().apply {
                 this.addressList = addressList
@@ -62,7 +62,7 @@ class CafeAddressListBottomSheet : ComposeBottomSheet<SelectableCafeAddressItem>
 private fun CafeAddressListScreen(
     addressList: List<SelectableCafeAddressItem>,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (SelectableCafeAddressItem) -> Unit,
+    onAddressClicked: (SelectableCafeAddressItem) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.pickup_address,
@@ -99,10 +99,10 @@ private fun CafeAddressListScreenPreview() {
                     uuid = "2",
                     address = "Оооооооооооооооооооооооочень длинный адрес 2",
                     isSelected = false
-                ),
+                )
             ),
             scrolledToTop = {},
-            onAddressClicked = {},
+            onAddressClicked = {}
         )
     }
 }

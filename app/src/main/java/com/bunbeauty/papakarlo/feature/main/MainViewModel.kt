@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class MainViewModel(
-    private val networkUtil: INetworkUtil,
+    private val networkUtil: INetworkUtil
 ) : ViewModel() {
 
     private val mutableMainState: MutableStateFlow<MainState> = MutableStateFlow(MainState())

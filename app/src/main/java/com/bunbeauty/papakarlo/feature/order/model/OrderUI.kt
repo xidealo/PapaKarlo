@@ -17,5 +17,5 @@ data class OrderUI(
     val orderProductList: List<OrderProductItem>,
     val isDelivery: Boolean,
     val oldAmountToPay: String?,
-    val newAmountToPay: String,
+    val newAmountToPay: String
 )

@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 
 class CafeListUiStateMapper(
-    private val stringUtil: IStringUtil,
+    private val stringUtil: IStringUtil
 ) {
     fun map(cafeListState: CafeListState): CafeListUi {
         return CafeListUi(
@@ -23,10 +23,10 @@ class CafeListUiStateMapper(
                     phone = cafeItem.phone,
                     workingHours = cafeItem.workingHours,
                     cafeStatusText = stringUtil.getCafeStatusText(cafeItem.cafeOpenState),
-                    cafeOpenState = cafeItem.cafeOpenState,
+                    cafeOpenState = cafeItem.cafeOpenState
                 )
             },
-            state = cafeListState.state,
+            state = cafeListState.state
         )
     }
 }

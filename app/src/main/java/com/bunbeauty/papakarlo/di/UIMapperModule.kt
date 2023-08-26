@@ -65,7 +65,7 @@ fun uiMapperModule() = module {
     }
     factory {
         PaymentMethodUiStateMapper(
-            resources = get(),
+            resources = get()
         )
     }
     factory {

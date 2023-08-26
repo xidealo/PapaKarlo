@@ -24,7 +24,7 @@ class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
-    private val removeCartProductUseCase: RemoveCartProductUseCase,
+    private val removeCartProductUseCase: RemoveCartProductUseCase
 ) : BaseViewModel() {
 
     private val consumerCartDataState = MutableStateFlow(ConsumerCartDataState())
@@ -46,7 +46,7 @@ class ConsumerCartViewModel(
                             } else {
                                 dataState.copy(
                                     state = getConsumerCartDataState(consumerCart),
-                                    consumerCartData = getConsumerCartData(consumerCart),
+                                    consumerCartData = getConsumerCartData(consumerCart)
                                 )
                             }
                         }
@@ -122,7 +122,7 @@ class ConsumerCartViewModel(
         return when (dataState.state) {
             ConsumerCartDataState.State.LOADING -> ConsumerCartUIState(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Loading,
-                eventList = dataState.eventList,
+                eventList = dataState.eventList
             )
             ConsumerCartDataState.State.SUCCESS -> {
                 if (dataState.consumerCartData == null) {
@@ -130,17 +130,17 @@ class ConsumerCartViewModel(
                 } else {
                     ConsumerCartUIState(
                         consumerCartState = ConsumerCartUIState.ConsumerCartState.Success(dataState.consumerCartData),
-                        eventList = dataState.eventList,
+                        eventList = dataState.eventList
                     )
                 }
             }
             ConsumerCartDataState.State.EMPTY -> ConsumerCartUIState(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Empty,
-                eventList = dataState.eventList,
+                eventList = dataState.eventList
             )
             ConsumerCartDataState.State.ERROR -> ConsumerCartUIState(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Error,
-                eventList = dataState.eventList,
+                eventList = dataState.eventList
             )
         }
     }
@@ -154,7 +154,7 @@ class ConsumerCartViewModel(
                 oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
                     stringUtil.getCostString(oldTotalCost)
                 },
-                newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost),
+                newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost)
             )
         }
     }

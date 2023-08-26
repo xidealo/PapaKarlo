@@ -51,7 +51,7 @@ fun SmsEditText(
     }
     Row(
         modifier = modifier,
-        horizontalArrangement = spacedBy(8.dp),
+        horizontalArrangement = spacedBy(8.dp)
     ) {
         CompositionLocalProvider(
             LocalTextSelectionColors provides FoodDeliveryTextFieldDefaults.smsCodeTextSelectionColors
@@ -132,7 +132,7 @@ fun SmsDigitCell(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.None
-        ),
+        )
     )
 }
 

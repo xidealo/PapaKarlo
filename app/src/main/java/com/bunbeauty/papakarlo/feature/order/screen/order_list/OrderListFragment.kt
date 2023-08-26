@@ -52,7 +52,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compos
             OrderListScreen(
                 orderListUi = OrderListUi(
                     orderList = orderListState.orderList.map(orderItemMapper::toItem),
-                    state = orderListState.state,
+                    state = orderListState.state
                 )
             )
             LaunchedEffect(orderListState.eventList) {
@@ -88,7 +88,7 @@ class OrderListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compos
                         imageId = R.drawable.ic_history,
                         imageDescriptionId = R.string.description_cafe_addresses_empty,
                         mainTextId = R.string.title_order_list_empty,
-                        extraTextId = R.string.msg_order_list_empty,
+                        extraTextId = R.string.msg_order_list_empty
                     )
                 }
                 OrderListState.State.LOADING -> {

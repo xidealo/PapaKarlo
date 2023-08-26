@@ -49,7 +49,7 @@ class CommentBottomSheet : ComposeBottomSheet<String>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            comment: String?,
+            comment: String?
         ) = suspendCoroutine { continuation ->
             CommentBottomSheet().apply {
                 this.comment = comment
@@ -68,7 +68,7 @@ class CommentBottomSheet : ComposeBottomSheet<String>() {
 @Composable
 private fun CommentScreen(
     comment: String?,
-    onSaveClicked: (String) -> Unit,
+    onSaveClicked: (String) -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.comment) {
         val focusRequester = remember { FocusRequester() }
@@ -112,7 +112,7 @@ private fun CommentScreenPreview() {
     FoodDeliveryTheme {
         CommentScreen(
             comment = null,
-            onSaveClicked = {},
+            onSaveClicked = {}
         )
     }
 }

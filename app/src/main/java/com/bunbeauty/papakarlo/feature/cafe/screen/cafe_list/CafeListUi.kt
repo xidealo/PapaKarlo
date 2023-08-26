@@ -7,5 +7,5 @@ import com.bunbeauty.shared.presentation.cafe_list.CafeListState
 data class CafeListUi(
     val cafeList: List<CafeItemAndroid> = emptyList(),
     val topCartUi: TopCartUi,
-    val state: CafeListState.State = CafeListState.State.Loading,
+    val state: CafeListState.State = CafeListState.State.Loading
 )

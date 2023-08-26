@@ -19,7 +19,7 @@ import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
 fun CategoryItem(
     modifier: Modifier = Modifier,
     categoryItem: CategoryItem,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val color = if (categoryItem.isSelected) {
         FoodDeliveryTheme.colors.mainColors.primary

@@ -13,7 +13,7 @@ object FoodDeliverySwitcherDefaults {
             containerColor = FoodDeliveryTheme.colors.mainColors.secondary,
             contentColor = FoodDeliveryTheme.colors.mainColors.onSecondary,
             disabledContainerColor = FoodDeliveryTheme.colors.mainColors.primary,
-            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
+            disabledContentColor = FoodDeliveryTheme.colors.mainColors.onPrimary
         )
 
     val switcherShape: RoundedCornerShape

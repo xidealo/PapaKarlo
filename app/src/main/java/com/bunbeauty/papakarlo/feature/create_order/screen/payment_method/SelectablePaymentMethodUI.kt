@@ -4,5 +4,5 @@ import com.bunbeauty.papakarlo.feature.profile.screen.payment.PaymentMethodUI
 
 class SelectablePaymentMethodUI(
     val paymentMethodUI: PaymentMethodUI,
-    val isSelected: Boolean,
+    val isSelected: Boolean
 )

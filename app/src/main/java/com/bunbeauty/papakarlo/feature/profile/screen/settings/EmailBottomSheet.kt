@@ -50,7 +50,7 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            email: String?,
+            email: String?
         ) = suspendCoroutine { continuation ->
             EmailBottomSheet().apply {
                 this.email = email
@@ -69,7 +69,7 @@ class EmailBottomSheet : ComposeBottomSheet<String>() {
 @Composable
 private fun EmailScreen(
     email: String?,
-    onSaveClicked: (String) -> Unit,
+    onSaveClicked: (String) -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.common_email) {
         val text = email ?: ""

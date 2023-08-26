@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.NavigationBarItem
 data class MainState(
     val connectionLost: Boolean = false,
     val navigationBarOptions: NavigationBarOptions = NavigationBarOptions.Hidden,
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
 
     sealed interface Event {
@@ -19,7 +19,7 @@ data class MainState(
 
 enum class FoodDeliveryMessageType {
     INFO,
-    ERROR,
+    ERROR
 }
 
 data class FoodDeliveryMessage(

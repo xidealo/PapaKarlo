@@ -5,5 +5,5 @@ import com.bunbeauty.shared.presentation.order_list.OrderListState
 
 data class OrderListUi(
     val orderList: List<OrderItem> = emptyList(),
-    val state: OrderListState.State = OrderListState.State.LOADING,
+    val state: OrderListState.State = OrderListState.State.LOADING
 )

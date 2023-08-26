@@ -50,7 +50,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
         parameters = {
             parametersOf(
                 args.successLoginDirection,
-                args.phone,
+                args.phone
             )
         }
     )
@@ -101,7 +101,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                         viewModel.onResendCodeClicked()
                         phoneVerificationUtil.resendVerificationCode(
                             phone = confirmState.formattedPhoneNumber,
-                            activity = requireActivity(),
+                            activity = requireActivity()
                         )
                     }
                 }
@@ -129,7 +129,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                 text = stringResource(R.string.msg_confirm_enter_code),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
             Text(
                 modifier = Modifier

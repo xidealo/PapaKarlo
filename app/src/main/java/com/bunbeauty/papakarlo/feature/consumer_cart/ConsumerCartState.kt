@@ -6,14 +6,14 @@ import com.bunbeauty.papakarlo.feature.consumer_cart.model.CartProductItem
 data class ConsumerCartDataState(
     val consumerCartData: ConsumerCartData? = null,
     val state: State = State.LOADING,
-    val eventList: List<ConsumerCartEvent> = emptyList(),
+    val eventList: List<ConsumerCartEvent> = emptyList()
 ) {
 
     enum class State {
         LOADING,
         SUCCESS,
         EMPTY,
-        ERROR,
+        ERROR
     }
 
     operator fun plus(event: ConsumerCartEvent) = copy(eventList = eventList + event)
@@ -24,7 +24,7 @@ data class ConsumerCartData(
     val forFreeDelivery: String,
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
-    val newTotalCost: String,
+    val newTotalCost: String
 )
 
 sealed interface ConsumerCartEvent {

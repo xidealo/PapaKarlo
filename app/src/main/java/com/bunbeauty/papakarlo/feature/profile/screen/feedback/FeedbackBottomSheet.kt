@@ -28,7 +28,7 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
         binding.root.setContentWithTheme {
             FeedbackScreen(
                 linkList = feedbackArgument.linkList,
-                onItemClick = ::goByLink,
+                onItemClick = ::goByLink
             )
         }
     }
@@ -44,7 +44,7 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 
         fun show(
             fragmentManager: FragmentManager,
-            feedbackArgument: FeedbackArgument,
+            feedbackArgument: FeedbackArgument
         ) = FeedbackBottomSheet().apply {
             this.feedbackArgument = feedbackArgument
             show(fragmentManager, TAG)
@@ -55,7 +55,7 @@ class FeedbackBottomSheet : ComposeBottomSheet<Any>() {
 @Composable
 private fun FeedbackScreen(
     linkList: List<LinkUI>,
-    onItemClick: (String) -> Unit,
+    onItemClick: (String) -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.title_feedback) {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -85,28 +85,28 @@ private fun FeedbackScreenPreview() {
                     uuid = "",
                     labelId = R.string.action_feedback_vk,
                     iconId = R.drawable.ic_vk,
-                    value = "https://vk.com/link",
+                    value = "https://vk.com/link"
                 ),
                 LinkUI(
                     uuid = "",
                     labelId = R.string.action_feedback_instagram,
                     iconId = R.drawable.ic_instagram,
-                    value = "https://instagram.com/link",
+                    value = "https://instagram.com/link"
                 ),
                 LinkUI(
                     uuid = "",
                     labelId = R.string.action_feedback_play_market,
                     iconId = R.drawable.ic_google_play,
-                    value = "https://googleplay.com/link",
+                    value = "https://googleplay.com/link"
                 ),
                 LinkUI(
                     uuid = "",
                     labelId = null,
                     iconId = R.drawable.ic_link,
-                    value = "https://unknown.link.com/path",
-                ),
+                    value = "https://unknown.link.com/path"
+                )
             ),
-            onItemClick = {},
+            onItemClick = {}
         )
     }
 }

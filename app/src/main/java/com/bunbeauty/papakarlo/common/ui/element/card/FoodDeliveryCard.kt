@@ -22,10 +22,10 @@ fun FoodDeliveryCard(
     colors: CardColors = FoodDeliveryCardDefaults.cardColors,
     shape: Shape = FoodDeliveryCardDefaults.cardShape,
     border: BorderStroke? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
+        LocalMinimumTouchTargetEnforcement provides false
     ) {
         if (clickable) {
             Card(

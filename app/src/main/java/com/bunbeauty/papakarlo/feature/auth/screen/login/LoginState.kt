@@ -6,7 +6,7 @@ data class LoginState(
     val phone: String = "",
     val hasPhoneError: Boolean = false,
     val state: State = State.Success,
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
 
     sealed class State {
@@ -18,7 +18,7 @@ data class LoginState(
     sealed interface Event {
         data class NavigateToConfirmEvent(
             val phone: String,
-            val successLoginDirection: SuccessLoginDirection,
+            val successLoginDirection: SuccessLoginDirection
         ) : Event
 
         object NavigateBackToProfileEvent : Event

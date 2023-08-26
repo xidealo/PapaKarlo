@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
             LaunchedEffect(mainState.eventList) {
                 handleEventList(
                     eventList = mainState.eventList,
-                    snackbarHostState = snackbarHostState,
+                    snackbarHostState = snackbarHostState
                 )
             }
             MainScreen(
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                     .fillMaxWidth()
                     .background(FoodDeliveryTheme.colors.mainColors.error)
                     .padding(8.dp),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = resources.getString(R.string.error_no_internet),
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
                 Snackbar(
                     snackbarData = snackbarData,
                     containerColor = containerColor,
-                    contentColor = contentColor,
+                    contentColor = contentColor
                 )
             }
         }

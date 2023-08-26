@@ -31,11 +31,11 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
-        onClick = onClick,
+        onClick = onClick
     ) {
         Row {
             AsyncImage(
@@ -69,7 +69,7 @@ fun CartProductItem(
                             text = cartProductItem.oldCost,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
@@ -85,7 +85,7 @@ fun CartProductItem(
                     .align(CenterVertically),
                 count = cartProductItem.count,
                 onCountIncreased = onCountIncreased,
-                onCountDecreased = onCountDecreased,
+                onCountDecreased = onCountDecreased
             )
         }
     }
@@ -107,7 +107,7 @@ private fun CartProductItemPreview() {
             ),
             onCountIncreased = {},
             onCountDecreased = {},
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -128,7 +128,7 @@ private fun CartProductItemWithoutOldCostPreview() {
             ),
             onCountIncreased = {},
             onCountDecreased = {},
-            onClick = {},
+            onClick = {}
         )
     }
 }

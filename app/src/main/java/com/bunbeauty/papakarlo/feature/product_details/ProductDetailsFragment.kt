@@ -77,7 +77,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        state: ProductDetailsState.State,
+        state: ProductDetailsState.State
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -143,7 +143,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(FoodDeliveryTheme.dimensions.mediumSpace),
-            clickable = false,
+            clickable = false
         ) {
             Column {
                 AsyncImage(
@@ -216,7 +216,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                 productDetailsUi = ProductDetailsUi(
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
+                        count = "2"
                     ),
                     menuProductUi = ProductDetailsUi.MenuProductUi(
                         photoLink = "",
@@ -225,7 +225,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом",
+                            "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
                 state = ProductDetailsState.State.SUCCESS
@@ -243,9 +243,9 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                 productDetailsUi = ProductDetailsUi(
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
+                        count = "2"
                     ),
-                    menuProductUi = null,
+                    menuProductUi = null
                 ),
                 state = ProductDetailsState.State.LOADING
             )

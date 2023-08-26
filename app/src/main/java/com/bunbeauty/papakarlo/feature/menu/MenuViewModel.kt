@@ -23,7 +23,7 @@ class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val stringUtil: IStringUtil,
     private val observeCartUseCase: ObserveCartUseCase,
-    private val addCartProductUseCase: AddCartProductUseCase,
+    private val addCartProductUseCase: AddCartProductUseCase
 ) : BaseViewModel() {
 
     private val mutableMenuState = MutableStateFlow(MenuState())
@@ -110,7 +110,7 @@ class MenuViewModel(
         mutableMenuState.update { oldState ->
             oldState + MenuState.Event.GoToSelectedItem(
                 uuid = menuProductItem.uuid,
-                name = menuProductItem.name,
+                name = menuProductItem.name
             )
         }
     }

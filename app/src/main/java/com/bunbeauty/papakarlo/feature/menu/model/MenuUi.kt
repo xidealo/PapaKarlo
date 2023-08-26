@@ -7,5 +7,5 @@ data class MenuUi(
     val topCartUi: TopCartUi,
     val menuItemList: List<MenuItem> = emptyList(),
     val state: MenuState.State = MenuState.State.Loading,
-    val eventList: List<MenuState.Event> = emptyList(),
+    val eventList: List<MenuState.Event> = emptyList()
 )

@@ -96,7 +96,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(1f)
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -135,7 +135,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
     private fun OrderInfoTextColumn(
         modifier: Modifier = Modifier,
         hint: String,
-        info: String,
+        info: String
     ) {
         Column(modifier = modifier) {
             Text(
@@ -154,7 +154,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
     @Composable
     private fun OrderInfoCard(
         modifier: Modifier = Modifier,
-        orderInfo: OrderDetailsUi.OrderInfo,
+        orderInfo: OrderDetailsUi.OrderInfo
     ) {
         FoodDeliveryCard(
             modifier = modifier,
@@ -172,7 +172,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                         modifier = Modifier
                             .weight(1f),
                         hint = stringResource(R.string.msg_order_details_date_time),
-                        info = orderInfo.dateTime,
+                        info = orderInfo.dateTime
                     )
                     orderInfo.deferredTime?.let { deferredTime ->
                         OrderInfoTextColumn(
@@ -180,7 +180,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                                 .padding(start = 16.dp)
                                 .weight(1f),
                             hint = stringResource(id = orderInfo.deferredTimeHintId),
-                            info = deferredTime,
+                            info = deferredTime
                         )
                     }
                 }
@@ -193,7 +193,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                         modifier = Modifier
                             .weight(1f),
                         hint = stringResource(R.string.msg_order_details_pickup_method),
-                        info = orderInfo.pickupMethod,
+                        info = orderInfo.pickupMethod
                     )
                     orderInfo.paymentMethod?.let { paymentMethod ->
                         OrderInfoTextColumn(
@@ -201,7 +201,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                                 .padding(start = 16.dp)
                                 .weight(1f),
                             hint = stringResource(R.string.msg_order_details_payment_method),
-                            info = paymentMethod,
+                            info = paymentMethod
                         )
                     }
                 }
@@ -209,14 +209,14 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     modifier = Modifier
                         .padding(top = 8.dp),
                     hint = stringResource(R.string.msg_order_details_address),
-                    info = orderInfo.address,
+                    info = orderInfo.address
                 )
                 orderInfo.comment?.let { comment ->
                     OrderInfoTextColumn(
                         modifier = Modifier
                             .padding(top = 8.dp),
                         hint = stringResource(R.string.msg_order_details_comment),
-                        info = comment,
+                        info = comment
                     )
                 }
             }
@@ -270,7 +270,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                         Text(
                             text = finalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
                     }
                 }
@@ -362,14 +362,14 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     oldCost = null,
                     photoLink = "",
                     count = "1"
-                ),
+                )
             ),
             orderInfo = getOrderInfo(),
             totalCost = "450",
             deliveryCost = "100",
             finalCost = "550",
             isLoading = false,
-            code = "A-40",
+            code = "A-40"
         )
     }
 

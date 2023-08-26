@@ -35,7 +35,7 @@ fun FoodDeliveryToolbar(
     backActionClick: (() -> Unit)? = null,
     scrollBehavior: TopAppBarScrollBehavior,
     @DrawableRes drawableId: Int? = null,
-    actions: List<FoodDeliveryToolbarActions> = emptyList(),
+    actions: List<FoodDeliveryToolbarActions> = emptyList()
 ) {
     Box {
         TopAppBar(
@@ -107,7 +107,7 @@ private fun Action(action: FoodDeliveryAction) {
 private fun CardAction(action: FoodDeliveryCartAction) {
     FoodDeliveryCard(
         elevated = false,
-        onClick = action.onClick,
+        onClick = action.onClick
     ) {
         Row(
             modifier = Modifier.padding(4.dp),
@@ -130,7 +130,7 @@ private fun CardAction(action: FoodDeliveryCartAction) {
                 Badge(
                     modifier = Modifier.align(Alignment.TopEnd),
                     containerColor = FoodDeliveryTheme.colors.mainColors.primary,
-                    contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
+                    contentColor = FoodDeliveryTheme.colors.mainColors.onPrimary
                 ) {
                     Text(
                         style = FoodDeliveryTheme.typography.labelSmall.medium,

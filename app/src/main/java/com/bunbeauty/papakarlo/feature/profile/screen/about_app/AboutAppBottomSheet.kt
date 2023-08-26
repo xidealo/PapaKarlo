@@ -35,14 +35,14 @@ private fun AboutAppScreen() {
             iconId = R.drawable.ic_bb,
             clickable = false,
             elevated = false,
-            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
+            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor
         )
         StartIconCard(
             modifier = Modifier.padding(top = 8.dp),
             label = stringResource(R.string.msg_about_app_version) + BuildConfig.VERSION_NAME,
             iconId = R.drawable.ic_version,
             clickable = false,
-            elevated = false,
+            elevated = false
         )
     }
 }

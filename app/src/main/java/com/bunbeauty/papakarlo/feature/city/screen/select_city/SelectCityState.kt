@@ -11,7 +11,7 @@ data class SelectCityDataState(
     enum class State {
         LOADING,
         SUCCESS,
-        ERROR,
+        ERROR
     }
 
     operator fun plus(event: SelectCityEvent) = copy(eventList = eventList + event)

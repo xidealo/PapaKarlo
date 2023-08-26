@@ -156,7 +156,7 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
                     ErrorScreen(
                         mainTextId = R.string.common_error,
                         extraTextId = R.string.internet_error,
-                        onClick = viewModel::setSuccessState,
+                        onClick = viewModel::setSuccessState
                     )
                 }
             }

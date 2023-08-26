@@ -79,7 +79,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 onLastOrderClicked = viewModel::onLastOrderClicked,
                 onSettingsClicked = viewModel::onSettingsClicked,
                 onYourAddressesClicked = viewModel::onYourAddressesClicked,
-                onOrderHistoryClicked = viewModel::onOrderHistoryClicked,
+                onOrderHistoryClicked = viewModel::onOrderHistoryClicked
             )
             LaunchedEffect(profileState.eventList) {
                 handleEventList(profileState.eventList)
@@ -103,13 +103,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClicked: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_profile),
             topActions = listOf(
                 FoodDeliveryCartAction(
-                    topCartUi = profileUi.topCartUi,
+                    topCartUi = profileUi.topCartUi
                 ) {
                     findNavController().navigateSafe(ProductDetailsFragmentDirections.globalConsumerCartFragment())
                 }
@@ -124,7 +124,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         viewModel.onLoginClicked()
                     }
                 }
-            },
+            }
         ) {
             when (profileUi.state) {
                 ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
@@ -132,7 +132,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     onLastOrderClicked = onLastOrderClicked,
                     onSettingsClick = onSettingsClicked,
                     onYourAddressesClicked = onYourAddressesClicked,
-                    onOrderHistoryClicked = onOrderHistoryClicked,
+                    onOrderHistoryClicked = onOrderHistoryClicked
                 )
                 ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
                 ProfileState.State.LOADING -> LoadingScreen()
@@ -210,7 +210,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
         onLastOrderClicked: (String, String) -> Unit,
         onSettingsClick: () -> Unit,
         onYourAddressesClicked: () -> Unit,
-        onOrderHistoryClicked: () -> Unit,
+        onOrderHistoryClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -262,7 +262,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(FoodDeliveryTheme.dimensions.mediumSpace),
+                .padding(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             ProfileInfoCards()
 
@@ -350,13 +350,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         status = OrderStatus.NOT_ACCEPTED,
                         statusName = OrderStatus.NOT_ACCEPTED.name,
                         code = "А-12",
-                        dateTime = "10-10-10 20:20",
+                        dateTime = "10-10-10 20:20"
                     ),
                     state = ProfileState.State.AUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -376,8 +376,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.AUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -397,8 +397,8 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.UNAUTHORIZED,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
@@ -418,13 +418,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.LOADING,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }
@@ -439,13 +439,13 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                     state = ProfileState.State.ERROR,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 ),
                 onLastOrderClicked = { _, _ -> },
                 onSettingsClicked = {},
                 onYourAddressesClicked = {},
-                onOrderHistoryClicked = {},
+                onOrderHistoryClicked = {}
             )
         }
     }

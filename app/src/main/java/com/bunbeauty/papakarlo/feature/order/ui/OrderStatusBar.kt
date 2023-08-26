@@ -30,13 +30,13 @@ private val stepShape = RoundedCornerShape(12.dp)
 fun OrderStatusBar(
     modifier: Modifier = Modifier,
     orderStatus: OrderStatus,
-    orderStatusName: String,
+    orderStatusName: String
 ) {
     FoodDeliveryCard(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .fillMaxWidth(),
-        clickable = false,
+        clickable = false
     ) {
         val currentStep = when (orderStatus) {
             OrderStatus.NOT_ACCEPTED -> 0
@@ -87,7 +87,7 @@ fun OrderStatusBar(
 @Composable
 private fun DoneStep(
     modifier: Modifier = Modifier,
-    orderStatus: OrderStatus,
+    orderStatus: OrderStatus
 ) {
     Box(
         modifier = modifier

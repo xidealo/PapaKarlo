@@ -38,7 +38,7 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
         private const val TAG = "EmailBottomSheet"
 
         suspend fun show(
-            fragmentManager: FragmentManager,
+            fragmentManager: FragmentManager
         ) = suspendCoroutine { continuation ->
             LogoutBottomSheet().apply {
                 callback = object : Callback<Boolean> {
@@ -56,7 +56,7 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
 @Composable
 private fun LogoutScreen(
     onLogoutClick: () -> Unit,
-    onCancelClick: () -> Unit,
+    onCancelClick: () -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.title_logout) {
         MainButton(

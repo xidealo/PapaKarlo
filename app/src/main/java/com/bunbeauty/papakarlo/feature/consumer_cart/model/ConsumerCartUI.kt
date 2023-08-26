@@ -4,5 +4,5 @@ data class ConsumerCartUI(
     val forFreeDelivery: String,
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
-    val newTotalCost: String,
+    val newTotalCost: String
 )

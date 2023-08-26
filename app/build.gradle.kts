@@ -9,7 +9,7 @@ plugins {
     id(Plugin.googleService)
     id(Plugin.kotlinParcelize)
     id(Plugin.crashlytics)
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
 }
 
 @Suppress("UnstableApiUsage")

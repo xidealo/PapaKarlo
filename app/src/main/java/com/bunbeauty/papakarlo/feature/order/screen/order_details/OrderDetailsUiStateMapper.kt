@@ -8,7 +8,7 @@ import com.bunbeauty.shared.presentation.order_details.OrderDetailsState
 class OrderDetailsUiStateMapper(
     private val stringUtil: IStringUtil,
     private val orderProductItemMapper: OrderProductItemMapper,
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
 ) {
     fun map(orderState: OrderDetailsState): OrderDetailsUi {
         return OrderDetailsUi(

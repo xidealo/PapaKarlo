@@ -26,7 +26,7 @@ class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val successLoginDirection: SuccessLoginDirection,
-    phoneNumber: String,
+    phoneNumber: String
 ) : BaseViewModel() {
 
     private val timerSecondCount = 60

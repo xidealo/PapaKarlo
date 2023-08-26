@@ -13,7 +13,7 @@ data class CreateOrderUi(
     val finalCost: String?,
     val isAddressErrorShown: Boolean,
     val isLoading: Boolean,
-    val selectedPaymentMethod: PaymentMethodUI?,
+    val selectedPaymentMethod: PaymentMethodUI?
 ) {
     val switcherPosition = if (isDelivery) {
         0

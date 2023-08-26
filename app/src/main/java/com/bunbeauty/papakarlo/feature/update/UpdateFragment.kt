@@ -70,7 +70,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
     @Composable
     private fun UpdateScreen(
         uiState: UpdateUiState,
-        onRepeatClick: () -> Unit,
+        onRepeatClick: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_update_new_app_version),
@@ -156,7 +156,7 @@ class UpdateFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) 
                     Link(
                         uuid = "1",
                         type = LinkType.GOOGLE_PLAY,
-                        linkValue = "https://play.google.com/store/apps/details?id=1",
+                        linkValue = "https://play.google.com/store/apps/details?id=1"
                     )
                 ),
                 onRepeatClick = {}

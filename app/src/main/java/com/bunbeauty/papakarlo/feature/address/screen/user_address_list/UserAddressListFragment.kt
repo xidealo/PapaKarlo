@@ -56,7 +56,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                         userAddressItemMapper.toItem(userAddress)
                     },
                     state = addressListState.state,
-                    eventList = addressListState.eventList,
+                    eventList = addressListState.eventList
                 )
             )
             LaunchedEffect(addressListState.eventList) {
@@ -163,7 +163,7 @@ class UserAddressListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_
                         addressItemModel,
                         addressItemModel,
                         addressItemModel,
-                        addressItemModel,
+                        addressItemModel
                     ),
                     state = UserAddressListState.State.SUCCESS,
                     eventList = emptyList()

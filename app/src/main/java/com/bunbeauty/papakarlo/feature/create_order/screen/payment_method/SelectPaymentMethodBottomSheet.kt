@@ -34,7 +34,7 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
                 onPaymentMethodClicked = { addressItem ->
                     callback?.onResult(addressItem)
                     dismiss()
-                },
+                }
             )
         }
     }
@@ -44,7 +44,7 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 
         suspend fun show(
             fragmentManager: FragmentManager,
-            selectablePaymentMethodList: List<SelectablePaymentMethodUI>,
+            selectablePaymentMethodList: List<SelectablePaymentMethodUI>
         ) = suspendCoroutine { continuation ->
             SelectPaymentMethodBottomSheet().apply {
                 this.paymentMethodList = selectablePaymentMethodList
@@ -63,11 +63,11 @@ class SelectPaymentMethodBottomSheet : ComposeBottomSheet<SelectablePaymentMetho
 private fun PaymentMethodListScreen(
     paymentMethodList: List<SelectablePaymentMethodUI>,
     scrolledToTop: (Boolean) -> Unit,
-    onPaymentMethodClicked: (SelectablePaymentMethodUI) -> Unit,
+    onPaymentMethodClicked: (SelectablePaymentMethodUI) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.pickup_payment_method,
-        scrolledToTop = scrolledToTop,
+        scrolledToTop = scrolledToTop
     ) {
         itemsIndexed(paymentMethodList) { i, paymentItem ->
             SelectableItemView(
@@ -97,8 +97,8 @@ private fun CafeAddressListScreenPreview() {
                         name = "Карта",
                         value = PaymentMethodValueUI(
                             value = "asdsd",
-                            valueToCopy = "asdsd",
-                        ),
+                            valueToCopy = "asdsd"
+                        )
                     ),
                     isSelected = true
                 ),
@@ -108,14 +108,14 @@ private fun CafeAddressListScreenPreview() {
                         name = "А нальчик можно?",
                         value = PaymentMethodValueUI(
                             value = "asdsd",
-                            valueToCopy = "asdsd",
-                        ),
+                            valueToCopy = "asdsd"
+                        )
                     ),
                     isSelected = true
-                ),
+                )
             ),
             scrolledToTop = {},
-            onPaymentMethodClicked = {},
+            onPaymentMethodClicked = {}
         )
     }
 }

@@ -14,19 +14,19 @@ fun SimpleCard(
     text: String,
     elevated: Boolean = true,
     onClick: () -> Unit = {},
-    clickable: Boolean = true,
+    clickable: Boolean = true
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
         onClick = onClick,
-        clickable = clickable,
+        clickable = clickable
     ) {
         OverflowingText(
             modifier = Modifier
                 .padding(
                     horizontal = FoodDeliveryTheme.dimensions.cardLargeInnerSpace,
-                    vertical = FoodDeliveryTheme.dimensions.cardMediumInnerSpace,
+                    vertical = FoodDeliveryTheme.dimensions.cardMediumInnerSpace
                 )
                 .fillMaxWidth(),
             text = text,
@@ -43,7 +43,7 @@ private fun SimpleCardPreview() {
         SimpleCard(
             modifier = Modifier,
             text = "Text",
-            onClick = {},
+            onClick = {}
         )
     }
 }

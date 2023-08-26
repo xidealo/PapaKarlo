@@ -27,7 +27,7 @@ class SelectCityViewModel(
                 selectCityDataState.update { state ->
                     state.copy(
                         state = SelectCityDataState.State.SUCCESS,
-                        cityList = cityInteractor.getCityList(),
+                        cityList = cityInteractor.getCityList()
                     )
                 }
             },

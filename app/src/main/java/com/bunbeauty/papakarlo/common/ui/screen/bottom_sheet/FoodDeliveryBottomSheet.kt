@@ -36,7 +36,7 @@ fun FoodDeliveryLazyBottomSheet(
     @StringRes titleStringId: Int,
     scrolledToTop: ((Boolean) -> Unit),
     bottomContent: @Composable ColumnScope.() -> Unit = {},
-    content: LazyListScope.() -> Unit,
+    content: LazyListScope.() -> Unit
 ) {
     val lazyListState = rememberLazyListState()
     val itemPosition by remember {
@@ -55,7 +55,7 @@ fun FoodDeliveryLazyBottomSheet(
         LazyColumn(
             modifier = Modifier.weight(1f, false),
             state = lazyListState,
-            content = content,
+            content = content
         )
         bottomContent()
     }

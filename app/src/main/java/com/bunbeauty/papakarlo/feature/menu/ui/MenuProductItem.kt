@@ -28,7 +28,7 @@ fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
     onAddProductClick: (String) -> Unit,
-    onProductClick: (MenuProductItem) -> Unit,
+    onProductClick: (MenuProductItem) -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -61,7 +61,7 @@ fun MenuProductItem(
                             text = menuProductItem.oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
@@ -95,10 +95,10 @@ private fun MenuProductItemPreview() {
                 photoLink = "",
                 name = "Бэргер",
                 newPrice = "99 ₽",
-                oldPrice = "100 ₽",
+                oldPrice = "100 ₽"
             ),
             onAddProductClick = {},
-            onProductClick = {},
+            onProductClick = {}
         )
     }
 }

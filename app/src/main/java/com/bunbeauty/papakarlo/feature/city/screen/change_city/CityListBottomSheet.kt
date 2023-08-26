@@ -47,7 +47,7 @@ class CityListBottomSheet : ComposeBottomSheet<City>() {
         suspend fun show(
             fragmentManager: FragmentManager,
             cityList: List<City>,
-            selectedCityUuid: String?,
+            selectedCityUuid: String?
         ) = suspendCoroutine { continuation ->
             CityListBottomSheet().apply {
                 this.cityList = cityList
@@ -68,7 +68,7 @@ private fun CityListScreen(
     cityList: List<City>,
     selectedCityUuid: String?,
     scrolledToTop: (Boolean) -> Unit,
-    onAddressClicked: (City) -> Unit,
+    onAddressClicked: (City) -> Unit
 ) {
     FoodDeliveryLazyBottomSheet(
         titleStringId = R.string.common_city,
@@ -98,13 +98,13 @@ private fun CityListScreenPreview() {
                 City(
                     uuid = "1",
                     name = "City 1",
-                    timeZone = "1",
+                    timeZone = "1"
                 ),
                 City(
                     uuid = "2",
                     name = "City 2",
-                    timeZone = "2",
-                ),
+                    timeZone = "2"
+                )
             ),
             scrolledToTop = {},
             onAddressClicked = {},

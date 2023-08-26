@@ -42,7 +42,7 @@ fun FoodDeliveryTextField(
             onValueChange = onValueChange,
             maxSymbols = maxSymbols,
             maxLines = maxLines,
-            isError = errorMessageId != null,
+            isError = errorMessageId != null
         )
         errorMessageId?.let {
             Text(
@@ -84,7 +84,7 @@ fun FoodDeliveryTextField(
             onValueChange = onValueChange,
             maxSymbols = maxSymbols,
             maxLines = maxLines,
-            isError = errorMessageId != null,
+            isError = errorMessageId != null
         )
         errorMessageId?.let {
             Text(

@@ -64,7 +64,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 addProductToCartClicked = viewModel::onAddCardProductClicked,
                 removeProductFromCartClicked = viewModel::onRemoveCardProductClicked,
                 onProductClicked = viewModel::onProductClicked,
-                onCreateOrderClicked = viewModel::onCreateOrderClicked,
+                onCreateOrderClicked = viewModel::onCreateOrderClicked
             )
             LaunchedEffect(uiState.eventList) {
                 handleEventList(uiState.eventList)
@@ -80,7 +80,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -95,7 +95,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                     addProductToCartClicked = addProductToCartClicked,
                     removeProductFromCartClicked = removeProductFromCartClicked,
                     onProductClicked = onProductClicked,
-                    onCreateOrderClicked = onCreateOrderClicked,
+                    onCreateOrderClicked = onCreateOrderClicked
                 )
                 ConsumerCartUIState.ConsumerCartState.Empty -> {
                     EmptyScreen(
@@ -123,7 +123,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -248,10 +248,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             cartProductItemModel,
                             cartProductItemModel,
                             cartProductItemModel,
-                            cartProductItemModel,
+                            cartProductItemModel
                         ),
                         oldTotalCost = "1650 ₽",
-                        newTotalCost = "1500 ₽",
+                        newTotalCost = "1500 ₽"
                     )
                 ),
                 onMenuClicked = {},
@@ -259,7 +259,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 addProductToCartClicked = {},
                 removeProductFromCartClicked = {},
                 onProductClicked = {},
-                onCreateOrderClicked = {},
+                onCreateOrderClicked = {}
             )
         }
     }
@@ -275,7 +275,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 addProductToCartClicked = {},
                 removeProductFromCartClicked = {},
                 onProductClicked = {},
-                onCreateOrderClicked = {},
+                onCreateOrderClicked = {}
             )
         }
     }
@@ -291,7 +291,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 addProductToCartClicked = {},
                 removeProductFromCartClicked = {},
                 onProductClicked = {},
-                onCreateOrderClicked = {},
+                onCreateOrderClicked = {}
             )
         }
     }
@@ -307,7 +307,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 addProductToCartClicked = {},
                 removeProductFromCartClicked = {},
                 onProductClicked = {},
-                onCreateOrderClicked = {},
+                onCreateOrderClicked = {}
             )
         }
     }

@@ -10,7 +10,7 @@ data class OrderDetailsUi(
     val finalCost: String?,
     val isLoading: Boolean,
     val code: String,
-    val orderInfo: OrderInfo?,
+    val orderInfo: OrderInfo?
 ) {
     data class OrderInfo(
         val status: OrderStatus,
@@ -21,6 +21,6 @@ data class OrderDetailsUi(
         val comment: String?,
         val pickupMethod: String,
         @StringRes val deferredTimeHintId: Int,
-        val paymentMethod: String?,
+        val paymentMethod: String?
     )
 }

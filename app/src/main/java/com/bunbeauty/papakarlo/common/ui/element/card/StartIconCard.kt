@@ -25,7 +25,7 @@ fun StartIconCard(
     elevated: Boolean = true,
     iconTint: Color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
     onClick: (() -> Unit) = {},
-    clickable: Boolean = true,
+    clickable: Boolean = true
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -61,7 +61,7 @@ private fun IconCardPreview() {
     FoodDeliveryTheme {
         StartIconCard(
             label = "Ооооооооооооооочень длинная информация",
-            iconId = R.drawable.ic_info,
+            iconId = R.drawable.ic_info
         )
     }
 }
@@ -73,7 +73,7 @@ private fun OriginalColorIconCardPreview() {
         StartIconCard(
             label = "Информация",
             iconId = R.drawable.ic_bb,
-            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor,
+            iconTint = FoodDeliveryTheme.colors.bunBeautyBrandColor
         )
     }
 }

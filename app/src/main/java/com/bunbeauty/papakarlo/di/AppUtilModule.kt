@@ -25,7 +25,7 @@ fun appUtilModule() = module {
     }
     single<IStringUtil> {
         StringUtil(
-            resourcesProvider = get(),
+            resourcesProvider = get()
         )
     }
 }

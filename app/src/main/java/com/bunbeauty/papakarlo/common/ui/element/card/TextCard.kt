@@ -15,12 +15,12 @@ fun TextCard(
     modifier: Modifier = Modifier,
     hint: String,
     label: String,
-    elevated: Boolean = true,
+    elevated: Boolean = true
 ) {
     FoodDeliveryCard(
         modifier = modifier,
         elevated = elevated,
-        clickable = false,
+        clickable = false
     ) {
         Column(
             modifier = Modifier

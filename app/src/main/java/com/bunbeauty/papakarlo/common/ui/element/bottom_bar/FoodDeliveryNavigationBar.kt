@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.feature.main.NavigationBarOptions
 enum class NavigationBarItem {
     CAFE_LIST,
     MENU,
-    PROFILE,
+    PROFILE
 }
 
 @Composable
@@ -65,7 +65,7 @@ private fun RowScope.FoodDeliveryBottomItem(
     selected: Boolean,
     @DrawableRes iconId: Int,
     @StringRes labelId: Int,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     NavigationBarItem(
         selected = selected,
@@ -84,9 +84,9 @@ private fun RowScope.FoodDeliveryBottomItem(
             Icon(
                 modifier = Modifier.icon24(),
                 painter = painterResource(iconId),
-                contentDescription = null,
+                contentDescription = null
             )
         },
-        colors = FoodDeliveryNavigationBarDefaults.navigationBarItemColors(),
+        colors = FoodDeliveryNavigationBarDefaults.navigationBarItemColors()
     )
 }

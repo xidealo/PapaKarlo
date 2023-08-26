@@ -104,7 +104,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
         ) {
             FoodDeliveryCard(
                 modifier = Modifier.padding(top = 16.dp),
-                clickable = false,
+                clickable = false
             ) {
                 Column(
                     modifier = Modifier
@@ -164,7 +164,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                             R.string.error_create_address_house
                         } else {
                             null
-                        },
+                        }
                     )
 
                     var flatText by remember {
@@ -178,7 +178,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                             flatText = value
                             viewModel.onFlatTextChanged(value)
                         },
-                        maxSymbols = 5,
+                        maxSymbols = 5
                     )
 
                     var entranceText by remember {
@@ -192,7 +192,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                             entranceText = value
                             viewModel.onEntranceTextChanged(value)
                         },
-                        maxSymbols = 5,
+                        maxSymbols = 5
                     )
 
                     var floorText by remember {
@@ -206,7 +206,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                             floorText = value
                             viewModel.onFloorTextChanged(value)
                         },
-                        maxSymbols = 5,
+                        maxSymbols = 5
                     )
 
                     var commentText by remember {
@@ -222,7 +222,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                             commentText = value
                             viewModel.onCommentTextChanged(value)
                         },
-                        maxSymbols = 100,
+                        maxSymbols = 100
                     )
                 }
             }
@@ -306,7 +306,7 @@ class CreateAddressFragment : BaseFragmentWithSharedViewModel(R.layout.layout_co
                     suggestedStreetList = listOf(
                         suggestion,
                         suggestion,
-                        suggestion,
+                        suggestion
                     ),
                     state = CreateAddressState.State.Success
                 )

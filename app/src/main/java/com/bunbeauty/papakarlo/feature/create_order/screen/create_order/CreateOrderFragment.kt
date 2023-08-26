@@ -194,7 +194,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
             hintStringId = hintStringId,
             label = createOrderUi.deferredTime,
             clickable = !createOrderUi.isLoading,
-            onClick = viewModel::onDeferredTimeClicked,
+            onClick = viewModel::onDeferredTimeClicked
         )
     }
 
@@ -215,7 +215,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                 hintStringId = R.string.payment_method,
                 label = createOrderUi.selectedPaymentMethod.name,
                 clickable = !createOrderUi.isLoading,
-                onClick = viewModel::onPaymentMethodClick,
+                onClick = viewModel::onPaymentMethodClick
             )
         }
     }
@@ -294,7 +294,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     lifecycleScope.launch {
                         UserAddressListBottomSheet.show(
                             fragmentManager = childFragmentManager,
-                            addressList = event.addressList.map(userAddressItemMapper::toItem),
+                            addressList = event.addressList.map(userAddressItemMapper::toItem)
                         )?.let { result ->
                             handleUserAddressListResult(result)
                         }
@@ -304,7 +304,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     lifecycleScope.launch {
                         CafeAddressListBottomSheet.show(
                             fragmentManager = childFragmentManager,
-                            addressList = event.addressList,
+                            addressList = event.addressList
                         )?.let { addressItem ->
                             viewModel.onCafeAddressChanged(addressItem.uuid)
                         }
@@ -373,7 +373,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                                         ),
                                         isSelected = selectablePaymentMethod.isSelected
                                     )
-                                },
+                                }
                         )?.let { paymentMethod ->
                             viewModel.onPaymentMethodChanged(paymentMethod.paymentMethodUI.uuid)
                         }
@@ -421,7 +421,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "наличка",
-                            valueToCopy = "наличка",
+                            valueToCopy = "наличка"
                         )
                     )
                 )
@@ -457,7 +457,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "наличка",
-                            valueToCopy = "наличка",
+                            valueToCopy = "наличка"
                         )
                     )
                 )
@@ -486,7 +486,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "наличка",
-                            valueToCopy = "наличка",
+                            valueToCopy = "наличка"
                         )
                     )
                 )
@@ -515,7 +515,7 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         name = "Наличка",
                         value = PaymentMethodValueUI(
                             value = "наличка",
-                            valueToCopy = "наличка",
+                            valueToCopy = "наличка"
                         )
                     )
                 )

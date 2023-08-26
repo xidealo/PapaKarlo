@@ -87,7 +87,7 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
         }
         MaterialDialog(
             dialogState = dialogState,
-            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface,
+            backgroundColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
             timepicker(
                 colors = TimePickerDefaults.colors(
@@ -98,12 +98,12 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
                     selectorColor = FoodDeliveryTheme.colors.mainColors.primary,
                     selectorTextColor = FoodDeliveryTheme.colors.mainColors.onPrimary,
                     headerTextColor = FoodDeliveryTheme.colors.mainColors.surface,
-                    borderColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+                    borderColor = FoodDeliveryTheme.colors.mainColors.onSurface
                 ),
                 is24HourClock = true,
                 initialTime = LocalTime.of(hours, minutes),
                 timeRange = LocalTime.of(minTime.hours, minTime.minutes)..LocalTime.MAX,
-                waitForPositiveButton = false,
+                waitForPositiveButton = false
             ) { time ->
                 pickedTime = time
             }
@@ -147,7 +147,7 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
             fragmentManager: FragmentManager,
             deferredTime: TimeUI,
             minTime: TimeUI.Time,
-            title: String,
+            title: String
         ) = suspendCoroutine { continuation ->
             DeferredTimeBottomSheet().apply {
                 this.deferredTime = deferredTime
@@ -168,7 +168,7 @@ class DeferredTimeBottomSheet : ComposeBottomSheet<TimeUI>() {
 private fun DeferredTimeScreen(
     title: String,
     onAsapClicked: () -> Unit,
-    onSelectTimeClicked: () -> Unit,
+    onSelectTimeClicked: () -> Unit
 ) {
     FoodDeliveryBottomSheet(title = title) {
         SimpleCard(
@@ -180,7 +180,7 @@ private fun DeferredTimeScreen(
             modifier = Modifier.padding(top = 8.dp),
             elevated = false,
             label = stringResource(R.string.action_deferred_time_select_time),
-            onClick = onSelectTimeClicked,
+            onClick = onSelectTimeClicked
         )
     }
 }
@@ -192,7 +192,7 @@ private fun DeferredTimeScreenPreview() {
         DeferredTimeScreen(
             title = "Время доставки",
             onAsapClicked = {},
-            onSelectTimeClicked = {},
+            onSelectTimeClicked = {}
         )
     }
 }

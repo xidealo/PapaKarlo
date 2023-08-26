@@ -48,7 +48,7 @@ fun FoodDeliveryBaseTextField(
             Text(
                 text = stringResource(labelStringId),
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         },
         trailingIcon = {
@@ -73,7 +73,7 @@ fun FoodDeliveryBaseTextField(
         ),
         singleLine = maxLines == 1,
         maxLines = maxLines,
-        colors = FoodDeliveryTextFieldDefaults.textFieldColors,
+        colors = FoodDeliveryTextFieldDefaults.textFieldColors
     )
 }
 
@@ -108,7 +108,7 @@ fun FoodDeliveryBaseTextField(
                 Text(
                     text = stringResource(labelStringId),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
+                    overflow = TextOverflow.Ellipsis
                 )
             },
             trailingIcon = {
@@ -133,7 +133,7 @@ fun FoodDeliveryBaseTextField(
             ),
             singleLine = maxLines == 1,
             maxLines = maxLines,
-            colors = FoodDeliveryTextFieldDefaults.textFieldColors,
+            colors = FoodDeliveryTextFieldDefaults.textFieldColors
         )
     }
 }

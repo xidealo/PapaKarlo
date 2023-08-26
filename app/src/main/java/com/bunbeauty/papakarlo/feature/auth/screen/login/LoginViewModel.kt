@@ -20,7 +20,7 @@ class LoginViewModel(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     private val mutableLoginState = MutableStateFlow(LoginState())
@@ -129,14 +129,14 @@ class LoginViewModel(
 
         mutableLoginState.update { oldState ->
             oldState.copy(
-                hasPhoneError = false,
+                hasPhoneError = false
             )
         }
 
         if (!textValidator.isPhoneNumberCorrect(phone)) {
             mutableLoginState.update { oldState ->
                 oldState.copy(
-                    hasPhoneError = true,
+                    hasPhoneError = true
                 )
             }
             return
@@ -183,8 +183,8 @@ class LoginViewModel(
             state.copy(
                 eventList = state.eventList + LoginState.Event.NavigateToConfirmEvent(
                     phone = phone,
-                    successLoginDirection = successLoginDirection,
-                ),
+                    successLoginDirection = successLoginDirection
+                )
             )
         }
     }

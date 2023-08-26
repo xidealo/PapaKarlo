@@ -25,7 +25,7 @@ class ProductDetailsUiStateMapper(
                         stringUtil.getCostString(oldPrice)
                     },
                     newPrice = stringUtil.getCostString(menuProduct.newPrice),
-                    description = menuProduct.description,
+                    description = menuProduct.description
                 )
             }
         )

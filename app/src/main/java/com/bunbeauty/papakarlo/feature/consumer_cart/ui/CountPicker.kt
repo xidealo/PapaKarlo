@@ -29,7 +29,7 @@ fun CountPicker(
     modifier: Modifier = Modifier,
     count: Int,
     onCountIncreased: () -> Unit,
-    onCountDecreased: () -> Unit,
+    onCountDecreased: () -> Unit
 ) {
     Row(
         modifier = modifier
@@ -51,7 +51,7 @@ fun CountPicker(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = count.toString(),
             style = FoodDeliveryTheme.typography.bodySmall.bold,
-            color = FoodDeliveryTheme.colors.mainColors.primary,
+            color = FoodDeliveryTheme.colors.mainColors.primary
         )
         CountPickerButton(
             iconId = R.drawable.ic_plus_16,
@@ -65,18 +65,18 @@ fun CountPicker(
 fun CountPickerButton(
     @DrawableRes iconId: Int,
     @StringRes descriptionStringId: Int,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     IconButton(
         modifier = Modifier.size(36.dp),
         onClick = onClick,
-        colors = FoodDeliveryButtonDefaults.iconButtonColors,
+        colors = FoodDeliveryButtonDefaults.iconButtonColors
     ) {
         Icon(
             modifier = Modifier.size(12.dp),
             painter = painterResource(iconId),
             tint = FoodDeliveryTheme.colors.mainColors.primary,
-            contentDescription = stringResource(descriptionStringId),
+            contentDescription = stringResource(descriptionStringId)
         )
     }
 }

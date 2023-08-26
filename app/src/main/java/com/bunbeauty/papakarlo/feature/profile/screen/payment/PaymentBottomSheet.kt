@@ -67,7 +67,7 @@ class PaymentBottomSheet : ComposeBottomSheet<Any>() {
 
         fun show(
             fragmentManager: FragmentManager,
-            paymentMethodsArgument: PaymentMethodsArgument,
+            paymentMethodsArgument: PaymentMethodsArgument
         ) = PaymentBottomSheet().apply {
             this.paymentMethodsArgument = paymentMethodsArgument
             show(fragmentManager, TAG)
@@ -84,7 +84,7 @@ private fun PaymentScreen(
         Text(
             text = stringResource(R.string.msg_payment_methods),
             style = FoodDeliveryTheme.typography.bodyMedium,
-            color = FoodDeliveryTheme.colors.mainColors.onSurface,
+            color = FoodDeliveryTheme.colors.mainColors.onSurface
         )
         Column(
             modifier = Modifier.padding(top = 16.dp),
@@ -95,7 +95,7 @@ private fun PaymentScreen(
                     SimpleCard(
                         text = paymentMethod.name,
                         elevated = false,
-                        clickable = false,
+                        clickable = false
                     )
                 } else {
                     StartIconTextCard(
@@ -122,29 +122,29 @@ private fun PaymentScreenPreview() {
                 PaymentMethodUI(
                     uuid = "",
                     name = "Наличные",
-                    value = null,
+                    value = null
                 ),
                 PaymentMethodUI(
                     uuid = "",
                     name = "Картой при получении",
-                    value = null,
+                    value = null
                 ),
                 PaymentMethodUI(
                     uuid = "",
                     name = "Перевод по номеру карты",
                     value = PaymentMethodValueUI(
                         value = "1234 1234 1234 1234",
-                        valueToCopy = "1234123412341234",
-                    ),
+                        valueToCopy = "1234123412341234"
+                    )
                 ),
                 PaymentMethodUI(
                     uuid = "",
                     name = "Перевод по номеру телефона",
                     value = PaymentMethodValueUI(
                         value = "+7 (900) 900-90-90",
-                        valueToCopy = "+79009009090",
-                    ),
-                ),
+                        valueToCopy = "+79009009090"
+                    )
+                )
             ),
             onCopyClick = {}
         )

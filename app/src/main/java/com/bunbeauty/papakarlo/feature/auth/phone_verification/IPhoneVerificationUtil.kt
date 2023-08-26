@@ -15,7 +15,7 @@ interface IPhoneVerificationUtil {
     fun sendVerificationCode(phone: String, activity: Activity)
     fun resendVerificationCode(
         phone: String,
-        activity: Activity,
+        activity: Activity
     )
 
     fun verifyCode(code: String)

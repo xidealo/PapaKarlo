@@ -33,11 +33,11 @@ import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUi
 @Composable
 fun OrderProductItem(
     modifier: Modifier = Modifier,
-    orderProductItem: OrderProductUiItem,
+    orderProductItem: OrderProductUiItem
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
-        clickable = false,
+        clickable = false
     ) {
         Row(modifier = Modifier.height(IntrinsicSize.Min)) {
             AsyncImage(
@@ -74,7 +74,7 @@ fun OrderProductItem(
                             text = oldPrice,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
@@ -101,7 +101,7 @@ fun OrderProductItem(
                                 text = oldCost,
                                 style = FoodDeliveryTheme.typography.bodySmall,
                                 textDecoration = TextDecoration.LineThrough,
-                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                             )
                         }
                         Text(

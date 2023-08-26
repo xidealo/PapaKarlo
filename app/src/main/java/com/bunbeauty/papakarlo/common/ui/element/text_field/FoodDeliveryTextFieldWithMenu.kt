@@ -29,7 +29,7 @@ fun FoodDeliveryTextFieldWithMenu(
     onValueChange: (value: String) -> Unit,
     @StringRes errorMessageId: Int? = null,
     suggestionsList: List<Suggestion> = emptyList(),
-    onSuggestionClick: (suggestion: Suggestion) -> Unit,
+    onSuggestionClick: (suggestion: Suggestion) -> Unit
 ) {
     Column {
         ExposedDropdownMenuBox(
