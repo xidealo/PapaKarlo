@@ -168,4 +168,8 @@ dependencies {
     coreLibraryDesugaring(AndroidTools.desugar)
 
     debugImplementation(Leakcanary.android)
+
+    androidTestImplementation(Kaspresso.kaspresso)
+    androidTestImplementation(Kaspresso.kaspressoAllureSupport)
+    androidTestImplementation(Kaspresso.kaspressoComposeSupport)
 }
