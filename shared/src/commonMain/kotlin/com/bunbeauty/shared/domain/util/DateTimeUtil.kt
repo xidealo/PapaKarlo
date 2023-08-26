@@ -23,7 +23,8 @@ class DateTimeUtil : IDateTimeUtil {
     }
 
     override fun toTime(millis: Long, timeZone: String): Time {
-        return getLocalDateTime(millis, timeZone).time
+        val localTime = getLocalDateTime(millis, timeZone).time
+        return Time(hours = localTime.hour, minutes = localTime.minute)
     }
 
     override fun getCurrentMinuteSecond(timeZone: String): MinuteSecond {
@@ -58,7 +59,7 @@ class DateTimeUtil : IDateTimeUtil {
     fun getMillisByHourAndMinute(
         currentMillis: Long,
         time: Time,
-        timeZone: String
+        timeZone: String,
     ): Long {
         val currentLocalDateTime = getLocalDateTime(currentMillis, timeZone)
         return LocalDateTime(
@@ -89,7 +90,7 @@ class DateTimeUtil : IDateTimeUtil {
 
     private val LocalDateTime.dateTime
         get() = DateTime(
-            time = time,
+            time = Time(hours = time.hour, minutes = time.minute),
             date = Date(
                 dayOfMonth = dayOfMonth,
                 monthNumber = monthNumber,

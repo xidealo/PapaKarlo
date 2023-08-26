@@ -14,6 +14,7 @@ plugins {
 
 @Suppress("UnstableApiUsage")
 android {
+    namespace = Namespace.app
 
     signingConfigs {
         create("release") {
@@ -80,12 +81,13 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     buildFeatures {
         viewBinding = true
         compose = true
+        buildConfig = true
     }
 
     composeOptions {
@@ -94,6 +96,8 @@ android {
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     lint {
@@ -113,13 +117,12 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 dependencies {
     implementation(project(":shared"))
 
-    implementation(Google.material)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreKtx)
-    implementation(AndroidX.constraintLayout)
 
-    implementation(Compose.bom)
+    implementation(platform(Compose.bom))
     implementation(Compose.foundation)
+    implementation(Compose.foundationLayout)
     implementation(Compose.ui)
     implementation(Compose.material3)
     implementation(Compose.uiTooling)
@@ -141,7 +144,6 @@ dependencies {
     implementation(Lifecycle.activity)
     implementation(Lifecycle.fragment)
     implementation(Lifecycle.runtime)
-    implementation(Lifecycle.livedate)
 
     implementation(ViewBindingDelegate.viewBindingDelegate)
 
@@ -161,10 +163,6 @@ dependencies {
 
     implementation(Coil.coil)
     implementation(Coil.coilCompose)
-
-    implementation(PinEntryEditText.pinEntryEditText) {
-        exclude(group = PinEntryEditText.group, module = PinEntryEditText.module)
-    }
 
     implementation(MaterialDialogs.datetime)
     coreLibraryDesugaring(AndroidTools.desugar)

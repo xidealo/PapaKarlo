@@ -1,7 +1,6 @@
 package com.bunbeauty.papakarlo.common.ui.element.text_field
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -10,12 +9,11 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 object FoodDeliveryTextFieldDefaults {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     val textFieldColors: TextFieldColors
-        @Composable get() = TextFieldDefaults.textFieldColors(
-            textColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+        @Composable get() = TextFieldDefaults.colors(
+            // textColor = FoodDeliveryTheme.colors.mainColors.onSurface,
             disabledTextColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-            containerColor = FoodDeliveryTheme.colors.mainColors.surface,
+            // containerColor = FoodDeliveryTheme.colors.mainColors.surface,
             cursorColor = FoodDeliveryTheme.colors.mainColors.primary,
             errorCursorColor = FoodDeliveryTheme.colors.mainColors.error,
             focusedIndicatorColor = FoodDeliveryTheme.colors.mainColors.primary,
@@ -32,16 +30,15 @@ object FoodDeliveryTextFieldDefaults {
             unfocusedLabelColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             disabledLabelColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             errorLabelColor = FoodDeliveryTheme.colors.mainColors.error,
-            placeholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+            // placeholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             disabledPlaceholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
         )
 
-    @OptIn(ExperimentalMaterial3Api::class)
     val smsCodeTextFieldColors: TextFieldColors
-        @Composable get() = TextFieldDefaults.textFieldColors(
-            textColor = FoodDeliveryTheme.colors.mainColors.onSurface,
+        @Composable get() = TextFieldDefaults.colors(
+            // textColor = FoodDeliveryTheme.colors.mainColors.onSurface,
             disabledTextColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-            containerColor = FoodDeliveryTheme.colors.mainColors.surface,
+            // containerColor = FoodDeliveryTheme.colors.mainColors.surface,
             cursorColor = Color.Transparent,
             errorCursorColor = FoodDeliveryTheme.colors.mainColors.error,
             focusedIndicatorColor = FoodDeliveryTheme.colors.mainColors.primary,
@@ -58,7 +55,7 @@ object FoodDeliveryTextFieldDefaults {
             unfocusedLabelColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             disabledLabelColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             errorLabelColor = FoodDeliveryTheme.colors.mainColors.error,
-            placeholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+            // placeholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
             disabledPlaceholderColor = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
         )
 

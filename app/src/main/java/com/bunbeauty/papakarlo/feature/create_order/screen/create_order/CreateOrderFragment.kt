@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -63,7 +62,6 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
     private val createOrderStateMapper: CreateOrderStateMapper by inject()
     private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper by inject()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

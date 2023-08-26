@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -36,7 +35,6 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     override val viewModel: SelectCityViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         overrideBackPressedCallback()
         super.onViewCreated(view, savedInstanceState)
