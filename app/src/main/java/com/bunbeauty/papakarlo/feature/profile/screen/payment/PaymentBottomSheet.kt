@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliverySnackbarBox
 import com.bunbeauty.papakarlo.common.ui.element.card.SimpleCard
 import com.bunbeauty.papakarlo.common.ui.element.card.StartIconTextCard
 import com.bunbeauty.papakarlo.common.ui.element.rememberFoodDeliverySnackbarState
-import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 

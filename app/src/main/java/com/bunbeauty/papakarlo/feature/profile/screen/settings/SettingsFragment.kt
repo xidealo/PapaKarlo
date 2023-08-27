@@ -22,13 +22,13 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.city.screen.changecity.CityListBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.Settings

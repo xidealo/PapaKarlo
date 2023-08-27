@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
+import com.bunbeauty.papakarlo.util.textvalidator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor

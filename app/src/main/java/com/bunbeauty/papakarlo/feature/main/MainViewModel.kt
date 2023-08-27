@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.NavigationBarItem
+import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 import com.bunbeauty.papakarlo.feature.main.network.INetworkUtil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -44,6 +44,7 @@ object Versions {
 
     const val pinEntryEditText = "2.0.6"
 
+    const val kaspresso = "1.5.3"
 }
 
 object Namespace {
@@ -251,4 +252,13 @@ object ViewBindingDelegate {
 
 object Leakcanary {
     const val android = "com.squareup.leakcanary:leakcanary-android:${Versions.leakcanary}"
+}
+
+object Kaspresso {
+    const val kaspresso =
+        "com.kaspersky.android-components:kaspresso:${Versions.leakcanary}"
+    const val kaspressoAllureSupport =
+        "com.kaspersky.android-components:kaspresso-allure-support:${Versions.leakcanary}"
+    const val kaspressoComposeSupport =
+        "com.kaspersky.android-components:kaspresso-compose-support:${Versions.leakcanary}"
 }

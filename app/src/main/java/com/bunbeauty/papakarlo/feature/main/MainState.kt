@@ -1,7 +1,7 @@
 package com.bunbeauty.papakarlo.feature.main
 
 import androidx.navigation.NavController
-import com.bunbeauty.papakarlo.common.ui.element.bottom_bar.NavigationBarItem
+import com.bunbeauty.papakarlo.common.ui.element.bottombar.NavigationBarItem
 
 data class MainState(
     val connectionLost: Boolean = false,

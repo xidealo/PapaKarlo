@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbar
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryToolbarActions
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbar
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryToolbarActions
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
