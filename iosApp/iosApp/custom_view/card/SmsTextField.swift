@@ -12,13 +12,11 @@ struct SmsTextField: View {
     let count:Int
     
     var body: some View {
-    
         HStack(spacing:0){
             ForEach(0...count, id: \.self){_ in
                 CodeView()
             }
         }
-
     }
 }
 

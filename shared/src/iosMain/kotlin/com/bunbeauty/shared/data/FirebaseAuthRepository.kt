@@ -1,6 +1,7 @@
 package com.bunbeauty.shared.data
 
 import cocoapods.FirebaseAuth.FIRAuth
+import kotlinx.cinterop.ExperimentalForeignApi
 
 actual class FirebaseAuthRepository(
     private val firebaseAuth:FIRAuth
@@ -10,6 +11,7 @@ actual class FirebaseAuthRepository(
     actual val firebaseUserPhone: String?
         get() = firebaseAuth.currentUser?.phoneNumber
 
+    @OptIn(ExperimentalForeignApi::class)
     actual fun signOut(){
         firebaseAuth.signOut(null)
     }

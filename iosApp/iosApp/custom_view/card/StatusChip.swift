@@ -13,7 +13,7 @@ struct StatusChip: View {
     
     var body: some View {
         Text(status)
-            .foregroundColor(Color("surface"))
+            .foregroundColor(AppColor.surface)
             .frame(height:30)
             .padding(Diems.SMALL_PADDING)
             .background(Color.blue)//select color
