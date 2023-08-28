@@ -17,18 +17,18 @@ struct CodeView: View {
     var body: some View {
         VStack{
             TextField("", text: $code)
-               .foregroundColor(Color("onSurface"))
+                .foregroundColor(AppColor.onSurface)
                 .multilineTextAlignment(.center)
                 .keyboardType(.numberPad)
                 .onReceive(Just(code)) { _ in limitText(textLimit) }
             
             if(code != ""){
                 Capsule()
-                    .fill(Color("primary"))
+                    .fill(AppColor.primary)
                     .frame(height:2)
             }else {
                 Capsule()
-                    .fill(Color("onSurface"))
+                    .fill(AppColor.onSurface)
                     .frame(height:2)
             }
         }

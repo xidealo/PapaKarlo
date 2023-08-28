@@ -70,7 +70,7 @@ struct SettingsView: View {
                         Text(Strings.ACTION_SETTINGS_REMOVE_ACCOUNT)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .foregroundColor(Color("error"))
+                            .foregroundColor(AppColor.error)
                             .cornerRadius(Diems.MEDIUM_RADIUS)
                             .font(.system(size: Diems.MEDIUM_TEXT_SIZE, weight: .medium, design: .default).smallCaps())
                     }.alert("Вы уверены, что хотите удалить аккаунт?", isPresented: $showingAlert) {
