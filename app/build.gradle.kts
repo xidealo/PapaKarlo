@@ -146,6 +146,9 @@ dependencies {
     implementation(Lifecycle.fragment)
     implementation(Lifecycle.runtime)
 
+    implementation(Test.junit)
+    implementation(Test.junitCompose)
+
     implementation(ViewBindingDelegate.viewBindingDelegate)
 
     implementation(Koin.core)
@@ -173,5 +176,5 @@ dependencies {
     androidTestImplementation(Kaspresso.kaspresso)
     androidTestImplementation(Kaspresso.kaspressoAllureSupport)
     androidTestImplementation(Kaspresso.kaspressoComposeSupport)
-    androidTestImplementation("io.github.kakaocup:compose:1.7.0")
+    //androidTestImplementation("io.github.kakaocup:compose:1.7.0")
 }

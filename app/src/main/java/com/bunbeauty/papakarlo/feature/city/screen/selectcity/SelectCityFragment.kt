@@ -11,7 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -51,14 +54,18 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
 
     @Composable
     private fun SelectCityScreen(cityListState: SelectCityUIState.CityListState) {
-        FoodDeliveryScaffold(title = stringResource(R.string.title_select_city)) {
+        FoodDeliveryScaffold(
+            title = stringResource(R.string.title_select_city),
+            modifier = Modifier.semantics { testTag = "SelectCityScreen" }) {
             when (cityListState) {
                 SelectCityUIState.CityListState.Loading -> {
                     LoadingScreen()
                 }
+
                 is SelectCityUIState.CityListState.Success -> {
                     SelectCitySuccessScreen(cityListState.cityList)
                 }
+
                 SelectCityUIState.CityListState.Error -> {
                     ErrorScreen(R.string.error_select_city_loading) {
                         viewModel.getCityList()
@@ -71,14 +78,14 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun SelectCitySuccessScreen(cityList: List<City>) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().testTag("SelectCitySuccessScreenLazyColumn"),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace)
         ) {
             itemsIndexed(cityList) { i, city ->
                 CityItem(
                     modifier = Modifier.padding(
                         top = FoodDeliveryTheme.dimensions.getItemSpaceByIndex(i)
-                    ),
+                    ).testTag("position=$i"),
                     cityName = city.name
                 ) {
                     viewModel.onCitySelected(city)

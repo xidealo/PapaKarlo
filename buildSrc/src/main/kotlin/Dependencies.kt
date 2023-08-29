@@ -151,6 +151,7 @@ object Lifecycle {
 
 object Test {
     const val junit = "junit:junit:${Versions.junit}"
+    const val junitCompose = "androidx.compose.ui:ui-test-junit4:1.5.0"
 }
 
 object Koin {
