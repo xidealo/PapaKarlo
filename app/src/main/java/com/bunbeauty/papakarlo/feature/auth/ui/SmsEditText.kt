@@ -40,7 +40,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 fun SmsEditText(
     modifier: Modifier = Modifier,
     smsCodeLength: Int = 6,
-    onFilled: (smsCode: String) -> Unit,
+    onFilled: (smsCode: String) -> Unit
 ) {
     val enteredNumbers: SnapshotStateList<String> = remember {
         (0 until smsCodeLength).map { "" }.toMutableStateList()
@@ -111,7 +111,7 @@ fun SmsDigitCell(
     value: String,
     onValueChanged: (String) -> Unit,
     onFilledRemoved: () -> Unit,
-    onEmptyRemoved: () -> Unit,
+    onEmptyRemoved: () -> Unit
 ) {
     val composeCoroutineScope = rememberCoroutineScope()
 
