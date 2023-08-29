@@ -11,10 +11,10 @@ jobs:
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE_JSON > app/google-services.json
-      - name: set up JDK 11
+      - name: set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       - name: Build with Gradle
         run: ./gradlew assemblepapaKarloDebug
 
@@ -23,6 +23,10 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
@@ -34,6 +38,10 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       - name: check ktLint
         run: ./gradlew --continue ktlintCheck
 
@@ -42,6 +50,10 @@ jobs:
     needs: build_job
     steps:
       - uses: actions/checkout@v2
+      - name: set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       - name: Decode google-services.json
         env:
           GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
