@@ -173,4 +173,5 @@ dependencies {
     androidTestImplementation(Kaspresso.kaspresso)
     androidTestImplementation(Kaspresso.kaspressoAllureSupport)
     androidTestImplementation(Kaspresso.kaspressoComposeSupport)
+    androidTestImplementation("io.github.kakaocup:compose:1.7.0")
 }

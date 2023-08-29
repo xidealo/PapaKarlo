@@ -7,6 +7,4 @@ object PlanogramCardScreen : KScreen() {
     //override val viewClass: Class<*> = MainActivity::class.java
 
    // val bottomNavMenu: MainBottomNavigationMenu = MainBottomNavigationMenu
-
-
 }
