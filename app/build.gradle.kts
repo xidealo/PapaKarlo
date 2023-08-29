@@ -137,6 +137,7 @@ dependencies {
     implementation(Navigation.navigationRuntimeKtx)
     implementation(Navigation.navigationUI)
     implementation(Navigation.navigationUIKtx)
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
     androidTestImplementation(Navigation.navigationTesting)
 
     implementation(Lifecycle.extensions)
