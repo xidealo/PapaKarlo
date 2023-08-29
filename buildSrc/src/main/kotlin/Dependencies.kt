@@ -256,9 +256,9 @@ object Leakcanary {
 
 object Kaspresso {
     const val kaspresso =
-        "com.kaspersky.android-components:kaspresso:${Versions.leakcanary}"
+        "com.kaspersky.android-components:kaspresso:${Versions.kaspresso}"
     const val kaspressoAllureSupport =
-        "com.kaspersky.android-components:kaspresso-allure-support:${Versions.leakcanary}"
+        "com.kaspersky.android-components:kaspresso-allure-support:${Versions.kaspresso}"
     const val kaspressoComposeSupport =
-        "com.kaspersky.android-components:kaspresso-compose-support:${Versions.leakcanary}"
+        "com.kaspersky.android-components:kaspresso-compose-support:${Versions.kaspresso}"
 }
