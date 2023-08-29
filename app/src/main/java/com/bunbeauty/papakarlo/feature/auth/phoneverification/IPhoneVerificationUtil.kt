@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.auth.phone_verification
+package com.bunbeauty.papakarlo.feature.auth.phoneverification
 
 import android.app.Activity
 import com.bunbeauty.papakarlo.feature.auth.event.AuthErrorEvent

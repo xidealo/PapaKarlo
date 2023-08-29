@@ -4,8 +4,8 @@ import com.bunbeauty.papakarlo.feature.cafe.screen.cafelist.CafeListUiStateMappe
 import com.bunbeauty.papakarlo.feature.createorder.mapper.UserAddressItemMapper
 import com.bunbeauty.papakarlo.feature.createorder.screen.createorder.CreateOrderStateMapper
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsUiStateMapper
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductItemMapper
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsUiStateMapper
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductItemMapper
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.LinkUiStateMapper
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper

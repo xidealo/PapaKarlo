@@ -144,7 +144,7 @@
 
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderDetailsFragment"
+        android:name="com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderDetailsFragment"
         android:label="{orderCode}">
         <argument
             android:name="orderUuid"
@@ -172,7 +172,7 @@
 
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragment"
+        android:name="com.bunbeauty.papakarlo.feature.order.screen.orderlist.OrderListFragment"
         android:label="@string/title_my_orders" >
         <action
             android:id="@+id/to_orderDetailsFragment"

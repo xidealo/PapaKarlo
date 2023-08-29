@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.order.screen.order_details
+package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.feature.profile.screen.profile.PaymentMethodUiStateMapper

@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.element.OverflowingText
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.order.screen.order_details.OrderProductUiItem
+import com.bunbeauty.papakarlo.feature.order.screen.orderdetails.OrderProductUiItem
 
 @Composable
 fun OrderProductItem(

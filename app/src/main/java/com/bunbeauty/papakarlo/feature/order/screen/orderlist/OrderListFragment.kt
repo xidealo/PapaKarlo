@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.order.screen.order_list
+package com.bunbeauty.papakarlo.feature.order.screen.orderlist
 
 import android.os.Bundle
 import android.view.View
@@ -28,7 +28,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
-import com.bunbeauty.papakarlo.feature.order.screen.order_list.OrderListFragmentDirections.toOrderDetailsFragment
+import com.bunbeauty.papakarlo.feature.order.screen.orderlist.OrderListFragmentDirections.toOrderDetailsFragment
 import com.bunbeauty.papakarlo.feature.order.ui.OrderItem
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.shared.domain.model.order.OrderStatus

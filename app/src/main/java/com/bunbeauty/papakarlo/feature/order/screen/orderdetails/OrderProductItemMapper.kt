@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.order.screen.order_details
+package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsState

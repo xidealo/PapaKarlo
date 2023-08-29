@@ -33,7 +33,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
-import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText

@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.order.screen.order_details
+package com.bunbeauty.papakarlo.feature.order.screen.orderdetails
 
 import androidx.annotation.StringRes
 import com.bunbeauty.shared.domain.model.order.OrderStatus

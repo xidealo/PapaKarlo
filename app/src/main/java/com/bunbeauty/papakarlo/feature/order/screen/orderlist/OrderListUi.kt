@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.order.screen.order_list
+package com.bunbeauty.papakarlo.feature.order.screen.orderlist
 
 import com.bunbeauty.papakarlo.feature.order.model.OrderItem
 import com.bunbeauty.shared.presentation.order_list.OrderListState

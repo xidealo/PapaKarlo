@@ -47,7 +47,7 @@ import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
