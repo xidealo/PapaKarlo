@@ -1,6 +1,5 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.common.viewmodel.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
 import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
@@ -99,7 +98,6 @@ fun viewModelModule() = module {
             savedStateHandle = parameters.get()
         )
     }
-    viewModel { EmptyViewModel() }
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
