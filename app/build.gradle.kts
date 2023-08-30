@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     kotlin(Plugin.android)
@@ -18,10 +20,13 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("keystore")
-            storePassword = "itisBB15092019"
-            keyAlias = "papakarloKey"
-            keyPassword = "Itispapakarlo08062004"
+            storeFile = file(getProperty("RELEASE_STORE_FILE"))
+            storePassword = getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = getProperty("RELEASE_KEY_PASSWORD")
+
+            enableV1Signing = true
+            enableV2Signing = true
         }
     }
 
@@ -112,6 +117,17 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.freeCompilerArgs = listOf(
         "-Xopt-in=io.ktor.util.KtorExperimentalAPI"
     )
+}
+
+fun getProperty(key: String): String {
+    val propertiesFile = rootProject.file("./local.properties")
+    val properties = Properties()
+    properties.load(FileInputStream(propertiesFile))
+    val property = properties.getProperty(key)
+    if (property == null) {
+        println("Property with key $key not found")
+    }
+    return property
 }
 
 dependencies {
