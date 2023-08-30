@@ -2,18 +2,19 @@ package com.bunbeauty.papakarlo.feature.menu
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
@@ -28,11 +29,12 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
-import com.bunbeauty.papakarlo.common.BaseFragment
+import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
@@ -43,23 +45,24 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
-import com.bunbeauty.papakarlo.feature.menu.model.MenuState
+import com.bunbeauty.shared.presentation.menu.CategoryItem
+import com.bunbeauty.shared.presentation.menu.MenuItem
+import com.bunbeauty.shared.presentation.menu.MenuProductItem
+import com.bunbeauty.shared.presentation.menu.MenuState
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
 import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MenuFragment : BaseFragment(R.layout.layout_compose) {
+class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
-    override val viewModel: MenuViewModel by viewModel()
+    val viewModel: MenuViewModel by viewModel()
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val menuUiStateMapper: MenuUiStateMapper by inject()
 
@@ -108,12 +111,14 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                 is MenuState.State.Success -> {
                     MenuSuccessScreen(menuUi)
                 }
+
                 is MenuState.State.Error -> {
                     ErrorScreen(
                         mainTextId = R.string.error_menu_loading,
                         onClick = viewModel::getMenu
                     )
                 }
+
                 else -> {
                     LoadingScreen()
                 }
@@ -124,26 +129,26 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun MenuSuccessScreen(menu: MenuUi) {
         Column(modifier = Modifier.fillMaxSize()) {
-            val menuLazyListState = rememberLazyListState()
+            val menuLazyGridState = rememberLazyGridState()
             val menuPosition by remember {
                 derivedStateOf {
-                    menuLazyListState.firstVisibleItemIndex
+                    menuLazyGridState.firstVisibleItemIndex
                 }
             }
             LaunchedEffect(Unit) {
                 snapshotFlow { menuPosition }.collect(viewModel::onMenuPositionChanged)
             }
             FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-                CategoryRow(menu.categoryItemList, menuLazyListState)
+                CategoryRow(menu.categoryItemList, menuLazyGridState)
             }
-            MenuColumn(menu.menuItemList, menuLazyListState)
+            MenuColumn(menu.menuItemList, menuLazyGridState)
         }
     }
 
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyGridState,
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -195,51 +200,43 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
-        menuLazyListState: LazyListState
+        menuLazyListState: LazyGridState,
     ) {
-        LazyColumn(
+        LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
             state = menuLazyListState
+            //  state = menuLazyListState
         ) {
-            itemsIndexed(
-                items = menuItemList,
-                key = { _, menuItemModel -> menuItemModel.key }
-            ) { i, menuItemModel ->
+            menuItemList.forEachIndexed { inedex, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.MenuCategoryHeaderItem -> {
-                        if (i > 0) {
-                            Spacer(
-                                modifier = Modifier.height(FoodDeliveryTheme.dimensions.mediumSpace)
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Text(
+                                modifier = Modifier.padding(
+                                    top = if (inedex > 0) {
+                                        16.dp
+                                    } else {
+                                        0.dp
+                                    }
+                                ),
+                                text = menuItemModel.name,
+                                style = FoodDeliveryTheme.typography.titleMedium.bold,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
                             )
                         }
-                        Text(
-                            text = menuItemModel.name,
-                            style = FoodDeliveryTheme.typography.titleMedium.bold,
-                            color = FoodDeliveryTheme.colors.mainColors.onSurface
-                        )
                     }
-                    is MenuItem.MenuProductPairItem -> {
-                        Row(Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace)) {
+
+                    is MenuItem.MenuProductItem -> {
+                        item {
                             MenuProductItem(
-                                modifier = Modifier.weight(1f),
-                                menuProductItem = menuItemModel.firstProduct,
+                                modifier = Modifier.padding(top = 8.dp),
+                                menuProductItem = menuItemModel.product,
                                 onAddProductClick = viewModel::onAddProductClicked,
                                 onProductClick = viewModel::onMenuItemClicked
                             )
-                            Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.smallSpace))
-                            if (menuItemModel.secondProduct == null) {
-                                Spacer(Modifier.weight(1f))
-                            } else {
-                                MenuProductItem(
-                                    modifier = Modifier
-                                        .padding(start = FoodDeliveryTheme.dimensions.verySmallSpace)
-                                        .weight(1f),
-                                    menuProductItem = menuItemModel.secondProduct,
-                                    onAddProductClick = viewModel::onAddProductClicked,
-                                    onProductClick = viewModel::onMenuItemClicked
-                                )
-                            }
                         }
                     }
                 }
@@ -267,14 +264,13 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
             uuid = "",
             photoLink = "",
             name = "Бэргер",
-            newPrice = "99 ₽",
-            oldPrice = "100 ₽"
+            newPrice = 99,
+            oldPrice = 100
         )
 
-        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductPairItem(
+        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductItem(
             key = key,
-            firstProduct = menuProductItemModel,
-            secondProduct = menuProductItemModel
+            product = menuProductItemModel,
         )
 
         FoodDeliveryTheme {

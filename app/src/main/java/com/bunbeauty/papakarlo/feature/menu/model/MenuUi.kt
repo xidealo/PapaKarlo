@@ -1,6 +1,9 @@
 package com.bunbeauty.papakarlo.feature.menu.model
 
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
+import com.bunbeauty.shared.presentation.menu.CategoryItem
+import com.bunbeauty.shared.presentation.menu.MenuItem
+import com.bunbeauty.shared.presentation.menu.MenuState
 
 data class MenuUi(
     val categoryItemList: List<CategoryItem> = emptyList(),

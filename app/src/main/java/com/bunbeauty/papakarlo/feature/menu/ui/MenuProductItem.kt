@@ -21,14 +21,14 @@ import com.bunbeauty.papakarlo.common.ui.element.button.SmallButton
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
-import com.bunbeauty.papakarlo.feature.menu.model.MenuProductItem
+import com.bunbeauty.shared.presentation.menu.MenuProductItem
 
 @Composable
 fun MenuProductItem(
     modifier: Modifier = Modifier,
     menuProductItem: MenuProductItem,
     onAddProductClick: (String) -> Unit,
-    onProductClick: (MenuProductItem) -> Unit
+    onProductClick: (MenuProductItem) -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -54,18 +54,18 @@ fun MenuProductItem(
                     color = FoodDeliveryTheme.colors.mainColors.onSurface
                 )
                 Row(modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.verySmallSpace)) {
-                    menuProductItem.oldPrice?.let {
+                    menuProductItem.oldPrice?.let { oldPrice ->
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.verySmallSpace),
-                            text = menuProductItem.oldPrice,
+                            text = stringResource(id = R.string.with_ruble, oldPrice),
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
-                        text = menuProductItem.newPrice,
+                        text = stringResource(id = R.string.with_ruble, menuProductItem.newPrice),
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
@@ -94,8 +94,8 @@ private fun MenuProductItemPreview() {
                 uuid = "",
                 photoLink = "",
                 name = "Бэргер",
-                newPrice = "99 ₽",
-                oldPrice = "100 ₽"
+                newPrice = 99,
+                oldPrice = 100
             ),
             onAddProductClick = {},
             onProductClick = {}

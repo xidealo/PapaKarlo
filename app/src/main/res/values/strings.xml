@@ -10,6 +10,7 @@
 
     <!--COMMON-->
     <string name="part_ruble">&#160;₽</string>
+    <string name="with_ruble">%d ₽</string>
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>

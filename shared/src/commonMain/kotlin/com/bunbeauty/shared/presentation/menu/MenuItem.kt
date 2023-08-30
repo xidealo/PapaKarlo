@@ -1,6 +1,6 @@
-package com.bunbeauty.papakarlo.feature.menu.model
+package com.bunbeauty.shared.presentation.menu
 
-import com.bunbeauty.papakarlo.common.model.ItemModel
+import com.bunbeauty.shared.ItemModel
 
 sealed class MenuItem : ItemModel() {
     data class MenuCategoryHeaderItem(
@@ -9,9 +9,8 @@ sealed class MenuItem : ItemModel() {
         val name: String
     ) : MenuItem()
 
-    data class MenuProductPairItem(
+    data class MenuProductItem(
         override val key: String,
-        val firstProduct: MenuProductItem,
-        val secondProduct: MenuProductItem?
+        val product: com.bunbeauty.shared.presentation.menu.MenuProductItem,
     ) : MenuItem()
 }

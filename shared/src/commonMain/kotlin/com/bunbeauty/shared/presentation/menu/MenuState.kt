@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.feature.menu.model
+package com.bunbeauty.shared.presentation.menu
 
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 
@@ -10,8 +10,8 @@ data class MenuState(
     val eventList: List<Event> = emptyList()
 ) {
     sealed class State {
-        object Success : State()
-        object Loading : State()
+        data object Success : State()
+        data object Loading : State()
         data class Error(val throwable: Throwable) : State()
     }
 
