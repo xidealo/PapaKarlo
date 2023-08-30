@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.SOMETHING_WENT_WRONG_ERROR
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState.ConfirmError.WRONG_CODE_ERROR
@@ -26,7 +26,7 @@ class ConfirmViewModel(
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
     private val successLoginDirection: SuccessLoginDirection,
-    phoneNumber: String,
+    phoneNumber: String
 ) : BaseViewModel() {
 
     private val timerSecondCount = 60

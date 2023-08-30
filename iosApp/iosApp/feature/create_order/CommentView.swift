@@ -29,13 +29,13 @@ struct CommentView: View {
                 Text(Strings.ACTION_CREATE_COMMENT_SAVE)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .foregroundColor(Color("surface"))
-                    .background(Color("primary"))
+                    .foregroundColor(AppColor.surface)
+                    .background(AppColor.primary)
                     .cornerRadius(Diems.BUTTON_RADIUS)
             }
         }
         .padding(Diems.MEDIUM_PADDING)
-        .background(Color("background"))
+        .background(AppColor.background)
         .hiddenNavigationBarStyle()
     }
 }

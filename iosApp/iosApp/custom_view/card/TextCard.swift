@@ -13,7 +13,6 @@ struct TextCard: View {
 
     var body: some View {
         VStack(spacing:0){
-            
             Text(placeHolder)
                 .labelSmall(weight: .medium)
                 .foregroundColor(AppColor.onSurfaceVariant)
@@ -26,7 +25,7 @@ struct TextCard: View {
                 .multilineTextAlignment(.leading)
         }.padding(.horizontal, Diems.MEDIUM_PADDING)
             .padding(.vertical, Diems.SMALL_PADDING)
-            .background(Color("surface"))
+            .background(AppColor.surface)
             .cornerRadius(Diems.MEDIUM_RADIUS)
     }
 }

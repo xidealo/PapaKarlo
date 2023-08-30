@@ -12,7 +12,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.ui.ComposeBottomSheet
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.button.SecondaryButton
-import com.bunbeauty.papakarlo.common.ui.screen.bottom_sheet.FoodDeliveryBottomSheet
+import com.bunbeauty.papakarlo.common.ui.screen.bottomsheet.FoodDeliveryBottomSheet
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import kotlin.coroutines.resume
@@ -38,7 +38,7 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
         private const val TAG = "EmailBottomSheet"
 
         suspend fun show(
-            fragmentManager: FragmentManager,
+            fragmentManager: FragmentManager
         ) = suspendCoroutine { continuation ->
             LogoutBottomSheet().apply {
                 callback = object : Callback<Boolean> {
@@ -56,7 +56,7 @@ class LogoutBottomSheet : ComposeBottomSheet<Boolean>() {
 @Composable
 private fun LogoutScreen(
     onLogoutClick: () -> Unit,
-    onCancelClick: () -> Unit,
+    onCancelClick: () -> Unit
 ) {
     FoodDeliveryBottomSheet(titleStringId = R.string.title_logout) {
         MainButton(

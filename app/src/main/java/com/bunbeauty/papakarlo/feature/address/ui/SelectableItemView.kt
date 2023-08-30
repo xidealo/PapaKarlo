@@ -24,7 +24,7 @@ fun SelectableItemView(
     isClickable: Boolean,
     elevated: Boolean,
     isSelected: Boolean = false,
-    onClick: (() -> Unit),
+    onClick: (() -> Unit)
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
@@ -52,7 +52,7 @@ fun SelectableItemView(
                         .align(CenterVertically),
                     painter = painterResource(R.drawable.ic_check),
                     tint = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
-                    contentDescription = stringResource(R.string.description_ic_checked),
+                    contentDescription = stringResource(R.string.description_ic_checked)
                 )
             }
         }
@@ -67,7 +67,7 @@ private fun AddressItemPreview() {
             title = "улица Чапаева, д. 22аб кв. 55, 1 подъезд, 1 этаж, код домофона 555",
             isClickable = false,
             elevated = false,
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -81,7 +81,7 @@ private fun AddressItemSelectedPreview() {
             isClickable = false,
             elevated = false,
             isSelected = true,
-            onClick = {},
+            onClick = {}
         )
     }
 }

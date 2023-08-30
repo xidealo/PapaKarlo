@@ -33,13 +33,13 @@ class AppColors(
         orderColors: OrderColors = this.orderColors,
         statusColors: StatusColors = this.statusColors,
         bunBeautyBrandColor: Color = this.bunBeautyBrandColor,
-        isLight: Boolean = this.isLight,
+        isLight: Boolean = this.isLight
     ) = AppColors(
         mainColors = mainColors,
         orderColors = orderColors,
         statusColors = statusColors,
         bunBeautyBrandColor = bunBeautyBrandColor,
-        isLight = isLight,
+        isLight = isLight
     )
 
     fun update(other: AppColors) {
@@ -65,7 +65,7 @@ class MainColors(
     onBackground: Color,
     onSurface: Color,
     onSurfaceVariant: Color,
-    onError: Color,
+    onError: Color
 ) {
 
     var primary by mutableStateOf(primary)
@@ -108,7 +108,7 @@ class MainColors(
         onBackground: Color = this.onBackground,
         onSurface: Color = this.onSurface,
         onSurfaceVariant: Color = this.onSurfaceVariant,
-        onError: Color = this.onError,
+        onError: Color = this.onError
     ) = MainColors(
         primary = primary,
         disabled = disabled,
@@ -122,7 +122,7 @@ class MainColors(
         onBackground = onBackground,
         onSurface = onSurface,
         onSurfaceVariant = onSurfaceVariant,
-        onError = onError,
+        onError = onError
     )
 
     fun update(other: MainColors) {
@@ -151,7 +151,7 @@ class OrderColors(
     done: Color,
     delivered: Color,
     canceled: Color,
-    onOrder: Color,
+    onOrder: Color
 ) {
     var notAccepted by mutableStateOf(notAccepted)
         private set
@@ -178,7 +178,7 @@ class OrderColors(
         done: Color = this.done,
         delivered: Color = this.delivered,
         canceled: Color = this.canceled,
-        onOrder: Color = this.onOrder,
+        onOrder: Color = this.onOrder
     ) = OrderColors(
         notAccepted = notAccepted,
         accepted = accepted,
@@ -187,7 +187,7 @@ class OrderColors(
         done = done,
         delivered = delivered,
         canceled = canceled,
-        onOrder = onOrder,
+        onOrder = onOrder
     )
 
     fun update(other: OrderColors) {
@@ -208,7 +208,7 @@ class StatusColors(
     warning: Color,
     negative: Color,
     info: Color,
-    onStatus: Color,
+    onStatus: Color
 ) {
     var positive by mutableStateOf(positive)
         private set
@@ -226,7 +226,7 @@ class StatusColors(
         warning: Color = this.warning,
         negative: Color = this.negative,
         info: Color = this.info,
-        onStatus: Color = this.onStatus,
+        onStatus: Color = this.onStatus
     ) = StatusColors(
         positive = positive,
         warning = warning,

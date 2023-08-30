@@ -7,7 +7,7 @@ data class MenuState(
     val cartCostAndCount: CartCostAndCount? = null,
     val menuItemList: List<MenuItem> = emptyList(),
     val state: State = State.Loading,
-    val eventList: List<Event> = emptyList(),
+    val eventList: List<Event> = emptyList()
 ) {
     sealed class State {
         object Success : State()

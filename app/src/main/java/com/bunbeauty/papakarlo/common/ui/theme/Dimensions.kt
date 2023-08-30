@@ -38,7 +38,7 @@ data class AppDimensions(
     val blurHeight: Dp = 16.dp,
     val smallProgressBarSize: Dp = 24.dp,
     val smsEditTextWidth: Dp = 320.dp,
-    val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp,
+    val scrollScreenBottomSpace: Dp = buttonHeight + 32.dp
 ) {
     @Deprecated("use arrangement")
     fun getItemSpaceByIndex(i: Int): Dp {

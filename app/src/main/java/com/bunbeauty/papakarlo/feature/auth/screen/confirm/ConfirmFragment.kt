@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,7 +33,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
 import com.bunbeauty.papakarlo.feature.auth.model.ConfirmState
-import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.backToProfileFragment
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmFragmentDirections.toCreateOrderFragment
 import com.bunbeauty.papakarlo.feature.auth.ui.SmsEditText
@@ -51,7 +50,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
         parameters = {
             parametersOf(
                 args.successLoginDirection,
-                args.phone,
+                args.phone
             )
         }
     )
@@ -60,7 +59,6 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
 
     private val phoneVerificationUtil: IPhoneVerificationUtil by inject()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -103,7 +101,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                         viewModel.onResendCodeClicked()
                         phoneVerificationUtil.resendVerificationCode(
                             phone = confirmState.formattedPhoneNumber,
-                            activity = requireActivity(),
+                            activity = requireActivity()
                         )
                     }
                 }
@@ -131,7 +129,7 @@ class ConfirmFragment : BaseFragment(R.layout.layout_compose) {
                 text = stringResource(R.string.msg_confirm_enter_code),
                 style = FoodDeliveryTheme.typography.bodyLarge,
                 color = FoodDeliveryTheme.colors.mainColors.onSurface,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
             Text(
                 modifier = Modifier

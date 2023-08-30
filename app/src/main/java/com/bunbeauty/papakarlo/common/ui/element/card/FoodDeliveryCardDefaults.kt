@@ -13,7 +13,7 @@ object FoodDeliveryCardDefaults {
     val cardColors: CardColors
         @Composable get() = CardDefaults.cardColors(
             containerColor = FoodDeliveryTheme.colors.mainColors.surface,
-            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.surface,
+            disabledContainerColor = FoodDeliveryTheme.colors.mainColors.surface
         )
 
     val cardShape: RoundedCornerShape
@@ -23,12 +23,12 @@ object FoodDeliveryCardDefaults {
     fun getCardElevation(elevated: Boolean): CardElevation = if (elevated) {
         CardDefaults.cardElevation(
             defaultElevation = FoodDeliveryTheme.dimensions.cardElevation,
-            disabledElevation = FoodDeliveryTheme.dimensions.cardElevation,
+            disabledElevation = FoodDeliveryTheme.dimensions.cardElevation
         )
     } else {
         CardDefaults.cardElevation(
             defaultElevation = 0.dp,
-            disabledElevation = 0.dp,
+            disabledElevation = 0.dp
         )
     }
 }

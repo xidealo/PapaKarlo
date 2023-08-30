@@ -22,7 +22,7 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 fun OrderItem(
     modifier: Modifier = Modifier,
     orderItem: OrderItem,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier,
@@ -69,7 +69,7 @@ private fun OrderItemPreview() {
                 code = "Щ-99",
                 dateTime = "9 февраля 22:00"
             ),
-            onClick = {},
+            onClick = {}
         )
     }
 }
@@ -86,7 +86,7 @@ private fun OrderItemLageFontPreview() {
                 code = "Щ-99",
                 dateTime = "9 февраля 22:00"
             ),
-            onClick = {},
+            onClick = {}
         )
     }
 }

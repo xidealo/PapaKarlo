@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.BACK_TO_PROFILE
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection.TO_CREATE_ORDER
-import com.bunbeauty.papakarlo.common.view_model.BaseViewModel
-import com.bunbeauty.papakarlo.util.text_validator.ITextValidator
+import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
+import com.bunbeauty.papakarlo.util.textvalidator.ITextValidator
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.data.FirebaseAuthRepository
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
@@ -20,7 +20,7 @@ class LoginViewModel(
     private val textValidator: ITextValidator,
     private val userInteractor: IUserInteractor,
     private val firebaseAuthRepository: FirebaseAuthRepository,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
     private val mutableLoginState = MutableStateFlow(LoginState())
@@ -129,14 +129,14 @@ class LoginViewModel(
 
         mutableLoginState.update { oldState ->
             oldState.copy(
-                hasPhoneError = false,
+                hasPhoneError = false
             )
         }
 
         if (!textValidator.isPhoneNumberCorrect(phone)) {
             mutableLoginState.update { oldState ->
                 oldState.copy(
-                    hasPhoneError = true,
+                    hasPhoneError = true
                 )
             }
             return
@@ -183,8 +183,8 @@ class LoginViewModel(
             state.copy(
                 eventList = state.eventList + LoginState.Event.NavigateToConfirmEvent(
                     phone = phone,
-                    successLoginDirection = successLoginDirection,
-                ),
+                    successLoginDirection = successLoginDirection
+                )
             )
         }
     }

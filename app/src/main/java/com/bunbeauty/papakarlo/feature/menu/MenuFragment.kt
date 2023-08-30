@@ -28,7 +28,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -37,7 +36,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryCartAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryCartAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -52,13 +51,12 @@ import com.bunbeauty.papakarlo.feature.menu.model.MenuUi
 import com.bunbeauty.papakarlo.feature.menu.model.MenuUiStateMapper
 import com.bunbeauty.papakarlo.feature.menu.ui.CategoryItem
 import com.bunbeauty.papakarlo.feature.menu.ui.MenuProductItem
-import com.bunbeauty.papakarlo.feature.product_details.ProductDetailsFragmentDirections.globalConsumerCartFragment
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDirections.globalConsumerCartFragment
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 class MenuFragment : BaseFragment(R.layout.layout_compose) {
 
     override val viewModel: MenuViewModel by viewModel()
@@ -104,7 +102,7 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                 FoodDeliveryCartAction(topCartUi = menuUi.topCartUi) {
                     findNavController().navigateSafe(globalConsumerCartFragment())
                 }
-            ),
+            )
         ) {
             when (menuUi.state) {
                 is MenuState.State.Success -> {
@@ -145,14 +143,14 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyListState,
+        menuLazyListState: LazyListState
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
         LazyRow(
             contentPadding = PaddingValues(
                 horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
-                vertical = FoodDeliveryTheme.dimensions.smallSpace,
+                vertical = FoodDeliveryTheme.dimensions.smallSpace
             ),
             state = categoryLazyListState
         ) {
@@ -197,7 +195,7 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
-        menuLazyListState: LazyListState,
+        menuLazyListState: LazyListState
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -227,7 +225,7 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                                 modifier = Modifier.weight(1f),
                                 menuProductItem = menuItemModel.firstProduct,
                                 onAddProductClick = viewModel::onAddProductClicked,
-                                onProductClick = viewModel::onMenuItemClicked,
+                                onProductClick = viewModel::onMenuItemClicked
                             )
                             Spacer(modifier = Modifier.width(FoodDeliveryTheme.dimensions.smallSpace))
                             if (menuItemModel.secondProduct == null) {
@@ -239,7 +237,7 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                                         .weight(1f),
                                     menuProductItem = menuItemModel.secondProduct,
                                     onAddProductClick = viewModel::onAddProductClicked,
-                                    onProductClick = viewModel::onMenuItemClicked,
+                                    onProductClick = viewModel::onMenuItemClicked
                                 )
                             }
                         }
@@ -270,13 +268,13 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
             photoLink = "",
             name = "Бэргер",
             newPrice = "99 ₽",
-            oldPrice = "100 ₽",
+            oldPrice = "100 ₽"
         )
 
         fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductPairItem(
             key = key,
             firstProduct = menuProductItemModel,
-            secondProduct = menuProductItemModel,
+            secondProduct = menuProductItemModel
         )
 
         FoodDeliveryTheme {
@@ -285,20 +283,20 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                     categoryItemList = listOf(
                         getCategoryItemModel("1"),
                         getCategoryItemModel("2"),
-                        getCategoryItemModel("3"),
+                        getCategoryItemModel("3")
                     ),
                     menuItemList = listOf(
                         getMenuCategoryHeaderItemModel("4"),
                         getMenuProductPairItemModel("5"),
                         getMenuProductPairItemModel("6"),
                         getMenuCategoryHeaderItemModel("7"),
-                        getMenuProductPairItemModel("8"),
+                        getMenuProductPairItemModel("8")
                     ),
                     state = MenuState.State.Success,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 )
             )
         }
@@ -313,9 +311,9 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                     state = MenuState.State.Loading,
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
-                ),
+                        count = "2"
+                    )
+                )
             )
         }
     }
@@ -329,8 +327,8 @@ class MenuFragment : BaseFragment(R.layout.layout_compose) {
                     state = MenuState.State.Error(Throwable()),
                     topCartUi = TopCartUi(
                         cost = "100",
-                        count = "2",
-                    ),
+                        count = "2"
+                    )
                 )
             )
         }

@@ -33,7 +33,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -42,13 +41,13 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
-import com.bunbeauty.papakarlo.common.ui.element.text_field.FoodDeliveryTextField
+import com.bunbeauty.papakarlo.common.ui.element.textfield.FoodDeliveryTextField
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.auth.phone_verification.IPhoneVerificationUtil
+import com.bunbeauty.papakarlo.feature.auth.phoneverification.IPhoneVerificationUtil
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.shared.Constants.PHONE_CODE
 import com.bunbeauty.shared.Constants.TOO_MANY_REQUESTS
@@ -64,7 +63,6 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
     })
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -158,7 +156,7 @@ class LoginFragment : BaseFragment(R.layout.layout_compose) {
                     ErrorScreen(
                         mainTextId = R.string.common_error,
                         extraTextId = R.string.internet_error,
-                        onClick = viewModel::setSuccessState,
+                        onClick = viewModel::setSuccessState
                     )
                 }
             }

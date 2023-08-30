@@ -1,13 +1,13 @@
 package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
-import com.bunbeauty.papakarlo.feature.top_cart.TopCartUi
+import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.papakarlo.mapper.OrderItemMapper
 import com.bunbeauty.papakarlo.util.string.IStringUtil
 import com.bunbeauty.shared.presentation.profile.ProfileState
 
 class ProfileUiStateMapper(
     private val stringUtil: IStringUtil,
-    private val orderItemMapper: OrderItemMapper,
+    private val orderItemMapper: OrderItemMapper
 ) {
 
     fun map(profileState: ProfileState): ProfileUi {
@@ -21,7 +21,7 @@ class ProfileUiStateMapper(
             orderItem = profileState.lastOrder?.let {
                 orderItemMapper.toItem(it)
             },
-            state = profileState.state,
+            state = profileState.state
         )
     }
 }

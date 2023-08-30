@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -23,13 +22,13 @@ import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
-import com.bunbeauty.papakarlo.common.ui.element.top_bar.FoodDeliveryAction
+import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.databinding.LayoutComposeBinding
 import com.bunbeauty.papakarlo.extensions.setContentWithTheme
-import com.bunbeauty.papakarlo.feature.city.screen.change_city.CityListBottomSheet
+import com.bunbeauty.papakarlo.feature.city.screen.changecity.CityListBottomSheet
 import com.bunbeauty.papakarlo.feature.main.IMessageHost
 import com.bunbeauty.papakarlo.feature.profile.screen.logout.LogoutBottomSheet
 import com.bunbeauty.shared.domain.model.Settings
@@ -43,7 +42,6 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
     override val viewBinding by viewBinding(LayoutComposeBinding::bind)
     private val viewModel: SettingsViewModel by viewModel()
 
-    @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadData()
@@ -115,7 +113,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     modifier = Modifier.padding(top = FoodDeliveryTheme.dimensions.smallSpace),
                     hintStringId = R.string.common_email,
                     label = email,
-                    onClick = viewModel::onEmailClicked,
+                    onClick = viewModel::onEmailClicked
                 )
             }
             NavigationTextCard(
@@ -178,12 +176,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "example@email.com",
+                        email = "example@email.com"
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )
@@ -200,12 +198,12 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                     settings = Settings(
                         userUuid = "",
                         phoneNumber = "+7 999 000-00-00",
-                        email = "",
+                        email = ""
                     ),
                     selectedCity = City(
                         uuid = "",
                         name = "Москва",
-                        timeZone = "",
+                        timeZone = ""
                     ),
                     state = SettingsState.State.SUCCESS
                 )

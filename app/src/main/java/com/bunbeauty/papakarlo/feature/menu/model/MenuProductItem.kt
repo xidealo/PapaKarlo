@@ -5,5 +5,5 @@ data class MenuProductItem(
     val photoLink: String,
     val name: String,
     val oldPrice: String?,
-    val newPrice: String,
+    val newPrice: String
 )

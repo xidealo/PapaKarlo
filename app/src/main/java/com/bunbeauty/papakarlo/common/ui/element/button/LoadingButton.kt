@@ -23,7 +23,7 @@ fun LoadingButton(
     @StringRes textStringId: Int,
     hasShadow: Boolean = true,
     isLoading: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Button(
         modifier = modifier.fillMaxWidth(),

@@ -26,13 +26,13 @@ fun FoodDeliverySwitcher(
     @StringRes optionResIdList: List<Int>,
     modifier: Modifier = Modifier,
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit,
+    onPositionChanged: (Int) -> Unit
 ) {
     FoodDeliverySwitcher(
         modifier = modifier,
         optionList = optionResIdList.map { stringResource(it) },
         position = position,
-        onPositionChanged = onPositionChanged,
+        onPositionChanged = onPositionChanged
     )
 }
 
@@ -41,13 +41,13 @@ fun FoodDeliverySwitcher(
     modifier: Modifier = Modifier,
     optionList: List<String> = emptyList(),
     position: Int = 0,
-    onPositionChanged: (Int) -> Unit,
+    onPositionChanged: (Int) -> Unit
 ) {
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = FoodDeliveryCardDefaults.getCardElevation(true),
         shape = FoodDeliverySwitcherDefaults.switcherShape,
-        colors = FoodDeliveryCardDefaults.cardColors,
+        colors = FoodDeliveryCardDefaults.cardColors
     ) {
         Row(modifier = Modifier.padding(4.dp)) {
             optionList.onEachIndexed { i, text ->
@@ -77,20 +77,20 @@ private fun SwitcherButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier.height(40.dp),
         onClick = onClick,
         enabled = enabled,
         shape = FoodDeliverySwitcherDefaults.switcherButtonShape,
-        colors = FoodDeliverySwitcherDefaults.switcherButtonColor,
+        colors = FoodDeliverySwitcherDefaults.switcherButtonColor
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = text,
-                style = FoodDeliveryTheme.typography.labelLarge.medium,
+                style = FoodDeliveryTheme.typography.labelLarge.medium
             )
         }
     }

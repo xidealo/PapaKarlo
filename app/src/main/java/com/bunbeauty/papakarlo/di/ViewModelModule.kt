@@ -1,11 +1,10 @@
 package com.bunbeauty.papakarlo.di
 
-import com.bunbeauty.papakarlo.common.view_model.EmptyViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.confirm.ConfirmViewModel
 import com.bunbeauty.papakarlo.feature.auth.screen.login.LoginViewModel
-import com.bunbeauty.papakarlo.feature.cafe.screen.cafe_options.CafeOptionsViewModel
-import com.bunbeauty.papakarlo.feature.city.screen.select_city.SelectCityViewModel
-import com.bunbeauty.papakarlo.feature.consumer_cart.ConsumerCartViewModel
+import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewModel
+import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
+import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
 import com.bunbeauty.papakarlo.feature.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
@@ -28,7 +27,7 @@ fun viewModelModule() = module {
             menuProductInteractor = get(),
             stringUtil = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get(),
+            addCartProductUseCase = get()
         )
     }
     viewModel {
@@ -42,7 +41,7 @@ fun viewModelModule() = module {
             userInteractor = get(),
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
-            removeCartProductUseCase = get(),
+            removeCartProductUseCase = get()
         )
     }
     viewModel {
@@ -89,22 +88,21 @@ fun viewModelModule() = module {
     viewModel {
         UserAddressListViewModel(
             getSelectableUserAddressListUseCase = get(),
-            saveSelectedUserAddressUseCase = get(),
+            saveSelectedUserAddressUseCase = get()
         )
     }
     viewModel { parameters ->
         CafeOptionsViewModel(
             cafeInteractor = get(),
             resourcesProvider = get(),
-            savedStateHandle = parameters.get(),
+            savedStateHandle = parameters.get()
         )
     }
-    viewModel { EmptyViewModel() }
     viewModel {
         OrderDetailsViewModel(
             observeOrderUseCase = get(),
             timeMapper = get(),
-            stopObserveOrdersUseCase = get(),
+            stopObserveOrdersUseCase = get()
         )
     }
     viewModel {
@@ -115,7 +113,7 @@ fun viewModelModule() = module {
             getLastOrderUseCase = get(),
             observeCartUseCase = get(),
             getPaymentMethodListUseCase = get(),
-            getLinkListUseCase = get(),
+            getLinkListUseCase = get()
         )
     }
     viewModel { parameters ->
@@ -131,7 +129,7 @@ fun viewModelModule() = module {
             userInteractor = get(),
             firebaseAuthRepository = get(),
             successLoginDirection = parameters[0],
-            phoneNumber = parameters[1],
+            phoneNumber = parameters[1]
         )
     }
     viewModel {
@@ -143,14 +141,14 @@ fun viewModelModule() = module {
             saveSelectedCityUseCase = get(),
             firebaseAuthRepository = get(),
             disableUserUseCase = get(),
-            userInteractor = get(),
+            userInteractor = get()
         )
     }
     viewModel {
         ProductDetailsViewModel(
             getMenuProductByUuidUseCase = get(),
             observeCartUseCase = get(),
-            addCartProductUseCase = get(),
+            addCartProductUseCase = get()
         )
     }
     viewModel {
@@ -161,12 +159,12 @@ fun viewModelModule() = module {
     viewModel {
         SplashViewModel(
             updateInteractor = get(),
-            cityInteractor = get(),
+            cityInteractor = get()
         )
     }
     viewModel {
         UpdateViewModel(
-            getLinkListUseCase = get(),
+            getLinkListUseCase = get()
         )
     }
 }
