@@ -1,5 +1,6 @@
 package com.bunbeauty.papakarlo.feature.productdetails
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import com.bunbeauty.papakarlo.feature.productdetails.ProductDetailsFragmentDire
 import com.bunbeauty.papakarlo.feature.topcart.TopCartUi
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsState
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
+import org.junit.Ignore
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -72,12 +74,13 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Composable
     private fun ProductDetailsScreen(
         menuProductName: String,
         menuProductUuid: String,
         productDetailsUi: ProductDetailsUi,
-        state: ProductDetailsState.State
+        state: ProductDetailsState.State,
     ) {
         FoodDeliveryScaffold(
             title = menuProductName,
@@ -111,9 +114,11 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                 ProductDetailsState.State.SUCCESS -> {
                     ProductDetailsSuccessScreen(productDetailsUi.menuProductUi)
                 }
+
                 ProductDetailsState.State.LOADING -> {
                     LoadingScreen()
                 }
+
                 ProductDetailsState.State.ERROR -> {
                     ErrorScreen(mainTextId = R.string.common_error) {
                         viewModel.getMenuProduct(menuProductUuid)
@@ -225,7 +230,7 @@ class ProductDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_c
                         oldPrice = "320 ₽",
                         newPrice = "280 ₽",
                         description = "Сочная котлетка, сыр Чедр, маринованный огурчик, помидор, " +
-                            "красный лук, салат, фирменный соус, булочка с кунжутом"
+                                "красный лук, салат, фирменный соус, булочка с кунжутом"
                     )
                 ),
                 state = ProductDetailsState.State.SUCCESS
