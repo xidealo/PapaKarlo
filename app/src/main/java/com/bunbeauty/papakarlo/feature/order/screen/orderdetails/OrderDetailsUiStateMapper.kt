@@ -51,7 +51,8 @@ class OrderDetailsUiStateMapper(
                     }
                 )
             },
-            code = orderState.orderInfo?.code ?: ""
+            code = orderState.orderInfo?.code ?: "",
+            discount = orderState.discount
         )
     }
 }

@@ -6,11 +6,11 @@ import com.bunbeauty.papakarlo.feature.cafe.screen.cafeoptions.CafeOptionsViewMo
 import com.bunbeauty.papakarlo.feature.city.screen.selectcity.SelectCityViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartViewModel
 import com.bunbeauty.papakarlo.feature.main.MainViewModel
-import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.papakarlo.feature.splash.SplashViewModel
 import com.bunbeauty.shared.presentation.cafe_list.CafeListViewModel
 import com.bunbeauty.shared.presentation.create_address.CreateAddressViewModel
 import com.bunbeauty.shared.presentation.create_order.CreateOrderViewModel
+import com.bunbeauty.shared.presentation.menu.MenuViewModel
 import com.bunbeauty.shared.presentation.order_details.OrderDetailsViewModel
 import com.bunbeauty.shared.presentation.order_list.OrderListViewModel
 import com.bunbeauty.shared.presentation.product_details.ProductDetailsViewModel
@@ -25,7 +25,7 @@ fun viewModelModule() = module {
     viewModel {
         MenuViewModel(
             menuProductInteractor = get(),
-          //  stringUtil = get(),
+            //  stringUtil = get(),
             observeCartUseCase = get(),
             addCartProductUseCase = get()
         )

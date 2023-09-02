@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
+import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -25,7 +25,7 @@ fun FoodDeliveryCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false
+        LocalMinimumInteractiveComponentEnforcement provides false
     ) {
         if (clickable) {
             Card(

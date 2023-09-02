@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.profile.screen.profile
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -126,21 +127,24 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 }
             }
         ) {
-            when (profileUi.state) {
-                ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
-                    profileUi,
-                    onLastOrderClicked = onLastOrderClicked,
-                    onSettingsClick = onSettingsClicked,
-                    onYourAddressesClicked = onYourAddressesClicked,
-                    onOrderHistoryClicked = onOrderHistoryClicked
-                )
-                ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
-                ProfileState.State.LOADING -> LoadingScreen()
-                ProfileState.State.ERROR -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_profile_loading
-                    ) {
-                        viewModel.update()
+            Crossfade(targetState = profileUi.state, label = "CafeListScreen") { state ->
+                when (state) {
+                    ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
+                        profileUi,
+                        onLastOrderClicked = onLastOrderClicked,
+                        onSettingsClick = onSettingsClicked,
+                        onYourAddressesClicked = onYourAddressesClicked,
+                        onOrderHistoryClicked = onOrderHistoryClicked
+                    )
+
+                    ProfileState.State.UNAUTHORIZED -> UnauthorizedProfileScreen()
+                    ProfileState.State.LOADING -> LoadingScreen()
+                    ProfileState.State.ERROR -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_profile_loading
+                        ) {
+                            viewModel.update()
+                        }
                     }
                 }
             }
@@ -158,9 +162,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.OpenSettings -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toSettingsFragment())
                 }
+
                 ProfileState.Event.OpenAddressList -> {
                     findNavController().navigateSafe(
                         ProfileFragmentDirections.toNavAddress(
@@ -168,9 +174,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.OpenOrderList -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toOrdersFragment())
                 }
+
                 is ProfileState.Event.ShowPayment -> {
                     PaymentBottomSheet.show(
                         fragmentManager = parentFragmentManager,
@@ -181,6 +189,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 is ProfileState.Event.ShowFeedback -> {
                     FeedbackBottomSheet.show(
                         fragmentManager = parentFragmentManager,
@@ -189,9 +198,11 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                         )
                     )
                 }
+
                 ProfileState.Event.ShowAboutApp -> {
                     findNavController().navigateSafe(ProfileFragmentDirections.toAboutAppBottomSheet())
                 }
+
                 ProfileState.Event.OpenLogin -> {
                     findNavController().navigateSafe(
                         ProfileFragmentDirections.toLoginFragment(

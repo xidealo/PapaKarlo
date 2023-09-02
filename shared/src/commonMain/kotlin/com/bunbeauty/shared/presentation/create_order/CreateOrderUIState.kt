@@ -19,4 +19,5 @@ data class CreateOrderUIState(
     val isLoading: Boolean,
     val eventList: List<CreateOrderEvent>,
     val paymentMethod: PaymentMethod?,
+    val discount: String?,
 )

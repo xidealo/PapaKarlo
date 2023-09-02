@@ -17,14 +17,16 @@ data class ConsumerCartDataState(
     }
 
     operator fun plus(event: ConsumerCartEvent) = copy(eventList = eventList + event)
-    operator fun minus(events: List<ConsumerCartEvent>) = copy(eventList = eventList - events.toSet())
+    operator fun minus(events: List<ConsumerCartEvent>) =
+        copy(eventList = eventList - events.toSet())
 }
 
 data class ConsumerCartData(
     val forFreeDelivery: String,
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
-    val newTotalCost: String
+    val newTotalCost: String,
+    val discount: String?
 )
 
 sealed interface ConsumerCartEvent {

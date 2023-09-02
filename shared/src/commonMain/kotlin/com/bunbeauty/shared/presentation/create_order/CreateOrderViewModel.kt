@@ -39,7 +39,12 @@ class CreateOrderViewModel(
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
 ) : SharedViewModel() {
 
-    private val mutableDataState = MutableStateFlow(CreateOrderDataState())
+    private val mutableDataState = MutableStateFlow(
+        CreateOrderDataState(
+            discount = null
+        )
+    )
+
     val uiState = mutableDataState.mapToStateFlow(
         scope = sharedScope,
         block = createOrderStateMapper::map
@@ -171,7 +176,7 @@ class CreateOrderViewModel(
             return
         }
 
-        if(data.selectedPaymentMethod == null){
+        if (data.selectedPaymentMethod == null) {
             mutableDataState.update { state ->
                 state + CreateOrderEvent.ShowPaymentMethodError
             }
@@ -280,6 +285,7 @@ class CreateOrderViewModel(
                     totalCost = cartTotal.totalCost,
                     deliveryCost = cartTotal.deliveryCost,
                     finalCost = cartTotal.finalCost,
+                    discount = "10%"
                 )
             }
         } catch (exception: Exception) {

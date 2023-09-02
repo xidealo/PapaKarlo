@@ -22,7 +22,8 @@ class CreateOrderStateMapper(
             isLoading = createOrderUIState.isLoading,
             selectedPaymentMethod = createOrderUIState.paymentMethod?.let {
                 paymentMethodUiStateMapper.map(it)
-            }
+            },
+            discount = createOrderUIState.discount
         )
     }
 }

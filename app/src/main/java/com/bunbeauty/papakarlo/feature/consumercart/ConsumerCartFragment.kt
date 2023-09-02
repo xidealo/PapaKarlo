@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -30,6 +32,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -88,30 +91,34 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 findNavController().popBackStack()
             }
         ) {
-            when (consumerCartState) {
-                ConsumerCartUIState.ConsumerCartState.Loading -> LoadingScreen()
-                is ConsumerCartUIState.ConsumerCartState.Success -> ConsumerCartSuccessScreen(
-                    consumerCartData = consumerCartState.data,
-                    addProductToCartClicked = addProductToCartClicked,
-                    removeProductFromCartClicked = removeProductFromCartClicked,
-                    onProductClicked = onProductClicked,
-                    onCreateOrderClicked = onCreateOrderClicked
-                )
-                ConsumerCartUIState.ConsumerCartState.Empty -> {
-                    EmptyScreen(
-                        imageId = R.drawable.ic_cart_24,
-                        imageDescriptionId = R.string.description_consumer_cart_empty,
-                        mainTextId = R.string.title_consumer_cart_empty,
-                        extraTextId = R.string.msg_consumer_cart_empty,
-                        buttonTextId = R.string.action_consumer_cart_menu,
-                        onClick = onMenuClicked
+            Crossfade(targetState = consumerCartState, label = "ConsumerCartScreen") { state ->
+                when (state) {
+                    ConsumerCartUIState.ConsumerCartState.Loading -> LoadingScreen()
+                    is ConsumerCartUIState.ConsumerCartState.Success -> ConsumerCartSuccessScreen(
+                        consumerCartData = state.data,
+                        addProductToCartClicked = addProductToCartClicked,
+                        removeProductFromCartClicked = removeProductFromCartClicked,
+                        onProductClicked = onProductClicked,
+                        onCreateOrderClicked = onCreateOrderClicked
                     )
-                }
-                is ConsumerCartUIState.ConsumerCartState.Error -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_consumer_cart_loading,
-                        onClick = onErrorButtonClicked
-                    )
+
+                    ConsumerCartUIState.ConsumerCartState.Empty -> {
+                        EmptyScreen(
+                            imageId = R.drawable.ic_cart_24,
+                            imageDescriptionId = R.string.description_consumer_cart_empty,
+                            mainTextId = R.string.title_consumer_cart_empty,
+                            extraTextId = R.string.msg_consumer_cart_empty,
+                            buttonTextId = R.string.action_consumer_cart_menu,
+                            onClick = onMenuClicked
+                        )
+                    }
+
+                    is ConsumerCartUIState.ConsumerCartState.Error -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_consumer_cart_loading,
+                            onClick = onErrorButtonClicked
+                        )
+                    }
                 }
             }
         }
@@ -167,6 +174,19 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
             }
             FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+                    consumerCartData.discount?.let { discount ->
+                        Row(modifier = Modifier.padding(bottom = 8.dp)) {
+                            Text(
+                                text = stringResource(R.string.title_consumer_cart_discount),
+                                style = FoodDeliveryTheme.typography.bodyMedium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            DiscountCard(discount = discount)
+                        }
+                    }
+
                     Row {
                         Text(
                             text = stringResource(R.string.title_consumer_cart_total),
@@ -206,12 +226,15 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 ConsumerCartEvent.NavigateToMenuEvent -> {
                     findNavController().navigateSafe(toMenuFragment())
                 }
+
                 ConsumerCartEvent.NavigateToCreateOrderEvent -> {
                     findNavController().navigateSafe(toCreateOrderFragment())
                 }
+
                 is ConsumerCartEvent.NavigateToLoginEvent -> {
                     findNavController().navigateSafe(toLoginFragment(event.successLoginDirection))
                 }
+
                 is ConsumerCartEvent.NavigateToProductEvent -> {
                     findNavController().navigateSafe(
                         toProductFragment(
@@ -251,7 +274,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             cartProductItemModel
                         ),
                         oldTotalCost = "1650 ₽",
-                        newTotalCost = "1500 ₽"
+                        newTotalCost = "1500 ₽",
+                        discount = "10%"
                     )
                 ),
                 onMenuClicked = {},

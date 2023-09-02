@@ -154,7 +154,8 @@ class ConsumerCartViewModel(
                 oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
                     stringUtil.getCostString(oldTotalCost)
                 },
-                newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost)
+                newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost),
+                discount = "10%"
             )
         }
     }

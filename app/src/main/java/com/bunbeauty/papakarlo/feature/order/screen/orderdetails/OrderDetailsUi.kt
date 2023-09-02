@@ -10,7 +10,8 @@ data class OrderDetailsUi(
     val finalCost: String?,
     val isLoading: Boolean,
     val code: String,
-    val orderInfo: OrderInfo?
+    val orderInfo: OrderInfo?,
+    val discount: String?
 ) {
     data class OrderInfo(
         val status: OrderStatus,

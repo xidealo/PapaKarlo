@@ -3,11 +3,12 @@ package com.bunbeauty.shared.presentation.menu
 import com.bunbeauty.shared.domain.model.cart.CartCostAndCount
 
 data class MenuState(
-    val categoryItemList: List<CategoryItem> = emptyList(),
-    val cartCostAndCount: CartCostAndCount? = null,
-    val menuItemList: List<MenuItem> = emptyList(),
-    val state: State = State.Loading,
-    val eventList: List<Event> = emptyList()
+    val categoryItemList: List<CategoryItem>,
+    val cartCostAndCount: CartCostAndCount?,
+    val menuItemList: List<MenuItem>,
+    val discount: String?,
+    val state: State,
+    val eventList: List<Event>,
 ) {
     sealed class State {
         data object Success : State()

@@ -12,7 +12,8 @@ data class OrderDetailsState(
     val totalCost: String? = null,
     val deliveryCost: String? = null,
     val finalCost: String? = null,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val discount: String?,
 ) {
 
     data class OrderInfo(
@@ -34,6 +35,6 @@ data class OrderDetailsState(
         val newCost: String,
         val oldCost: String?,
         val photoLink: String,
-        val count: String
+        val count: String,
     )
 }

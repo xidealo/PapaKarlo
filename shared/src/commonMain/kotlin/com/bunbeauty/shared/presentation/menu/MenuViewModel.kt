@@ -19,7 +19,16 @@ class MenuViewModel(
     private val addCartProductUseCase: AddCartProductUseCase,
 ) : SharedViewModel() {
 
-    private val mutableMenuState = MutableStateFlow(MenuState())
+    private val mutableMenuState = MutableStateFlow(
+        MenuState(
+            categoryItemList = emptyList(),
+            cartCostAndCount = null,
+            menuItemList = emptyList(),
+            discount = null,
+            state = MenuState.State.Loading,
+            eventList = emptyList(),
+        )
+    )
     val menuState = mutableMenuState.asStateFlow()
 
     private var selectedCategoryUuid: String? = null
@@ -71,7 +80,8 @@ class MenuViewModel(
                         listOf(toMenuCategoryItemModel(menuSection)) +
                                 toMenuProductItemModelList(menuSection)
                     },
-                    state = MenuState.State.Success
+                    state = MenuState.State.Success,
+                    discount = "10" + "%"
                 )
             }
         }

@@ -18,7 +18,9 @@ class OrderDetailsViewModel(
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedViewModel() {
 
-    private val mutableOrderState = MutableStateFlow(OrderDetailsState())
+    private val mutableOrderState = MutableStateFlow(
+        OrderDetailsState(discount = null)
+    )
     val orderState = mutableOrderState.asCommonStateFlow()
 
     private var observeOrderJob: Job? = null
@@ -40,7 +42,8 @@ class OrderDetailsViewModel(
                             deliveryCost = order.deliveryCost?.toString(),
                             totalCost = getTotalCost(order),
                             finalCost = getFinalCost(order),
-                            isLoading = false
+                            isLoading = false,
+                            discount = "10%"
                         )
                     }
                 }

@@ -2,6 +2,7 @@ package com.bunbeauty.papakarlo.feature.cafe.screen.cafelist
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -78,17 +79,20 @@ class CafeListFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                 )
             )
         ) {
-            when (cafeListUi.state) {
-                is CafeListState.State.Success -> CafeListSuccessScreen(
-                    cafeListUi.cafeList,
-                    onCafeClicked = onCafeClicked
-                )
-                is CafeListState.State.Loading -> LoadingScreen()
-                is CafeListState.State.Error -> {
-                    ErrorScreen(
-                        mainTextId = R.string.error_cafe_list_loading,
-                        onClick = onRefreshClicked
+            Crossfade(targetState = cafeListUi.state, label = "CafeListScreen") { state ->
+                when (state) {
+                    is CafeListState.State.Success -> CafeListSuccessScreen(
+                        cafeListUi.cafeList,
+                        onCafeClicked = onCafeClicked
                     )
+
+                    is CafeListState.State.Loading -> LoadingScreen()
+                    is CafeListState.State.Error -> {
+                        ErrorScreen(
+                            mainTextId = R.string.error_cafe_list_loading,
+                            onClick = onRefreshClicked
+                        )
+                    }
                 }
             }
         }

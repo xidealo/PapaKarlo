@@ -22,7 +22,8 @@ class CreateOrderStateMapper(
             isLoading = dataState.isLoading,
 
             eventList = dataState.eventList,
-            paymentMethod = dataState.selectedPaymentMethod
+            paymentMethod = dataState.selectedPaymentMethod,
+            discount = dataState.discount
         )
     }
 }

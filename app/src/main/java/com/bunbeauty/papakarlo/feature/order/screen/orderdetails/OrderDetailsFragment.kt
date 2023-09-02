@@ -29,6 +29,7 @@ import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.delegates.argument
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
@@ -232,6 +233,19 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                     .background(FoodDeliveryTheme.colors.mainColors.surface)
                     .padding(FoodDeliveryTheme.dimensions.mediumSpace)
             ) {
+                orderDetailsUi.discount?.let { discount ->
+                    Row(modifier = Modifier.padding(bottom = 8.dp)) {
+                        Text(
+                            text = stringResource(R.string.msg_order_details_discount),
+                            style = FoodDeliveryTheme.typography.bodyMedium,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurface
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        DiscountCard(discount = discount)
+                    }
+                }
+
                 orderDetailsUi.deliveryCost?.let { deliveryCost ->
                     Row(modifier = Modifier.padding(bottom = 8.dp)) {
                         Text(
@@ -369,7 +383,8 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             deliveryCost = "100",
             finalCost = "550",
             isLoading = false,
-            code = "A-40"
+            code = "A-40",
+            discount = "10%"
         )
     }
 
