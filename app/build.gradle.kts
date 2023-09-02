@@ -29,6 +29,8 @@ android {
         minSdk = AndroidSdk.min
         compileSdk = AndroidSdk.compile
         targetSdk = AndroidSdk.target
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -176,5 +178,8 @@ dependencies {
     androidTestImplementation(Kaspresso.kaspresso)
     androidTestImplementation(Kaspresso.kaspressoAllureSupport)
     androidTestImplementation(Kaspresso.kaspressoComposeSupport)
-    //androidTestImplementation("io.github.kakaocup:compose:1.7.0")
+    debugImplementation("androidx.test:core:1.5.0")
+    debugImplementation("androidx.test:rules:1.5.0")
+    debugImplementation("androidx.test:runner:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
 }

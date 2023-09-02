@@ -53,7 +53,7 @@ class SelectCityFragment : BaseFragment(R.layout.layout_compose) {
     }
 
     @Composable
-    private fun SelectCityScreen(cityListState: SelectCityUIState.CityListState) {
+    fun SelectCityScreen(cityListState: SelectCityUIState.CityListState) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_select_city),
             modifier = Modifier.semantics { testTag = "SelectCityScreen" }) {

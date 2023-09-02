@@ -10,8 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.icon24
@@ -29,7 +32,9 @@ enum class NavigationBarItem {
 fun FoodDeliveryNavigationBar(options: NavigationBarOptions) {
     if (options is NavigationBarOptions.Visible) {
         NavigationBar(
-            modifier = Modifier.shadow(FoodDeliveryTheme.dimensions.surfaceElevation),
+            modifier = Modifier
+                .shadow(FoodDeliveryTheme.dimensions.surfaceElevation)
+                .testTag("FoodDeliveryNavigationBar"),
             containerColor = FoodDeliveryTheme.colors.mainColors.surface
         ) {
             FoodDeliveryBottomItem(
@@ -49,6 +54,8 @@ fun FoodDeliveryNavigationBar(options: NavigationBarOptions) {
                 }
             )
             FoodDeliveryBottomItem(
+                modifier = Modifier
+                    .testTag("ProfileBottomItem"),
                 selected = options.selectedItem == NavigationBarItem.PROFILE,
                 iconId = R.drawable.ic_profile,
                 labelId = R.string.title_bottom_navigation_profile,
@@ -62,12 +69,14 @@ fun FoodDeliveryNavigationBar(options: NavigationBarOptions) {
 
 @Composable
 private fun RowScope.FoodDeliveryBottomItem(
+    modifier: Modifier = Modifier,
     selected: Boolean,
     @DrawableRes iconId: Int,
     @StringRes labelId: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     NavigationBarItem(
+        modifier = modifier,
         selected = selected,
         onClick = {
             if (!selected) {

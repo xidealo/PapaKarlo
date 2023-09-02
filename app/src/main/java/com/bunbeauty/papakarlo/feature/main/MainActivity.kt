@@ -28,8 +28,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidViewBinding
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -94,10 +98,10 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun MainScreen(mainState: MainState, snackbarHostState: SnackbarHostState) {
         Scaffold(
+            modifier = Modifier.semantics { testTag = "MainScreen" },
             snackbarHost = {
                 FoodDeliverySnackbarHost(snackbarHostState)
             },
@@ -158,10 +162,9 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     private fun handleEventList(
         eventList: List<MainState.Event>,
-        snackbarHostState: SnackbarHostState
+        snackbarHostState: SnackbarHostState,
     ) {
         eventList.forEach { event ->
             when (event) {
@@ -181,7 +184,7 @@ class MainActivity : AppCompatActivity(R.layout.layout_compose), IMessageHost {
     private fun fragmentContainerFactory(
         inflater: LayoutInflater,
         parent: ViewGroup,
-        attachToParent: Boolean
+        attachToParent: Boolean,
     ): FragmentContainerBinding =
         FragmentContainerBinding.inflate(inflater, parent, attachToParent).also {
             setupNavigationListener()
