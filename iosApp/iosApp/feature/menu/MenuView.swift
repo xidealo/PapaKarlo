@@ -22,14 +22,13 @@ struct MenuView: View {
     let columns = [
         GridItem(.flexible(), spacing: 8, alignment: .top),
         GridItem(.flexible(), spacing: 8, alignment: .top)
-      ]
-
+    ]
+    
     var body: some View {
         VStack(spacing:0){
             if viewModel.menuViewState.isLoading {
                 LoadingView()
             }else{
-
                 ScrollView(.horizontal, showsIndicators:false) {
                     ScrollViewReader{ scrollReader in
                         HStack(spacing:0){
@@ -55,8 +54,12 @@ struct MenuView: View {
                 }
                 .padding(.vertical, Diems.SMALL_PADDING)
                 .background(AppColor.surface)
-
+                
                 ScrollView {
+                    if(viewModel.menuViewState.discount != nil){
+                        DiscountView(discount: viewModel.menuViewState.discount ?? "")
+                    }
+                    
                     ScrollViewReader{ scrollReader in
                         LazyVGrid(columns: columns, spacing: 8) {
                             ForEach(viewModel.menuViewState.menuItems.indices){  i in
@@ -66,26 +69,26 @@ struct MenuView: View {
                                     )
                                     .id(viewModel.menuViewState.menuItems[i].categorySectionItem.id)
                                     .padding(.top, 16)
-                                    ){
-                                        ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
-                                            MenuItemView(
-                                                menuProductItem: menuProductItem,
-                                                isRootActive : $isRootActive,
-                                                selection : $selection,
-                                                showOrderCreated : $showOrderCreated,
-                                                action: {
-                                                    viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
-                                                })
-                                            .onAppear(){
-                                                print("onAppear \(i)")
-                                                viewModel.checkAppear(index: i)
-                                            }
-                                            .onDisappear(){
-                                                print("onDisappear \(i)")
-                                                viewModel.checkDisappear(index: i)
-                                            }
+                                ){
+                                    ForEach(viewModel.menuViewState.menuItems[i].categorySectionItem.menuProdctItems){ menuProductItem in
+                                        MenuItemView(
+                                            menuProductItem: menuProductItem,
+                                            isRootActive : $isRootActive,
+                                            selection : $selection,
+                                            showOrderCreated : $showOrderCreated,
+                                            action: {
+                                                viewModel.addCartProductToCart(menuProductUuid: menuProductItem.productUuid)
+                                            })
+                                        .onAppear(){
+                                            print("onAppear \(i)")
+                                            viewModel.checkAppear(index: i)
+                                        }
+                                        .onDisappear(){
+                                            print("onDisappear \(i)")
+                                            viewModel.checkDisappear(index: i)
                                         }
                                     }
+                                }
                             }
                         }
                         .padding(.horizontal, 16)
@@ -105,5 +108,37 @@ struct MenuView: View {
         .navigationBarTitle("")
         .hiddenNavigationBarStyle()
         .preferredColorScheme(.light)
+    }
+    
+    
+    
+    func DiscountView(discount:String) -> some View {
+        VStack(spacing:0){
+            HStack(spacing:0){
+                IconImage(
+                    width: 24,
+                    height: 24,
+                    imageName: "ic_discount"
+                )
+                .foregroundColor(AppColor.onStatus)
+                Text("Скидка \(discount)%")
+                    .titleMedium(weight: .bold)
+                    .padding(.leading, 8)
+                    .foregroundColor(AppColor.onStatus)
+                Spacer()
+            }
+            Text("Успей сделать первый заказ со скидкой \(discount)%")
+                .bodyLarge()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 8)
+                .foregroundColor(AppColor.onStatus)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppColor.positive)
+        .cornerRadius(Diems.LARGE_RADIUS)
+        .padding(.horizontal, 16)
+        .padding(.top, 16)
     }
 }
