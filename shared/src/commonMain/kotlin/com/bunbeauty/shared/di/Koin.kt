@@ -7,6 +7,13 @@ import com.bunbeauty.shared.data.di.networkModule
 import com.bunbeauty.shared.data.di.repositoryModule
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.data.network.api.NetworkConnector
+import com.bunbeauty.shared.di.usecase.cafeUseCaseModule
+import com.bunbeauty.shared.di.usecase.cartUseCaseModule
+import com.bunbeauty.shared.di.usecase.cityUseCaseModule
+import com.bunbeauty.shared.di.usecase.orderUseCaseModule
+import com.bunbeauty.shared.di.usecase.paymentUseCaseModule
+import com.bunbeauty.shared.di.usecase.useCaseModules
+import com.bunbeauty.shared.di.usecase.userAddressUseCaseModule
 import com.bunbeauty.shared.domain.feature.address.CreateAddressUseCase
 import com.bunbeauty.shared.domain.feature.address.GetFilteredStreetListUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
@@ -51,10 +58,16 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
         dataMapperModule(),
         repositoryModule(),
         interactorModule(),
-        useCaseModule(),
         utilModule(),
         platformModule(),
         domainMapperModule(),
+        cityUseCaseModule(),
+        userAddressUseCaseModule(),
+        orderUseCaseModule(),
+        cartUseCaseModule(),
+        cafeUseCaseModule(),
+        paymentUseCaseModule(),
+        useCaseModules()
     )
 }
 
@@ -67,8 +80,14 @@ fun initKoin() = startKoin {
         interactorModule(),
         utilModule(),
         platformModule(),
-        useCaseModule(),
         domainMapperModule(),
+        cityUseCaseModule(),
+        userAddressUseCaseModule(),
+        orderUseCaseModule(),
+        cartUseCaseModule(),
+        cafeUseCaseModule(),
+        paymentUseCaseModule(),
+        useCaseModules()
     )
 }
 
@@ -112,7 +131,9 @@ class IosComponent : KoinComponent {
     fun provideGetPaymentMethodListUseCase(): GetPaymentMethodListUseCase = get()
 
     fun provideSubscribeToNotificationUseCase(): SubscribeToNotificationUseCase = get()
-    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase = get()
+    fun provideGetSelectablePaymentMethodListUseCase(): GetSelectablePaymentMethodListUseCase =
+        get()
+
     fun provideSavePaymentMethodUseCase(): SavePaymentMethodUseCase = get()
 
     //Mapper

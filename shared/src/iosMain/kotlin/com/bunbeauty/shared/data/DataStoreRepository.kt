@@ -2,6 +2,7 @@ package com.bunbeauty.shared.data
 
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Payment
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
@@ -83,6 +84,17 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
     override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
         NSUserDefaults.standardUserDefaults.setObject(selectedPaymentMethodUuid, SELECTED_PAYMENT_METHOD_UUID_KEY)
+    }
+
+    override val discount: Flow<Discount?>
+        get() = TODO("Not yet implemented")
+
+    override suspend fun getDiscount(): Discount? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun saveDiscount(discount: Discount) {
+        TODO("Not yet implemented")
     }
 
     actual override fun observeUserAndCityUuid(): Flow<UserCityUuid> {

@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.menu
 
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.ObserveCartUseCase
+import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
 import com.bunbeauty.shared.domain.model.menu.MenuSection
 import com.bunbeauty.shared.domain.model.product.MenuProduct
@@ -17,6 +18,7 @@ class MenuViewModel(
     private val menuProductInteractor: IMenuProductInteractor,
     private val observeCartUseCase: ObserveCartUseCase,
     private val addCartProductUseCase: AddCartProductUseCase,
+    private val getDiscountUseCase: GetDiscountUseCase,
 ) : SharedViewModel() {
 
     private val mutableMenuState = MutableStateFlow(
@@ -81,7 +83,7 @@ class MenuViewModel(
                                 toMenuProductItemModelList(menuSection)
                     },
                     state = MenuState.State.Success,
-                    discount = "10" + "%"
+                    discount = getDiscountUseCase()?.firstOrderDiscount?.toString()
                 )
             }
         }
