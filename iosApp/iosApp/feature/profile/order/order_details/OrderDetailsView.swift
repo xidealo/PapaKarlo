@@ -19,7 +19,8 @@ struct OrderDetailsView: View {
         totalCost: nil,
         deliveryCost: nil,
         finalCost: nil,
-        isLoading: true
+        isLoading: true,
+        discount: nil
     )
     
     var viewModel = OrderDetailsViewModel(

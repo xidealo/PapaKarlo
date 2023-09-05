@@ -14,7 +14,8 @@ class MenuViewModel : ObservableObject {
         categoryItemModels: [],
         isLoading: true,
         scrollToPostion: "",
-        scrollToHorizontalPostion: ""
+        scrollToHorizontalPostion: "",
+        discount: "10"
     )
     
     var lastDisappearIndex = 1
@@ -22,7 +23,6 @@ class MenuViewModel : ObservableObject {
     var canCalculate = true
     
     init(){
-
         iosComponent.provideMenuInteractor().getMenuSectionList { menuSectionList, error in
             if(error != nil){
                 print("")
