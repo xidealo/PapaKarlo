@@ -15,7 +15,7 @@ class OrderDetailsUiStateMapper(
             orderProductItemList = orderState.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
-            totalCost = orderState.totalCost?.let { totalCost ->
+            totalCost = orderState.oldTotalCost?.let { totalCost ->
                 stringUtil.getCostString(totalCost)
             },
             deliveryCost = orderState.deliveryCost?.let { deliveryCost ->
@@ -23,7 +23,7 @@ class OrderDetailsUiStateMapper(
                     deliveryCost
                 )
             },
-            finalCost = orderState.finalCost?.let { finalCost ->
+            finalCost = orderState.newTotalCost?.let { finalCost ->
                 stringUtil.getCostString(
                     finalCost
                 )

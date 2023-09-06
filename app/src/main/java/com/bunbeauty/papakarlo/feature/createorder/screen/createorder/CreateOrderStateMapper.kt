@@ -6,7 +6,7 @@ import com.bunbeauty.shared.presentation.create_order.CreateOrderUIState
 
 class CreateOrderStateMapper(
     private val stringUtil: IStringUtil,
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
 ) {
     fun map(createOrderUIState: CreateOrderUIState): CreateOrderUi {
         return CreateOrderUi(
@@ -17,7 +17,8 @@ class CreateOrderStateMapper(
             deferredTime = stringUtil.getTimeString(createOrderUIState.deferredTime),
             totalCost = stringUtil.getCostString(createOrderUIState.totalCost),
             deliveryCost = stringUtil.getCostString(createOrderUIState.deliveryCost),
-            finalCost = stringUtil.getCostString(createOrderUIState.finalCost),
+            oldFinalCost = stringUtil.getCostString(createOrderUIState.oldFinalCost),
+            newFinalCost = stringUtil.getCostString(createOrderUIState.newFinalCost),
             isAddressErrorShown = createOrderUIState.isDeliveryAddressErrorShown,
             isLoading = createOrderUIState.isLoading,
             selectedPaymentMethod = createOrderUIState.paymentMethod?.let {

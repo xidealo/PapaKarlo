@@ -24,6 +24,7 @@ import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 
 @Composable
 fun CartProductItem(
@@ -31,7 +32,7 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),
@@ -66,14 +67,14 @@ fun CartProductItem(
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                            text = cartProductItem.oldCost,
+                            text = cartProductItem.oldCost + RUBLE_CURRENCY,
                             style = FoodDeliveryTheme.typography.bodySmall,
                             textDecoration = TextDecoration.LineThrough,
                             color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant
                         )
                     }
                     Text(
-                        text = cartProductItem.newCost,
+                        text = cartProductItem.newCost + RUBLE_CURRENCY,
                         style = FoodDeliveryTheme.typography.bodySmall.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )

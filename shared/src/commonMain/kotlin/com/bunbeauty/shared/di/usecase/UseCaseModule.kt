@@ -20,6 +20,7 @@ internal fun useCaseModules() = module {
         GetCartTotalUseCase(
             cartProductRepo = get(),
             deliveryRepo = get(),
+            getDiscountUseCase = get()
         )
     }
     factory {

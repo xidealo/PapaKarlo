@@ -21,7 +21,8 @@ data class CreateOrderDataState(
 
     val totalCost: Int? = null,
     val deliveryCost: Int? = null,
-    val finalCost: Int? = null,
+    val oldFinalCost: Int? = null,
+    val newFinalCost: Int? = null,
 
     val isLoading: Boolean = false,
     val eventList: List<CreateOrderEvent> = emptyList(),

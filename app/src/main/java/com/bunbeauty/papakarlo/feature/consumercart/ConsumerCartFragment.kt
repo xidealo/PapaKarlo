@@ -47,6 +47,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
@@ -83,7 +84,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -91,34 +92,32 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 findNavController().popBackStack()
             }
         ) {
-            Crossfade(targetState = consumerCartState, label = "ConsumerCartScreen") { state ->
-                when (state) {
-                    ConsumerCartUIState.ConsumerCartState.Loading -> LoadingScreen()
-                    is ConsumerCartUIState.ConsumerCartState.Success -> ConsumerCartSuccessScreen(
-                        consumerCartData = state.data,
-                        addProductToCartClicked = addProductToCartClicked,
-                        removeProductFromCartClicked = removeProductFromCartClicked,
-                        onProductClicked = onProductClicked,
-                        onCreateOrderClicked = onCreateOrderClicked
+            when (consumerCartState) {
+                ConsumerCartUIState.ConsumerCartState.Loading -> LoadingScreen()
+                is ConsumerCartUIState.ConsumerCartState.Success -> ConsumerCartSuccessScreen(
+                    consumerCartData = consumerCartState.data,
+                    addProductToCartClicked = addProductToCartClicked,
+                    removeProductFromCartClicked = removeProductFromCartClicked,
+                    onProductClicked = onProductClicked,
+                    onCreateOrderClicked = onCreateOrderClicked,
+                )
+
+                ConsumerCartUIState.ConsumerCartState.Empty -> {
+                    EmptyScreen(
+                        imageId = R.drawable.ic_cart_24,
+                        imageDescriptionId = R.string.description_consumer_cart_empty,
+                        mainTextId = R.string.title_consumer_cart_empty,
+                        extraTextId = R.string.msg_consumer_cart_empty,
+                        buttonTextId = R.string.action_consumer_cart_menu,
+                        onClick = onMenuClicked
                     )
+                }
 
-                    ConsumerCartUIState.ConsumerCartState.Empty -> {
-                        EmptyScreen(
-                            imageId = R.drawable.ic_cart_24,
-                            imageDescriptionId = R.string.description_consumer_cart_empty,
-                            mainTextId = R.string.title_consumer_cart_empty,
-                            extraTextId = R.string.msg_consumer_cart_empty,
-                            buttonTextId = R.string.action_consumer_cart_menu,
-                            onClick = onMenuClicked
-                        )
-                    }
-
-                    is ConsumerCartUIState.ConsumerCartState.Error -> {
-                        ErrorScreen(
-                            mainTextId = R.string.error_consumer_cart_loading,
-                            onClick = onErrorButtonClicked
-                        )
-                    }
+                is ConsumerCartUIState.ConsumerCartState.Error -> {
+                    ErrorScreen(
+                        mainTextId = R.string.error_consumer_cart_loading,
+                        onClick = onErrorButtonClicked
+                    )
                 }
             }
         }
@@ -130,7 +129,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -147,7 +146,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCartData.forFreeDelivery,
+                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCartData.forFreeDelivery + RUBLE_CURRENCY,
                             style = FoodDeliveryTheme.typography.bodyLarge,
                             color = FoodDeliveryTheme.colors.mainColors.onBackground,
                             textAlign = TextAlign.Center
@@ -174,7 +173,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
             }
             FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
-                    consumerCartData.discount?.let { discount ->
+                    consumerCartData.firstOrderDiscount?.let { discount ->
                         Row(modifier = Modifier.padding(bottom = 8.dp)) {
                             Text(
                                 text = stringResource(R.string.title_consumer_cart_discount),
@@ -198,14 +197,14 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             Text(
                                 modifier = Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                text = oldTotalCost,
+                                text = oldTotalCost + RUBLE_CURRENCY,
                                 style = FoodDeliveryTheme.typography.bodyMedium.bold,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 textDecoration = TextDecoration.LineThrough
                             )
                         }
                         Text(
-                            text = consumerCartData.newTotalCost,
+                            text = consumerCartData.newTotalCost + RUBLE_CURRENCY,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
@@ -275,8 +274,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                         ),
                         oldTotalCost = "1650 ₽",
                         newTotalCost = "1500 ₽",
-                        discount = "10%"
-                    )
+                        firstOrderDiscount = "10"
+                    ),
                 ),
                 onMenuClicked = {},
                 onErrorButtonClicked = {},

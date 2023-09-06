@@ -9,9 +9,9 @@ import com.bunbeauty.shared.presentation.create_order.model.TimeUI
 data class OrderDetailsState(
     val orderProductItemList: List<OrderProductItem> = emptyList(),
     val orderInfo: OrderInfo? = null,
-    val totalCost: String? = null,
+    val oldTotalCost: String? = null,
     val deliveryCost: String? = null,
-    val finalCost: String? = null,
+    val newTotalCost: String? = null,
     val isLoading: Boolean = true,
     val discount: String?,
 ) {

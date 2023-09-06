@@ -17,7 +17,8 @@ class CreateOrderStateMapper(
 
             totalCost = dataState.totalCost,
             deliveryCost = dataState.deliveryCost,
-            finalCost = dataState.finalCost,
+            oldFinalCost  = dataState.oldFinalCost,
+            newFinalCost = dataState.newFinalCost,
 
             isLoading = dataState.isLoading,
 

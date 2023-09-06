@@ -2,6 +2,7 @@ package com.bunbeauty.shared.presentation.create_order
 
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
+import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -37,6 +38,7 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
+    private val getDiscountUseCase: GetDiscountUseCase,
 ) : SharedViewModel() {
 
     private val mutableDataState = MutableStateFlow(
@@ -192,7 +194,7 @@ class CreateOrderViewModel(
                     comment = stateValue.comment,
                     deferredTime = data.deferredTime,
                     timeZone = getSelectedCityTimeZone(),
-                    paymentMethod = data.selectedPaymentMethod?.name?.name
+                    paymentMethod = data.selectedPaymentMethod.name.name
                 )
                 if (orderCode == null) {
                     val event = CreateOrderEvent.ShowSomethingWentWrongErrorEvent
@@ -284,8 +286,9 @@ class CreateOrderViewModel(
                 state.copy(
                     totalCost = cartTotal.totalCost,
                     deliveryCost = cartTotal.deliveryCost,
-                    finalCost = cartTotal.finalCost,
-                    discount = "10%"
+                    newFinalCost = cartTotal.newFinalCost,
+                    oldFinalCost = cartTotal.oldFinalCost,
+                    discount = getDiscountUseCase()?.firstOrderDiscount?.toString()
                 )
             }
         } catch (exception: Exception) {

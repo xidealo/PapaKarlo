@@ -35,7 +35,6 @@ import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.city.ICityInteractor
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import com.bunbeauty.shared.domain.interactor.menu_product.IMenuProductInteractor
-import com.bunbeauty.shared.domain.interactor.order.IOrderInteractor
 import com.bunbeauty.shared.domain.feature.address.GetStreetsUseCase
 import com.bunbeauty.shared.domain.feature.payment.GetSelectablePaymentMethodListUseCase
 import com.bunbeauty.shared.domain.feature.payment.SavePaymentMethodUseCase
@@ -98,7 +97,6 @@ class IosComponent : KoinComponent {
     fun provideCafeInteractor(): ICafeInteractor = get()
     fun provideCartProductInteractor(): ICartProductInteractor = get()
     fun provideIUserInteractor(): IUserInteractor = get()
-    fun provideIOrderInteractor(): IOrderInteractor = get()
 
     //Use cases
     fun provideDisableUserUseCase(): DisableUserUseCase = get()

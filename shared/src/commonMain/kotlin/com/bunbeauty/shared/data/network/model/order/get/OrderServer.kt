@@ -44,6 +44,15 @@ class OrderServer(
 
     @SerialName("paymentMethod")
     val paymentMethod: String?,
+
+    @SerialName("oldTotalCost")
+    val oldTotalCost: Int?,
+
+    @SerialName("newTotalCost")
+    val newTotalCost: Int,
+
+    @SerialName("percentDiscount")
+    val percentDiscount: Int?,
 )
 
 @Serializable

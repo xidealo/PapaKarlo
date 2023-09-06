@@ -21,7 +21,7 @@ object FoodDeliveryColors {
     val LightRed = Color(0xFFDD6962)
     val Yellow = Color(0xFFECA441)
     val LightGreen = Color(0xFF86BD47)
-    val Green = Color(0xFF62BC71)
+    val Green = Color(0xFF5BC589)
     val DarkGrey = Color(0xFF7B7A80)
     val LightBlue = Color(0xFF0AB9E8)
     val LightOrange = Color(0xFFFDA65D)

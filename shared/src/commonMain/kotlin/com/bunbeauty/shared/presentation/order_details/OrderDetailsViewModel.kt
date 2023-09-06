@@ -40,10 +40,10 @@ class OrderDetailsViewModel(
                             orderProductItemList = getProductList(order),
                             orderInfo = getOrderInfo(order),
                             deliveryCost = order.deliveryCost?.toString(),
-                            totalCost = getTotalCost(order),
-                            finalCost = getFinalCost(order),
+                            oldTotalCost = order.oldTotalCost?.toString(),
+                            newTotalCost = order.newTotalCost.toString(),
                             isLoading = false,
-                            discount = "10%"
+                            discount = order.percentDiscount?.toString()
                         )
                     }
                 }

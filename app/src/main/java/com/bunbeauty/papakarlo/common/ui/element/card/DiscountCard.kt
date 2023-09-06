@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.bold
 
+private const val PERCENT = "%"
+
 @Composable
 fun DiscountCard(discount: String) {
     FoodDeliveryCard(
@@ -18,7 +20,7 @@ fun DiscountCard(discount: String) {
     ) {
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
-            text = discount,
+            text = discount + PERCENT,
             style = FoodDeliveryTheme.typography.bodyMedium.bold,
             color = FoodDeliveryTheme.colors.statusColors.onStatus
         )

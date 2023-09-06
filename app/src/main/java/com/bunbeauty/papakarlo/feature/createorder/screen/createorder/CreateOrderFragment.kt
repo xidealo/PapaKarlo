@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -331,9 +332,19 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                         style = FoodDeliveryTheme.typography.bodyMedium.bold,
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
-                    createOrderUi.finalCost?.let { finalCost ->
+                    createOrderUi.oldFinalCost?.let { oldFinalCost ->
                         Text(
-                            text = finalCost,
+                            modifier = Modifier
+                                .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
+                            text = oldFinalCost,
+                            style = FoodDeliveryTheme.typography.bodyMedium.bold,
+                            color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
+                            textDecoration = TextDecoration.LineThrough
+                        )
+                    }
+                    createOrderUi.newFinalCost?.let { newFinalCost ->
+                        Text(
+                            text = newFinalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )
@@ -488,7 +499,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     deferredTime = "",
                     totalCost = null,
                     deliveryCost = null,
-                    finalCost = null,
+                    newFinalCost = null,
+                    oldFinalCost = null,
                     isLoading = false,
                     pickupAddress = null,
                     isAddressErrorShown = false,
@@ -532,7 +544,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     deferredTime = "",
                     totalCost = "250 $",
                     deliveryCost = "100 $",
-                    finalCost = "350 $",
+                    newFinalCost = "350 $",
+                    oldFinalCost = "450 $",
                     isLoading = false,
                     pickupAddress = null,
                     isAddressErrorShown = false,
@@ -569,7 +582,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     deferredTime = "10:30",
                     totalCost = null,
                     deliveryCost = null,
-                    finalCost = null,
+                    newFinalCost = null,
+                    oldFinalCost = null,
                     isLoading = false,
                     isAddressErrorShown = false,
                     deliveryAddress = null,
@@ -606,7 +620,8 @@ class CreateOrderFragment : BaseFragmentWithSharedViewModel(R.layout.layout_comp
                     deferredTime = "",
                     totalCost = "250 $",
                     deliveryCost = "100 $",
-                    finalCost = "350 $",
+                    newFinalCost = "350 $",
+                    oldFinalCost = "450 $",
                     isLoading = true,
                     isAddressErrorShown = false,
                     deliveryAddress = null,
