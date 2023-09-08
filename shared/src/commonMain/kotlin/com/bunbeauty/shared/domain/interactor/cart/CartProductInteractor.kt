@@ -15,7 +15,7 @@ class CartProductInteractor(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
     private val productInteractor: IProductInteractor,
-    private val getDiscountUseCase: GetDiscountUseCase,
+    private val getCartTotal: GetCartTotalUseCase,
 ) : ICartProductInteractor {
 
     override fun observeConsumerCart(): CommonFlow<ConsumerCart?> {
@@ -58,12 +58,13 @@ class CartProductInteractor(
             ConsumerCart.Empty
         } else {
             deliveryRepo.getDelivery()?.let { delivery ->
+                val cartTotal = getCartTotal(isDelivery = false)
                 ConsumerCart.WithProducts(
                     forFreeDelivery = delivery.forFree,
                     cartProductList = cartProductList.map(::toLightCartProduct),
-                    oldTotalCost = productInteractor.getOldTotalCost(cartProductList),
-                    newTotalCost = productInteractor.getNewTotalCost(cartProductList),
-                    discount = getDiscountUseCase()?.firstOrderDiscount?.toString()
+                    oldTotalCost = cartTotal.oldFinalCost,
+                    newTotalCost = cartTotal.newFinalCost,
+                    discount = cartTotal.discount?.toString()
                 )
             }
         }

@@ -38,7 +38,6 @@ class CreateOrderViewModel(
     private val saveSelectedUserAddress: SaveSelectedUserAddressUseCase,
     private val getSelectablePaymentMethodListUseCase: GetSelectablePaymentMethodListUseCase,
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
-    private val getDiscountUseCase: GetDiscountUseCase,
 ) : SharedViewModel() {
 
     private val mutableDataState = MutableStateFlow(
@@ -288,7 +287,7 @@ class CreateOrderViewModel(
                     deliveryCost = cartTotal.deliveryCost,
                     newFinalCost = cartTotal.newFinalCost,
                     oldFinalCost = cartTotal.oldFinalCost,
-                    discount = getDiscountUseCase()?.firstOrderDiscount?.toString()
+                    discount = cartTotal.discount?.toString()
                 )
             }
         } catch (exception: Exception) {

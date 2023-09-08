@@ -31,6 +31,7 @@ class GetCartTotalUseCase(
                 oldTotalCost + deliveryCost
             },
             newFinalCost = newTotalCost + deliveryCost,
+            discount = getDiscountUseCase()?.firstOrderDiscount
         )
     }
 

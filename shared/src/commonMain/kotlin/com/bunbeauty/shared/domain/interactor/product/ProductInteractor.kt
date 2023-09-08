@@ -8,17 +8,6 @@ class ProductInteractor : IProductInteractor {
         return productList.sumOf(::getProductPositionNewCost)
     }
 
-    override fun getOldTotalCost(productList: List<ProductPosition>): Int? {
-        val oldCost = productList.sumOf { productPosition ->
-            getProductPositionOldCost(productPosition) ?: getProductPositionNewCost(productPosition)
-        }
-        return if (oldCost == getNewTotalCost(productList)) {
-            null
-        } else {
-            oldCost
-        }
-    }
-
     override fun getProductPositionNewCost(productPosition: ProductPosition): Int {
         return productPosition.product.newPrice * productPosition.count
     }
