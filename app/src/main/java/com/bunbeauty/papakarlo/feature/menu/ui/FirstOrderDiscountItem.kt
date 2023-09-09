@@ -22,11 +22,12 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 @Composable
 fun FirstOrderDiscountItem(
     modifier: Modifier = Modifier,
-    discount: String
+    discount: String,
 ) {
     FoodDeliveryCard(
         modifier = modifier,
-        colors = FoodDeliveryCardDefaults.cardStatusColors
+        colors = FoodDeliveryCardDefaults.cardStatusColors,
+        clickable = false
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(

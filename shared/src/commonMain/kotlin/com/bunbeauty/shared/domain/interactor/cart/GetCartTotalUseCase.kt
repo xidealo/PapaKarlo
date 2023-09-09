@@ -19,6 +19,7 @@ class GetCartTotalUseCase(
             //Выкинуть ошибку и в корзине обработать как пустая корзина
             error("Cart is empty")
         }
+
         val newTotalCost = getNewTotalCost(cartProductList)
         val oldTotalCost = getOldTotalCost(cartProductList)
 
@@ -44,13 +45,13 @@ class GetCartTotalUseCase(
         }
     }
 
-    fun getTotalCost(productList: List<CartProduct>): Int {
+    private fun getTotalCost(productList: List<CartProduct>): Int {
         return productList.sumOf { orderProductEntity ->
             orderProductEntity.count * orderProductEntity.product.newPrice
         }
     }
 
-    suspend fun getNewTotalCost(productList: List<CartProduct>): Int {
+    private suspend fun getNewTotalCost(productList: List<CartProduct>): Int {
         val newTotalCost = productList.sumOf { orderProductEntity ->
             orderProductEntity.count * orderProductEntity.product.newPrice
         }
@@ -61,7 +62,7 @@ class GetCartTotalUseCase(
         return newTotalCost - discount
     }
 
-    suspend fun getOldTotalCost(productList: List<CartProduct>): Int? {
+    private suspend fun getOldTotalCost(productList: List<CartProduct>): Int? {
         val oldTotalCost = productList.sumOf { orderProductEntity ->
             orderProductEntity.count * (orderProductEntity.product.oldPrice
                 ?: orderProductEntity.product.newPrice)

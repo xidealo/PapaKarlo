@@ -82,7 +82,9 @@ internal fun useCaseModules() = module {
     }
     factory {
         GetDiscountUseCase(
-            discountRepository = get()
+            discountRepository = get(),
+            orderRepository = get(),
+            dataStoreRepo = get(),
         )
     }
 }
