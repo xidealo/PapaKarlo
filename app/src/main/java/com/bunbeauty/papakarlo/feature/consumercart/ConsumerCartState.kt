@@ -6,7 +6,7 @@ import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 data class ConsumerCartDataState(
     val consumerCartData: ConsumerCartData? = null,
     val state: State = State.LOADING,
-    val eventList: List<ConsumerCartEvent> = emptyList(),
+    val eventList: List<ConsumerCartEvent> = emptyList()
 ) {
 
     enum class State {
@@ -26,7 +26,7 @@ data class ConsumerCartData(
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
     val newTotalCost: String,
-    val firstOrderDiscount: String?,
+    val firstOrderDiscount: String?
 )
 
 sealed interface ConsumerCartEvent {
@@ -38,7 +38,7 @@ sealed interface ConsumerCartEvent {
 
 data class ConsumerCartUIState(
     val consumerCartState: ConsumerCartState = ConsumerCartState.Loading,
-    val eventList: List<ConsumerCartEvent> = emptyList(),
+    val eventList: List<ConsumerCartEvent> = emptyList()
 ) {
 
     sealed interface ConsumerCartState {

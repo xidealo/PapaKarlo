@@ -22,7 +22,7 @@ import com.bunbeauty.papakarlo.common.ui.theme.bold
 @Composable
 fun FirstOrderDiscountItem(
     modifier: Modifier = Modifier,
-    discount: String,
+    discount: String
 ) {
     FoodDeliveryCard(
         modifier = modifier,

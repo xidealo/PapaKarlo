@@ -6,7 +6,6 @@ import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
-import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
 import com.bunbeauty.shared.domain.interactor.user.IUserInteractor
 import com.bunbeauty.shared.domain.model.cart.ConsumerCart
@@ -23,7 +22,7 @@ class ConsumerCartViewModel(
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
-    private val removeCartProductUseCase: RemoveCartProductUseCase,
+    private val removeCartProductUseCase: RemoveCartProductUseCase
 ) : BaseViewModel() {
 
     private val consumerCartDataState = MutableStateFlow(
@@ -48,8 +47,8 @@ class ConsumerCartViewModel(
                                 dataState.copy(
                                     state = getConsumerCartDataState(consumerCart),
                                     consumerCartData = getConsumerCartData(
-                                        consumerCart = consumerCart,
-                                    ),
+                                        consumerCart = consumerCart
+                                    )
                                 )
                             }
                         }
@@ -136,7 +135,7 @@ class ConsumerCartViewModel(
                         consumerCartState = ConsumerCartUIState
                             .ConsumerCartState
                             .Success(
-                                data = dataState.consumerCartData,
+                                data = dataState.consumerCartData
                             ),
                         eventList = dataState.eventList
                     )
@@ -156,7 +155,7 @@ class ConsumerCartViewModel(
     }
 
     private fun getConsumerCartData(
-        consumerCart: ConsumerCart,
+        consumerCart: ConsumerCart
     ): ConsumerCartData? {
         return when (consumerCart) {
             is ConsumerCart.Empty -> null

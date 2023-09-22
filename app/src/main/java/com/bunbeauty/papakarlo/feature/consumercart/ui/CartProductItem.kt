@@ -32,7 +32,7 @@ fun CartProductItem(
     cartProductItem: CartProductItem,
     onCountIncreased: () -> Unit,
     onCountDecreased: () -> Unit,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     FoodDeliveryCard(
         modifier = modifier.fillMaxWidth(),

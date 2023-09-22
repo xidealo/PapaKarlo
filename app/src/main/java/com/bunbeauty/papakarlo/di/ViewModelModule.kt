@@ -40,7 +40,7 @@ fun viewModelModule() = module {
             userInteractor = get(),
             cartProductInteractor = get(),
             addCartProductUseCase = get(),
-            removeCartProductUseCase = get(),
+            removeCartProductUseCase = get()
         )
     }
     viewModel {
@@ -59,7 +59,7 @@ fun viewModelModule() = module {
             getSelectedCityTimeZone = get(),
             saveSelectedUserAddress = get(),
             getSelectablePaymentMethodListUseCase = get(),
-            savePaymentMethodUseCase = get(),
+            savePaymentMethodUseCase = get()
         )
     }
     viewModel {

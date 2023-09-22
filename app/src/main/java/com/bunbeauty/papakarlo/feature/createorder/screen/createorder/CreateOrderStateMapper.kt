@@ -6,7 +6,7 @@ import com.bunbeauty.shared.presentation.create_order.CreateOrderUIState
 
 class CreateOrderStateMapper(
     private val stringUtil: IStringUtil,
-    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper,
+    private val paymentMethodUiStateMapper: PaymentMethodUiStateMapper
 ) {
     fun map(createOrderUIState: CreateOrderUIState): CreateOrderUi {
         return CreateOrderUi(

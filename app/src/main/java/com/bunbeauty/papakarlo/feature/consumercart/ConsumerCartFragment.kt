@@ -2,7 +2,6 @@ package com.bunbeauty.papakarlo.feature.consumercart
 
 import android.os.Bundle
 import android.view.View
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -84,7 +83,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -99,7 +98,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                     addProductToCartClicked = addProductToCartClicked,
                     removeProductFromCartClicked = removeProductFromCartClicked,
                     onProductClicked = onProductClicked,
-                    onCreateOrderClicked = onCreateOrderClicked,
+                    onCreateOrderClicked = onCreateOrderClicked
                 )
 
                 ConsumerCartUIState.ConsumerCartState.Empty -> {
@@ -129,7 +128,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit,
+        onCreateOrderClicked: () -> Unit
     ) {
         Column(
             modifier = Modifier
@@ -275,7 +274,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                         oldTotalCost = "1650 ₽",
                         newTotalCost = "1500 ₽",
                         firstOrderDiscount = "10"
-                    ),
+                    )
                 ),
                 onMenuClicked = {},
                 onErrorButtonClicked = {},
