@@ -155,7 +155,7 @@ class ConsumerCartViewModel(
         }
     }
 
-    private suspend fun getConsumerCartData(
+    private fun getConsumerCartData(
         consumerCart: ConsumerCart,
     ): ConsumerCartData? {
         return when (consumerCart) {
@@ -165,7 +165,7 @@ class ConsumerCartViewModel(
                 cartProductList = consumerCart.cartProductList.map(::toItem),
                 oldTotalCost = consumerCart.oldTotalCost?.toString(),
                 newTotalCost = consumerCart.newTotalCost.toString(),
-                firstOrderDiscount = consumerCart.discount
+                firstOrderDiscount = consumerCart.discount?.toString()
             )
         }
     }

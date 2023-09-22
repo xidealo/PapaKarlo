@@ -7,6 +7,6 @@ sealed class ConsumerCart {
         val cartProductList: List<LightCartProduct>,
         val oldTotalCost: Int?,
         val newTotalCost: Int,
-        val discount: String?,
+        val discount: Int?,
     ) : ConsumerCart()
 }

@@ -53,7 +53,7 @@ class CartProductInteractor(
         cartProductRepo.deleteAllCartProducts()
     }
 
-    suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
+    private suspend fun getConsumerCart(cartProductList: List<CartProduct>): ConsumerCart? {
         return if (cartProductList.isEmpty()) {
             ConsumerCart.Empty
         } else {
@@ -64,7 +64,7 @@ class CartProductInteractor(
                     cartProductList = cartProductList.map(::toLightCartProduct),
                     oldTotalCost = cartTotal.oldFinalCost,
                     newTotalCost = cartTotal.newFinalCost,
-                    discount = cartTotal.discount?.toString()
+                    discount = cartTotal.discount
                 )
             }
         }

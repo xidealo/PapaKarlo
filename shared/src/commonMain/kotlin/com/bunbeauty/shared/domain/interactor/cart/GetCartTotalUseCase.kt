@@ -15,11 +15,6 @@ class GetCartTotalUseCase(
     suspend operator fun invoke(isDelivery: Boolean): CartTotal {
         val cartProductList = cartProductRepo.getCartProductList()
 
-        if (cartProductList.isEmpty()) {
-            //Выкинуть ошибку и в корзине обработать как пустая корзина
-            error("Cart is empty")
-        }
-
         val newTotalCost = getNewTotalCost(cartProductList)
         val oldTotalCost = getOldTotalCost(cartProductList)
 
