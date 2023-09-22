@@ -6,6 +6,7 @@ import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
+//скидка не должна меняться
 class GetCartTotalUseCase(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
