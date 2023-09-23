@@ -15,7 +15,6 @@
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
     <string name="description_ic_discount">Скидка</string>
-    <string name="description_ic_clear">Очистить</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
     <string name="action_retry">Повторить попытку</string>
