@@ -23,4 +23,6 @@ interface OrderRepo {
 
     suspend fun createOrder(token: String, createdOrder: CreatedOrder): OrderCode?
 
+
+    suspend fun clearCache()
 }

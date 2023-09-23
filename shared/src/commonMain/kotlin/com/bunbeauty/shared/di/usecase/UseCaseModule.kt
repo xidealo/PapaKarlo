@@ -11,6 +11,7 @@ import com.bunbeauty.shared.domain.feature.notification.SubscribeToNotificationU
 import com.bunbeauty.shared.domain.feature.settings.ObserveSettingsUseCase
 import com.bunbeauty.shared.domain.feature.settings.UpdateEmailUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
+import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.use_case.DisableUserUseCase
 import com.bunbeauty.shared.domain.use_case.deferred_time.GetMinTimeUseCase
 import org.koin.dsl.module
@@ -20,6 +21,12 @@ internal fun useCaseModules() = module {
         GetCartTotalUseCase(
             cartProductRepo = get(),
             deliveryRepo = get(),
+            getDiscountUseCase = get(),
+            getNewTotalCostUseCase = get()
+        )
+    }
+    factory {
+        GetNewTotalCostUseCase(
             getDiscountUseCase = get()
         )
     }

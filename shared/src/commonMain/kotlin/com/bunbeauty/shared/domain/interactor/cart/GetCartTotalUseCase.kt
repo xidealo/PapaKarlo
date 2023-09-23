@@ -6,17 +6,17 @@ import com.bunbeauty.shared.domain.model.cart.CartTotal
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 
-//скидка не должна меняться
 class GetCartTotalUseCase(
     private val cartProductRepo: CartProductRepo,
     private val deliveryRepo: DeliveryRepo,
     private val getDiscountUseCase: GetDiscountUseCase,
+    private val getNewTotalCostUseCase: GetNewTotalCostUseCase,
 ) {
 
     suspend operator fun invoke(isDelivery: Boolean): CartTotal {
         val cartProductList = cartProductRepo.getCartProductList()
 
-        val newTotalCost = getNewTotalCost(cartProductList)
+        val newTotalCost = getNewTotalCostUseCase(cartProductList)
         val oldTotalCost = getOldTotalCost(cartProductList)
 
         val deliveryCost = getDeliveryCost(isDelivery, newTotalCost)
@@ -47,16 +47,6 @@ class GetCartTotalUseCase(
         }
     }
 
-    private suspend fun getNewTotalCost(productList: List<CartProduct>): Int {
-        val newTotalCost = productList.sumOf { orderProductEntity ->
-            orderProductEntity.count * orderProductEntity.product.newPrice
-        }
-
-        val discount =
-            (newTotalCost * (getDiscountUseCase()?.firstOrderDiscount ?: 0) / 100.0).toInt()
-
-        return newTotalCost - discount
-    }
 
     private suspend fun getOldTotalCost(productList: List<CartProduct>): Int? {
         val oldTotalCost = productList.sumOf { orderProductEntity ->
@@ -64,7 +54,7 @@ class GetCartTotalUseCase(
                 ?: orderProductEntity.product.newPrice)
         }
 
-        return if (oldTotalCost == getNewTotalCost(productList)) {
+        return if (oldTotalCost == getNewTotalCostUseCase(productList)) {
             null
         } else {
             oldTotalCost

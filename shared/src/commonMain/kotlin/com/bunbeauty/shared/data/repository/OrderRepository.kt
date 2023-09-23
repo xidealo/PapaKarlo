@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.sync.Mutex
 
 class OrderRepository(
     private val orderDao: IOrderDao,
@@ -22,12 +23,13 @@ class OrderRepository(
     private val orderMapper: IOrderMapper,
 ) : OrderRepo {
 
-    data class ValidLastOrder(
+    data class CacheLastLightOrder(
         val lastOrder: LightOrder? = null,
         val isValid: Boolean = false,
     )
 
-    var validLastOrder = ValidLastOrder()
+    private var cacheLastLightOrder = CacheLastLightOrder()
+    val mutex = Mutex()
 
     override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
@@ -79,6 +81,10 @@ class OrderRepository(
             onSuccess = { orderServerList ->
                 orderServerList.results.firstOrNull()?.let { orderServer ->
                     saveOrderLocally(orderServer)
+                    cacheLastLightOrder = CacheLastLightOrder(
+                        lastOrder = orderMapper.toLightOrder(orderServer),
+                        isValid = true
+                    )
                     orderMapper.toLightOrder(orderServer)
                 }
             }
@@ -89,8 +95,8 @@ class OrderRepository(
         token: String,
         userUuid: String,
     ): LightOrder? {
-        return if (validLastOrder.isValid) {
-            validLastOrder.lastOrder ?: orderDao.getLastOrderByUserUuid(userUuid)
+        return if (cacheLastLightOrder.isValid) {
+            cacheLastLightOrder.lastOrder ?: orderDao.getLastOrderByUserUuid(userUuid)
                 ?.let(orderMapper::toLightOrder)
         } else {
             networkConnector.getOrderList(token = token, count = 1)
@@ -98,7 +104,7 @@ class OrderRepository(
                     onError = {
                         val lastOrderFromLocal = orderDao.getLastOrderByUserUuid(userUuid)
                             ?.let(orderMapper::toLightOrder)
-                        validLastOrder = ValidLastOrder(
+                        cacheLastLightOrder = CacheLastLightOrder(
                             lastOrder = lastOrderFromLocal,
                             isValid = true
                         )
@@ -107,7 +113,7 @@ class OrderRepository(
                     onSuccess = { orderServerList ->
                         orderServerList.results.firstOrNull()?.let { orderServer ->
                             saveOrderLocally(orderServer)
-                            validLastOrder = ValidLastOrder(
+                            cacheLastLightOrder = CacheLastLightOrder(
                                 lastOrder = orderMapper.toLightOrder(orderServer),
                                 isValid = true
                             )
@@ -136,8 +142,11 @@ class OrderRepository(
         val orderPostServer = orderMapper.toOrderPostServer(createdOrder)
         return networkConnector.postOrder(token, orderPostServer).getNullableResult { orderServer ->
             saveOrderLocally(orderServer)
-            validLastOrder =
-                ValidLastOrder(lastOrder = orderMapper.toLightOrder(orderServer), isValid = true)
+            cacheLastLightOrder =
+                CacheLastLightOrder(
+                    lastOrder = orderMapper.toLightOrder(orderServer),
+                    isValid = true
+                )
             orderMapper.toOrderCode(orderServer)
         }
     }
@@ -164,5 +173,9 @@ class OrderRepository(
 
     private fun saveOrderLocally(orderServer: OrderServer) {
         saveOrderListLocally(listOf(orderServer))
+    }
+
+    override suspend fun clearCache() {
+        cacheLastLightOrder = CacheLastLightOrder()
     }
 }
