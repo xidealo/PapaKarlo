@@ -66,6 +66,7 @@ object Constants {
     // SIGN
 
     const val RUBLE_CURRENCY = "₽"
+    const val PERCENT = "%"
 
     // PHONE
     const val PHONE_CODE = "+7"

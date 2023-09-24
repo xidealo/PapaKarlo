@@ -9,8 +9,8 @@ sealed class MenuItem : ItemModel() {
         val name: String
     ) : MenuItem()
 
-    data class MenuProductItem(
+    data class MenuProductListItem(
         override val key: String,
-        val product: com.bunbeauty.shared.presentation.menu.MenuProductItem,
+        val product: MenuProductItem,
     ) : MenuItem()
 }

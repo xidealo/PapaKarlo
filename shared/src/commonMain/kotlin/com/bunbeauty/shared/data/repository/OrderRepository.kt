@@ -29,7 +29,6 @@ class OrderRepository(
     )
 
     private var cacheLastLightOrder = CacheLastLightOrder()
-    val mutex = Mutex()
 
     override suspend fun observeOrderUpdates(token: String): Pair<String?, Flow<Order>> {
         val (uuid, orderUpdatesFlow) = observeOrderUpdatesServer(token)
@@ -96,18 +95,13 @@ class OrderRepository(
         userUuid: String,
     ): LightOrder? {
         return if (cacheLastLightOrder.isValid) {
-            cacheLastLightOrder.lastOrder ?: orderDao.getLastOrderByUserUuid(userUuid)
-                ?.let(orderMapper::toLightOrder)
+            cacheLastLightOrder.lastOrder
         } else {
             networkConnector.getOrderList(token = token, count = 1)
                 .getNullableResult(
                     onError = {
                         val lastOrderFromLocal = orderDao.getLastOrderByUserUuid(userUuid)
                             ?.let(orderMapper::toLightOrder)
-                        cacheLastLightOrder = CacheLastLightOrder(
-                            lastOrder = lastOrderFromLocal,
-                            isValid = true
-                        )
                         lastOrderFromLocal
                     },
                     onSuccess = { orderServerList ->

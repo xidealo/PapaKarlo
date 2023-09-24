@@ -270,7 +270,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                         color = FoodDeliveryTheme.colors.mainColors.onSurface
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    orderDetailsUi.totalCost?.let { totalCost ->
+                    orderDetailsUi.oldTotalCost?.let { totalCost ->
                         Text(
                             modifier = Modifier
                                 .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
@@ -280,7 +280,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                             textDecoration = TextDecoration.LineThrough
                         )
                     }
-                    orderDetailsUi.finalCost?.let { finalCost ->
+                    orderDetailsUi.newTotalCost?.let { finalCost ->
                         Text(
                             text = finalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
@@ -328,7 +328,7 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
             BottomAmountBar(
                 orderDetailsUi = getOrderDetails().copy(
                     deliveryCost = null,
-                    totalCost = null
+                    oldTotalCost = null
                 )
             )
         }
@@ -379,9 +379,9 @@ class OrderDetailsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_com
                 )
             ),
             orderInfo = getOrderInfo(),
-            totalCost = "450",
+            oldTotalCost = "450",
             deliveryCost = "100",
-            finalCost = "550",
+            newTotalCost = "550",
             isLoading = false,
             code = "A-40",
             discount = "10%"

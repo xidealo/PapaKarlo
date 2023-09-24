@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.order_details
 
+import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
@@ -43,7 +44,9 @@ class OrderDetailsViewModel(
                             oldTotalCost = order.oldTotalCost?.toString(),
                             newTotalCost = order.newTotalCost.toString(),
                             isLoading = false,
-                            discount = order.percentDiscount?.toString()
+                            discount = order.percentDiscount?.let { discount ->
+                                discount.toString() + PERCENT
+                            }
                         )
                     }
                 }

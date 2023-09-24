@@ -46,7 +46,6 @@ import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirectio
 import com.bunbeauty.papakarlo.feature.consumercart.ConsumerCartFragmentDirections.toProductFragment
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
 import com.bunbeauty.papakarlo.feature.consumercart.ui.CartProductItem
-import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
@@ -145,7 +144,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCartData.forFreeDelivery + RUBLE_CURRENCY,
+                            text = stringResource(
+                                R.string.msg_consumer_cart_free_delivery_from,
+                                consumerCartData.forFreeDelivery
+                            ),
                             style = FoodDeliveryTheme.typography.bodyLarge,
                             color = FoodDeliveryTheme.colors.mainColors.onBackground,
                             textAlign = TextAlign.Center
@@ -196,14 +198,14 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             Text(
                                 modifier = Modifier
                                     .padding(end = FoodDeliveryTheme.dimensions.smallSpace),
-                                text = oldTotalCost + RUBLE_CURRENCY,
+                                text = oldTotalCost,
                                 style = FoodDeliveryTheme.typography.bodyMedium.bold,
                                 color = FoodDeliveryTheme.colors.mainColors.onSurfaceVariant,
                                 textDecoration = TextDecoration.LineThrough
                             )
                         }
                         Text(
-                            text = consumerCartData.newTotalCost + RUBLE_CURRENCY,
+                            text = consumerCartData.newTotalCost,
                             style = FoodDeliveryTheme.typography.bodyMedium.bold,
                             color = FoodDeliveryTheme.colors.mainColors.onSurface
                         )

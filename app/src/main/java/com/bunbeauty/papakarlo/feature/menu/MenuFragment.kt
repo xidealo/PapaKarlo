@@ -233,13 +233,13 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     FirstOrderDiscountItem(discount = discount)
                 }
             }
-            menuItemList.forEachIndexed { inedex, menuItemModel ->
+            menuItemList.forEachIndexed { index, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.MenuCategoryHeaderItem -> {
                         item(span = { GridItemSpan(maxLineSpan) }) {
                             Text(
                                 modifier = Modifier.padding(
-                                    top = if (inedex > 0 || discount != null) {
+                                    top = if (index > 0 || discount != null) {
                                         16.dp
                                     } else {
                                         0.dp
@@ -252,7 +252,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         }
                     }
 
-                    is MenuItem.MenuProductItem -> {
+                    is MenuItem.MenuProductListItem -> {
                         item {
                             MenuProductItem(
                                 modifier = Modifier.padding(top = 8.dp),
@@ -291,7 +291,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             oldPrice = 100
         )
 
-        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductItem(
+        fun getMenuProductPairItemModel(key: String) = MenuItem.MenuProductListItem(
             key = key,
             product = menuProductItemModel
         )

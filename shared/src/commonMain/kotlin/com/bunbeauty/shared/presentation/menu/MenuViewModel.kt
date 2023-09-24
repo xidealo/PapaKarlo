@@ -187,7 +187,7 @@ class MenuViewModel(
         )
     }
 
-    private fun toMenuProductItemModelList(menuSection: MenuSection): List<MenuItem.MenuProductItem> {
+    private fun toMenuProductItemModelList(menuSection: MenuSection): List<MenuItem.MenuProductListItem> {
         fun toMenuProductItemModel(menuProduct: MenuProduct): MenuProductItem {
             return MenuProductItem(
                 uuid = menuProduct.uuid,
@@ -199,7 +199,7 @@ class MenuViewModel(
         }
 
         return menuSection.menuProductList.map { menuProduct ->
-            MenuItem.MenuProductItem(
+            MenuItem.MenuProductListItem(
                 key = "MenuProductPairItemModel ${menuProduct.uuid} ${menuSection.category}",
                 product = toMenuProductItemModel(menuProduct),
             )

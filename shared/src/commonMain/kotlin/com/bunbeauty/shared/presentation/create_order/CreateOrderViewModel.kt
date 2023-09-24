@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
@@ -287,7 +288,9 @@ class CreateOrderViewModel(
                     deliveryCost = cartTotal.deliveryCost,
                     newFinalCost = cartTotal.newFinalCost,
                     oldFinalCost = cartTotal.oldFinalCost,
-                    discount = cartTotal.discount?.toString()
+                    discount = cartTotal.discount?.let { discount ->
+                        discount.toString() + PERCENT
+                    }
                 )
             }
         } catch (exception: Exception) {
