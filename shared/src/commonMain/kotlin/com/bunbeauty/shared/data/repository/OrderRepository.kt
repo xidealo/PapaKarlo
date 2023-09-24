@@ -100,9 +100,7 @@ class OrderRepository(
             networkConnector.getOrderList(token = token, count = 1)
                 .getNullableResult(
                     onError = {
-                        val lastOrderFromLocal = orderDao.getLastOrderByUserUuid(userUuid)
-                            ?.let(orderMapper::toLightOrder)
-                        lastOrderFromLocal
+                       orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
                     },
                     onSuccess = { orderServerList ->
                         orderServerList.results.firstOrNull()?.let { orderServer ->
