@@ -82,7 +82,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         FoodDeliveryScaffold(
             title = stringResource(id = R.string.title_cart),
@@ -127,7 +127,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
         addProductToCartClicked: (String) -> Unit,
         removeProductFromCartClicked: (String) -> Unit,
         onProductClicked: (CartProductItem) -> Unit,
-        onCreateOrderClicked: () -> Unit
+        onCreateOrderClicked: () -> Unit,
     ) {
         Column(
             modifier = Modifier
@@ -173,7 +173,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 }
             }
             FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+                Column(
+                    modifier = Modifier
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                ) {
                     consumerCartData.firstOrderDiscount?.let { discount ->
                         Row(modifier = Modifier.padding(bottom = 8.dp)) {
                             Text(

@@ -25,9 +25,8 @@ class GetNewTotalCostUseCaseTest {
         )
     }
 
-
     @Test
-    fun `should return 0 newFinalCost when product list is empty`() = runTest {
+    fun `should return zero newFinalCost when product list is empty`() = runTest {
         // Given
 
         coEvery { getDiscountUseCase() } returns null
@@ -43,7 +42,7 @@ class GetNewTotalCostUseCaseTest {
     }
 
     @Test
-    fun `should return 100 newFinalCost when cart product list has 2 products with 50 newPrice`() =
+    fun `should return newFinalCost equals sum of newPrice from cartProductList`() =
         runTest {
             // Given
             coEvery { getDiscountUseCase() } returns null
@@ -59,7 +58,7 @@ class GetNewTotalCostUseCaseTest {
         }
 
     @Test
-    fun `should return 90 newFinalCost when discount 10 percent`() =
+    fun `should return newFinalCost equals sum of newPrice minus discount`() =
         runTest {
             // Given
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
@@ -75,7 +74,7 @@ class GetNewTotalCostUseCaseTest {
         }
 
     @Test
-    fun `should return 600 newFinalCost and round to bottom when discount 10 percent and new price 666`() =
+    fun `should return newFinalCost rounded to bottom`() =
         runTest {
             // Given
 
@@ -92,7 +91,7 @@ class GetNewTotalCostUseCaseTest {
         }
 
     @Test
-    fun `should return 0 newFinalCost  when discount 100`() =
+    fun `should return zero newFinalCost when discount 100 percent`() =
         runTest {
             // Given
 
@@ -109,7 +108,7 @@ class GetNewTotalCostUseCaseTest {
         }
 
     @Test
-    fun `should return same newFinalCost when discount 0`() =
+    fun `should return same newFinalCost when discount zero`() =
         runTest {
             // Given
 

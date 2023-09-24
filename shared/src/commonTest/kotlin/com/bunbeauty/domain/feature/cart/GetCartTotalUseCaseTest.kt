@@ -4,7 +4,6 @@ import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
@@ -35,7 +34,7 @@ class GetCartTotalUseCaseTest {
     }
 
     @Test
-    fun `should return 0 totalCost when product list is empty`() = runTest {
+    fun `should return zero totalCost when product list is empty`() = runTest {
         // Given
 
         coEvery { cartProductRepo.getCartProductList() } returns listOf()
@@ -101,7 +100,7 @@ class GetCartTotalUseCaseTest {
     }
 
     @Test
-    fun `should return 200 totalCost when cart product list has 2 products with 100 oldPrice`() =
+    fun `should return totalCost equals sum of newPrice from productList`() =
         runTest {
             // Given
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
@@ -124,7 +123,7 @@ class GetCartTotalUseCaseTest {
         }
 
     @Test
-    fun `should return 200 oldFinalCost when cart product list has 2 products with 100 oldPrice and not equal to newPrice`() =
+    fun `should return oldFinalCost equals sum of oldPrice from cart product list when it is not equal to newPrice`() =
         runTest {
             // Given
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
@@ -149,7 +148,7 @@ class GetCartTotalUseCaseTest {
     //delivery
 
     @Test
-    fun `should return 210 oldFinalCost when delivery true`() =
+    fun `should return oldFinalCost with cost of delivery when delivery is true`() =
         runTest {
             // Given
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
@@ -172,7 +171,7 @@ class GetCartTotalUseCaseTest {
         }
 
     @Test
-    fun `should return 110 newFinalCost when delivery true`() =
+    fun `should return newFinalCost with cost of delivery when delivery is true`() =
         runTest {
             // Given
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData

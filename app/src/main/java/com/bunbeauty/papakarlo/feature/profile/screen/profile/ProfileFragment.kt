@@ -127,7 +127,7 @@ class ProfileFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose)
                 }
             }
         ) {
-            Crossfade(targetState = profileUi.state, label = "CafeListScreen") { state ->
+            Crossfade(targetState = profileUi.state, label = "ProfileScreen") { state ->
                 when (state) {
                     ProfileState.State.AUTHORIZED -> AuthorizedProfileScreen(
                         profileUi,
