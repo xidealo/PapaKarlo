@@ -17,6 +17,9 @@ import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
+import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
+import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
+import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
@@ -45,6 +48,7 @@ interface NetworkConnector {
     suspend fun getPaymentMethodList(): ApiResult<ListServer<PaymentMethodServer>>
     suspend fun getLinkList(): ApiResult<ListServer<LinkServer>>
 
+    @Deprecated("Outdated login method")
     suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer>
     suspend fun postUserAddress(
         token: String,
@@ -52,11 +56,15 @@ interface NetworkConnector {
     ): ApiResult<AddressServer>
 
     suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer>
+    suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer>
 
     suspend fun patchSettings(
         token: String,
         patchUserServer: PatchUserServer
     ): ApiResult<SettingsServer>
+
+    suspend fun putCodeResend(uuid: String): ApiResult<Unit>
+    suspend fun putCodeCheck(code: CodeServer, uuid: String): ApiResult<AuthResponseServer>
 
     suspend fun startOrderUpdatesObservation(token: String): Pair<String?, Flow<OrderUpdateServer>>
     suspend fun stopOrderUpdatesObservation(uuid: String)

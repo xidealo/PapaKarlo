@@ -3,6 +3,7 @@ package com.bunbeauty.shared.data.network.api
 import com.bunbeauty.shared.Constants.AUTHORIZATION_HEADER
 import com.bunbeauty.shared.Constants.CITY_UUID_PARAMETER
 import com.bunbeauty.shared.Constants.COMPANY_UUID_PARAMETER
+import com.bunbeauty.shared.Constants.UUID_PARAMETER
 import com.bunbeauty.shared.data.companyUuid
 import com.bunbeauty.shared.data.network.ApiError
 import com.bunbeauty.shared.data.network.ApiResult
@@ -22,6 +23,9 @@ import com.bunbeauty.shared.data.network.model.SettingsServer
 import com.bunbeauty.shared.data.network.model.StreetServer
 import com.bunbeauty.shared.data.network.model.UserAddressPostServer
 import com.bunbeauty.shared.data.network.model.login.AuthResponseServer
+import com.bunbeauty.shared.data.network.model.login.AuthSessionServer
+import com.bunbeauty.shared.data.network.model.login.CodeRequestServer
+import com.bunbeauty.shared.data.network.model.login.CodeServer
 import com.bunbeauty.shared.data.network.model.login.LoginPostServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderServer
 import com.bunbeauty.shared.data.network.model.order.get.OrderUpdateServer
@@ -38,6 +42,7 @@ import io.ktor.client.request.header
 import io.ktor.client.request.parameter
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
+import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.path
@@ -174,10 +179,11 @@ class NetworkConnectorImpl(
 
     // POST
 
+    @Deprecated("Outdated login method")
     override suspend fun postLogin(loginPostServer: LoginPostServer): ApiResult<AuthResponseServer> {
         return postData(
             path = "client/login",
-            postBody = loginPostServer,
+            body = loginPostServer,
         )
     }
 
@@ -187,7 +193,7 @@ class NetworkConnectorImpl(
     ): ApiResult<AddressServer> {
         return postData(
             path = "address",
-            postBody = userAddress,
+            body = userAddress,
             token = token
         )
     }
@@ -195,8 +201,16 @@ class NetworkConnectorImpl(
     override suspend fun postOrder(token: String, order: OrderPostServer): ApiResult<OrderServer> {
         return postData(
             path = "v2/order",
-            postBody = order,
+            body = order,
             token = token
+        )
+    }
+
+    override suspend fun postCodeRequest(codeRequest: CodeRequestServer): ApiResult<AuthSessionServer> {
+        return postData(
+            path = "client/code_request",
+            body = codeRequest,
+            parameters = mapOf(COMPANY_UUID_PARAMETER to companyUuid)
         )
     }
 
@@ -208,8 +222,25 @@ class NetworkConnectorImpl(
     ): ApiResult<SettingsServer> {
         return patchData(
             path = "client/settings",
-            patchBody = patchUserServer,
+            body = patchUserServer,
             token = token
+        )
+    }
+
+    // PUT
+
+    override suspend fun putCodeResend(uuid: String): ApiResult<Unit> {
+        return putData(
+            path = "client/code_resend",
+            parameters = mapOf(UUID_PARAMETER to uuid)
+        )
+    }
+
+    override suspend fun putCodeCheck(code: CodeServer, uuid: String): ApiResult<AuthResponseServer> {
+        return putData(
+            path = "client/code_check",
+            body = code,
+            parameters = mapOf(UUID_PARAMETER to uuid)
         )
     }
 
@@ -248,7 +279,7 @@ class NetworkConnectorImpl(
     private suspend inline fun <reified R> postData(
         path: String,
         parameters: Map<String, String> = mapOf(),
-        postBody: Any,
+        body: Any,
         token: String? = null
     ): ApiResult<R> {
         return safeCall {
@@ -256,7 +287,7 @@ class NetworkConnectorImpl(
                 buildRequest(
                     path = path,
                     parameters = parameters,
-                    body = postBody,
+                    body = body,
                     token = token
                 )
             }
@@ -265,7 +296,7 @@ class NetworkConnectorImpl(
 
     private suspend inline fun <reified R> patchData(
         path: String,
-        patchBody: Any,
+        body: Any,
         parameters: Map<String, String> = mapOf(),
         token: String? = null
     ): ApiResult<R> {
@@ -274,7 +305,25 @@ class NetworkConnectorImpl(
                 buildRequest(
                     path = path,
                     parameters = parameters,
-                    body = patchBody,
+                    body = body,
+                    token = token
+                )
+            }
+        }
+    }
+
+    private suspend inline fun <reified R> putData(
+        path: String,
+        body: Any? = null,
+        parameters: Map<String, String> = mapOf(),
+        token: String? = null
+    ): ApiResult<R> {
+        return safeCall {
+            client.put {
+                buildRequest(
+                    path = path,
+                    parameters = parameters,
+                    body = body,
                     token = token
                 )
             }
