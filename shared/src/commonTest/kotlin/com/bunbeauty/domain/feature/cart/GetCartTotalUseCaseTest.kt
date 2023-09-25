@@ -107,7 +107,11 @@ class GetCartTotalUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                )
+                ),
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
             )
 
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
@@ -133,12 +137,15 @@ class GetCartTotalUseCaseTest {
     fun `should return oldFinalCost equals sum of oldPrice from cart product list when it is not equal to newPrice`() =
         runTest {
             // Given
-            // Given
             val cartProductListMockData = listOf(
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                )
+                ),
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
             )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
@@ -169,7 +176,11 @@ class GetCartTotalUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                )
+                ),
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
             )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
@@ -198,7 +209,11 @@ class GetCartTotalUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
-                )
+                ),
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
             )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 

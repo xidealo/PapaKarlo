@@ -49,6 +49,10 @@ class GetNewTotalCostUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
                 )
             )
             coEvery { getDiscountUseCase() } returns null
@@ -68,6 +72,10 @@ class GetNewTotalCostUseCaseTest {
         runTest {
             // Given
             val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                ),
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
@@ -93,7 +101,7 @@ class GetNewTotalCostUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
-                )
+                ),
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
 
@@ -115,7 +123,7 @@ class GetNewTotalCostUseCaseTest {
                 getCartProduct(
                     count = 1,
                     menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
-                )
+                ),
             )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
 
