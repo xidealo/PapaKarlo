@@ -1,11 +1,11 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.getCartProduct
+import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetCartTotalUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.model.Delivery
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 import com.bunbeauty.shared.domain.repo.CartProductRepo
 import com.bunbeauty.shared.domain.repo.DeliveryRepo
 import io.mockk.coEvery
@@ -103,6 +103,13 @@ class GetCartTotalUseCaseTest {
     fun `should return totalCost equals sum of newPrice from productList`() =
         runTest {
             // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
+
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
@@ -126,6 +133,13 @@ class GetCartTotalUseCaseTest {
     fun `should return oldFinalCost equals sum of oldPrice from cart product list when it is not equal to newPrice`() =
         runTest {
             // Given
+            // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
@@ -151,6 +165,12 @@ class GetCartTotalUseCaseTest {
     fun `should return oldFinalCost with cost of delivery when delivery is true`() =
         runTest {
             // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
@@ -174,6 +194,12 @@ class GetCartTotalUseCaseTest {
     fun `should return newFinalCost with cost of delivery when delivery is true`() =
         runTest {
             // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
             coEvery { cartProductRepo.getCartProductList() } returns cartProductListMockData
 
             coEvery { getDiscountUseCase() } returns null
@@ -193,62 +219,4 @@ class GetCartTotalUseCaseTest {
             )
         }
 
-    //discount
-
-    private val cartProductListMockData = listOf(
-        CartProduct(
-            uuid = "1",
-            count = 1,
-            product = MenuProduct(
-                uuid = "1",
-                name = "Kapusta",
-                newPrice = 50,
-                oldPrice = 100,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-        CartProduct(
-            uuid = "2",
-            count = 1,
-            product = MenuProduct(
-                uuid = "2",
-                name = "Kartoxa",
-                newPrice = 50,
-                oldPrice = 100,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-    )
-
-    private val cartProductListMockDataWith666NewPrice = listOf(
-        CartProduct(
-            uuid = "1",
-            count = 1,
-            product = MenuProduct(
-                uuid = "1",
-                name = "Kapusta",
-                newPrice = 666,
-                oldPrice = 1000,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-    )
 }

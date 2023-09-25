@@ -18,7 +18,7 @@ object FoodDeliveryCardDefaults {
 
     val cardStatusColors: CardColors
         @Composable get() = CardDefaults.cardColors(
-            containerColor = FoodDeliveryTheme.colors.statusColors.positive,
+            containerColor = FoodDeliveryTheme.colors.statusColors.positive
         )
 
     val cardShape: RoundedCornerShape

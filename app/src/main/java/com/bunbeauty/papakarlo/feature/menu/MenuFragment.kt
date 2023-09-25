@@ -105,7 +105,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuScreen(
         menuUi: MenuUi,
         onMenuPositionChanged: (Int) -> Unit,
-        errorAction: () -> Unit,
+        errorAction: () -> Unit
     ) {
         FoodDeliveryScaffold(
             title = stringResource(R.string.title_menu),
@@ -166,7 +166,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun CategoryRow(
         categoryItemList: List<CategoryItem>,
-        menuLazyListState: LazyGridState,
+        menuLazyListState: LazyGridState
     ) {
         val coroutineScope = rememberCoroutineScope()
         val categoryLazyListState = rememberLazyListState()
@@ -219,7 +219,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
         discount: String?,
-        menuLazyListState: LazyGridState,
+        menuLazyListState: LazyGridState
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),

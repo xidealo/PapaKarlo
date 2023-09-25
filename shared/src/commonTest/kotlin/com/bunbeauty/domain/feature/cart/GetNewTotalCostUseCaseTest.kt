@@ -1,10 +1,10 @@
 package com.bunbeauty.domain.feature.cart
 
+import com.bunbeauty.getCartProduct
+import com.bunbeauty.getMenuProduct
 import com.bunbeauty.shared.domain.feature.discount.GetDiscountUseCase
 import com.bunbeauty.shared.domain.interactor.cart.GetNewTotalCostUseCase
 import com.bunbeauty.shared.domain.model.Discount
-import com.bunbeauty.shared.domain.model.cart.CartProduct
-import com.bunbeauty.shared.domain.model.product.MenuProduct
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -45,6 +45,12 @@ class GetNewTotalCostUseCaseTest {
     fun `should return newFinalCost equals sum of newPrice from cartProductList`() =
         runTest {
             // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
             coEvery { getDiscountUseCase() } returns null
 
             // When
@@ -61,6 +67,12 @@ class GetNewTotalCostUseCaseTest {
     fun `should return newFinalCost equals sum of newPrice minus discount`() =
         runTest {
             // Given
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 50, oldPrice = 100)
+                )
+            )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
 
             // When
@@ -77,11 +89,16 @@ class GetNewTotalCostUseCaseTest {
     fun `should return newFinalCost rounded to bottom`() =
         runTest {
             // Given
-
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
+                )
+            )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 10)
 
             // When
-            val newFinalCost = getNewTotalCostUseCase(cartProductListMockDataWith666NewPrice)
+            val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
 
             // Then
             assertEquals(
@@ -94,11 +111,16 @@ class GetNewTotalCostUseCaseTest {
     fun `should return zero newFinalCost when discount 100 percent`() =
         runTest {
             // Given
-
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
+                )
+            )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 100)
 
             // When
-            val newFinalCost = getNewTotalCostUseCase(cartProductListMockDataWith666NewPrice)
+            val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
 
             // Then
             assertEquals(
@@ -111,11 +133,16 @@ class GetNewTotalCostUseCaseTest {
     fun `should return same newFinalCost when discount zero`() =
         runTest {
             // Given
-
+            val cartProductListMockData = listOf(
+                getCartProduct(
+                    count = 1,
+                    menuProduct = getMenuProduct(newPrice = 666, oldPrice = 1000)
+                )
+            )
             coEvery { getDiscountUseCase() } returns Discount(firstOrderDiscount = 0)
 
             // When
-            val newFinalCost = getNewTotalCostUseCase(cartProductListMockDataWith666NewPrice)
+            val newFinalCost = getNewTotalCostUseCase(cartProductListMockData)
 
             // Then
             assertEquals(
@@ -124,60 +151,4 @@ class GetNewTotalCostUseCaseTest {
             )
         }
 
-    private val cartProductListMockData = listOf(
-        CartProduct(
-            uuid = "1",
-            count = 1,
-            product = MenuProduct(
-                uuid = "1",
-                name = "Kapusta",
-                newPrice = 50,
-                oldPrice = 100,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-        CartProduct(
-            uuid = "2",
-            count = 1,
-            product = MenuProduct(
-                uuid = "2",
-                name = "Kartoxa",
-                newPrice = 50,
-                oldPrice = 100,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-    )
-
-    private val cartProductListMockDataWith666NewPrice = listOf(
-        CartProduct(
-            uuid = "1",
-            count = 1,
-            product = MenuProduct(
-                uuid = "1",
-                name = "Kapusta",
-                newPrice = 666,
-                oldPrice = 1000,
-                utils = "г",
-                nutrition = 1,
-                description = "",
-                comboDescription = "",
-                photoLink = "",
-                categoryList = emptyList(),
-                visible = true,
-            ),
-        ),
-    )
 }
