@@ -4,7 +4,7 @@ import com.bunbeauty.shared.domain.model.cart.CartProduct
 import com.bunbeauty.shared.domain.model.product.MenuProduct
 
 
-fun getMenuProduct(newPrice: Int = 0, oldPrice: Int = 0) = MenuProduct(
+fun getMenuProduct(newPrice: Int = 0, oldPrice: Int? = null) = MenuProduct(
     uuid = "1",
     name = "Kapusta",
     newPrice = newPrice,
@@ -19,7 +19,7 @@ fun getMenuProduct(newPrice: Int = 0, oldPrice: Int = 0) = MenuProduct(
 )
 
 
-fun getCartProduct(count: Int = 0, menuProduct: MenuProduct = getMenuProduct()) = CartProduct(
+fun getCartProduct(count: Int = 0, menuProduct: MenuProduct) = CartProduct(
     uuid = "1",
     count = count,
     product = menuProduct,

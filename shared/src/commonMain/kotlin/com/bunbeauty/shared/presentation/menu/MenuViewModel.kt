@@ -127,9 +127,14 @@ class MenuViewModel(
     }
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {
+        val extraDiscountIndex = if (mutableMenuState.value.discount != null) {
+            1
+        } else {
+            0
+        }
         return mutableMenuState.value.menuItemList.indexOfFirst { menuItemModel ->
             (menuItemModel as? MenuItem.MenuCategoryHeaderItem)?.uuid == categoryItem.uuid
-        }
+        } + extraDiscountIndex
     }
 
     private fun setCategory(categoryUuid: String) {
