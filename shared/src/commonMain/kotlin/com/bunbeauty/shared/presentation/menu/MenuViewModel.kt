@@ -27,6 +27,7 @@ class MenuViewModel(
             cartCostAndCount = null,
             menuItemList = emptyList(),
             state = MenuState.State.Loading,
+            userScrollEnabled = true,
             eventList = emptyList(),
         )
     )
@@ -34,8 +35,6 @@ class MenuViewModel(
 
     private var selectedCategoryUuid: String? = null
     private var currentMenuPosition = 0
-
-    var autoScrolling = false
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         mutableMenuState.update { oldState ->
@@ -47,6 +46,18 @@ class MenuViewModel(
 
     init {
         observeCart()
+    }
+
+    fun onStartAutoScroll() {
+        mutableMenuState.update {
+            it.copy(userScrollEnabled = false)
+        }
+    }
+
+    fun onStopAutoScroll() {
+        mutableMenuState.update {
+            it.copy(userScrollEnabled = true)
+        }
     }
 
     private fun observeCart() {
@@ -80,9 +91,9 @@ class MenuViewModel(
                     )
                 }
 
-            val menuItemList =  listOfNotNull(discountItem) +  menuSectionList.flatMap { menuSection ->
+            val menuItemList = listOfNotNull(discountItem) + menuSectionList.flatMap { menuSection ->
                 listOf(toMenuCategoryItemModel(menuSection)) +
-                        toMenuProductItemModelList(menuSection)
+                    toMenuProductItemModelList(menuSection)
             }
 
             mutableMenuState.update { oldState ->
@@ -102,7 +113,7 @@ class MenuViewModel(
     }
 
     fun onMenuPositionChanged(menuPosition: Int) {
-        if (autoScrolling || menuPosition == currentMenuPosition) {
+        if (!mutableMenuState.value.userScrollEnabled || menuPosition == currentMenuPosition) {
             return
         }
 

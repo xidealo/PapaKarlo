@@ -10,5 +10,6 @@ data class MenuUi(
     val topCartUi: TopCartUi,
     val menuItemList: List<MenuItem> = emptyList(),
     val state: MenuState.State = MenuState.State.Loading,
+    val userScrollEnabled: Boolean,
     val eventList: List<MenuState.Event> = emptyList()
 )

@@ -7,6 +7,7 @@ data class MenuState(
     val cartCostAndCount: CartCostAndCount?,
     val menuItemList: List<MenuItem>,
     val state: State,
+    val userScrollEnabled: Boolean,
     val eventList: List<Event>,
 ) {
     sealed class State {

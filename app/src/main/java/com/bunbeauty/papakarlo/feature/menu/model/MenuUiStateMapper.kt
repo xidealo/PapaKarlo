@@ -18,6 +18,7 @@ class MenuUiStateMapper(
             categoryItemList = menuState.categoryItemList,
             menuItemList = menuState.menuItemList,
             state = menuState.state,
+            userScrollEnabled = menuState.userScrollEnabled,
             eventList = menuState.eventList
         )
     }

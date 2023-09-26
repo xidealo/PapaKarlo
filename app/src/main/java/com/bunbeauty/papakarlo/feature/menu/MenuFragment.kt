@@ -156,7 +156,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 CategoryRow(menu.categoryItemList, menuLazyGridState)
             }
             MenuColumn(
-                menuItemList = menu.menuItemList,
+                menu = menu,
                 menuLazyListState = menuLazyGridState
             )
         }
@@ -192,11 +192,11 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                             categoryLazyListState.animateScrollToItem(i)
                         }
                         coroutineScope.launch {
-                            viewModel.autoScrolling = true
+                            viewModel.onStartAutoScroll()
                             menuLazyListState.animateScrollToItem(
                                 viewModel.getMenuListPosition(categoryItemModel)
                             )
-                            viewModel.autoScrolling = false
+                            viewModel.onStopAutoScroll()
                         }
                     }
                 )
@@ -217,17 +217,18 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
 
     @Composable
     private fun MenuColumn(
-        menuItemList: List<MenuItem>,
-        menuLazyListState: LazyGridState
+        menu: MenuUi,
+        menuLazyListState: LazyGridState,
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(FoodDeliveryTheme.dimensions.mediumSpace),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
-            state = menuLazyListState
+            state = menuLazyListState,
+            userScrollEnabled = menu.userScrollEnabled
         ) {
-            menuItemList.forEachIndexed { index, menuItemModel ->
+            menu.menuItemList.forEachIndexed { index, menuItemModel ->
                 when (menuItemModel) {
                     is MenuItem.DiscountItem -> {
                         item(
@@ -322,6 +323,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                         getMenuProductPairItemModel("8")
                     ),
                     state = MenuState.State.Success,
+                    userScrollEnabled = true,
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
@@ -340,6 +342,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             MenuScreen(
                 menuUi = MenuUi(
                     state = MenuState.State.Loading,
+                    userScrollEnabled = true,
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
@@ -358,6 +361,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             MenuScreen(
                 menuUi = MenuUi(
                     state = MenuState.State.Error(Throwable()),
+                    userScrollEnabled = true,
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
