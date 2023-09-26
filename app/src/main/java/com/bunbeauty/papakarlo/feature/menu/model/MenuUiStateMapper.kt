@@ -17,7 +17,6 @@ class MenuUiStateMapper(
             ),
             categoryItemList = menuState.categoryItemList,
             menuItemList = menuState.menuItemList,
-            discount = menuState.discount,
             state = menuState.state,
             eventList = menuState.eventList
         )

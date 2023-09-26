@@ -26,7 +26,6 @@ class MenuViewModel(
             categoryItemList = emptyList(),
             cartCostAndCount = null,
             menuItemList = emptyList(),
-            discount = null,
             state = MenuState.State.Loading,
             eventList = emptyList(),
         )
@@ -73,17 +72,26 @@ class MenuViewModel(
                 selectedCategoryUuid = menuSectionList.firstOrNull()?.category?.uuid
             }
 
+            val discountItem =
+                getDiscountUseCase()?.firstOrderDiscount?.toString()?.let { discount ->
+                    MenuItem.DiscountItem(
+                        key = "MenuProductDiscountModel $discount",
+                        discount = discount
+                    )
+                }
+
+            val menuItemList =  listOfNotNull(discountItem) +  menuSectionList.flatMap { menuSection ->
+                listOf(toMenuCategoryItemModel(menuSection)) +
+                        toMenuProductItemModelList(menuSection)
+            }
+
             mutableMenuState.update { oldState ->
                 oldState.copy(
                     categoryItemList = menuSectionList.map { menuSection ->
                         toCategoryItemModel(menuSection)
                     },
-                    menuItemList = menuSectionList.flatMap { menuSection ->
-                        listOf(toMenuCategoryItemModel(menuSection)) +
-                                toMenuProductItemModelList(menuSection)
-                    },
+                    menuItemList = menuItemList,
                     state = MenuState.State.Success,
-                    discount = getDiscountUseCase()?.firstOrderDiscount?.toString()
                 )
             }
         }
@@ -97,11 +105,11 @@ class MenuViewModel(
         if (autoScrolling || menuPosition == currentMenuPosition) {
             return
         }
+
         currentMenuPosition = menuPosition
 
         sharedScope.launch(exceptionHandler) {
-            val menuItemModelList =
-                mutableMenuState.value.menuItemList
+            val menuItemModelList = mutableMenuState.value.menuItemList
             menuItemModelList.filterIsInstance<MenuItem.MenuCategoryHeaderItem>()
                 .findLast { menuItemModel ->
                     menuItemModelList.indexOf(menuItemModel) <= menuPosition
@@ -127,14 +135,14 @@ class MenuViewModel(
     }
 
     fun getMenuListPosition(categoryItem: CategoryItem): Int {
-        val extraDiscountIndex = if (mutableMenuState.value.discount != null) {
-            1
-        } else {
-            0
-        }
-        return mutableMenuState.value.menuItemList.indexOfFirst { menuItemModel ->
+        val index = mutableMenuState.value.menuItemList.indexOfFirst { menuItemModel ->
             (menuItemModel as? MenuItem.MenuCategoryHeaderItem)?.uuid == categoryItem.uuid
-        } + extraDiscountIndex
+        }
+        return if (index == 1 && mutableMenuState.value.hasDiscountItem) {
+            0
+        } else {
+            index
+        }
     }
 
     private fun setCategory(categoryUuid: String) {

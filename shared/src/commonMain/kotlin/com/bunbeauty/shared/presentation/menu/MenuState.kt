@@ -6,7 +6,6 @@ data class MenuState(
     val categoryItemList: List<CategoryItem>,
     val cartCostAndCount: CartCostAndCount?,
     val menuItemList: List<MenuItem>,
-    val discount: String?,
     val state: State,
     val eventList: List<Event>,
 ) {
@@ -22,4 +21,6 @@ data class MenuState(
 
     operator fun plus(event: Event) = copy(eventList = eventList + event)
     operator fun minus(events: List<Event>) = copy(eventList = eventList - events.toSet())
+
+    val hasDiscountItem = menuItemList.any { it is MenuItem.DiscountItem }
 }

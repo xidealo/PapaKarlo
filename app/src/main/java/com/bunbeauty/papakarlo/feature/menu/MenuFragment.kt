@@ -157,7 +157,6 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             }
             MenuColumn(
                 menuItemList = menu.menuItemList,
-                discount = menu.discount,
                 menuLazyListState = menuLazyGridState
             )
         }
@@ -175,7 +174,8 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                 horizontal = FoodDeliveryTheme.dimensions.mediumSpace,
                 vertical = FoodDeliveryTheme.dimensions.smallSpace
             ),
-            state = categoryLazyListState
+            state = categoryLazyListState,
+            horizontalArrangement = Arrangement.SpaceAround
         ) {
             itemsIndexed(
                 categoryItemList,
@@ -218,7 +218,6 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menuItemList: List<MenuItem>,
-        discount: String?,
         menuLazyListState: LazyGridState
     ) {
         LazyVerticalGrid(
@@ -228,18 +227,24 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
             horizontalArrangement = Arrangement.Absolute.spacedBy(8.dp),
             state = menuLazyListState
         ) {
-            discount?.let {
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    FirstOrderDiscountItem(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        discount = discount
-                    )
-                }
-            }
             menuItemList.forEachIndexed { index, menuItemModel ->
                 when (menuItemModel) {
+                    is MenuItem.DiscountItem -> {
+                        item(
+                            span = { GridItemSpan(maxLineSpan) },
+                            key = menuItemModel.key
+                        ) {
+                            FirstOrderDiscountItem(
+                                discount = menuItemModel.discount
+                            )
+                        }
+                    }
+
                     is MenuItem.MenuCategoryHeaderItem -> {
-                        item(span = { GridItemSpan(maxLineSpan) }) {
+                        item(
+                            span = { GridItemSpan(maxLineSpan) },
+                            key = menuItemModel.key
+                        ) {
                             Text(
                                 modifier = Modifier.padding(
                                     top = if (index == 0) {
@@ -256,7 +261,9 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     }
 
                     is MenuItem.MenuProductListItem -> {
-                        item {
+                        item(
+                            key = menuItemModel.key
+                        ) {
                             MenuProductItem(
                                 modifier = Modifier.padding(top = 8.dp),
                                 menuProductItem = menuItemModel.product,
@@ -318,8 +325,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    ),
-                    discount = null
+                    )
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
@@ -337,8 +343,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    ),
-                    discount = null
+                    )
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
@@ -356,8 +361,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
                     topCartUi = TopCartUi(
                         cost = "100",
                         count = "2"
-                    ),
-                    discount = null
+                    )
                 ),
                 onMenuPositionChanged = {},
                 errorAction = {}
