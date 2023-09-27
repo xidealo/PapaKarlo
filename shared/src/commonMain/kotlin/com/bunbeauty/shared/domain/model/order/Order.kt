@@ -17,6 +17,9 @@ data class Order(
     val deliveryCost: Int?,
     val orderProductList: List<OrderProduct>,
     val paymentMethod: PaymentMethodName?,
+    val oldTotalCost: Int?,
+    val newTotalCost: Int,
+    val percentDiscount: Int?,
 )
 
 data class OrderAddress(

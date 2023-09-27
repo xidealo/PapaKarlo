@@ -10,9 +10,11 @@ data class CreateOrderUi(
     val deferredTime: String,
     val totalCost: String?,
     val deliveryCost: String?,
-    val finalCost: String?,
+    val oldFinalCost: String?,
+    val newFinalCost: String?,
     val isAddressErrorShown: Boolean,
     val isLoading: Boolean,
+    val discount: String?,
     val selectedPaymentMethod: PaymentMethodUI?
 ) {
     val switcherPosition = if (isDelivery) {

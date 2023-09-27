@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.bunbeauty.shared.DataStoreRepo
 import com.bunbeauty.shared.domain.model.Delivery
+import com.bunbeauty.shared.domain.model.Discount
 import com.bunbeauty.shared.domain.model.Settings
 import com.bunbeauty.shared.domain.model.UserCityUuid
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +29,8 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
     private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = SETTINGS_DATA_STORE)
     private val Context.userUuidDataStore: DataStore<Preferences> by preferencesDataStore(name = USER_UUID_DATA_STORE)
     private val Context.selectedCityDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_CITY_DATA_STORE)
-    private val Context.selectedPaymentMethod: DataStore<Preferences> by preferencesDataStore(name = SELECTED_PAYMENT_METHOD_DATA_STORE)
+    private val Context.selectedPaymentMethodDataStore: DataStore<Preferences> by preferencesDataStore(name = SELECTED_PAYMENT_METHOD_DATA_STORE)
+    private val Context.discountDataStore: DataStore<Preferences> by preferencesDataStore(name = DISCOUNT_DATA_STORE)
 
     actual override val token: Flow<String?> = context.tokenDataStore.data.map {
         it[TOKEN_KEY]
@@ -93,12 +95,12 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         }
     }
 
-    override val selectedPaymentMethodUuid: Flow<String?> = context.selectedPaymentMethod.data.map {
+    override val selectedPaymentMethodUuid: Flow<String?> = context.selectedPaymentMethodDataStore.data.map {
         it[SELECTED_PAYMENT_METHOD_UUID_KEY]
     }
 
     override suspend fun saveSelectedPaymentMethodUuid(selectedPaymentMethodUuid: String) {
-        context.selectedPaymentMethod.edit {
+        context.selectedPaymentMethodDataStore.edit {
             it[SELECTED_PAYMENT_METHOD_UUID_KEY] = selectedPaymentMethodUuid
         }
     }
@@ -157,6 +159,24 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
         )
     }
 
+    override val discount: Flow<Discount?> = context.discountDataStore.data.map {
+        it[FIRST_ORDER_DISCOUNT_KEY]?.let { firstOrderDiscount ->
+            Discount(
+                firstOrderDiscount = firstOrderDiscount,
+            )
+        }
+    }
+
+    override suspend fun getDiscount(): Discount? {
+        return discount.firstOrNull()
+    }
+
+    override suspend fun saveDiscount(discount: Discount) {
+        context.discountDataStore.edit {
+            it[FIRST_ORDER_DISCOUNT_KEY] = discount.firstOrderDiscount
+        }
+    }
+
     actual override suspend fun clearUserData() {
         context.tokenDataStore.edit {
             it.clear()
@@ -199,7 +219,12 @@ actual class DataStoreRepository : DataStoreRepo, KoinComponent {
 
         private const val SELECTED_PAYMENT_METHOD_DATA_STORE = "payment method data store"
         private const val SELECTED_PAYMENT_METHOD_UUID = "payment method uuid"
-        private val SELECTED_PAYMENT_METHOD_UUID_KEY = stringPreferencesKey(SELECTED_PAYMENT_METHOD_UUID)
+        private val SELECTED_PAYMENT_METHOD_UUID_KEY =
+            stringPreferencesKey(SELECTED_PAYMENT_METHOD_UUID)
+
+        private const val DISCOUNT_DATA_STORE = "discount data store"
+        private const val FIRST_ORDER_DISCOUNT = "first order discount"
+        private val FIRST_ORDER_DISCOUNT_KEY = intPreferencesKey(FIRST_ORDER_DISCOUNT)
 
     }
 }

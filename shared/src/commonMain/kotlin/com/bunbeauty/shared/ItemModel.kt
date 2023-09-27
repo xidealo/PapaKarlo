@@ -1,4 +1,4 @@
-package com.bunbeauty.papakarlo.common.model
+package com.bunbeauty.shared
 
 abstract class ItemModel {
     abstract val key: String

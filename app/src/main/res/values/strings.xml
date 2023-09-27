@@ -10,9 +10,11 @@
 
     <!--COMMON-->
     <string name="part_ruble">&#160;₽</string>
+    <string name="with_ruble">%d ₽</string>
     <string name="description_ic_next">Переход</string>
     <string name="description_ic_checked">Выбрано</string>
     <string name="description_product">Фото блюда</string>
+    <string name="description_ic_discount">Скидка</string>
     <string name="common_email">Почта</string>
     <string name="common_city">Город</string>
     <string name="action_retry">Повторить попытку</string>
@@ -49,6 +51,8 @@
     <!-- MENU -->
     <string name="title_menu">Меню</string>
     <string name="error_menu_loading">Не удалось загрузить меню</string>
+    <string name="title_menu_discount">Скидка %s%%</string>
+    <string name="msg_menu_discount">Успей сделать первый заказ со скидкой %s%%</string>
 
     <!-- PRODUCT DETAILS -->
     <string name="action_product_details_want">Хочу!</string>
@@ -59,8 +63,9 @@
     <string name="action_consumer_cart_menu">Меню</string>
     <string name="title_consumer_cart_empty">Корзина пуста</string>
     <string name="msg_consumer_cart_empty">Добавьте товар из «Меню»</string>
-    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от&#160;</string>
+    <string name="msg_consumer_cart_free_delivery_from">Бесплатная доставка от %s</string>
     <string name="title_consumer_cart_total">Итого</string>
+    <string name="title_consumer_cart_discount">Скидка</string>
     <string name="description_consumer_cart_increase">Увеличить</string>
     <string name="description_consumer_cart_decrease">Уменьшить</string>
     <string name="description_consumer_cart_empty">Пустая корзина</string>
@@ -166,6 +171,7 @@
     <string name="msg_order_details_order_cost">Сумма заказа</string>
     <string name="msg_order_details_delivery_cost">Доставка</string>
     <string name="description_order_details_done">Шаг выполнен</string>
+    <string name="msg_order_details_discount">Скидка</string>
 
     <!-- PROFILE  -->
     <string name="title_profile">Профиль</string>

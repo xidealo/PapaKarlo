@@ -14,9 +14,11 @@ data class CreateOrderUIState(
 
     val totalCost: Int?,
     val deliveryCost: Int?,
-    val finalCost: Int?,
+    val oldFinalCost: Int?,
+    val newFinalCost: Int?,
 
     val isLoading: Boolean,
     val eventList: List<CreateOrderEvent>,
     val paymentMethod: PaymentMethod?,
+    val discount: String?,
 )

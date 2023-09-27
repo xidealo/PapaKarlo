@@ -19,10 +19,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bunbeauty.papakarlo.R
 import com.bunbeauty.papakarlo.common.BaseFragmentWithSharedViewModel
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
+import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationCard
 import com.bunbeauty.papakarlo.common.ui.element.card.NavigationTextCard
 import com.bunbeauty.papakarlo.common.ui.element.card.TextCard
-import com.bunbeauty.papakarlo.common.ui.element.topbar.FoodDeliveryAction
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
 import com.bunbeauty.papakarlo.common.ui.screen.LoadingScreen
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
@@ -61,24 +61,26 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
             backActionClick = {
                 findNavController().popBackStack()
             },
-            topActions = listOf(
-                FoodDeliveryAction(
-                    iconId = R.drawable.ic_logout_24,
-                    onClick = {
-                        viewModel.onLogoutClicked()
-                    }
+            actionButton = {
+                MainButton(
+                    modifier = Modifier
+                        .padding(horizontal = FoodDeliveryTheme.dimensions.mediumSpace),
+                    text = stringResource(id = R.string.action_logout),
+                    onClick = viewModel::onLogoutClicked
                 )
-            )
+            }
         ) {
             when (settingsState.state) {
                 SettingsState.State.SUCCESS -> {
                     SettingsScreenSuccess(settingsState)
                 }
+
                 SettingsState.State.ERROR -> {
                     ErrorScreen(mainTextId = R.string.error_common_data_loading) {
                         viewModel.loadData()
                     }
                 }
+
                 SettingsState.State.LOADING -> {
                     LoadingScreen()
                 }
@@ -133,6 +135,7 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                         viewModel.onEmailChanged(email)
                     }
                 }
+
                 is SettingsState.Event.ShowCityListEvent -> {
                     CityListBottomSheet.show(
                         fragmentManager = childFragmentManager,
@@ -142,19 +145,23 @@ class SettingsFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose
                         viewModel.onCitySelected(city.uuid)
                     }
                 }
+
                 SettingsState.Event.ShowEmailChangedSuccessfullyEvent -> {
                     (activity as? IMessageHost)?.showInfoMessage(
                         resources.getString(R.string.msg_settings_email_updated)
                     )
                 }
+
                 SettingsState.Event.ShowEmailChangingFailedEvent -> {
                     (activity as? IMessageHost)?.showErrorMessage(
                         resources.getString(R.string.error_something_went_wrong)
                     )
                 }
+
                 SettingsState.Event.Back -> {
                     findNavController().navigateUp()
                 }
+
                 SettingsState.Event.ShowLogoutEvent -> {
                     LogoutBottomSheet.show(childFragmentManager)?.let { isLogout ->
                         if (isLogout) {

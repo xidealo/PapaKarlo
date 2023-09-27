@@ -1,0 +1,3 @@
+ALTER TABLE orderEntity ADD COLUMN oldTotalCost INTEGER;
+ALTER TABLE orderEntity ADD COLUMN newTotalCost INTEGER DEFAULT 0;
+ALTER TABLE orderEntity ADD COLUMN percentDiscount INTEGER;

@@ -17,19 +17,21 @@ data class ConsumerCartDataState(
     }
 
     operator fun plus(event: ConsumerCartEvent) = copy(eventList = eventList + event)
-    operator fun minus(events: List<ConsumerCartEvent>) = copy(eventList = eventList - events.toSet())
+    operator fun minus(events: List<ConsumerCartEvent>) =
+        copy(eventList = eventList - events.toSet())
 }
 
 data class ConsumerCartData(
     val forFreeDelivery: String,
     val cartProductList: List<CartProductItem>,
     val oldTotalCost: String?,
-    val newTotalCost: String
+    val newTotalCost: String,
+    val firstOrderDiscount: String?
 )
 
 sealed interface ConsumerCartEvent {
-    object NavigateToMenuEvent : ConsumerCartEvent
-    object NavigateToCreateOrderEvent : ConsumerCartEvent
+    data object NavigateToMenuEvent : ConsumerCartEvent
+    data object NavigateToCreateOrderEvent : ConsumerCartEvent
     class NavigateToLoginEvent(val successLoginDirection: SuccessLoginDirection) : ConsumerCartEvent
     class NavigateToProductEvent(val cartProductItem: CartProductItem) : ConsumerCartEvent
 }
@@ -40,9 +42,10 @@ data class ConsumerCartUIState(
 ) {
 
     sealed interface ConsumerCartState {
-        object Loading : ConsumerCartState
+        data object Loading : ConsumerCartState
         data class Success(val data: ConsumerCartData) : ConsumerCartState
-        object Empty : ConsumerCartState
-        object Error : ConsumerCartState
+
+        data object Empty : ConsumerCartState
+        data object Error : ConsumerCartState
     }
 }

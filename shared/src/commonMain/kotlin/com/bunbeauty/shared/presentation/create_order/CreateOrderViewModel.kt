@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.create_order
 
+import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.data.mapper.user_address.UserAddressMapper
 import com.bunbeauty.shared.domain.feature.city.GetSelectedCityTimeZoneUseCase
 import com.bunbeauty.shared.domain.feature.order.CreateOrderUseCase
@@ -39,7 +40,12 @@ class CreateOrderViewModel(
     private val savePaymentMethodUseCase: SavePaymentMethodUseCase,
 ) : SharedViewModel() {
 
-    private val mutableDataState = MutableStateFlow(CreateOrderDataState())
+    private val mutableDataState = MutableStateFlow(
+        CreateOrderDataState(
+            discount = null
+        )
+    )
+
     val uiState = mutableDataState.mapToStateFlow(
         scope = sharedScope,
         block = createOrderStateMapper::map
@@ -171,7 +177,7 @@ class CreateOrderViewModel(
             return
         }
 
-        if(data.selectedPaymentMethod == null){
+        if (data.selectedPaymentMethod == null) {
             mutableDataState.update { state ->
                 state + CreateOrderEvent.ShowPaymentMethodError
             }
@@ -187,7 +193,7 @@ class CreateOrderViewModel(
                     comment = stateValue.comment,
                     deferredTime = data.deferredTime,
                     timeZone = getSelectedCityTimeZone(),
-                    paymentMethod = data.selectedPaymentMethod?.name?.name
+                    paymentMethod = data.selectedPaymentMethod.name.name
                 )
                 if (orderCode == null) {
                     val event = CreateOrderEvent.ShowSomethingWentWrongErrorEvent
@@ -279,7 +285,11 @@ class CreateOrderViewModel(
                 state.copy(
                     totalCost = cartTotal.totalCost,
                     deliveryCost = cartTotal.deliveryCost,
-                    finalCost = cartTotal.finalCost,
+                    newFinalCost = cartTotal.newFinalCost,
+                    oldFinalCost = cartTotal.oldFinalCost,
+                    discount = cartTotal.discount?.let { discount ->
+                        discount.toString() + PERCENT
+                    }
                 )
             }
         } catch (exception: Exception) {

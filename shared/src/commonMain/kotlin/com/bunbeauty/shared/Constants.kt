@@ -40,16 +40,6 @@ object Constants {
 
     const val CART_PRODUCT_LIMIT = 99
 
-    // PAYMENT
-
-    const val CARD_NUMBER_LABEL = "cart number"
-    const val PHONE_NUMBER_LABEL = "phone number"
-
-    // PATTERN
-
-    const val DD_MMMM_HH_MM_PATTERN = "dd MMMM HH:mm"
-    const val HH_MM_PATTERN = "HH:mm"
-
     // TIME
 
     const val MIN_DEFERRED_HOURS_ADDITION = 1
@@ -72,6 +62,11 @@ object Constants {
     const val WORKING_HOURS_DIVIDER = " - "
     const val COORDINATES_DIVIDER = ","
     const val ADDRESS_DIVIDER = ", "
+
+    // SIGN
+
+    const val RUBLE_CURRENCY = "₽"
+    const val PERCENT = "%"
 
     // PHONE
     const val PHONE_CODE = "+7"

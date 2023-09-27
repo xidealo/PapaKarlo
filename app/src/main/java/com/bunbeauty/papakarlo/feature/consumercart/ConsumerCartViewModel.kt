@@ -4,7 +4,8 @@ import androidx.lifecycle.viewModelScope
 import com.bunbeauty.papakarlo.common.model.SuccessLoginDirection
 import com.bunbeauty.papakarlo.common.viewmodel.BaseViewModel
 import com.bunbeauty.papakarlo.feature.consumercart.model.CartProductItem
-import com.bunbeauty.papakarlo.util.string.IStringUtil
+import com.bunbeauty.shared.Constants.PERCENT
+import com.bunbeauty.shared.Constants.RUBLE_CURRENCY
 import com.bunbeauty.shared.domain.feature.cart.AddCartProductUseCase
 import com.bunbeauty.shared.domain.feature.cart.RemoveCartProductUseCase
 import com.bunbeauty.shared.domain.interactor.cart.ICartProductInteractor
@@ -20,14 +21,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 class ConsumerCartViewModel(
-    private val stringUtil: IStringUtil,
     private val userInteractor: IUserInteractor,
     private val cartProductInteractor: ICartProductInteractor,
     private val addCartProductUseCase: AddCartProductUseCase,
     private val removeCartProductUseCase: RemoveCartProductUseCase
 ) : BaseViewModel() {
 
-    private val consumerCartDataState = MutableStateFlow(ConsumerCartDataState())
+    private val consumerCartDataState = MutableStateFlow(
+        ConsumerCartDataState()
+    )
     val consumerCartState = consumerCartDataState.mapToStateFlow(viewModelScope) { dataState ->
         mapState(dataState)
     }
@@ -46,7 +48,9 @@ class ConsumerCartViewModel(
                             } else {
                                 dataState.copy(
                                     state = getConsumerCartDataState(consumerCart),
-                                    consumerCartData = getConsumerCartData(consumerCart)
+                                    consumerCartData = getConsumerCartData(
+                                        consumerCart = consumerCart
+                                    )
                                 )
                             }
                         }
@@ -124,20 +128,25 @@ class ConsumerCartViewModel(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Loading,
                 eventList = dataState.eventList
             )
+
             ConsumerCartDataState.State.SUCCESS -> {
                 if (dataState.consumerCartData == null) {
                     ConsumerCartUIState(ConsumerCartUIState.ConsumerCartState.Error)
                 } else {
                     ConsumerCartUIState(
-                        consumerCartState = ConsumerCartUIState.ConsumerCartState.Success(dataState.consumerCartData),
+                        consumerCartState = ConsumerCartUIState.ConsumerCartState.Success(
+                            data = dataState.consumerCartData
+                        ),
                         eventList = dataState.eventList
                     )
                 }
             }
+
             ConsumerCartDataState.State.EMPTY -> ConsumerCartUIState(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Empty,
                 eventList = dataState.eventList
             )
+
             ConsumerCartDataState.State.ERROR -> ConsumerCartUIState(
                 consumerCartState = ConsumerCartUIState.ConsumerCartState.Error,
                 eventList = dataState.eventList
@@ -145,16 +154,21 @@ class ConsumerCartViewModel(
         }
     }
 
-    private fun getConsumerCartData(consumerCart: ConsumerCart): ConsumerCartData? {
+    private fun getConsumerCartData(
+        consumerCart: ConsumerCart
+    ): ConsumerCartData? {
         return when (consumerCart) {
             is ConsumerCart.Empty -> null
             is ConsumerCart.WithProducts -> ConsumerCartData(
-                forFreeDelivery = stringUtil.getCostString(consumerCart.forFreeDelivery),
+                forFreeDelivery = "${consumerCart.forFreeDelivery} $RUBLE_CURRENCY",
                 cartProductList = consumerCart.cartProductList.map(::toItem),
                 oldTotalCost = consumerCart.oldTotalCost?.let { oldTotalCost ->
-                    stringUtil.getCostString(oldTotalCost)
+                    oldTotalCost.toString() + RUBLE_CURRENCY
                 },
-                newTotalCost = stringUtil.getCostString(consumerCart.newTotalCost)
+                newTotalCost = consumerCart.newTotalCost.toString() + RUBLE_CURRENCY,
+                firstOrderDiscount = consumerCart.discount?.let { discount ->
+                    discount.toString() + PERCENT
+                }
             )
         }
     }
@@ -170,10 +184,8 @@ class ConsumerCartViewModel(
         return CartProductItem(
             uuid = lightCartProduct.uuid,
             name = lightCartProduct.name,
-            newCost = stringUtil.getCostString(lightCartProduct.newCost),
-            oldCost = lightCartProduct.oldCost?.let { oldCost ->
-                stringUtil.getCostString(oldCost)
-            },
+            newCost = lightCartProduct.newCost.toString() + RUBLE_CURRENCY,
+            oldCost = lightCartProduct.oldCost?.let { oldCost -> oldCost.toString() + RUBLE_CURRENCY },
             photoLink = lightCartProduct.photoLink,
             count = lightCartProduct.count,
             menuProductUuid = lightCartProduct.menuProductUuid

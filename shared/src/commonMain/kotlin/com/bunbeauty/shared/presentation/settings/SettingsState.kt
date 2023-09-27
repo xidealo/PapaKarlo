@@ -13,11 +13,11 @@ data class SettingsState(
 
     sealed interface Event {
         class ShowEditEmailEvent(val email: String?) : Event
-        object ShowLogoutEvent : Event
+        data object ShowLogoutEvent : Event
         class ShowCityListEvent(val cityList: List<City>, val selectedCityUuid: String?) : Event
-        object ShowEmailChangedSuccessfullyEvent : Event
-        object ShowEmailChangingFailedEvent : Event
-        object Back : Event
+        data object ShowEmailChangedSuccessfullyEvent : Event
+        data object ShowEmailChangingFailedEvent : Event
+        data object Back : Event
     }
 
     enum class State {

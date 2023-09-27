@@ -5,12 +5,13 @@ import com.bunbeauty.shared.domain.model.order.OrderStatus
 
 data class OrderDetailsUi(
     val orderProductItemList: List<OrderProductUiItem>,
-    val totalCost: String?,
+    val oldTotalCost: String?,
     val deliveryCost: String?,
-    val finalCost: String?,
+    val newTotalCost: String?,
     val isLoading: Boolean,
     val code: String,
-    val orderInfo: OrderInfo?
+    val orderInfo: OrderInfo?,
+    val discount: String?
 ) {
     data class OrderInfo(
         val status: OrderStatus,

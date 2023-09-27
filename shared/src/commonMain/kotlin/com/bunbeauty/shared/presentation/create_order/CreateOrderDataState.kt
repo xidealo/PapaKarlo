@@ -21,12 +21,14 @@ data class CreateOrderDataState(
 
     val totalCost: Int? = null,
     val deliveryCost: Int? = null,
-    val finalCost: Int? = null,
+    val oldFinalCost: Int? = null,
+    val newFinalCost: Int? = null,
 
     val isLoading: Boolean = false,
     val eventList: List<CreateOrderEvent> = emptyList(),
     val selectedPaymentMethod: PaymentMethod? = null,
     val paymentMethodList: List<SelectablePaymentMethod> = emptyList(),
+    val discount: String?,
 ) {
 
     operator fun plus(event: CreateOrderEvent) = copy(eventList = eventList + event)

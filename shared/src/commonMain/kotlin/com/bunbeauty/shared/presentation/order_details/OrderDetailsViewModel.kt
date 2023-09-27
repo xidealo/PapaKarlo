@@ -1,5 +1,6 @@
 package com.bunbeauty.shared.presentation.order_details
 
+import com.bunbeauty.shared.Constants.PERCENT
 import com.bunbeauty.shared.domain.asCommonStateFlow
 import com.bunbeauty.shared.domain.feature.order.ObserveOrderUseCase
 import com.bunbeauty.shared.domain.feature.order.StopObserveOrdersUseCase
@@ -18,7 +19,9 @@ class OrderDetailsViewModel(
     private val stopObserveOrdersUseCase: StopObserveOrdersUseCase,
 ) : SharedViewModel() {
 
-    private val mutableOrderState = MutableStateFlow(OrderDetailsState())
+    private val mutableOrderState = MutableStateFlow(
+        OrderDetailsState(discount = null)
+    )
     val orderState = mutableOrderState.asCommonStateFlow()
 
     private var observeOrderJob: Job? = null
@@ -38,9 +41,12 @@ class OrderDetailsViewModel(
                             orderProductItemList = getProductList(order),
                             orderInfo = getOrderInfo(order),
                             deliveryCost = order.deliveryCost?.toString(),
-                            totalCost = getTotalCost(order),
-                            finalCost = getFinalCost(order),
-                            isLoading = false
+                            oldTotalCost = order.oldTotalCost?.toString(),
+                            newTotalCost = order.newTotalCost.toString(),
+                            isLoading = false,
+                            discount = order.percentDiscount?.let { discount ->
+                                discount.toString() + PERCENT
+                            }
                         )
                     }
                 }
@@ -56,26 +62,6 @@ class OrderDetailsViewModel(
             }
         }
         orderObservationUuid = null
-    }
-
-    private fun getTotalCost(order: Order): String? {
-        val isTotalCostEnabled = order.orderProductList.any { orderProduct ->
-            orderProduct.product.oldPrice != null
-        }
-        return if (isTotalCostEnabled) {
-            val cost = order.orderProductList.sumOf { orderProduct ->
-                (orderProduct.product.oldPrice
-                    ?: orderProduct.product.newPrice) * orderProduct.count
-            }
-            (cost + (order.deliveryCost ?: 0)).toString()
-        } else null
-    }
-
-    private fun getFinalCost(order: Order): String {
-        val cost = order.orderProductList.sumOf { orderProduct ->
-            orderProduct.product.newPrice * orderProduct.count
-        }
-        return (cost + (order.deliveryCost ?: 0)).toString()
     }
 
     private fun getOrderInfo(order: Order) =

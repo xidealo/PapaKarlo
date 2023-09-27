@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.bunbeauty.papakarlo.common.ui.element.card.FoodDeliveryCard
 import com.bunbeauty.papakarlo.common.ui.theme.FoodDeliveryTheme
 import com.bunbeauty.papakarlo.common.ui.theme.medium
-import com.bunbeauty.papakarlo.feature.menu.model.CategoryItem
+import com.bunbeauty.shared.presentation.menu.CategoryItem
 
 @Composable
 fun CategoryItem(

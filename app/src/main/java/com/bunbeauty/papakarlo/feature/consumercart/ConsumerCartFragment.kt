@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -30,6 +31,7 @@ import com.bunbeauty.papakarlo.common.BaseFragment
 import com.bunbeauty.papakarlo.common.extension.navigateSafe
 import com.bunbeauty.papakarlo.common.ui.element.FoodDeliveryScaffold
 import com.bunbeauty.papakarlo.common.ui.element.button.MainButton
+import com.bunbeauty.papakarlo.common.ui.element.card.DiscountCard
 import com.bunbeauty.papakarlo.common.ui.element.surface.FoodDeliverySurface
 import com.bunbeauty.papakarlo.common.ui.screen.EmptyScreen
 import com.bunbeauty.papakarlo.common.ui.screen.ErrorScreen
@@ -97,6 +99,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                     onProductClicked = onProductClicked,
                     onCreateOrderClicked = onCreateOrderClicked
                 )
+
                 ConsumerCartUIState.ConsumerCartState.Empty -> {
                     EmptyScreen(
                         imageId = R.drawable.ic_cart_24,
@@ -107,6 +110,7 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                         onClick = onMenuClicked
                     )
                 }
+
                 is ConsumerCartUIState.ConsumerCartState.Error -> {
                     ErrorScreen(
                         mainTextId = R.string.error_consumer_cart_loading,
@@ -140,7 +144,10 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = FoodDeliveryTheme.dimensions.mediumSpace),
-                            text = stringResource(R.string.msg_consumer_cart_free_delivery_from) + consumerCartData.forFreeDelivery,
+                            text = stringResource(
+                                R.string.msg_consumer_cart_free_delivery_from,
+                                consumerCartData.forFreeDelivery
+                            ),
                             style = FoodDeliveryTheme.typography.bodyLarge,
                             color = FoodDeliveryTheme.colors.mainColors.onBackground,
                             textAlign = TextAlign.Center
@@ -166,7 +173,23 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 }
             }
             FoodDeliverySurface(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(FoodDeliveryTheme.dimensions.mediumSpace)) {
+                Column(
+                    modifier = Modifier
+                        .padding(FoodDeliveryTheme.dimensions.mediumSpace)
+                ) {
+                    consumerCartData.firstOrderDiscount?.let { discount ->
+                        Row(modifier = Modifier.padding(bottom = 8.dp)) {
+                            Text(
+                                text = stringResource(R.string.title_consumer_cart_discount),
+                                style = FoodDeliveryTheme.typography.bodyMedium,
+                                color = FoodDeliveryTheme.colors.mainColors.onSurface
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            DiscountCard(discount = discount)
+                        }
+                    }
+
                     Row {
                         Text(
                             text = stringResource(R.string.title_consumer_cart_total),
@@ -206,12 +229,15 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                 ConsumerCartEvent.NavigateToMenuEvent -> {
                     findNavController().navigateSafe(toMenuFragment())
                 }
+
                 ConsumerCartEvent.NavigateToCreateOrderEvent -> {
                     findNavController().navigateSafe(toCreateOrderFragment())
                 }
+
                 is ConsumerCartEvent.NavigateToLoginEvent -> {
                     findNavController().navigateSafe(toLoginFragment(event.successLoginDirection))
                 }
+
                 is ConsumerCartEvent.NavigateToProductEvent -> {
                     findNavController().navigateSafe(
                         toProductFragment(
@@ -251,7 +277,8 @@ class ConsumerCartFragment : BaseFragment(R.layout.layout_compose) {
                             cartProductItemModel
                         ),
                         oldTotalCost = "1650 ₽",
-                        newTotalCost = "1500 ₽"
+                        newTotalCost = "1500 ₽",
+                        firstOrderDiscount = "10"
                     )
                 ),
                 onMenuClicked = {},

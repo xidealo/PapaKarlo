@@ -7,6 +7,7 @@ import com.bunbeauty.shared.data.repository.CafeRepository
 import com.bunbeauty.shared.data.repository.CartProductRepository
 import com.bunbeauty.shared.data.repository.CityRepository
 import com.bunbeauty.shared.data.repository.DeliveryRepository
+import com.bunbeauty.shared.data.repository.DiscountRepository
 import com.bunbeauty.shared.data.repository.LinkRepository
 import com.bunbeauty.shared.data.repository.MenuProductRepository
 import com.bunbeauty.shared.data.repository.OrderRepository
@@ -138,6 +139,12 @@ fun repositoryModule() = module {
             networkConnector = get(),
             linkMapper = get(),
             linkDao = get(),
+        )
+    }
+    single {
+        DiscountRepository(
+            networkConnector = get(),
+            dataStoreRepo = get(),
         )
     }
 }

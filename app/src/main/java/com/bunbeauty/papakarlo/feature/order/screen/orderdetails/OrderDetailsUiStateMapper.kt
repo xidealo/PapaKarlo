@@ -15,17 +15,17 @@ class OrderDetailsUiStateMapper(
             orderProductItemList = orderState.orderProductItemList.map(
                 orderProductItemMapper::toItem
             ),
-            totalCost = orderState.totalCost?.let { totalCost ->
-                stringUtil.getCostString(totalCost)
+            oldTotalCost = orderState.oldTotalCost?.let { oldTotalCost ->
+                stringUtil.getCostString(oldTotalCost)
             },
             deliveryCost = orderState.deliveryCost?.let { deliveryCost ->
                 stringUtil.getCostString(
                     deliveryCost
                 )
             },
-            finalCost = orderState.finalCost?.let { finalCost ->
+            newTotalCost = orderState.newTotalCost?.let { newTotalCost ->
                 stringUtil.getCostString(
-                    finalCost
+                    newTotalCost
                 )
             },
             isLoading = orderState.isLoading,
@@ -51,7 +51,8 @@ class OrderDetailsUiStateMapper(
                     }
                 )
             },
-            code = orderState.orderInfo?.code ?: ""
+            code = orderState.orderInfo?.code ?: "",
+            discount = orderState.discount
         )
     }
 }

@@ -24,7 +24,7 @@ class DeliveryRepository(
         )
     }
 
-    fun toDelivery(deliveryServer: DeliveryServer): Delivery {
+    private fun toDelivery(deliveryServer: DeliveryServer): Delivery {
         return Delivery(deliveryServer.cost, deliveryServer.forFree)
     }
 }

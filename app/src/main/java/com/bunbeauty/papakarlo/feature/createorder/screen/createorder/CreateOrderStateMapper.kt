@@ -17,12 +17,14 @@ class CreateOrderStateMapper(
             deferredTime = stringUtil.getTimeString(createOrderUIState.deferredTime),
             totalCost = stringUtil.getCostString(createOrderUIState.totalCost),
             deliveryCost = stringUtil.getCostString(createOrderUIState.deliveryCost),
-            finalCost = stringUtil.getCostString(createOrderUIState.finalCost),
+            oldFinalCost = stringUtil.getCostString(createOrderUIState.oldFinalCost),
+            newFinalCost = stringUtil.getCostString(createOrderUIState.newFinalCost),
             isAddressErrorShown = createOrderUIState.isDeliveryAddressErrorShown,
             isLoading = createOrderUIState.isLoading,
             selectedPaymentMethod = createOrderUIState.paymentMethod?.let {
                 paymentMethodUiStateMapper.map(it)
-            }
+            },
+            discount = createOrderUIState.discount
         )
     }
 }
