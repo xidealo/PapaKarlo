@@ -218,7 +218,7 @@ class MenuFragment : BaseFragmentWithSharedViewModel(R.layout.layout_compose) {
     @Composable
     private fun MenuColumn(
         menu: MenuUi,
-        menuLazyListState: LazyGridState,
+        menuLazyListState: LazyGridState
     ) {
         LazyVerticalGrid(
             modifier = Modifier.fillMaxSize(),
