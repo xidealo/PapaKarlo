@@ -10,13 +10,11 @@ import com.bunbeauty.shared.domain.model.order.LightOrder
 import com.bunbeauty.shared.domain.model.order.Order
 import com.bunbeauty.shared.domain.model.order.OrderCode
 import com.bunbeauty.shared.domain.repo.OrderRepo
-import com.bunbeauty.shared.extension.getListResult
 import com.bunbeauty.shared.extension.getNullableResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.sync.Mutex
 
 class OrderRepository(
     private val orderDao: IOrderDao,
@@ -79,14 +77,18 @@ class OrderRepository(
                 orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
             },
             onSuccess = { orderServerList ->
-                orderServerList.results.firstOrNull()?.let { orderServer ->
+                val lastOrderServer = orderServerList.results.firstOrNull()
+                val lightOrder = lastOrderServer?.let { orderServer ->
                     saveOrderLocally(orderServer)
-                    cacheLastLightOrder = CacheLastLightOrder(
-                        lastOrder = orderMapper.toLightOrder(orderServer),
-                        isValid = true
-                    )
                     orderMapper.toLightOrder(orderServer)
                 }
+
+                cacheLastLightOrder = CacheLastLightOrder(
+                    lastOrder = lightOrder,
+                    isValid = true
+                )
+
+                lightOrder
             }
         )
     }
@@ -98,30 +100,7 @@ class OrderRepository(
         return if (cacheLastLightOrder.isValid) {
             cacheLastLightOrder.lastOrder
         } else {
-            networkConnector.getOrderList(token = token, count = 1)
-                .getListResult(
-                    onError = {
-                        orderDao.getLastOrderByUserUuid(userUuid)?.let(orderMapper::toLightOrder)
-                    },
-                    onSuccess = { orderServerList ->
-                        orderServerList.firstOrNull().let { orderServer ->
-                            if (orderServer == null) {
-                                cacheLastLightOrder = CacheLastLightOrder(
-                                    lastOrder = null,
-                                    isValid = true
-                                )
-                                null
-                            } else {
-                                saveOrderLocally(orderServer)
-                                cacheLastLightOrder = CacheLastLightOrder(
-                                    lastOrder = orderMapper.toLightOrder(orderServer),
-                                    isValid = true
-                                )
-                                orderMapper.toLightOrder(orderServer)
-                            }
-                        }
-                    }
-                )
+            getLastOrderByUserUuidNetworkFirst(token, userUuid)
         }
     }
 

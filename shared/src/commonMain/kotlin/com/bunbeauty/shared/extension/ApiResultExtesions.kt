@@ -13,7 +13,7 @@ suspend fun <T, R> ApiResult<T>.getNullableResult(
     is ApiResult.Success -> {
         data?.let {
             onSuccess(data)
-        } ?: onError?.invoke(ApiError.DATA_IS_NULL)
+        }
     }
     is ApiResult.Error -> {
         Logger.logW(NETWORK_TAG, apiError.message)
